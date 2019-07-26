@@ -1,6 +1,8 @@
 syntax = "proto3";
 package dvote;
 
+import "gateway.proto";
+
 // Helper to serialize and store all cached data
 message EntitiesStore {
     repeated Entity entities = 1;
@@ -26,11 +28,11 @@ message Entity {
     map<string, string> description = 5;  // locale-aware value
     string votingContract = 6;
 
-    message VotesMap {
+    message VotingProcesses {
         repeated string active = 1;
         repeated string ended = 2;
     }
-    VotesMap votingProcesses = 7;
+    VotingProcesses votingProcesses = 7;
 
     map<string, string> newsFeed = 8;  // locale-aware value
     string avatar = 9;
@@ -89,10 +91,4 @@ message Entity {
     // Allow to use arbitrary key/values so that
     // entities can be organized by custom values.
     map<string, string> meta = 100;
-}
-
-message Gateway {
-    string dvote = 1;
-    string web3 = 2;
-    string publicKey = 3; // Secp256k1 public key
 }

@@ -9,6 +9,8 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'gateway.pb.dart' as $0;
+
 class EntitiesStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntitiesStore', package: const $pb.PackageName('dvote'))
     ..pc<Entity>(1, 'entities', $pb.PbFieldType.PM,Entity.create)
@@ -37,7 +39,7 @@ class Entity_Reference extends $pb.GeneratedMessage {
     ..aOS(1, 'entityId')
     ..aOS(2, 'resolverAddress')
     ..aOS(3, 'networkId')
-    ..pc<Gateway>(4, 'entryPoints', $pb.PbFieldType.PM,Gateway.create)
+    ..pc<$0.Gateway>(4, 'entryPoints', $pb.PbFieldType.PM,$0.Gateway.create)
     ..hasRequiredFields = false
   ;
 
@@ -70,29 +72,29 @@ class Entity_Reference extends $pb.GeneratedMessage {
   $core.bool hasNetworkId() => $_has(2);
   void clearNetworkId() => clearField(3);
 
-  $core.List<Gateway> get entryPoints => $_getList(3);
+  $core.List<$0.Gateway> get entryPoints => $_getList(3);
 }
 
-class Entity_VotesMap extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.VotesMap', package: const $pb.PackageName('dvote'))
+class Entity_VotingProcesses extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.VotingProcesses', package: const $pb.PackageName('dvote'))
     ..pPS(1, 'active')
     ..pPS(2, 'ended')
     ..hasRequiredFields = false
   ;
 
-  Entity_VotesMap._() : super();
-  factory Entity_VotesMap() => create();
-  factory Entity_VotesMap.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Entity_VotesMap.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Entity_VotesMap clone() => Entity_VotesMap()..mergeFromMessage(this);
-  Entity_VotesMap copyWith(void Function(Entity_VotesMap) updates) => super.copyWith((message) => updates(message as Entity_VotesMap));
+  Entity_VotingProcesses._() : super();
+  factory Entity_VotingProcesses() => create();
+  factory Entity_VotingProcesses.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Entity_VotingProcesses.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Entity_VotingProcesses clone() => Entity_VotingProcesses()..mergeFromMessage(this);
+  Entity_VotingProcesses copyWith(void Function(Entity_VotingProcesses) updates) => super.copyWith((message) => updates(message as Entity_VotingProcesses));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Entity_VotesMap create() => Entity_VotesMap._();
-  Entity_VotesMap createEmptyInstance() => create();
-  static $pb.PbList<Entity_VotesMap> createRepeated() => $pb.PbList<Entity_VotesMap>();
-  static Entity_VotesMap getDefault() => _defaultInstance ??= create()..freeze();
-  static Entity_VotesMap _defaultInstance;
+  static Entity_VotingProcesses create() => Entity_VotingProcesses._();
+  Entity_VotingProcesses createEmptyInstance() => create();
+  static $pb.PbList<Entity_VotingProcesses> createRepeated() => $pb.PbList<Entity_VotingProcesses>();
+  static Entity_VotingProcesses getDefault() => _defaultInstance ??= create()..freeze();
+  static Entity_VotingProcesses _defaultInstance;
 
   $core.List<$core.String> get active => $_getList(0);
 
@@ -332,7 +334,7 @@ class Entity extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(4, 'name', 'Entity.NameEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..m<$core.String, $core.String>(5, 'description', 'Entity.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..aOS(6, 'votingContract')
-    ..a<Entity_VotesMap>(7, 'votingProcesses', $pb.PbFieldType.OM, Entity_VotesMap.getDefault, Entity_VotesMap.create)
+    ..a<Entity_VotingProcesses>(7, 'votingProcesses', $pb.PbFieldType.OM, Entity_VotingProcesses.getDefault, Entity_VotingProcesses.create)
     ..m<$core.String, $core.String>(8, 'newsFeed', 'Entity.NewsFeedEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..aOS(9, 'avatar')
     ..pc<Entity_Action>(10, 'actions', $pb.PbFieldType.PM,Entity_Action.create)
@@ -382,8 +384,8 @@ class Entity extends $pb.GeneratedMessage {
   $core.bool hasVotingContract() => $_has(5);
   void clearVotingContract() => clearField(6);
 
-  Entity_VotesMap get votingProcesses => $_getN(6);
-  set votingProcesses(Entity_VotesMap v) { setField(7, v); }
+  Entity_VotingProcesses get votingProcesses => $_getN(6);
+  set votingProcesses(Entity_VotingProcesses v) { setField(7, v); }
   $core.bool hasVotingProcesses() => $_has(6);
   void clearVotingProcesses() => clearField(7);
 
@@ -414,43 +416,5 @@ class Entity extends $pb.GeneratedMessage {
   $core.List<Entity_EntityReference> get censusServiceManagedEntitie => $_getList(16);
 
   $core.Map<$core.String, $core.String> get meta => $_getMap(17);
-}
-
-class Gateway extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Gateway', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'dvote')
-    ..aOS(2, 'web3')
-    ..aOS(3, 'publicKey')
-    ..hasRequiredFields = false
-  ;
-
-  Gateway._() : super();
-  factory Gateway() => create();
-  factory Gateway.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Gateway.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Gateway clone() => Gateway()..mergeFromMessage(this);
-  Gateway copyWith(void Function(Gateway) updates) => super.copyWith((message) => updates(message as Gateway));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static Gateway create() => Gateway._();
-  Gateway createEmptyInstance() => create();
-  static $pb.PbList<Gateway> createRepeated() => $pb.PbList<Gateway>();
-  static Gateway getDefault() => _defaultInstance ??= create()..freeze();
-  static Gateway _defaultInstance;
-
-  $core.String get dvote => $_getS(0, '');
-  set dvote($core.String v) { $_setString(0, v); }
-  $core.bool hasDvote() => $_has(0);
-  void clearDvote() => clearField(1);
-
-  $core.String get web3 => $_getS(1, '');
-  set web3($core.String v) { $_setString(1, v); }
-  $core.bool hasWeb3() => $_has(1);
-  void clearWeb3() => clearField(2);
-
-  $core.String get publicKey => $_getS(2, '');
-  set publicKey($core.String v) { $_setString(2, v); }
-  $core.bool hasPublicKey() => $_has(2);
-  void clearPublicKey() => clearField(3);
 }
 
