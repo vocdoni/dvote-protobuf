@@ -1,7 +1,13 @@
 syntax = "proto3";
 package dvote;
 
+import "entity.proto";
 import "key.proto";
+
+// Helper to serialize and store a set of entries
+message IdentitiesStore {
+    repeated Identity identities = 1; 
+}
 
 message Identity {
     string name = 1; // alias
@@ -10,26 +16,20 @@ message Identity {
     // Associated keys
     repeated Key keys = 3;
 
-    // This structure points to the place where the Entity
-    // can be fetched
-    // The full data structure is defined in entity.proto
-    message Entity {
-        string entityId = 1;  // 0x...
-        string resolverAddress = 2;  // 0x...
-        string networkId = 3;  // homestead, goerli, ...
-        repeated string entryPoints = 4;  // Gateway URI's
-    }
-    repeated Entity subscriptions = 4;
+    // Pointer to the place where the Entity metadata can be fetched
+    repeated Entity.Reference subscriptions = 4;
 
     message Claim {
-        string index = 1;
-        string proof = 2;
-        string data = 3;
+        string index = 1;  // The index on the Merkle Tree
+        string proof = 2;  // The Merkle Tree siblings of a ZK proof
+        string data = 3;  // The claim itself
+        repeated string tags = 4;
     }
-    repeated Claim claims = 5;
-}
+    repeated Claim receivedClaims = 5;
+    repeated Claim emittedClaims = 6;
 
-// Data structure to serialize and store
-message IdentitiesStore {
-    repeated Identity identities = 1; 
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // identities can be organized by custom values.
+    map<string, string> meta = 100;
 }

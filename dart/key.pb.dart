@@ -18,6 +18,7 @@ class Key extends $pb.GeneratedMessage {
     ..e<Key_KeyType>(1, 'type', $pb.PbFieldType.OE, Key_KeyType.SECP256K1, Key_KeyType.valueOf, Key_KeyType.values)
     ..aOS(2, 'publicKey')
     ..aOS(3, 'encryptedPrivateKey')
+    ..m<$core.String, $core.String>(100, 'meta', 'Key.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -49,5 +50,7 @@ class Key extends $pb.GeneratedMessage {
   set encryptedPrivateKey($core.String v) { $_setString(2, v); }
   $core.bool hasEncryptedPrivateKey() => $_has(2);
   void clearEncryptedPrivateKey() => clearField(3);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(3);
 }
 

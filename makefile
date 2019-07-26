@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 PATH  := $(PATH):$(HOME)/.pub-cache/bin
-PROJECTNAME=$(shell basename "$(PWD)")
-
 .DEFAULT_GOAL := help
+
+PROJECT_NAME=$(shell basename "$(PWD)")
 MODEL_SOURCES=$(wildcard src/*.proto)
 
 #******************************************************************************
@@ -14,7 +14,7 @@ MODEL_SOURCES=$(wildcard src/*.proto)
 .PHONY: help
 help: makefile
 	@echo
-	@echo " Available actions in "$(PROJECTNAME)":"
+	@echo " Available actions in "$(PROJECT_NAME)":"
 	@echo
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
 	@echo
@@ -30,18 +30,15 @@ all: dart
 
 
 ## dart: Generate the Dart source code
-.SILENT:
-.ONESHELL:
 dart: $(MODEL_SOURCES)
-	# export PATH=$(PATH):$(HOME)/.pub-cache/bin
-	echo $(PATH)
-	make dart-env
+	@make dart-env
 	mkdir -p ./dart
 	for f in $^ ; do \
 		protoc -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
 	done
-	touch $@
+	@touch $@
 
+.SILENT: dart-env
 dart-env:
 	if [ ! -x /usr/local/bin/protoc ] ; then \
 		echo "Please, install protoc from https://developers.google.com/protocol-buffers/docs/downloads.html" ; \
@@ -49,3 +46,7 @@ dart-env:
 	if [ ! -x $(HOME)/.pub-cache/bin/protoc-gen-dart ] ; then \
 		pub global activate protoc_plugin ; \
 	fi
+
+clean:
+	rm -f dart/*
+	@touch src/*

@@ -5,26 +5,46 @@
 // @dart = 2.3
 // ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
+const EntitiesStore$json = const {
+  '1': 'EntitiesStore',
+  '2': const [
+    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.Entity', '10': 'entities'},
+  ],
+};
+
 const Entity$json = const {
   '1': 'Entity',
   '2': const [
-    const {'1': 'languages', '3': 1, '4': 3, '5': 9, '10': 'languages'},
-    const {'1': 'name', '3': 2, '4': 3, '5': 11, '6': '.dvote.Entity.NameEntry', '10': 'name'},
-    const {'1': 'description', '3': 3, '4': 3, '5': 11, '6': '.dvote.Entity.DescriptionEntry', '10': 'description'},
-    const {'1': 'votingContract', '3': 4, '4': 1, '5': 9, '10': 'votingContract'},
-    const {'1': 'votingProcesses', '3': 5, '4': 1, '5': 11, '6': '.dvote.Entity.VotesMap', '10': 'votingProcesses'},
-    const {'1': 'newsFeed', '3': 6, '4': 3, '5': 11, '6': '.dvote.Entity.NewsFeedEntry', '10': 'newsFeed'},
-    const {'1': 'avatar', '3': 7, '4': 1, '5': 9, '10': 'avatar'},
-    const {'1': 'actions', '3': 8, '4': 3, '5': 11, '6': '.dvote.Entity.Action', '10': 'actions'},
-    const {'1': 'gatewayBootNodes', '3': 9, '4': 3, '5': 11, '6': '.dvote.Entity.GatewayBootNode', '10': 'gatewayBootNodes'},
-    const {'1': 'gatewayUpdate', '3': 10, '4': 1, '5': 11, '6': '.dvote.Entity.GatewyUpdate', '10': 'gatewayUpdate'},
-    const {'1': 'relays', '3': 11, '4': 3, '5': 11, '6': '.dvote.Entity.Relay', '10': 'relays'},
-    const {'1': 'bootEntities', '3': 12, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'bootEntities'},
-    const {'1': 'fallbackBootNodeEntities', '3': 13, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'fallbackBootNodeEntities'},
-    const {'1': 'trustedEntities', '3': 14, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'trustedEntities'},
-    const {'1': 'censusServiceManagedEntitie', '3': 15, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntitie'},
+    const {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
+    const {'1': 'reference', '3': 2, '4': 1, '5': 11, '6': '.dvote.Entity.Reference', '10': 'reference'},
+    const {'1': 'languages', '3': 3, '4': 3, '5': 9, '10': 'languages'},
+    const {'1': 'name', '3': 4, '4': 3, '5': 11, '6': '.dvote.Entity.NameEntry', '10': 'name'},
+    const {'1': 'description', '3': 5, '4': 3, '5': 11, '6': '.dvote.Entity.DescriptionEntry', '10': 'description'},
+    const {'1': 'votingContract', '3': 6, '4': 1, '5': 9, '10': 'votingContract'},
+    const {'1': 'votingProcesses', '3': 7, '4': 1, '5': 11, '6': '.dvote.Entity.VotesMap', '10': 'votingProcesses'},
+    const {'1': 'newsFeed', '3': 8, '4': 3, '5': 11, '6': '.dvote.Entity.NewsFeedEntry', '10': 'newsFeed'},
+    const {'1': 'avatar', '3': 9, '4': 1, '5': 9, '10': 'avatar'},
+    const {'1': 'actions', '3': 10, '4': 3, '5': 11, '6': '.dvote.Entity.Action', '10': 'actions'},
+    const {'1': 'gatewayBootNodes', '3': 11, '4': 3, '5': 11, '6': '.dvote.Entity.GatewayBootNode', '10': 'gatewayBootNodes'},
+    const {'1': 'gatewayUpdate', '3': 12, '4': 1, '5': 11, '6': '.dvote.Entity.GatewyUpdate', '10': 'gatewayUpdate'},
+    const {'1': 'relays', '3': 13, '4': 3, '5': 11, '6': '.dvote.Entity.Relay', '10': 'relays'},
+    const {'1': 'bootEntities', '3': 14, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'bootEntities'},
+    const {'1': 'fallbackBootNodeEntities', '3': 15, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'fallbackBootNodeEntities'},
+    const {'1': 'trustedEntities', '3': 16, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'trustedEntities'},
+    const {'1': 'censusServiceManagedEntitie', '3': 17, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntitie'},
+    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Entity.MetaEntry', '10': 'meta'},
   ],
-  '3': const [Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_VotesMap$json, Entity_NewsFeedEntry$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json],
+  '3': const [Entity_Reference$json, Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_VotesMap$json, Entity_NewsFeedEntry$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
+};
+
+const Entity_Reference$json = const {
+  '1': 'Reference',
+  '2': const [
+    const {'1': 'entityId', '3': 1, '4': 1, '5': 9, '10': 'entityId'},
+    const {'1': 'resolverAddress', '3': 2, '4': 1, '5': 9, '10': 'resolverAddress'},
+    const {'1': 'networkId', '3': 3, '4': 1, '5': 9, '10': 'networkId'},
+    const {'1': 'entryPoints', '3': 4, '4': 3, '5': 11, '6': '.dvote.Gateway', '10': 'entryPoints'},
+  ],
 };
 
 const Entity_NameEntry$json = const {
@@ -137,10 +157,21 @@ const Entity_EntityReference$json = const {
   ],
 };
 
-const EntitiesStore$json = const {
-  '1': 'EntitiesStore',
+const Entity_MetaEntry$json = const {
+  '1': 'MetaEntry',
   '2': const [
-    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.Entity', '10': 'entities'},
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': const {'7': true},
+};
+
+const Gateway$json = const {
+  '1': 'Gateway',
+  '2': const [
+    const {'1': 'dvote', '3': 1, '4': 1, '5': 9, '10': 'dvote'},
+    const {'1': 'web3', '3': 2, '4': 1, '5': 9, '10': 'web3'},
+    const {'1': 'publicKey', '3': 3, '4': 1, '5': 9, '10': 'publicKey'},
   ],
 };
 

@@ -1,27 +1,46 @@
 syntax = "proto3";
 package dvote;
 
+// Helper to serialize and store all cached data
+message EntitiesStore {
+    repeated Entity entities = 1;
+}
+
+// The metadata of an entity
+// https://vocdoni.io/docs/#/architecture/components/entity?id=json-schema
 message Entity {
-    repeated string languages = 1;
-    map<string, string> name = 2;  // locale-aware value
-    map<string, string> description = 3;  // locale-aware value
-    string votingContract = 4;
+    // OWN FIELDS
+    string version = 1;
+
+    // Pointer to the place where the Entity metadata can be fetched
+    message Reference {
+        string entityId = 1;  // 0x...
+        string resolverAddress = 2;  // 0x...
+        string networkId = 3;  // homestead, goerli, ...
+        repeated Gateway entryPoints = 4;  // Gateways
+    }
+    Reference reference = 2;
+
+    repeated string languages = 3;
+    map<string, string> name = 4;  // locale-aware value
+    map<string, string> description = 5;  // locale-aware value
+    string votingContract = 6;
 
     message VotesMap {
         repeated string active = 1;
         repeated string ended = 2;
     }
-    VotesMap votingProcesses = 5;
+    VotesMap votingProcesses = 7;
 
-    map<string, string> newsFeed = 6;  // locale-aware value
-    string avatar = 7;
+    map<string, string> newsFeed = 8;  // locale-aware value
+    string avatar = 9;
 
     // See entity actions definition
     // https://vocdoni.io/docs/#/architecture/components/entity?id=entity-actions
     message Action {
         string type = 1;
         map<string, string> name = 2;  // locale-aware value
-        string visible = 3; // URL or "true"
+        string visible = 3; // A URL or "true"
 
         // type = browser / image
         string url = 4;
@@ -36,38 +55,44 @@ message Entity {
         }
         repeated ImageSource imageSources = 5;
     }
-    repeated Action actions = 8;
+    repeated Action actions = 10;
 
     message GatewayBootNode {
         string heartbeatMessagingUri = 1;
         string fetchUri = 2;
     }
-    repeated GatewayBootNode gatewayBootNodes = 9;
+    repeated GatewayBootNode gatewayBootNodes = 11;
 
     message GatewyUpdate {
         int32 timeout = 1;
         string topic = 2;
         string difficulty = 3;
     }
-    GatewyUpdate gatewayUpdate = 10;
+    GatewyUpdate gatewayUpdate = 12;
 
     message Relay {
         string publicKey = 1;
         string messagingUri = 2;
     }
-    repeated Relay relays = 11;
+    repeated Relay relays = 13;
 
     message EntityReference {
         string resolverAddress = 1;
         string entityId = 2;
     }
-    repeated EntityReference bootEntities = 12;
-    repeated EntityReference fallbackBootNodeEntities = 13;
-    repeated EntityReference trustedEntities = 14;
-    repeated EntityReference censusServiceManagedEntitie = 15;
+    repeated EntityReference bootEntities = 14;
+    repeated EntityReference fallbackBootNodeEntities = 15;
+    repeated EntityReference trustedEntities = 16;
+    repeated EntityReference censusServiceManagedEntitie = 17;
+
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // entities can be organized by custom values.
+    map<string, string> meta = 100;
 }
 
-// Data structure to serialize and store
-message EntitiesStore {
-    repeated Entity entities = 1;
+message Gateway {
+    string dvote = 1;
+    string web3 = 2;
+    string publicKey = 3; // Secp256k1 public key
 }

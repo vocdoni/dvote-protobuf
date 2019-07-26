@@ -10,46 +10,29 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'key.pb.dart' as $0;
+import 'entity.pb.dart' as $1;
 
-class Identity_Entity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity.Entity', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'entityId')
-    ..aOS(2, 'resolverAddress')
-    ..aOS(3, 'networkId')
-    ..pPS(4, 'entryPoints')
+class IdentitiesStore extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('IdentitiesStore', package: const $pb.PackageName('dvote'))
+    ..pc<Identity>(1, 'identities', $pb.PbFieldType.PM,Identity.create)
     ..hasRequiredFields = false
   ;
 
-  Identity_Entity._() : super();
-  factory Identity_Entity() => create();
-  factory Identity_Entity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Identity_Entity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Identity_Entity clone() => Identity_Entity()..mergeFromMessage(this);
-  Identity_Entity copyWith(void Function(Identity_Entity) updates) => super.copyWith((message) => updates(message as Identity_Entity));
+  IdentitiesStore._() : super();
+  factory IdentitiesStore() => create();
+  factory IdentitiesStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory IdentitiesStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  IdentitiesStore clone() => IdentitiesStore()..mergeFromMessage(this);
+  IdentitiesStore copyWith(void Function(IdentitiesStore) updates) => super.copyWith((message) => updates(message as IdentitiesStore));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Identity_Entity create() => Identity_Entity._();
-  Identity_Entity createEmptyInstance() => create();
-  static $pb.PbList<Identity_Entity> createRepeated() => $pb.PbList<Identity_Entity>();
-  static Identity_Entity getDefault() => _defaultInstance ??= create()..freeze();
-  static Identity_Entity _defaultInstance;
+  static IdentitiesStore create() => IdentitiesStore._();
+  IdentitiesStore createEmptyInstance() => create();
+  static $pb.PbList<IdentitiesStore> createRepeated() => $pb.PbList<IdentitiesStore>();
+  static IdentitiesStore getDefault() => _defaultInstance ??= create()..freeze();
+  static IdentitiesStore _defaultInstance;
 
-  $core.String get entityId => $_getS(0, '');
-  set entityId($core.String v) { $_setString(0, v); }
-  $core.bool hasEntityId() => $_has(0);
-  void clearEntityId() => clearField(1);
-
-  $core.String get resolverAddress => $_getS(1, '');
-  set resolverAddress($core.String v) { $_setString(1, v); }
-  $core.bool hasResolverAddress() => $_has(1);
-  void clearResolverAddress() => clearField(2);
-
-  $core.String get networkId => $_getS(2, '');
-  set networkId($core.String v) { $_setString(2, v); }
-  $core.bool hasNetworkId() => $_has(2);
-  void clearNetworkId() => clearField(3);
-
-  $core.List<$core.String> get entryPoints => $_getList(3);
+  $core.List<Identity> get identities => $_getList(0);
 }
 
 class Identity_Claim extends $pb.GeneratedMessage {
@@ -57,6 +40,7 @@ class Identity_Claim extends $pb.GeneratedMessage {
     ..aOS(1, 'index')
     ..aOS(2, 'proof')
     ..aOS(3, 'data')
+    ..pPS(4, 'tags')
     ..hasRequiredFields = false
   ;
 
@@ -88,6 +72,8 @@ class Identity_Claim extends $pb.GeneratedMessage {
   set data($core.String v) { $_setString(2, v); }
   $core.bool hasData() => $_has(2);
   void clearData() => clearField(3);
+
+  $core.List<$core.String> get tags => $_getList(3);
 }
 
 class Identity extends $pb.GeneratedMessage {
@@ -95,8 +81,10 @@ class Identity extends $pb.GeneratedMessage {
     ..aOS(1, 'name')
     ..aOS(2, 'identityId')
     ..pc<$0.Key>(3, 'keys', $pb.PbFieldType.PM,$0.Key.create)
-    ..pc<Identity_Entity>(4, 'subscriptions', $pb.PbFieldType.PM,Identity_Entity.create)
-    ..pc<Identity_Claim>(5, 'claims', $pb.PbFieldType.PM,Identity_Claim.create)
+    ..pc<$1.Entity_Reference>(4, 'subscriptions', $pb.PbFieldType.PM,$1.Entity_Reference.create)
+    ..pc<Identity_Claim>(5, 'receivedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
+    ..pc<Identity_Claim>(6, 'emittedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
+    ..m<$core.String, $core.String>(100, 'meta', 'Identity.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -126,31 +114,12 @@ class Identity extends $pb.GeneratedMessage {
 
   $core.List<$0.Key> get keys => $_getList(2);
 
-  $core.List<Identity_Entity> get subscriptions => $_getList(3);
+  $core.List<$1.Entity_Reference> get subscriptions => $_getList(3);
 
-  $core.List<Identity_Claim> get claims => $_getList(4);
-}
+  $core.List<Identity_Claim> get receivedClaims => $_getList(4);
 
-class IdentitiesStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('IdentitiesStore', package: const $pb.PackageName('dvote'))
-    ..pc<Identity>(1, 'identities', $pb.PbFieldType.PM,Identity.create)
-    ..hasRequiredFields = false
-  ;
+  $core.List<Identity_Claim> get emittedClaims => $_getList(5);
 
-  IdentitiesStore._() : super();
-  factory IdentitiesStore() => create();
-  factory IdentitiesStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory IdentitiesStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  IdentitiesStore clone() => IdentitiesStore()..mergeFromMessage(this);
-  IdentitiesStore copyWith(void Function(IdentitiesStore) updates) => super.copyWith((message) => updates(message as IdentitiesStore));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static IdentitiesStore create() => IdentitiesStore._();
-  IdentitiesStore createEmptyInstance() => create();
-  static $pb.PbList<IdentitiesStore> createRepeated() => $pb.PbList<IdentitiesStore>();
-  static IdentitiesStore getDefault() => _defaultInstance ??= create()..freeze();
-  static IdentitiesStore _defaultInstance;
-
-  $core.List<Identity> get identities => $_getList(0);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(6);
 }
 

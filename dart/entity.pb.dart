@@ -9,6 +9,70 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class EntitiesStore extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntitiesStore', package: const $pb.PackageName('dvote'))
+    ..pc<Entity>(1, 'entities', $pb.PbFieldType.PM,Entity.create)
+    ..hasRequiredFields = false
+  ;
+
+  EntitiesStore._() : super();
+  factory EntitiesStore() => create();
+  factory EntitiesStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EntitiesStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  EntitiesStore clone() => EntitiesStore()..mergeFromMessage(this);
+  EntitiesStore copyWith(void Function(EntitiesStore) updates) => super.copyWith((message) => updates(message as EntitiesStore));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EntitiesStore create() => EntitiesStore._();
+  EntitiesStore createEmptyInstance() => create();
+  static $pb.PbList<EntitiesStore> createRepeated() => $pb.PbList<EntitiesStore>();
+  static EntitiesStore getDefault() => _defaultInstance ??= create()..freeze();
+  static EntitiesStore _defaultInstance;
+
+  $core.List<Entity> get entities => $_getList(0);
+}
+
+class Entity_Reference extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.Reference', package: const $pb.PackageName('dvote'))
+    ..aOS(1, 'entityId')
+    ..aOS(2, 'resolverAddress')
+    ..aOS(3, 'networkId')
+    ..pc<Gateway>(4, 'entryPoints', $pb.PbFieldType.PM,Gateway.create)
+    ..hasRequiredFields = false
+  ;
+
+  Entity_Reference._() : super();
+  factory Entity_Reference() => create();
+  factory Entity_Reference.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Entity_Reference.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Entity_Reference clone() => Entity_Reference()..mergeFromMessage(this);
+  Entity_Reference copyWith(void Function(Entity_Reference) updates) => super.copyWith((message) => updates(message as Entity_Reference));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Entity_Reference create() => Entity_Reference._();
+  Entity_Reference createEmptyInstance() => create();
+  static $pb.PbList<Entity_Reference> createRepeated() => $pb.PbList<Entity_Reference>();
+  static Entity_Reference getDefault() => _defaultInstance ??= create()..freeze();
+  static Entity_Reference _defaultInstance;
+
+  $core.String get entityId => $_getS(0, '');
+  set entityId($core.String v) { $_setString(0, v); }
+  $core.bool hasEntityId() => $_has(0);
+  void clearEntityId() => clearField(1);
+
+  $core.String get resolverAddress => $_getS(1, '');
+  set resolverAddress($core.String v) { $_setString(1, v); }
+  $core.bool hasResolverAddress() => $_has(1);
+  void clearResolverAddress() => clearField(2);
+
+  $core.String get networkId => $_getS(2, '');
+  set networkId($core.String v) { $_setString(2, v); }
+  $core.bool hasNetworkId() => $_has(2);
+  void clearNetworkId() => clearField(3);
+
+  $core.List<Gateway> get entryPoints => $_getList(3);
+}
+
 class Entity_VotesMap extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.VotesMap', package: const $pb.PackageName('dvote'))
     ..pPS(1, 'active')
@@ -262,21 +326,24 @@ class Entity_EntityReference extends $pb.GeneratedMessage {
 
 class Entity extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity', package: const $pb.PackageName('dvote'))
-    ..pPS(1, 'languages')
-    ..m<$core.String, $core.String>(2, 'name', 'Entity.NameEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..m<$core.String, $core.String>(3, 'description', 'Entity.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..aOS(4, 'votingContract')
-    ..a<Entity_VotesMap>(5, 'votingProcesses', $pb.PbFieldType.OM, Entity_VotesMap.getDefault, Entity_VotesMap.create)
-    ..m<$core.String, $core.String>(6, 'newsFeed', 'Entity.NewsFeedEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..aOS(7, 'avatar')
-    ..pc<Entity_Action>(8, 'actions', $pb.PbFieldType.PM,Entity_Action.create)
-    ..pc<Entity_GatewayBootNode>(9, 'gatewayBootNodes', $pb.PbFieldType.PM,Entity_GatewayBootNode.create)
-    ..a<Entity_GatewyUpdate>(10, 'gatewayUpdate', $pb.PbFieldType.OM, Entity_GatewyUpdate.getDefault, Entity_GatewyUpdate.create)
-    ..pc<Entity_Relay>(11, 'relays', $pb.PbFieldType.PM,Entity_Relay.create)
-    ..pc<Entity_EntityReference>(12, 'bootEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
-    ..pc<Entity_EntityReference>(13, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
-    ..pc<Entity_EntityReference>(14, 'trustedEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
-    ..pc<Entity_EntityReference>(15, 'censusServiceManagedEntitie', $pb.PbFieldType.PM,Entity_EntityReference.create)
+    ..aOS(1, 'version')
+    ..a<Entity_Reference>(2, 'reference', $pb.PbFieldType.OM, Entity_Reference.getDefault, Entity_Reference.create)
+    ..pPS(3, 'languages')
+    ..m<$core.String, $core.String>(4, 'name', 'Entity.NameEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..m<$core.String, $core.String>(5, 'description', 'Entity.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..aOS(6, 'votingContract')
+    ..a<Entity_VotesMap>(7, 'votingProcesses', $pb.PbFieldType.OM, Entity_VotesMap.getDefault, Entity_VotesMap.create)
+    ..m<$core.String, $core.String>(8, 'newsFeed', 'Entity.NewsFeedEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..aOS(9, 'avatar')
+    ..pc<Entity_Action>(10, 'actions', $pb.PbFieldType.PM,Entity_Action.create)
+    ..pc<Entity_GatewayBootNode>(11, 'gatewayBootNodes', $pb.PbFieldType.PM,Entity_GatewayBootNode.create)
+    ..a<Entity_GatewyUpdate>(12, 'gatewayUpdate', $pb.PbFieldType.OM, Entity_GatewyUpdate.getDefault, Entity_GatewyUpdate.create)
+    ..pc<Entity_Relay>(13, 'relays', $pb.PbFieldType.PM,Entity_Relay.create)
+    ..pc<Entity_EntityReference>(14, 'bootEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
+    ..pc<Entity_EntityReference>(15, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
+    ..pc<Entity_EntityReference>(16, 'trustedEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
+    ..pc<Entity_EntityReference>(17, 'censusServiceManagedEntitie', $pb.PbFieldType.PM,Entity_EntityReference.create)
+    ..m<$core.String, $core.String>(100, 'meta', 'Entity.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -294,69 +361,96 @@ class Entity extends $pb.GeneratedMessage {
   static Entity getDefault() => _defaultInstance ??= create()..freeze();
   static Entity _defaultInstance;
 
-  $core.List<$core.String> get languages => $_getList(0);
+  $core.String get version => $_getS(0, '');
+  set version($core.String v) { $_setString(0, v); }
+  $core.bool hasVersion() => $_has(0);
+  void clearVersion() => clearField(1);
 
-  $core.Map<$core.String, $core.String> get name => $_getMap(1);
+  Entity_Reference get reference => $_getN(1);
+  set reference(Entity_Reference v) { setField(2, v); }
+  $core.bool hasReference() => $_has(1);
+  void clearReference() => clearField(2);
 
-  $core.Map<$core.String, $core.String> get description => $_getMap(2);
+  $core.List<$core.String> get languages => $_getList(2);
 
-  $core.String get votingContract => $_getS(3, '');
-  set votingContract($core.String v) { $_setString(3, v); }
-  $core.bool hasVotingContract() => $_has(3);
-  void clearVotingContract() => clearField(4);
+  $core.Map<$core.String, $core.String> get name => $_getMap(3);
 
-  Entity_VotesMap get votingProcesses => $_getN(4);
-  set votingProcesses(Entity_VotesMap v) { setField(5, v); }
-  $core.bool hasVotingProcesses() => $_has(4);
-  void clearVotingProcesses() => clearField(5);
+  $core.Map<$core.String, $core.String> get description => $_getMap(4);
 
-  $core.Map<$core.String, $core.String> get newsFeed => $_getMap(5);
+  $core.String get votingContract => $_getS(5, '');
+  set votingContract($core.String v) { $_setString(5, v); }
+  $core.bool hasVotingContract() => $_has(5);
+  void clearVotingContract() => clearField(6);
 
-  $core.String get avatar => $_getS(6, '');
-  set avatar($core.String v) { $_setString(6, v); }
-  $core.bool hasAvatar() => $_has(6);
-  void clearAvatar() => clearField(7);
+  Entity_VotesMap get votingProcesses => $_getN(6);
+  set votingProcesses(Entity_VotesMap v) { setField(7, v); }
+  $core.bool hasVotingProcesses() => $_has(6);
+  void clearVotingProcesses() => clearField(7);
 
-  $core.List<Entity_Action> get actions => $_getList(7);
+  $core.Map<$core.String, $core.String> get newsFeed => $_getMap(7);
 
-  $core.List<Entity_GatewayBootNode> get gatewayBootNodes => $_getList(8);
+  $core.String get avatar => $_getS(8, '');
+  set avatar($core.String v) { $_setString(8, v); }
+  $core.bool hasAvatar() => $_has(8);
+  void clearAvatar() => clearField(9);
 
-  Entity_GatewyUpdate get gatewayUpdate => $_getN(9);
-  set gatewayUpdate(Entity_GatewyUpdate v) { setField(10, v); }
-  $core.bool hasGatewayUpdate() => $_has(9);
-  void clearGatewayUpdate() => clearField(10);
+  $core.List<Entity_Action> get actions => $_getList(9);
 
-  $core.List<Entity_Relay> get relays => $_getList(10);
+  $core.List<Entity_GatewayBootNode> get gatewayBootNodes => $_getList(10);
 
-  $core.List<Entity_EntityReference> get bootEntities => $_getList(11);
+  Entity_GatewyUpdate get gatewayUpdate => $_getN(11);
+  set gatewayUpdate(Entity_GatewyUpdate v) { setField(12, v); }
+  $core.bool hasGatewayUpdate() => $_has(11);
+  void clearGatewayUpdate() => clearField(12);
 
-  $core.List<Entity_EntityReference> get fallbackBootNodeEntities => $_getList(12);
+  $core.List<Entity_Relay> get relays => $_getList(12);
 
-  $core.List<Entity_EntityReference> get trustedEntities => $_getList(13);
+  $core.List<Entity_EntityReference> get bootEntities => $_getList(13);
 
-  $core.List<Entity_EntityReference> get censusServiceManagedEntitie => $_getList(14);
+  $core.List<Entity_EntityReference> get fallbackBootNodeEntities => $_getList(14);
+
+  $core.List<Entity_EntityReference> get trustedEntities => $_getList(15);
+
+  $core.List<Entity_EntityReference> get censusServiceManagedEntitie => $_getList(16);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(17);
 }
 
-class EntitiesStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntitiesStore', package: const $pb.PackageName('dvote'))
-    ..pc<Entity>(1, 'entities', $pb.PbFieldType.PM,Entity.create)
+class Gateway extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Gateway', package: const $pb.PackageName('dvote'))
+    ..aOS(1, 'dvote')
+    ..aOS(2, 'web3')
+    ..aOS(3, 'publicKey')
     ..hasRequiredFields = false
   ;
 
-  EntitiesStore._() : super();
-  factory EntitiesStore() => create();
-  factory EntitiesStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory EntitiesStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  EntitiesStore clone() => EntitiesStore()..mergeFromMessage(this);
-  EntitiesStore copyWith(void Function(EntitiesStore) updates) => super.copyWith((message) => updates(message as EntitiesStore));
+  Gateway._() : super();
+  factory Gateway() => create();
+  factory Gateway.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Gateway.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Gateway clone() => Gateway()..mergeFromMessage(this);
+  Gateway copyWith(void Function(Gateway) updates) => super.copyWith((message) => updates(message as Gateway));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static EntitiesStore create() => EntitiesStore._();
-  EntitiesStore createEmptyInstance() => create();
-  static $pb.PbList<EntitiesStore> createRepeated() => $pb.PbList<EntitiesStore>();
-  static EntitiesStore getDefault() => _defaultInstance ??= create()..freeze();
-  static EntitiesStore _defaultInstance;
+  static Gateway create() => Gateway._();
+  Gateway createEmptyInstance() => create();
+  static $pb.PbList<Gateway> createRepeated() => $pb.PbList<Gateway>();
+  static Gateway getDefault() => _defaultInstance ??= create()..freeze();
+  static Gateway _defaultInstance;
 
-  $core.List<Entity> get entities => $_getList(0);
+  $core.String get dvote => $_getS(0, '');
+  set dvote($core.String v) { $_setString(0, v); }
+  $core.bool hasDvote() => $_has(0);
+  void clearDvote() => clearField(1);
+
+  $core.String get web3 => $_getS(1, '');
+  set web3($core.String v) { $_setString(1, v); }
+  $core.bool hasWeb3() => $_has(1);
+  void clearWeb3() => clearField(2);
+
+  $core.String get publicKey => $_getS(2, '');
+  set publicKey($core.String v) { $_setString(2, v); }
+  $core.bool hasPublicKey() => $_has(2);
+  void clearPublicKey() => clearField(3);
 }
 
