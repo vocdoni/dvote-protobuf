@@ -1,0 +1,73 @@
+syntax = "proto3";
+package dvote;
+
+message Entity {
+    repeated string languages = 1;
+    map<string, string> name = 2;  // locale-aware value
+    map<string, string> description = 3;  // locale-aware value
+    string votingContract = 4;
+
+    message VotesMap {
+        repeated string active = 1;
+        repeated string ended = 2;
+    }
+    VotesMap votingProcesses = 5;
+
+    map<string, string> newsFeed = 6;  // locale-aware value
+    string avatar = 7;
+
+    // See entity actions definition
+    // https://vocdoni.io/docs/#/architecture/components/entity?id=entity-actions
+    message Action {
+        string type = 1;
+        map<string, string> name = 2;  // locale-aware value
+        string visible = 3; // URL or "true"
+
+        // type = browser / image
+        string url = 4;
+
+        // type = image
+        message ImageSource {
+            string type = 1;
+            string name = 2;
+            string orientation = 3;
+            string overlay = 4;
+            map<string, string> caption = 5;  // locale-aware value
+        }
+        repeated ImageSource imageSources = 5;
+    }
+    repeated Action actions = 8;
+
+    message GatewayBootNode {
+        string heartbeatMessagingUri = 1;
+        string fetchUri = 2;
+    }
+    repeated GatewayBootNode gatewayBootNodes = 9;
+
+    message GatewyUpdate {
+        int32 timeout = 1;
+        string topic = 2;
+        string difficulty = 3;
+    }
+    GatewyUpdate gatewayUpdate = 10;
+
+    message Relay {
+        string publicKey = 1;
+        string messagingUri = 2;
+    }
+    repeated Relay relays = 11;
+
+    message EntityReference {
+        string resolverAddress = 1;
+        string entityId = 2;
+    }
+    repeated EntityReference bootEntities = 12;
+    repeated EntityReference fallbackBootNodeEntities = 13;
+    repeated EntityReference trustedEntities = 14;
+    repeated EntityReference censusServiceManagedEntitie = 15;
+}
+
+// Data structure to serialize and store
+message EntitiesStore {
+    repeated Entity entities = 1;
+}

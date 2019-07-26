@@ -1,0 +1,35 @@
+syntax = "proto3";
+package dvote;
+
+import "key.proto";
+
+message Identity {
+    string name = 1; // alias
+    string identityId = 2;
+
+    // Associated keys
+    repeated Key keys = 3;
+
+    // This structure points to the place where the Entity
+    // can be fetched
+    // The full data structure is defined in entity.proto
+    message Entity {
+        string entityId = 1;  // 0x...
+        string resolverAddress = 2;  // 0x...
+        string networkId = 3;  // homestead, goerli, ...
+        repeated string entryPoints = 4;  // Gateway URI's
+    }
+    repeated Entity subscriptions = 4;
+
+    message Claim {
+        string index = 1;
+        string proof = 2;
+        string data = 3;
+    }
+    repeated Claim claims = 5;
+}
+
+// Data structure to serialize and store
+message IdentitiesStore {
+    repeated Identity identities = 1; 
+}
