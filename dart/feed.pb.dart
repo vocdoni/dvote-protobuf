@@ -9,26 +9,123 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Post_Author extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Post.Author', package: const $pb.PackageName('dvote'))
+class FeedStore extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedStore', package: const $pb.PackageName('dvote'))
+    ..pc<Feed>(1, 'feeds', $pb.PbFieldType.PM,Feed.create)
+    ..hasRequiredFields = false
+  ;
+
+  FeedStore._() : super();
+  factory FeedStore() => create();
+  factory FeedStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FeedStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FeedStore clone() => FeedStore()..mergeFromMessage(this);
+  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FeedStore create() => FeedStore._();
+  FeedStore createEmptyInstance() => create();
+  static $pb.PbList<FeedStore> createRepeated() => $pb.PbList<FeedStore>();
+  static FeedStore getDefault() => _defaultInstance ??= create()..freeze();
+  static FeedStore _defaultInstance;
+
+  $core.List<Feed> get feeds => $_getList(0);
+}
+
+class Feed extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Feed', package: const $pb.PackageName('dvote'))
+    ..aOS(1, 'version')
+    ..aOS(2, 'title')
+    ..aOS(3, 'homePageUrl')
+    ..aOS(4, 'description')
+    ..aOS(5, 'feedUrl')
+    ..aOS(6, 'icon')
+    ..aOS(7, 'favicon')
+    ..aOB(8, 'expired')
+    ..pc<FeedPost>(9, 'items', $pb.PbFieldType.PM,FeedPost.create)
+    ..m<$core.String, $core.String>(100, 'meta', 'Feed.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..hasRequiredFields = false
+  ;
+
+  Feed._() : super();
+  factory Feed() => create();
+  factory Feed.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Feed.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Feed clone() => Feed()..mergeFromMessage(this);
+  Feed copyWith(void Function(Feed) updates) => super.copyWith((message) => updates(message as Feed));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Feed create() => Feed._();
+  Feed createEmptyInstance() => create();
+  static $pb.PbList<Feed> createRepeated() => $pb.PbList<Feed>();
+  static Feed getDefault() => _defaultInstance ??= create()..freeze();
+  static Feed _defaultInstance;
+
+  $core.String get version => $_getS(0, '');
+  set version($core.String v) { $_setString(0, v); }
+  $core.bool hasVersion() => $_has(0);
+  void clearVersion() => clearField(1);
+
+  $core.String get title => $_getS(1, '');
+  set title($core.String v) { $_setString(1, v); }
+  $core.bool hasTitle() => $_has(1);
+  void clearTitle() => clearField(2);
+
+  $core.String get homePageUrl => $_getS(2, '');
+  set homePageUrl($core.String v) { $_setString(2, v); }
+  $core.bool hasHomePageUrl() => $_has(2);
+  void clearHomePageUrl() => clearField(3);
+
+  $core.String get description => $_getS(3, '');
+  set description($core.String v) { $_setString(3, v); }
+  $core.bool hasDescription() => $_has(3);
+  void clearDescription() => clearField(4);
+
+  $core.String get feedUrl => $_getS(4, '');
+  set feedUrl($core.String v) { $_setString(4, v); }
+  $core.bool hasFeedUrl() => $_has(4);
+  void clearFeedUrl() => clearField(5);
+
+  $core.String get icon => $_getS(5, '');
+  set icon($core.String v) { $_setString(5, v); }
+  $core.bool hasIcon() => $_has(5);
+  void clearIcon() => clearField(6);
+
+  $core.String get favicon => $_getS(6, '');
+  set favicon($core.String v) { $_setString(6, v); }
+  $core.bool hasFavicon() => $_has(6);
+  void clearFavicon() => clearField(7);
+
+  $core.bool get expired => $_get(7, false);
+  set expired($core.bool v) { $_setBool(7, v); }
+  $core.bool hasExpired() => $_has(7);
+  void clearExpired() => clearField(8);
+
+  $core.List<FeedPost> get items => $_getList(8);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(9);
+}
+
+class FeedPost_Author extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedPost.Author', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'name')
     ..aOS(2, 'url')
     ..hasRequiredFields = false
   ;
 
-  Post_Author._() : super();
-  factory Post_Author() => create();
-  factory Post_Author.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Post_Author.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Post_Author clone() => Post_Author()..mergeFromMessage(this);
-  Post_Author copyWith(void Function(Post_Author) updates) => super.copyWith((message) => updates(message as Post_Author));
+  FeedPost_Author._() : super();
+  factory FeedPost_Author() => create();
+  factory FeedPost_Author.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FeedPost_Author.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FeedPost_Author clone() => FeedPost_Author()..mergeFromMessage(this);
+  FeedPost_Author copyWith(void Function(FeedPost_Author) updates) => super.copyWith((message) => updates(message as FeedPost_Author));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Post_Author create() => Post_Author._();
-  Post_Author createEmptyInstance() => create();
-  static $pb.PbList<Post_Author> createRepeated() => $pb.PbList<Post_Author>();
-  static Post_Author getDefault() => _defaultInstance ??= create()..freeze();
-  static Post_Author _defaultInstance;
+  static FeedPost_Author create() => FeedPost_Author._();
+  FeedPost_Author createEmptyInstance() => create();
+  static $pb.PbList<FeedPost_Author> createRepeated() => $pb.PbList<FeedPost_Author>();
+  static FeedPost_Author getDefault() => _defaultInstance ??= create()..freeze();
+  static FeedPost_Author _defaultInstance;
 
   $core.String get name => $_getS(0, '');
   set name($core.String v) { $_setString(0, v); }
@@ -41,8 +138,8 @@ class Post_Author extends $pb.GeneratedMessage {
   void clearUrl() => clearField(2);
 }
 
-class Post extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Post', package: const $pb.PackageName('dvote'))
+class FeedPost extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedPost', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'id')
     ..aOS(2, 'guid')
     ..aOS(3, 'title')
@@ -54,23 +151,23 @@ class Post extends $pb.GeneratedMessage {
     ..pPS(9, 'tags')
     ..aOS(10, 'datePublished')
     ..aOS(11, 'dateModified')
-    ..a<Post_Author>(12, 'author', $pb.PbFieldType.OM, Post_Author.getDefault, Post_Author.create)
+    ..a<FeedPost_Author>(12, 'author', $pb.PbFieldType.OM, FeedPost_Author.getDefault, FeedPost_Author.create)
     ..hasRequiredFields = false
   ;
 
-  Post._() : super();
-  factory Post() => create();
-  factory Post.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Post.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Post clone() => Post()..mergeFromMessage(this);
-  Post copyWith(void Function(Post) updates) => super.copyWith((message) => updates(message as Post));
+  FeedPost._() : super();
+  factory FeedPost() => create();
+  factory FeedPost.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FeedPost.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FeedPost clone() => FeedPost()..mergeFromMessage(this);
+  FeedPost copyWith(void Function(FeedPost) updates) => super.copyWith((message) => updates(message as FeedPost));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Post create() => Post._();
-  Post createEmptyInstance() => create();
-  static $pb.PbList<Post> createRepeated() => $pb.PbList<Post>();
-  static Post getDefault() => _defaultInstance ??= create()..freeze();
-  static Post _defaultInstance;
+  static FeedPost create() => FeedPost._();
+  FeedPost createEmptyInstance() => create();
+  static $pb.PbList<FeedPost> createRepeated() => $pb.PbList<FeedPost>();
+  static FeedPost getDefault() => _defaultInstance ??= create()..freeze();
+  static FeedPost _defaultInstance;
 
   $core.String get id => $_getS(0, '');
   set id($core.String v) { $_setString(0, v); }
@@ -124,109 +221,9 @@ class Post extends $pb.GeneratedMessage {
   $core.bool hasDateModified() => $_has(10);
   void clearDateModified() => clearField(11);
 
-  Post_Author get author => $_getN(11);
-  set author(Post_Author v) { setField(12, v); }
+  FeedPost_Author get author => $_getN(11);
+  set author(FeedPost_Author v) { setField(12, v); }
   $core.bool hasAuthor() => $_has(11);
   void clearAuthor() => clearField(12);
-}
-
-class Feed extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Feed', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'id')
-    ..aOS(2, 'version')
-    ..aOS(3, 'title')
-    ..aOS(4, 'homePageUrl')
-    ..aOS(5, 'description')
-    ..aOS(6, 'feedUrl')
-    ..aOS(7, 'icon')
-    ..aOS(8, 'favicon')
-    ..aOB(9, 'expired')
-    ..pc<Post>(10, 'items', $pb.PbFieldType.PM,Post.create)
-    ..hasRequiredFields = false
-  ;
-
-  Feed._() : super();
-  factory Feed() => create();
-  factory Feed.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Feed.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Feed clone() => Feed()..mergeFromMessage(this);
-  Feed copyWith(void Function(Feed) updates) => super.copyWith((message) => updates(message as Feed));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static Feed create() => Feed._();
-  Feed createEmptyInstance() => create();
-  static $pb.PbList<Feed> createRepeated() => $pb.PbList<Feed>();
-  static Feed getDefault() => _defaultInstance ??= create()..freeze();
-  static Feed _defaultInstance;
-
-  $core.String get id => $_getS(0, '');
-  set id($core.String v) { $_setString(0, v); }
-  $core.bool hasId() => $_has(0);
-  void clearId() => clearField(1);
-
-  $core.String get version => $_getS(1, '');
-  set version($core.String v) { $_setString(1, v); }
-  $core.bool hasVersion() => $_has(1);
-  void clearVersion() => clearField(2);
-
-  $core.String get title => $_getS(2, '');
-  set title($core.String v) { $_setString(2, v); }
-  $core.bool hasTitle() => $_has(2);
-  void clearTitle() => clearField(3);
-
-  $core.String get homePageUrl => $_getS(3, '');
-  set homePageUrl($core.String v) { $_setString(3, v); }
-  $core.bool hasHomePageUrl() => $_has(3);
-  void clearHomePageUrl() => clearField(4);
-
-  $core.String get description => $_getS(4, '');
-  set description($core.String v) { $_setString(4, v); }
-  $core.bool hasDescription() => $_has(4);
-  void clearDescription() => clearField(5);
-
-  $core.String get feedUrl => $_getS(5, '');
-  set feedUrl($core.String v) { $_setString(5, v); }
-  $core.bool hasFeedUrl() => $_has(5);
-  void clearFeedUrl() => clearField(6);
-
-  $core.String get icon => $_getS(6, '');
-  set icon($core.String v) { $_setString(6, v); }
-  $core.bool hasIcon() => $_has(6);
-  void clearIcon() => clearField(7);
-
-  $core.String get favicon => $_getS(7, '');
-  set favicon($core.String v) { $_setString(7, v); }
-  $core.bool hasFavicon() => $_has(7);
-  void clearFavicon() => clearField(8);
-
-  $core.bool get expired => $_get(8, false);
-  set expired($core.bool v) { $_setBool(8, v); }
-  $core.bool hasExpired() => $_has(8);
-  void clearExpired() => clearField(9);
-
-  $core.List<Post> get items => $_getList(9);
-}
-
-class FeedStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedStore', package: const $pb.PackageName('dvote'))
-    ..pc<Feed>(1, 'feeds', $pb.PbFieldType.PM,Feed.create)
-    ..hasRequiredFields = false
-  ;
-
-  FeedStore._() : super();
-  factory FeedStore() => create();
-  factory FeedStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FeedStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  FeedStore clone() => FeedStore()..mergeFromMessage(this);
-  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static FeedStore create() => FeedStore._();
-  FeedStore createEmptyInstance() => create();
-  static $pb.PbList<FeedStore> createRepeated() => $pb.PbList<FeedStore>();
-  static FeedStore getDefault() => _defaultInstance ??= create()..freeze();
-  static FeedStore _defaultInstance;
-
-  $core.List<Feed> get feeds => $_getList(0);
 }
 

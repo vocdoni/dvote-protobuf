@@ -10,4 +10,9 @@ message Key {
     KeyType type = 1;
     string publicKey = 2;
     string encryptedPrivateKey = 3;
+
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // keys can be organized by custom values.
+    map<string, string> meta = 100;
 }

@@ -11,8 +11,19 @@ const Key$json = const {
     const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.Key.KeyType', '10': 'type'},
     const {'1': 'publicKey', '3': 2, '4': 1, '5': 9, '10': 'publicKey'},
     const {'1': 'encryptedPrivateKey', '3': 3, '4': 1, '5': 9, '10': 'encryptedPrivateKey'},
+    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Key.MetaEntry', '10': 'meta'},
   ],
+  '3': const [Key_MetaEntry$json],
   '4': const [Key_KeyType$json],
+};
+
+const Key_MetaEntry$json = const {
+  '1': 'MetaEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': const {'7': true},
 };
 
 const Key_KeyType$json = const {
