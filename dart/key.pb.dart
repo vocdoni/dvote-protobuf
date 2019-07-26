@@ -15,7 +15,7 @@ export 'key.pbenum.dart';
 
 class Key extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Key', package: const $pb.PackageName('dvote'))
-    ..e<Key_KeyType>(1, 'type', $pb.PbFieldType.OE, Key_KeyType.SECP256K1, Key_KeyType.valueOf, Key_KeyType.values)
+    ..e<Key_Type>(1, 'type', $pb.PbFieldType.OE, Key_Type.SECP256K1, Key_Type.valueOf, Key_Type.values)
     ..aOS(2, 'publicKey')
     ..aOS(3, 'encryptedPrivateKey')
     ..m<$core.String, $core.String>(100, 'meta', 'Key.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
@@ -36,8 +36,8 @@ class Key extends $pb.GeneratedMessage {
   static Key getDefault() => _defaultInstance ??= create()..freeze();
   static Key _defaultInstance;
 
-  Key_KeyType get type => $_getN(0);
-  set type(Key_KeyType v) { setField(1, v); }
+  Key_Type get type => $_getN(0);
+  set type(Key_Type v) { setField(1, v); }
   $core.bool hasType() => $_has(0);
   void clearType() => clearField(1);
 
