@@ -21,7 +21,7 @@ const Entity$json = const {
     const {'1': 'name', '3': 4, '4': 3, '5': 11, '6': '.dvote.Entity.NameEntry', '10': 'name'},
     const {'1': 'description', '3': 5, '4': 3, '5': 11, '6': '.dvote.Entity.DescriptionEntry', '10': 'description'},
     const {'1': 'votingContract', '3': 6, '4': 1, '5': 9, '10': 'votingContract'},
-    const {'1': 'votingProcesses', '3': 7, '4': 1, '5': 11, '6': '.dvote.Entity.VotesMap', '10': 'votingProcesses'},
+    const {'1': 'votingProcesses', '3': 7, '4': 1, '5': 11, '6': '.dvote.Entity.VotingProcesses', '10': 'votingProcesses'},
     const {'1': 'newsFeed', '3': 8, '4': 3, '5': 11, '6': '.dvote.Entity.NewsFeedEntry', '10': 'newsFeed'},
     const {'1': 'avatar', '3': 9, '4': 1, '5': 9, '10': 'avatar'},
     const {'1': 'actions', '3': 10, '4': 3, '5': 11, '6': '.dvote.Entity.Action', '10': 'actions'},
@@ -34,7 +34,7 @@ const Entity$json = const {
     const {'1': 'censusServiceManagedEntitie', '3': 17, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntitie'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Entity.MetaEntry', '10': 'meta'},
   ],
-  '3': const [Entity_Reference$json, Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_VotesMap$json, Entity_NewsFeedEntry$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
+  '3': const [Entity_Reference$json, Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_VotingProcesses$json, Entity_NewsFeedEntry$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
 };
 
 const Entity_Reference$json = const {
@@ -65,8 +65,8 @@ const Entity_DescriptionEntry$json = const {
   '7': const {'7': true},
 };
 
-const Entity_VotesMap$json = const {
-  '1': 'VotesMap',
+const Entity_VotingProcesses$json = const {
+  '1': 'VotingProcesses',
   '2': const [
     const {'1': 'active', '3': 1, '4': 3, '5': 9, '10': 'active'},
     const {'1': 'ended', '3': 2, '4': 3, '5': 9, '10': 'ended'},
@@ -164,14 +164,5 @@ const Entity_MetaEntry$json = const {
     const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
   '7': const {'7': true},
-};
-
-const Gateway$json = const {
-  '1': 'Gateway',
-  '2': const [
-    const {'1': 'dvote', '3': 1, '4': 1, '5': 9, '10': 'dvote'},
-    const {'1': 'web3', '3': 2, '4': 1, '5': 9, '10': 'web3'},
-    const {'1': 'publicKey', '3': 3, '4': 1, '5': 9, '10': 'publicKey'},
-  ],
 };
 

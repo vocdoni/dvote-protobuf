@@ -1,0 +1,13 @@
+syntax = "proto3";
+package dvote;
+
+// Helper to serialize and store all cached data
+message GatewaysStore {
+    repeated Gateway bootnodes = 1;
+}
+
+message Gateway {
+    string dvote = 1;
+    string web3 = 2;
+    string publicKey = 3; // Secp256k1 public key
+}
