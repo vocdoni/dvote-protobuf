@@ -1,0 +1,13 @@
+syntax = "proto3";
+package dvote;
+
+message Key {
+    enum KeyType {
+        SECP256K1 = 0; // ETHEREUM
+        BABYJUB = 1;
+    }
+
+    KeyType type = 1;
+    string publicKey = 2;
+    string encryptedPrivateKey = 3;
+}

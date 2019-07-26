@@ -1,0 +1,53 @@
+///
+//  Generated code. Do not modify.
+//  source: key.proto
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+
+import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, override, pragma, String;
+
+import 'package:protobuf/protobuf.dart' as $pb;
+
+import 'key.pbenum.dart';
+
+export 'key.pbenum.dart';
+
+class Key extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Key', package: const $pb.PackageName('dvote'))
+    ..e<Key_KeyType>(1, 'type', $pb.PbFieldType.OE, Key_KeyType.SECP256K1, Key_KeyType.valueOf, Key_KeyType.values)
+    ..aOS(2, 'publicKey')
+    ..aOS(3, 'encryptedPrivateKey')
+    ..hasRequiredFields = false
+  ;
+
+  Key._() : super();
+  factory Key() => create();
+  factory Key.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Key.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Key clone() => Key()..mergeFromMessage(this);
+  Key copyWith(void Function(Key) updates) => super.copyWith((message) => updates(message as Key));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Key create() => Key._();
+  Key createEmptyInstance() => create();
+  static $pb.PbList<Key> createRepeated() => $pb.PbList<Key>();
+  static Key getDefault() => _defaultInstance ??= create()..freeze();
+  static Key _defaultInstance;
+
+  Key_KeyType get type => $_getN(0);
+  set type(Key_KeyType v) { setField(1, v); }
+  $core.bool hasType() => $_has(0);
+  void clearType() => clearField(1);
+
+  $core.String get publicKey => $_getS(1, '');
+  set publicKey($core.String v) { $_setString(1, v); }
+  $core.bool hasPublicKey() => $_has(1);
+  void clearPublicKey() => clearField(2);
+
+  $core.String get encryptedPrivateKey => $_getS(2, '');
+  set encryptedPrivateKey($core.String v) { $_setString(2, v); }
+  $core.bool hasEncryptedPrivateKey() => $_has(2);
+  void clearEncryptedPrivateKey() => clearField(3);
+}
+

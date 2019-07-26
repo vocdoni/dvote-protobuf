@@ -1,0 +1,48 @@
+syntax = "proto3";
+package dvote;
+
+// The following models implement the structure of a JSON Feed
+// https://jsonfeed.org/version/1
+
+message Post {
+    string id = 1;
+    string guid = 2;
+    string title = 3;
+    string summary = 4;
+    string content_text = 5;
+    string content_html = 6;
+    string url = 7;
+    string image = 8;
+    repeated string tags = 9;
+    string date_published = 10;
+    string date_modified = 11;
+
+    message Author {
+        string name = 1;
+        string url = 2;
+    }
+    Author author = 12;
+}
+
+message Feed {
+    // A unique ID assigned to this object, so that
+    // Entity objects can link to it
+    string id = 1;
+
+    // JSON Feed fields
+    string version = 2;
+    string title = 3;
+    string home_page_url = 4;
+    string description = 5;
+    string feed_url = 6;
+    string icon = 7;
+    string favicon = 8;
+    bool expired = 9;
+
+    repeated Post items = 10; 
+}
+
+// Data structure to serialize and store all cached posts from all entities
+message FeedStore {
+    repeated Feed feeds = 1;
+}
