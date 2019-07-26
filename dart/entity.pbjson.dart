@@ -16,14 +16,14 @@ const Entity$json = const {
   '1': 'Entity',
   '2': const [
     const {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
-    const {'1': 'reference', '3': 2, '4': 1, '5': 11, '6': '.dvote.Entity.Reference', '10': 'reference'},
+    const {'1': 'entityId', '3': 2, '4': 1, '5': 9, '10': 'entityId'},
     const {'1': 'languages', '3': 3, '4': 3, '5': 9, '10': 'languages'},
     const {'1': 'name', '3': 4, '4': 3, '5': 11, '6': '.dvote.Entity.NameEntry', '10': 'name'},
     const {'1': 'description', '3': 5, '4': 3, '5': 11, '6': '.dvote.Entity.DescriptionEntry', '10': 'description'},
-    const {'1': 'votingContract', '3': 6, '4': 1, '5': 9, '10': 'votingContract'},
+    const {'1': 'contracts', '3': 6, '4': 1, '5': 11, '6': '.dvote.Entity.ContractsInfo', '10': 'contracts'},
     const {'1': 'votingProcesses', '3': 7, '4': 1, '5': 11, '6': '.dvote.Entity.VotingProcesses', '10': 'votingProcesses'},
     const {'1': 'newsFeed', '3': 8, '4': 3, '5': 11, '6': '.dvote.Entity.NewsFeedEntry', '10': 'newsFeed'},
-    const {'1': 'avatar', '3': 9, '4': 1, '5': 9, '10': 'avatar'},
+    const {'1': 'media', '3': 9, '4': 1, '5': 11, '6': '.dvote.Entity.Media', '10': 'media'},
     const {'1': 'actions', '3': 10, '4': 3, '5': 11, '6': '.dvote.Entity.Action', '10': 'actions'},
     const {'1': 'gatewayBootNodes', '3': 11, '4': 3, '5': 11, '6': '.dvote.Entity.GatewayBootNode', '10': 'gatewayBootNodes'},
     const {'1': 'gatewayUpdate', '3': 12, '4': 1, '5': 11, '6': '.dvote.Entity.GatewyUpdate', '10': 'gatewayUpdate'},
@@ -34,17 +34,7 @@ const Entity$json = const {
     const {'1': 'censusServiceManagedEntitie', '3': 17, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntitie'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Entity.MetaEntry', '10': 'meta'},
   ],
-  '3': const [Entity_Reference$json, Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_VotingProcesses$json, Entity_NewsFeedEntry$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
-};
-
-const Entity_Reference$json = const {
-  '1': 'Reference',
-  '2': const [
-    const {'1': 'entityId', '3': 1, '4': 1, '5': 9, '10': 'entityId'},
-    const {'1': 'resolverAddress', '3': 2, '4': 1, '5': 9, '10': 'resolverAddress'},
-    const {'1': 'networkId', '3': 3, '4': 1, '5': 9, '10': 'networkId'},
-    const {'1': 'entryPoints', '3': 4, '4': 3, '5': 11, '6': '.dvote.Gateway', '10': 'entryPoints'},
-  ],
+  '3': const [Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_ContractsInfo$json, Entity_VotingProcesses$json, Entity_NewsFeedEntry$json, Entity_Media$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
 };
 
 const Entity_NameEntry$json = const {
@@ -65,6 +55,15 @@ const Entity_DescriptionEntry$json = const {
   '7': const {'7': true},
 };
 
+const Entity_ContractsInfo$json = const {
+  '1': 'ContractsInfo',
+  '2': const [
+    const {'1': 'resolverAddress', '3': 1, '4': 1, '5': 9, '10': 'resolverAddress'},
+    const {'1': 'votingAddress', '3': 2, '4': 1, '5': 9, '10': 'votingAddress'},
+    const {'1': 'networkId', '3': 3, '4': 1, '5': 9, '10': 'networkId'},
+  ],
+};
+
 const Entity_VotingProcesses$json = const {
   '1': 'VotingProcesses',
   '2': const [
@@ -80,6 +79,14 @@ const Entity_NewsFeedEntry$json = const {
     const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
   '7': const {'7': true},
+};
+
+const Entity_Media$json = const {
+  '1': 'Media',
+  '2': const [
+    const {'1': 'avatar', '3': 1, '4': 1, '5': 9, '10': 'avatar'},
+    const {'1': 'header', '3': 2, '4': 1, '5': 9, '10': 'header'},
+  ],
 };
 
 const Entity_Action$json = const {
@@ -127,8 +134,8 @@ const Entity_Action_ImageSource_CaptionEntry$json = const {
 const Entity_GatewayBootNode$json = const {
   '1': 'GatewayBootNode',
   '2': const [
-    const {'1': 'heartbeatMessagingUri', '3': 1, '4': 1, '5': 9, '10': 'heartbeatMessagingUri'},
-    const {'1': 'fetchUri', '3': 2, '4': 1, '5': 9, '10': 'fetchUri'},
+    const {'1': 'fetchUri', '3': 1, '4': 1, '5': 9, '10': 'fetchUri'},
+    const {'1': 'heartbeatMessagingUri', '3': 2, '4': 1, '5': 9, '10': 'heartbeatMessagingUri'},
   ],
 };
 
@@ -153,7 +160,8 @@ const Entity_EntityReference$json = const {
   '1': 'EntityReference',
   '2': const [
     const {'1': 'resolverAddress', '3': 1, '4': 1, '5': 9, '10': 'resolverAddress'},
-    const {'1': 'entityId', '3': 2, '4': 1, '5': 9, '10': 'entityId'},
+    const {'1': 'networkId', '3': 2, '4': 1, '5': 9, '10': 'networkId'},
+    const {'1': 'entityId', '3': 3, '4': 1, '5': 9, '10': 'entityId'},
   ],
 };
 
@@ -164,5 +172,15 @@ const Entity_MetaEntry$json = const {
     const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
   '7': const {'7': true},
+};
+
+const EntitySummary$json = const {
+  '1': 'EntitySummary',
+  '2': const [
+    const {'1': 'resolverAddress', '3': 1, '4': 1, '5': 9, '10': 'resolverAddress'},
+    const {'1': 'networkId', '3': 2, '4': 1, '5': 9, '10': 'networkId'},
+    const {'1': 'entityId', '3': 3, '4': 1, '5': 9, '10': 'entityId'},
+    const {'1': 'entryPoints', '3': 4, '4': 3, '5': 11, '6': '.dvote.Gateway', '10': 'entryPoints'},
+  ],
 };
 
