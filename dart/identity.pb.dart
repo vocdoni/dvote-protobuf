@@ -81,7 +81,7 @@ class Identity extends $pb.GeneratedMessage {
     ..aOS(1, 'name')
     ..aOS(2, 'identityId')
     ..pc<$0.Key>(3, 'keys', $pb.PbFieldType.PM,$0.Key.create)
-    ..pc<$1.Entity_Reference>(4, 'subscriptions', $pb.PbFieldType.PM,$1.Entity_Reference.create)
+    ..pc<$1.EntitySummary>(4, 'subscribedEntities', $pb.PbFieldType.PM,$1.EntitySummary.create)
     ..pc<Identity_Claim>(5, 'receivedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
     ..pc<Identity_Claim>(6, 'emittedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
     ..m<$core.String, $core.String>(100, 'meta', 'Identity.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
@@ -114,7 +114,7 @@ class Identity extends $pb.GeneratedMessage {
 
   $core.List<$0.Key> get keys => $_getList(2);
 
-  $core.List<$1.Entity_Reference> get subscriptions => $_getList(3);
+  $core.List<$1.EntitySummary> get subscribedEntities => $_getList(3);
 
   $core.List<Identity_Claim> get receivedClaims => $_getList(4);
 

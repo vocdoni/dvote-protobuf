@@ -18,7 +18,7 @@ const Identity$json = const {
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'identityId', '3': 2, '4': 1, '5': 9, '10': 'identityId'},
     const {'1': 'keys', '3': 3, '4': 3, '5': 11, '6': '.dvote.Key', '10': 'keys'},
-    const {'1': 'subscriptions', '3': 4, '4': 3, '5': 11, '6': '.dvote.Entity.Reference', '10': 'subscriptions'},
+    const {'1': 'subscribedEntities', '3': 4, '4': 3, '5': 11, '6': '.dvote.EntitySummary', '10': 'subscribedEntities'},
     const {'1': 'receivedClaims', '3': 5, '4': 3, '5': 11, '6': '.dvote.Identity.Claim', '10': 'receivedClaims'},
     const {'1': 'emittedClaims', '3': 6, '4': 3, '5': 11, '6': '.dvote.Identity.Claim', '10': 'emittedClaims'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Identity.MetaEntry', '10': 'meta'},

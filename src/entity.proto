@@ -13,20 +13,19 @@ message EntitiesStore {
 message Entity {
     // OWN FIELDS
     string version = 1;
-
-    // Pointer to the place where the Entity metadata can be fetched
-    message Reference {
-        string entityId = 1;  // 0x...
-        string resolverAddress = 2;  // 0x...
-        string networkId = 3;  // homestead, goerli, ...
-        repeated Gateway entryPoints = 4;  // Gateways
-    }
-    Reference reference = 2;
+    string entityId = 2;  // 0x...
 
     repeated string languages = 3;
     map<string, string> name = 4;  // locale-aware value
     map<string, string> description = 5;  // locale-aware value
-    string votingContract = 6;
+
+    // Details on where the contracts are deployed
+    message ContractsInfo {
+        string resolverAddress = 1;  // 0x...
+        string votingAddress = 2;  // 0x...
+        string networkId = 3;  // homestead, goerli, ...
+    }
+    ContractsInfo contracts = 6;
 
     message VotingProcesses {
         repeated string active = 1;
@@ -35,7 +34,12 @@ message Entity {
     VotingProcesses votingProcesses = 7;
 
     map<string, string> newsFeed = 8;  // locale-aware value
-    string avatar = 9;
+
+    message Media {
+        string avatar = 1;
+        string header = 2;
+    }
+    Media media = 9;
 
     // See entity actions definition
     // https://vocdoni.io/docs/#/architecture/components/entity?id=entity-actions
@@ -60,8 +64,8 @@ message Entity {
     repeated Action actions = 10;
 
     message GatewayBootNode {
-        string heartbeatMessagingUri = 1;
-        string fetchUri = 2;
+        string fetchUri = 1;
+        string heartbeatMessagingUri = 2;
     }
     repeated GatewayBootNode gatewayBootNodes = 11;
 
@@ -80,7 +84,8 @@ message Entity {
 
     message EntityReference {
         string resolverAddress = 1;
-        string entityId = 2;
+        string networkId = 2;
+        string entityId = 3;
     }
     repeated EntityReference bootEntities = 14;
     repeated EntityReference fallbackBootNodeEntities = 15;
@@ -91,4 +96,13 @@ message Entity {
     // Allow to use arbitrary key/values so that
     // entities can be organized by custom values.
     map<string, string> meta = 100;
+}
+
+
+// Pointer to the place where the metadata of an Entity can be fetched
+message EntitySummary {
+    string resolverAddress = 1;
+    string networkId = 2;
+    string entityId = 3;
+    repeated Gateway entryPoints = 4;
 }

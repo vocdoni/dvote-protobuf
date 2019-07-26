@@ -16,8 +16,8 @@ message Identity {
     // Associated keys
     repeated Key keys = 3;
 
-    // Pointer to the place where the Entity metadata can be fetched
-    repeated Entity.Reference subscriptions = 4;
+    // Pointer to fetch the subscribed entities
+    repeated EntitySummary subscribedEntities = 4;
 
     message Claim {
         string index = 1;  // The index on the Merkle Tree

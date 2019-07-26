@@ -34,45 +34,42 @@ class EntitiesStore extends $pb.GeneratedMessage {
   $core.List<Entity> get entities => $_getList(0);
 }
 
-class Entity_Reference extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.Reference', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'entityId')
-    ..aOS(2, 'resolverAddress')
+class Entity_ContractsInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.ContractsInfo', package: const $pb.PackageName('dvote'))
+    ..aOS(1, 'resolverAddress')
+    ..aOS(2, 'votingAddress')
     ..aOS(3, 'networkId')
-    ..pc<$0.Gateway>(4, 'entryPoints', $pb.PbFieldType.PM,$0.Gateway.create)
     ..hasRequiredFields = false
   ;
 
-  Entity_Reference._() : super();
-  factory Entity_Reference() => create();
-  factory Entity_Reference.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Entity_Reference.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Entity_Reference clone() => Entity_Reference()..mergeFromMessage(this);
-  Entity_Reference copyWith(void Function(Entity_Reference) updates) => super.copyWith((message) => updates(message as Entity_Reference));
+  Entity_ContractsInfo._() : super();
+  factory Entity_ContractsInfo() => create();
+  factory Entity_ContractsInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Entity_ContractsInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Entity_ContractsInfo clone() => Entity_ContractsInfo()..mergeFromMessage(this);
+  Entity_ContractsInfo copyWith(void Function(Entity_ContractsInfo) updates) => super.copyWith((message) => updates(message as Entity_ContractsInfo));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Entity_Reference create() => Entity_Reference._();
-  Entity_Reference createEmptyInstance() => create();
-  static $pb.PbList<Entity_Reference> createRepeated() => $pb.PbList<Entity_Reference>();
-  static Entity_Reference getDefault() => _defaultInstance ??= create()..freeze();
-  static Entity_Reference _defaultInstance;
+  static Entity_ContractsInfo create() => Entity_ContractsInfo._();
+  Entity_ContractsInfo createEmptyInstance() => create();
+  static $pb.PbList<Entity_ContractsInfo> createRepeated() => $pb.PbList<Entity_ContractsInfo>();
+  static Entity_ContractsInfo getDefault() => _defaultInstance ??= create()..freeze();
+  static Entity_ContractsInfo _defaultInstance;
 
-  $core.String get entityId => $_getS(0, '');
-  set entityId($core.String v) { $_setString(0, v); }
-  $core.bool hasEntityId() => $_has(0);
-  void clearEntityId() => clearField(1);
+  $core.String get resolverAddress => $_getS(0, '');
+  set resolverAddress($core.String v) { $_setString(0, v); }
+  $core.bool hasResolverAddress() => $_has(0);
+  void clearResolverAddress() => clearField(1);
 
-  $core.String get resolverAddress => $_getS(1, '');
-  set resolverAddress($core.String v) { $_setString(1, v); }
-  $core.bool hasResolverAddress() => $_has(1);
-  void clearResolverAddress() => clearField(2);
+  $core.String get votingAddress => $_getS(1, '');
+  set votingAddress($core.String v) { $_setString(1, v); }
+  $core.bool hasVotingAddress() => $_has(1);
+  void clearVotingAddress() => clearField(2);
 
   $core.String get networkId => $_getS(2, '');
   set networkId($core.String v) { $_setString(2, v); }
   $core.bool hasNetworkId() => $_has(2);
   void clearNetworkId() => clearField(3);
-
-  $core.List<$0.Gateway> get entryPoints => $_getList(3);
 }
 
 class Entity_VotingProcesses extends $pb.GeneratedMessage {
@@ -99,6 +96,38 @@ class Entity_VotingProcesses extends $pb.GeneratedMessage {
   $core.List<$core.String> get active => $_getList(0);
 
   $core.List<$core.String> get ended => $_getList(1);
+}
+
+class Entity_Media extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.Media', package: const $pb.PackageName('dvote'))
+    ..aOS(1, 'avatar')
+    ..aOS(2, 'header')
+    ..hasRequiredFields = false
+  ;
+
+  Entity_Media._() : super();
+  factory Entity_Media() => create();
+  factory Entity_Media.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Entity_Media.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Entity_Media clone() => Entity_Media()..mergeFromMessage(this);
+  Entity_Media copyWith(void Function(Entity_Media) updates) => super.copyWith((message) => updates(message as Entity_Media));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Entity_Media create() => Entity_Media._();
+  Entity_Media createEmptyInstance() => create();
+  static $pb.PbList<Entity_Media> createRepeated() => $pb.PbList<Entity_Media>();
+  static Entity_Media getDefault() => _defaultInstance ??= create()..freeze();
+  static Entity_Media _defaultInstance;
+
+  $core.String get avatar => $_getS(0, '');
+  set avatar($core.String v) { $_setString(0, v); }
+  $core.bool hasAvatar() => $_has(0);
+  void clearAvatar() => clearField(1);
+
+  $core.String get header => $_getS(1, '');
+  set header($core.String v) { $_setString(1, v); }
+  $core.bool hasHeader() => $_has(1);
+  void clearHeader() => clearField(2);
 }
 
 class Entity_Action_ImageSource extends $pb.GeneratedMessage {
@@ -194,8 +223,8 @@ class Entity_Action extends $pb.GeneratedMessage {
 
 class Entity_GatewayBootNode extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.GatewayBootNode', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'heartbeatMessagingUri')
-    ..aOS(2, 'fetchUri')
+    ..aOS(1, 'fetchUri')
+    ..aOS(2, 'heartbeatMessagingUri')
     ..hasRequiredFields = false
   ;
 
@@ -213,15 +242,15 @@ class Entity_GatewayBootNode extends $pb.GeneratedMessage {
   static Entity_GatewayBootNode getDefault() => _defaultInstance ??= create()..freeze();
   static Entity_GatewayBootNode _defaultInstance;
 
-  $core.String get heartbeatMessagingUri => $_getS(0, '');
-  set heartbeatMessagingUri($core.String v) { $_setString(0, v); }
-  $core.bool hasHeartbeatMessagingUri() => $_has(0);
-  void clearHeartbeatMessagingUri() => clearField(1);
+  $core.String get fetchUri => $_getS(0, '');
+  set fetchUri($core.String v) { $_setString(0, v); }
+  $core.bool hasFetchUri() => $_has(0);
+  void clearFetchUri() => clearField(1);
 
-  $core.String get fetchUri => $_getS(1, '');
-  set fetchUri($core.String v) { $_setString(1, v); }
-  $core.bool hasFetchUri() => $_has(1);
-  void clearFetchUri() => clearField(2);
+  $core.String get heartbeatMessagingUri => $_getS(1, '');
+  set heartbeatMessagingUri($core.String v) { $_setString(1, v); }
+  $core.bool hasHeartbeatMessagingUri() => $_has(1);
+  void clearHeartbeatMessagingUri() => clearField(2);
 }
 
 class Entity_GatewyUpdate extends $pb.GeneratedMessage {
@@ -297,7 +326,8 @@ class Entity_Relay extends $pb.GeneratedMessage {
 class Entity_EntityReference extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.EntityReference', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'resolverAddress')
-    ..aOS(2, 'entityId')
+    ..aOS(2, 'networkId')
+    ..aOS(3, 'entityId')
     ..hasRequiredFields = false
   ;
 
@@ -320,23 +350,28 @@ class Entity_EntityReference extends $pb.GeneratedMessage {
   $core.bool hasResolverAddress() => $_has(0);
   void clearResolverAddress() => clearField(1);
 
-  $core.String get entityId => $_getS(1, '');
-  set entityId($core.String v) { $_setString(1, v); }
-  $core.bool hasEntityId() => $_has(1);
-  void clearEntityId() => clearField(2);
+  $core.String get networkId => $_getS(1, '');
+  set networkId($core.String v) { $_setString(1, v); }
+  $core.bool hasNetworkId() => $_has(1);
+  void clearNetworkId() => clearField(2);
+
+  $core.String get entityId => $_getS(2, '');
+  set entityId($core.String v) { $_setString(2, v); }
+  $core.bool hasEntityId() => $_has(2);
+  void clearEntityId() => clearField(3);
 }
 
 class Entity extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'version')
-    ..a<Entity_Reference>(2, 'reference', $pb.PbFieldType.OM, Entity_Reference.getDefault, Entity_Reference.create)
+    ..aOS(2, 'entityId')
     ..pPS(3, 'languages')
     ..m<$core.String, $core.String>(4, 'name', 'Entity.NameEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..m<$core.String, $core.String>(5, 'description', 'Entity.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..aOS(6, 'votingContract')
+    ..a<Entity_ContractsInfo>(6, 'contracts', $pb.PbFieldType.OM, Entity_ContractsInfo.getDefault, Entity_ContractsInfo.create)
     ..a<Entity_VotingProcesses>(7, 'votingProcesses', $pb.PbFieldType.OM, Entity_VotingProcesses.getDefault, Entity_VotingProcesses.create)
     ..m<$core.String, $core.String>(8, 'newsFeed', 'Entity.NewsFeedEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..aOS(9, 'avatar')
+    ..a<Entity_Media>(9, 'media', $pb.PbFieldType.OM, Entity_Media.getDefault, Entity_Media.create)
     ..pc<Entity_Action>(10, 'actions', $pb.PbFieldType.PM,Entity_Action.create)
     ..pc<Entity_GatewayBootNode>(11, 'gatewayBootNodes', $pb.PbFieldType.PM,Entity_GatewayBootNode.create)
     ..a<Entity_GatewyUpdate>(12, 'gatewayUpdate', $pb.PbFieldType.OM, Entity_GatewyUpdate.getDefault, Entity_GatewyUpdate.create)
@@ -368,10 +403,10 @@ class Entity extends $pb.GeneratedMessage {
   $core.bool hasVersion() => $_has(0);
   void clearVersion() => clearField(1);
 
-  Entity_Reference get reference => $_getN(1);
-  set reference(Entity_Reference v) { setField(2, v); }
-  $core.bool hasReference() => $_has(1);
-  void clearReference() => clearField(2);
+  $core.String get entityId => $_getS(1, '');
+  set entityId($core.String v) { $_setString(1, v); }
+  $core.bool hasEntityId() => $_has(1);
+  void clearEntityId() => clearField(2);
 
   $core.List<$core.String> get languages => $_getList(2);
 
@@ -379,10 +414,10 @@ class Entity extends $pb.GeneratedMessage {
 
   $core.Map<$core.String, $core.String> get description => $_getMap(4);
 
-  $core.String get votingContract => $_getS(5, '');
-  set votingContract($core.String v) { $_setString(5, v); }
-  $core.bool hasVotingContract() => $_has(5);
-  void clearVotingContract() => clearField(6);
+  Entity_ContractsInfo get contracts => $_getN(5);
+  set contracts(Entity_ContractsInfo v) { setField(6, v); }
+  $core.bool hasContracts() => $_has(5);
+  void clearContracts() => clearField(6);
 
   Entity_VotingProcesses get votingProcesses => $_getN(6);
   set votingProcesses(Entity_VotingProcesses v) { setField(7, v); }
@@ -391,10 +426,10 @@ class Entity extends $pb.GeneratedMessage {
 
   $core.Map<$core.String, $core.String> get newsFeed => $_getMap(7);
 
-  $core.String get avatar => $_getS(8, '');
-  set avatar($core.String v) { $_setString(8, v); }
-  $core.bool hasAvatar() => $_has(8);
-  void clearAvatar() => clearField(9);
+  Entity_Media get media => $_getN(8);
+  set media(Entity_Media v) { setField(9, v); }
+  $core.bool hasMedia() => $_has(8);
+  void clearMedia() => clearField(9);
 
   $core.List<Entity_Action> get actions => $_getList(9);
 
@@ -416,5 +451,46 @@ class Entity extends $pb.GeneratedMessage {
   $core.List<Entity_EntityReference> get censusServiceManagedEntitie => $_getList(16);
 
   $core.Map<$core.String, $core.String> get meta => $_getMap(17);
+}
+
+class EntitySummary extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntitySummary', package: const $pb.PackageName('dvote'))
+    ..aOS(1, 'resolverAddress')
+    ..aOS(2, 'networkId')
+    ..aOS(3, 'entityId')
+    ..pc<$0.Gateway>(4, 'entryPoints', $pb.PbFieldType.PM,$0.Gateway.create)
+    ..hasRequiredFields = false
+  ;
+
+  EntitySummary._() : super();
+  factory EntitySummary() => create();
+  factory EntitySummary.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EntitySummary.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  EntitySummary clone() => EntitySummary()..mergeFromMessage(this);
+  EntitySummary copyWith(void Function(EntitySummary) updates) => super.copyWith((message) => updates(message as EntitySummary));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EntitySummary create() => EntitySummary._();
+  EntitySummary createEmptyInstance() => create();
+  static $pb.PbList<EntitySummary> createRepeated() => $pb.PbList<EntitySummary>();
+  static EntitySummary getDefault() => _defaultInstance ??= create()..freeze();
+  static EntitySummary _defaultInstance;
+
+  $core.String get resolverAddress => $_getS(0, '');
+  set resolverAddress($core.String v) { $_setString(0, v); }
+  $core.bool hasResolverAddress() => $_has(0);
+  void clearResolverAddress() => clearField(1);
+
+  $core.String get networkId => $_getS(1, '');
+  set networkId($core.String v) { $_setString(1, v); }
+  $core.bool hasNetworkId() => $_has(1);
+  void clearNetworkId() => clearField(2);
+
+  $core.String get entityId => $_getS(2, '');
+  set entityId($core.String v) { $_setString(2, v); }
+  $core.bool hasEntityId() => $_has(2);
+  void clearEntityId() => clearField(3);
+
+  $core.List<$0.Gateway> get entryPoints => $_getList(3);
 }
 
