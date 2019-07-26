@@ -9,18 +9,18 @@
 import 'dart:core' as $core show int, dynamic, String, List, Map;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Key_KeyType extends $pb.ProtobufEnum {
-  static const Key_KeyType SECP256K1 = Key_KeyType._(0, 'SECP256K1');
-  static const Key_KeyType BABYJUB = Key_KeyType._(1, 'BABYJUB');
+class Key_Type extends $pb.ProtobufEnum {
+  static const Key_Type SECP256K1 = Key_Type._(0, 'SECP256K1');
+  static const Key_Type BABYJUB = Key_Type._(1, 'BABYJUB');
 
-  static const $core.List<Key_KeyType> values = <Key_KeyType> [
+  static const $core.List<Key_Type> values = <Key_Type> [
     SECP256K1,
     BABYJUB,
   ];
 
-  static final $core.Map<$core.int, Key_KeyType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Key_KeyType valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, Key_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static Key_Type valueOf($core.int value) => _byValue[value];
 
-  const Key_KeyType._($core.int v, $core.String n) : super(v, n);
+  const Key_Type._($core.int v, $core.String n) : super(v, n);
 }
 
