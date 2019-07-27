@@ -10,4 +10,9 @@ message Gateway {
     string dvote = 1;
     string web3 = 2;
     string publicKey = 3; // Secp256k1 public key
+
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // gateways can be organized by custom values.
+    map<string, string> meta = 100;
 }
