@@ -37,6 +37,7 @@ class Gateway extends $pb.GeneratedMessage {
     ..aOS(1, 'dvote')
     ..aOS(2, 'web3')
     ..aOS(3, 'publicKey')
+    ..m<$core.String, $core.String>(100, 'meta', 'Gateway.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -68,5 +69,7 @@ class Gateway extends $pb.GeneratedMessage {
   set publicKey($core.String v) { $_setString(2, v); }
   $core.bool hasPublicKey() => $_has(2);
   void clearPublicKey() => clearField(3);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(3);
 }
 
