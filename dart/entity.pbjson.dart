@@ -144,7 +144,7 @@ const Entity_GatewyUpdate$json = const {
   '2': const [
     const {'1': 'timeout', '3': 1, '4': 1, '5': 5, '10': 'timeout'},
     const {'1': 'topic', '3': 2, '4': 1, '5': 9, '10': 'topic'},
-    const {'1': 'difficulty', '3': 3, '4': 1, '5': 9, '10': 'difficulty'},
+    const {'1': 'difficulty', '3': 3, '4': 1, '5': 3, '10': 'difficulty'},
   ],
 };
 
