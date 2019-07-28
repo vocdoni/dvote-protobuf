@@ -72,7 +72,7 @@ message Entity {
     message GatewyUpdate {
         int32 timeout = 1;
         string topic = 2;
-        string difficulty = 3;
+        int64 difficulty = 3;
     }
     GatewyUpdate gatewayUpdate = 12;
 
