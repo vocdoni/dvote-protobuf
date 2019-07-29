@@ -5,8 +5,8 @@
 // @dart = 2.3
 // ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-const FeedStore$json = const {
-  '1': 'FeedStore',
+const FeedsStore$json = const {
+  '1': 'FeedsStore',
   '2': const [
     const {'1': 'feeds', '3': 1, '4': 3, '5': 11, '6': '.dvote.Feed', '10': 'feeds'},
   ],
