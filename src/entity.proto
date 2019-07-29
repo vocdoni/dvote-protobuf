@@ -69,12 +69,12 @@ message Entity {
     }
     repeated GatewayBootNode gatewayBootNodes = 11;
 
-    message GatewyUpdate {
+    message GatewayUpdate {
         int32 timeout = 1;
         string topic = 2;
         int64 difficulty = 3;
     }
-    GatewyUpdate gatewayUpdate = 12;
+    GatewayUpdate gatewayUpdate = 12;
 
     message Relay {
         string publicKey = 1;

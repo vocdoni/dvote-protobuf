@@ -254,27 +254,27 @@ class Entity_GatewayBootNode extends $pb.GeneratedMessage {
   void clearHeartbeatMessagingUri() => clearField(2);
 }
 
-class Entity_GatewyUpdate extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.GatewyUpdate', package: const $pb.PackageName('dvote'))
+class Entity_GatewayUpdate extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.GatewayUpdate', package: const $pb.PackageName('dvote'))
     ..a<$core.int>(1, 'timeout', $pb.PbFieldType.O3)
     ..aOS(2, 'topic')
     ..aInt64(3, 'difficulty')
     ..hasRequiredFields = false
   ;
 
-  Entity_GatewyUpdate._() : super();
-  factory Entity_GatewyUpdate() => create();
-  factory Entity_GatewyUpdate.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Entity_GatewyUpdate.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Entity_GatewyUpdate clone() => Entity_GatewyUpdate()..mergeFromMessage(this);
-  Entity_GatewyUpdate copyWith(void Function(Entity_GatewyUpdate) updates) => super.copyWith((message) => updates(message as Entity_GatewyUpdate));
+  Entity_GatewayUpdate._() : super();
+  factory Entity_GatewayUpdate() => create();
+  factory Entity_GatewayUpdate.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Entity_GatewayUpdate.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Entity_GatewayUpdate clone() => Entity_GatewayUpdate()..mergeFromMessage(this);
+  Entity_GatewayUpdate copyWith(void Function(Entity_GatewayUpdate) updates) => super.copyWith((message) => updates(message as Entity_GatewayUpdate));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Entity_GatewyUpdate create() => Entity_GatewyUpdate._();
-  Entity_GatewyUpdate createEmptyInstance() => create();
-  static $pb.PbList<Entity_GatewyUpdate> createRepeated() => $pb.PbList<Entity_GatewyUpdate>();
-  static Entity_GatewyUpdate getDefault() => _defaultInstance ??= create()..freeze();
-  static Entity_GatewyUpdate _defaultInstance;
+  static Entity_GatewayUpdate create() => Entity_GatewayUpdate._();
+  Entity_GatewayUpdate createEmptyInstance() => create();
+  static $pb.PbList<Entity_GatewayUpdate> createRepeated() => $pb.PbList<Entity_GatewayUpdate>();
+  static Entity_GatewayUpdate getDefault() => _defaultInstance ??= create()..freeze();
+  static Entity_GatewayUpdate _defaultInstance;
 
   $core.int get timeout => $_get(0, 0);
   set timeout($core.int v) { $_setSignedInt32(0, v); }
@@ -375,7 +375,7 @@ class Entity extends $pb.GeneratedMessage {
     ..a<Entity_Media>(9, 'media', $pb.PbFieldType.OM, Entity_Media.getDefault, Entity_Media.create)
     ..pc<Entity_Action>(10, 'actions', $pb.PbFieldType.PM,Entity_Action.create)
     ..pc<Entity_GatewayBootNode>(11, 'gatewayBootNodes', $pb.PbFieldType.PM,Entity_GatewayBootNode.create)
-    ..a<Entity_GatewyUpdate>(12, 'gatewayUpdate', $pb.PbFieldType.OM, Entity_GatewyUpdate.getDefault, Entity_GatewyUpdate.create)
+    ..a<Entity_GatewayUpdate>(12, 'gatewayUpdate', $pb.PbFieldType.OM, Entity_GatewayUpdate.getDefault, Entity_GatewayUpdate.create)
     ..pc<Entity_Relay>(13, 'relays', $pb.PbFieldType.PM,Entity_Relay.create)
     ..pc<Entity_EntityReference>(14, 'bootEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
     ..pc<Entity_EntityReference>(15, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
@@ -436,8 +436,8 @@ class Entity extends $pb.GeneratedMessage {
 
   $core.List<Entity_GatewayBootNode> get gatewayBootNodes => $_getList(10);
 
-  Entity_GatewyUpdate get gatewayUpdate => $_getN(11);
-  set gatewayUpdate(Entity_GatewyUpdate v) { setField(12, v); }
+  Entity_GatewayUpdate get gatewayUpdate => $_getN(11);
+  set gatewayUpdate(Entity_GatewayUpdate v) { setField(12, v); }
   $core.bool hasGatewayUpdate() => $_has(11);
   void clearGatewayUpdate() => clearField(12);
 
