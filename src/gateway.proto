@@ -3,7 +3,7 @@ package dvote;
 
 // Helper to serialize and store all cached data
 message GatewaysStore {
-    repeated Gateway bootnodes = 1;
+    repeated Gateway items = 1;
 }
 
 message Gateway {

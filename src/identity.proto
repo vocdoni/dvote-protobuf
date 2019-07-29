@@ -6,7 +6,7 @@ import "key.proto";
 
 // Helper to serialize and store a set of entries
 message IdentitiesStore {
-    repeated Identity identities = 1; 
+    repeated Identity items = 1; 
 }
 
 message Identity {

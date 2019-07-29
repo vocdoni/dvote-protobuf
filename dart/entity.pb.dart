@@ -13,7 +13,7 @@ import 'gateway.pb.dart' as $0;
 
 class EntitiesStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntitiesStore', package: const $pb.PackageName('dvote'))
-    ..pc<Entity>(1, 'entities', $pb.PbFieldType.PM,Entity.create)
+    ..pc<Entity>(1, 'items', $pb.PbFieldType.PM,Entity.create)
     ..hasRequiredFields = false
   ;
 
@@ -31,7 +31,7 @@ class EntitiesStore extends $pb.GeneratedMessage {
   static EntitiesStore getDefault() => _defaultInstance ??= create()..freeze();
   static EntitiesStore _defaultInstance;
 
-  $core.List<Entity> get entities => $_getList(0);
+  $core.List<Entity> get items => $_getList(0);
 }
 
 class Entity_ContractsInfo extends $pb.GeneratedMessage {

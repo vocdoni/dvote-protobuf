@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class FeedsStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedsStore', package: const $pb.PackageName('dvote'))
-    ..pc<Feed>(1, 'feeds', $pb.PbFieldType.PM,Feed.create)
+    ..pc<Feed>(1, 'items', $pb.PbFieldType.PM,Feed.create)
     ..hasRequiredFields = false
   ;
 
@@ -29,7 +29,7 @@ class FeedsStore extends $pb.GeneratedMessage {
   static FeedsStore getDefault() => _defaultInstance ??= create()..freeze();
   static FeedsStore _defaultInstance;
 
-  $core.List<Feed> get feeds => $_getList(0);
+  $core.List<Feed> get items => $_getList(0);
 }
 
 class Feed extends $pb.GeneratedMessage {

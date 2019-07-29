@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class GatewaysStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('GatewaysStore', package: const $pb.PackageName('dvote'))
-    ..pc<Gateway>(1, 'bootnodes', $pb.PbFieldType.PM,Gateway.create)
+    ..pc<Gateway>(1, 'items', $pb.PbFieldType.PM,Gateway.create)
     ..hasRequiredFields = false
   ;
 
@@ -29,7 +29,7 @@ class GatewaysStore extends $pb.GeneratedMessage {
   static GatewaysStore getDefault() => _defaultInstance ??= create()..freeze();
   static GatewaysStore _defaultInstance;
 
-  $core.List<Gateway> get bootnodes => $_getList(0);
+  $core.List<Gateway> get items => $_getList(0);
 }
 
 class Gateway extends $pb.GeneratedMessage {

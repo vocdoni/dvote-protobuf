@@ -14,7 +14,7 @@ import 'entity.pb.dart' as $1;
 
 class IdentitiesStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('IdentitiesStore', package: const $pb.PackageName('dvote'))
-    ..pc<Identity>(1, 'identities', $pb.PbFieldType.PM,Identity.create)
+    ..pc<Identity>(1, 'items', $pb.PbFieldType.PM,Identity.create)
     ..hasRequiredFields = false
   ;
 
@@ -32,7 +32,7 @@ class IdentitiesStore extends $pb.GeneratedMessage {
   static IdentitiesStore getDefault() => _defaultInstance ??= create()..freeze();
   static IdentitiesStore _defaultInstance;
 
-  $core.List<Identity> get identities => $_getList(0);
+  $core.List<Identity> get items => $_getList(0);
 }
 
 class Identity_Claim extends $pb.GeneratedMessage {
