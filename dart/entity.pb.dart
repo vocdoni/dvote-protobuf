@@ -380,7 +380,7 @@ class Entity extends $pb.GeneratedMessage {
     ..pc<Entity_EntityReference>(14, 'bootEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
     ..pc<Entity_EntityReference>(15, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
     ..pc<Entity_EntityReference>(16, 'trustedEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
-    ..pc<Entity_EntityReference>(17, 'censusServiceManagedEntitie', $pb.PbFieldType.PM,Entity_EntityReference.create)
+    ..pc<Entity_EntityReference>(17, 'censusServiceManagedEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
     ..m<$core.String, $core.String>(100, 'meta', 'Entity.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -449,7 +449,7 @@ class Entity extends $pb.GeneratedMessage {
 
   $core.List<Entity_EntityReference> get trustedEntities => $_getList(15);
 
-  $core.List<Entity_EntityReference> get censusServiceManagedEntitie => $_getList(16);
+  $core.List<Entity_EntityReference> get censusServiceManagedEntities => $_getList(16);
 
   $core.Map<$core.String, $core.String> get meta => $_getMap(17);
 }

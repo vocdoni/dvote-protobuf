@@ -90,7 +90,7 @@ message Entity {
     repeated EntityReference bootEntities = 14;
     repeated EntityReference fallbackBootNodeEntities = 15;
     repeated EntityReference trustedEntities = 16;
-    repeated EntityReference censusServiceManagedEntitie = 17;
+    repeated EntityReference censusServiceManagedEntities = 17;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
