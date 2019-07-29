@@ -31,7 +31,7 @@ const Entity$json = const {
     const {'1': 'bootEntities', '3': 14, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'bootEntities'},
     const {'1': 'fallbackBootNodeEntities', '3': 15, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'fallbackBootNodeEntities'},
     const {'1': 'trustedEntities', '3': 16, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'trustedEntities'},
-    const {'1': 'censusServiceManagedEntitie', '3': 17, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntitie'},
+    const {'1': 'censusServiceManagedEntities', '3': 17, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntities'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Entity.MetaEntry', '10': 'meta'},
   ],
   '3': const [Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_ContractsInfo$json, Entity_VotingProcesses$json, Entity_NewsFeedEntry$json, Entity_Media$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
