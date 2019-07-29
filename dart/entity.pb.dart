@@ -7,7 +7,6 @@
 
 import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, override, pragma, String;
 
-import 'package:fixnum/fixnum.dart';
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'gateway.pb.dart' as $0;
@@ -258,7 +257,7 @@ class Entity_GatewayUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.GatewayUpdate', package: const $pb.PackageName('dvote'))
     ..a<$core.int>(1, 'timeout', $pb.PbFieldType.O3)
     ..aOS(2, 'topic')
-    ..aInt64(3, 'difficulty')
+    ..a<$core.int>(3, 'difficulty', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -286,8 +285,8 @@ class Entity_GatewayUpdate extends $pb.GeneratedMessage {
   $core.bool hasTopic() => $_has(1);
   void clearTopic() => clearField(2);
 
-  Int64 get difficulty => $_getI64(2);
-  set difficulty(Int64 v) { $_setInt64(2, v); }
+  $core.int get difficulty => $_get(2, 0);
+  set difficulty($core.int v) { $_setSignedInt32(2, v); }
   $core.bool hasDifficulty() => $_has(2);
   void clearDifficulty() => clearField(3);
 }
