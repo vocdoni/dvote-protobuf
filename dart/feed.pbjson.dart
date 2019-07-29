@@ -8,7 +8,7 @@
 const FeedsStore$json = const {
   '1': 'FeedsStore',
   '2': const [
-    const {'1': 'feeds', '3': 1, '4': 3, '5': 11, '6': '.dvote.Feed', '10': 'feeds'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.Feed', '10': 'items'},
   ],
 };
 

@@ -8,7 +8,7 @@
 const GatewaysStore$json = const {
   '1': 'GatewaysStore',
   '2': const [
-    const {'1': 'bootnodes', '3': 1, '4': 3, '5': 11, '6': '.dvote.Gateway', '10': 'bootnodes'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.Gateway', '10': 'items'},
   ],
 };
 

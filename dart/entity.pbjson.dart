@@ -8,7 +8,7 @@
 const EntitiesStore$json = const {
   '1': 'EntitiesStore',
   '2': const [
-    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.Entity', '10': 'entities'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.Entity', '10': 'items'},
   ],
 };
 

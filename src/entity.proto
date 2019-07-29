@@ -5,7 +5,7 @@ import "gateway.proto";
 
 // Helper to serialize and store all cached data
 message EntitiesStore {
-    repeated Entity entities = 1;
+    repeated Entity items = 1;
 }
 
 // The metadata of an entity

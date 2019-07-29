@@ -6,7 +6,7 @@ package dvote;
 
 // Helper to serialize and store all cached posts from all entities
 message FeedsStore {
-    repeated Feed feeds = 1;
+    repeated Feed items = 1;
 }
 
 // A JSON Feed, containing a collection of posts
