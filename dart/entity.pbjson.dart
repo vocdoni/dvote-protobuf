@@ -26,7 +26,7 @@ const Entity$json = const {
     const {'1': 'media', '3': 9, '4': 1, '5': 11, '6': '.dvote.Entity.Media', '10': 'media'},
     const {'1': 'actions', '3': 10, '4': 3, '5': 11, '6': '.dvote.Entity.Action', '10': 'actions'},
     const {'1': 'gatewayBootNodes', '3': 11, '4': 3, '5': 11, '6': '.dvote.Entity.GatewayBootNode', '10': 'gatewayBootNodes'},
-    const {'1': 'gatewayUpdate', '3': 12, '4': 1, '5': 11, '6': '.dvote.Entity.GatewyUpdate', '10': 'gatewayUpdate'},
+    const {'1': 'gatewayUpdate', '3': 12, '4': 1, '5': 11, '6': '.dvote.Entity.GatewayUpdate', '10': 'gatewayUpdate'},
     const {'1': 'relays', '3': 13, '4': 3, '5': 11, '6': '.dvote.Entity.Relay', '10': 'relays'},
     const {'1': 'bootEntities', '3': 14, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'bootEntities'},
     const {'1': 'fallbackBootNodeEntities', '3': 15, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'fallbackBootNodeEntities'},
@@ -34,7 +34,7 @@ const Entity$json = const {
     const {'1': 'censusServiceManagedEntities', '3': 17, '4': 3, '5': 11, '6': '.dvote.Entity.EntityReference', '10': 'censusServiceManagedEntities'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Entity.MetaEntry', '10': 'meta'},
   ],
-  '3': const [Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_ContractsInfo$json, Entity_VotingProcesses$json, Entity_NewsFeedEntry$json, Entity_Media$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewyUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
+  '3': const [Entity_NameEntry$json, Entity_DescriptionEntry$json, Entity_ContractsInfo$json, Entity_VotingProcesses$json, Entity_NewsFeedEntry$json, Entity_Media$json, Entity_Action$json, Entity_GatewayBootNode$json, Entity_GatewayUpdate$json, Entity_Relay$json, Entity_EntityReference$json, Entity_MetaEntry$json],
 };
 
 const Entity_NameEntry$json = const {
@@ -139,8 +139,8 @@ const Entity_GatewayBootNode$json = const {
   ],
 };
 
-const Entity_GatewyUpdate$json = const {
-  '1': 'GatewyUpdate',
+const Entity_GatewayUpdate$json = const {
+  '1': 'GatewayUpdate',
   '2': const [
     const {'1': 'timeout', '3': 1, '4': 1, '5': 5, '10': 'timeout'},
     const {'1': 'topic', '3': 2, '4': 1, '5': 9, '10': 'topic'},
