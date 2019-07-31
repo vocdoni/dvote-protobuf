@@ -48,5 +48,5 @@ dart-env:
 	fi
 
 clean:
-	rm -f dart/*
+	rm -Rf dart/*
 	@touch src/*

@@ -4,6 +4,11 @@ Protobuf definitions for data types used by Vocdoni voting processes
 
 Check out the source code generated for each of the available languages.
 
+## Important note
+
+- In protobuf, new fields can be added, renamed and removed with future-compatibility.
+- However, **once an ID has been used, it can't never be reused by any other field again**
+
 ## Models provided
 
 - Entity
