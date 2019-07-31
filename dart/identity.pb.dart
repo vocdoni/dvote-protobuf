@@ -12,6 +12,10 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'key.pb.dart' as $0;
 import 'entity.pb.dart' as $1;
 
+import 'identity.pbenum.dart';
+
+export 'identity.pbenum.dart';
+
 class IdentitiesStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('IdentitiesStore', package: const $pb.PackageName('dvote'))
     ..pc<Identity>(1, 'items', $pb.PbFieldType.PM,Identity.create)
@@ -33,6 +37,38 @@ class IdentitiesStore extends $pb.GeneratedMessage {
   static IdentitiesStore _defaultInstance;
 
   $core.List<Identity> get items => $_getList(0);
+}
+
+class Identity_Peers extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity.Peers', package: const $pb.PackageName('dvote'))
+    ..a<$1.EntitySummary>(1, 'entities', $pb.PbFieldType.OM, $1.EntitySummary.getDefault, $1.EntitySummary.create)
+    ..a<PeerIdentity>(2, 'identities', $pb.PbFieldType.OM, PeerIdentity.getDefault, PeerIdentity.create)
+    ..hasRequiredFields = false
+  ;
+
+  Identity_Peers._() : super();
+  factory Identity_Peers() => create();
+  factory Identity_Peers.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Identity_Peers.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Identity_Peers clone() => Identity_Peers()..mergeFromMessage(this);
+  Identity_Peers copyWith(void Function(Identity_Peers) updates) => super.copyWith((message) => updates(message as Identity_Peers));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Identity_Peers create() => Identity_Peers._();
+  Identity_Peers createEmptyInstance() => create();
+  static $pb.PbList<Identity_Peers> createRepeated() => $pb.PbList<Identity_Peers>();
+  static Identity_Peers getDefault() => _defaultInstance ??= create()..freeze();
+  static Identity_Peers _defaultInstance;
+
+  $1.EntitySummary get entities => $_getN(0);
+  set entities($1.EntitySummary v) { setField(1, v); }
+  $core.bool hasEntities() => $_has(0);
+  void clearEntities() => clearField(1);
+
+  PeerIdentity get identities => $_getN(1);
+  set identities(PeerIdentity v) { setField(2, v); }
+  $core.bool hasIdentities() => $_has(1);
+  void clearIdentities() => clearField(2);
 }
 
 class Identity_Claim extends $pb.GeneratedMessage {
@@ -78,12 +114,13 @@ class Identity_Claim extends $pb.GeneratedMessage {
 
 class Identity extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'name')
-    ..aOS(2, 'identityId')
-    ..pc<$0.Key>(3, 'keys', $pb.PbFieldType.PM,$0.Key.create)
-    ..pc<$1.EntitySummary>(4, 'subscribedEntities', $pb.PbFieldType.PM,$1.EntitySummary.create)
-    ..pc<Identity_Claim>(5, 'receivedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
-    ..pc<Identity_Claim>(6, 'emittedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
+    ..e<Identity_Type>(1, 'type', $pb.PbFieldType.OE, Identity_Type.ECDSA_SECP256k1, Identity_Type.valueOf, Identity_Type.values)
+    ..aOS(2, 'alias')
+    ..aOS(3, 'identityId')
+    ..pc<$0.Key>(4, 'keys', $pb.PbFieldType.PM,$0.Key.create)
+    ..pc<Identity_Peers>(5, 'peers', $pb.PbFieldType.PM,Identity_Peers.create)
+    ..pc<Identity_Claim>(6, 'receivedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
+    ..pc<Identity_Claim>(7, 'issuedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
     ..m<$core.String, $core.String>(100, 'meta', 'Identity.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -102,24 +139,67 @@ class Identity extends $pb.GeneratedMessage {
   static Identity getDefault() => _defaultInstance ??= create()..freeze();
   static Identity _defaultInstance;
 
-  $core.String get name => $_getS(0, '');
-  set name($core.String v) { $_setString(0, v); }
-  $core.bool hasName() => $_has(0);
-  void clearName() => clearField(1);
+  Identity_Type get type => $_getN(0);
+  set type(Identity_Type v) { setField(1, v); }
+  $core.bool hasType() => $_has(0);
+  void clearType() => clearField(1);
 
-  $core.String get identityId => $_getS(1, '');
-  set identityId($core.String v) { $_setString(1, v); }
-  $core.bool hasIdentityId() => $_has(1);
-  void clearIdentityId() => clearField(2);
+  $core.String get alias => $_getS(1, '');
+  set alias($core.String v) { $_setString(1, v); }
+  $core.bool hasAlias() => $_has(1);
+  void clearAlias() => clearField(2);
 
-  $core.List<$0.Key> get keys => $_getList(2);
+  $core.String get identityId => $_getS(2, '');
+  set identityId($core.String v) { $_setString(2, v); }
+  $core.bool hasIdentityId() => $_has(2);
+  void clearIdentityId() => clearField(3);
 
-  $core.List<$1.EntitySummary> get subscribedEntities => $_getList(3);
+  $core.List<$0.Key> get keys => $_getList(3);
 
-  $core.List<Identity_Claim> get receivedClaims => $_getList(4);
+  $core.List<Identity_Peers> get peers => $_getList(4);
 
-  $core.List<Identity_Claim> get emittedClaims => $_getList(5);
+  $core.List<Identity_Claim> get receivedClaims => $_getList(5);
 
-  $core.Map<$core.String, $core.String> get meta => $_getMap(6);
+  $core.List<Identity_Claim> get issuedClaims => $_getList(6);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(7);
+}
+
+class PeerIdentity extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PeerIdentity', package: const $pb.PackageName('dvote'))
+    ..e<PeerIdentity_Type>(1, 'type', $pb.PbFieldType.OE, PeerIdentity_Type.ECDSA_SECP256k1, PeerIdentity_Type.valueOf, PeerIdentity_Type.values)
+    ..aOS(2, 'alias')
+    ..aOS(3, 'identityId')
+    ..hasRequiredFields = false
+  ;
+
+  PeerIdentity._() : super();
+  factory PeerIdentity() => create();
+  factory PeerIdentity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PeerIdentity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  PeerIdentity clone() => PeerIdentity()..mergeFromMessage(this);
+  PeerIdentity copyWith(void Function(PeerIdentity) updates) => super.copyWith((message) => updates(message as PeerIdentity));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeerIdentity create() => PeerIdentity._();
+  PeerIdentity createEmptyInstance() => create();
+  static $pb.PbList<PeerIdentity> createRepeated() => $pb.PbList<PeerIdentity>();
+  static PeerIdentity getDefault() => _defaultInstance ??= create()..freeze();
+  static PeerIdentity _defaultInstance;
+
+  PeerIdentity_Type get type => $_getN(0);
+  set type(PeerIdentity_Type v) { setField(1, v); }
+  $core.bool hasType() => $_has(0);
+  void clearType() => clearField(1);
+
+  $core.String get alias => $_getS(1, '');
+  set alias($core.String v) { $_setString(1, v); }
+  $core.bool hasAlias() => $_has(1);
+  void clearAlias() => clearField(2);
+
+  $core.String get identityId => $_getS(2, '');
+  set identityId($core.String v) { $_setString(2, v); }
+  $core.bool hasIdentityId() => $_has(2);
+  void clearIdentityId() => clearField(3);
 }
 

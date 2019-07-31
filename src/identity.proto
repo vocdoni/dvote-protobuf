@@ -1,3 +1,5 @@
+/// Type: Client side helper model
+
 syntax = "proto3";
 package dvote;
 
@@ -10,14 +12,23 @@ message IdentitiesStore {
 }
 
 message Identity {
-    string name = 1; // alias
-    string identityId = 2;
+    enum Type {
+        ECDSA_SECP256k1 = 0; // Ethereum key pair
+        IDEN3 = 1;
+    }
+    Type type = 1;
+    string alias = 2;
+    string identityId = 3;
 
     // Associated keys
-    repeated Key keys = 3;
+    repeated Key keys = 4;
 
     // Pointer to fetch the subscribed entities
-    repeated EntitySummary subscribedEntities = 4;
+    message Peers {
+        EntitySummary entities = 1;
+        PeerIdentity identities = 2;  // external identities that we have interacted with
+    }
+    repeated Peers peers = 5;
 
     message Claim {
         string index = 1;  // The index on the Merkle Tree
@@ -25,11 +36,21 @@ message Identity {
         string data = 3;  // The claim itself
         repeated string tags = 4;
     }
-    repeated Claim receivedClaims = 5;
-    repeated Claim emittedClaims = 6;
+    repeated Claim receivedClaims = 6;
+    repeated Claim issuedClaims = 7;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
     // identities can be organized by custom values.
     map<string, string> meta = 100;
+}
+
+message PeerIdentity {
+    enum Type {
+        ECDSA_SECP256k1 = 0; // Ethereum key pair
+        IDEN3 = 1;
+    }
+    Type type = 1;
+    string alias = 2;
+    string identityId = 3; 
 }

@@ -1,3 +1,5 @@
+/// Type: Client side helper model
+
 syntax = "proto3";
 package dvote;
 

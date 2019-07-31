@@ -1,3 +1,6 @@
+/// Type: Protocol model
+/// Info: https://vocdoni.io/docs/#/architecture/components/entity?id=json-schema
+
 syntax = "proto3";
 package dvote;
 
