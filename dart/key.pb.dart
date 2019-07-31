@@ -18,6 +18,7 @@ class Key extends $pb.GeneratedMessage {
     ..e<Key_Type>(1, 'type', $pb.PbFieldType.OE, Key_Type.SECP256K1, Key_Type.valueOf, Key_Type.values)
     ..aOS(2, 'publicKey')
     ..aOS(3, 'encryptedPrivateKey')
+    ..aOS(4, 'encryptedMnemonic')
     ..m<$core.String, $core.String>(100, 'meta', 'Key.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -51,6 +52,11 @@ class Key extends $pb.GeneratedMessage {
   $core.bool hasEncryptedPrivateKey() => $_has(2);
   void clearEncryptedPrivateKey() => clearField(3);
 
-  $core.Map<$core.String, $core.String> get meta => $_getMap(3);
+  $core.String get encryptedMnemonic => $_getS(3, '');
+  set encryptedMnemonic($core.String v) { $_setString(3, v); }
+  $core.bool hasEncryptedMnemonic() => $_has(3);
+  void clearEncryptedMnemonic() => clearField(4);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(4);
 }
 

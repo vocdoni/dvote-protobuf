@@ -12,6 +12,7 @@ message Key {
     Type type = 1;
     string publicKey = 2;
     string encryptedPrivateKey = 3;
+    string encryptedMnemonic = 4;    // Human friendly seed phrase
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
