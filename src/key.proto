@@ -10,9 +10,10 @@ message Key {
     }
 
     Type type = 1;
-    string publicKey = 2;
+    string encryptedMnemonic = 2;    // Human friendly seed phrase
     string encryptedPrivateKey = 3;
-    string encryptedMnemonic = 4;    // Human friendly seed phrase
+    string publicKey = 4;
+    string address = 5;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that

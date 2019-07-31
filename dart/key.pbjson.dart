@@ -9,9 +9,10 @@ const Key$json = const {
   '1': 'Key',
   '2': const [
     const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.Key.Type', '10': 'type'},
-    const {'1': 'publicKey', '3': 2, '4': 1, '5': 9, '10': 'publicKey'},
+    const {'1': 'encryptedMnemonic', '3': 2, '4': 1, '5': 9, '10': 'encryptedMnemonic'},
     const {'1': 'encryptedPrivateKey', '3': 3, '4': 1, '5': 9, '10': 'encryptedPrivateKey'},
-    const {'1': 'encryptedMnemonic', '3': 4, '4': 1, '5': 9, '10': 'encryptedMnemonic'},
+    const {'1': 'publicKey', '3': 4, '4': 1, '5': 9, '10': 'publicKey'},
+    const {'1': 'address', '3': 5, '4': 1, '5': 9, '10': 'address'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Key.MetaEntry', '10': 'meta'},
   ],
   '3': const [Key_MetaEntry$json],

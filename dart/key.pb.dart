@@ -16,9 +16,10 @@ export 'key.pbenum.dart';
 class Key extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Key', package: const $pb.PackageName('dvote'))
     ..e<Key_Type>(1, 'type', $pb.PbFieldType.OE, Key_Type.SECP256K1, Key_Type.valueOf, Key_Type.values)
-    ..aOS(2, 'publicKey')
+    ..aOS(2, 'encryptedMnemonic')
     ..aOS(3, 'encryptedPrivateKey')
-    ..aOS(4, 'encryptedMnemonic')
+    ..aOS(4, 'publicKey')
+    ..aOS(5, 'address')
     ..m<$core.String, $core.String>(100, 'meta', 'Key.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -42,21 +43,26 @@ class Key extends $pb.GeneratedMessage {
   $core.bool hasType() => $_has(0);
   void clearType() => clearField(1);
 
-  $core.String get publicKey => $_getS(1, '');
-  set publicKey($core.String v) { $_setString(1, v); }
-  $core.bool hasPublicKey() => $_has(1);
-  void clearPublicKey() => clearField(2);
+  $core.String get encryptedMnemonic => $_getS(1, '');
+  set encryptedMnemonic($core.String v) { $_setString(1, v); }
+  $core.bool hasEncryptedMnemonic() => $_has(1);
+  void clearEncryptedMnemonic() => clearField(2);
 
   $core.String get encryptedPrivateKey => $_getS(2, '');
   set encryptedPrivateKey($core.String v) { $_setString(2, v); }
   $core.bool hasEncryptedPrivateKey() => $_has(2);
   void clearEncryptedPrivateKey() => clearField(3);
 
-  $core.String get encryptedMnemonic => $_getS(3, '');
-  set encryptedMnemonic($core.String v) { $_setString(3, v); }
-  $core.bool hasEncryptedMnemonic() => $_has(3);
-  void clearEncryptedMnemonic() => clearField(4);
+  $core.String get publicKey => $_getS(3, '');
+  set publicKey($core.String v) { $_setString(3, v); }
+  $core.bool hasPublicKey() => $_has(3);
+  void clearPublicKey() => clearField(4);
 
-  $core.Map<$core.String, $core.String> get meta => $_getMap(4);
+  $core.String get address => $_getS(4, '');
+  set address($core.String v) { $_setString(4, v); }
+  $core.bool hasAddress() => $_has(4);
+  void clearAddress() => clearField(5);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(5);
 }
 
