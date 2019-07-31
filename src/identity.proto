@@ -25,10 +25,10 @@ message Identity {
 
     // Pointer to fetch the subscribed entities
     message Peers {
-        EntitySummary entities = 1;
-        PeerIdentity identities = 2;  // external identities that we have interacted with
+        repeated EntitySummary entities = 1;
+        repeated PeerIdentity identities = 2;  // external identities that we have interacted with
     }
-    repeated Peers peers = 5;
+    Peers peers = 5;
 
     message Claim {
         string index = 1;  // The index on the Merkle Tree
