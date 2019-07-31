@@ -41,8 +41,8 @@ class IdentitiesStore extends $pb.GeneratedMessage {
 
 class Identity_Peers extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity.Peers', package: const $pb.PackageName('dvote'))
-    ..a<$1.EntitySummary>(1, 'entities', $pb.PbFieldType.OM, $1.EntitySummary.getDefault, $1.EntitySummary.create)
-    ..a<PeerIdentity>(2, 'identities', $pb.PbFieldType.OM, PeerIdentity.getDefault, PeerIdentity.create)
+    ..pc<$1.EntitySummary>(1, 'entities', $pb.PbFieldType.PM,$1.EntitySummary.create)
+    ..pc<PeerIdentity>(2, 'identities', $pb.PbFieldType.PM,PeerIdentity.create)
     ..hasRequiredFields = false
   ;
 
@@ -60,15 +60,9 @@ class Identity_Peers extends $pb.GeneratedMessage {
   static Identity_Peers getDefault() => _defaultInstance ??= create()..freeze();
   static Identity_Peers _defaultInstance;
 
-  $1.EntitySummary get entities => $_getN(0);
-  set entities($1.EntitySummary v) { setField(1, v); }
-  $core.bool hasEntities() => $_has(0);
-  void clearEntities() => clearField(1);
+  $core.List<$1.EntitySummary> get entities => $_getList(0);
 
-  PeerIdentity get identities => $_getN(1);
-  set identities(PeerIdentity v) { setField(2, v); }
-  $core.bool hasIdentities() => $_has(1);
-  void clearIdentities() => clearField(2);
+  $core.List<PeerIdentity> get identities => $_getList(1);
 }
 
 class Identity_Claim extends $pb.GeneratedMessage {
@@ -118,7 +112,7 @@ class Identity extends $pb.GeneratedMessage {
     ..aOS(2, 'alias')
     ..aOS(3, 'identityId')
     ..pc<$0.Key>(4, 'keys', $pb.PbFieldType.PM,$0.Key.create)
-    ..pc<Identity_Peers>(5, 'peers', $pb.PbFieldType.PM,Identity_Peers.create)
+    ..a<Identity_Peers>(5, 'peers', $pb.PbFieldType.OM, Identity_Peers.getDefault, Identity_Peers.create)
     ..pc<Identity_Claim>(6, 'receivedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
     ..pc<Identity_Claim>(7, 'issuedClaims', $pb.PbFieldType.PM,Identity_Claim.create)
     ..m<$core.String, $core.String>(100, 'meta', 'Identity.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
@@ -156,7 +150,10 @@ class Identity extends $pb.GeneratedMessage {
 
   $core.List<$0.Key> get keys => $_getList(3);
 
-  $core.List<Identity_Peers> get peers => $_getList(4);
+  Identity_Peers get peers => $_getN(4);
+  set peers(Identity_Peers v) { setField(5, v); }
+  $core.bool hasPeers() => $_has(4);
+  void clearPeers() => clearField(5);
 
   $core.List<Identity_Claim> get receivedClaims => $_getList(5);
 

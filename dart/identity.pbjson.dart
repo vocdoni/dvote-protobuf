@@ -19,7 +19,7 @@ const Identity$json = const {
     const {'1': 'alias', '3': 2, '4': 1, '5': 9, '10': 'alias'},
     const {'1': 'identityId', '3': 3, '4': 1, '5': 9, '10': 'identityId'},
     const {'1': 'keys', '3': 4, '4': 3, '5': 11, '6': '.dvote.Key', '10': 'keys'},
-    const {'1': 'peers', '3': 5, '4': 3, '5': 11, '6': '.dvote.Identity.Peers', '10': 'peers'},
+    const {'1': 'peers', '3': 5, '4': 1, '5': 11, '6': '.dvote.Identity.Peers', '10': 'peers'},
     const {'1': 'receivedClaims', '3': 6, '4': 3, '5': 11, '6': '.dvote.Identity.Claim', '10': 'receivedClaims'},
     const {'1': 'issuedClaims', '3': 7, '4': 3, '5': 11, '6': '.dvote.Identity.Claim', '10': 'issuedClaims'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Identity.MetaEntry', '10': 'meta'},
@@ -31,8 +31,8 @@ const Identity$json = const {
 const Identity_Peers$json = const {
   '1': 'Peers',
   '2': const [
-    const {'1': 'entities', '3': 1, '4': 1, '5': 11, '6': '.dvote.EntitySummary', '10': 'entities'},
-    const {'1': 'identities', '3': 2, '4': 1, '5': 11, '6': '.dvote.PeerIdentity', '10': 'identities'},
+    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.EntitySummary', '10': 'entities'},
+    const {'1': 'identities', '3': 2, '4': 3, '5': 11, '6': '.dvote.PeerIdentity', '10': 'identities'},
   ],
 };
 
