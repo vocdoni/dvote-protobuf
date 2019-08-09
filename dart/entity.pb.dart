@@ -184,6 +184,7 @@ class Entity_Action extends $pb.GeneratedMessage {
     ..aOS(3, 'visible')
     ..aOS(4, 'url')
     ..pc<Entity_Action_ImageSource>(5, 'imageSources', $pb.PbFieldType.PM,Entity_Action_ImageSource.create)
+    ..aOB(6, 'register')
     ..hasRequiredFields = false
   ;
 
@@ -219,6 +220,11 @@ class Entity_Action extends $pb.GeneratedMessage {
   void clearUrl() => clearField(4);
 
   $core.List<Entity_Action_ImageSource> get imageSources => $_getList(4);
+
+  $core.bool get register => $_get(5, false);
+  set register($core.bool v) { $_setBool(5, v); }
+  $core.bool hasRegister() => $_has(5);
+  void clearRegister() => clearField(6);
 }
 
 class Entity_GatewayBootNode extends $pb.GeneratedMessage {

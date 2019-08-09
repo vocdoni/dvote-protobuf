@@ -141,17 +141,16 @@ class FeedPost_Author extends $pb.GeneratedMessage {
 class FeedPost extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedPost', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'id')
-    ..aOS(2, 'guid')
-    ..aOS(3, 'title')
-    ..aOS(4, 'summary')
-    ..aOS(5, 'contentText')
-    ..aOS(6, 'contentHtml')
-    ..aOS(7, 'url')
-    ..aOS(8, 'image')
-    ..pPS(9, 'tags')
-    ..aOS(10, 'datePublished')
-    ..aOS(11, 'dateModified')
-    ..a<FeedPost_Author>(12, 'author', $pb.PbFieldType.OM, FeedPost_Author.getDefault, FeedPost_Author.create)
+    ..aOS(2, 'title')
+    ..aOS(3, 'summary')
+    ..aOS(4, 'contentText')
+    ..aOS(5, 'contentHtml')
+    ..aOS(6, 'url')
+    ..aOS(7, 'image')
+    ..pPS(8, 'tags')
+    ..aOS(9, 'datePublished')
+    ..aOS(10, 'dateModified')
+    ..a<FeedPost_Author>(11, 'author', $pb.PbFieldType.OM, FeedPost_Author.getDefault, FeedPost_Author.create)
     ..hasRequiredFields = false
   ;
 
@@ -174,56 +173,51 @@ class FeedPost extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(0);
   void clearId() => clearField(1);
 
-  $core.String get guid => $_getS(1, '');
-  set guid($core.String v) { $_setString(1, v); }
-  $core.bool hasGuid() => $_has(1);
-  void clearGuid() => clearField(2);
+  $core.String get title => $_getS(1, '');
+  set title($core.String v) { $_setString(1, v); }
+  $core.bool hasTitle() => $_has(1);
+  void clearTitle() => clearField(2);
 
-  $core.String get title => $_getS(2, '');
-  set title($core.String v) { $_setString(2, v); }
-  $core.bool hasTitle() => $_has(2);
-  void clearTitle() => clearField(3);
+  $core.String get summary => $_getS(2, '');
+  set summary($core.String v) { $_setString(2, v); }
+  $core.bool hasSummary() => $_has(2);
+  void clearSummary() => clearField(3);
 
-  $core.String get summary => $_getS(3, '');
-  set summary($core.String v) { $_setString(3, v); }
-  $core.bool hasSummary() => $_has(3);
-  void clearSummary() => clearField(4);
+  $core.String get contentText => $_getS(3, '');
+  set contentText($core.String v) { $_setString(3, v); }
+  $core.bool hasContentText() => $_has(3);
+  void clearContentText() => clearField(4);
 
-  $core.String get contentText => $_getS(4, '');
-  set contentText($core.String v) { $_setString(4, v); }
-  $core.bool hasContentText() => $_has(4);
-  void clearContentText() => clearField(5);
+  $core.String get contentHtml => $_getS(4, '');
+  set contentHtml($core.String v) { $_setString(4, v); }
+  $core.bool hasContentHtml() => $_has(4);
+  void clearContentHtml() => clearField(5);
 
-  $core.String get contentHtml => $_getS(5, '');
-  set contentHtml($core.String v) { $_setString(5, v); }
-  $core.bool hasContentHtml() => $_has(5);
-  void clearContentHtml() => clearField(6);
+  $core.String get url => $_getS(5, '');
+  set url($core.String v) { $_setString(5, v); }
+  $core.bool hasUrl() => $_has(5);
+  void clearUrl() => clearField(6);
 
-  $core.String get url => $_getS(6, '');
-  set url($core.String v) { $_setString(6, v); }
-  $core.bool hasUrl() => $_has(6);
-  void clearUrl() => clearField(7);
+  $core.String get image => $_getS(6, '');
+  set image($core.String v) { $_setString(6, v); }
+  $core.bool hasImage() => $_has(6);
+  void clearImage() => clearField(7);
 
-  $core.String get image => $_getS(7, '');
-  set image($core.String v) { $_setString(7, v); }
-  $core.bool hasImage() => $_has(7);
-  void clearImage() => clearField(8);
+  $core.List<$core.String> get tags => $_getList(7);
 
-  $core.List<$core.String> get tags => $_getList(8);
+  $core.String get datePublished => $_getS(8, '');
+  set datePublished($core.String v) { $_setString(8, v); }
+  $core.bool hasDatePublished() => $_has(8);
+  void clearDatePublished() => clearField(9);
 
-  $core.String get datePublished => $_getS(9, '');
-  set datePublished($core.String v) { $_setString(9, v); }
-  $core.bool hasDatePublished() => $_has(9);
-  void clearDatePublished() => clearField(10);
+  $core.String get dateModified => $_getS(9, '');
+  set dateModified($core.String v) { $_setString(9, v); }
+  $core.bool hasDateModified() => $_has(9);
+  void clearDateModified() => clearField(10);
 
-  $core.String get dateModified => $_getS(10, '');
-  set dateModified($core.String v) { $_setString(10, v); }
-  $core.bool hasDateModified() => $_has(10);
-  void clearDateModified() => clearField(11);
-
-  FeedPost_Author get author => $_getN(11);
-  set author(FeedPost_Author v) { setField(12, v); }
-  $core.bool hasAuthor() => $_has(11);
-  void clearAuthor() => clearField(12);
+  FeedPost_Author get author => $_getN(10);
+  set author(FeedPost_Author v) { setField(11, v); }
+  $core.bool hasAuthor() => $_has(10);
+  void clearAuthor() => clearField(11);
 }
 

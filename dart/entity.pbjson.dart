@@ -96,6 +96,7 @@ const Entity_Action$json = const {
     const {'1': 'name', '3': 2, '4': 3, '5': 11, '6': '.dvote.Entity.Action.NameEntry', '10': 'name'},
     const {'1': 'visible', '3': 3, '4': 1, '5': 9, '10': 'visible'},
     const {'1': 'url', '3': 4, '4': 1, '5': 9, '10': 'url'},
+    const {'1': 'register', '3': 6, '4': 1, '5': 8, '10': 'register'},
     const {'1': 'imageSources', '3': 5, '4': 3, '5': 11, '6': '.dvote.Entity.Action.ImageSource', '10': 'imageSources'},
   ],
   '3': const [Entity_Action_NameEntry$json, Entity_Action_ImageSource$json],
