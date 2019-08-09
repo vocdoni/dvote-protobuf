@@ -54,6 +54,9 @@ message Entity {
         // type = browser / image
         string url = 4;
 
+        // type = browser
+        bool register = 6;
+        
         // type = image
         message ImageSource {
             string type = 1;
