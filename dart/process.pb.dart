@@ -158,11 +158,12 @@ class Process_Details extends $pb.GeneratedMessage {
 class Process extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Process', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'version')
-    ..aOS(2, 'type')
-    ..a<$core.int>(3, 'startBlock', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, 'numberOfBlocks', $pb.PbFieldType.O3)
-    ..a<Process_Census>(5, 'census', $pb.PbFieldType.OM, Process_Census.getDefault, Process_Census.create)
-    ..a<Process_Details>(6, 'details', $pb.PbFieldType.OM, Process_Details.getDefault, Process_Details.create)
+    ..aOS(2, 'processId')
+    ..aOS(3, 'type')
+    ..a<$core.int>(4, 'startBlock', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, 'numberOfBlocks', $pb.PbFieldType.O3)
+    ..a<Process_Census>(6, 'census', $pb.PbFieldType.OM, Process_Census.getDefault, Process_Census.create)
+    ..a<Process_Details>(7, 'details', $pb.PbFieldType.OM, Process_Details.getDefault, Process_Details.create)
     ..hasRequiredFields = false
   ;
 
@@ -185,29 +186,34 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasVersion() => $_has(0);
   void clearVersion() => clearField(1);
 
-  $core.String get type => $_getS(1, '');
-  set type($core.String v) { $_setString(1, v); }
-  $core.bool hasType() => $_has(1);
-  void clearType() => clearField(2);
+  $core.String get processId => $_getS(1, '');
+  set processId($core.String v) { $_setString(1, v); }
+  $core.bool hasProcessId() => $_has(1);
+  void clearProcessId() => clearField(2);
 
-  $core.int get startBlock => $_get(2, 0);
-  set startBlock($core.int v) { $_setSignedInt32(2, v); }
-  $core.bool hasStartBlock() => $_has(2);
-  void clearStartBlock() => clearField(3);
+  $core.String get type => $_getS(2, '');
+  set type($core.String v) { $_setString(2, v); }
+  $core.bool hasType() => $_has(2);
+  void clearType() => clearField(3);
 
-  $core.int get numberOfBlocks => $_get(3, 0);
-  set numberOfBlocks($core.int v) { $_setSignedInt32(3, v); }
-  $core.bool hasNumberOfBlocks() => $_has(3);
-  void clearNumberOfBlocks() => clearField(4);
+  $core.int get startBlock => $_get(3, 0);
+  set startBlock($core.int v) { $_setSignedInt32(3, v); }
+  $core.bool hasStartBlock() => $_has(3);
+  void clearStartBlock() => clearField(4);
 
-  Process_Census get census => $_getN(4);
-  set census(Process_Census v) { setField(5, v); }
-  $core.bool hasCensus() => $_has(4);
-  void clearCensus() => clearField(5);
+  $core.int get numberOfBlocks => $_get(4, 0);
+  set numberOfBlocks($core.int v) { $_setSignedInt32(4, v); }
+  $core.bool hasNumberOfBlocks() => $_has(4);
+  void clearNumberOfBlocks() => clearField(5);
 
-  Process_Details get details => $_getN(5);
-  set details(Process_Details v) { setField(6, v); }
-  $core.bool hasDetails() => $_has(5);
-  void clearDetails() => clearField(6);
+  Process_Census get census => $_getN(5);
+  set census(Process_Census v) { setField(6, v); }
+  $core.bool hasCensus() => $_has(5);
+  void clearCensus() => clearField(6);
+
+  Process_Details get details => $_getN(6);
+  set details(Process_Details v) { setField(7, v); }
+  $core.bool hasDetails() => $_has(6);
+  void clearDetails() => clearField(7);
 }
 
