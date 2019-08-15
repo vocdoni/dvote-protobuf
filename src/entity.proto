@@ -82,12 +82,6 @@ message Entity {
     }
     GatewayUpdate gatewayUpdate = 12;
 
-    message Relay {
-        string publicKey = 1;
-        string messagingUri = 2;
-    }
-    repeated Relay relays = 13;
-
     message EntityReference {
         string resolverAddress = 1;
         string networkId = 2;
