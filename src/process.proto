@@ -1,0 +1,41 @@
+/// Type: Client side helper model
+
+syntax = "proto3";
+package dvote;
+
+message Process {
+    string version = 1;
+    string type = 2;
+
+    int32 startBlock = 3;
+    int32 numberOfBlocks = 4;
+
+    message Census {
+        string id = 1;
+        string merkleRoot = 2;
+        repeated string messagingUris = 3;
+    }
+    Census census = 5;
+
+    message Details {
+        string entityId = 1;
+        string encryptionKey = 2;
+        map<string, string> title = 3;  // locale-aware value
+        map<string, string> description = 4;  // locale-aware value
+        string headerImage = 5;
+
+        message Question {
+            string type = 1;
+            map<string, string> question = 2;  // locale-aware value
+            map<string, string> description = 3;  // locale-aware value
+
+            message VoteOption {
+                map<string, string> title = 1;  // locale-aware value
+                string value = 2;
+            }
+            repeated VoteOption voteOptions = 4;
+        }
+        repeated Question questions = 6;
+    }
+    Details details = 6;
+}
