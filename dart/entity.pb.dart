@@ -297,38 +297,6 @@ class Entity_GatewayUpdate extends $pb.GeneratedMessage {
   void clearDifficulty() => clearField(3);
 }
 
-class Entity_Relay extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.Relay', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'publicKey')
-    ..aOS(2, 'messagingUri')
-    ..hasRequiredFields = false
-  ;
-
-  Entity_Relay._() : super();
-  factory Entity_Relay() => create();
-  factory Entity_Relay.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Entity_Relay.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Entity_Relay clone() => Entity_Relay()..mergeFromMessage(this);
-  Entity_Relay copyWith(void Function(Entity_Relay) updates) => super.copyWith((message) => updates(message as Entity_Relay));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static Entity_Relay create() => Entity_Relay._();
-  Entity_Relay createEmptyInstance() => create();
-  static $pb.PbList<Entity_Relay> createRepeated() => $pb.PbList<Entity_Relay>();
-  static Entity_Relay getDefault() => _defaultInstance ??= create()..freeze();
-  static Entity_Relay _defaultInstance;
-
-  $core.String get publicKey => $_getS(0, '');
-  set publicKey($core.String v) { $_setString(0, v); }
-  $core.bool hasPublicKey() => $_has(0);
-  void clearPublicKey() => clearField(1);
-
-  $core.String get messagingUri => $_getS(1, '');
-  set messagingUri($core.String v) { $_setString(1, v); }
-  $core.bool hasMessagingUri() => $_has(1);
-  void clearMessagingUri() => clearField(2);
-}
-
 class Entity_EntityReference extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Entity.EntityReference', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'resolverAddress')
@@ -381,7 +349,6 @@ class Entity extends $pb.GeneratedMessage {
     ..pc<Entity_Action>(10, 'actions', $pb.PbFieldType.PM,Entity_Action.create)
     ..pc<Entity_GatewayBootNode>(11, 'gatewayBootNodes', $pb.PbFieldType.PM,Entity_GatewayBootNode.create)
     ..a<Entity_GatewayUpdate>(12, 'gatewayUpdate', $pb.PbFieldType.OM, Entity_GatewayUpdate.getDefault, Entity_GatewayUpdate.create)
-    ..pc<Entity_Relay>(13, 'relays', $pb.PbFieldType.PM,Entity_Relay.create)
     ..pc<Entity_EntityReference>(14, 'bootEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
     ..pc<Entity_EntityReference>(15, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
     ..pc<Entity_EntityReference>(16, 'trustedEntities', $pb.PbFieldType.PM,Entity_EntityReference.create)
@@ -446,17 +413,15 @@ class Entity extends $pb.GeneratedMessage {
   $core.bool hasGatewayUpdate() => $_has(11);
   void clearGatewayUpdate() => clearField(12);
 
-  $core.List<Entity_Relay> get relays => $_getList(12);
+  $core.List<Entity_EntityReference> get bootEntities => $_getList(12);
 
-  $core.List<Entity_EntityReference> get bootEntities => $_getList(13);
+  $core.List<Entity_EntityReference> get fallbackBootNodeEntities => $_getList(13);
 
-  $core.List<Entity_EntityReference> get fallbackBootNodeEntities => $_getList(14);
+  $core.List<Entity_EntityReference> get trustedEntities => $_getList(14);
 
-  $core.List<Entity_EntityReference> get trustedEntities => $_getList(15);
+  $core.List<Entity_EntityReference> get censusServiceManagedEntities => $_getList(15);
 
-  $core.List<Entity_EntityReference> get censusServiceManagedEntities => $_getList(16);
-
-  $core.Map<$core.String, $core.String> get meta => $_getMap(17);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(16);
 }
 
 class EntitySummary extends $pb.GeneratedMessage {
