@@ -19,7 +19,7 @@ message Process {
 
     message Details {
         string entityId = 1;
-        string encryptionKey = 2;
+        string encryptionPublicKey = 2;
         map<string, string> title = 3;  // locale-aware value
         map<string, string> description = 4;  // locale-aware value
         string headerImage = 5;

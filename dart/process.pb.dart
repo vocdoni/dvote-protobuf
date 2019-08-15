@@ -111,7 +111,7 @@ class Process_Details_Question extends $pb.GeneratedMessage {
 class Process_Details extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Process.Details', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'entityId')
-    ..aOS(2, 'encryptionKey')
+    ..aOS(2, 'encryptionPublicKey')
     ..m<$core.String, $core.String>(3, 'title', 'Process.Details.TitleEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..m<$core.String, $core.String>(4, 'description', 'Process.Details.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..aOS(5, 'headerImage')
@@ -138,10 +138,10 @@ class Process_Details extends $pb.GeneratedMessage {
   $core.bool hasEntityId() => $_has(0);
   void clearEntityId() => clearField(1);
 
-  $core.String get encryptionKey => $_getS(1, '');
-  set encryptionKey($core.String v) { $_setString(1, v); }
-  $core.bool hasEncryptionKey() => $_has(1);
-  void clearEncryptionKey() => clearField(2);
+  $core.String get encryptionPublicKey => $_getS(1, '');
+  set encryptionPublicKey($core.String v) { $_setString(1, v); }
+  $core.bool hasEncryptionPublicKey() => $_has(1);
+  void clearEncryptionPublicKey() => clearField(2);
 
   $core.Map<$core.String, $core.String> get title => $_getMap(2);
 

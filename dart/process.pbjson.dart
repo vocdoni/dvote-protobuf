@@ -31,7 +31,7 @@ const Process_Details$json = const {
   '1': 'Details',
   '2': const [
     const {'1': 'entityId', '3': 1, '4': 1, '5': 9, '10': 'entityId'},
-    const {'1': 'encryptionKey', '3': 2, '4': 1, '5': 9, '10': 'encryptionKey'},
+    const {'1': 'encryptionPublicKey', '3': 2, '4': 1, '5': 9, '10': 'encryptionPublicKey'},
     const {'1': 'title', '3': 3, '4': 3, '5': 11, '6': '.dvote.Process.Details.TitleEntry', '10': 'title'},
     const {'1': 'description', '3': 4, '4': 3, '5': 11, '6': '.dvote.Process.Details.DescriptionEntry', '10': 'description'},
     const {'1': 'headerImage', '3': 5, '4': 1, '5': 9, '10': 'headerImage'},
