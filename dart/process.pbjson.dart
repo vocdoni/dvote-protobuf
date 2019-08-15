@@ -9,12 +9,11 @@ const Process$json = const {
   '1': 'Process',
   '2': const [
     const {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
-    const {'1': 'processId', '3': 2, '4': 1, '5': 9, '10': 'processId'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 9, '10': 'type'},
-    const {'1': 'startBlock', '3': 4, '4': 1, '5': 5, '10': 'startBlock'},
-    const {'1': 'numberOfBlocks', '3': 5, '4': 1, '5': 5, '10': 'numberOfBlocks'},
-    const {'1': 'census', '3': 6, '4': 1, '5': 11, '6': '.dvote.Process.Census', '10': 'census'},
-    const {'1': 'details', '3': 7, '4': 1, '5': 11, '6': '.dvote.Process.Details', '10': 'details'},
+    const {'1': 'type', '3': 2, '4': 1, '5': 9, '10': 'type'},
+    const {'1': 'startBlock', '3': 3, '4': 1, '5': 5, '10': 'startBlock'},
+    const {'1': 'numberOfBlocks', '3': 4, '4': 1, '5': 5, '10': 'numberOfBlocks'},
+    const {'1': 'census', '3': 5, '4': 1, '5': 11, '6': '.dvote.Process.Census', '10': 'census'},
+    const {'1': 'details', '3': 6, '4': 1, '5': 11, '6': '.dvote.Process.Details', '10': 'details'},
   ],
   '3': const [Process_Census$json, Process_Details$json],
 };
