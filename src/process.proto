@@ -5,18 +5,17 @@ package dvote;
 
 message Process {
     string version = 1;
-    string processId = 2;  // 0x...
-    string type = 3;
+    string type = 2;
 
-    int32 startBlock = 4;
-    int32 numberOfBlocks = 5;
+    int32 startBlock = 3;
+    int32 numberOfBlocks = 4;
 
     message Census {
         string id = 1;
         string merkleRoot = 2;
         repeated string messagingUris = 3;
     }
-    Census census = 6;
+    Census census = 5;
 
     message Details {
         string entityId = 1;
@@ -38,5 +37,5 @@ message Process {
         }
         repeated Question questions = 6;
     }
-    Details details = 7;
+    Details details = 6;
 }
