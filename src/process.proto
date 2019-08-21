@@ -45,6 +45,6 @@ message ProcessMetadata {
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
-    // entities can be organized by custom values.
+    // processes can be tagged and organized by custom values.
     map<string, string> meta = 100;
 }
