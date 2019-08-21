@@ -4,8 +4,6 @@
 syntax = "proto3";
 package dvote;
 
-import "gateway.proto";
-
 // Helper to serialize and store all cached data
 message EntityMetadataStore {
     repeated EntityMetadata items = 1;
@@ -16,11 +14,10 @@ message EntityMetadataStore {
 message EntityMetadata {
     // OWN FIELDS
     string version = 1;
-    string entityId = 2;  // 0x...
 
-    repeated string languages = 3;
-    map<string, string> name = 4;  // locale-aware value
-    map<string, string> description = 5;  // locale-aware value
+    repeated string languages = 2;
+    map<string, string> name = 3;  // locale-aware value
+    map<string, string> description = 4;  // locale-aware value
 
     // Details on where the contracts are deployed
     message ContractsInfo {
@@ -28,21 +25,21 @@ message EntityMetadata {
         string votingAddress = 2;  // 0x...
         string networkId = 3;  // homestead, goerli, ...
     }
-    ContractsInfo contracts = 6;
+    ContractsInfo contracts = 5;
 
     message VotingProcesses {
         repeated string active = 1;
         repeated string ended = 2;
     }
-    VotingProcesses votingProcesses = 7;
+    VotingProcesses votingProcesses = 6;
 
-    map<string, string> newsFeed = 8;  // locale-aware value
+    map<string, string> newsFeed = 7;  // locale-aware value
 
     message Media {
         string avatar = 1;
         string header = 2;
     }
-    Media media = 9;
+    Media media = 8;
 
     // See entity actions definition
     // https://vocdoni.io/docs/#/architecture/components/entity?id=entity-actions
@@ -67,25 +64,12 @@ message EntityMetadata {
         }
         repeated ImageSource imageSources = 5;
     }
-    repeated Action actions = 10;
+    repeated Action actions = 9;
 
-    message GatewayBootNode {
-        string fetchUri = 1;
-        string heartbeatMessagingUri = 2;
-    }
-    repeated GatewayBootNode gatewayBootNodes = 11;
-
-    message GatewayUpdate {
-        int32 timeout = 1;
-        string topic = 2;
-        int32 difficulty = 3;
-    }
-    GatewayUpdate gatewayUpdate = 12;
-
-    repeated EntityReference bootEntities = 14;
-    repeated EntityReference fallbackBootNodeEntities = 15;
-    repeated EntityReference trustedEntities = 16;
-    repeated EntityReference censusServiceManagedEntities = 17;
+    repeated EntityReference bootEntities = 10;
+    repeated EntityReference fallbackBootNodeEntities = 11;
+    repeated EntityReference trustedEntities = 12;
+    repeated EntityReference censusServiceManagedEntities = 13;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
@@ -96,8 +80,7 @@ message EntityMetadata {
 
 // Pointer to the place where the metadata of an Entity can be fetched
 message EntityReference {
-    string resolverAddress = 1;
+    string entityId = 1;
     string networkId = 2;
-    string entityId = 3;
-    repeated Gateway entryPoints = 4;
+    repeated string entryPoints = 3; // Web3
 }

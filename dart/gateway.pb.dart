@@ -9,67 +9,76 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class GatewaysStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GatewaysStore', package: const $pb.PackageName('dvote'))
-    ..pc<Gateway>(1, 'items', $pb.PbFieldType.PM,Gateway.create)
+class GatewayInfoStore extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GatewayInfoStore', package: const $pb.PackageName('dvote'))
+    ..pc<GatewayInfo>(1, 'items', $pb.PbFieldType.PM,GatewayInfo.create)
     ..hasRequiredFields = false
   ;
 
-  GatewaysStore._() : super();
-  factory GatewaysStore() => create();
-  factory GatewaysStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GatewaysStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  GatewaysStore clone() => GatewaysStore()..mergeFromMessage(this);
-  GatewaysStore copyWith(void Function(GatewaysStore) updates) => super.copyWith((message) => updates(message as GatewaysStore));
+  GatewayInfoStore._() : super();
+  factory GatewayInfoStore() => create();
+  factory GatewayInfoStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GatewayInfoStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GatewayInfoStore clone() => GatewayInfoStore()..mergeFromMessage(this);
+  GatewayInfoStore copyWith(void Function(GatewayInfoStore) updates) => super.copyWith((message) => updates(message as GatewayInfoStore));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static GatewaysStore create() => GatewaysStore._();
-  GatewaysStore createEmptyInstance() => create();
-  static $pb.PbList<GatewaysStore> createRepeated() => $pb.PbList<GatewaysStore>();
-  static GatewaysStore getDefault() => _defaultInstance ??= create()..freeze();
-  static GatewaysStore _defaultInstance;
+  static GatewayInfoStore create() => GatewayInfoStore._();
+  GatewayInfoStore createEmptyInstance() => create();
+  static $pb.PbList<GatewayInfoStore> createRepeated() => $pb.PbList<GatewayInfoStore>();
+  static GatewayInfoStore getDefault() => _defaultInstance ??= create()..freeze();
+  static GatewayInfoStore _defaultInstance;
 
-  $core.List<Gateway> get items => $_getList(0);
+  $core.List<GatewayInfo> get items => $_getList(0);
 }
 
-class Gateway extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Gateway', package: const $pb.PackageName('dvote'))
+class GatewayInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GatewayInfo', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'dvote')
-    ..aOS(2, 'web3')
-    ..aOS(3, 'publicKey')
-    ..m<$core.String, $core.String>(100, 'meta', 'Gateway.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..pPS(2, 'supportedApis')
+    ..aOS(3, 'web3')
+    ..aOS(4, 'networkId')
+    ..aOS(5, 'publicKey')
+    ..m<$core.String, $core.String>(100, 'meta', 'GatewayInfo.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
-  Gateway._() : super();
-  factory Gateway() => create();
-  factory Gateway.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Gateway.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  Gateway clone() => Gateway()..mergeFromMessage(this);
-  Gateway copyWith(void Function(Gateway) updates) => super.copyWith((message) => updates(message as Gateway));
+  GatewayInfo._() : super();
+  factory GatewayInfo() => create();
+  factory GatewayInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GatewayInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GatewayInfo clone() => GatewayInfo()..mergeFromMessage(this);
+  GatewayInfo copyWith(void Function(GatewayInfo) updates) => super.copyWith((message) => updates(message as GatewayInfo));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static Gateway create() => Gateway._();
-  Gateway createEmptyInstance() => create();
-  static $pb.PbList<Gateway> createRepeated() => $pb.PbList<Gateway>();
-  static Gateway getDefault() => _defaultInstance ??= create()..freeze();
-  static Gateway _defaultInstance;
+  static GatewayInfo create() => GatewayInfo._();
+  GatewayInfo createEmptyInstance() => create();
+  static $pb.PbList<GatewayInfo> createRepeated() => $pb.PbList<GatewayInfo>();
+  static GatewayInfo getDefault() => _defaultInstance ??= create()..freeze();
+  static GatewayInfo _defaultInstance;
 
   $core.String get dvote => $_getS(0, '');
   set dvote($core.String v) { $_setString(0, v); }
   $core.bool hasDvote() => $_has(0);
   void clearDvote() => clearField(1);
 
-  $core.String get web3 => $_getS(1, '');
-  set web3($core.String v) { $_setString(1, v); }
-  $core.bool hasWeb3() => $_has(1);
-  void clearWeb3() => clearField(2);
+  $core.List<$core.String> get supportedApis => $_getList(1);
 
-  $core.String get publicKey => $_getS(2, '');
-  set publicKey($core.String v) { $_setString(2, v); }
-  $core.bool hasPublicKey() => $_has(2);
-  void clearPublicKey() => clearField(3);
+  $core.String get web3 => $_getS(2, '');
+  set web3($core.String v) { $_setString(2, v); }
+  $core.bool hasWeb3() => $_has(2);
+  void clearWeb3() => clearField(3);
 
-  $core.Map<$core.String, $core.String> get meta => $_getMap(3);
+  $core.String get networkId => $_getS(3, '');
+  set networkId($core.String v) { $_setString(3, v); }
+  $core.bool hasNetworkId() => $_has(3);
+  void clearNetworkId() => clearField(4);
+
+  $core.String get publicKey => $_getS(4, '');
+  set publicKey($core.String v) { $_setString(4, v); }
+  $core.bool hasPublicKey() => $_has(4);
+  void clearPublicKey() => clearField(5);
+
+  $core.Map<$core.String, $core.String> get meta => $_getMap(5);
 }
 
