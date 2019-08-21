@@ -25,7 +25,7 @@ message Identity {
 
     // Pointer to fetch the subscribed entities
     message Peers {
-        repeated EntitySummary entities = 1;
+        repeated EntityReference entities = 1;
         repeated PeerIdentity identities = 2;  // external identities that we have interacted with
     }
     Peers peers = 5;

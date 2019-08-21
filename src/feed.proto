@@ -7,7 +7,7 @@ package dvote;
 // https://jsonfeed.org/version/1
 
 // Helper to serialize and store all cached posts from all entities
-message FeedsStore {
+message FeedStore {
     repeated Feed items = 1;
 }
 

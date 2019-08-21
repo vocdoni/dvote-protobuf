@@ -41,7 +41,7 @@ class IdentitiesStore extends $pb.GeneratedMessage {
 
 class Identity_Peers extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity.Peers', package: const $pb.PackageName('dvote'))
-    ..pc<$1.EntitySummary>(1, 'entities', $pb.PbFieldType.PM,$1.EntitySummary.create)
+    ..pc<$1.EntityReference>(1, 'entities', $pb.PbFieldType.PM,$1.EntityReference.create)
     ..pc<PeerIdentity>(2, 'identities', $pb.PbFieldType.PM,PeerIdentity.create)
     ..hasRequiredFields = false
   ;
@@ -60,7 +60,7 @@ class Identity_Peers extends $pb.GeneratedMessage {
   static Identity_Peers getDefault() => _defaultInstance ??= create()..freeze();
   static Identity_Peers _defaultInstance;
 
-  $core.List<$1.EntitySummary> get entities => $_getList(0);
+  $core.List<$1.EntityReference> get entities => $_getList(0);
 
   $core.List<PeerIdentity> get identities => $_getList(1);
 }

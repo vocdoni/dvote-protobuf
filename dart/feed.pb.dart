@@ -9,25 +9,25 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class FeedsStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedsStore', package: const $pb.PackageName('dvote'))
+class FeedStore extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedStore', package: const $pb.PackageName('dvote'))
     ..pc<Feed>(1, 'items', $pb.PbFieldType.PM,Feed.create)
     ..hasRequiredFields = false
   ;
 
-  FeedsStore._() : super();
-  factory FeedsStore() => create();
-  factory FeedsStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FeedsStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  FeedsStore clone() => FeedsStore()..mergeFromMessage(this);
-  FeedsStore copyWith(void Function(FeedsStore) updates) => super.copyWith((message) => updates(message as FeedsStore));
+  FeedStore._() : super();
+  factory FeedStore() => create();
+  factory FeedStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FeedStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FeedStore clone() => FeedStore()..mergeFromMessage(this);
+  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static FeedsStore create() => FeedsStore._();
-  FeedsStore createEmptyInstance() => create();
-  static $pb.PbList<FeedsStore> createRepeated() => $pb.PbList<FeedsStore>();
-  static FeedsStore getDefault() => _defaultInstance ??= create()..freeze();
-  static FeedsStore _defaultInstance;
+  static FeedStore create() => FeedStore._();
+  FeedStore createEmptyInstance() => create();
+  static $pb.PbList<FeedStore> createRepeated() => $pb.PbList<FeedStore>();
+  static FeedStore getDefault() => _defaultInstance ??= create()..freeze();
+  static FeedStore _defaultInstance;
 
   $core.List<Feed> get items => $_getList(0);
 }
