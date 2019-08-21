@@ -7,13 +7,13 @@ package dvote;
 import "gateway.proto";
 
 // Helper to serialize and store all cached data
-message EntitiesStore {
-    repeated Entity items = 1;
+message EntityMetadataStore {
+    repeated EntityMetadata items = 1;
 }
 
 // The metadata of an entity
 // https://vocdoni.io/docs/#/architecture/components/entity?id=json-schema
-message Entity {
+message EntityMetadata {
     // OWN FIELDS
     string version = 1;
     string entityId = 2;  // 0x...
@@ -82,11 +82,6 @@ message Entity {
     }
     GatewayUpdate gatewayUpdate = 12;
 
-    message EntityReference {
-        string resolverAddress = 1;
-        string networkId = 2;
-        string entityId = 3;
-    }
     repeated EntityReference bootEntities = 14;
     repeated EntityReference fallbackBootNodeEntities = 15;
     repeated EntityReference trustedEntities = 16;
@@ -100,7 +95,7 @@ message Entity {
 
 
 // Pointer to the place where the metadata of an Entity can be fetched
-message EntitySummary {
+message EntityReference {
     string resolverAddress = 1;
     string networkId = 2;
     string entityId = 3;

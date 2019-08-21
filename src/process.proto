@@ -3,7 +3,12 @@
 syntax = "proto3";
 package dvote;
 
-message Process {
+// Helper to serialize and store all cached data
+message ProcessMetadataStore {
+    repeated ProcessMetadata items = 1;
+}
+
+message ProcessMetadata {
     string version = 1;
     string type = 2;
 
@@ -11,9 +16,8 @@ message Process {
     int32 numberOfBlocks = 4;
 
     message Census {
-        string id = 1;
-        string merkleRoot = 2;
-        repeated string messagingUris = 3;
+        string merkleRoot = 1;
+        string merkleTree = 2;
     }
     Census census = 5;
 
@@ -38,4 +42,9 @@ message Process {
         repeated Question questions = 6;
     }
     Details details = 6;
+
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // entities can be organized by custom values.
+    map<string, string> meta = 100;
 }

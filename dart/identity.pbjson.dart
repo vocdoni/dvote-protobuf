@@ -31,7 +31,7 @@ const Identity$json = const {
 const Identity_Peers$json = const {
   '1': 'Peers',
   '2': const [
-    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.EntitySummary', '10': 'entities'},
+    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.EntityReference', '10': 'entities'},
     const {'1': 'identities', '3': 2, '4': 3, '5': 11, '6': '.dvote.PeerIdentity', '10': 'identities'},
   ],
 };
