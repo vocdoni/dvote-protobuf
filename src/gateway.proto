@@ -5,14 +5,16 @@ syntax = "proto3";
 package dvote;
 
 // Helper to serialize and store all cached data
-message GatewaysStore {
-    repeated Gateway items = 1;
+message GatewayInfoStore {
+    repeated GatewayInfo items = 1;
 }
 
-message Gateway {
+message GatewayInfo {
     string dvote = 1;
-    string web3 = 2;
-    string publicKey = 3; // Secp256k1 public key
+    repeated string supportedApis = 2;
+    string web3 = 3;
+    string networkId = 4;
+    string publicKey = 5; // Secp256k1 public key
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
