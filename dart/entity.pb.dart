@@ -32,44 +32,6 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
   $core.List<EntityMetadata> get items => $_getList(0);
 }
 
-class EntityMetadata_ContractsInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata.ContractsInfo', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'resolverAddress')
-    ..aOS(2, 'votingAddress')
-    ..aOS(3, 'networkId')
-    ..hasRequiredFields = false
-  ;
-
-  EntityMetadata_ContractsInfo._() : super();
-  factory EntityMetadata_ContractsInfo() => create();
-  factory EntityMetadata_ContractsInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory EntityMetadata_ContractsInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  EntityMetadata_ContractsInfo clone() => EntityMetadata_ContractsInfo()..mergeFromMessage(this);
-  EntityMetadata_ContractsInfo copyWith(void Function(EntityMetadata_ContractsInfo) updates) => super.copyWith((message) => updates(message as EntityMetadata_ContractsInfo));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static EntityMetadata_ContractsInfo create() => EntityMetadata_ContractsInfo._();
-  EntityMetadata_ContractsInfo createEmptyInstance() => create();
-  static $pb.PbList<EntityMetadata_ContractsInfo> createRepeated() => $pb.PbList<EntityMetadata_ContractsInfo>();
-  static EntityMetadata_ContractsInfo getDefault() => _defaultInstance ??= create()..freeze();
-  static EntityMetadata_ContractsInfo _defaultInstance;
-
-  $core.String get resolverAddress => $_getS(0, '');
-  set resolverAddress($core.String v) { $_setString(0, v); }
-  $core.bool hasResolverAddress() => $_has(0);
-  void clearResolverAddress() => clearField(1);
-
-  $core.String get votingAddress => $_getS(1, '');
-  set votingAddress($core.String v) { $_setString(1, v); }
-  $core.bool hasVotingAddress() => $_has(1);
-  void clearVotingAddress() => clearField(2);
-
-  $core.String get networkId => $_getS(2, '');
-  set networkId($core.String v) { $_setString(2, v); }
-  $core.bool hasNetworkId() => $_has(2);
-  void clearNetworkId() => clearField(3);
-}
-
 class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata.VotingProcesses', package: const $pb.PackageName('dvote'))
     ..pPS(1, 'active')
@@ -231,15 +193,14 @@ class EntityMetadata extends $pb.GeneratedMessage {
     ..pPS(2, 'languages')
     ..m<$core.String, $core.String>(3, 'name', 'EntityMetadata.NameEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..m<$core.String, $core.String>(4, 'description', 'EntityMetadata.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..a<EntityMetadata_ContractsInfo>(5, 'contracts', $pb.PbFieldType.OM, EntityMetadata_ContractsInfo.getDefault, EntityMetadata_ContractsInfo.create)
-    ..a<EntityMetadata_VotingProcesses>(6, 'votingProcesses', $pb.PbFieldType.OM, EntityMetadata_VotingProcesses.getDefault, EntityMetadata_VotingProcesses.create)
-    ..m<$core.String, $core.String>(7, 'newsFeed', 'EntityMetadata.NewsFeedEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..a<EntityMetadata_Media>(8, 'media', $pb.PbFieldType.OM, EntityMetadata_Media.getDefault, EntityMetadata_Media.create)
-    ..pc<EntityMetadata_Action>(9, 'actions', $pb.PbFieldType.PM,EntityMetadata_Action.create)
-    ..pc<EntityReference>(10, 'bootEntities', $pb.PbFieldType.PM,EntityReference.create)
-    ..pc<EntityReference>(11, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,EntityReference.create)
-    ..pc<EntityReference>(12, 'trustedEntities', $pb.PbFieldType.PM,EntityReference.create)
-    ..pc<EntityReference>(13, 'censusServiceManagedEntities', $pb.PbFieldType.PM,EntityReference.create)
+    ..a<EntityMetadata_VotingProcesses>(5, 'votingProcesses', $pb.PbFieldType.OM, EntityMetadata_VotingProcesses.getDefault, EntityMetadata_VotingProcesses.create)
+    ..m<$core.String, $core.String>(6, 'newsFeed', 'EntityMetadata.NewsFeedEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..a<EntityMetadata_Media>(7, 'media', $pb.PbFieldType.OM, EntityMetadata_Media.getDefault, EntityMetadata_Media.create)
+    ..pc<EntityMetadata_Action>(8, 'actions', $pb.PbFieldType.PM,EntityMetadata_Action.create)
+    ..pc<EntityReference>(9, 'bootEntities', $pb.PbFieldType.PM,EntityReference.create)
+    ..pc<EntityReference>(10, 'fallbackBootNodeEntities', $pb.PbFieldType.PM,EntityReference.create)
+    ..pc<EntityReference>(11, 'trustedEntities', $pb.PbFieldType.PM,EntityReference.create)
+    ..pc<EntityReference>(12, 'censusServiceManagedEntities', $pb.PbFieldType.PM,EntityReference.create)
     ..m<$core.String, $core.String>(100, 'meta', 'EntityMetadata.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -269,41 +230,35 @@ class EntityMetadata extends $pb.GeneratedMessage {
 
   $core.Map<$core.String, $core.String> get description => $_getMap(3);
 
-  EntityMetadata_ContractsInfo get contracts => $_getN(4);
-  set contracts(EntityMetadata_ContractsInfo v) { setField(5, v); }
-  $core.bool hasContracts() => $_has(4);
-  void clearContracts() => clearField(5);
+  EntityMetadata_VotingProcesses get votingProcesses => $_getN(4);
+  set votingProcesses(EntityMetadata_VotingProcesses v) { setField(5, v); }
+  $core.bool hasVotingProcesses() => $_has(4);
+  void clearVotingProcesses() => clearField(5);
 
-  EntityMetadata_VotingProcesses get votingProcesses => $_getN(5);
-  set votingProcesses(EntityMetadata_VotingProcesses v) { setField(6, v); }
-  $core.bool hasVotingProcesses() => $_has(5);
-  void clearVotingProcesses() => clearField(6);
+  $core.Map<$core.String, $core.String> get newsFeed => $_getMap(5);
 
-  $core.Map<$core.String, $core.String> get newsFeed => $_getMap(6);
+  EntityMetadata_Media get media => $_getN(6);
+  set media(EntityMetadata_Media v) { setField(7, v); }
+  $core.bool hasMedia() => $_has(6);
+  void clearMedia() => clearField(7);
 
-  EntityMetadata_Media get media => $_getN(7);
-  set media(EntityMetadata_Media v) { setField(8, v); }
-  $core.bool hasMedia() => $_has(7);
-  void clearMedia() => clearField(8);
+  $core.List<EntityMetadata_Action> get actions => $_getList(7);
 
-  $core.List<EntityMetadata_Action> get actions => $_getList(8);
+  $core.List<EntityReference> get bootEntities => $_getList(8);
 
-  $core.List<EntityReference> get bootEntities => $_getList(9);
+  $core.List<EntityReference> get fallbackBootNodeEntities => $_getList(9);
 
-  $core.List<EntityReference> get fallbackBootNodeEntities => $_getList(10);
+  $core.List<EntityReference> get trustedEntities => $_getList(10);
 
-  $core.List<EntityReference> get trustedEntities => $_getList(11);
+  $core.List<EntityReference> get censusServiceManagedEntities => $_getList(11);
 
-  $core.List<EntityReference> get censusServiceManagedEntities => $_getList(12);
-
-  $core.Map<$core.String, $core.String> get meta => $_getMap(13);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(12);
 }
 
 class EntityReference extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityReference', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'entityId')
-    ..aOS(2, 'networkId')
-    ..pPS(3, 'entryPoints')
+    ..pPS(2, 'entryPoints')
     ..hasRequiredFields = false
   ;
 
@@ -326,11 +281,6 @@ class EntityReference extends $pb.GeneratedMessage {
   $core.bool hasEntityId() => $_has(0);
   void clearEntityId() => clearField(1);
 
-  $core.String get networkId => $_getS(1, '');
-  set networkId($core.String v) { $_setString(1, v); }
-  $core.bool hasNetworkId() => $_has(1);
-  void clearNetworkId() => clearField(2);
-
-  $core.List<$core.String> get entryPoints => $_getList(2);
+  $core.List<$core.String> get entryPoints => $_getList(1);
 }
 
