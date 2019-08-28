@@ -6,7 +6,7 @@ package dvote;
 
 // Implementing the data structure from https://vocdoni.io/docs/#/architecture/components/bootnode
 message BootNodeGateways {
-    message Node {
+    message NetworkNodes {
         message DVote {
             string uri = 1;
             repeated string apis = 2;
@@ -21,8 +21,8 @@ message BootNodeGateways {
     }
 
     // network Id's
-    Node homestead = 1;
-    Node goerli = 2;
+    NetworkNodes homestead = 1;
+    NetworkNodes goerli = 2;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
