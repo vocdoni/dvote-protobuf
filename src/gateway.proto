@@ -7,17 +7,17 @@ package dvote;
 // Implementing the data structure from https://vocdoni.io/docs/#/architecture/components/bootnode
 message BootNodeGateways {
     message Node {
-        message DVoteNode {
+        message DVote {
             string uri = 1;
             repeated string apis = 2;
             string pubKey = 3;
         }
-        message Web3Node {
+        message Web3 {
             string uri = 1;
         }
 
-        repeated DVoteNode dvote = 1;
-        repeated Web3Node web3 = 2;
+        repeated DVote dvote = 1;
+        repeated Web3 web3 = 2;
     }
 
     // network Id's
