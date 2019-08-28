@@ -8,23 +8,23 @@
 const BootNodeGateways$json = const {
   '1': 'BootNodeGateways',
   '2': const [
-    const {'1': 'homestead', '3': 1, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.Nodes', '10': 'homestead'},
-    const {'1': 'goerli', '3': 2, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.Nodes', '10': 'goerli'},
+    const {'1': 'homestead', '3': 1, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.Node', '10': 'homestead'},
+    const {'1': 'goerli', '3': 2, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.Node', '10': 'goerli'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.MetaEntry', '10': 'meta'},
   ],
-  '3': const [BootNodeGateways_Nodes$json, BootNodeGateways_MetaEntry$json],
+  '3': const [BootNodeGateways_Node$json, BootNodeGateways_MetaEntry$json],
 };
 
-const BootNodeGateways_Nodes$json = const {
-  '1': 'Nodes',
+const BootNodeGateways_Node$json = const {
+  '1': 'Node',
   '2': const [
-    const {'1': 'dvote', '3': 1, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.Nodes.DVoteNode', '10': 'dvote'},
-    const {'1': 'web3', '3': 2, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.Nodes.Web3Node', '10': 'web3'},
+    const {'1': 'dvote', '3': 1, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.Node.DVoteNode', '10': 'dvote'},
+    const {'1': 'web3', '3': 2, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.Node.Web3Node', '10': 'web3'},
   ],
-  '3': const [BootNodeGateways_Nodes_DVoteNode$json, BootNodeGateways_Nodes_Web3Node$json],
+  '3': const [BootNodeGateways_Node_DVoteNode$json, BootNodeGateways_Node_Web3Node$json],
 };
 
-const BootNodeGateways_Nodes_DVoteNode$json = const {
+const BootNodeGateways_Node_DVoteNode$json = const {
   '1': 'DVoteNode',
   '2': const [
     const {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
@@ -33,7 +33,7 @@ const BootNodeGateways_Nodes_DVoteNode$json = const {
   ],
 };
 
-const BootNodeGateways_Nodes_Web3Node$json = const {
+const BootNodeGateways_Node_Web3Node$json = const {
   '1': 'Web3Node',
   '2': const [
     const {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
