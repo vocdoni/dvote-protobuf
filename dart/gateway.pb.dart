@@ -9,27 +9,27 @@ import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, overr
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class BootNodeGateways_Nodes_DVoteNode extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.Nodes.DVoteNode', package: const $pb.PackageName('dvote'))
+class BootNodeGateways_Node_DVoteNode extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.Node.DVoteNode', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'uri')
     ..pPS(2, 'apis')
     ..aOS(3, 'pubKey')
     ..hasRequiredFields = false
   ;
 
-  BootNodeGateways_Nodes_DVoteNode._() : super();
-  factory BootNodeGateways_Nodes_DVoteNode() => create();
-  factory BootNodeGateways_Nodes_DVoteNode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory BootNodeGateways_Nodes_DVoteNode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  BootNodeGateways_Nodes_DVoteNode clone() => BootNodeGateways_Nodes_DVoteNode()..mergeFromMessage(this);
-  BootNodeGateways_Nodes_DVoteNode copyWith(void Function(BootNodeGateways_Nodes_DVoteNode) updates) => super.copyWith((message) => updates(message as BootNodeGateways_Nodes_DVoteNode));
+  BootNodeGateways_Node_DVoteNode._() : super();
+  factory BootNodeGateways_Node_DVoteNode() => create();
+  factory BootNodeGateways_Node_DVoteNode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BootNodeGateways_Node_DVoteNode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BootNodeGateways_Node_DVoteNode clone() => BootNodeGateways_Node_DVoteNode()..mergeFromMessage(this);
+  BootNodeGateways_Node_DVoteNode copyWith(void Function(BootNodeGateways_Node_DVoteNode) updates) => super.copyWith((message) => updates(message as BootNodeGateways_Node_DVoteNode));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static BootNodeGateways_Nodes_DVoteNode create() => BootNodeGateways_Nodes_DVoteNode._();
-  BootNodeGateways_Nodes_DVoteNode createEmptyInstance() => create();
-  static $pb.PbList<BootNodeGateways_Nodes_DVoteNode> createRepeated() => $pb.PbList<BootNodeGateways_Nodes_DVoteNode>();
-  static BootNodeGateways_Nodes_DVoteNode getDefault() => _defaultInstance ??= create()..freeze();
-  static BootNodeGateways_Nodes_DVoteNode _defaultInstance;
+  static BootNodeGateways_Node_DVoteNode create() => BootNodeGateways_Node_DVoteNode._();
+  BootNodeGateways_Node_DVoteNode createEmptyInstance() => create();
+  static $pb.PbList<BootNodeGateways_Node_DVoteNode> createRepeated() => $pb.PbList<BootNodeGateways_Node_DVoteNode>();
+  static BootNodeGateways_Node_DVoteNode getDefault() => _defaultInstance ??= create()..freeze();
+  static BootNodeGateways_Node_DVoteNode _defaultInstance;
 
   $core.String get uri => $_getS(0, '');
   set uri($core.String v) { $_setString(0, v); }
@@ -44,25 +44,25 @@ class BootNodeGateways_Nodes_DVoteNode extends $pb.GeneratedMessage {
   void clearPubKey() => clearField(3);
 }
 
-class BootNodeGateways_Nodes_Web3Node extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.Nodes.Web3Node', package: const $pb.PackageName('dvote'))
+class BootNodeGateways_Node_Web3Node extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.Node.Web3Node', package: const $pb.PackageName('dvote'))
     ..aOS(1, 'uri')
     ..hasRequiredFields = false
   ;
 
-  BootNodeGateways_Nodes_Web3Node._() : super();
-  factory BootNodeGateways_Nodes_Web3Node() => create();
-  factory BootNodeGateways_Nodes_Web3Node.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory BootNodeGateways_Nodes_Web3Node.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  BootNodeGateways_Nodes_Web3Node clone() => BootNodeGateways_Nodes_Web3Node()..mergeFromMessage(this);
-  BootNodeGateways_Nodes_Web3Node copyWith(void Function(BootNodeGateways_Nodes_Web3Node) updates) => super.copyWith((message) => updates(message as BootNodeGateways_Nodes_Web3Node));
+  BootNodeGateways_Node_Web3Node._() : super();
+  factory BootNodeGateways_Node_Web3Node() => create();
+  factory BootNodeGateways_Node_Web3Node.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BootNodeGateways_Node_Web3Node.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BootNodeGateways_Node_Web3Node clone() => BootNodeGateways_Node_Web3Node()..mergeFromMessage(this);
+  BootNodeGateways_Node_Web3Node copyWith(void Function(BootNodeGateways_Node_Web3Node) updates) => super.copyWith((message) => updates(message as BootNodeGateways_Node_Web3Node));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static BootNodeGateways_Nodes_Web3Node create() => BootNodeGateways_Nodes_Web3Node._();
-  BootNodeGateways_Nodes_Web3Node createEmptyInstance() => create();
-  static $pb.PbList<BootNodeGateways_Nodes_Web3Node> createRepeated() => $pb.PbList<BootNodeGateways_Nodes_Web3Node>();
-  static BootNodeGateways_Nodes_Web3Node getDefault() => _defaultInstance ??= create()..freeze();
-  static BootNodeGateways_Nodes_Web3Node _defaultInstance;
+  static BootNodeGateways_Node_Web3Node create() => BootNodeGateways_Node_Web3Node._();
+  BootNodeGateways_Node_Web3Node createEmptyInstance() => create();
+  static $pb.PbList<BootNodeGateways_Node_Web3Node> createRepeated() => $pb.PbList<BootNodeGateways_Node_Web3Node>();
+  static BootNodeGateways_Node_Web3Node getDefault() => _defaultInstance ??= create()..freeze();
+  static BootNodeGateways_Node_Web3Node _defaultInstance;
 
   $core.String get uri => $_getS(0, '');
   set uri($core.String v) { $_setString(0, v); }
@@ -70,36 +70,36 @@ class BootNodeGateways_Nodes_Web3Node extends $pb.GeneratedMessage {
   void clearUri() => clearField(1);
 }
 
-class BootNodeGateways_Nodes extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.Nodes', package: const $pb.PackageName('dvote'))
-    ..pc<BootNodeGateways_Nodes_DVoteNode>(1, 'dvote', $pb.PbFieldType.PM,BootNodeGateways_Nodes_DVoteNode.create)
-    ..pc<BootNodeGateways_Nodes_Web3Node>(2, 'web3', $pb.PbFieldType.PM,BootNodeGateways_Nodes_Web3Node.create)
+class BootNodeGateways_Node extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.Node', package: const $pb.PackageName('dvote'))
+    ..pc<BootNodeGateways_Node_DVoteNode>(1, 'dvote', $pb.PbFieldType.PM,BootNodeGateways_Node_DVoteNode.create)
+    ..pc<BootNodeGateways_Node_Web3Node>(2, 'web3', $pb.PbFieldType.PM,BootNodeGateways_Node_Web3Node.create)
     ..hasRequiredFields = false
   ;
 
-  BootNodeGateways_Nodes._() : super();
-  factory BootNodeGateways_Nodes() => create();
-  factory BootNodeGateways_Nodes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory BootNodeGateways_Nodes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  BootNodeGateways_Nodes clone() => BootNodeGateways_Nodes()..mergeFromMessage(this);
-  BootNodeGateways_Nodes copyWith(void Function(BootNodeGateways_Nodes) updates) => super.copyWith((message) => updates(message as BootNodeGateways_Nodes));
+  BootNodeGateways_Node._() : super();
+  factory BootNodeGateways_Node() => create();
+  factory BootNodeGateways_Node.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BootNodeGateways_Node.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  BootNodeGateways_Node clone() => BootNodeGateways_Node()..mergeFromMessage(this);
+  BootNodeGateways_Node copyWith(void Function(BootNodeGateways_Node) updates) => super.copyWith((message) => updates(message as BootNodeGateways_Node));
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static BootNodeGateways_Nodes create() => BootNodeGateways_Nodes._();
-  BootNodeGateways_Nodes createEmptyInstance() => create();
-  static $pb.PbList<BootNodeGateways_Nodes> createRepeated() => $pb.PbList<BootNodeGateways_Nodes>();
-  static BootNodeGateways_Nodes getDefault() => _defaultInstance ??= create()..freeze();
-  static BootNodeGateways_Nodes _defaultInstance;
+  static BootNodeGateways_Node create() => BootNodeGateways_Node._();
+  BootNodeGateways_Node createEmptyInstance() => create();
+  static $pb.PbList<BootNodeGateways_Node> createRepeated() => $pb.PbList<BootNodeGateways_Node>();
+  static BootNodeGateways_Node getDefault() => _defaultInstance ??= create()..freeze();
+  static BootNodeGateways_Node _defaultInstance;
 
-  $core.List<BootNodeGateways_Nodes_DVoteNode> get dvote => $_getList(0);
+  $core.List<BootNodeGateways_Node_DVoteNode> get dvote => $_getList(0);
 
-  $core.List<BootNodeGateways_Nodes_Web3Node> get web3 => $_getList(1);
+  $core.List<BootNodeGateways_Node_Web3Node> get web3 => $_getList(1);
 }
 
 class BootNodeGateways extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways', package: const $pb.PackageName('dvote'))
-    ..a<BootNodeGateways_Nodes>(1, 'homestead', $pb.PbFieldType.OM, BootNodeGateways_Nodes.getDefault, BootNodeGateways_Nodes.create)
-    ..a<BootNodeGateways_Nodes>(2, 'goerli', $pb.PbFieldType.OM, BootNodeGateways_Nodes.getDefault, BootNodeGateways_Nodes.create)
+    ..a<BootNodeGateways_Node>(1, 'homestead', $pb.PbFieldType.OM, BootNodeGateways_Node.getDefault, BootNodeGateways_Node.create)
+    ..a<BootNodeGateways_Node>(2, 'goerli', $pb.PbFieldType.OM, BootNodeGateways_Node.getDefault, BootNodeGateways_Node.create)
     ..m<$core.String, $core.String>(100, 'meta', 'BootNodeGateways.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -118,13 +118,13 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   static BootNodeGateways getDefault() => _defaultInstance ??= create()..freeze();
   static BootNodeGateways _defaultInstance;
 
-  BootNodeGateways_Nodes get homestead => $_getN(0);
-  set homestead(BootNodeGateways_Nodes v) { setField(1, v); }
+  BootNodeGateways_Node get homestead => $_getN(0);
+  set homestead(BootNodeGateways_Node v) { setField(1, v); }
   $core.bool hasHomestead() => $_has(0);
   void clearHomestead() => clearField(1);
 
-  BootNodeGateways_Nodes get goerli => $_getN(1);
-  set goerli(BootNodeGateways_Nodes v) { setField(2, v); }
+  BootNodeGateways_Node get goerli => $_getN(1);
+  set goerli(BootNodeGateways_Node v) { setField(2, v); }
   $core.bool hasGoerli() => $_has(1);
   void clearGoerli() => clearField(2);
 
