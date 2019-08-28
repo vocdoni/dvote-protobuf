@@ -8,23 +8,23 @@
 const BootNodeGateways$json = const {
   '1': 'BootNodeGateways',
   '2': const [
-    const {'1': 'homestead', '3': 1, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.Node', '10': 'homestead'},
-    const {'1': 'goerli', '3': 2, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.Node', '10': 'goerli'},
+    const {'1': 'homestead', '3': 1, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes', '10': 'homestead'},
+    const {'1': 'goerli', '3': 2, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes', '10': 'goerli'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.MetaEntry', '10': 'meta'},
   ],
-  '3': const [BootNodeGateways_Node$json, BootNodeGateways_MetaEntry$json],
+  '3': const [BootNodeGateways_NetworkNodes$json, BootNodeGateways_MetaEntry$json],
 };
 
-const BootNodeGateways_Node$json = const {
-  '1': 'Node',
+const BootNodeGateways_NetworkNodes$json = const {
+  '1': 'NetworkNodes',
   '2': const [
-    const {'1': 'dvote', '3': 1, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.Node.DVote', '10': 'dvote'},
-    const {'1': 'web3', '3': 2, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.Node.Web3', '10': 'web3'},
+    const {'1': 'dvote', '3': 1, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes.DVote', '10': 'dvote'},
+    const {'1': 'web3', '3': 2, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes.Web3', '10': 'web3'},
   ],
-  '3': const [BootNodeGateways_Node_DVote$json, BootNodeGateways_Node_Web3$json],
+  '3': const [BootNodeGateways_NetworkNodes_DVote$json, BootNodeGateways_NetworkNodes_Web3$json],
 };
 
-const BootNodeGateways_Node_DVote$json = const {
+const BootNodeGateways_NetworkNodes_DVote$json = const {
   '1': 'DVote',
   '2': const [
     const {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
@@ -33,7 +33,7 @@ const BootNodeGateways_Node_DVote$json = const {
   ],
 };
 
-const BootNodeGateways_Node_Web3$json = const {
+const BootNodeGateways_NetworkNodes_Web3$json = const {
   '1': 'Web3',
   '2': const [
     const {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
