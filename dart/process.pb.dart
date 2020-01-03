@@ -5,13 +5,13 @@
 // @dart = 2.3
 // ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-import 'dart:core' as $core show bool, Deprecated, double, int, List, Map, override, pragma, String;
+import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ProcessMetadataStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadataStore', package: const $pb.PackageName('dvote'))
-    ..pc<ProcessMetadata>(1, 'items', $pb.PbFieldType.PM,ProcessMetadata.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadataStore', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
+    ..pc<ProcessMetadata>(1, 'items', $pb.PbFieldType.PM, subBuilder: ProcessMetadata.create)
     ..hasRequiredFields = false
   ;
 
@@ -26,16 +26,18 @@ class ProcessMetadataStore extends $pb.GeneratedMessage {
   static ProcessMetadataStore create() => ProcessMetadataStore._();
   ProcessMetadataStore createEmptyInstance() => create();
   static $pb.PbList<ProcessMetadataStore> createRepeated() => $pb.PbList<ProcessMetadataStore>();
-  static ProcessMetadataStore getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadataStore getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadataStore>(create);
   static ProcessMetadataStore _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.List<ProcessMetadata> get items => $_getList(0);
 }
 
 class ProcessMetadata_Census extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Census', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'merkleRoot')
-    ..aOS(2, 'merkleTree')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Census', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
+    ..aOS(1, 'merkleRoot', protoName: 'merkleRoot')
+    ..aOS(2, 'merkleTree', protoName: 'merkleTree')
     ..hasRequiredFields = false
   ;
 
@@ -50,23 +52,32 @@ class ProcessMetadata_Census extends $pb.GeneratedMessage {
   static ProcessMetadata_Census create() => ProcessMetadata_Census._();
   ProcessMetadata_Census createEmptyInstance() => create();
   static $pb.PbList<ProcessMetadata_Census> createRepeated() => $pb.PbList<ProcessMetadata_Census>();
-  static ProcessMetadata_Census getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata_Census getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Census>(create);
   static ProcessMetadata_Census _defaultInstance;
 
-  $core.String get merkleRoot => $_getS(0, '');
+  @$pb.TagNumber(1)
+  $core.String get merkleRoot => $_getSZ(0);
+  @$pb.TagNumber(1)
   set merkleRoot($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
   $core.bool hasMerkleRoot() => $_has(0);
+  @$pb.TagNumber(1)
   void clearMerkleRoot() => clearField(1);
 
-  $core.String get merkleTree => $_getS(1, '');
+  @$pb.TagNumber(2)
+  $core.String get merkleTree => $_getSZ(1);
+  @$pb.TagNumber(2)
   set merkleTree($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
   $core.bool hasMerkleTree() => $_has(1);
+  @$pb.TagNumber(2)
   void clearMerkleTree() => clearField(2);
 }
 
 class ProcessMetadata_Details_Question_VoteOption extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details.Question.VoteOption', package: const $pb.PackageName('dvote'))
-    ..m<$core.String, $core.String>(1, 'title', 'ProcessMetadata.Details.Question.VoteOption.TitleEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details.Question.VoteOption', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
+    ..m<$core.String, $core.String>(1, 'title', entryClassName: 'ProcessMetadata.Details.Question.VoteOption.TitleEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..aOS(2, 'value')
     ..hasRequiredFields = false
   ;
@@ -82,23 +93,29 @@ class ProcessMetadata_Details_Question_VoteOption extends $pb.GeneratedMessage {
   static ProcessMetadata_Details_Question_VoteOption create() => ProcessMetadata_Details_Question_VoteOption._();
   ProcessMetadata_Details_Question_VoteOption createEmptyInstance() => create();
   static $pb.PbList<ProcessMetadata_Details_Question_VoteOption> createRepeated() => $pb.PbList<ProcessMetadata_Details_Question_VoteOption>();
-  static ProcessMetadata_Details_Question_VoteOption getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata_Details_Question_VoteOption getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Details_Question_VoteOption>(create);
   static ProcessMetadata_Details_Question_VoteOption _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.Map<$core.String, $core.String> get title => $_getMap(0);
 
-  $core.String get value => $_getS(1, '');
+  @$pb.TagNumber(2)
+  $core.String get value => $_getSZ(1);
+  @$pb.TagNumber(2)
   set value($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
   void clearValue() => clearField(2);
 }
 
 class ProcessMetadata_Details_Question extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details.Question', package: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details.Question', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
     ..aOS(1, 'type')
-    ..m<$core.String, $core.String>(2, 'question', 'ProcessMetadata.Details.Question.QuestionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..m<$core.String, $core.String>(3, 'description', 'ProcessMetadata.Details.Question.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..pc<ProcessMetadata_Details_Question_VoteOption>(4, 'voteOptions', $pb.PbFieldType.PM,ProcessMetadata_Details_Question_VoteOption.create)
+    ..m<$core.String, $core.String>(2, 'question', entryClassName: 'ProcessMetadata.Details.Question.QuestionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..m<$core.String, $core.String>(3, 'description', entryClassName: 'ProcessMetadata.Details.Question.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..pc<ProcessMetadata_Details_Question_VoteOption>(4, 'voteOptions', $pb.PbFieldType.PM, protoName: 'voteOptions', subBuilder: ProcessMetadata_Details_Question_VoteOption.create)
     ..hasRequiredFields = false
   ;
 
@@ -113,29 +130,37 @@ class ProcessMetadata_Details_Question extends $pb.GeneratedMessage {
   static ProcessMetadata_Details_Question create() => ProcessMetadata_Details_Question._();
   ProcessMetadata_Details_Question createEmptyInstance() => create();
   static $pb.PbList<ProcessMetadata_Details_Question> createRepeated() => $pb.PbList<ProcessMetadata_Details_Question>();
-  static ProcessMetadata_Details_Question getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata_Details_Question getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Details_Question>(create);
   static ProcessMetadata_Details_Question _defaultInstance;
 
-  $core.String get type => $_getS(0, '');
+  @$pb.TagNumber(1)
+  $core.String get type => $_getSZ(0);
+  @$pb.TagNumber(1)
   set type($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
   void clearType() => clearField(1);
 
+  @$pb.TagNumber(2)
   $core.Map<$core.String, $core.String> get question => $_getMap(1);
 
+  @$pb.TagNumber(3)
   $core.Map<$core.String, $core.String> get description => $_getMap(2);
 
+  @$pb.TagNumber(4)
   $core.List<ProcessMetadata_Details_Question_VoteOption> get voteOptions => $_getList(3);
 }
 
 class ProcessMetadata_Details extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details', package: const $pb.PackageName('dvote'))
-    ..aOS(1, 'entityId')
-    ..aOS(2, 'encryptionPublicKey')
-    ..m<$core.String, $core.String>(3, 'title', 'ProcessMetadata.Details.TitleEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..m<$core.String, $core.String>(4, 'description', 'ProcessMetadata.Details.DescriptionEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
-    ..aOS(5, 'headerImage')
-    ..pc<ProcessMetadata_Details_Question>(6, 'questions', $pb.PbFieldType.PM,ProcessMetadata_Details_Question.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
+    ..aOS(1, 'entityId', protoName: 'entityId')
+    ..aOS(2, 'encryptionPublicKey', protoName: 'encryptionPublicKey')
+    ..m<$core.String, $core.String>(3, 'title', entryClassName: 'ProcessMetadata.Details.TitleEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..m<$core.String, $core.String>(4, 'description', entryClassName: 'ProcessMetadata.Details.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..aOS(5, 'headerImage', protoName: 'headerImage')
+    ..pc<ProcessMetadata_Details_Question>(6, 'questions', $pb.PbFieldType.PM, subBuilder: ProcessMetadata_Details_Question.create)
     ..hasRequiredFields = false
   ;
 
@@ -150,40 +175,56 @@ class ProcessMetadata_Details extends $pb.GeneratedMessage {
   static ProcessMetadata_Details create() => ProcessMetadata_Details._();
   ProcessMetadata_Details createEmptyInstance() => create();
   static $pb.PbList<ProcessMetadata_Details> createRepeated() => $pb.PbList<ProcessMetadata_Details>();
-  static ProcessMetadata_Details getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata_Details getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Details>(create);
   static ProcessMetadata_Details _defaultInstance;
 
-  $core.String get entityId => $_getS(0, '');
+  @$pb.TagNumber(1)
+  $core.String get entityId => $_getSZ(0);
+  @$pb.TagNumber(1)
   set entityId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
   $core.bool hasEntityId() => $_has(0);
+  @$pb.TagNumber(1)
   void clearEntityId() => clearField(1);
 
-  $core.String get encryptionPublicKey => $_getS(1, '');
+  @$pb.TagNumber(2)
+  $core.String get encryptionPublicKey => $_getSZ(1);
+  @$pb.TagNumber(2)
   set encryptionPublicKey($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
   $core.bool hasEncryptionPublicKey() => $_has(1);
+  @$pb.TagNumber(2)
   void clearEncryptionPublicKey() => clearField(2);
 
+  @$pb.TagNumber(3)
   $core.Map<$core.String, $core.String> get title => $_getMap(2);
 
+  @$pb.TagNumber(4)
   $core.Map<$core.String, $core.String> get description => $_getMap(3);
 
-  $core.String get headerImage => $_getS(4, '');
+  @$pb.TagNumber(5)
+  $core.String get headerImage => $_getSZ(4);
+  @$pb.TagNumber(5)
   set headerImage($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
   $core.bool hasHeaderImage() => $_has(4);
+  @$pb.TagNumber(5)
   void clearHeaderImage() => clearField(5);
 
+  @$pb.TagNumber(6)
   $core.List<ProcessMetadata_Details_Question> get questions => $_getList(5);
 }
 
 class ProcessMetadata extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata', package: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
     ..aOS(1, 'version')
     ..aOS(2, 'type')
-    ..a<$core.int>(3, 'startBlock', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, 'numberOfBlocks', $pb.PbFieldType.O3)
-    ..a<ProcessMetadata_Census>(5, 'census', $pb.PbFieldType.OM, ProcessMetadata_Census.getDefault, ProcessMetadata_Census.create)
-    ..a<ProcessMetadata_Details>(6, 'details', $pb.PbFieldType.OM, ProcessMetadata_Details.getDefault, ProcessMetadata_Details.create)
-    ..m<$core.String, $core.String>(100, 'meta', 'ProcessMetadata.MetaEntry',$pb.PbFieldType.OS, $pb.PbFieldType.OS, null, null, null , const $pb.PackageName('dvote'))
+    ..a<$core.int>(3, 'startBlock', $pb.PbFieldType.O3, protoName: 'startBlock')
+    ..a<$core.int>(4, 'numberOfBlocks', $pb.PbFieldType.O3, protoName: 'numberOfBlocks')
+    ..aOM<ProcessMetadata_Census>(5, 'census', subBuilder: ProcessMetadata_Census.create)
+    ..aOM<ProcessMetadata_Details>(6, 'details', subBuilder: ProcessMetadata_Details.create)
+    ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'ProcessMetadata.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -198,39 +239,69 @@ class ProcessMetadata extends $pb.GeneratedMessage {
   static ProcessMetadata create() => ProcessMetadata._();
   ProcessMetadata createEmptyInstance() => create();
   static $pb.PbList<ProcessMetadata> createRepeated() => $pb.PbList<ProcessMetadata>();
-  static ProcessMetadata getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata>(create);
   static ProcessMetadata _defaultInstance;
 
-  $core.String get version => $_getS(0, '');
+  @$pb.TagNumber(1)
+  $core.String get version => $_getSZ(0);
+  @$pb.TagNumber(1)
   set version($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
   $core.bool hasVersion() => $_has(0);
+  @$pb.TagNumber(1)
   void clearVersion() => clearField(1);
 
-  $core.String get type => $_getS(1, '');
+  @$pb.TagNumber(2)
+  $core.String get type => $_getSZ(1);
+  @$pb.TagNumber(2)
   set type($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
   $core.bool hasType() => $_has(1);
+  @$pb.TagNumber(2)
   void clearType() => clearField(2);
 
-  $core.int get startBlock => $_get(2, 0);
+  @$pb.TagNumber(3)
+  $core.int get startBlock => $_getIZ(2);
+  @$pb.TagNumber(3)
   set startBlock($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
   $core.bool hasStartBlock() => $_has(2);
+  @$pb.TagNumber(3)
   void clearStartBlock() => clearField(3);
 
-  $core.int get numberOfBlocks => $_get(3, 0);
+  @$pb.TagNumber(4)
+  $core.int get numberOfBlocks => $_getIZ(3);
+  @$pb.TagNumber(4)
   set numberOfBlocks($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
   $core.bool hasNumberOfBlocks() => $_has(3);
+  @$pb.TagNumber(4)
   void clearNumberOfBlocks() => clearField(4);
 
+  @$pb.TagNumber(5)
   ProcessMetadata_Census get census => $_getN(4);
+  @$pb.TagNumber(5)
   set census(ProcessMetadata_Census v) { setField(5, v); }
+  @$pb.TagNumber(5)
   $core.bool hasCensus() => $_has(4);
+  @$pb.TagNumber(5)
   void clearCensus() => clearField(5);
+  @$pb.TagNumber(5)
+  ProcessMetadata_Census ensureCensus() => $_ensure(4);
 
+  @$pb.TagNumber(6)
   ProcessMetadata_Details get details => $_getN(5);
+  @$pb.TagNumber(6)
   set details(ProcessMetadata_Details v) { setField(6, v); }
+  @$pb.TagNumber(6)
   $core.bool hasDetails() => $_has(5);
+  @$pb.TagNumber(6)
   void clearDetails() => clearField(6);
+  @$pb.TagNumber(6)
+  ProcessMetadata_Details ensureDetails() => $_ensure(5);
 
+  @$pb.TagNumber(100)
   $core.Map<$core.String, $core.String> get meta => $_getMap(6);
 }
 

@@ -25,28 +25,32 @@ help: makefile
 # RECIPES
 #******************************************************************************
 
+## init: Check external dependencies
+init: protobuf-env
+
 ## all: Generate the source code for all supported languages
 all: dart
 
 
 ## dart: Generate the Dart source code
 dart: $(MODEL_SOURCES)
-	@make dart-env
 	mkdir -p ./dart
 	for f in $^ ; do \
 		protoc -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
-.SILENT: dart-env
-dart-env:
-	if [ ! -x /usr/local/bin/protoc ] ; then \
-		echo "Please, install protoc from https://developers.google.com/protocol-buffers/docs/downloads.html" ; \
+.PHONY: protobuf-env
+protobuf-env:
+	@if [ ! -x /usr/local/bin/protoc ] ; then \
+		echo -e "Please, install protoc on /usr/local/bin.\nSee https://developers.google.com/protocol-buffers/docs/downloads.html" ; \
+		exit 1 ; \
 	fi
-	if [ ! -x $(HOME)/.pub-cache/bin/protoc-gen-dart ] ; then \
+	@if [ ! -x $(HOME)/.pub-cache/bin/protoc-gen-dart ] ; then \
 		pub global activate protoc_plugin ; \
 	fi
+	@echo "Done"
 
 clean:
-	rm -Rf dart/*
+	rm -Rf dart
 	@touch src/*
