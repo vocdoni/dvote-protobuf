@@ -21,12 +21,19 @@ help: makefile
 
 ## :
 
+## init: Check external dependencies
+init: protobuf-env
+
+## clean: Remove the build artifacts
+clean:
+	rm -Rf dart
+	@touch src/*
+
+## :
+
 #******************************************************************************
 # RECIPES
 #******************************************************************************
-
-## init: Check external dependencies
-init: protobuf-env
 
 ## all: Generate the source code for all supported languages
 all: dart
@@ -50,7 +57,3 @@ protobuf-env:
 		pub global activate protoc_plugin ; \
 	fi
 	@echo "Done"
-
-clean:
-	rm -Rf dart
-	@touch src/*
