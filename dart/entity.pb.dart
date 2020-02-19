@@ -176,7 +176,7 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
     ..aOS(3, 'visible')
     ..aOS(4, 'url')
     ..pc<EntityMetadata_Action_ImageSource>(5, 'imageSources', $pb.PbFieldType.PM, protoName: 'imageSources', subBuilder: EntityMetadata_Action_ImageSource.create)
-    ..aOB(6, 'register')
+    ..aOS(7, 'actionKey', protoName: 'actionKey')
     ..hasRequiredFields = false
   ;
 
@@ -228,14 +228,14 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<EntityMetadata_Action_ImageSource> get imageSources => $_getList(4);
 
-  @$pb.TagNumber(6)
-  $core.bool get register => $_getBF(5);
-  @$pb.TagNumber(6)
-  set register($core.bool v) { $_setBool(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasRegister() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearRegister() => clearField(6);
+  @$pb.TagNumber(7)
+  $core.String get actionKey => $_getSZ(5);
+  @$pb.TagNumber(7)
+  set actionKey($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasActionKey() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearActionKey() => clearField(7);
 }
 
 class EntityMetadata extends $pb.GeneratedMessage {
