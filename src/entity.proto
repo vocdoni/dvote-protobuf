@@ -37,16 +37,14 @@ message EntityMetadata {
     // https://vocdoni.io/docs/#/architecture/components/entity?id=entity-actions
     message Action {
         string type = 1;
+        string actionKey = 7;
         map<string, string> name = 2;  // locale-aware value
         string visible = 3; // A URL or "true"
 
-        // type = browser / image
+        // type = register / browser / submitMedia
         string url = 4;
 
-        // type = browser
-        bool register = 6;
-        
-        // type = image
+        // type = submitMedia
         message ImageSource {
             string type = 1;
             string name = 2;
