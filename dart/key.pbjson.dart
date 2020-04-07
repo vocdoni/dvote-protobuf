@@ -32,7 +32,7 @@ const Key_Type$json = const {
   '1': 'Type',
   '2': const [
     const {'1': 'SECP256K1', '2': 0},
-    const {'1': 'BABYJUB', '2': 1},
+    const {'1': 'BABYJUBJUB', '2': 1},
   ],
 };
 

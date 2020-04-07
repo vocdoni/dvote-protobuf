@@ -42,6 +42,7 @@ const ProcessMetadata_Details$json = const {
     const {'1': 'title', '3': 3, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.TitleEntry', '10': 'title'},
     const {'1': 'description', '3': 4, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.DescriptionEntry', '10': 'description'},
     const {'1': 'headerImage', '3': 5, '4': 1, '5': 9, '10': 'headerImage'},
+    const {'1': 'streamUrl', '3': 7, '4': 1, '5': 9, '10': 'streamUrl'},
     const {'1': 'questions', '3': 6, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question', '10': 'questions'},
   ],
   '3': const [ProcessMetadata_Details_TitleEntry$json, ProcessMetadata_Details_DescriptionEntry$json, ProcessMetadata_Details_Question$json],
@@ -98,7 +99,7 @@ const ProcessMetadata_Details_Question_VoteOption$json = const {
   '1': 'VoteOption',
   '2': const [
     const {'1': 'title', '3': 1, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question.VoteOption.TitleEntry', '10': 'title'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
   ],
   '3': const [ProcessMetadata_Details_Question_VoteOption_TitleEntry$json],
 };

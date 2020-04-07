@@ -11,11 +11,11 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class Key_Type extends $pb.ProtobufEnum {
   static const Key_Type SECP256K1 = Key_Type._(0, 'SECP256K1');
-  static const Key_Type BABYJUB = Key_Type._(1, 'BABYJUB');
+  static const Key_Type BABYJUBJUB = Key_Type._(1, 'BABYJUBJUB');
 
   static const $core.List<Key_Type> values = <Key_Type> [
     SECP256K1,
-    BABYJUB,
+    BABYJUBJUB,
   ];
 
   static final $core.Map<$core.int, Key_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
