@@ -27,6 +27,7 @@ message ProcessMetadata {
         map<string, string> title = 3;  // locale-aware value
         map<string, string> description = 4;  // locale-aware value
         string headerImage = 5;
+        string streamUrl = 7;
 
         message Question {
             string type = 1;
@@ -35,7 +36,7 @@ message ProcessMetadata {
 
             message VoteOption {
                 map<string, string> title = 1;  // locale-aware value
-                string value = 2;
+                int32 value = 2;
             }
             repeated VoteOption voteOptions = 4;
         }

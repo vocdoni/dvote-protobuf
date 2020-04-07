@@ -78,7 +78,7 @@ class ProcessMetadata_Census extends $pb.GeneratedMessage {
 class ProcessMetadata_Details_Question_VoteOption extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details.Question.VoteOption', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
     ..m<$core.String, $core.String>(1, 'title', entryClassName: 'ProcessMetadata.Details.Question.VoteOption.TitleEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
-    ..aOS(2, 'value')
+    ..a<$core.int>(2, 'value', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -101,9 +101,9 @@ class ProcessMetadata_Details_Question_VoteOption extends $pb.GeneratedMessage {
   $core.Map<$core.String, $core.String> get title => $_getMap(0);
 
   @$pb.TagNumber(2)
-  $core.String get value => $_getSZ(1);
+  $core.int get value => $_getIZ(1);
   @$pb.TagNumber(2)
-  set value($core.String v) { $_setString(1, v); }
+  set value($core.int v) { $_setSignedInt32(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(1);
   @$pb.TagNumber(2)
@@ -161,6 +161,7 @@ class ProcessMetadata_Details extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(4, 'description', entryClassName: 'ProcessMetadata.Details.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..aOS(5, 'headerImage', protoName: 'headerImage')
     ..pc<ProcessMetadata_Details_Question>(6, 'questions', $pb.PbFieldType.PM, subBuilder: ProcessMetadata_Details_Question.create)
+    ..aOS(7, 'streamUrl', protoName: 'streamUrl')
     ..hasRequiredFields = false
   ;
 
@@ -214,6 +215,15 @@ class ProcessMetadata_Details extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $core.List<ProcessMetadata_Details_Question> get questions => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $core.String get streamUrl => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set streamUrl($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasStreamUrl() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearStreamUrl() => clearField(7);
 }
 
 class ProcessMetadata extends $pb.GeneratedMessage {

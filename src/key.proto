@@ -6,7 +6,7 @@ package dvote;
 message Key {
     enum Type {
         SECP256K1 = 0; // ETHEREUM
-        BABYJUB = 1;
+        BABYJUBJUB = 1;
     }
 
     Type type = 1;
