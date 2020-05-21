@@ -156,7 +156,6 @@ class ProcessMetadata_Details_Question extends $pb.GeneratedMessage {
 class ProcessMetadata_Details extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProcessMetadata.Details', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
     ..aOS(1, 'entityId', protoName: 'entityId')
-    ..aOS(2, 'encryptionPublicKey', protoName: 'encryptionPublicKey')
     ..m<$core.String, $core.String>(3, 'title', entryClassName: 'ProcessMetadata.Details.TitleEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..m<$core.String, $core.String>(4, 'description', entryClassName: 'ProcessMetadata.Details.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..aOS(5, 'headerImage', protoName: 'headerImage')
@@ -189,39 +188,30 @@ class ProcessMetadata_Details extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearEntityId() => clearField(1);
 
-  @$pb.TagNumber(2)
-  $core.String get encryptionPublicKey => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set encryptionPublicKey($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasEncryptionPublicKey() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearEncryptionPublicKey() => clearField(2);
-
   @$pb.TagNumber(3)
-  $core.Map<$core.String, $core.String> get title => $_getMap(2);
+  $core.Map<$core.String, $core.String> get title => $_getMap(1);
 
   @$pb.TagNumber(4)
-  $core.Map<$core.String, $core.String> get description => $_getMap(3);
+  $core.Map<$core.String, $core.String> get description => $_getMap(2);
 
   @$pb.TagNumber(5)
-  $core.String get headerImage => $_getSZ(4);
+  $core.String get headerImage => $_getSZ(3);
   @$pb.TagNumber(5)
-  set headerImage($core.String v) { $_setString(4, v); }
+  set headerImage($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasHeaderImage() => $_has(4);
+  $core.bool hasHeaderImage() => $_has(3);
   @$pb.TagNumber(5)
   void clearHeaderImage() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.List<ProcessMetadata_Details_Question> get questions => $_getList(5);
+  $core.List<ProcessMetadata_Details_Question> get questions => $_getList(4);
 
   @$pb.TagNumber(7)
-  $core.String get streamUrl => $_getSZ(6);
+  $core.String get streamUrl => $_getSZ(5);
   @$pb.TagNumber(7)
-  set streamUrl($core.String v) { $_setString(6, v); }
+  set streamUrl($core.String v) { $_setString(5, v); }
   @$pb.TagNumber(7)
-  $core.bool hasStreamUrl() => $_has(6);
+  $core.bool hasStreamUrl() => $_has(5);
   @$pb.TagNumber(7)
   void clearStreamUrl() => clearField(7);
 }
