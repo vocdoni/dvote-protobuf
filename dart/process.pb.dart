@@ -221,7 +221,7 @@ class ProcessMetadata extends $pb.GeneratedMessage {
     ..aOS(1, 'version')
     ..aOS(2, 'type')
     ..a<$core.int>(3, 'startBlock', $pb.PbFieldType.O3, protoName: 'startBlock')
-    ..a<$core.int>(4, 'numberOfBlocks', $pb.PbFieldType.O3, protoName: 'numberOfBlocks')
+    ..a<$core.int>(4, 'blockCount', $pb.PbFieldType.O3, protoName: 'blockCount')
     ..aOM<ProcessMetadata_Census>(5, 'census', subBuilder: ProcessMetadata_Census.create)
     ..aOM<ProcessMetadata_Details>(6, 'details', subBuilder: ProcessMetadata_Details.create)
     ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'ProcessMetadata.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
@@ -271,13 +271,13 @@ class ProcessMetadata extends $pb.GeneratedMessage {
   void clearStartBlock() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get numberOfBlocks => $_getIZ(3);
+  $core.int get blockCount => $_getIZ(3);
   @$pb.TagNumber(4)
-  set numberOfBlocks($core.int v) { $_setSignedInt32(3, v); }
+  set blockCount($core.int v) { $_setSignedInt32(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasNumberOfBlocks() => $_has(3);
+  $core.bool hasBlockCount() => $_has(3);
   @$pb.TagNumber(4)
-  void clearNumberOfBlocks() => clearField(4);
+  void clearBlockCount() => clearField(4);
 
   @$pb.TagNumber(5)
   ProcessMetadata_Census get census => $_getN(4);
