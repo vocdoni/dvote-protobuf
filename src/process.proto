@@ -13,7 +13,7 @@ message ProcessMetadata {
     string type = 2;
 
     int32 startBlock = 3;
-    int32 numberOfBlocks = 4;
+    int32 blockCount = 4;
 
     message Census {
         string merkleRoot = 1;
