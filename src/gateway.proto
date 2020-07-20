@@ -23,6 +23,7 @@ message BootNodeGateways {
     // network Id's
     NetworkNodes homestead = 1;
     NetworkNodes goerli = 2;
+    NetworkNodes xdai = 3;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that

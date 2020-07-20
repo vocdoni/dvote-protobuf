@@ -118,6 +118,7 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
     ..aOM<BootNodeGateways_NetworkNodes>(1, 'homestead', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..aOM<BootNodeGateways_NetworkNodes>(2, 'goerli', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..aOM<BootNodeGateways_NetworkNodes>(3, 'xdai', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'BootNodeGateways.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -159,8 +160,19 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   BootNodeGateways_NetworkNodes ensureGoerli() => $_ensure(1);
 
+  @$pb.TagNumber(3)
+  BootNodeGateways_NetworkNodes get xdai => $_getN(2);
+  @$pb.TagNumber(3)
+  set xdai(BootNodeGateways_NetworkNodes v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasXdai() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearXdai() => clearField(3);
+  @$pb.TagNumber(3)
+  BootNodeGateways_NetworkNodes ensureXdai() => $_ensure(2);
+
   @$pb.TagNumber(100)
-  $core.Map<$core.String, $core.String> get meta => $_getMap(2);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(3);
 }
 
 class GatewayInfoStore extends $pb.GeneratedMessage {
