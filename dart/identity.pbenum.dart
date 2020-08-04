@@ -10,12 +10,10 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class Identity_Type extends $pb.ProtobufEnum {
-  static const Identity_Type ECDSA_SECP256k1 = Identity_Type._(0, 'ECDSA_SECP256k1');
-  static const Identity_Type IDEN3 = Identity_Type._(1, 'IDEN3');
+  static const Identity_Type ECDSA = Identity_Type._(0, 'ECDSA');
 
   static const $core.List<Identity_Type> values = <Identity_Type> [
-    ECDSA_SECP256k1,
-    IDEN3,
+    ECDSA,
   ];
 
   static final $core.Map<$core.int, Identity_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -25,12 +23,10 @@ class Identity_Type extends $pb.ProtobufEnum {
 }
 
 class PeerIdentity_Type extends $pb.ProtobufEnum {
-  static const PeerIdentity_Type ECDSA_SECP256k1 = PeerIdentity_Type._(0, 'ECDSA_SECP256k1');
-  static const PeerIdentity_Type IDEN3 = PeerIdentity_Type._(1, 'IDEN3');
+  static const PeerIdentity_Type ECDSA = PeerIdentity_Type._(0, 'ECDSA');
 
   static const $core.List<PeerIdentity_Type> values = <PeerIdentity_Type> [
-    ECDSA_SECP256k1,
-    IDEN3,
+    ECDSA,
   ];
 
   static final $core.Map<$core.int, PeerIdentity_Type> _byValue = $pb.ProtobufEnum.initByValue(values);

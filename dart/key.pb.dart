@@ -17,9 +17,9 @@ class Key extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Key', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
     ..e<Key_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: Key_Type.SECP256K1, valueOf: Key_Type.valueOf, enumValues: Key_Type.values)
     ..aOS(2, 'encryptedMnemonic', protoName: 'encryptedMnemonic')
-    ..aOS(3, 'encryptedPrivateKey', protoName: 'encryptedPrivateKey')
-    ..aOS(4, 'publicKey', protoName: 'publicKey')
-    ..aOS(5, 'address')
+    ..aOS(3, 'encryptedRootPrivateKey', protoName: 'encryptedRootPrivateKey')
+    ..aOS(4, 'rootPublicKey', protoName: 'rootPublicKey')
+    ..aOS(5, 'rootAddress', protoName: 'rootAddress')
     ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'Key.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -58,31 +58,31 @@ class Key extends $pb.GeneratedMessage {
   void clearEncryptedMnemonic() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get encryptedPrivateKey => $_getSZ(2);
+  $core.String get encryptedRootPrivateKey => $_getSZ(2);
   @$pb.TagNumber(3)
-  set encryptedPrivateKey($core.String v) { $_setString(2, v); }
+  set encryptedRootPrivateKey($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasEncryptedPrivateKey() => $_has(2);
+  $core.bool hasEncryptedRootPrivateKey() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEncryptedPrivateKey() => clearField(3);
+  void clearEncryptedRootPrivateKey() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get publicKey => $_getSZ(3);
+  $core.String get rootPublicKey => $_getSZ(3);
   @$pb.TagNumber(4)
-  set publicKey($core.String v) { $_setString(3, v); }
+  set rootPublicKey($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasPublicKey() => $_has(3);
+  $core.bool hasRootPublicKey() => $_has(3);
   @$pb.TagNumber(4)
-  void clearPublicKey() => clearField(4);
+  void clearRootPublicKey() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get address => $_getSZ(4);
+  $core.String get rootAddress => $_getSZ(4);
   @$pb.TagNumber(5)
-  set address($core.String v) { $_setString(4, v); }
+  set rootAddress($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasAddress() => $_has(4);
+  $core.bool hasRootAddress() => $_has(4);
   @$pb.TagNumber(5)
-  void clearAddress() => clearField(5);
+  void clearRootAddress() => clearField(5);
 
   @$pb.TagNumber(100)
   $core.Map<$core.String, $core.String> get meta => $_getMap(5);
