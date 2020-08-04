@@ -8,14 +8,19 @@ message Key {
         SECP256K1 = 0; // ETHEREUM
         BABYJUBJUB = 1;
     }
-
     Type type = 1;
-    string encryptedMnemonic = 2;    // Human friendly seed phrase
-    string encryptedPrivateKey = 3;
-    string publicKey = 4;
-    string address = 5;
+
+    // Human friendly seed phrase, derived with an HD path to produce a root private key
+    // The root private key will still be uniquely derived for each entity
+    string encryptedMnemonic = 2;
+    
+    // Accouts have an N:N mapping with entities and private keys
+    string encryptedRootPrivateKey = 3;
+    string rootPublicKey = 4;
+    string rootAddress = 5;
 
     // EXTERNAL FIELDS
+
     // Allow to use arbitrary key/values so that
     // keys can be organized by custom values.
     map<string, string> meta = 100;

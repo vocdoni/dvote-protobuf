@@ -13,8 +13,7 @@ message IdentitiesStore {
 
 message Identity {
     enum Type {
-        ECDSA_SECP256k1 = 0; // Ethereum key pair
-        IDEN3 = 1;
+        ECDSA = 0; // Ethereum key pairs
     }
     Type type = 1;
     string alias = 2;
@@ -47,8 +46,7 @@ message Identity {
 
 message PeerIdentity {
     enum Type {
-        ECDSA_SECP256k1 = 0; // Ethereum key pair
-        IDEN3 = 1;
+        ECDSA = 0; // Ethereum key pairs
     }
     Type type = 1;
     string alias = 2;

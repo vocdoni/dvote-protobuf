@@ -127,7 +127,7 @@ class Identity_Claim extends $pb.GeneratedMessage {
 
 class Identity extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..e<Identity_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: Identity_Type.ECDSA_SECP256k1, valueOf: Identity_Type.valueOf, enumValues: Identity_Type.values)
+    ..e<Identity_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: Identity_Type.ECDSA, valueOf: Identity_Type.valueOf, enumValues: Identity_Type.values)
     ..aOS(2, 'alias')
     ..aOS(3, 'identityId', protoName: 'identityId')
     ..pc<$0.Key>(4, 'keys', $pb.PbFieldType.PM, subBuilder: $0.Key.create)
@@ -206,7 +206,7 @@ class Identity extends $pb.GeneratedMessage {
 
 class PeerIdentity extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('PeerIdentity', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..e<PeerIdentity_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: PeerIdentity_Type.ECDSA_SECP256k1, valueOf: PeerIdentity_Type.valueOf, enumValues: PeerIdentity_Type.values)
+    ..e<PeerIdentity_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: PeerIdentity_Type.ECDSA, valueOf: PeerIdentity_Type.valueOf, enumValues: PeerIdentity_Type.values)
     ..aOS(2, 'alias')
     ..aOS(3, 'identityId', protoName: 'identityId')
     ..hasRequiredFields = false

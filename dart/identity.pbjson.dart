@@ -58,8 +58,7 @@ const Identity_MetaEntry$json = const {
 const Identity_Type$json = const {
   '1': 'Type',
   '2': const [
-    const {'1': 'ECDSA_SECP256k1', '2': 0},
-    const {'1': 'IDEN3', '2': 1},
+    const {'1': 'ECDSA', '2': 0},
   ],
 };
 
@@ -76,8 +75,7 @@ const PeerIdentity$json = const {
 const PeerIdentity_Type$json = const {
   '1': 'Type',
   '2': const [
-    const {'1': 'ECDSA_SECP256k1', '2': 0},
-    const {'1': 'IDEN3', '2': 1},
+    const {'1': 'ECDSA', '2': 0},
   ],
 };
 
