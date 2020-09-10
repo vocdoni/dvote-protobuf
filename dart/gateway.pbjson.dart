@@ -11,6 +11,7 @@ const BootNodeGateways$json = const {
     const {'1': 'homestead', '3': 1, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes', '10': 'homestead'},
     const {'1': 'goerli', '3': 2, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes', '10': 'goerli'},
     const {'1': 'xdai', '3': 3, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes', '10': 'xdai'},
+    const {'1': 'sokol', '3': 4, '4': 1, '5': 11, '6': '.dvote.BootNodeGateways.NetworkNodes', '10': 'sokol'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.BootNodeGateways.MetaEntry', '10': 'meta'},
   ],
   '3': const [BootNodeGateways_NetworkNodes$json, BootNodeGateways_MetaEntry$json],
