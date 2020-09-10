@@ -119,6 +119,7 @@ class BootNodeGateways extends $pb.GeneratedMessage {
     ..aOM<BootNodeGateways_NetworkNodes>(1, 'homestead', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..aOM<BootNodeGateways_NetworkNodes>(2, 'goerli', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..aOM<BootNodeGateways_NetworkNodes>(3, 'xdai', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..aOM<BootNodeGateways_NetworkNodes>(4, 'sokol', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'BootNodeGateways.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
@@ -171,7 +172,18 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   BootNodeGateways_NetworkNodes ensureXdai() => $_ensure(2);
 
+  @$pb.TagNumber(4)
+  BootNodeGateways_NetworkNodes get sokol => $_getN(3);
+  @$pb.TagNumber(4)
+  set sokol(BootNodeGateways_NetworkNodes v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSokol() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSokol() => clearField(4);
+  @$pb.TagNumber(4)
+  BootNodeGateways_NetworkNodes ensureSokol() => $_ensure(3);
+
   @$pb.TagNumber(100)
-  $core.Map<$core.String, $core.String> get meta => $_getMap(3);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(4);
 }
 
