@@ -1,24 +1,24 @@
 ///
 //  Generated code. Do not modify.
-//  source: identity.proto
+//  source: client-store/identity.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'key.pb.dart' as $0;
-import 'entity.pb.dart' as $1;
+import '../metadata/entity.pb.dart' as $1;
 
 import 'identity.pbenum.dart';
 
 export 'identity.pbenum.dart';
 
 class IdentitiesStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('IdentitiesStore', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..pc<Identity>(1, 'items', $pb.PbFieldType.PM, subBuilder: Identity.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IdentitiesStore', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..pc<Identity>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: Identity.create)
     ..hasRequiredFields = false
   ;
 
@@ -26,8 +26,16 @@ class IdentitiesStore extends $pb.GeneratedMessage {
   factory IdentitiesStore() => create();
   factory IdentitiesStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory IdentitiesStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   IdentitiesStore clone() => IdentitiesStore()..mergeFromMessage(this);
-  IdentitiesStore copyWith(void Function(IdentitiesStore) updates) => super.copyWith((message) => updates(message as IdentitiesStore));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  IdentitiesStore copyWith(void Function(IdentitiesStore) updates) => super.copyWith((message) => updates(message as IdentitiesStore)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static IdentitiesStore create() => IdentitiesStore._();
@@ -42,9 +50,9 @@ class IdentitiesStore extends $pb.GeneratedMessage {
 }
 
 class Identity_Peers extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity.Peers', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..pc<$1.EntityReference>(1, 'entities', $pb.PbFieldType.PM, subBuilder: $1.EntityReference.create)
-    ..pc<PeerIdentity>(2, 'identities', $pb.PbFieldType.PM, subBuilder: PeerIdentity.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Identity.Peers', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..pc<$1.EntityReference>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entities', $pb.PbFieldType.PM, subBuilder: $1.EntityReference.create)
+    ..pc<PeerIdentity>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'identities', $pb.PbFieldType.PM, subBuilder: PeerIdentity.create)
     ..hasRequiredFields = false
   ;
 
@@ -52,8 +60,16 @@ class Identity_Peers extends $pb.GeneratedMessage {
   factory Identity_Peers() => create();
   factory Identity_Peers.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Identity_Peers.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Identity_Peers clone() => Identity_Peers()..mergeFromMessage(this);
-  Identity_Peers copyWith(void Function(Identity_Peers) updates) => super.copyWith((message) => updates(message as Identity_Peers));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Identity_Peers copyWith(void Function(Identity_Peers) updates) => super.copyWith((message) => updates(message as Identity_Peers)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Identity_Peers create() => Identity_Peers._();
@@ -71,11 +87,11 @@ class Identity_Peers extends $pb.GeneratedMessage {
 }
 
 class Identity_Claim extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity.Claim', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'index')
-    ..aOS(2, 'proof')
-    ..aOS(3, 'data')
-    ..pPS(4, 'tags')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Identity.Claim', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'index')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data')
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
     ..hasRequiredFields = false
   ;
 
@@ -83,8 +99,16 @@ class Identity_Claim extends $pb.GeneratedMessage {
   factory Identity_Claim() => create();
   factory Identity_Claim.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Identity_Claim.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Identity_Claim clone() => Identity_Claim()..mergeFromMessage(this);
-  Identity_Claim copyWith(void Function(Identity_Claim) updates) => super.copyWith((message) => updates(message as Identity_Claim));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Identity_Claim copyWith(void Function(Identity_Claim) updates) => super.copyWith((message) => updates(message as Identity_Claim)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Identity_Claim create() => Identity_Claim._();
@@ -126,15 +150,15 @@ class Identity_Claim extends $pb.GeneratedMessage {
 }
 
 class Identity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Identity', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..e<Identity_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: Identity_Type.ECDSA, valueOf: Identity_Type.valueOf, enumValues: Identity_Type.values)
-    ..aOS(2, 'alias')
-    ..aOS(3, 'identityId', protoName: 'identityId')
-    ..pc<$0.Key>(4, 'keys', $pb.PbFieldType.PM, subBuilder: $0.Key.create)
-    ..aOM<Identity_Peers>(5, 'peers', subBuilder: Identity_Peers.create)
-    ..pc<Identity_Claim>(6, 'receivedClaims', $pb.PbFieldType.PM, protoName: 'receivedClaims', subBuilder: Identity_Claim.create)
-    ..pc<Identity_Claim>(7, 'issuedClaims', $pb.PbFieldType.PM, protoName: 'issuedClaims', subBuilder: Identity_Claim.create)
-    ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'Identity.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Identity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..e<Identity_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Identity_Type.ECDSA, valueOf: Identity_Type.valueOf, enumValues: Identity_Type.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'alias')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'identityId', protoName: 'identityId')
+    ..pc<$0.Key>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keys', $pb.PbFieldType.PM, subBuilder: $0.Key.create)
+    ..aOM<Identity_Peers>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'peers', subBuilder: Identity_Peers.create)
+    ..pc<Identity_Claim>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'receivedClaims', $pb.PbFieldType.PM, protoName: 'receivedClaims', subBuilder: Identity_Claim.create)
+    ..pc<Identity_Claim>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'issuedClaims', $pb.PbFieldType.PM, protoName: 'issuedClaims', subBuilder: Identity_Claim.create)
+    ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'Identity.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -142,8 +166,16 @@ class Identity extends $pb.GeneratedMessage {
   factory Identity() => create();
   factory Identity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Identity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Identity clone() => Identity()..mergeFromMessage(this);
-  Identity copyWith(void Function(Identity) updates) => super.copyWith((message) => updates(message as Identity));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Identity copyWith(void Function(Identity) updates) => super.copyWith((message) => updates(message as Identity)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Identity create() => Identity._();
@@ -205,10 +237,10 @@ class Identity extends $pb.GeneratedMessage {
 }
 
 class PeerIdentity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PeerIdentity', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..e<PeerIdentity_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: PeerIdentity_Type.ECDSA, valueOf: PeerIdentity_Type.valueOf, enumValues: PeerIdentity_Type.values)
-    ..aOS(2, 'alias')
-    ..aOS(3, 'identityId', protoName: 'identityId')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PeerIdentity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..e<PeerIdentity_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PeerIdentity_Type.ECDSA, valueOf: PeerIdentity_Type.valueOf, enumValues: PeerIdentity_Type.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'alias')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'identityId', protoName: 'identityId')
     ..hasRequiredFields = false
   ;
 
@@ -216,8 +248,16 @@ class PeerIdentity extends $pb.GeneratedMessage {
   factory PeerIdentity() => create();
   factory PeerIdentity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PeerIdentity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   PeerIdentity clone() => PeerIdentity()..mergeFromMessage(this);
-  PeerIdentity copyWith(void Function(PeerIdentity) updates) => super.copyWith((message) => updates(message as PeerIdentity));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PeerIdentity copyWith(void Function(PeerIdentity) updates) => super.copyWith((message) => updates(message as PeerIdentity)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PeerIdentity create() => PeerIdentity._();

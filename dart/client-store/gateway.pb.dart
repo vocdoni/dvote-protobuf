@@ -1,19 +1,19 @@
 ///
 //  Generated code. Do not modify.
-//  source: gateway.proto
+//  source: client-store/gateway.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.NetworkNodes.DVote', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'uri')
-    ..pPS(2, 'apis')
-    ..aOS(3, 'pubKey', protoName: 'pubKey')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes.DVote', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uri')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'apis')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pubKey', protoName: 'pubKey')
     ..hasRequiredFields = false
   ;
 
@@ -21,8 +21,16 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
   factory BootNodeGateways_NetworkNodes_DVote() => create();
   factory BootNodeGateways_NetworkNodes_DVote.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes_DVote.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BootNodeGateways_NetworkNodes_DVote clone() => BootNodeGateways_NetworkNodes_DVote()..mergeFromMessage(this);
-  BootNodeGateways_NetworkNodes_DVote copyWith(void Function(BootNodeGateways_NetworkNodes_DVote) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_DVote));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes_DVote copyWith(void Function(BootNodeGateways_NetworkNodes_DVote) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_DVote)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_DVote create() => BootNodeGateways_NetworkNodes_DVote._();
@@ -55,8 +63,8 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
 }
 
 class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.NetworkNodes.Web3', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'uri')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes.Web3', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uri')
     ..hasRequiredFields = false
   ;
 
@@ -64,8 +72,16 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
   factory BootNodeGateways_NetworkNodes_Web3() => create();
   factory BootNodeGateways_NetworkNodes_Web3.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes_Web3.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BootNodeGateways_NetworkNodes_Web3 clone() => BootNodeGateways_NetworkNodes_Web3()..mergeFromMessage(this);
-  BootNodeGateways_NetworkNodes_Web3 copyWith(void Function(BootNodeGateways_NetworkNodes_Web3) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_Web3));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes_Web3 copyWith(void Function(BootNodeGateways_NetworkNodes_Web3) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_Web3)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_Web3 create() => BootNodeGateways_NetworkNodes_Web3._();
@@ -86,9 +102,9 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
 }
 
 class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways.NetworkNodes', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..pc<BootNodeGateways_NetworkNodes_DVote>(1, 'dvote', $pb.PbFieldType.PM, subBuilder: BootNodeGateways_NetworkNodes_DVote.create)
-    ..pc<BootNodeGateways_NetworkNodes_Web3>(2, 'web3', $pb.PbFieldType.PM, subBuilder: BootNodeGateways_NetworkNodes_Web3.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..pc<BootNodeGateways_NetworkNodes_DVote>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dvote', $pb.PbFieldType.PM, subBuilder: BootNodeGateways_NetworkNodes_DVote.create)
+    ..pc<BootNodeGateways_NetworkNodes_Web3>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'web3', $pb.PbFieldType.PM, subBuilder: BootNodeGateways_NetworkNodes_Web3.create)
     ..hasRequiredFields = false
   ;
 
@@ -96,8 +112,16 @@ class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
   factory BootNodeGateways_NetworkNodes() => create();
   factory BootNodeGateways_NetworkNodes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BootNodeGateways_NetworkNodes clone() => BootNodeGateways_NetworkNodes()..mergeFromMessage(this);
-  BootNodeGateways_NetworkNodes copyWith(void Function(BootNodeGateways_NetworkNodes) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes copyWith(void Function(BootNodeGateways_NetworkNodes) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes create() => BootNodeGateways_NetworkNodes._();
@@ -115,12 +139,12 @@ class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
 }
 
 class BootNodeGateways extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('BootNodeGateways', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOM<BootNodeGateways_NetworkNodes>(1, 'homestead', subBuilder: BootNodeGateways_NetworkNodes.create)
-    ..aOM<BootNodeGateways_NetworkNodes>(2, 'goerli', subBuilder: BootNodeGateways_NetworkNodes.create)
-    ..aOM<BootNodeGateways_NetworkNodes>(3, 'xdai', subBuilder: BootNodeGateways_NetworkNodes.create)
-    ..aOM<BootNodeGateways_NetworkNodes>(4, 'sokol', subBuilder: BootNodeGateways_NetworkNodes.create)
-    ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'BootNodeGateways.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOM<BootNodeGateways_NetworkNodes>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'homestead', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..aOM<BootNodeGateways_NetworkNodes>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'goerli', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..aOM<BootNodeGateways_NetworkNodes>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'xdai', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..aOM<BootNodeGateways_NetworkNodes>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sokol', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'BootNodeGateways.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -128,8 +152,16 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   factory BootNodeGateways() => create();
   factory BootNodeGateways.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   BootNodeGateways clone() => BootNodeGateways()..mergeFromMessage(this);
-  BootNodeGateways copyWith(void Function(BootNodeGateways) updates) => super.copyWith((message) => updates(message as BootNodeGateways));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways copyWith(void Function(BootNodeGateways) updates) => super.copyWith((message) => updates(message as BootNodeGateways)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways create() => BootNodeGateways._();
