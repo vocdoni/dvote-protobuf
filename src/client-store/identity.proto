@@ -3,8 +3,8 @@
 syntax = "proto3";
 package dvote;
 
-import "entity.proto";
-import "key.proto";
+import "metadata/entity.proto";
+import "client-store/key.proto";
 
 // Helper to serialize and store a set of entries
 message IdentitiesStore {

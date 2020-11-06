@@ -1,17 +1,17 @@
 ///
 //  Generated code. Do not modify.
-//  source: entity.proto
+//  source: metadata/entity.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class EntityMetadataStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadataStore', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..pc<EntityMetadata>(1, 'items', $pb.PbFieldType.PM, subBuilder: EntityMetadata.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityMetadataStore', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..pc<EntityMetadata>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: EntityMetadata.create)
     ..hasRequiredFields = false
   ;
 
@@ -19,8 +19,16 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
   factory EntityMetadataStore() => create();
   factory EntityMetadataStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadataStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityMetadataStore clone() => EntityMetadataStore()..mergeFromMessage(this);
-  EntityMetadataStore copyWith(void Function(EntityMetadataStore) updates) => super.copyWith((message) => updates(message as EntityMetadataStore));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityMetadataStore copyWith(void Function(EntityMetadataStore) updates) => super.copyWith((message) => updates(message as EntityMetadataStore)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadataStore create() => EntityMetadataStore._();
@@ -35,9 +43,9 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
 }
 
 class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata.VotingProcesses', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..pPS(1, 'active')
-    ..pPS(2, 'ended')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityMetadata.VotingProcesses', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'active')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ended')
     ..hasRequiredFields = false
   ;
 
@@ -45,8 +53,16 @@ class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
   factory EntityMetadata_VotingProcesses() => create();
   factory EntityMetadata_VotingProcesses.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_VotingProcesses.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityMetadata_VotingProcesses clone() => EntityMetadata_VotingProcesses()..mergeFromMessage(this);
-  EntityMetadata_VotingProcesses copyWith(void Function(EntityMetadata_VotingProcesses) updates) => super.copyWith((message) => updates(message as EntityMetadata_VotingProcesses));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityMetadata_VotingProcesses copyWith(void Function(EntityMetadata_VotingProcesses) updates) => super.copyWith((message) => updates(message as EntityMetadata_VotingProcesses)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_VotingProcesses create() => EntityMetadata_VotingProcesses._();
@@ -64,9 +80,9 @@ class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
 }
 
 class EntityMetadata_Media extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata.Media', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'avatar')
-    ..aOS(2, 'header')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityMetadata.Media', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatar')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'header')
     ..hasRequiredFields = false
   ;
 
@@ -74,8 +90,16 @@ class EntityMetadata_Media extends $pb.GeneratedMessage {
   factory EntityMetadata_Media() => create();
   factory EntityMetadata_Media.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_Media.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityMetadata_Media clone() => EntityMetadata_Media()..mergeFromMessage(this);
-  EntityMetadata_Media copyWith(void Function(EntityMetadata_Media) updates) => super.copyWith((message) => updates(message as EntityMetadata_Media));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityMetadata_Media copyWith(void Function(EntityMetadata_Media) updates) => super.copyWith((message) => updates(message as EntityMetadata_Media)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Media create() => EntityMetadata_Media._();
@@ -105,12 +129,12 @@ class EntityMetadata_Media extends $pb.GeneratedMessage {
 }
 
 class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata.Action.ImageSource', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'type')
-    ..aOS(2, 'name')
-    ..aOS(3, 'orientation')
-    ..aOS(4, 'overlay')
-    ..m<$core.String, $core.String>(5, 'caption', entryClassName: 'EntityMetadata.Action.ImageSource.CaptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityMetadata.Action.ImageSource', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'orientation')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'overlay')
+    ..m<$core.String, $core.String>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'caption', entryClassName: 'EntityMetadata.Action.ImageSource.CaptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -118,8 +142,16 @@ class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
   factory EntityMetadata_Action_ImageSource() => create();
   factory EntityMetadata_Action_ImageSource.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_Action_ImageSource.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityMetadata_Action_ImageSource clone() => EntityMetadata_Action_ImageSource()..mergeFromMessage(this);
-  EntityMetadata_Action_ImageSource copyWith(void Function(EntityMetadata_Action_ImageSource) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action_ImageSource));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityMetadata_Action_ImageSource copyWith(void Function(EntityMetadata_Action_ImageSource) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action_ImageSource)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Action_ImageSource create() => EntityMetadata_Action_ImageSource._();
@@ -170,13 +202,13 @@ class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
 }
 
 class EntityMetadata_Action extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata.Action', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'type')
-    ..m<$core.String, $core.String>(2, 'name', entryClassName: 'EntityMetadata.Action.NameEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
-    ..aOS(3, 'visible')
-    ..aOS(4, 'url')
-    ..pc<EntityMetadata_Action_ImageSource>(5, 'imageSources', $pb.PbFieldType.PM, protoName: 'imageSources', subBuilder: EntityMetadata_Action_ImageSource.create)
-    ..aOS(7, 'actionKey', protoName: 'actionKey')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityMetadata.Action', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
+    ..m<$core.String, $core.String>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name', entryClassName: 'EntityMetadata.Action.NameEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'visible')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
+    ..pc<EntityMetadata_Action_ImageSource>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageSources', $pb.PbFieldType.PM, protoName: 'imageSources', subBuilder: EntityMetadata_Action_ImageSource.create)
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'actionKey', protoName: 'actionKey')
     ..hasRequiredFields = false
   ;
 
@@ -184,8 +216,16 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
   factory EntityMetadata_Action() => create();
   factory EntityMetadata_Action.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_Action.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityMetadata_Action clone() => EntityMetadata_Action()..mergeFromMessage(this);
-  EntityMetadata_Action copyWith(void Function(EntityMetadata_Action) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityMetadata_Action copyWith(void Function(EntityMetadata_Action) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Action create() => EntityMetadata_Action._();
@@ -239,20 +279,20 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
 }
 
 class EntityMetadata extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityMetadata', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'version')
-    ..pPS(2, 'languages')
-    ..m<$core.String, $core.String>(3, 'name', entryClassName: 'EntityMetadata.NameEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
-    ..m<$core.String, $core.String>(4, 'description', entryClassName: 'EntityMetadata.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
-    ..aOM<EntityMetadata_VotingProcesses>(5, 'votingProcesses', protoName: 'votingProcesses', subBuilder: EntityMetadata_VotingProcesses.create)
-    ..m<$core.String, $core.String>(6, 'newsFeed', protoName: 'newsFeed', entryClassName: 'EntityMetadata.NewsFeedEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
-    ..aOM<EntityMetadata_Media>(7, 'media', subBuilder: EntityMetadata_Media.create)
-    ..pc<EntityMetadata_Action>(8, 'actions', $pb.PbFieldType.PM, subBuilder: EntityMetadata_Action.create)
-    ..pc<EntityReference>(9, 'bootEntities', $pb.PbFieldType.PM, protoName: 'bootEntities', subBuilder: EntityReference.create)
-    ..pc<EntityReference>(10, 'fallbackBootNodeEntities', $pb.PbFieldType.PM, protoName: 'fallbackBootNodeEntities', subBuilder: EntityReference.create)
-    ..pc<EntityReference>(11, 'trustedEntities', $pb.PbFieldType.PM, protoName: 'trustedEntities', subBuilder: EntityReference.create)
-    ..pc<EntityReference>(12, 'censusServiceManagedEntities', $pb.PbFieldType.PM, protoName: 'censusServiceManagedEntities', subBuilder: EntityReference.create)
-    ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'EntityMetadata.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityMetadata', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'languages')
+    ..m<$core.String, $core.String>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name', entryClassName: 'EntityMetadata.NameEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..m<$core.String, $core.String>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description', entryClassName: 'EntityMetadata.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..aOM<EntityMetadata_VotingProcesses>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votingProcesses', protoName: 'votingProcesses', subBuilder: EntityMetadata_VotingProcesses.create)
+    ..m<$core.String, $core.String>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newsFeed', protoName: 'newsFeed', entryClassName: 'EntityMetadata.NewsFeedEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+    ..aOM<EntityMetadata_Media>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'media', subBuilder: EntityMetadata_Media.create)
+    ..pc<EntityMetadata_Action>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'actions', $pb.PbFieldType.PM, subBuilder: EntityMetadata_Action.create)
+    ..pc<EntityReference>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bootEntities', $pb.PbFieldType.PM, protoName: 'bootEntities', subBuilder: EntityReference.create)
+    ..pc<EntityReference>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fallbackBootNodeEntities', $pb.PbFieldType.PM, protoName: 'fallbackBootNodeEntities', subBuilder: EntityReference.create)
+    ..pc<EntityReference>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trustedEntities', $pb.PbFieldType.PM, protoName: 'trustedEntities', subBuilder: EntityReference.create)
+    ..pc<EntityReference>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusServiceManagedEntities', $pb.PbFieldType.PM, protoName: 'censusServiceManagedEntities', subBuilder: EntityReference.create)
+    ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'EntityMetadata.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -260,8 +300,16 @@ class EntityMetadata extends $pb.GeneratedMessage {
   factory EntityMetadata() => create();
   factory EntityMetadata.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityMetadata clone() => EntityMetadata()..mergeFromMessage(this);
-  EntityMetadata copyWith(void Function(EntityMetadata) updates) => super.copyWith((message) => updates(message as EntityMetadata));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityMetadata copyWith(void Function(EntityMetadata) updates) => super.copyWith((message) => updates(message as EntityMetadata)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata create() => EntityMetadata._();
@@ -334,9 +382,9 @@ class EntityMetadata extends $pb.GeneratedMessage {
 }
 
 class EntityReference extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('EntityReference', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'entityId', protoName: 'entityId')
-    ..pPS(2, 'entryPoints', protoName: 'entryPoints')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityReference', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityId', protoName: 'entityId')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entryPoints', protoName: 'entryPoints')
     ..hasRequiredFields = false
   ;
 
@@ -344,8 +392,16 @@ class EntityReference extends $pb.GeneratedMessage {
   factory EntityReference() => create();
   factory EntityReference.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityReference.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   EntityReference clone() => EntityReference()..mergeFromMessage(this);
-  EntityReference copyWith(void Function(EntityReference) updates) => super.copyWith((message) => updates(message as EntityReference));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EntityReference copyWith(void Function(EntityReference) updates) => super.copyWith((message) => updates(message as EntityReference)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityReference create() => EntityReference._();

@@ -1,17 +1,17 @@
 ///
 //  Generated code. Do not modify.
-//  source: feed.proto
+//  source: metadata/feed.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class FeedStore extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedStore', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..pc<Feed>(1, 'items', $pb.PbFieldType.PM, subBuilder: Feed.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FeedStore', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..pc<Feed>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: Feed.create)
     ..hasRequiredFields = false
   ;
 
@@ -19,8 +19,16 @@ class FeedStore extends $pb.GeneratedMessage {
   factory FeedStore() => create();
   factory FeedStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FeedStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FeedStore clone() => FeedStore()..mergeFromMessage(this);
-  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FeedStore create() => FeedStore._();
@@ -35,17 +43,17 @@ class FeedStore extends $pb.GeneratedMessage {
 }
 
 class Feed extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Feed', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'version')
-    ..aOS(2, 'title')
-    ..aOS(3, 'homePageUrl')
-    ..aOS(4, 'description')
-    ..aOS(5, 'feedUrl')
-    ..aOS(6, 'icon')
-    ..aOS(7, 'favicon')
-    ..aOB(8, 'expired')
-    ..pc<FeedPost>(9, 'items', $pb.PbFieldType.PM, subBuilder: FeedPost.create)
-    ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'Feed.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Feed', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'homePageUrl')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'feedUrl')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'icon')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'favicon')
+    ..aOB(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'expired')
+    ..pc<FeedPost>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: FeedPost.create)
+    ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'Feed.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -53,8 +61,16 @@ class Feed extends $pb.GeneratedMessage {
   factory Feed() => create();
   factory Feed.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Feed.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Feed clone() => Feed()..mergeFromMessage(this);
-  Feed copyWith(void Function(Feed) updates) => super.copyWith((message) => updates(message as Feed));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Feed copyWith(void Function(Feed) updates) => super.copyWith((message) => updates(message as Feed)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Feed create() => Feed._();
@@ -144,9 +160,9 @@ class Feed extends $pb.GeneratedMessage {
 }
 
 class FeedPost_Author extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedPost.Author', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'name')
-    ..aOS(2, 'url')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FeedPost.Author', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
     ..hasRequiredFields = false
   ;
 
@@ -154,8 +170,16 @@ class FeedPost_Author extends $pb.GeneratedMessage {
   factory FeedPost_Author() => create();
   factory FeedPost_Author.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FeedPost_Author.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FeedPost_Author clone() => FeedPost_Author()..mergeFromMessage(this);
-  FeedPost_Author copyWith(void Function(FeedPost_Author) updates) => super.copyWith((message) => updates(message as FeedPost_Author));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FeedPost_Author copyWith(void Function(FeedPost_Author) updates) => super.copyWith((message) => updates(message as FeedPost_Author)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FeedPost_Author create() => FeedPost_Author._();
@@ -185,18 +209,18 @@ class FeedPost_Author extends $pb.GeneratedMessage {
 }
 
 class FeedPost extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FeedPost', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..aOS(1, 'id')
-    ..aOS(2, 'title')
-    ..aOS(3, 'summary')
-    ..aOS(4, 'contentText')
-    ..aOS(5, 'contentHtml')
-    ..aOS(6, 'url')
-    ..aOS(7, 'image')
-    ..pPS(8, 'tags')
-    ..aOS(9, 'datePublished')
-    ..aOS(10, 'dateModified')
-    ..aOM<FeedPost_Author>(11, 'author', subBuilder: FeedPost_Author.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FeedPost', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'summary')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'contentText')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'contentHtml')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image')
+    ..pPS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'datePublished')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dateModified')
+    ..aOM<FeedPost_Author>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'author', subBuilder: FeedPost_Author.create)
     ..hasRequiredFields = false
   ;
 
@@ -204,8 +228,16 @@ class FeedPost extends $pb.GeneratedMessage {
   factory FeedPost() => create();
   factory FeedPost.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FeedPost.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   FeedPost clone() => FeedPost()..mergeFromMessage(this);
-  FeedPost copyWith(void Function(FeedPost) updates) => super.copyWith((message) => updates(message as FeedPost));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FeedPost copyWith(void Function(FeedPost) updates) => super.copyWith((message) => updates(message as FeedPost)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FeedPost create() => FeedPost._();

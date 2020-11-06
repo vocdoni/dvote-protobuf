@@ -1,9 +1,9 @@
 ///
 //  Generated code. Do not modify.
-//  source: key.proto
+//  source: client-store/key.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -14,13 +14,13 @@ import 'key.pbenum.dart';
 export 'key.pbenum.dart';
 
 class Key extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Key', package: const $pb.PackageName('dvote'), createEmptyInstance: create)
-    ..e<Key_Type>(1, 'type', $pb.PbFieldType.OE, defaultOrMaker: Key_Type.SECP256K1, valueOf: Key_Type.valueOf, enumValues: Key_Type.values)
-    ..aOS(2, 'encryptedMnemonic', protoName: 'encryptedMnemonic')
-    ..aOS(3, 'encryptedRootPrivateKey', protoName: 'encryptedRootPrivateKey')
-    ..aOS(4, 'rootPublicKey', protoName: 'rootPublicKey')
-    ..aOS(5, 'rootAddress', protoName: 'rootAddress')
-    ..m<$core.String, $core.String>(100, 'meta', entryClassName: 'Key.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Key', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote'), createEmptyInstance: create)
+    ..e<Key_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Key_Type.SECP256K1, valueOf: Key_Type.valueOf, enumValues: Key_Type.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptedMnemonic', protoName: 'encryptedMnemonic')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptedRootPrivateKey', protoName: 'encryptedRootPrivateKey')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rootPublicKey', protoName: 'rootPublicKey')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rootAddress', protoName: 'rootAddress')
+    ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'Key.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote'))
     ..hasRequiredFields = false
   ;
 
@@ -28,8 +28,16 @@ class Key extends $pb.GeneratedMessage {
   factory Key() => create();
   factory Key.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Key.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Key clone() => Key()..mergeFromMessage(this);
-  Key copyWith(void Function(Key) updates) => super.copyWith((message) => updates(message as Key));
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Key copyWith(void Function(Key) updates) => super.copyWith((message) => updates(message as Key)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Key create() => Key._();
