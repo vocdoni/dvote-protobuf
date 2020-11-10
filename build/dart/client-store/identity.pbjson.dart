@@ -8,21 +8,21 @@
 const IdentitiesStore$json = const {
   '1': 'IdentitiesStore',
   '2': const [
-    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.Identity', '10': 'items'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v1.Identity', '10': 'items'},
   ],
 };
 
 const Identity$json = const {
   '1': 'Identity',
   '2': const [
-    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.Identity.Type', '10': 'type'},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.Identity.Type', '10': 'type'},
     const {'1': 'alias', '3': 2, '4': 1, '5': 9, '10': 'alias'},
     const {'1': 'identityId', '3': 3, '4': 1, '5': 9, '10': 'identityId'},
-    const {'1': 'keys', '3': 4, '4': 3, '5': 11, '6': '.dvote.Key', '10': 'keys'},
-    const {'1': 'peers', '3': 5, '4': 1, '5': 11, '6': '.dvote.Identity.Peers', '10': 'peers'},
-    const {'1': 'receivedClaims', '3': 6, '4': 3, '5': 11, '6': '.dvote.Identity.Claim', '10': 'receivedClaims'},
-    const {'1': 'issuedClaims', '3': 7, '4': 3, '5': 11, '6': '.dvote.Identity.Claim', '10': 'issuedClaims'},
-    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Identity.MetaEntry', '10': 'meta'},
+    const {'1': 'keys', '3': 4, '4': 3, '5': 11, '6': '.dvote.types.v1.Key', '10': 'keys'},
+    const {'1': 'peers', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.Identity.Peers', '10': 'peers'},
+    const {'1': 'receivedClaims', '3': 6, '4': 3, '5': 11, '6': '.dvote.types.v1.Identity.Claim', '10': 'receivedClaims'},
+    const {'1': 'issuedClaims', '3': 7, '4': 3, '5': 11, '6': '.dvote.types.v1.Identity.Claim', '10': 'issuedClaims'},
+    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.types.v1.Identity.MetaEntry', '10': 'meta'},
   ],
   '3': const [Identity_Peers$json, Identity_Claim$json, Identity_MetaEntry$json],
   '4': const [Identity_Type$json],
@@ -31,8 +31,8 @@ const Identity$json = const {
 const Identity_Peers$json = const {
   '1': 'Peers',
   '2': const [
-    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.EntityReference', '10': 'entities'},
-    const {'1': 'identities', '3': 2, '4': 3, '5': 11, '6': '.dvote.PeerIdentity', '10': 'identities'},
+    const {'1': 'entities', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v1.EntityReference', '10': 'entities'},
+    const {'1': 'identities', '3': 2, '4': 3, '5': 11, '6': '.dvote.types.v1.PeerIdentity', '10': 'identities'},
   ],
 };
 
@@ -65,7 +65,7 @@ const Identity_Type$json = const {
 const PeerIdentity$json = const {
   '1': 'PeerIdentity',
   '2': const [
-    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.PeerIdentity.Type', '10': 'type'},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.PeerIdentity.Type', '10': 'type'},
     const {'1': 'alias', '3': 2, '4': 1, '5': 9, '10': 'alias'},
     const {'1': 'identityId', '3': 3, '4': 1, '5': 9, '10': 'identityId'},
   ],

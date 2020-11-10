@@ -8,7 +8,7 @@
 const ProcessMetadataStore$json = const {
   '1': 'ProcessMetadataStore',
   '2': const [
-    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata', '10': 'items'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata', '10': 'items'},
   ],
 };
 
@@ -19,9 +19,9 @@ const ProcessMetadata$json = const {
     const {'1': 'type', '3': 2, '4': 1, '5': 9, '10': 'type'},
     const {'1': 'startBlock', '3': 3, '4': 1, '5': 5, '10': 'startBlock'},
     const {'1': 'blockCount', '3': 4, '4': 1, '5': 5, '10': 'blockCount'},
-    const {'1': 'census', '3': 5, '4': 1, '5': 11, '6': '.dvote.ProcessMetadata.Census', '10': 'census'},
-    const {'1': 'details', '3': 6, '4': 1, '5': 11, '6': '.dvote.ProcessMetadata.Details', '10': 'details'},
-    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.MetaEntry', '10': 'meta'},
+    const {'1': 'census', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Census', '10': 'census'},
+    const {'1': 'details', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details', '10': 'details'},
+    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.MetaEntry', '10': 'meta'},
   ],
   '3': const [ProcessMetadata_Census$json, ProcessMetadata_Details$json, ProcessMetadata_MetaEntry$json],
 };
@@ -38,11 +38,11 @@ const ProcessMetadata_Details$json = const {
   '1': 'Details',
   '2': const [
     const {'1': 'entityId', '3': 1, '4': 1, '5': 9, '10': 'entityId'},
-    const {'1': 'title', '3': 3, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.TitleEntry', '10': 'title'},
-    const {'1': 'description', '3': 4, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.DescriptionEntry', '10': 'description'},
+    const {'1': 'title', '3': 3, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.TitleEntry', '10': 'title'},
+    const {'1': 'description', '3': 4, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.DescriptionEntry', '10': 'description'},
     const {'1': 'headerImage', '3': 5, '4': 1, '5': 9, '10': 'headerImage'},
     const {'1': 'streamUrl', '3': 7, '4': 1, '5': 9, '10': 'streamUrl'},
-    const {'1': 'questions', '3': 6, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question', '10': 'questions'},
+    const {'1': 'questions', '3': 6, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.Question', '10': 'questions'},
   ],
   '3': const [ProcessMetadata_Details_TitleEntry$json, ProcessMetadata_Details_DescriptionEntry$json, ProcessMetadata_Details_Question$json],
 };
@@ -69,9 +69,9 @@ const ProcessMetadata_Details_Question$json = const {
   '1': 'Question',
   '2': const [
     const {'1': 'type', '3': 1, '4': 1, '5': 9, '10': 'type'},
-    const {'1': 'question', '3': 2, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question.QuestionEntry', '10': 'question'},
-    const {'1': 'description', '3': 3, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question.DescriptionEntry', '10': 'description'},
-    const {'1': 'voteOptions', '3': 4, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question.VoteOption', '10': 'voteOptions'},
+    const {'1': 'question', '3': 2, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.Question.QuestionEntry', '10': 'question'},
+    const {'1': 'description', '3': 3, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.Question.DescriptionEntry', '10': 'description'},
+    const {'1': 'voteOptions', '3': 4, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.Question.VoteOption', '10': 'voteOptions'},
   ],
   '3': const [ProcessMetadata_Details_Question_QuestionEntry$json, ProcessMetadata_Details_Question_DescriptionEntry$json, ProcessMetadata_Details_Question_VoteOption$json],
 };
@@ -97,7 +97,7 @@ const ProcessMetadata_Details_Question_DescriptionEntry$json = const {
 const ProcessMetadata_Details_Question_VoteOption$json = const {
   '1': 'VoteOption',
   '2': const [
-    const {'1': 'title', '3': 1, '4': 3, '5': 11, '6': '.dvote.ProcessMetadata.Details.Question.VoteOption.TitleEntry', '10': 'title'},
+    const {'1': 'title', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Details.Question.VoteOption.TitleEntry', '10': 'title'},
     const {'1': 'value', '3': 2, '4': 1, '5': 5, '10': 'value'},
   ],
   '3': const [ProcessMetadata_Details_Question_VoteOption_TitleEntry$json],

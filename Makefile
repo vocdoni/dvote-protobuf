@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PATH  := $(PATH):$(HOME)/.pub-cache/bin
+PATH  := $(PATH):$(HOME)/.pub-cache/bin:./protoc
 .DEFAULT_GOAL := help
 
 PROJECT_NAME=$(shell basename "$(PWD)")
@@ -7,7 +7,8 @@ CLIENT_STORE_SOURCES=$(wildcard src/client-store/*.proto)
 COMMON_SOURCES=$(wildcard src/common/*.proto)
 METADATA_SOURCES=$(wildcard src/metadata/*.proto)
 VOCHAIN_STORE_SOURCES=$(wildcard src/vochain/*.proto)
-GO_PKG_DIR=go-vocdonitypes
+GO_ARTIFACTS_DIR=go-vocdonitypes
+PROTOC=protoc/bin/protoc
 
 #-----------------------------------------------------------------------
 # HELP
@@ -26,12 +27,11 @@ help: makefile
 ## :
 
 ## init: Install external dependencies
-init: protobuf-env
+init: $(PROTOC) protoc-dart-plugin protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
-	rm -Rf dart $(GO_PKG_DIR)
-	@touch src/* src/*/*
+	rm -Rf build $(GO_ARTIFACTS_DIR)
 
 ## :
 
@@ -40,32 +40,75 @@ clean:
 #-----------------------------------------------------------------------
 
 ## all: Generate the source code for all supported languages
-all: dart golang
+all: $(PROTOC) build/dart build/js $(GO_ARTIFACTS_DIR)
 
-## golang: Generate the Golang source code
-golang: $(VOCHAIN_STORE_SOURCES) $(COMMON_SOURCES)
-	mkdir -p ./$(GO_PKG_DIR)
+## golang: Generate the Golang protobuf artifacts
+golang: $(GO_ARTIFACTS_DIR)
+
+$(GO_ARTIFACTS_DIR): $(VOCHAIN_STORE_SOURCES) $(COMMON_SOURCES)
+	mkdir -p $@
 	for f in $^ ; do \
-		protoc --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$(PWD)/$(GO_PKG_DIR) $(PWD)/$$f ; \
+		$(PROTOC) --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$@ $(PWD)/$$f ; \
 	done
-	find $(GO_PKG_DIR) -iname "*.go" -type f -exec mv {} $(GO_PKG_DIR) \;
-	find $(GO_PKG_DIR) -type d -empty -delete
-	@touch $(GO_PKG_DIR)
+	find $@ -iname "*.go" -type f -exec mv {} $@ \;
+	find $@ -type d -empty -delete
+	@touch $@
 
 
-## dart: Generate the Dart source code
-dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES)
-	mkdir -p ./dart
+## dart: Generate the Dart protobuf artifacts
+dart: build/dart
+
+build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES)
+	mkdir -p $@
 	for f in $^ ; do \
-		protoc -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
+		$(PROTOC) --experimental_allow_proto3_optional -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
-.PHONY: protobuf-env
-protobuf-env:
-	@if [ ! -x /usr/local/bin/protoc ] ; then \
-		echo -e "Please, install protoc on /usr/local/bin.\nSee https://developers.google.com/protocol-buffers/docs/downloads.html" ; \
+## js: Generate the Javascript protobuf artifacts
+js: build/js
+
+build/js: $(COMMON_SOURCES)
+	mkdir -p $@
+	# protoc --proto_path=src --js_out=import_style=commonjs,binary:build/gen src/foo.proto src/bar/baz.proto
+	for f in $^ ; do \
+		protoc -I=$(PWD)/src --js_out=import_style=commonjs,binary:$@ $(PWD)/$$f ; \
+	done
+	@touch $@
+
+
+#-----------------------------------------------------------------------
+# COMPILERS
+#-----------------------------------------------------------------------
+
+$(PROTOC):
+	@# Main protoc binary
+	case "$$(uname)" in \
+		linux|Linux) \
+			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip > protoc.zip \
+			;; \
+		darwin|Darwin) \
+			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-osx-x86_64.zip > protoc.zip \
+			;; \
+		*) \
+			echo "Unsupported platform: $$(uname)" ; \
+			exit 1 ; \
+	esac
+
+	unzip -d protoc protoc.zip
+	rm protoc.zip
+
+# DART
+.PHONY: protoc-dart-plugin
+protoc-dart-plugin:
+	pub global activate protoc_plugin
+
+# GO
+protoc-go-plugin: protoc/protoc-gen-go
+protoc/protoc-gen-go:
+	if [ ! -d "$$GOPATH" ] ; then \
+		echo "Please, set $$GOPATH" ; \
 		exit 1 ; \
 	fi
-	pub global activate protoc_plugin
-	@echo "Done"
+	go get google.golang.org/protobuf/cmd/protoc-gen-go
+	go build -o $@ $$GOPATH/src/google.golang.org/protobuf/cmd/protoc-gen-go/main.go

@@ -1,7 +1,7 @@
 /// Type: Client side helper model
 
 syntax = "proto3";
-package dvote;
+package dvote.types.v1;
 
 // Helper to serialize and store all cached data
 message ProcessMetadataStore {

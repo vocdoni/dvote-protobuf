@@ -2,7 +2,7 @@
 /// Info: https://vocdoni.io/docs/#/architecture/components/gateway
 
 syntax = "proto3";
-package dvote;
+package dvote.types.v1;
 
 // Implementing the data structure from https://vocdoni.io/docs/#/architecture/components/bootnode
 message BootNodeGateways {

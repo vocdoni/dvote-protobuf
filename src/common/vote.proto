@@ -11,7 +11,10 @@ message VoteEnvelope {
         bytes processId = 3;  // The process for which the vote is casted
         Proof proof = 4;  // Merkle proof, ZK Proof or Ethereum storage proof
         bytes votePackage = 5;   // base64 encoded bytes[] of the VotePackage
-        optional bytes nullifier = 6;  // Hash of the private key + processId
+
+        // optional bytes nullifier = 6;
+        bytes nullifier = 6;  // Hash of the private key + processId
+
         repeated uint32 encryptionKeyIndexes = 7; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 }
 

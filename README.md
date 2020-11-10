@@ -9,6 +9,24 @@ Check out the source code generated for each of the available languages.
 - In protobuf, new fields can be added, renamed and removed with future-compatibility.
 - However, **once an ID has been used, it can't never be reused by any other field again**
 
+## Get started
+
+To install `protoc` and the plugins for Dart and Go:
+
+```sh
+$ make init
+```
+
+Or optionally:
+
+```sh
+$ make protoc/bin/protoc
+$ make protoc-dart-plugin
+$ make protoc-go-plugin
+```
+
+Then, run `make all` to build all the targets
+
 ## Available models
 
 - `client-store`
@@ -24,3 +42,9 @@ Check out the source code generated for each of the available languages.
 
 + Build DART models: `make dart`
 + Build GoLang models: `make golang`
+
+## Artifacts
+
+Import the files from:
+- `build/dart/*`
+- `go-vocdonitypes/*`

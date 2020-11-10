@@ -8,7 +8,7 @@
 const FeedStore$json = const {
   '1': 'FeedStore',
   '2': const [
-    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.Feed', '10': 'items'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v1.Feed', '10': 'items'},
   ],
 };
 
@@ -23,8 +23,8 @@ const Feed$json = const {
     const {'1': 'icon', '3': 6, '4': 1, '5': 9, '10': 'icon'},
     const {'1': 'favicon', '3': 7, '4': 1, '5': 9, '10': 'favicon'},
     const {'1': 'expired', '3': 8, '4': 1, '5': 8, '10': 'expired'},
-    const {'1': 'items', '3': 9, '4': 3, '5': 11, '6': '.dvote.FeedPost', '10': 'items'},
-    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Feed.MetaEntry', '10': 'meta'},
+    const {'1': 'items', '3': 9, '4': 3, '5': 11, '6': '.dvote.types.v1.FeedPost', '10': 'items'},
+    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.types.v1.Feed.MetaEntry', '10': 'meta'},
   ],
   '3': const [Feed_MetaEntry$json],
 };
@@ -51,7 +51,7 @@ const FeedPost$json = const {
     const {'1': 'tags', '3': 8, '4': 3, '5': 9, '10': 'tags'},
     const {'1': 'date_published', '3': 9, '4': 1, '5': 9, '10': 'datePublished'},
     const {'1': 'date_modified', '3': 10, '4': 1, '5': 9, '10': 'dateModified'},
-    const {'1': 'author', '3': 11, '4': 1, '5': 11, '6': '.dvote.FeedPost.Author', '10': 'author'},
+    const {'1': 'author', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v1.FeedPost.Author', '10': 'author'},
   ],
   '3': const [FeedPost_Author$json],
 };

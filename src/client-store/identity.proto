@@ -1,7 +1,7 @@
 /// Type: Client side helper model
 
 syntax = "proto3";
-package dvote;
+package dvote.types.v1;
 
 import "metadata/entity.proto";
 import "client-store/key.proto";

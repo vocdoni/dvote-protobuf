@@ -8,12 +8,12 @@
 const Key$json = const {
   '1': 'Key',
   '2': const [
-    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.Key.Type', '10': 'type'},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.Key.Type', '10': 'type'},
     const {'1': 'encryptedMnemonic', '3': 2, '4': 1, '5': 9, '10': 'encryptedMnemonic'},
     const {'1': 'encryptedRootPrivateKey', '3': 3, '4': 1, '5': 9, '10': 'encryptedRootPrivateKey'},
     const {'1': 'rootPublicKey', '3': 4, '4': 1, '5': 9, '10': 'rootPublicKey'},
     const {'1': 'rootAddress', '3': 5, '4': 1, '5': 9, '10': 'rootAddress'},
-    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.Key.MetaEntry', '10': 'meta'},
+    const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.types.v1.Key.MetaEntry', '10': 'meta'},
   ],
   '3': const [Key_MetaEntry$json],
   '4': const [Key_Type$json],
