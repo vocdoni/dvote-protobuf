@@ -29,11 +29,11 @@ message Tx {
 }
 
 message NewProcessTx {
-	TxType txtype = 1;
+	TxType txType = 1;
 	bytes entityId = 2;
 	bytes processId = 3;
 	bytes mkRoot = 4;
-	string  processType = 5;
+	string processType = 5;
 	uint64 startBlock = 6;
 	optional string mkURI = 7;
 	uint64 numberOfBlocks = 8;
@@ -41,13 +41,13 @@ message NewProcessTx {
 }
 
 message CancelProcessTx {
-	TxType txtype = 1;
+	TxType txType = 1;
 	bytes processId = 2;
 	string nonce = 3;
 }
 
 message AdminTx {
-	TxType txtype = 1;
+	TxType txType = 1;
 	bytes processId = 2;
 	optional bytes address = 3;
 	optional bytes commitmentKey = 4;
