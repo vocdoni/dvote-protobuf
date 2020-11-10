@@ -1,16 +1,48 @@
 /// Type: Vote payloads send across the network
 
 syntax = "proto3";
-package dvote;
+
+package dvote.types.v1;
+
+option go_package = "github.com/vocdoni/dvote-protobuf/go-vocdoni-types;vocdonitypes";
 
 message VoteEnvelope {
-    string processId = 1;  // The process for which the vote is casted
-    string proof = 2;  // Merkle proof, ZK Proof or Ethereum storage proof
-    string nonce = 3;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
-    string nullifier = 4;  // Hash of the private key + processId
-    repeated int32 encryptionKeyIndexes = 5; // (optional) On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
-    string votePackage = 6;   // base64 encoded bytes[] of the VotePackage
+        string nonce = 2;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+        bytes processId = 3;  // The process for which the vote is casted
+        Proof proof = 4;  // Merkle proof, ZK Proof or Ethereum storage proof
+        bytes votePackage = 5;   // base64 encoded bytes[] of the VotePackage
+        optional bytes nullifier = 6;  // Hash of the private key + processId
+        repeated uint32 encryptionKeyIndexes = 7; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 }
 
-message VotePackage {
+message Proof {
+        oneof proof {
+                ProofGraviton graviton = 1;
+                ProofIden3 iden3 = 2;
+                ProofEthereumStorage ethStg = 3;
+                ProofEthereumAccount ethAcc = 4;
+        }
 }
+
+message ProofGraviton {
+        bytes siblings = 1;
+}
+
+message ProofIden3 {
+        bytes siblings = 1;
+}
+
+message ProofEthereumStorage {
+        bytes key = 1;
+        bytes value = 2;
+        repeated bytes siblings = 3;
+}
+
+message ProofEthereumAccount {
+        string nonce = 1;
+        string balance = 2;
+        bytes storageHash = 3;
+        bytes codeHash = 4;
+        repeated bytes siblings = 5;
+}
+

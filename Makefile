@@ -6,6 +6,8 @@ PROJECT_NAME=$(shell basename "$(PWD)")
 CLIENT_STORE_SOURCES=$(wildcard src/client-store/*.proto)
 COMMON_SOURCES=$(wildcard src/common/*.proto)
 METADATA_SOURCES=$(wildcard src/metadata/*.proto)
+VOCHAIN_STORE_SOURCES=$(wildcard src/vochain/*.proto)
+GO_PKG_DIR=go-vocdonitypes
 
 #-----------------------------------------------------------------------
 # HELP
@@ -28,7 +30,7 @@ init: protobuf-env
 
 ## clean: Remove the build artifacts
 clean:
-	rm -Rf dart
+	rm -Rf dart $(GO_PKG_DIR)
 	@touch src/* src/*/*
 
 ## :
@@ -38,7 +40,17 @@ clean:
 #-----------------------------------------------------------------------
 
 ## all: Generate the source code for all supported languages
-all: dart
+all: dart golang
+
+## golang: Generate the Golang source code
+golang: $(VOCHAIN_STORE_SOURCES) $(COMMON_SOURCES)
+	mkdir -p ./$(GO_PKG_DIR)
+	for f in $^ ; do \
+		protoc --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$(PWD)/$(GO_PKG_DIR) $(PWD)/$$f ; \
+	done
+	find $(GO_PKG_DIR) -iname "*.go" -type f -exec mv {} $(GO_PKG_DIR) \;
+	find $(GO_PKG_DIR) -type d -empty -delete
+	@touch $(GO_PKG_DIR)
 
 
 ## dart: Generate the Dart source code
