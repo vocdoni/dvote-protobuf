@@ -16,4 +16,11 @@ Check out the source code generated for each of the available languages.
 - `common`
   - Types shared across many components
 - `metadata`
-  - Human readable data for organizations, governance processes, news feeds, etc.
+  - Human readable data for organizations, governance processes, news feeds, etc.  - Human readable data for organizations, governance processes, news feeds, etc.
+- `vochain`
+  - Specific data types for the Vocdoni Vochain
+
+## Build
+
++ Build DART models: `make dart`
++ Build GoLang models: `make golang`
