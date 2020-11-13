@@ -44,6 +44,7 @@ all: dart golang
 
 ## golang: Generate the Golang source code
 golang: $(VOCHAIN_STORE_SOURCES) $(COMMON_SOURCES)
+	rm -rf ./$(GO_PKG_DIR)
 	mkdir -p ./$(GO_PKG_DIR)
 	for f in $^ ; do \
 		protoc --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$(PWD)/$(GO_PKG_DIR) $(PWD)/$$f ; \

@@ -8,14 +8,17 @@ option go_package = "github.com/vocdoni/dvote-protobuf/go-vocdoni-types;vocdonit
 
 enum TxType {
 	UNKNOWN = 0;
-	NEWPROCESS = 1;
-	CANCELPROCESS = 2;
-	ADDPROCESSKEYS = 3;
-	REVEALPROCESSKEYS = 4;
-	ADDORACLE = 5;
-	REMOVEORACLE = 6;
-	ADDVALIDATOR = 7;
-	REMOVEVALIDATOR = 8;
+	NEW_PROCESS = 1;
+	CANCEL_PROCESS = 2;
+	SET_PROCESS_STATUS = 3;
+	SET_PROCESS_CENSUS = 4;
+	SET_PROCESS_QUESTION_INDEX = 5;
+	ADD_PROCESS_KEYS = 6;
+	REVEAL_PROCESS_KEYS = 7;
+	ADD_ORACLE = 8;
+	REMOVE_ORACLE = 9;
+	ADD_VALIDATOR = 10;
+	REMOVE_VALIDATOR = 11;
 }
 
 message Tx {
@@ -24,20 +27,25 @@ message Tx {
 		NewProcessTx newProcess = 3;
 		CancelProcessTx cancelProcess = 4;
 		AdminTx admin = 5;
+		SetProcessTx setProcess = 6;
 	}
 	optional bytes signature = 1;
 }
 
 message NewProcessTx {
 	TxType txtype = 1;
-	bytes entityId = 2;
-	bytes processId = 3;
-	bytes mkRoot = 4;
-	string  processType = 5;
-	uint64 startBlock = 6;
-	optional string mkURI = 7;
-	uint64 numberOfBlocks = 8;
-	string nonce = 9;  
+	string nonce = 2;
+	Process process = 3;
+}
+
+message SetProcessTx {
+	TxType txtype = 1;
+	string nonce = 2;
+	bytes processID   = 3;
+	optional uint32 status = 4;
+	optional uint32 questionIndex = 5;
+	optional bytes censusMkRoot = 6;
+	optional string censusMkURI = 7;
 }
 
 message CancelProcessTx {
@@ -61,3 +69,43 @@ message AdminTx {
 }
 
 
+message Process {
+	bytes processId = 1;
+	// EntityID identifies unequivocally a process
+	bytes entityId = 2;
+	// StartBlock represents the tendermint block where the process goes from scheduled to active
+	uint64 startBlock = 3;
+	// BlockCount represents the amount of tendermint blocks that the process will last
+	uint64 blockCount = 4;
+	// CensusMkRoot merkle root of all the census in the process
+	bytes censusMkRoot = 5;
+	// CensusMkURI merkle tree URI of all the census in the process
+	optional string censusMkURI = 6;
+	// CommitmentKeys are the reveal keys hashed
+	repeated string commitmentKeys = 7;
+	// EncryptionPrivateKeys are the keys required to decrypt the votes
+	repeated string encryptionPrivateKeys = 8;
+	// EncryptionPublicKeys are the keys required to encrypt the votes
+	repeated string encryptionPublicKeys = 9;
+	// RevealKeys are the seed of the CommitmentKeys
+	repeated string revealKeys = 10;
+	optional uint32 keyIndex = 11;
+	uint32 status = 12;
+	optional bytes paramsSignature = 13;
+	uint32 namespace = 14;
+	uint32 envelopeType = 15;
+	uint32 mode = 16;
+	optional uint32 questionIndex = 17;
+	optional uint32 questionCount = 18;
+	ProcessVoteOptions voteOptions = 19;
+	string ProcessType = 20; // legacy
+}
+
+message ProcessVoteOptions {
+	uint32 maxQuestions = 1;
+	uint32 maxCount  = 2;
+	uint32 maxValue   = 3; 
+	uint32 maxVoteOverwrites = 4;
+	uint32 maxTotalCost = 5;
+	uint32 costExponent = 6;
+}
