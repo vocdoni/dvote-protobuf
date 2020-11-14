@@ -7,8 +7,8 @@ CLIENT_STORE_SOURCES=$(wildcard src/client-store/*.proto)
 COMMON_SOURCES=$(wildcard src/common/*.proto)
 METADATA_SOURCES=$(wildcard src/metadata/*.proto)
 VOCHAIN_STORE_SOURCES=$(wildcard src/vochain/*.proto)
-GO_ARTIFACTS_DIR=go-vocdonitypes
-PROTOC=protoc/bin/protoc
+GO_ARTIFACTS_DIR:=go-vocdonitypes
+PROTOC:=protoc/bin/protoc
 
 #-----------------------------------------------------------------------
 # HELP
@@ -46,6 +46,7 @@ all: $(PROTOC) build/dart build/js $(GO_ARTIFACTS_DIR)
 golang: $(GO_ARTIFACTS_DIR)
 
 $(GO_ARTIFACTS_DIR): $(VOCHAIN_STORE_SOURCES) $(COMMON_SOURCES)
+	rm -rf $@
 	mkdir -p $@
 	for f in $^ ; do \
 		$(PROTOC) --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$@ $(PWD)/$$f ; \
