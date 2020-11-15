@@ -11,6 +11,9 @@ Check out the source code generated for each of the available languages.
 
 ## Get started
 
+If `protoc` is installed in the host system, it will be used by default.
+To force installing protoc, set PROTOC variable to blank: `PROTOC= make <action>`
+
 To install `protoc` and the plugins for Dart and Go:
 
 ```sh
