@@ -4,7 +4,7 @@ package dvote.types.v1;
 
 import "common/vote.proto";
 
-option go_package = "github.com/vocdoni/dvote-protobuf/go-vocdoni-types;vocdonitypes";
+option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 
 enum TxType {
 	UNKNOWN = 0;
@@ -22,7 +22,7 @@ enum TxType {
 }
 
 message Tx {
-	oneof tx {
+	oneof payload {
 		VoteEnvelope vote = 2;
 		NewProcessTx newProcess = 3;
 		CancelProcessTx cancelProcess = 4;
@@ -34,13 +34,13 @@ message Tx {
 
 message NewProcessTx {
 	TxType txtype = 1;
-	string nonce = 2;
+	bytes nonce = 2;
 	Process process = 3;
 }
 
 message SetProcessTx {
 	TxType txtype = 1;
-	string nonce = 2;
+	bytes nonce = 2;
 	bytes processID   = 3;
 	optional uint32 status = 4;
 	optional uint32 questionIndex = 5;
@@ -51,7 +51,7 @@ message SetProcessTx {
 message CancelProcessTx {
 	TxType txtype = 1;
 	bytes processId = 2;
-	string nonce = 3;
+	bytes nonce = 3;
 }
 
 message AdminTx {
@@ -65,7 +65,7 @@ message AdminTx {
 	optional uint64 power = 8;
 	optional bytes publicKey = 9;
 	optional bytes revealKey = 10;
-	string nonce = 11;  
+	bytes nonce = 11;  
 }
 
 

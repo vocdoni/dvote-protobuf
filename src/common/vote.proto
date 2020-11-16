@@ -4,7 +4,7 @@ syntax = "proto3";
 
 package dvote.types.v1;
 
-option go_package = "github.com/vocdoni/dvote-protobuf/go-vocdoni-types;vocdonitypes";
+option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 
 message VoteEnvelope {
         bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
@@ -19,7 +19,7 @@ message VoteEnvelope {
 }
 
 message Proof {
-        oneof proof {
+        oneof payload {
                 ProofGraviton graviton = 1;
                 ProofIden3 iden3 = 2;
                 ProofEthereumStorage ethereumStorage = 3;
