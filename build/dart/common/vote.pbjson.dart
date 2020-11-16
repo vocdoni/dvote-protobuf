@@ -26,7 +26,7 @@ const Proof$json = const {
     const {'1': 'ethAccount', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumAccount', '9': 0, '10': 'ethAccount'},
   ],
   '8': const [
-    const {'1': 'proof'},
+    const {'1': 'payload'},
   ],
 };
 

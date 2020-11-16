@@ -13,7 +13,7 @@ var goog = jspb;
 var global = Function('return this')();
 
 goog.exportSymbol('proto.dvote.types.v1.Proof', null, global);
-goog.exportSymbol('proto.dvote.types.v1.Proof.ProofCase', null, global);
+goog.exportSymbol('proto.dvote.types.v1.Proof.PayloadCase', null, global);
 goog.exportSymbol('proto.dvote.types.v1.ProofEthereumAccount', null, global);
 goog.exportSymbol('proto.dvote.types.v1.ProofEthereumStorage', null, global);
 goog.exportSymbol('proto.dvote.types.v1.ProofGraviton', null, global);
@@ -582,8 +582,8 @@ proto.dvote.types.v1.Proof.oneofGroups_ = [[1,2,3,4]];
 /**
  * @enum {number}
  */
-proto.dvote.types.v1.Proof.ProofCase = {
-  PROOF_NOT_SET: 0,
+proto.dvote.types.v1.Proof.PayloadCase = {
+  PAYLOAD_NOT_SET: 0,
   GRAVITON: 1,
   IDEN3: 2,
   ETHEREUMSTORAGE: 3,
@@ -591,10 +591,10 @@ proto.dvote.types.v1.Proof.ProofCase = {
 };
 
 /**
- * @return {proto.dvote.types.v1.Proof.ProofCase}
+ * @return {proto.dvote.types.v1.Proof.PayloadCase}
  */
-proto.dvote.types.v1.Proof.prototype.getProofCase = function() {
-  return /** @type {proto.dvote.types.v1.Proof.ProofCase} */(jspb.Message.computeOneofCase(this, proto.dvote.types.v1.Proof.oneofGroups_[0]));
+proto.dvote.types.v1.Proof.prototype.getPayloadCase = function() {
+  return /** @type {proto.dvote.types.v1.Proof.PayloadCase} */(jspb.Message.computeOneofCase(this, proto.dvote.types.v1.Proof.oneofGroups_[0]));
 };
 
 

@@ -94,7 +94,7 @@ class VoteEnvelope extends $pb.GeneratedMessage {
   $core.List<$core.int> get encryptionKeyIndexes => $_getList(5);
 }
 
-enum Proof_Proof {
+enum Proof_Payload {
   graviton, 
   iden3, 
   ethereumStorage, 
@@ -103,12 +103,12 @@ enum Proof_Proof {
 }
 
 class Proof extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, Proof_Proof> _Proof_ProofByTag = {
-    1 : Proof_Proof.graviton,
-    2 : Proof_Proof.iden3,
-    3 : Proof_Proof.ethereumStorage,
-    4 : Proof_Proof.ethAccount,
-    0 : Proof_Proof.notSet
+  static const $core.Map<$core.int, Proof_Payload> _Proof_PayloadByTag = {
+    1 : Proof_Payload.graviton,
+    2 : Proof_Payload.iden3,
+    3 : Proof_Payload.ethereumStorage,
+    4 : Proof_Payload.ethAccount,
+    0 : Proof_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4])
@@ -142,8 +142,8 @@ class Proof extends $pb.GeneratedMessage {
   static Proof getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Proof>(create);
   static Proof _defaultInstance;
 
-  Proof_Proof whichProof() => _Proof_ProofByTag[$_whichOneof(0)];
-  void clearProof() => clearField($_whichOneof(0));
+  Proof_Payload whichPayload() => _Proof_PayloadByTag[$_whichOneof(0)];
+  void clearPayload() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   ProofGraviton get graviton => $_getN(0);
