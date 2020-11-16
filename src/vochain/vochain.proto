@@ -98,7 +98,9 @@ message Process {
 	optional uint32 questionIndex = 17;
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
-	string ProcessType = 20; // legacy
+
+	// Currently deprecated
+	string ProcessType = 100000000;
 }
 
 message ProcessVoteOptions {

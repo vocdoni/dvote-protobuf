@@ -10,7 +10,7 @@ message ProcessMetadataStore {
 
 message ProcessMetadata {
     string version = 1;
-    string type = 2;
+    string type = 2;   // Deprecated
 
     int32 startBlock = 3;
     int32 blockCount = 4;
@@ -42,7 +42,7 @@ message ProcessMetadata {
         }
         repeated Question questions = 6;
     }
-    Details details = 6;
+    Details details = 6;  // Deprecated
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
