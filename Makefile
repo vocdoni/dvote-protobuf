@@ -34,7 +34,8 @@ define install_protoc_go
 	if [ ! -d "$$GOPATH" ] ; then \
 		export GOPATH="$$HOME/go" ;\
 	fi ; \
-	GOBIN=$$PWD/bin/ go install google.golang.org/protobuf/cmd/protoc-gen-go ;\
+	go get google.golang.org/protobuf/cmd/protoc-gen-go ; \
+	go install google.golang.org/protobuf/cmd/protoc-gen-go ;\
 	fi
 endef
 
@@ -69,15 +70,15 @@ clean:
 
 
 ## all: Generate the source code for all supported languages
-all: $(PROTOC) build/dart build/js build/go/models
+all: protoc build/dart build/js build/go/models
 
 ## golang: Generate the Golang protobuf artifacts
-golang: build/go/models
+golang: protoc protoc-go-plugin build/go/models
 
-build/go/models: protoc protoc-go-plugin 
+build/go/models: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
 	rm -rf $@
 	mkdir -p $@
-	for f in  $(COMMON_SOURCES) $(VOCHAIN_SOURCES) ; do \
+	for f in $^ ; do \
 		$(PROTOC) --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$@ $(PWD)/$$f ; \
 	done
 	find $@ -iname "*.go" -type f -exec mv {} $@ \;
@@ -86,23 +87,22 @@ build/go/models: protoc protoc-go-plugin
 
 
 ## dart: Generate the Dart protobuf artifacts
-dart: build/dart
+dart: protoc protoc-dart-plugin build/dart
 
-build/dart: protoc protoc-dart-plugin
+build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES)
 	mkdir -p $@
-	for f in $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) ; do \
+	for f in $^ ; do \
 		$(PROTOC) --experimental_allow_proto3_optional -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
 ## js: Generate the Javascript protobuf artifacts
-js: build/js
+js: protoc build/js
 
-build/js: protoc
+build/js: $(COMMON_SOURCES)
 	mkdir -p $@
-	# protoc --proto_path=src --js_out=import_style=commonjs,binary:build/gen src/foo.proto src/bar/baz.proto
-	for f in $(COMMON_SOURCES) ; do \
-		protoc -I=$(PWD)/src --js_out=import_style=commonjs,binary:$@ $(PWD)/$$f ; \
+	for f in $^ ; do \
+		$(PROTOC) -I=$(PWD)/src --js_out=import_style=commonjs,binary:$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
@@ -111,6 +111,7 @@ build/js: protoc
 # COMPILERS
 #-----------------------------------------------------------------------
 
+.PHONY: protoc
 protoc:
 	$(call install_protoc)
 	@echo "Using protoc binary $(PROTOC)"
@@ -121,5 +122,6 @@ protoc-dart-plugin:
 	pub global activate protoc_plugin
 
 # GO
+.PHONY: protoc-go-plugin
 protoc-go-plugin:
 	$(call install_protoc_go)

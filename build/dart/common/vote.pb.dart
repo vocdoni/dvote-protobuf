@@ -11,12 +11,12 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class VoteEnvelope extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'VoteEnvelope', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce')
-    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
-    ..aOM<Proof>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: Proof.create)
-    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votePackage', $pb.PbFieldType.OY, protoName: 'votePackage')
-    ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifier', $pb.PbFieldType.OY)
-    ..p<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.PU3, protoName: 'encryptionKeyIndexes')
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
+    ..aOM<Proof>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: Proof.create)
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votePackage', $pb.PbFieldType.OY, protoName: 'votePackage')
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifier', $pb.PbFieldType.OY)
+    ..p<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.PU3, protoName: 'encryptionKeyIndexes')
     ..hasRequiredFields = false
   ;
 
@@ -43,62 +43,62 @@ class VoteEnvelope extends $pb.GeneratedMessage {
   static VoteEnvelope getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VoteEnvelope>(create);
   static VoteEnvelope _defaultInstance;
 
-  @$pb.TagNumber(2)
-  $core.String get nonce => $_getSZ(0);
-  @$pb.TagNumber(2)
-  set nonce($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get nonce => $_getN(0);
+  @$pb.TagNumber(1)
+  set nonce($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
   $core.bool hasNonce() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearNonce() => clearField(1);
+
   @$pb.TagNumber(2)
-  void clearNonce() => clearField(2);
-
-  @$pb.TagNumber(3)
   $core.List<$core.int> get processId => $_getN(1);
-  @$pb.TagNumber(3)
+  @$pb.TagNumber(2)
   set processId($core.List<$core.int> v) { $_setBytes(1, v); }
-  @$pb.TagNumber(3)
+  @$pb.TagNumber(2)
   $core.bool hasProcessId() => $_has(1);
-  @$pb.TagNumber(3)
-  void clearProcessId() => clearField(3);
+  @$pb.TagNumber(2)
+  void clearProcessId() => clearField(2);
 
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
   Proof get proof => $_getN(2);
-  @$pb.TagNumber(4)
-  set proof(Proof v) { setField(4, v); }
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
+  set proof(Proof v) { setField(3, v); }
+  @$pb.TagNumber(3)
   $core.bool hasProof() => $_has(2);
-  @$pb.TagNumber(4)
-  void clearProof() => clearField(4);
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
+  void clearProof() => clearField(3);
+  @$pb.TagNumber(3)
   Proof ensureProof() => $_ensure(2);
 
-  @$pb.TagNumber(5)
+  @$pb.TagNumber(4)
   $core.List<$core.int> get votePackage => $_getN(3);
-  @$pb.TagNumber(5)
+  @$pb.TagNumber(4)
   set votePackage($core.List<$core.int> v) { $_setBytes(3, v); }
-  @$pb.TagNumber(5)
+  @$pb.TagNumber(4)
   $core.bool hasVotePackage() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearVotePackage() => clearField(4);
+
   @$pb.TagNumber(5)
-  void clearVotePackage() => clearField(5);
-
-  @$pb.TagNumber(6)
   $core.List<$core.int> get nullifier => $_getN(4);
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(5)
   set nullifier($core.List<$core.int> v) { $_setBytes(4, v); }
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(5)
   $core.bool hasNullifier() => $_has(4);
-  @$pb.TagNumber(6)
-  void clearNullifier() => clearField(6);
+  @$pb.TagNumber(5)
+  void clearNullifier() => clearField(5);
 
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(6)
   $core.List<$core.int> get encryptionKeyIndexes => $_getList(5);
 }
 
 enum Proof_Proof {
   graviton, 
   iden3, 
-  ethStg, 
-  ethAcc, 
+  ethereumStorage, 
+  ethAccount, 
   notSet
 }
 
@@ -106,16 +106,16 @@ class Proof extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Proof_Proof> _Proof_ProofByTag = {
     1 : Proof_Proof.graviton,
     2 : Proof_Proof.iden3,
-    3 : Proof_Proof.ethStg,
-    4 : Proof_Proof.ethAcc,
+    3 : Proof_Proof.ethereumStorage,
+    4 : Proof_Proof.ethAccount,
     0 : Proof_Proof.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4])
     ..aOM<ProofGraviton>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'graviton', subBuilder: ProofGraviton.create)
     ..aOM<ProofIden3>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iden3', subBuilder: ProofIden3.create)
-    ..aOM<ProofEthereumStorage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethStg', protoName: 'ethStg', subBuilder: ProofEthereumStorage.create)
-    ..aOM<ProofEthereumAccount>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethAcc', protoName: 'ethAcc', subBuilder: ProofEthereumAccount.create)
+    ..aOM<ProofEthereumStorage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumStorage', protoName: 'ethereumStorage', subBuilder: ProofEthereumStorage.create)
+    ..aOM<ProofEthereumAccount>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethAccount', protoName: 'ethAccount', subBuilder: ProofEthereumAccount.create)
     ..hasRequiredFields = false
   ;
 
@@ -168,26 +168,26 @@ class Proof extends $pb.GeneratedMessage {
   ProofIden3 ensureIden3() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  ProofEthereumStorage get ethStg => $_getN(2);
+  ProofEthereumStorage get ethereumStorage => $_getN(2);
   @$pb.TagNumber(3)
-  set ethStg(ProofEthereumStorage v) { setField(3, v); }
+  set ethereumStorage(ProofEthereumStorage v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasEthStg() => $_has(2);
+  $core.bool hasEthereumStorage() => $_has(2);
   @$pb.TagNumber(3)
-  void clearEthStg() => clearField(3);
+  void clearEthereumStorage() => clearField(3);
   @$pb.TagNumber(3)
-  ProofEthereumStorage ensureEthStg() => $_ensure(2);
+  ProofEthereumStorage ensureEthereumStorage() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  ProofEthereumAccount get ethAcc => $_getN(3);
+  ProofEthereumAccount get ethAccount => $_getN(3);
   @$pb.TagNumber(4)
-  set ethAcc(ProofEthereumAccount v) { setField(4, v); }
+  set ethAccount(ProofEthereumAccount v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasEthAcc() => $_has(3);
+  $core.bool hasEthAccount() => $_has(3);
   @$pb.TagNumber(4)
-  void clearEthAcc() => clearField(4);
+  void clearEthAccount() => clearField(4);
   @$pb.TagNumber(4)
-  ProofEthereumAccount ensureEthAcc() => $_ensure(3);
+  ProofEthereumAccount ensureEthAccount() => $_ensure(3);
 }
 
 class ProofGraviton extends $pb.GeneratedMessage {
@@ -323,8 +323,8 @@ class ProofEthereumStorage extends $pb.GeneratedMessage {
 
 class ProofEthereumAccount extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofEthereumAccount', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'balance')
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'balance', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'storageHash', $pb.PbFieldType.OY, protoName: 'storageHash')
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'codeHash', $pb.PbFieldType.OY, protoName: 'codeHash')
     ..p<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siblings', $pb.PbFieldType.PY)
@@ -355,18 +355,18 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
   static ProofEthereumAccount _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get nonce => $_getSZ(0);
+  $core.List<$core.int> get nonce => $_getN(0);
   @$pb.TagNumber(1)
-  set nonce($core.String v) { $_setString(0, v); }
+  set nonce($core.List<$core.int> v) { $_setBytes(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasNonce() => $_has(0);
   @$pb.TagNumber(1)
   void clearNonce() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get balance => $_getSZ(1);
+  $core.List<$core.int> get balance => $_getN(1);
   @$pb.TagNumber(2)
-  set balance($core.String v) { $_setString(1, v); }
+  set balance($core.List<$core.int> v) { $_setBytes(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasBalance() => $_has(1);
   @$pb.TagNumber(2)

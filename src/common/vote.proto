@@ -7,7 +7,7 @@ package dvote.types.v1;
 option go_package = "github.com/vocdoni/dvote-protobuf/go-vocdoni-types;vocdonitypes";
 
 message VoteEnvelope {
-        string nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
         bytes processId = 2;  // The process for which the vote is casted
         Proof proof = 3;  // Merkle proof, ZK Proof or Ethereum storage proof
         bytes votePackage = 4;   // base64 encoded bytes[] of the VotePackage
@@ -22,8 +22,8 @@ message Proof {
         oneof proof {
                 ProofGraviton graviton = 1;
                 ProofIden3 iden3 = 2;
-                ProofEthereumStorage ethStg = 3;
-                ProofEthereumAccount ethAcc = 4;
+                ProofEthereumStorage ethereumStorage = 3;
+                ProofEthereumAccount ethAccount = 4;
         }
 }
 
@@ -42,8 +42,8 @@ message ProofEthereumStorage {
 }
 
 message ProofEthereumAccount {
-        string nonce = 1;
-        string balance = 2;
+        bytes nonce = 1;
+        bytes balance = 2;  // Big Int encoded as bytes
         bytes storageHash = 3;
         bytes codeHash = 4;
         repeated bytes siblings = 5;

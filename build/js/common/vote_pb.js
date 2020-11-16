@@ -151,7 +151,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.dvote.types.v1.VoteEnvelope.repeatedFields_ = [7];
+proto.dvote.types.v1.VoteEnvelope.repeatedFields_ = [6];
 
 
 
@@ -184,12 +184,12 @@ proto.dvote.types.v1.VoteEnvelope.prototype.toObject = function(opt_includeInsta
  */
 proto.dvote.types.v1.VoteEnvelope.toObject = function(includeInstance, msg) {
   var f, obj = {
-    nonce: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    nonce: msg.getNonce_asB64(),
     processid: msg.getProcessid_asB64(),
     proof: (f = msg.getProof()) && proto.dvote.types.v1.Proof.toObject(includeInstance, f),
     votepackage: msg.getVotepackage_asB64(),
     nullifier: msg.getNullifier_asB64(),
-    encryptionkeyindexesList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f
+    encryptionkeyindexesList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -226,28 +226,28 @@ proto.dvote.types.v1.VoteEnvelope.deserializeBinaryFromReader = function(msg, re
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setNonce(value);
       break;
-    case 3:
+    case 2:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setProcessid(value);
       break;
-    case 4:
+    case 3:
       var value = new proto.dvote.types.v1.Proof;
       reader.readMessage(value,proto.dvote.types.v1.Proof.deserializeBinaryFromReader);
       msg.setProof(value);
       break;
-    case 5:
+    case 4:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setVotepackage(value);
       break;
-    case 6:
+    case 5:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setNullifier(value);
       break;
-    case 7:
+    case 6:
       var value = /** @type {!Array<number>} */ (reader.readPackedUint32());
       msg.setEncryptionkeyindexesList(value);
       break;
@@ -280,24 +280,24 @@ proto.dvote.types.v1.VoteEnvelope.prototype.serializeBinary = function() {
  */
 proto.dvote.types.v1.VoteEnvelope.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getNonce();
+  f = message.getNonce_asU8();
   if (f.length > 0) {
-    writer.writeString(
-      2,
+    writer.writeBytes(
+      1,
       f
     );
   }
   f = message.getProcessid_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      3,
+      2,
       f
     );
   }
   f = message.getProof();
   if (f != null) {
     writer.writeMessage(
-      4,
+      3,
       f,
       proto.dvote.types.v1.Proof.serializeBinaryToWriter
     );
@@ -305,21 +305,21 @@ proto.dvote.types.v1.VoteEnvelope.serializeBinaryToWriter = function(message, wr
   f = message.getVotepackage_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      5,
+      4,
       f
     );
   }
   f = message.getNullifier_asU8();
   if (f.length > 0) {
     writer.writeBytes(
-      6,
+      5,
       f
     );
   }
   f = message.getEncryptionkeyindexesList();
   if (f.length > 0) {
     writer.writePackedUint32(
-      7,
+      6,
       f
     );
   }
@@ -327,34 +327,58 @@ proto.dvote.types.v1.VoteEnvelope.serializeBinaryToWriter = function(message, wr
 
 
 /**
- * optional string nonce = 2;
- * @return {string}
+ * optional bytes nonce = 1;
+ * @return {!(string|Uint8Array)}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.getNonce = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {string} value
+ * optional bytes nonce = 1;
+ * This is a type-conversion wrapper around `getNonce()`
+ * @return {string}
+ */
+proto.dvote.types.v1.VoteEnvelope.prototype.getNonce_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getNonce()));
+};
+
+
+/**
+ * optional bytes nonce = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getNonce()`
+ * @return {!Uint8Array}
+ */
+proto.dvote.types.v1.VoteEnvelope.prototype.getNonce_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getNonce()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.setNonce = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
- * optional bytes processId = 3;
+ * optional bytes processId = 2;
  * @return {!(string|Uint8Array)}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.getProcessid = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /**
- * optional bytes processId = 3;
+ * optional bytes processId = 2;
  * This is a type-conversion wrapper around `getProcessid()`
  * @return {string}
  */
@@ -365,7 +389,7 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getProcessid_asB64 = function() {
 
 
 /**
- * optional bytes processId = 3;
+ * optional bytes processId = 2;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getProcessid()`
@@ -382,17 +406,17 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getProcessid_asU8 = function() {
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.setProcessid = function(value) {
-  return jspb.Message.setProto3BytesField(this, 3, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
- * optional Proof proof = 4;
+ * optional Proof proof = 3;
  * @return {?proto.dvote.types.v1.Proof}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.getProof = function() {
   return /** @type{?proto.dvote.types.v1.Proof} */ (
-    jspb.Message.getWrapperField(this, proto.dvote.types.v1.Proof, 4));
+    jspb.Message.getWrapperField(this, proto.dvote.types.v1.Proof, 3));
 };
 
 
@@ -401,7 +425,7 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getProof = function() {
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
 */
 proto.dvote.types.v1.VoteEnvelope.prototype.setProof = function(value) {
-  return jspb.Message.setWrapperField(this, 4, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -419,21 +443,21 @@ proto.dvote.types.v1.VoteEnvelope.prototype.clearProof = function() {
  * @return {boolean}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.hasProof = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
 /**
- * optional bytes votePackage = 5;
+ * optional bytes votePackage = 4;
  * @return {!(string|Uint8Array)}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.getVotepackage = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
 /**
- * optional bytes votePackage = 5;
+ * optional bytes votePackage = 4;
  * This is a type-conversion wrapper around `getVotepackage()`
  * @return {string}
  */
@@ -444,7 +468,7 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getVotepackage_asB64 = function() {
 
 
 /**
- * optional bytes votePackage = 5;
+ * optional bytes votePackage = 4;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getVotepackage()`
@@ -461,21 +485,21 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getVotepackage_asU8 = function() {
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.setVotepackage = function(value) {
-  return jspb.Message.setProto3BytesField(this, 5, value);
+  return jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
 /**
- * optional bytes nullifier = 6;
+ * optional bytes nullifier = 5;
  * @return {!(string|Uint8Array)}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.getNullifier = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
 /**
- * optional bytes nullifier = 6;
+ * optional bytes nullifier = 5;
  * This is a type-conversion wrapper around `getNullifier()`
  * @return {string}
  */
@@ -486,7 +510,7 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getNullifier_asB64 = function() {
 
 
 /**
- * optional bytes nullifier = 6;
+ * optional bytes nullifier = 5;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getNullifier()`
@@ -503,16 +527,16 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getNullifier_asU8 = function() {
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.setNullifier = function(value) {
-  return jspb.Message.setProto3BytesField(this, 6, value);
+  return jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
 /**
- * repeated uint32 encryptionKeyIndexes = 7;
+ * repeated uint32 encryptionKeyIndexes = 6;
  * @return {!Array<number>}
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.getEncryptionkeyindexesList = function() {
-  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 7));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 6));
 };
 
 
@@ -521,7 +545,7 @@ proto.dvote.types.v1.VoteEnvelope.prototype.getEncryptionkeyindexesList = functi
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.setEncryptionkeyindexesList = function(value) {
-  return jspb.Message.setField(this, 7, value || []);
+  return jspb.Message.setField(this, 6, value || []);
 };
 
 
@@ -531,7 +555,7 @@ proto.dvote.types.v1.VoteEnvelope.prototype.setEncryptionkeyindexesList = functi
  * @return {!proto.dvote.types.v1.VoteEnvelope} returns this
  */
 proto.dvote.types.v1.VoteEnvelope.prototype.addEncryptionkeyindexes = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 6, value, opt_index);
 };
 
 
@@ -562,8 +586,8 @@ proto.dvote.types.v1.Proof.ProofCase = {
   PROOF_NOT_SET: 0,
   GRAVITON: 1,
   IDEN3: 2,
-  ETHSTG: 3,
-  ETHACC: 4
+  ETHEREUMSTORAGE: 3,
+  ETHACCOUNT: 4
 };
 
 /**
@@ -606,8 +630,8 @@ proto.dvote.types.v1.Proof.toObject = function(includeInstance, msg) {
   var f, obj = {
     graviton: (f = msg.getGraviton()) && proto.dvote.types.v1.ProofGraviton.toObject(includeInstance, f),
     iden3: (f = msg.getIden3()) && proto.dvote.types.v1.ProofIden3.toObject(includeInstance, f),
-    ethstg: (f = msg.getEthstg()) && proto.dvote.types.v1.ProofEthereumStorage.toObject(includeInstance, f),
-    ethacc: (f = msg.getEthacc()) && proto.dvote.types.v1.ProofEthereumAccount.toObject(includeInstance, f)
+    ethereumstorage: (f = msg.getEthereumstorage()) && proto.dvote.types.v1.ProofEthereumStorage.toObject(includeInstance, f),
+    ethaccount: (f = msg.getEthaccount()) && proto.dvote.types.v1.ProofEthereumAccount.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -657,12 +681,12 @@ proto.dvote.types.v1.Proof.deserializeBinaryFromReader = function(msg, reader) {
     case 3:
       var value = new proto.dvote.types.v1.ProofEthereumStorage;
       reader.readMessage(value,proto.dvote.types.v1.ProofEthereumStorage.deserializeBinaryFromReader);
-      msg.setEthstg(value);
+      msg.setEthereumstorage(value);
       break;
     case 4:
       var value = new proto.dvote.types.v1.ProofEthereumAccount;
       reader.readMessage(value,proto.dvote.types.v1.ProofEthereumAccount.deserializeBinaryFromReader);
-      msg.setEthacc(value);
+      msg.setEthaccount(value);
       break;
     default:
       reader.skipField();
@@ -709,7 +733,7 @@ proto.dvote.types.v1.Proof.serializeBinaryToWriter = function(message, writer) {
       proto.dvote.types.v1.ProofIden3.serializeBinaryToWriter
     );
   }
-  f = message.getEthstg();
+  f = message.getEthereumstorage();
   if (f != null) {
     writer.writeMessage(
       3,
@@ -717,7 +741,7 @@ proto.dvote.types.v1.Proof.serializeBinaryToWriter = function(message, writer) {
       proto.dvote.types.v1.ProofEthereumStorage.serializeBinaryToWriter
     );
   }
-  f = message.getEthacc();
+  f = message.getEthaccount();
   if (f != null) {
     writer.writeMessage(
       4,
@@ -803,10 +827,10 @@ proto.dvote.types.v1.Proof.prototype.hasIden3 = function() {
 
 
 /**
- * optional ProofEthereumStorage ethStg = 3;
+ * optional ProofEthereumStorage ethereumStorage = 3;
  * @return {?proto.dvote.types.v1.ProofEthereumStorage}
  */
-proto.dvote.types.v1.Proof.prototype.getEthstg = function() {
+proto.dvote.types.v1.Proof.prototype.getEthereumstorage = function() {
   return /** @type{?proto.dvote.types.v1.ProofEthereumStorage} */ (
     jspb.Message.getWrapperField(this, proto.dvote.types.v1.ProofEthereumStorage, 3));
 };
@@ -816,7 +840,7 @@ proto.dvote.types.v1.Proof.prototype.getEthstg = function() {
  * @param {?proto.dvote.types.v1.ProofEthereumStorage|undefined} value
  * @return {!proto.dvote.types.v1.Proof} returns this
 */
-proto.dvote.types.v1.Proof.prototype.setEthstg = function(value) {
+proto.dvote.types.v1.Proof.prototype.setEthereumstorage = function(value) {
   return jspb.Message.setOneofWrapperField(this, 3, proto.dvote.types.v1.Proof.oneofGroups_[0], value);
 };
 
@@ -825,8 +849,8 @@ proto.dvote.types.v1.Proof.prototype.setEthstg = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.dvote.types.v1.Proof} returns this
  */
-proto.dvote.types.v1.Proof.prototype.clearEthstg = function() {
-  return this.setEthstg(undefined);
+proto.dvote.types.v1.Proof.prototype.clearEthereumstorage = function() {
+  return this.setEthereumstorage(undefined);
 };
 
 
@@ -834,16 +858,16 @@ proto.dvote.types.v1.Proof.prototype.clearEthstg = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.dvote.types.v1.Proof.prototype.hasEthstg = function() {
+proto.dvote.types.v1.Proof.prototype.hasEthereumstorage = function() {
   return jspb.Message.getField(this, 3) != null;
 };
 
 
 /**
- * optional ProofEthereumAccount ethAcc = 4;
+ * optional ProofEthereumAccount ethAccount = 4;
  * @return {?proto.dvote.types.v1.ProofEthereumAccount}
  */
-proto.dvote.types.v1.Proof.prototype.getEthacc = function() {
+proto.dvote.types.v1.Proof.prototype.getEthaccount = function() {
   return /** @type{?proto.dvote.types.v1.ProofEthereumAccount} */ (
     jspb.Message.getWrapperField(this, proto.dvote.types.v1.ProofEthereumAccount, 4));
 };
@@ -853,7 +877,7 @@ proto.dvote.types.v1.Proof.prototype.getEthacc = function() {
  * @param {?proto.dvote.types.v1.ProofEthereumAccount|undefined} value
  * @return {!proto.dvote.types.v1.Proof} returns this
 */
-proto.dvote.types.v1.Proof.prototype.setEthacc = function(value) {
+proto.dvote.types.v1.Proof.prototype.setEthaccount = function(value) {
   return jspb.Message.setOneofWrapperField(this, 4, proto.dvote.types.v1.Proof.oneofGroups_[0], value);
 };
 
@@ -862,8 +886,8 @@ proto.dvote.types.v1.Proof.prototype.setEthacc = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.dvote.types.v1.Proof} returns this
  */
-proto.dvote.types.v1.Proof.prototype.clearEthacc = function() {
-  return this.setEthacc(undefined);
+proto.dvote.types.v1.Proof.prototype.clearEthaccount = function() {
+  return this.setEthaccount(undefined);
 };
 
 
@@ -871,7 +895,7 @@ proto.dvote.types.v1.Proof.prototype.clearEthacc = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.dvote.types.v1.Proof.prototype.hasEthacc = function() {
+proto.dvote.types.v1.Proof.prototype.hasEthaccount = function() {
   return jspb.Message.getField(this, 4) != null;
 };
 
@@ -1511,8 +1535,8 @@ proto.dvote.types.v1.ProofEthereumAccount.prototype.toObject = function(opt_incl
  */
 proto.dvote.types.v1.ProofEthereumAccount.toObject = function(includeInstance, msg) {
   var f, obj = {
-    nonce: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    balance: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    nonce: msg.getNonce_asB64(),
+    balance: msg.getBalance_asB64(),
     storagehash: msg.getStoragehash_asB64(),
     codehash: msg.getCodehash_asB64(),
     siblingsList: msg.getSiblingsList_asB64()
@@ -1553,11 +1577,11 @@ proto.dvote.types.v1.ProofEthereumAccount.deserializeBinaryFromReader = function
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setNonce(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setBalance(value);
       break;
     case 3:
@@ -1601,16 +1625,16 @@ proto.dvote.types.v1.ProofEthereumAccount.prototype.serializeBinary = function()
  */
 proto.dvote.types.v1.ProofEthereumAccount.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getNonce();
+  f = message.getNonce_asU8();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeBytes(
       1,
       f
     );
   }
-  f = message.getBalance();
+  f = message.getBalance_asU8();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeBytes(
       2,
       f
     );
@@ -1640,38 +1664,86 @@ proto.dvote.types.v1.ProofEthereumAccount.serializeBinaryToWriter = function(mes
 
 
 /**
- * optional string nonce = 1;
- * @return {string}
+ * optional bytes nonce = 1;
+ * @return {!(string|Uint8Array)}
  */
 proto.dvote.types.v1.ProofEthereumAccount.prototype.getNonce = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {string} value
+ * optional bytes nonce = 1;
+ * This is a type-conversion wrapper around `getNonce()`
+ * @return {string}
+ */
+proto.dvote.types.v1.ProofEthereumAccount.prototype.getNonce_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getNonce()));
+};
+
+
+/**
+ * optional bytes nonce = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getNonce()`
+ * @return {!Uint8Array}
+ */
+proto.dvote.types.v1.ProofEthereumAccount.prototype.getNonce_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getNonce()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
  * @return {!proto.dvote.types.v1.ProofEthereumAccount} returns this
  */
 proto.dvote.types.v1.ProofEthereumAccount.prototype.setNonce = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
- * optional string balance = 2;
- * @return {string}
+ * optional bytes balance = 2;
+ * @return {!(string|Uint8Array)}
  */
 proto.dvote.types.v1.ProofEthereumAccount.prototype.getBalance = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /**
- * @param {string} value
+ * optional bytes balance = 2;
+ * This is a type-conversion wrapper around `getBalance()`
+ * @return {string}
+ */
+proto.dvote.types.v1.ProofEthereumAccount.prototype.getBalance_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getBalance()));
+};
+
+
+/**
+ * optional bytes balance = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getBalance()`
+ * @return {!Uint8Array}
+ */
+proto.dvote.types.v1.ProofEthereumAccount.prototype.getBalance_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getBalance()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
  * @return {!proto.dvote.types.v1.ProofEthereumAccount} returns this
  */
 proto.dvote.types.v1.ProofEthereumAccount.prototype.setBalance = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
