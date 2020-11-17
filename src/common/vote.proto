@@ -23,7 +23,7 @@ message Proof {
                 ProofGraviton graviton = 1;
                 ProofIden3 iden3 = 2;
                 ProofEthereumStorage ethereumStorage = 3;
-                ProofEthereumAccount ethAccount = 4;
+                ProofEthereumAccount ethereumAccount = 4;
         }
 }
 

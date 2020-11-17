@@ -7,7 +7,7 @@ import "common/vote.proto";
 option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 
 enum TxType {
-	UNKNOWN = 0;
+	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
 	CANCEL_PROCESS = 2;
 	SET_PROCESS_STATUS = 3;
@@ -25,9 +25,9 @@ message Tx {
 	oneof payload {
 		VoteEnvelope vote = 2;
 		NewProcessTx newProcess = 3;
-		CancelProcessTx cancelProcess = 4;
-		AdminTx admin = 5;
-		SetProcessTx setProcess = 6;
+		CancelProcessTx cancelProcess = 2001; // legacy
+		AdminTx admin = 4;
+		SetProcessTx setProcess = 5;
 	}
 	optional bytes signature = 1;
 }
@@ -42,13 +42,14 @@ message SetProcessTx {
 	TxType txtype = 1;
 	bytes nonce = 2;
 	bytes processID   = 3;
-	optional uint32 status = 4;
+	optional ProcessStatus status = 4;
 	optional uint32 questionIndex = 5;
 	optional bytes censusMkRoot = 6;
 	optional string censusMkURI = 7;
+	optional Proof proof = 8;
 }
 
-message CancelProcessTx {
+message CancelProcessTx { // Legacy
 	TxType txtype = 1;
 	bytes processId = 2;
 	bytes nonce = 3;
@@ -90,15 +91,51 @@ message Process {
 	// RevealKeys are the seed of the CommitmentKeys
 	repeated string revealKeys = 10;
 	optional uint32 keyIndex = 11;
-	uint32 status = 12;
+	ProcessStatus status = 12;
 	optional bytes paramsSignature = 13;
 	uint32 namespace = 14;
-	uint32 envelopeType = 15;
-	uint32 mode = 16;
+	EnvelopeType envelopeType = 15;
+	ProcessMode mode = 16;
 	optional uint32 questionIndex = 17;
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
-	string ProcessType = 20; // legacy
+	CensusOrigin censusOrigin = 20;
+	map<uint32, uint32> results = 21;
+
+	string ProcessType = 2000; // legacy
+}
+
+enum ProcessStatus {
+	PROCESS_UNKNOWN = 0;
+	READY = 1;
+	ENDED = 2;
+	CANCELED = 3;
+	PAUSED = 4;
+	RESULTS = 5;
+}
+
+enum CensusOrigin {
+	CENSUS_UNKNOWN = 0;
+	OFF_CHAIN = 1;
+	ERC20 = 2;
+	ERC721 = 3;
+	ERC1155 = 4;
+	ERC777 = 5;
+	MINI_ME = 6;
+}
+
+message EnvelopeType {
+	bool serial = 1;
+	bool anonymous = 2;
+	bool encrypted = 3;
+}
+
+message ProcessMode {
+	bool autoStart = 1;
+	bool interruptible = 2;
+	bool dynamicCensus = 3;
+	bool allowVoteOverwrite = 4;
+	bool encryptedMetaData = 5;
 }
 
 message ProcessVoteOptions {
