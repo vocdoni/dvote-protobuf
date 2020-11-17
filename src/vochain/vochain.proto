@@ -9,7 +9,7 @@ option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 enum TxType {
 	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
-	CANCEL_PROCESS = 2;
+	CANCEL_PROCESS = 2;  // Legacy // TODO: Use a much higher index
 	SET_PROCESS_STATUS = 3;
 	SET_PROCESS_CENSUS = 4;
 	SET_PROCESS_QUESTION_INDEX = 5;
@@ -25,7 +25,7 @@ message Tx {
 	oneof payload {
 		VoteEnvelope vote = 2;
 		NewProcessTx newProcess = 3;
-		CancelProcessTx cancelProcess = 10000001; // legacy
+		CancelProcessTx cancelProcess = 10000001; // Legacy
 		AdminTx admin = 4;
 		SetProcessTx setProcess = 5;
 	}
@@ -41,7 +41,7 @@ message NewProcessTx {
 message SetProcessTx {
 	TxType txtype = 1;
 	bytes nonce = 2;
-	bytes processID   = 3;
+	bytes processID = 3;
 	optional ProcessStatus status = 4;
 	optional uint32 questionIndex = 5;
 	optional bytes censusMkRoot = 6;
@@ -66,18 +66,17 @@ message AdminTx {
 	optional uint64 power = 8;
 	optional bytes publicKey = 9;
 	optional bytes revealKey = 10;
-	bytes nonce = 11;  
+	bytes nonce = 11;
 }
-
 
 message Process {
 	bytes processId = 1;
 	// EntityID identifies unequivocally a process
 	bytes entityId = 2;
 	// StartBlock represents the tendermint block where the process goes from scheduled to active
-	uint64 startBlock = 3;
+	uint32 startBlock = 3;
 	// BlockCount represents the amount of tendermint blocks that the process will last
-	uint64 blockCount = 4;
+	uint32 blockCount = 4;
 	// CensusMkRoot merkle root of all the census in the process
 	bytes censusMkRoot = 5;
 	// CensusMkURI merkle tree URI of all the census in the process
@@ -100,9 +99,10 @@ message Process {
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
 	CensusOrigin censusOrigin = 20;
-	map<uint32, uint32> results = 21;
+	map<uint32, uint32> results = 21;   // TODO:  Needs to be a multi dimensional array/map
+	// TODO: Add envelopeHeight ?
 
-	string ProcessType = 10000000; // legacy
+	string ProcessType = 10000000; // Legacy
 }
 
 enum ProcessStatus {
@@ -127,21 +127,21 @@ enum CensusOrigin {
 message EnvelopeType {
 	bool serial = 1;
 	bool anonymous = 2;
-	bool encrypted = 3;
+	bool encryptedVotes = 3;
+	bool uniqueValues = 4;
 }
 
 message ProcessMode {
 	bool autoStart = 1;
 	bool interruptible = 2;
 	bool dynamicCensus = 3;
-	bool allowVoteOverwrite = 4;
-	bool encryptedMetaData = 5;
+	bool encryptedMetaData = 4;
 }
 
 message ProcessVoteOptions {
-	uint32 maxQuestions = 1;
-	uint32 maxCount  = 2;
-	uint32 maxValue   = 3; 
+	uint32 maxQuestions = 1; // redundant with questionCount?
+	uint32 maxCount = 2;
+	uint32 maxValue = 3; 
 	uint32 maxVoteOverwrites = 4;
 	uint32 maxTotalCost = 5;
 	uint32 costExponent = 6;

@@ -23,7 +23,7 @@ const Proof$json = const {
     const {'1': 'graviton', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofGraviton', '9': 0, '10': 'graviton'},
     const {'1': 'iden3', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofIden3', '9': 0, '10': 'iden3'},
     const {'1': 'ethereumStorage', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumStorage', '9': 0, '10': 'ethereumStorage'},
-    const {'1': 'ethAccount', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumAccount', '9': 0, '10': 'ethAccount'},
+    const {'1': 'ethereumAccount', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumAccount', '9': 0, '10': 'ethereumAccount'},
   ],
   '8': const [
     const {'1': 'payload'},

@@ -587,7 +587,7 @@ proto.dvote.types.v1.Proof.PayloadCase = {
   GRAVITON: 1,
   IDEN3: 2,
   ETHEREUMSTORAGE: 3,
-  ETHACCOUNT: 4
+  ETHEREUMACCOUNT: 4
 };
 
 /**
@@ -631,7 +631,7 @@ proto.dvote.types.v1.Proof.toObject = function(includeInstance, msg) {
     graviton: (f = msg.getGraviton()) && proto.dvote.types.v1.ProofGraviton.toObject(includeInstance, f),
     iden3: (f = msg.getIden3()) && proto.dvote.types.v1.ProofIden3.toObject(includeInstance, f),
     ethereumstorage: (f = msg.getEthereumstorage()) && proto.dvote.types.v1.ProofEthereumStorage.toObject(includeInstance, f),
-    ethaccount: (f = msg.getEthaccount()) && proto.dvote.types.v1.ProofEthereumAccount.toObject(includeInstance, f)
+    ethereumaccount: (f = msg.getEthereumaccount()) && proto.dvote.types.v1.ProofEthereumAccount.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -686,7 +686,7 @@ proto.dvote.types.v1.Proof.deserializeBinaryFromReader = function(msg, reader) {
     case 4:
       var value = new proto.dvote.types.v1.ProofEthereumAccount;
       reader.readMessage(value,proto.dvote.types.v1.ProofEthereumAccount.deserializeBinaryFromReader);
-      msg.setEthaccount(value);
+      msg.setEthereumaccount(value);
       break;
     default:
       reader.skipField();
@@ -741,7 +741,7 @@ proto.dvote.types.v1.Proof.serializeBinaryToWriter = function(message, writer) {
       proto.dvote.types.v1.ProofEthereumStorage.serializeBinaryToWriter
     );
   }
-  f = message.getEthaccount();
+  f = message.getEthereumaccount();
   if (f != null) {
     writer.writeMessage(
       4,
@@ -864,10 +864,10 @@ proto.dvote.types.v1.Proof.prototype.hasEthereumstorage = function() {
 
 
 /**
- * optional ProofEthereumAccount ethAccount = 4;
+ * optional ProofEthereumAccount ethereumAccount = 4;
  * @return {?proto.dvote.types.v1.ProofEthereumAccount}
  */
-proto.dvote.types.v1.Proof.prototype.getEthaccount = function() {
+proto.dvote.types.v1.Proof.prototype.getEthereumaccount = function() {
   return /** @type{?proto.dvote.types.v1.ProofEthereumAccount} */ (
     jspb.Message.getWrapperField(this, proto.dvote.types.v1.ProofEthereumAccount, 4));
 };
@@ -877,7 +877,7 @@ proto.dvote.types.v1.Proof.prototype.getEthaccount = function() {
  * @param {?proto.dvote.types.v1.ProofEthereumAccount|undefined} value
  * @return {!proto.dvote.types.v1.Proof} returns this
 */
-proto.dvote.types.v1.Proof.prototype.setEthaccount = function(value) {
+proto.dvote.types.v1.Proof.prototype.setEthereumaccount = function(value) {
   return jspb.Message.setOneofWrapperField(this, 4, proto.dvote.types.v1.Proof.oneofGroups_[0], value);
 };
 
@@ -886,8 +886,8 @@ proto.dvote.types.v1.Proof.prototype.setEthaccount = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.dvote.types.v1.Proof} returns this
  */
-proto.dvote.types.v1.Proof.prototype.clearEthaccount = function() {
-  return this.setEthaccount(undefined);
+proto.dvote.types.v1.Proof.prototype.clearEthereumaccount = function() {
+  return this.setEthereumaccount(undefined);
 };
 
 
@@ -895,7 +895,7 @@ proto.dvote.types.v1.Proof.prototype.clearEthaccount = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.dvote.types.v1.Proof.prototype.hasEthaccount = function() {
+proto.dvote.types.v1.Proof.prototype.hasEthereumaccount = function() {
   return jspb.Message.getField(this, 4) != null;
 };
 

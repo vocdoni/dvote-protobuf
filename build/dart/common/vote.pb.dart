@@ -98,7 +98,7 @@ enum Proof_Payload {
   graviton, 
   iden3, 
   ethereumStorage, 
-  ethAccount, 
+  ethereumAccount, 
   notSet
 }
 
@@ -107,7 +107,7 @@ class Proof extends $pb.GeneratedMessage {
     1 : Proof_Payload.graviton,
     2 : Proof_Payload.iden3,
     3 : Proof_Payload.ethereumStorage,
-    4 : Proof_Payload.ethAccount,
+    4 : Proof_Payload.ethereumAccount,
     0 : Proof_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
@@ -115,7 +115,7 @@ class Proof extends $pb.GeneratedMessage {
     ..aOM<ProofGraviton>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'graviton', subBuilder: ProofGraviton.create)
     ..aOM<ProofIden3>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iden3', subBuilder: ProofIden3.create)
     ..aOM<ProofEthereumStorage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumStorage', protoName: 'ethereumStorage', subBuilder: ProofEthereumStorage.create)
-    ..aOM<ProofEthereumAccount>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethAccount', protoName: 'ethAccount', subBuilder: ProofEthereumAccount.create)
+    ..aOM<ProofEthereumAccount>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumAccount', protoName: 'ethereumAccount', subBuilder: ProofEthereumAccount.create)
     ..hasRequiredFields = false
   ;
 
@@ -179,15 +179,15 @@ class Proof extends $pb.GeneratedMessage {
   ProofEthereumStorage ensureEthereumStorage() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  ProofEthereumAccount get ethAccount => $_getN(3);
+  ProofEthereumAccount get ethereumAccount => $_getN(3);
   @$pb.TagNumber(4)
-  set ethAccount(ProofEthereumAccount v) { setField(4, v); }
+  set ethereumAccount(ProofEthereumAccount v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasEthAccount() => $_has(3);
+  $core.bool hasEthereumAccount() => $_has(3);
   @$pb.TagNumber(4)
-  void clearEthAccount() => clearField(4);
+  void clearEthereumAccount() => clearField(4);
   @$pb.TagNumber(4)
-  ProofEthereumAccount ensureEthAccount() => $_ensure(3);
+  ProofEthereumAccount ensureEthereumAccount() => $_ensure(3);
 }
 
 class ProofGraviton extends $pb.GeneratedMessage {
