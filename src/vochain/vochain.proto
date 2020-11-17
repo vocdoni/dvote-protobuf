@@ -25,7 +25,7 @@ message Tx {
 	oneof payload {
 		VoteEnvelope vote = 2;
 		NewProcessTx newProcess = 3;
-		CancelProcessTx cancelProcess = 2001; // legacy
+		CancelProcessTx cancelProcess = 10000001; // legacy
 		AdminTx admin = 4;
 		SetProcessTx setProcess = 5;
 	}
@@ -102,7 +102,7 @@ message Process {
 	CensusOrigin censusOrigin = 20;
 	map<uint32, uint32> results = 21;
 
-	string ProcessType = 2000; // legacy
+	string ProcessType = 10000000; // legacy
 }
 
 enum ProcessStatus {

@@ -12,7 +12,7 @@ PROTOC?=$(shell which protoc)
 $(if $(PROTOC),,$(eval PROTOC=bin/protoc))
 
 define install_protoc
-	if [ "$(PROTOC)" == "bin/protoc" -a ! -x bin/protoc ]; then \
+	@if [ "$(PROTOC)" == "bin/protoc" -a ! -x bin/protoc ]; then \
 	case "$$(uname)" in \
 		linux|Linux) \
 			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip > protoc.zip \
@@ -30,7 +30,7 @@ define install_protoc
 endef
 
 define install_protoc_go
-	if [ "$(PROTOC)" == "bin/protoc" -a ! -x bin/protoc-gen-go ]; then \
+	@if [ "$(PROTOC)" == "bin/protoc" -a ! -x bin/protoc-gen-go ]; then \
 	if [ ! -d "$$GOPATH" ] ; then \
 		export GOPATH="$$HOME/go" ;\
 	fi ; \
@@ -114,7 +114,7 @@ build/js: $(COMMON_SOURCES)
 .PHONY: protoc
 protoc:
 	$(call install_protoc)
-	@echo "Using protoc binary $(PROTOC)"
+	@echo "Using protoc from $(PROTOC)"
 
 # DART
 .PHONY: protoc-dart-plugin
