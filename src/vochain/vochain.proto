@@ -139,10 +139,9 @@ message ProcessMode {
 }
 
 message ProcessVoteOptions {
-	uint32 maxQuestions = 1; // redundant with questionCount?
-	uint32 maxCount = 2;
-	uint32 maxValue = 3; 
-	uint32 maxVoteOverwrites = 4;
-	uint32 maxTotalCost = 5;
-	uint32 costExponent = 6;
+	uint32 maxCount = 1;
+	uint32 maxValue = 2;
+	uint32 maxVoteOverwrites = 3;
+	uint32 maxTotalCost = 4;
+	uint32 costExponent = 5;
 }
