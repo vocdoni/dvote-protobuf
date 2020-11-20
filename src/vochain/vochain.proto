@@ -194,3 +194,14 @@ message TendermintHeader {
   bytes evidence_hash    = 13;  // evidence included in the block
   bytes proposer_address = 14;  // original proposer of the block
 }
+
+// Scrutinizer
+message ProcessResult {
+	repeated QuestionResult votes = 1;
+}
+message QuestionResult {
+	repeated uint32 question = 1;
+}
+message ProcessEndingList {
+	repeated bytes processList = 1;
+}
