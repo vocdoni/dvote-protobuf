@@ -205,3 +205,8 @@ message QuestionResult {
 message ProcessEndingList {
 	repeated bytes processList = 1;
 }
+
+// KeyKeeper
+message StoredKeys {
+	repeated string pids = 1;
+}
