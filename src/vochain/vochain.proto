@@ -162,6 +162,11 @@ message Validator {
 	string name = 4;
 }
 
+message AppState {
+	repeated Validator validators = 1;
+	repeated bytes oracles = 2;	
+}
+
 message Vote {
 	uint32 height = 1;
 	bytes nullifier = 2;
@@ -194,6 +199,7 @@ message TendermintHeader {
   bytes evidence_hash    = 13;  // evidence included in the block
   bytes proposer_address = 14;  // original proposer of the block
 }
+
 
 // Scrutinizer
 message ProcessResult {
