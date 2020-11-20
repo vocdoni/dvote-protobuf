@@ -3,6 +3,7 @@ syntax = "proto3";
 package dvote.types.v1;
 
 import "common/vote.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 
@@ -144,4 +145,52 @@ message ProcessVoteOptions {
 	uint32 maxVoteOverwrites = 3;
 	uint32 maxTotalCost = 4;
 	uint32 costExponent = 5;
+}
+
+message OracleList {
+	repeated bytes oracles = 1;
+}
+
+message ValidatorList {
+	repeated Validator validators = 1;
+}
+
+message Validator {
+	bytes address = 1;
+	bytes pubKey = 2;
+	uint64 power = 3;
+	string name = 4;
+}
+
+message Vote {
+	uint32 height = 1;
+	bytes nullifier = 2;
+	bytes processId = 3;
+	bytes votePackage = 4;
+	repeated uint32 encryptionKeyIndexes = 5;
+}
+
+message TendermintHeader {
+  // basic block info
+  string                       chain_id = 2 ;
+  int64                        height   = 3;
+  google.protobuf.Timestamp    time     = 4 ;
+
+  // prev block info
+  bytes blockID  = 5;
+
+  // hashes of block data
+  bytes last_commit_hash = 6;  // commit from validators from the last block
+  bytes data_hash        = 7;  // transactions
+
+  // hashes from the app output from the prev block
+  bytes validators_hash      = 8;   // validators for the current block
+  bytes next_validators_hash = 9;   // validators for the next block
+  bytes consensus_hash       = 10;  // consensus params for current block
+  bytes app_hash             = 11;  // state after txs from the previous block
+  bytes last_results_hash    = 12;  // root hash of all results from the txs from the previous block
+
+  // consensus info
+  bytes evidence_hash    = 13;  // evidence included in the block
+  bytes proposer_address = 14;  // original proposer of the block
 }
