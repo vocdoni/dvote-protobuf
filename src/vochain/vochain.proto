@@ -177,9 +177,9 @@ message Vote {
 
 message TendermintHeader {
   // basic block info
-  string                       chain_id = 2 ;
-  int64                        height   = 3;
-  google.protobuf.Timestamp    time     = 4 ;
+  string chain_id = 2 ;
+  int64 height = 3;
+  int64 timestamp = 4 ;
 
   // prev block info
   bytes blockID  = 5;
