@@ -9,23 +9,23 @@ option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 enum TxType {
 	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
-	CANCEL_PROCESS = 2;  // Legacy // TODO: Use a much higher index
-	SET_PROCESS_STATUS = 3;
-	SET_PROCESS_CENSUS = 4;
-	SET_PROCESS_QUESTION_INDEX = 5;
-	ADD_PROCESS_KEYS = 6;
-	REVEAL_PROCESS_KEYS = 7;
-	ADD_ORACLE = 8;
-	REMOVE_ORACLE = 9;
-	ADD_VALIDATOR = 10;
-	REMOVE_VALIDATOR = 11;
+	CANCEL_PROCESS = 10000000;  // Legacy
+	SET_PROCESS_STATUS = 2;
+	SET_PROCESS_CENSUS = 3;
+	SET_PROCESS_QUESTION_INDEX = 4;
+	ADD_PROCESS_KEYS = 5;
+	REVEAL_PROCESS_KEYS = 6;
+	ADD_ORACLE = 7;
+	REMOVE_ORACLE = 8;
+	ADD_VALIDATOR = 9;
+	REMOVE_VALIDATOR = 10;
 }
 
 message Tx {
 	oneof payload {
 		VoteEnvelope vote = 2;
 		NewProcessTx newProcess = 3;
-		CancelProcessTx cancelProcess = 10000001; // Legacy
+		CancelProcessTx cancelProcess = 10000000; // Legacy
 		AdminTx admin = 4;
 		SetProcessTx setProcess = 5;
 	}
@@ -99,8 +99,8 @@ message Process {
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
 	CensusOrigin censusOrigin = 20;
-	map<uint32, uint32> results = 21;   // TODO:  Needs to be a multi dimensional array/map
-	// TODO: Add envelopeHeight ?
+	ProcessResult results = 21;
+	repeated bytes resultsSignatures = 22;
 
 	string ProcessType = 10000000; // Legacy
 }
@@ -198,6 +198,8 @@ message TendermintHeader {
 // Scrutinizer
 message ProcessResult {
 	repeated QuestionResult votes = 1;
+	optional bytes processId = 2;
+	optional bytes entityId = 3;
 }
 message QuestionResult {
 	repeated uint32 question = 1;
