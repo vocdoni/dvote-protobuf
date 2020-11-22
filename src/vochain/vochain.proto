@@ -3,7 +3,6 @@ syntax = "proto3";
 package dvote.types.v1;
 
 import "common/vote.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
 
@@ -162,11 +161,6 @@ message Validator {
 	string name = 4;
 }
 
-message AppState {
-	repeated Validator validators = 1;
-	repeated bytes oracles = 2;	
-}
-
 message Vote {
 	uint32 height = 1;
 	bytes nullifier = 2;
@@ -214,5 +208,5 @@ message ProcessEndingList {
 
 // KeyKeeper
 message StoredKeys {
-	repeated string pids = 1;
+	repeated bytes pids = 1;
 }
