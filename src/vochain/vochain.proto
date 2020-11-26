@@ -102,6 +102,7 @@ message Process {
 	ProcessResult results = 21;
 	repeated bytes resultsSignatures = 22;
 
+	optional uint32 ethIndexSlot = 23;
 	string ProcessType = 10000000; // Legacy
 }
 
