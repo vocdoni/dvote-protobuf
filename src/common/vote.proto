@@ -20,9 +20,13 @@ message VoteEnvelope {
 
 message Proof {
         oneof payload {
+                // Proof used for signed envelopes
                 ProofGraviton graviton = 1;
+                // Proof used for anonymous votes
                 ProofIden3 iden3 = 2;
+                // Proof used on EVM census based processes
                 ProofEthereumStorage ethereumStorage = 3;
+                // Proof used by oracles to update the census of EVM processes
                 ProofEthereumAccount ethereumAccount = 4;
         }
 }
