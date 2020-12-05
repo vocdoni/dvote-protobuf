@@ -195,18 +195,22 @@ type isProof_Payload interface {
 }
 
 type Proof_Graviton struct {
+	// Proof used for signed envelopes
 	Graviton *ProofGraviton `protobuf:"bytes,1,opt,name=graviton,proto3,oneof"`
 }
 
 type Proof_Iden3 struct {
+	// Proof used for anonymous votes
 	Iden3 *ProofIden3 `protobuf:"bytes,2,opt,name=iden3,proto3,oneof"`
 }
 
 type Proof_EthereumStorage struct {
+	// Proof used on EVM census based processes
 	EthereumStorage *ProofEthereumStorage `protobuf:"bytes,3,opt,name=ethereumStorage,proto3,oneof"`
 }
 
 type Proof_EthereumAccount struct {
+	// Proof used by oracles to update the census of EVM processes
 	EthereumAccount *ProofEthereumAccount `protobuf:"bytes,4,opt,name=ethereumAccount,proto3,oneof"`
 }
 

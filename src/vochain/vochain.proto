@@ -19,6 +19,7 @@ enum TxType {
 	REMOVE_ORACLE = 8;
 	ADD_VALIDATOR = 9;
 	REMOVE_VALIDATOR = 10;
+	VOTE = 11;
 }
 
 message Tx {
@@ -41,7 +42,7 @@ message NewProcessTx {
 message SetProcessTx {
 	TxType txtype = 1;
 	bytes nonce = 2;
-	bytes processID = 3;
+	bytes processId = 3;
 	optional ProcessStatus status = 4;
 	optional uint32 questionIndex = 5;
 	optional bytes censusMkRoot = 6;
@@ -71,7 +72,7 @@ message AdminTx {
 
 message Process {
 	bytes processId = 1;
-	// EntityID identifies unequivocally a process
+	// EntityId identifies unequivocally a process
 	bytes entityId = 2;
 	// StartBlock represents the tendermint block where the process goes from scheduled to active
 	uint32 startBlock = 3;
