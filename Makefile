@@ -7,6 +7,7 @@ CLIENT_STORE_SOURCES=$(wildcard src/client-store/*.proto)
 COMMON_SOURCES=$(wildcard src/common/*.proto)
 METADATA_SOURCES=$(wildcard src/metadata/*.proto)
 VOCHAIN_SOURCES=$(wildcard src/vochain/*.proto)
+IPFSSYNC_SOURCES=$(wildcard src/ipfsSync/*.proto)
 
 PROTOC?=$(shell which protoc)
 $(if $(PROTOC),,$(eval PROTOC=bin/protoc))
@@ -75,7 +76,7 @@ all: protoc build/dart build/js build/go/models
 ## golang: Generate the Golang protobuf artifacts
 golang: protoc protoc-go-plugin build/go/models
 
-build/go/models: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
+build/go/models: $(COMMON_SOURCES) $(VOCHAIN_SOURCES) $(IPFSSYNC_SOURCES)
 	rm -rf $@
 	mkdir -p $@
 	for f in $^ ; do \

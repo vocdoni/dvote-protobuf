@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package dvote.types.v1;
+
+option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
+
+enum IpfsSyncType {
+    UNKNOWN = 0;
+    HELLO = 1;
+    UPDATE = 2;
+    FETCH = 3;
+    FETCHREPLY = 4;
+}
+
+message IpfsSync {
+    IpfsSyncType msgtype = 1;
+    string address = 2;
+    string multiaddress = 3;
+    bytes hash = 4;
+    repeated IpfsPin pinList = 5;
+    uint32 timestamp = 6;
+}
+
+message IpfsPin {
+    string uri = 1;
+}
