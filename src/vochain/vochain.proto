@@ -20,6 +20,7 @@ enum TxType {
 	ADD_VALIDATOR = 9;
 	REMOVE_VALIDATOR = 10;
 	VOTE = 11;
+	SET_PROCESS_RESULTS = 12;
 }
 
 message Tx {
@@ -48,6 +49,7 @@ message SetProcessTx {
 	optional bytes censusMkRoot = 6;
 	optional string censusMkURI = 7;
 	optional Proof proof = 8;
+	optional ProcessResult results = 9;
 }
 
 message CancelProcessTx { // Legacy
