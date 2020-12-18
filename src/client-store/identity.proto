@@ -38,6 +38,8 @@ message Identity {
     repeated Claim receivedClaims = 6;
     repeated Claim issuedClaims = 7;
 
+    string version = 8; // App version information
+
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
     // identities can be organized by custom values.
