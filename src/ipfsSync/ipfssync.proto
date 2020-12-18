@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dvote.types.v1;
 
-option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
+option go_package = "go.vocdoni.io/proto/build/go/models";
 
 enum IpfsSyncType {
     UNKNOWN = 0;

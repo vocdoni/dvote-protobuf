@@ -4,7 +4,7 @@ package dvote.types.v1;
 
 import "common/vote.proto";
 
-option go_package = "github.com/vocdoni/dvote-protobuf/build/go/models";
+option go_package = "go.vocdoni.io/proto/build/go/models";
 
 enum TxType {
 	TX_UNKNOWN = 0;
