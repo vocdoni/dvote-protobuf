@@ -39,6 +39,7 @@ message Identity {
     repeated Claim issuedClaims = 7;
 
     string version = 8; // App version information
+    bool backedUp = 9; // App user has backed up their account
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
