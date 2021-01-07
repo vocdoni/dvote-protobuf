@@ -160,6 +160,7 @@ class Identity extends $pb.GeneratedMessage {
     ..pc<Identity_Claim>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'issuedClaims', $pb.PbFieldType.PM, protoName: 'issuedClaims', subBuilder: Identity_Claim.create)
     ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
     ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'backedUp', protoName: 'backedUp')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'analyticsID', protoName: 'analyticsID')
     ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'Identity.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote.types.v1'))
     ..hasRequiredFields = false
   ;
@@ -252,8 +253,17 @@ class Identity extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearBackedUp() => clearField(9);
 
+  @$pb.TagNumber(10)
+  $core.String get analyticsID => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set analyticsID($core.String v) { $_setString(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasAnalyticsID() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearAnalyticsID() => clearField(10);
+
   @$pb.TagNumber(100)
-  $core.Map<$core.String, $core.String> get meta => $_getMap(9);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(10);
 }
 
 class PeerIdentity extends $pb.GeneratedMessage {

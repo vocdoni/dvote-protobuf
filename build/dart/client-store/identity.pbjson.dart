@@ -24,6 +24,7 @@ const Identity$json = const {
     const {'1': 'issuedClaims', '3': 7, '4': 3, '5': 11, '6': '.dvote.types.v1.Identity.Claim', '10': 'issuedClaims'},
     const {'1': 'version', '3': 8, '4': 1, '5': 9, '10': 'version'},
     const {'1': 'backedUp', '3': 9, '4': 1, '5': 8, '10': 'backedUp'},
+    const {'1': 'analyticsID', '3': 10, '4': 1, '5': 9, '10': 'analyticsID'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.types.v1.Identity.MetaEntry', '10': 'meta'},
   ],
   '3': const [Identity_Peers$json, Identity_Claim$json, Identity_MetaEntry$json],
