@@ -9,7 +9,6 @@ option go_package = "go.vocdoni.io/proto/build/go/models";
 enum TxType {
 	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
-	CANCEL_PROCESS = 10000000;  // Legacy
 	SET_PROCESS_STATUS = 2;
 	SET_PROCESS_CENSUS = 3;
 	SET_PROCESS_QUESTION_INDEX = 4;
@@ -27,7 +26,6 @@ message Tx {
 	oneof payload {
 		VoteEnvelope vote = 2;
 		NewProcessTx newProcess = 3;
-		CancelProcessTx cancelProcess = 10000000; // Legacy
 		AdminTx admin = 4;
 		SetProcessTx setProcess = 5;
 	}
@@ -46,16 +44,10 @@ message SetProcessTx {
 	bytes processId = 3;
 	optional ProcessStatus status = 4;
 	optional uint32 questionIndex = 5;
-	optional bytes censusMkRoot = 6;
-	optional string censusMkURI = 7;
+	optional bytes censusRoot = 6;
+	optional string censusURI = 7;
 	optional Proof proof = 8;
 	optional ProcessResult results = 9;
-}
-
-message CancelProcessTx { // Legacy
-	TxType txtype = 1;
-	bytes processId = 2;
-	bytes nonce = 3;
 }
 
 message AdminTx {
@@ -80,10 +72,10 @@ message Process {
 	uint32 startBlock = 3;
 	// BlockCount represents the amount of tendermint blocks that the process will last
 	uint32 blockCount = 4;
-	// CensusMkRoot merkle root of all the census in the process
-	bytes censusMkRoot = 5;
-	// CensusMkURI merkle tree URI of all the census in the process
-	optional string censusMkURI = 6;
+	// CensusRoot merkle root of all the census in the process
+	bytes censusRoot = 5;
+	// CensusURI where to find the census
+	optional string censusURI = 6;
 	// CommitmentKeys are the reveal keys hashed
 	repeated string commitmentKeys = 7;
 	// EncryptionPrivateKeys are the keys required to decrypt the votes
@@ -106,7 +98,6 @@ message Process {
 	repeated bytes resultsSignatures = 22;
 
 	optional uint32 ethIndexSlot = 23;
-	string ProcessType = 10000000; // Legacy
 }
 
 enum ProcessStatus {
@@ -120,12 +111,14 @@ enum ProcessStatus {
 
 enum CensusOrigin {
 	CENSUS_UNKNOWN = 0;
-	OFF_CHAIN = 1;
-	ERC20 = 2;
-	ERC721 = 3;
-	ERC1155 = 4;
-	ERC777 = 5;
-	MINI_ME = 6;
+	OFF_CHAIN_TREE = 1;
+	OFF_CHAIN_TREE_WEIGHTED = 2;
+	OFF_CHAIN_CA = 3;
+	ERC20 = 11;
+	ERC721 = 12;
+	ERC1155 = 13;
+	ERC777 = 14;
+	MINI_ME = 15;
 }
 
 message EnvelopeType {
@@ -171,6 +164,7 @@ message Vote {
 	bytes processId = 3;
 	bytes votePackage = 4;
 	repeated uint32 encryptionKeyIndexes = 5;
+	bytes weight = 6;
 }
 
 message TendermintHeader {
