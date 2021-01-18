@@ -7,6 +7,8 @@
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
+/* eslint-disable */
+// @ts-nocheck
 
 var jspb = require('google-protobuf');
 var goog = jspb;
@@ -248,8 +250,10 @@ proto.dvote.types.v1.VoteEnvelope.deserializeBinaryFromReader = function(msg, re
       msg.setNullifier(value);
       break;
     case 6:
-      var value = /** @type {!Array<number>} */ (reader.readPackedUint32());
-      msg.setEncryptionkeyindexesList(value);
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint32() : [reader.readUint32()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addEncryptionkeyindexes(values[i]);
+      }
       break;
     default:
       reader.skipField();
