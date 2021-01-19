@@ -199,9 +199,11 @@ message ProcessResult {
 	optional bytes processId = 2;
 	optional bytes entityId = 3;
 }
+
 message QuestionResult {
-	repeated uint32 question = 1;
+	repeated bytes question = 1;
 }
+
 message ProcessEndingList {
 	repeated bytes processList = 1;
 }
