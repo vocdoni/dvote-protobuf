@@ -28,7 +28,15 @@ message Proof {
                 ProofEthereumStorage ethereumStorage = 3;
                 // Proof used by oracles to update the census of EVM processes
                 ProofEthereumAccount ethereumAccount = 4;
-        }
+                // Proof Certification Authority
+                ProofCA ca = 5;
+         }
+}
+
+enum SignatureType {
+        UNKNOWN = 0;
+        ECDSA = 1;
+        ECDSA_PROCESSID_SALTED = 2;
 }
 
 message ProofGraviton {
@@ -37,6 +45,17 @@ message ProofGraviton {
 
 message ProofIden3 {
         bytes siblings = 1;
+}
+
+message ProofCA {
+        CAbundle bundle = 1;
+        bytes signature = 2;
+        SignatureType type = 3;
+}
+
+message CAbundle {
+        bytes nonce = 1;
+        bytes address = 2;
 }
 
 message ProofEthereumStorage {
