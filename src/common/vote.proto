@@ -36,7 +36,9 @@ message Proof {
 enum SignatureType {
         UNKNOWN = 0;
         ECDSA = 1;
-        ECDSA_PROCESSID_SALTED = 2;
+        ECDSA_PIDSALTED = 2;
+        ECDSA_BLIND = 3;
+        ECDSA_BLIND_PIDSALTED = 4;
 }
 
 message ProofGraviton {
@@ -48,13 +50,13 @@ message ProofIden3 {
 }
 
 message ProofCA {
-        CAbundle bundle = 1;
-        bytes signature = 2;
-        SignatureType type = 3;
+        SignatureType type = 1;
+        CAbundle bundle = 2;
+        bytes signature = 3;
 }
 
 message CAbundle {
-        bytes nonce = 1;
+        bytes processId = 1;
         bytes address = 2;
 }
 
