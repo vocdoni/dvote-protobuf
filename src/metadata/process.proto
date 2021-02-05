@@ -10,39 +10,20 @@ message ProcessMetadataStore {
 
 message ProcessMetadata {
     string version = 1;
-    string type = 2;   // Deprecated
+    map<string, string> title = 2;
+    map<string, string> description = 3;
+    map<string, string> media = 4;
+    message Question {
+        map<string, string> title = 1;
+        map<string, string> description = 2;
 
-    int32 startBlock = 3;
-    int32 blockCount = 4;
-
-    message Census {
-        string merkleRoot = 1;
-        string merkleTree = 2;
-    }
-    Census census = 5;
-
-    message Details {
-        string entityId = 1;
-        // string __ = 2;
-        map<string, string> title = 3;  // locale-aware value
-        map<string, string> description = 4;  // locale-aware value
-        string headerImage = 5;
-        string streamUrl = 7;
-
-        message Question {
-            string type = 1;
-            map<string, string> question = 2;  // locale-aware value
-            map<string, string> description = 3;  // locale-aware value
-
-            message VoteOption {
-                map<string, string> title = 1;  // locale-aware value
-                int32 value = 2;
-            }
-            repeated VoteOption voteOptions = 4;
+        message VoteOption {
+            map<string, string> title = 1;  // locale-aware value
+            int32 value = 2;
         }
-        repeated Question questions = 6;
+        repeated VoteOption choices = 3;
     }
-    Details details = 6;  // Deprecated
+    repeated Question questions = 5;
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
