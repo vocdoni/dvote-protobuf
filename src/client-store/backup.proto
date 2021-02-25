@@ -4,9 +4,8 @@ syntax = "proto3";
 package dvote.types.v1;
 
 message BackupLink {
-    string name = 1;
-    string version = 2;
-    repeated string questions = 3;
-    string auth = 4;
-    string key = 5;
+    string version = 1;
+    repeated string questions = 2;
+    string auth = 3;
+    string key = 4;
 }

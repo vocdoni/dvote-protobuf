@@ -12,13 +12,12 @@ import 'dart:typed_data' as $typed_data;
 const BackupLink$json = const {
   '1': 'BackupLink',
   '2': const [
-    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'version', '3': 2, '4': 1, '5': 9, '10': 'version'},
-    const {'1': 'questions', '3': 3, '4': 3, '5': 9, '10': 'questions'},
-    const {'1': 'auth', '3': 4, '4': 1, '5': 9, '10': 'auth'},
-    const {'1': 'key', '3': 5, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
+    const {'1': 'questions', '3': 2, '4': 3, '5': 9, '10': 'questions'},
+    const {'1': 'auth', '3': 3, '4': 1, '5': 9, '10': 'auth'},
+    const {'1': 'key', '3': 4, '4': 1, '5': 9, '10': 'key'},
   ],
 };
 
 /// Descriptor for `BackupLink`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List backupLinkDescriptor = $convert.base64Decode('CgpCYWNrdXBMaW5rEhIKBG5hbWUYASABKAlSBG5hbWUSGAoHdmVyc2lvbhgCIAEoCVIHdmVyc2lvbhIcCglxdWVzdGlvbnMYAyADKAlSCXF1ZXN0aW9ucxISCgRhdXRoGAQgASgJUgRhdXRoEhAKA2tleRgFIAEoCVIDa2V5');
+final $typed_data.Uint8List backupLinkDescriptor = $convert.base64Decode('CgpCYWNrdXBMaW5rEhgKB3ZlcnNpb24YASABKAlSB3ZlcnNpb24SHAoJcXVlc3Rpb25zGAIgAygJUglxdWVzdGlvbnMSEgoEYXV0aBgDIAEoCVIEYXV0aBIQCgNrZXkYBCABKAlSA2tleQ==');
