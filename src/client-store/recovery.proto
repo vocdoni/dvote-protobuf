@@ -3,7 +3,7 @@
 syntax = "proto3";
 package dvote.types.v1;
 
-message BackupLink {
+message AccountRecovery {
     string version = 1;
     repeated string questions = 2;
     string auth = 3;
