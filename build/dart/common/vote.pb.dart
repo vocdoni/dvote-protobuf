@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: common/vote.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -25,7 +25,35 @@ class VoteEnvelope extends $pb.GeneratedMessage {
   ;
 
   VoteEnvelope._() : super();
-  factory VoteEnvelope() => create();
+  factory VoteEnvelope({
+    $core.List<$core.int> nonce,
+    $core.List<$core.int> processId,
+    Proof proof,
+    $core.List<$core.int> votePackage,
+    $core.List<$core.int> nullifier,
+    $core.Iterable<$core.int> encryptionKeyIndexes,
+  }) {
+    final _result = create();
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (processId != null) {
+      _result.processId = processId;
+    }
+    if (proof != null) {
+      _result.proof = proof;
+    }
+    if (votePackage != null) {
+      _result.votePackage = votePackage;
+    }
+    if (nullifier != null) {
+      _result.nullifier = nullifier;
+    }
+    if (encryptionKeyIndexes != null) {
+      _result.encryptionKeyIndexes.addAll(encryptionKeyIndexes);
+    }
+    return _result;
+  }
   factory VoteEnvelope.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory VoteEnvelope.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -37,7 +65,7 @@ class VoteEnvelope extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  VoteEnvelope copyWith(void Function(VoteEnvelope) updates) => super.copyWith((message) => updates(message as VoteEnvelope)); // ignore: deprecated_member_use
+  VoteEnvelope copyWith(void Function(VoteEnvelope) updates) => super.copyWith((message) => updates(message as VoteEnvelope)) as VoteEnvelope; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VoteEnvelope create() => VoteEnvelope._();
@@ -127,7 +155,31 @@ class Proof extends $pb.GeneratedMessage {
   ;
 
   Proof._() : super();
-  factory Proof() => create();
+  factory Proof({
+    ProofGraviton graviton,
+    ProofIden3 iden3,
+    ProofEthereumStorage ethereumStorage,
+    ProofEthereumAccount ethereumAccount,
+    ProofCA ca,
+  }) {
+    final _result = create();
+    if (graviton != null) {
+      _result.graviton = graviton;
+    }
+    if (iden3 != null) {
+      _result.iden3 = iden3;
+    }
+    if (ethereumStorage != null) {
+      _result.ethereumStorage = ethereumStorage;
+    }
+    if (ethereumAccount != null) {
+      _result.ethereumAccount = ethereumAccount;
+    }
+    if (ca != null) {
+      _result.ca = ca;
+    }
+    return _result;
+  }
   factory Proof.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Proof.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -139,7 +191,7 @@ class Proof extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Proof copyWith(void Function(Proof) updates) => super.copyWith((message) => updates(message as Proof)); // ignore: deprecated_member_use
+  Proof copyWith(void Function(Proof) updates) => super.copyWith((message) => updates(message as Proof)) as Proof; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Proof create() => Proof._();
@@ -215,7 +267,15 @@ class ProofGraviton extends $pb.GeneratedMessage {
   ;
 
   ProofGraviton._() : super();
-  factory ProofGraviton() => create();
+  factory ProofGraviton({
+    $core.List<$core.int> siblings,
+  }) {
+    final _result = create();
+    if (siblings != null) {
+      _result.siblings = siblings;
+    }
+    return _result;
+  }
   factory ProofGraviton.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProofGraviton.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -227,7 +287,7 @@ class ProofGraviton extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProofGraviton copyWith(void Function(ProofGraviton) updates) => super.copyWith((message) => updates(message as ProofGraviton)); // ignore: deprecated_member_use
+  ProofGraviton copyWith(void Function(ProofGraviton) updates) => super.copyWith((message) => updates(message as ProofGraviton)) as ProofGraviton; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProofGraviton create() => ProofGraviton._();
@@ -254,7 +314,15 @@ class ProofIden3 extends $pb.GeneratedMessage {
   ;
 
   ProofIden3._() : super();
-  factory ProofIden3() => create();
+  factory ProofIden3({
+    $core.List<$core.int> siblings,
+  }) {
+    final _result = create();
+    if (siblings != null) {
+      _result.siblings = siblings;
+    }
+    return _result;
+  }
   factory ProofIden3.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProofIden3.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -266,7 +334,7 @@ class ProofIden3 extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProofIden3 copyWith(void Function(ProofIden3) updates) => super.copyWith((message) => updates(message as ProofIden3)); // ignore: deprecated_member_use
+  ProofIden3 copyWith(void Function(ProofIden3) updates) => super.copyWith((message) => updates(message as ProofIden3)) as ProofIden3; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProofIden3 create() => ProofIden3._();
@@ -295,7 +363,23 @@ class ProofCA extends $pb.GeneratedMessage {
   ;
 
   ProofCA._() : super();
-  factory ProofCA() => create();
+  factory ProofCA({
+    SignatureType type,
+    CAbundle bundle,
+    $core.List<$core.int> signature,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (bundle != null) {
+      _result.bundle = bundle;
+    }
+    if (signature != null) {
+      _result.signature = signature;
+    }
+    return _result;
+  }
   factory ProofCA.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProofCA.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -307,7 +391,7 @@ class ProofCA extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProofCA copyWith(void Function(ProofCA) updates) => super.copyWith((message) => updates(message as ProofCA)); // ignore: deprecated_member_use
+  ProofCA copyWith(void Function(ProofCA) updates) => super.copyWith((message) => updates(message as ProofCA)) as ProofCA; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProofCA create() => ProofCA._();
@@ -355,7 +439,19 @@ class CAbundle extends $pb.GeneratedMessage {
   ;
 
   CAbundle._() : super();
-  factory CAbundle() => create();
+  factory CAbundle({
+    $core.List<$core.int> processId,
+    $core.List<$core.int> address,
+  }) {
+    final _result = create();
+    if (processId != null) {
+      _result.processId = processId;
+    }
+    if (address != null) {
+      _result.address = address;
+    }
+    return _result;
+  }
   factory CAbundle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CAbundle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -367,7 +463,7 @@ class CAbundle extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CAbundle copyWith(void Function(CAbundle) updates) => super.copyWith((message) => updates(message as CAbundle)); // ignore: deprecated_member_use
+  CAbundle copyWith(void Function(CAbundle) updates) => super.copyWith((message) => updates(message as CAbundle)) as CAbundle; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CAbundle create() => CAbundle._();
@@ -405,7 +501,23 @@ class ProofEthereumStorage extends $pb.GeneratedMessage {
   ;
 
   ProofEthereumStorage._() : super();
-  factory ProofEthereumStorage() => create();
+  factory ProofEthereumStorage({
+    $core.List<$core.int> key,
+    $core.List<$core.int> value,
+    $core.Iterable<$core.List<$core.int>> siblings,
+  }) {
+    final _result = create();
+    if (key != null) {
+      _result.key = key;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    if (siblings != null) {
+      _result.siblings.addAll(siblings);
+    }
+    return _result;
+  }
   factory ProofEthereumStorage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProofEthereumStorage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -417,7 +529,7 @@ class ProofEthereumStorage extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProofEthereumStorage copyWith(void Function(ProofEthereumStorage) updates) => super.copyWith((message) => updates(message as ProofEthereumStorage)); // ignore: deprecated_member_use
+  ProofEthereumStorage copyWith(void Function(ProofEthereumStorage) updates) => super.copyWith((message) => updates(message as ProofEthereumStorage)) as ProofEthereumStorage; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProofEthereumStorage create() => ProofEthereumStorage._();
@@ -460,7 +572,31 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
   ;
 
   ProofEthereumAccount._() : super();
-  factory ProofEthereumAccount() => create();
+  factory ProofEthereumAccount({
+    $core.List<$core.int> nonce,
+    $core.List<$core.int> balance,
+    $core.List<$core.int> storageHash,
+    $core.List<$core.int> codeHash,
+    $core.Iterable<$core.List<$core.int>> siblings,
+  }) {
+    final _result = create();
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (balance != null) {
+      _result.balance = balance;
+    }
+    if (storageHash != null) {
+      _result.storageHash = storageHash;
+    }
+    if (codeHash != null) {
+      _result.codeHash = codeHash;
+    }
+    if (siblings != null) {
+      _result.siblings.addAll(siblings);
+    }
+    return _result;
+  }
   factory ProofEthereumAccount.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProofEthereumAccount.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -472,7 +608,7 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProofEthereumAccount copyWith(void Function(ProofEthereumAccount) updates) => super.copyWith((message) => updates(message as ProofEthereumAccount)); // ignore: deprecated_member_use
+  ProofEthereumAccount copyWith(void Function(ProofEthereumAccount) updates) => super.copyWith((message) => updates(message as ProofEthereumAccount)) as ProofEthereumAccount; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProofEthereumAccount create() => ProofEthereumAccount._();

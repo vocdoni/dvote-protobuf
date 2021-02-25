@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/key.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -25,7 +25,35 @@ class Key extends $pb.GeneratedMessage {
   ;
 
   Key._() : super();
-  factory Key() => create();
+  factory Key({
+    Key_Type type,
+    $core.String encryptedMnemonic,
+    $core.String encryptedRootPrivateKey,
+    $core.String rootPublicKey,
+    $core.String rootAddress,
+    $core.Map<$core.String, $core.String> meta,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (encryptedMnemonic != null) {
+      _result.encryptedMnemonic = encryptedMnemonic;
+    }
+    if (encryptedRootPrivateKey != null) {
+      _result.encryptedRootPrivateKey = encryptedRootPrivateKey;
+    }
+    if (rootPublicKey != null) {
+      _result.rootPublicKey = rootPublicKey;
+    }
+    if (rootAddress != null) {
+      _result.rootAddress = rootAddress;
+    }
+    if (meta != null) {
+      _result.meta.addAll(meta);
+    }
+    return _result;
+  }
   factory Key.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Key.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -37,7 +65,7 @@ class Key extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Key copyWith(void Function(Key) updates) => super.copyWith((message) => updates(message as Key)); // ignore: deprecated_member_use
+  Key copyWith(void Function(Key) updates) => super.copyWith((message) => updates(message as Key)) as Key; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Key create() => Key._();

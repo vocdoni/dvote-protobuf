@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: metadata/feed.proto
 //
-// @dart = 2.3
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use feedStoreDescriptor instead')
 const FeedStore$json = const {
   '1': 'FeedStore',
   '2': const [
@@ -12,6 +16,9 @@ const FeedStore$json = const {
   ],
 };
 
+/// Descriptor for `FeedStore`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List feedStoreDescriptor = $convert.base64Decode('CglGZWVkU3RvcmUSKgoFaXRlbXMYASADKAsyFC5kdm90ZS50eXBlcy52MS5GZWVkUgVpdGVtcw==');
+@$core.Deprecated('Use feedDescriptor instead')
 const Feed$json = const {
   '1': 'Feed',
   '2': const [
@@ -29,6 +36,7 @@ const Feed$json = const {
   '3': const [Feed_MetaEntry$json],
 };
 
+@$core.Deprecated('Use feedDescriptor instead')
 const Feed_MetaEntry$json = const {
   '1': 'MetaEntry',
   '2': const [
@@ -38,6 +46,9 @@ const Feed_MetaEntry$json = const {
   '7': const {'7': true},
 };
 
+/// Descriptor for `Feed`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List feedDescriptor = $convert.base64Decode('CgRGZWVkEhgKB3ZlcnNpb24YASABKAlSB3ZlcnNpb24SFAoFdGl0bGUYAiABKAlSBXRpdGxlEiIKDWhvbWVfcGFnZV91cmwYAyABKAlSC2hvbWVQYWdlVXJsEiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcmlwdGlvbhIZCghmZWVkX3VybBgFIAEoCVIHZmVlZFVybBISCgRpY29uGAYgASgJUgRpY29uEhgKB2Zhdmljb24YByABKAlSB2Zhdmljb24SGAoHZXhwaXJlZBgIIAEoCFIHZXhwaXJlZBIuCgVpdGVtcxgJIAMoCzIYLmR2b3RlLnR5cGVzLnYxLkZlZWRQb3N0UgVpdGVtcxIyCgRtZXRhGGQgAygLMh4uZHZvdGUudHlwZXMudjEuRmVlZC5NZXRhRW50cnlSBG1ldGEaNwoJTWV0YUVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE=');
+@$core.Deprecated('Use feedPostDescriptor instead')
 const FeedPost$json = const {
   '1': 'FeedPost',
   '2': const [
@@ -56,6 +67,7 @@ const FeedPost$json = const {
   '3': const [FeedPost_Author$json],
 };
 
+@$core.Deprecated('Use feedPostDescriptor instead')
 const FeedPost_Author$json = const {
   '1': 'Author',
   '2': const [
@@ -64,3 +76,5 @@ const FeedPost_Author$json = const {
   ],
 };
 
+/// Descriptor for `FeedPost`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List feedPostDescriptor = $convert.base64Decode('CghGZWVkUG9zdBIOCgJpZBgBIAEoCVICaWQSFAoFdGl0bGUYAiABKAlSBXRpdGxlEhgKB3N1bW1hcnkYAyABKAlSB3N1bW1hcnkSIQoMY29udGVudF90ZXh0GAQgASgJUgtjb250ZW50VGV4dBIhCgxjb250ZW50X2h0bWwYBSABKAlSC2NvbnRlbnRIdG1sEhAKA3VybBgGIAEoCVIDdXJsEhQKBWltYWdlGAcgASgJUgVpbWFnZRISCgR0YWdzGAggAygJUgR0YWdzEiUKDmRhdGVfcHVibGlzaGVkGAkgASgJUg1kYXRlUHVibGlzaGVkEiMKDWRhdGVfbW9kaWZpZWQYCiABKAlSDGRhdGVNb2RpZmllZBI3CgZhdXRob3IYCyABKAsyHy5kdm90ZS50eXBlcy52MS5GZWVkUG9zdC5BdXRob3JSBmF1dGhvchouCgZBdXRob3ISEgoEbmFtZRgBIAEoCVIEbmFtZRIQCgN1cmwYAiABKAlSA3VybA==');

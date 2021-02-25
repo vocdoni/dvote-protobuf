@@ -1,0 +1,12 @@
+/// Type: Client side helper model
+
+syntax = "proto3";
+package dvote.types.v1;
+
+message BackupLink {
+    string name = 1;
+    string version = 2;
+    repeated string questions = 3;
+    string auth = 4;
+    string key = 5;
+}

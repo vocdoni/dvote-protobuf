@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/identity.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -23,7 +23,15 @@ class IdentitiesStore extends $pb.GeneratedMessage {
   ;
 
   IdentitiesStore._() : super();
-  factory IdentitiesStore() => create();
+  factory IdentitiesStore({
+    $core.Iterable<Identity> items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    return _result;
+  }
   factory IdentitiesStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory IdentitiesStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -35,7 +43,7 @@ class IdentitiesStore extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  IdentitiesStore copyWith(void Function(IdentitiesStore) updates) => super.copyWith((message) => updates(message as IdentitiesStore)); // ignore: deprecated_member_use
+  IdentitiesStore copyWith(void Function(IdentitiesStore) updates) => super.copyWith((message) => updates(message as IdentitiesStore)) as IdentitiesStore; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static IdentitiesStore create() => IdentitiesStore._();
@@ -57,7 +65,19 @@ class Identity_Peers extends $pb.GeneratedMessage {
   ;
 
   Identity_Peers._() : super();
-  factory Identity_Peers() => create();
+  factory Identity_Peers({
+    $core.Iterable<$1.EntityReference> entities,
+    $core.Iterable<PeerIdentity> identities,
+  }) {
+    final _result = create();
+    if (entities != null) {
+      _result.entities.addAll(entities);
+    }
+    if (identities != null) {
+      _result.identities.addAll(identities);
+    }
+    return _result;
+  }
   factory Identity_Peers.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Identity_Peers.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -69,7 +89,7 @@ class Identity_Peers extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Identity_Peers copyWith(void Function(Identity_Peers) updates) => super.copyWith((message) => updates(message as Identity_Peers)); // ignore: deprecated_member_use
+  Identity_Peers copyWith(void Function(Identity_Peers) updates) => super.copyWith((message) => updates(message as Identity_Peers)) as Identity_Peers; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Identity_Peers create() => Identity_Peers._();
@@ -96,7 +116,27 @@ class Identity_Claim extends $pb.GeneratedMessage {
   ;
 
   Identity_Claim._() : super();
-  factory Identity_Claim() => create();
+  factory Identity_Claim({
+    $core.String index,
+    $core.String proof,
+    $core.String data,
+    $core.Iterable<$core.String> tags,
+  }) {
+    final _result = create();
+    if (index != null) {
+      _result.index = index;
+    }
+    if (proof != null) {
+      _result.proof = proof;
+    }
+    if (data != null) {
+      _result.data = data;
+    }
+    if (tags != null) {
+      _result.tags.addAll(tags);
+    }
+    return _result;
+  }
   factory Identity_Claim.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Identity_Claim.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -108,7 +148,7 @@ class Identity_Claim extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Identity_Claim copyWith(void Function(Identity_Claim) updates) => super.copyWith((message) => updates(message as Identity_Claim)); // ignore: deprecated_member_use
+  Identity_Claim copyWith(void Function(Identity_Claim) updates) => super.copyWith((message) => updates(message as Identity_Claim)) as Identity_Claim; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Identity_Claim create() => Identity_Claim._();
@@ -166,7 +206,55 @@ class Identity extends $pb.GeneratedMessage {
   ;
 
   Identity._() : super();
-  factory Identity() => create();
+  factory Identity({
+    Identity_Type type,
+    $core.String alias,
+    $core.String identityId,
+    $core.Iterable<$0.Key> keys,
+    Identity_Peers peers,
+    $core.Iterable<Identity_Claim> receivedClaims,
+    $core.Iterable<Identity_Claim> issuedClaims,
+    $core.String version,
+    $core.bool backedUp,
+    $core.String analyticsID,
+    $core.Map<$core.String, $core.String> meta,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (alias != null) {
+      _result.alias = alias;
+    }
+    if (identityId != null) {
+      _result.identityId = identityId;
+    }
+    if (keys != null) {
+      _result.keys.addAll(keys);
+    }
+    if (peers != null) {
+      _result.peers = peers;
+    }
+    if (receivedClaims != null) {
+      _result.receivedClaims.addAll(receivedClaims);
+    }
+    if (issuedClaims != null) {
+      _result.issuedClaims.addAll(issuedClaims);
+    }
+    if (version != null) {
+      _result.version = version;
+    }
+    if (backedUp != null) {
+      _result.backedUp = backedUp;
+    }
+    if (analyticsID != null) {
+      _result.analyticsID = analyticsID;
+    }
+    if (meta != null) {
+      _result.meta.addAll(meta);
+    }
+    return _result;
+  }
   factory Identity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Identity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -178,7 +266,7 @@ class Identity extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Identity copyWith(void Function(Identity) updates) => super.copyWith((message) => updates(message as Identity)); // ignore: deprecated_member_use
+  Identity copyWith(void Function(Identity) updates) => super.copyWith((message) => updates(message as Identity)) as Identity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Identity create() => Identity._();
@@ -275,7 +363,23 @@ class PeerIdentity extends $pb.GeneratedMessage {
   ;
 
   PeerIdentity._() : super();
-  factory PeerIdentity() => create();
+  factory PeerIdentity({
+    PeerIdentity_Type type,
+    $core.String alias,
+    $core.String identityId,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (alias != null) {
+      _result.alias = alias;
+    }
+    if (identityId != null) {
+      _result.identityId = identityId;
+    }
+    return _result;
+  }
   factory PeerIdentity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PeerIdentity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -287,7 +391,7 @@ class PeerIdentity extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PeerIdentity copyWith(void Function(PeerIdentity) updates) => super.copyWith((message) => updates(message as PeerIdentity)); // ignore: deprecated_member_use
+  PeerIdentity copyWith(void Function(PeerIdentity) updates) => super.copyWith((message) => updates(message as PeerIdentity)) as PeerIdentity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PeerIdentity create() => PeerIdentity._();

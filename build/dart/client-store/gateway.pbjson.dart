@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: client-store/gateway.proto
 //
-// @dart = 2.3
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
 const BootNodeGateways$json = const {
   '1': 'BootNodeGateways',
   '2': const [
@@ -17,6 +21,7 @@ const BootNodeGateways$json = const {
   '3': const [BootNodeGateways_NetworkNodes$json, BootNodeGateways_MetaEntry$json],
 };
 
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
 const BootNodeGateways_NetworkNodes$json = const {
   '1': 'NetworkNodes',
   '2': const [
@@ -26,6 +31,7 @@ const BootNodeGateways_NetworkNodes$json = const {
   '3': const [BootNodeGateways_NetworkNodes_DVote$json, BootNodeGateways_NetworkNodes_Web3$json],
 };
 
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
 const BootNodeGateways_NetworkNodes_DVote$json = const {
   '1': 'DVote',
   '2': const [
@@ -35,6 +41,7 @@ const BootNodeGateways_NetworkNodes_DVote$json = const {
   ],
 };
 
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
 const BootNodeGateways_NetworkNodes_Web3$json = const {
   '1': 'Web3',
   '2': const [
@@ -42,6 +49,7 @@ const BootNodeGateways_NetworkNodes_Web3$json = const {
   ],
 };
 
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
 const BootNodeGateways_MetaEntry$json = const {
   '1': 'MetaEntry',
   '2': const [
@@ -51,3 +59,5 @@ const BootNodeGateways_MetaEntry$json = const {
   '7': const {'7': true},
 };
 
+/// Descriptor for `BootNodeGateways`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List bootNodeGatewaysDescriptor = $convert.base64Decode('ChBCb290Tm9kZUdhdGV3YXlzEksKCWhvbWVzdGVhZBgBIAEoCzItLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTmV0d29ya05vZGVzUglob21lc3RlYWQSRQoGZ29lcmxpGAIgASgLMi0uZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXNSBmdvZXJsaRJBCgR4ZGFpGAMgASgLMi0uZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXNSBHhkYWkSQwoFc29rb2wYBCABKAsyLS5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk5ldHdvcmtOb2Rlc1IFc29rb2wSPgoEbWV0YRhkIAMoCzIqLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTWV0YUVudHJ5UgRtZXRhGoICCgxOZXR3b3JrTm9kZXMSSQoFZHZvdGUYASADKAsyMy5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk5ldHdvcmtOb2Rlcy5EVm90ZVIFZHZvdGUSRgoEd2ViMxgCIAMoCzIyLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTmV0d29ya05vZGVzLldlYjNSBHdlYjMaRQoFRFZvdGUSEAoDdXJpGAEgASgJUgN1cmkSEgoEYXBpcxgCIAMoCVIEYXBpcxIWCgZwdWJLZXkYAyABKAlSBnB1YktleRoYCgRXZWIzEhAKA3VyaRgBIAEoCVIDdXJpGjcKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');

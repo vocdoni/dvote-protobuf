@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: metadata/entity.proto
 //
-// @dart = 2.3
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use entityMetadataStoreDescriptor instead')
 const EntityMetadataStore$json = const {
   '1': 'EntityMetadataStore',
   '2': const [
@@ -12,6 +16,9 @@ const EntityMetadataStore$json = const {
   ],
 };
 
+/// Descriptor for `EntityMetadataStore`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List entityMetadataStoreDescriptor = $convert.base64Decode('ChNFbnRpdHlNZXRhZGF0YVN0b3JlEjQKBWl0ZW1zGAEgAygLMh4uZHZvdGUudHlwZXMudjEuRW50aXR5TWV0YWRhdGFSBWl0ZW1z');
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata$json = const {
   '1': 'EntityMetadata',
   '2': const [
@@ -32,6 +39,7 @@ const EntityMetadata$json = const {
   '3': const [EntityMetadata_NameEntry$json, EntityMetadata_DescriptionEntry$json, EntityMetadata_VotingProcesses$json, EntityMetadata_NewsFeedEntry$json, EntityMetadata_Media$json, EntityMetadata_Action$json, EntityMetadata_MetaEntry$json],
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_NameEntry$json = const {
   '1': 'NameEntry',
   '2': const [
@@ -41,6 +49,7 @@ const EntityMetadata_NameEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_DescriptionEntry$json = const {
   '1': 'DescriptionEntry',
   '2': const [
@@ -50,6 +59,7 @@ const EntityMetadata_DescriptionEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_VotingProcesses$json = const {
   '1': 'VotingProcesses',
   '2': const [
@@ -58,6 +68,7 @@ const EntityMetadata_VotingProcesses$json = const {
   ],
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_NewsFeedEntry$json = const {
   '1': 'NewsFeedEntry',
   '2': const [
@@ -67,6 +78,7 @@ const EntityMetadata_NewsFeedEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_Media$json = const {
   '1': 'Media',
   '2': const [
@@ -75,6 +87,7 @@ const EntityMetadata_Media$json = const {
   ],
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_Action$json = const {
   '1': 'Action',
   '2': const [
@@ -88,6 +101,7 @@ const EntityMetadata_Action$json = const {
   '3': const [EntityMetadata_Action_NameEntry$json, EntityMetadata_Action_ImageSource$json],
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_Action_NameEntry$json = const {
   '1': 'NameEntry',
   '2': const [
@@ -97,6 +111,7 @@ const EntityMetadata_Action_NameEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_Action_ImageSource$json = const {
   '1': 'ImageSource',
   '2': const [
@@ -109,6 +124,7 @@ const EntityMetadata_Action_ImageSource$json = const {
   '3': const [EntityMetadata_Action_ImageSource_CaptionEntry$json],
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_Action_ImageSource_CaptionEntry$json = const {
   '1': 'CaptionEntry',
   '2': const [
@@ -118,6 +134,7 @@ const EntityMetadata_Action_ImageSource_CaptionEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use entityMetadataDescriptor instead')
 const EntityMetadata_MetaEntry$json = const {
   '1': 'MetaEntry',
   '2': const [
@@ -127,6 +144,9 @@ const EntityMetadata_MetaEntry$json = const {
   '7': const {'7': true},
 };
 
+/// Descriptor for `EntityMetadata`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List entityMetadataDescriptor = $convert.base64Decode('Cg5FbnRpdHlNZXRhZGF0YRIYCgd2ZXJzaW9uGAEgASgJUgd2ZXJzaW9uEhwKCWxhbmd1YWdlcxgCIAMoCVIJbGFuZ3VhZ2VzEjwKBG5hbWUYAyADKAsyKC5kdm90ZS50eXBlcy52MS5FbnRpdHlNZXRhZGF0YS5OYW1lRW50cnlSBG5hbWUSUQoLZGVzY3JpcHRpb24YBCADKAsyLy5kdm90ZS50eXBlcy52MS5FbnRpdHlNZXRhZGF0YS5EZXNjcmlwdGlvbkVudHJ5UgtkZXNjcmlwdGlvbhJYCg92b3RpbmdQcm9jZXNzZXMYBSABKAsyLi5kdm90ZS50eXBlcy52MS5FbnRpdHlNZXRhZGF0YS5Wb3RpbmdQcm9jZXNzZXNSD3ZvdGluZ1Byb2Nlc3NlcxJICghuZXdzRmVlZBgGIAMoCzIsLmR2b3RlLnR5cGVzLnYxLkVudGl0eU1ldGFkYXRhLk5ld3NGZWVkRW50cnlSCG5ld3NGZWVkEjoKBW1lZGlhGAcgASgLMiQuZHZvdGUudHlwZXMudjEuRW50aXR5TWV0YWRhdGEuTWVkaWFSBW1lZGlhEj8KB2FjdGlvbnMYCCADKAsyJS5kdm90ZS50eXBlcy52MS5FbnRpdHlNZXRhZGF0YS5BY3Rpb25SB2FjdGlvbnMSQwoMYm9vdEVudGl0aWVzGAkgAygLMh8uZHZvdGUudHlwZXMudjEuRW50aXR5UmVmZXJlbmNlUgxib290RW50aXRpZXMSWwoYZmFsbGJhY2tCb290Tm9kZUVudGl0aWVzGAogAygLMh8uZHZvdGUudHlwZXMudjEuRW50aXR5UmVmZXJlbmNlUhhmYWxsYmFja0Jvb3ROb2RlRW50aXRpZXMSSQoPdHJ1c3RlZEVudGl0aWVzGAsgAygLMh8uZHZvdGUudHlwZXMudjEuRW50aXR5UmVmZXJlbmNlUg90cnVzdGVkRW50aXRpZXMSYwocY2Vuc3VzU2VydmljZU1hbmFnZWRFbnRpdGllcxgMIAMoCzIfLmR2b3RlLnR5cGVzLnYxLkVudGl0eVJlZmVyZW5jZVIcY2Vuc3VzU2VydmljZU1hbmFnZWRFbnRpdGllcxI8CgRtZXRhGGQgAygLMiguZHZvdGUudHlwZXMudjEuRW50aXR5TWV0YWRhdGEuTWV0YUVudHJ5UgRtZXRhGjcKCU5hbWVFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGj4KEERlc2NyaXB0aW9uRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo/Cg9Wb3RpbmdQcm9jZXNzZXMSFgoGYWN0aXZlGAEgAygJUgZhY3RpdmUSFAoFZW5kZWQYAiADKAlSBWVuZGVkGjsKDU5ld3NGZWVkRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo3CgVNZWRpYRIWCgZhdmF0YXIYASABKAlSBmF2YXRhchIWCgZoZWFkZXIYAiABKAlSBmhlYWRlchrFBAoGQWN0aW9uEhIKBHR5cGUYASABKAlSBHR5cGUSHAoJYWN0aW9uS2V5GAcgASgJUglhY3Rpb25LZXkSQwoEbmFtZRgCIAMoCzIvLmR2b3RlLnR5cGVzLnYxLkVudGl0eU1ldGFkYXRhLkFjdGlvbi5OYW1lRW50cnlSBG5hbWUSGAoHdmlzaWJsZRgDIAEoCVIHdmlzaWJsZRIQCgN1cmwYBCABKAlSA3VybBJVCgxpbWFnZVNvdXJjZXMYBSADKAsyMS5kdm90ZS50eXBlcy52MS5FbnRpdHlNZXRhZGF0YS5BY3Rpb24uSW1hZ2VTb3VyY2VSDGltYWdlU291cmNlcxo3CglOYW1lRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARqHAgoLSW1hZ2VTb3VyY2USEgoEdHlwZRgBIAEoCVIEdHlwZRISCgRuYW1lGAIgASgJUgRuYW1lEiAKC29yaWVudGF0aW9uGAMgASgJUgtvcmllbnRhdGlvbhIYCgdvdmVybGF5GAQgASgJUgdvdmVybGF5ElgKB2NhcHRpb24YBSADKAsyPi5kdm90ZS50eXBlcy52MS5FbnRpdHlNZXRhZGF0YS5BY3Rpb24uSW1hZ2VTb3VyY2UuQ2FwdGlvbkVudHJ5UgdjYXB0aW9uGjoKDENhcHRpb25FbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjcKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
+@$core.Deprecated('Use entityReferenceDescriptor instead')
 const EntityReference$json = const {
   '1': 'EntityReference',
   '2': const [
@@ -135,3 +155,5 @@ const EntityReference$json = const {
   ],
 };
 
+/// Descriptor for `EntityReference`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List entityReferenceDescriptor = $convert.base64Decode('Cg9FbnRpdHlSZWZlcmVuY2USGgoIZW50aXR5SWQYASABKAlSCGVudGl0eUlkEiAKC2VudHJ5UG9pbnRzGAIgAygJUgtlbnRyeVBvaW50cw==');

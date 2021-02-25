@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/gateway.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -18,7 +18,23 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
   ;
 
   BootNodeGateways_NetworkNodes_DVote._() : super();
-  factory BootNodeGateways_NetworkNodes_DVote() => create();
+  factory BootNodeGateways_NetworkNodes_DVote({
+    $core.String uri,
+    $core.Iterable<$core.String> apis,
+    $core.String pubKey,
+  }) {
+    final _result = create();
+    if (uri != null) {
+      _result.uri = uri;
+    }
+    if (apis != null) {
+      _result.apis.addAll(apis);
+    }
+    if (pubKey != null) {
+      _result.pubKey = pubKey;
+    }
+    return _result;
+  }
   factory BootNodeGateways_NetworkNodes_DVote.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes_DVote.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -30,7 +46,7 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  BootNodeGateways_NetworkNodes_DVote copyWith(void Function(BootNodeGateways_NetworkNodes_DVote) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_DVote)); // ignore: deprecated_member_use
+  BootNodeGateways_NetworkNodes_DVote copyWith(void Function(BootNodeGateways_NetworkNodes_DVote) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_DVote)) as BootNodeGateways_NetworkNodes_DVote; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_DVote create() => BootNodeGateways_NetworkNodes_DVote._();
@@ -69,7 +85,15 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
   ;
 
   BootNodeGateways_NetworkNodes_Web3._() : super();
-  factory BootNodeGateways_NetworkNodes_Web3() => create();
+  factory BootNodeGateways_NetworkNodes_Web3({
+    $core.String uri,
+  }) {
+    final _result = create();
+    if (uri != null) {
+      _result.uri = uri;
+    }
+    return _result;
+  }
   factory BootNodeGateways_NetworkNodes_Web3.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes_Web3.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -81,7 +105,7 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  BootNodeGateways_NetworkNodes_Web3 copyWith(void Function(BootNodeGateways_NetworkNodes_Web3) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_Web3)); // ignore: deprecated_member_use
+  BootNodeGateways_NetworkNodes_Web3 copyWith(void Function(BootNodeGateways_NetworkNodes_Web3) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_Web3)) as BootNodeGateways_NetworkNodes_Web3; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_Web3 create() => BootNodeGateways_NetworkNodes_Web3._();
@@ -109,7 +133,19 @@ class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
   ;
 
   BootNodeGateways_NetworkNodes._() : super();
-  factory BootNodeGateways_NetworkNodes() => create();
+  factory BootNodeGateways_NetworkNodes({
+    $core.Iterable<BootNodeGateways_NetworkNodes_DVote> dvote,
+    $core.Iterable<BootNodeGateways_NetworkNodes_Web3> web3,
+  }) {
+    final _result = create();
+    if (dvote != null) {
+      _result.dvote.addAll(dvote);
+    }
+    if (web3 != null) {
+      _result.web3.addAll(web3);
+    }
+    return _result;
+  }
   factory BootNodeGateways_NetworkNodes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -121,7 +157,7 @@ class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  BootNodeGateways_NetworkNodes copyWith(void Function(BootNodeGateways_NetworkNodes) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes)); // ignore: deprecated_member_use
+  BootNodeGateways_NetworkNodes copyWith(void Function(BootNodeGateways_NetworkNodes) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes)) as BootNodeGateways_NetworkNodes; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes create() => BootNodeGateways_NetworkNodes._();
@@ -149,7 +185,31 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   ;
 
   BootNodeGateways._() : super();
-  factory BootNodeGateways() => create();
+  factory BootNodeGateways({
+    BootNodeGateways_NetworkNodes homestead,
+    BootNodeGateways_NetworkNodes goerli,
+    BootNodeGateways_NetworkNodes xdai,
+    BootNodeGateways_NetworkNodes sokol,
+    $core.Map<$core.String, $core.String> meta,
+  }) {
+    final _result = create();
+    if (homestead != null) {
+      _result.homestead = homestead;
+    }
+    if (goerli != null) {
+      _result.goerli = goerli;
+    }
+    if (xdai != null) {
+      _result.xdai = xdai;
+    }
+    if (sokol != null) {
+      _result.sokol = sokol;
+    }
+    if (meta != null) {
+      _result.meta.addAll(meta);
+    }
+    return _result;
+  }
   factory BootNodeGateways.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -161,7 +221,7 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  BootNodeGateways copyWith(void Function(BootNodeGateways) updates) => super.copyWith((message) => updates(message as BootNodeGateways)); // ignore: deprecated_member_use
+  BootNodeGateways copyWith(void Function(BootNodeGateways) updates) => super.copyWith((message) => updates(message as BootNodeGateways)) as BootNodeGateways; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways create() => BootNodeGateways._();
