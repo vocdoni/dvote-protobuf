@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: metadata/feed.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -16,7 +16,15 @@ class FeedStore extends $pb.GeneratedMessage {
   ;
 
   FeedStore._() : super();
-  factory FeedStore() => create();
+  factory FeedStore({
+    $core.Iterable<Feed> items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    return _result;
+  }
   factory FeedStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FeedStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -28,7 +36,7 @@ class FeedStore extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore)); // ignore: deprecated_member_use
+  FeedStore copyWith(void Function(FeedStore) updates) => super.copyWith((message) => updates(message as FeedStore)) as FeedStore; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FeedStore create() => FeedStore._();
@@ -58,7 +66,51 @@ class Feed extends $pb.GeneratedMessage {
   ;
 
   Feed._() : super();
-  factory Feed() => create();
+  factory Feed({
+    $core.String version,
+    $core.String title,
+    $core.String homePageUrl,
+    $core.String description,
+    $core.String feedUrl,
+    $core.String icon,
+    $core.String favicon,
+    $core.bool expired,
+    $core.Iterable<FeedPost> items,
+    $core.Map<$core.String, $core.String> meta,
+  }) {
+    final _result = create();
+    if (version != null) {
+      _result.version = version;
+    }
+    if (title != null) {
+      _result.title = title;
+    }
+    if (homePageUrl != null) {
+      _result.homePageUrl = homePageUrl;
+    }
+    if (description != null) {
+      _result.description = description;
+    }
+    if (feedUrl != null) {
+      _result.feedUrl = feedUrl;
+    }
+    if (icon != null) {
+      _result.icon = icon;
+    }
+    if (favicon != null) {
+      _result.favicon = favicon;
+    }
+    if (expired != null) {
+      _result.expired = expired;
+    }
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    if (meta != null) {
+      _result.meta.addAll(meta);
+    }
+    return _result;
+  }
   factory Feed.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Feed.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -70,7 +122,7 @@ class Feed extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Feed copyWith(void Function(Feed) updates) => super.copyWith((message) => updates(message as Feed)); // ignore: deprecated_member_use
+  Feed copyWith(void Function(Feed) updates) => super.copyWith((message) => updates(message as Feed)) as Feed; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Feed create() => Feed._();
@@ -167,7 +219,19 @@ class FeedPost_Author extends $pb.GeneratedMessage {
   ;
 
   FeedPost_Author._() : super();
-  factory FeedPost_Author() => create();
+  factory FeedPost_Author({
+    $core.String name,
+    $core.String url,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (url != null) {
+      _result.url = url;
+    }
+    return _result;
+  }
   factory FeedPost_Author.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FeedPost_Author.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -179,7 +243,7 @@ class FeedPost_Author extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FeedPost_Author copyWith(void Function(FeedPost_Author) updates) => super.copyWith((message) => updates(message as FeedPost_Author)); // ignore: deprecated_member_use
+  FeedPost_Author copyWith(void Function(FeedPost_Author) updates) => super.copyWith((message) => updates(message as FeedPost_Author)) as FeedPost_Author; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FeedPost_Author create() => FeedPost_Author._();
@@ -225,7 +289,55 @@ class FeedPost extends $pb.GeneratedMessage {
   ;
 
   FeedPost._() : super();
-  factory FeedPost() => create();
+  factory FeedPost({
+    $core.String id,
+    $core.String title,
+    $core.String summary,
+    $core.String contentText,
+    $core.String contentHtml,
+    $core.String url,
+    $core.String image,
+    $core.Iterable<$core.String> tags,
+    $core.String datePublished,
+    $core.String dateModified,
+    FeedPost_Author author,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (title != null) {
+      _result.title = title;
+    }
+    if (summary != null) {
+      _result.summary = summary;
+    }
+    if (contentText != null) {
+      _result.contentText = contentText;
+    }
+    if (contentHtml != null) {
+      _result.contentHtml = contentHtml;
+    }
+    if (url != null) {
+      _result.url = url;
+    }
+    if (image != null) {
+      _result.image = image;
+    }
+    if (tags != null) {
+      _result.tags.addAll(tags);
+    }
+    if (datePublished != null) {
+      _result.datePublished = datePublished;
+    }
+    if (dateModified != null) {
+      _result.dateModified = dateModified;
+    }
+    if (author != null) {
+      _result.author = author;
+    }
+    return _result;
+  }
   factory FeedPost.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FeedPost.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -237,7 +349,7 @@ class FeedPost extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FeedPost copyWith(void Function(FeedPost) updates) => super.copyWith((message) => updates(message as FeedPost)); // ignore: deprecated_member_use
+  FeedPost copyWith(void Function(FeedPost) updates) => super.copyWith((message) => updates(message as FeedPost)) as FeedPost; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FeedPost create() => FeedPost._();

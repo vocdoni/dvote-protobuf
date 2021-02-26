@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: metadata/process.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -16,7 +16,15 @@ class ProcessMetadataStore extends $pb.GeneratedMessage {
   ;
 
   ProcessMetadataStore._() : super();
-  factory ProcessMetadataStore() => create();
+  factory ProcessMetadataStore({
+    $core.Iterable<ProcessMetadata> items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    return _result;
+  }
   factory ProcessMetadataStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProcessMetadataStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -28,7 +36,7 @@ class ProcessMetadataStore extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProcessMetadataStore copyWith(void Function(ProcessMetadataStore) updates) => super.copyWith((message) => updates(message as ProcessMetadataStore)); // ignore: deprecated_member_use
+  ProcessMetadataStore copyWith(void Function(ProcessMetadataStore) updates) => super.copyWith((message) => updates(message as ProcessMetadataStore)) as ProcessMetadataStore; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProcessMetadataStore create() => ProcessMetadataStore._();
@@ -50,7 +58,19 @@ class ProcessMetadata_Question_VoteOption extends $pb.GeneratedMessage {
   ;
 
   ProcessMetadata_Question_VoteOption._() : super();
-  factory ProcessMetadata_Question_VoteOption() => create();
+  factory ProcessMetadata_Question_VoteOption({
+    $core.Map<$core.String, $core.String> title,
+    $core.int value,
+  }) {
+    final _result = create();
+    if (title != null) {
+      _result.title.addAll(title);
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory ProcessMetadata_Question_VoteOption.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProcessMetadata_Question_VoteOption.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -62,7 +82,7 @@ class ProcessMetadata_Question_VoteOption extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProcessMetadata_Question_VoteOption copyWith(void Function(ProcessMetadata_Question_VoteOption) updates) => super.copyWith((message) => updates(message as ProcessMetadata_Question_VoteOption)); // ignore: deprecated_member_use
+  ProcessMetadata_Question_VoteOption copyWith(void Function(ProcessMetadata_Question_VoteOption) updates) => super.copyWith((message) => updates(message as ProcessMetadata_Question_VoteOption)) as ProcessMetadata_Question_VoteOption; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata_Question_VoteOption create() => ProcessMetadata_Question_VoteOption._();
@@ -94,7 +114,23 @@ class ProcessMetadata_Question extends $pb.GeneratedMessage {
   ;
 
   ProcessMetadata_Question._() : super();
-  factory ProcessMetadata_Question() => create();
+  factory ProcessMetadata_Question({
+    $core.Map<$core.String, $core.String> title,
+    $core.Map<$core.String, $core.String> description,
+    $core.Iterable<ProcessMetadata_Question_VoteOption> choices,
+  }) {
+    final _result = create();
+    if (title != null) {
+      _result.title.addAll(title);
+    }
+    if (description != null) {
+      _result.description.addAll(description);
+    }
+    if (choices != null) {
+      _result.choices.addAll(choices);
+    }
+    return _result;
+  }
   factory ProcessMetadata_Question.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProcessMetadata_Question.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -106,7 +142,7 @@ class ProcessMetadata_Question extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProcessMetadata_Question copyWith(void Function(ProcessMetadata_Question) updates) => super.copyWith((message) => updates(message as ProcessMetadata_Question)); // ignore: deprecated_member_use
+  ProcessMetadata_Question copyWith(void Function(ProcessMetadata_Question) updates) => super.copyWith((message) => updates(message as ProcessMetadata_Question)) as ProcessMetadata_Question; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata_Question create() => ProcessMetadata_Question._();
@@ -138,7 +174,35 @@ class ProcessMetadata extends $pb.GeneratedMessage {
   ;
 
   ProcessMetadata._() : super();
-  factory ProcessMetadata() => create();
+  factory ProcessMetadata({
+    $core.String version,
+    $core.Map<$core.String, $core.String> title,
+    $core.Map<$core.String, $core.String> description,
+    $core.Map<$core.String, $core.String> media,
+    $core.Iterable<ProcessMetadata_Question> questions,
+    $core.Map<$core.String, $core.String> meta,
+  }) {
+    final _result = create();
+    if (version != null) {
+      _result.version = version;
+    }
+    if (title != null) {
+      _result.title.addAll(title);
+    }
+    if (description != null) {
+      _result.description.addAll(description);
+    }
+    if (media != null) {
+      _result.media.addAll(media);
+    }
+    if (questions != null) {
+      _result.questions.addAll(questions);
+    }
+    if (meta != null) {
+      _result.meta.addAll(meta);
+    }
+    return _result;
+  }
   factory ProcessMetadata.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProcessMetadata.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -150,7 +214,7 @@ class ProcessMetadata extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProcessMetadata copyWith(void Function(ProcessMetadata) updates) => super.copyWith((message) => updates(message as ProcessMetadata)); // ignore: deprecated_member_use
+  ProcessMetadata copyWith(void Function(ProcessMetadata) updates) => super.copyWith((message) => updates(message as ProcessMetadata)) as ProcessMetadata; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata create() => ProcessMetadata._();

@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: common/vote.proto
 //
-// @dart = 2.3
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use signatureTypeDescriptor instead')
 const SignatureType$json = const {
   '1': 'SignatureType',
   '2': const [
@@ -16,6 +20,9 @@ const SignatureType$json = const {
   ],
 };
 
+/// Descriptor for `SignatureType`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List signatureTypeDescriptor = $convert.base64Decode('Cg1TaWduYXR1cmVUeXBlEgsKB1VOS05PV04QABIJCgVFQ0RTQRABEhMKD0VDRFNBX1BJRFNBTFRFRBACEg8KC0VDRFNBX0JMSU5EEAMSGQoVRUNEU0FfQkxJTkRfUElEU0FMVEVEEAQ=');
+@$core.Deprecated('Use voteEnvelopeDescriptor instead')
 const VoteEnvelope$json = const {
   '1': 'VoteEnvelope',
   '2': const [
@@ -28,6 +35,9 @@ const VoteEnvelope$json = const {
   ],
 };
 
+/// Descriptor for `VoteEnvelope`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List voteEnvelopeDescriptor = $convert.base64Decode('CgxWb3RlRW52ZWxvcGUSFAoFbm9uY2UYASABKAxSBW5vbmNlEhwKCXByb2Nlc3NJZBgCIAEoDFIJcHJvY2Vzc0lkEisKBXByb29mGAMgASgLMhUuZHZvdGUudHlwZXMudjEuUHJvb2ZSBXByb29mEiAKC3ZvdGVQYWNrYWdlGAQgASgMUgt2b3RlUGFja2FnZRIcCgludWxsaWZpZXIYBSABKAxSCW51bGxpZmllchIyChRlbmNyeXB0aW9uS2V5SW5kZXhlcxgGIAMoDVIUZW5jcnlwdGlvbktleUluZGV4ZXM=');
+@$core.Deprecated('Use proofDescriptor instead')
 const Proof$json = const {
   '1': 'Proof',
   '2': const [
@@ -42,6 +52,9 @@ const Proof$json = const {
   ],
 };
 
+/// Descriptor for `Proof`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhQgkKB3BheWxvYWQ=');
+@$core.Deprecated('Use proofGravitonDescriptor instead')
 const ProofGraviton$json = const {
   '1': 'ProofGraviton',
   '2': const [
@@ -49,6 +62,9 @@ const ProofGraviton$json = const {
   ],
 };
 
+/// Descriptor for `ProofGraviton`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofGravitonDescriptor = $convert.base64Decode('Cg1Qcm9vZkdyYXZpdG9uEhoKCHNpYmxpbmdzGAEgASgMUghzaWJsaW5ncw==');
+@$core.Deprecated('Use proofIden3Descriptor instead')
 const ProofIden3$json = const {
   '1': 'ProofIden3',
   '2': const [
@@ -56,6 +72,9 @@ const ProofIden3$json = const {
   ],
 };
 
+/// Descriptor for `ProofIden3`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofIden3Descriptor = $convert.base64Decode('CgpQcm9vZklkZW4zEhoKCHNpYmxpbmdzGAEgASgMUghzaWJsaW5ncw==');
+@$core.Deprecated('Use proofCADescriptor instead')
 const ProofCA$json = const {
   '1': 'ProofCA',
   '2': const [
@@ -65,6 +84,9 @@ const ProofCA$json = const {
   ],
 };
 
+/// Descriptor for `ProofCA`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofCADescriptor = $convert.base64Decode('CgdQcm9vZkNBEjEKBHR5cGUYASABKA4yHS5kdm90ZS50eXBlcy52MS5TaWduYXR1cmVUeXBlUgR0eXBlEjAKBmJ1bmRsZRgCIAEoCzIYLmR2b3RlLnR5cGVzLnYxLkNBYnVuZGxlUgZidW5kbGUSHAoJc2lnbmF0dXJlGAMgASgMUglzaWduYXR1cmU=');
+@$core.Deprecated('Use cAbundleDescriptor instead')
 const CAbundle$json = const {
   '1': 'CAbundle',
   '2': const [
@@ -73,6 +95,9 @@ const CAbundle$json = const {
   ],
 };
 
+/// Descriptor for `CAbundle`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cAbundleDescriptor = $convert.base64Decode('CghDQWJ1bmRsZRIcCglwcm9jZXNzSWQYASABKAxSCXByb2Nlc3NJZBIYCgdhZGRyZXNzGAIgASgMUgdhZGRyZXNz');
+@$core.Deprecated('Use proofEthereumStorageDescriptor instead')
 const ProofEthereumStorage$json = const {
   '1': 'ProofEthereumStorage',
   '2': const [
@@ -82,6 +107,9 @@ const ProofEthereumStorage$json = const {
   ],
 };
 
+/// Descriptor for `ProofEthereumStorage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofEthereumStorageDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtU3RvcmFnZRIQCgNrZXkYASABKAxSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWUSGgoIc2libGluZ3MYAyADKAxSCHNpYmxpbmdz');
+@$core.Deprecated('Use proofEthereumAccountDescriptor instead')
 const ProofEthereumAccount$json = const {
   '1': 'ProofEthereumAccount',
   '2': const [
@@ -93,3 +121,5 @@ const ProofEthereumAccount$json = const {
   ],
 };
 
+/// Descriptor for `ProofEthereumAccount`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofEthereumAccountDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtQWNjb3VudBIUCgVub25jZRgBIAEoDFIFbm9uY2USGAoHYmFsYW5jZRgCIAEoDFIHYmFsYW5jZRIgCgtzdG9yYWdlSGFzaBgDIAEoDFILc3RvcmFnZUhhc2gSGgoIY29kZUhhc2gYBCABKAxSCGNvZGVIYXNoEhoKCHNpYmxpbmdzGAUgAygMUghzaWJsaW5ncw==');

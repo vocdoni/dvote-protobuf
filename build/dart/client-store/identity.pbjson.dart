@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: client-store/identity.proto
 //
-// @dart = 2.3
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.7
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use identitiesStoreDescriptor instead')
 const IdentitiesStore$json = const {
   '1': 'IdentitiesStore',
   '2': const [
@@ -12,6 +16,9 @@ const IdentitiesStore$json = const {
   ],
 };
 
+/// Descriptor for `IdentitiesStore`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List identitiesStoreDescriptor = $convert.base64Decode('Cg9JZGVudGl0aWVzU3RvcmUSLgoFaXRlbXMYASADKAsyGC5kdm90ZS50eXBlcy52MS5JZGVudGl0eVIFaXRlbXM=');
+@$core.Deprecated('Use identityDescriptor instead')
 const Identity$json = const {
   '1': 'Identity',
   '2': const [
@@ -31,6 +38,7 @@ const Identity$json = const {
   '4': const [Identity_Type$json],
 };
 
+@$core.Deprecated('Use identityDescriptor instead')
 const Identity_Peers$json = const {
   '1': 'Peers',
   '2': const [
@@ -39,6 +47,7 @@ const Identity_Peers$json = const {
   ],
 };
 
+@$core.Deprecated('Use identityDescriptor instead')
 const Identity_Claim$json = const {
   '1': 'Claim',
   '2': const [
@@ -49,6 +58,7 @@ const Identity_Claim$json = const {
   ],
 };
 
+@$core.Deprecated('Use identityDescriptor instead')
 const Identity_MetaEntry$json = const {
   '1': 'MetaEntry',
   '2': const [
@@ -58,6 +68,7 @@ const Identity_MetaEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use identityDescriptor instead')
 const Identity_Type$json = const {
   '1': 'Type',
   '2': const [
@@ -65,6 +76,9 @@ const Identity_Type$json = const {
   ],
 };
 
+/// Descriptor for `Identity`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List identityDescriptor = $convert.base64Decode('CghJZGVudGl0eRIxCgR0eXBlGAEgASgOMh0uZHZvdGUudHlwZXMudjEuSWRlbnRpdHkuVHlwZVIEdHlwZRIUCgVhbGlhcxgCIAEoCVIFYWxpYXMSHgoKaWRlbnRpdHlJZBgDIAEoCVIKaWRlbnRpdHlJZBInCgRrZXlzGAQgAygLMhMuZHZvdGUudHlwZXMudjEuS2V5UgRrZXlzEjQKBXBlZXJzGAUgASgLMh4uZHZvdGUudHlwZXMudjEuSWRlbnRpdHkuUGVlcnNSBXBlZXJzEkYKDnJlY2VpdmVkQ2xhaW1zGAYgAygLMh4uZHZvdGUudHlwZXMudjEuSWRlbnRpdHkuQ2xhaW1SDnJlY2VpdmVkQ2xhaW1zEkIKDGlzc3VlZENsYWltcxgHIAMoCzIeLmR2b3RlLnR5cGVzLnYxLklkZW50aXR5LkNsYWltUgxpc3N1ZWRDbGFpbXMSGAoHdmVyc2lvbhgIIAEoCVIHdmVyc2lvbhIaCghiYWNrZWRVcBgJIAEoCFIIYmFja2VkVXASIAoLYW5hbHl0aWNzSUQYCiABKAlSC2FuYWx5dGljc0lEEjYKBG1ldGEYZCADKAsyIi5kdm90ZS50eXBlcy52MS5JZGVudGl0eS5NZXRhRW50cnlSBG1ldGEaggEKBVBlZXJzEjsKCGVudGl0aWVzGAEgAygLMh8uZHZvdGUudHlwZXMudjEuRW50aXR5UmVmZXJlbmNlUghlbnRpdGllcxI8CgppZGVudGl0aWVzGAIgAygLMhwuZHZvdGUudHlwZXMudjEuUGVlcklkZW50aXR5UgppZGVudGl0aWVzGlsKBUNsYWltEhQKBWluZGV4GAEgASgJUgVpbmRleBIUCgVwcm9vZhgCIAEoCVIFcHJvb2YSEgoEZGF0YRgDIAEoCVIEZGF0YRISCgR0YWdzGAQgAygJUgR0YWdzGjcKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBIhEKBFR5cGUSCQoFRUNEU0EQAA==');
+@$core.Deprecated('Use peerIdentityDescriptor instead')
 const PeerIdentity$json = const {
   '1': 'PeerIdentity',
   '2': const [
@@ -75,6 +89,7 @@ const PeerIdentity$json = const {
   '4': const [PeerIdentity_Type$json],
 };
 
+@$core.Deprecated('Use peerIdentityDescriptor instead')
 const PeerIdentity_Type$json = const {
   '1': 'Type',
   '2': const [
@@ -82,3 +97,5 @@ const PeerIdentity_Type$json = const {
   ],
 };
 
+/// Descriptor for `PeerIdentity`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List peerIdentityDescriptor = $convert.base64Decode('CgxQZWVySWRlbnRpdHkSNQoEdHlwZRgBIAEoDjIhLmR2b3RlLnR5cGVzLnYxLlBlZXJJZGVudGl0eS5UeXBlUgR0eXBlEhQKBWFsaWFzGAIgASgJUgVhbGlhcxIeCgppZGVudGl0eUlkGAMgASgJUgppZGVudGl0eUlkIhEKBFR5cGUSCQoFRUNEU0EQAA==');

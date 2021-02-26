@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: metadata/entity.proto
 //
-// @dart = 2.3
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -16,7 +16,15 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
   ;
 
   EntityMetadataStore._() : super();
-  factory EntityMetadataStore() => create();
+  factory EntityMetadataStore({
+    $core.Iterable<EntityMetadata> items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    return _result;
+  }
   factory EntityMetadataStore.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadataStore.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -28,7 +36,7 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityMetadataStore copyWith(void Function(EntityMetadataStore) updates) => super.copyWith((message) => updates(message as EntityMetadataStore)); // ignore: deprecated_member_use
+  EntityMetadataStore copyWith(void Function(EntityMetadataStore) updates) => super.copyWith((message) => updates(message as EntityMetadataStore)) as EntityMetadataStore; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadataStore create() => EntityMetadataStore._();
@@ -50,7 +58,19 @@ class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
   ;
 
   EntityMetadata_VotingProcesses._() : super();
-  factory EntityMetadata_VotingProcesses() => create();
+  factory EntityMetadata_VotingProcesses({
+    $core.Iterable<$core.String> active,
+    $core.Iterable<$core.String> ended,
+  }) {
+    final _result = create();
+    if (active != null) {
+      _result.active.addAll(active);
+    }
+    if (ended != null) {
+      _result.ended.addAll(ended);
+    }
+    return _result;
+  }
   factory EntityMetadata_VotingProcesses.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_VotingProcesses.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -62,7 +82,7 @@ class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityMetadata_VotingProcesses copyWith(void Function(EntityMetadata_VotingProcesses) updates) => super.copyWith((message) => updates(message as EntityMetadata_VotingProcesses)); // ignore: deprecated_member_use
+  EntityMetadata_VotingProcesses copyWith(void Function(EntityMetadata_VotingProcesses) updates) => super.copyWith((message) => updates(message as EntityMetadata_VotingProcesses)) as EntityMetadata_VotingProcesses; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_VotingProcesses create() => EntityMetadata_VotingProcesses._();
@@ -87,7 +107,19 @@ class EntityMetadata_Media extends $pb.GeneratedMessage {
   ;
 
   EntityMetadata_Media._() : super();
-  factory EntityMetadata_Media() => create();
+  factory EntityMetadata_Media({
+    $core.String avatar,
+    $core.String header,
+  }) {
+    final _result = create();
+    if (avatar != null) {
+      _result.avatar = avatar;
+    }
+    if (header != null) {
+      _result.header = header;
+    }
+    return _result;
+  }
   factory EntityMetadata_Media.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_Media.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -99,7 +131,7 @@ class EntityMetadata_Media extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityMetadata_Media copyWith(void Function(EntityMetadata_Media) updates) => super.copyWith((message) => updates(message as EntityMetadata_Media)); // ignore: deprecated_member_use
+  EntityMetadata_Media copyWith(void Function(EntityMetadata_Media) updates) => super.copyWith((message) => updates(message as EntityMetadata_Media)) as EntityMetadata_Media; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Media create() => EntityMetadata_Media._();
@@ -139,7 +171,31 @@ class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
   ;
 
   EntityMetadata_Action_ImageSource._() : super();
-  factory EntityMetadata_Action_ImageSource() => create();
+  factory EntityMetadata_Action_ImageSource({
+    $core.String type,
+    $core.String name,
+    $core.String orientation,
+    $core.String overlay,
+    $core.Map<$core.String, $core.String> caption,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (orientation != null) {
+      _result.orientation = orientation;
+    }
+    if (overlay != null) {
+      _result.overlay = overlay;
+    }
+    if (caption != null) {
+      _result.caption.addAll(caption);
+    }
+    return _result;
+  }
   factory EntityMetadata_Action_ImageSource.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_Action_ImageSource.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -151,7 +207,7 @@ class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityMetadata_Action_ImageSource copyWith(void Function(EntityMetadata_Action_ImageSource) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action_ImageSource)); // ignore: deprecated_member_use
+  EntityMetadata_Action_ImageSource copyWith(void Function(EntityMetadata_Action_ImageSource) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action_ImageSource)) as EntityMetadata_Action_ImageSource; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Action_ImageSource create() => EntityMetadata_Action_ImageSource._();
@@ -213,7 +269,35 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
   ;
 
   EntityMetadata_Action._() : super();
-  factory EntityMetadata_Action() => create();
+  factory EntityMetadata_Action({
+    $core.String type,
+    $core.Map<$core.String, $core.String> name,
+    $core.String visible,
+    $core.String url,
+    $core.Iterable<EntityMetadata_Action_ImageSource> imageSources,
+    $core.String actionKey,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (name != null) {
+      _result.name.addAll(name);
+    }
+    if (visible != null) {
+      _result.visible = visible;
+    }
+    if (url != null) {
+      _result.url = url;
+    }
+    if (imageSources != null) {
+      _result.imageSources.addAll(imageSources);
+    }
+    if (actionKey != null) {
+      _result.actionKey = actionKey;
+    }
+    return _result;
+  }
   factory EntityMetadata_Action.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata_Action.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -225,7 +309,7 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityMetadata_Action copyWith(void Function(EntityMetadata_Action) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action)); // ignore: deprecated_member_use
+  EntityMetadata_Action copyWith(void Function(EntityMetadata_Action) updates) => super.copyWith((message) => updates(message as EntityMetadata_Action)) as EntityMetadata_Action; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Action create() => EntityMetadata_Action._();
@@ -297,7 +381,63 @@ class EntityMetadata extends $pb.GeneratedMessage {
   ;
 
   EntityMetadata._() : super();
-  factory EntityMetadata() => create();
+  factory EntityMetadata({
+    $core.String version,
+    $core.Iterable<$core.String> languages,
+    $core.Map<$core.String, $core.String> name,
+    $core.Map<$core.String, $core.String> description,
+    EntityMetadata_VotingProcesses votingProcesses,
+    $core.Map<$core.String, $core.String> newsFeed,
+    EntityMetadata_Media media,
+    $core.Iterable<EntityMetadata_Action> actions,
+    $core.Iterable<EntityReference> bootEntities,
+    $core.Iterable<EntityReference> fallbackBootNodeEntities,
+    $core.Iterable<EntityReference> trustedEntities,
+    $core.Iterable<EntityReference> censusServiceManagedEntities,
+    $core.Map<$core.String, $core.String> meta,
+  }) {
+    final _result = create();
+    if (version != null) {
+      _result.version = version;
+    }
+    if (languages != null) {
+      _result.languages.addAll(languages);
+    }
+    if (name != null) {
+      _result.name.addAll(name);
+    }
+    if (description != null) {
+      _result.description.addAll(description);
+    }
+    if (votingProcesses != null) {
+      _result.votingProcesses = votingProcesses;
+    }
+    if (newsFeed != null) {
+      _result.newsFeed.addAll(newsFeed);
+    }
+    if (media != null) {
+      _result.media = media;
+    }
+    if (actions != null) {
+      _result.actions.addAll(actions);
+    }
+    if (bootEntities != null) {
+      _result.bootEntities.addAll(bootEntities);
+    }
+    if (fallbackBootNodeEntities != null) {
+      _result.fallbackBootNodeEntities.addAll(fallbackBootNodeEntities);
+    }
+    if (trustedEntities != null) {
+      _result.trustedEntities.addAll(trustedEntities);
+    }
+    if (censusServiceManagedEntities != null) {
+      _result.censusServiceManagedEntities.addAll(censusServiceManagedEntities);
+    }
+    if (meta != null) {
+      _result.meta.addAll(meta);
+    }
+    return _result;
+  }
   factory EntityMetadata.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityMetadata.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -309,7 +449,7 @@ class EntityMetadata extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityMetadata copyWith(void Function(EntityMetadata) updates) => super.copyWith((message) => updates(message as EntityMetadata)); // ignore: deprecated_member_use
+  EntityMetadata copyWith(void Function(EntityMetadata) updates) => super.copyWith((message) => updates(message as EntityMetadata)) as EntityMetadata; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityMetadata create() => EntityMetadata._();
@@ -389,7 +529,19 @@ class EntityReference extends $pb.GeneratedMessage {
   ;
 
   EntityReference._() : super();
-  factory EntityReference() => create();
+  factory EntityReference({
+    $core.String entityId,
+    $core.Iterable<$core.String> entryPoints,
+  }) {
+    final _result = create();
+    if (entityId != null) {
+      _result.entityId = entityId;
+    }
+    if (entryPoints != null) {
+      _result.entryPoints.addAll(entryPoints);
+    }
+    return _result;
+  }
   factory EntityReference.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityReference.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -401,7 +553,7 @@ class EntityReference extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityReference copyWith(void Function(EntityReference) updates) => super.copyWith((message) => updates(message as EntityReference)); // ignore: deprecated_member_use
+  EntityReference copyWith(void Function(EntityReference) updates) => super.copyWith((message) => updates(message as EntityReference)) as EntityReference; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EntityReference create() => EntityReference._();
