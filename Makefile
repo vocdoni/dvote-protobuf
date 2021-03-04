@@ -90,7 +90,7 @@ build/go/models: $(COMMON_SOURCES) $(VOCHAIN_SOURCES) $(IPFSSYNC_SOURCES)
 ## dart: Generate the Dart protobuf artifacts
 dart: protoc protoc-dart-plugin build/dart
 
-build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES)
+build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) $(VOCHAIN_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
 		$(PROTOC) --experimental_allow_proto3_optional -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
