@@ -24,12 +24,16 @@ enum TxType {
 
 message Tx {
 	oneof payload {
-		VoteEnvelope vote = 2;
-		NewProcessTx newProcess = 3;
-		AdminTx admin = 4;
-		SetProcessTx setProcess = 5;
+		VoteEnvelope vote = 1;
+		NewProcessTx newProcess = 2;
+		AdminTx admin = 3;
+		SetProcessTx setProcess = 4;
 	}
-	optional bytes signature = 1;
+}
+
+message SignedTx {
+	bytes tx = 1; // The bytes produced by Marshaling a Tx{} message
+	optional bytes signature = 2; // The signature for the tx bytes
 }
 
 message NewProcessTx {
