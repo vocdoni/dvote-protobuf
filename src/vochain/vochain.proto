@@ -33,7 +33,10 @@ message Tx {
 
 message SignedTx {
 	bytes tx = 1; // The bytes produced by Marshaling a Tx{} message
-	optional bytes signature = 2; // The signature for the tx bytes
+	optional bytes signature = 2; // The signature for the tx bytes. 
+	// signature is only required in those transactions that actually need signature.
+        // I.e zk-Snarks based transactions won't needed, however the transaction should use
+        // this message type in order to preserve consistency on the Vochain
 }
 
 message NewProcessTx {

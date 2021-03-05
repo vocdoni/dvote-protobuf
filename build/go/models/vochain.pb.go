@@ -343,7 +343,7 @@ type SignedTx struct {
 	unknownFields protoimpl.UnknownFields
 
 	Tx        []byte `protobuf:"bytes,1,opt,name=tx,proto3" json:"tx,omitempty"`                     // The bytes produced by Marshaling a Tx{} message
-	Signature []byte `protobuf:"bytes,2,opt,name=signature,proto3,oneof" json:"signature,omitempty"` // The signature for the tx bytes
+	Signature []byte `protobuf:"bytes,2,opt,name=signature,proto3,oneof" json:"signature,omitempty"` // The signature for the tx bytes.
 }
 
 func (x *SignedTx) Reset() {
