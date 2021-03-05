@@ -100,10 +100,10 @@ build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) $(VOCH
 ## js: Generate the Javascript protobuf artifacts
 js: protoc build/js
 
-build/js: $(COMMON_SOURCES)
+build/js: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
-		$(PROTOC) -I=$(PWD)/src --js_out=import_style=commonjs,binary:$@ $(PWD)/$$f ; \
+		$(PROTOC) -I=$(PWD)/src --experimental_allow_proto3_optional --js_out=import_style=commonjs,binary:$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
