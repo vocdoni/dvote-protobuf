@@ -26,34 +26,29 @@ enum Tx_Payload {
 
 class Tx extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Tx_Payload> _Tx_PayloadByTag = {
-    2 : Tx_Payload.vote,
-    3 : Tx_Payload.newProcess,
-    4 : Tx_Payload.admin,
-    5 : Tx_Payload.setProcess,
+    1 : Tx_Payload.vote,
+    2 : Tx_Payload.newProcess,
+    3 : Tx_Payload.admin,
+    4 : Tx_Payload.setProcess,
     0 : Tx_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Tx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5])
-    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
-    ..aOM<$0.VoteEnvelope>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vote', subBuilder: $0.VoteEnvelope.create)
-    ..aOM<NewProcessTx>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newProcess', protoName: 'newProcess', subBuilder: NewProcessTx.create)
-    ..aOM<AdminTx>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'admin', subBuilder: AdminTx.create)
-    ..aOM<SetProcessTx>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setProcess', protoName: 'setProcess', subBuilder: SetProcessTx.create)
+    ..oo(0, [1, 2, 3, 4])
+    ..aOM<$0.VoteEnvelope>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vote', subBuilder: $0.VoteEnvelope.create)
+    ..aOM<NewProcessTx>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newProcess', protoName: 'newProcess', subBuilder: NewProcessTx.create)
+    ..aOM<AdminTx>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'admin', subBuilder: AdminTx.create)
+    ..aOM<SetProcessTx>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setProcess', protoName: 'setProcess', subBuilder: SetProcessTx.create)
     ..hasRequiredFields = false
   ;
 
   Tx._() : super();
   factory Tx({
-    $core.List<$core.int> signature,
     $0.VoteEnvelope vote,
     NewProcessTx newProcess,
     AdminTx admin,
     SetProcessTx setProcess,
   }) {
     final _result = create();
-    if (signature != null) {
-      _result.signature = signature;
-    }
     if (vote != null) {
       _result.vote = vote;
     }
@@ -93,57 +88,109 @@ class Tx extends $pb.GeneratedMessage {
   void clearPayload() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $core.List<$core.int> get signature => $_getN(0);
+  $0.VoteEnvelope get vote => $_getN(0);
   @$pb.TagNumber(1)
-  set signature($core.List<$core.int> v) { $_setBytes(0, v); }
+  set vote($0.VoteEnvelope v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasSignature() => $_has(0);
+  $core.bool hasVote() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSignature() => clearField(1);
+  void clearVote() => clearField(1);
+  @$pb.TagNumber(1)
+  $0.VoteEnvelope ensureVote() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $0.VoteEnvelope get vote => $_getN(1);
+  NewProcessTx get newProcess => $_getN(1);
   @$pb.TagNumber(2)
-  set vote($0.VoteEnvelope v) { setField(2, v); }
+  set newProcess(NewProcessTx v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasVote() => $_has(1);
+  $core.bool hasNewProcess() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVote() => clearField(2);
+  void clearNewProcess() => clearField(2);
   @$pb.TagNumber(2)
-  $0.VoteEnvelope ensureVote() => $_ensure(1);
+  NewProcessTx ensureNewProcess() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  NewProcessTx get newProcess => $_getN(2);
+  AdminTx get admin => $_getN(2);
   @$pb.TagNumber(3)
-  set newProcess(NewProcessTx v) { setField(3, v); }
+  set admin(AdminTx v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasNewProcess() => $_has(2);
+  $core.bool hasAdmin() => $_has(2);
   @$pb.TagNumber(3)
-  void clearNewProcess() => clearField(3);
+  void clearAdmin() => clearField(3);
   @$pb.TagNumber(3)
-  NewProcessTx ensureNewProcess() => $_ensure(2);
+  AdminTx ensureAdmin() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  AdminTx get admin => $_getN(3);
+  SetProcessTx get setProcess => $_getN(3);
   @$pb.TagNumber(4)
-  set admin(AdminTx v) { setField(4, v); }
+  set setProcess(SetProcessTx v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasAdmin() => $_has(3);
+  $core.bool hasSetProcess() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAdmin() => clearField(4);
+  void clearSetProcess() => clearField(4);
   @$pb.TagNumber(4)
-  AdminTx ensureAdmin() => $_ensure(3);
+  SetProcessTx ensureSetProcess() => $_ensure(3);
+}
 
-  @$pb.TagNumber(5)
-  SetProcessTx get setProcess => $_getN(4);
-  @$pb.TagNumber(5)
-  set setProcess(SetProcessTx v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasSetProcess() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearSetProcess() => clearField(5);
-  @$pb.TagNumber(5)
-  SetProcessTx ensureSetProcess() => $_ensure(4);
+class SignedTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SignedTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tx', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  SignedTx._() : super();
+  factory SignedTx({
+    $core.List<$core.int> tx,
+    $core.List<$core.int> signature,
+  }) {
+    final _result = create();
+    if (tx != null) {
+      _result.tx = tx;
+    }
+    if (signature != null) {
+      _result.signature = signature;
+    }
+    return _result;
+  }
+  factory SignedTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SignedTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SignedTx clone() => SignedTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SignedTx copyWith(void Function(SignedTx) updates) => super.copyWith((message) => updates(message as SignedTx)) as SignedTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SignedTx create() => SignedTx._();
+  SignedTx createEmptyInstance() => create();
+  static $pb.PbList<SignedTx> createRepeated() => $pb.PbList<SignedTx>();
+  @$core.pragma('dart2js:noInline')
+  static SignedTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignedTx>(create);
+  static SignedTx _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get tx => $_getN(0);
+  @$pb.TagNumber(1)
+  set tx($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTx() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTx() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get signature => $_getN(1);
+  @$pb.TagNumber(2)
+  set signature($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSignature() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSignature() => clearField(2);
 }
 
 class NewProcessTx extends $pb.GeneratedMessage {

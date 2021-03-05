@@ -67,20 +67,32 @@ final $typed_data.Uint8List censusOriginDescriptor = $convert.base64Decode('CgxD
 const Tx$json = const {
   '1': 'Tx',
   '2': const [
-    const {'1': 'vote', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.VoteEnvelope', '9': 0, '10': 'vote'},
-    const {'1': 'newProcess', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.NewProcessTx', '9': 0, '10': 'newProcess'},
-    const {'1': 'admin', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.AdminTx', '9': 0, '10': 'admin'},
-    const {'1': 'setProcess', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.SetProcessTx', '9': 0, '10': 'setProcess'},
-    const {'1': 'signature', '3': 1, '4': 1, '5': 12, '9': 1, '10': 'signature', '17': true},
+    const {'1': 'vote', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v1.VoteEnvelope', '9': 0, '10': 'vote'},
+    const {'1': 'newProcess', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.NewProcessTx', '9': 0, '10': 'newProcess'},
+    const {'1': 'admin', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.AdminTx', '9': 0, '10': 'admin'},
+    const {'1': 'setProcess', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.SetProcessTx', '9': 0, '10': 'setProcess'},
   ],
   '8': const [
     const {'1': 'payload'},
-    const {'1': '_signature'},
   ],
 };
 
 /// Descriptor for `Tx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List txDescriptor = $convert.base64Decode('CgJUeBIyCgR2b3RlGAIgASgLMhwuZHZvdGUudHlwZXMudjEuVm90ZUVudmVsb3BlSABSBHZvdGUSPgoKbmV3UHJvY2VzcxgDIAEoCzIcLmR2b3RlLnR5cGVzLnYxLk5ld1Byb2Nlc3NUeEgAUgpuZXdQcm9jZXNzEi8KBWFkbWluGAQgASgLMhcuZHZvdGUudHlwZXMudjEuQWRtaW5UeEgAUgVhZG1pbhI+CgpzZXRQcm9jZXNzGAUgASgLMhwuZHZvdGUudHlwZXMudjEuU2V0UHJvY2Vzc1R4SABSCnNldFByb2Nlc3MSIQoJc2lnbmF0dXJlGAEgASgMSAFSCXNpZ25hdHVyZYgBAUIJCgdwYXlsb2FkQgwKCl9zaWduYXR1cmU=');
+final $typed_data.Uint8List txDescriptor = $convert.base64Decode('CgJUeBIyCgR2b3RlGAEgASgLMhwuZHZvdGUudHlwZXMudjEuVm90ZUVudmVsb3BlSABSBHZvdGUSPgoKbmV3UHJvY2VzcxgCIAEoCzIcLmR2b3RlLnR5cGVzLnYxLk5ld1Byb2Nlc3NUeEgAUgpuZXdQcm9jZXNzEi8KBWFkbWluGAMgASgLMhcuZHZvdGUudHlwZXMudjEuQWRtaW5UeEgAUgVhZG1pbhI+CgpzZXRQcm9jZXNzGAQgASgLMhwuZHZvdGUudHlwZXMudjEuU2V0UHJvY2Vzc1R4SABSCnNldFByb2Nlc3NCCQoHcGF5bG9hZA==');
+@$core.Deprecated('Use signedTxDescriptor instead')
+const SignedTx$json = const {
+  '1': 'SignedTx',
+  '2': const [
+    const {'1': 'tx', '3': 1, '4': 1, '5': 12, '10': 'tx'},
+    const {'1': 'signature', '3': 2, '4': 1, '5': 12, '9': 0, '10': 'signature', '17': true},
+  ],
+  '8': const [
+    const {'1': '_signature'},
+  ],
+};
+
+/// Descriptor for `SignedTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List signedTxDescriptor = $convert.base64Decode('CghTaWduZWRUeBIOCgJ0eBgBIAEoDFICdHgSIQoJc2lnbmF0dXJlGAIgASgMSABSCXNpZ25hdHVyZYgBAUIMCgpfc2lnbmF0dXJl');
 @$core.Deprecated('Use newProcessTxDescriptor instead')
 const NewProcessTx$json = const {
   '1': 'NewProcessTx',
