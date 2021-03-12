@@ -11,6 +11,7 @@ IPFSSYNC_SOURCES=$(wildcard src/ipfsSync/*.proto)
 
 PROTOC?=$(shell which protoc)
 $(if $(PROTOC),,$(eval PROTOC=bin/protoc))
+PROTOC_TS_PLUGIN := ./node_modules/.bin/protoc-gen-ts_proto
 
 define install_protoc
 	@if [ "$(PROTOC)" == "bin/protoc" -a ! -x bin/protoc ]; then \
@@ -40,6 +41,11 @@ define install_protoc_go
 	fi
 endef
 
+define install_protoc_ts
+	@npm install ts-proto
+	rm package.json package-lock.json
+endef
+
 #-----------------------------------------------------------------------
 # HELP
 #-----------------------------------------------------------------------
@@ -57,11 +63,11 @@ help:
 ## :
 
 ## init: Install external dependencies
-init: protoc protoc-dart-plugin protoc-go-plugin
+init: protoc protoc-dart-plugin protoc-ts-plugin protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
-	rm -Rf build bin include
+	rm -Rf build bin include node_modules
 
 ## :
 
@@ -71,7 +77,7 @@ clean:
 
 
 ## all: Generate the source code for all supported languages
-all: protoc build/dart build/js build/go/models
+all: protoc build/dart build/ts build/go/models
 
 ## golang: Generate the Golang protobuf artifacts
 golang: protoc protoc-go-plugin build/go/models
@@ -97,13 +103,14 @@ build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) $(VOCH
 	done
 	@touch $@
 
-## js: Generate the Javascript protobuf artifacts
-js: protoc build/js
+## js: Generate the TypeScript protobuf artifacts
+js: protoc protoc-ts-plugin build/ts
+ts: js
 
-build/js: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
+build/ts: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
-		$(PROTOC) -I=$(PWD)/src --experimental_allow_proto3_optional --js_out=import_style=commonjs,binary:$@ $(PWD)/$$f ; \
+		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_out=$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
@@ -121,6 +128,11 @@ protoc:
 .PHONY: protoc-dart-plugin
 protoc-dart-plugin:
 	pub global activate protoc_plugin
+
+# TS
+.PHONY: protoc-ts-plugin
+protoc-ts-plugin:
+	$(call install_protoc_ts)
 
 # GO
 .PHONY: protoc-go-plugin
