@@ -69,16 +69,12 @@ export interface VoteEnvelope {
 }
 
 export interface Proof {
-  /** Proof used for signed envelopes */
-  graviton: ProofGraviton | undefined;
-  /** Proof used for anonymous votes */
-  iden3: ProofIden3 | undefined;
-  /** Proof used on EVM census based processes */
-  ethereumStorage: ProofEthereumStorage | undefined;
-  /** Proof used by oracles to update the census of EVM processes */
-  ethereumAccount: ProofEthereumAccount | undefined;
-  /** Proof Certification Authority */
-  ca: ProofCA | undefined;
+  payload?:
+    | { $case: "graviton"; graviton: ProofGraviton }
+    | { $case: "iden3"; iden3: ProofIden3 }
+    | { $case: "ethereumStorage"; ethereumStorage: ProofEthereumStorage }
+    | { $case: "ethereumAccount"; ethereumAccount: ProofEthereumAccount }
+    | { $case: "ca"; ca: ProofCA };
 }
 
 export interface ProofGraviton {
@@ -194,8 +190,6 @@ export const VoteEnvelope = {
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromJSON(object.proof);
-    } else {
-      message.proof = undefined;
     }
     if (object.votePackage !== undefined && object.votePackage !== null) {
       message.votePackage = bytesFromBase64(object.votePackage);
@@ -249,28 +243,18 @@ export const VoteEnvelope = {
     message.encryptionKeyIndexes = [];
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
-    } else {
-      message.nonce = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = new Uint8Array();
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
-    } else {
-      message.proof = undefined;
     }
     if (object.votePackage !== undefined && object.votePackage !== null) {
       message.votePackage = object.votePackage;
-    } else {
-      message.votePackage = new Uint8Array();
     }
     if (object.nullifier !== undefined && object.nullifier !== null) {
       message.nullifier = object.nullifier;
-    } else {
-      message.nullifier = new Uint8Array();
     }
     if (
       object.encryptionKeyIndexes !== undefined &&
@@ -288,26 +272,32 @@ const baseProof: object = {};
 
 export const Proof = {
   encode(message: Proof, writer: Writer = Writer.create()): Writer {
-    if (message.graviton !== undefined) {
-      ProofGraviton.encode(message.graviton, writer.uint32(10).fork()).ldelim();
+    if (message.payload?.$case === "graviton") {
+      ProofGraviton.encode(
+        message.payload.graviton,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
-    if (message.iden3 !== undefined) {
-      ProofIden3.encode(message.iden3, writer.uint32(18).fork()).ldelim();
+    if (message.payload?.$case === "iden3") {
+      ProofIden3.encode(
+        message.payload.iden3,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
-    if (message.ethereumStorage !== undefined) {
+    if (message.payload?.$case === "ethereumStorage") {
       ProofEthereumStorage.encode(
-        message.ethereumStorage,
+        message.payload.ethereumStorage,
         writer.uint32(26).fork()
       ).ldelim();
     }
-    if (message.ethereumAccount !== undefined) {
+    if (message.payload?.$case === "ethereumAccount") {
       ProofEthereumAccount.encode(
-        message.ethereumAccount,
+        message.payload.ethereumAccount,
         writer.uint32(34).fork()
       ).ldelim();
     }
-    if (message.ca !== undefined) {
-      ProofCA.encode(message.ca, writer.uint32(42).fork()).ldelim();
+    if (message.payload?.$case === "ca") {
+      ProofCA.encode(message.payload.ca, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -320,25 +310,40 @@ export const Proof = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.graviton = ProofGraviton.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "graviton",
+            graviton: ProofGraviton.decode(reader, reader.uint32()),
+          };
           break;
         case 2:
-          message.iden3 = ProofIden3.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "iden3",
+            iden3: ProofIden3.decode(reader, reader.uint32()),
+          };
           break;
         case 3:
-          message.ethereumStorage = ProofEthereumStorage.decode(
-            reader,
-            reader.uint32()
-          );
+          message.payload = {
+            $case: "ethereumStorage",
+            ethereumStorage: ProofEthereumStorage.decode(
+              reader,
+              reader.uint32()
+            ),
+          };
           break;
         case 4:
-          message.ethereumAccount = ProofEthereumAccount.decode(
-            reader,
-            reader.uint32()
-          );
+          message.payload = {
+            $case: "ethereumAccount",
+            ethereumAccount: ProofEthereumAccount.decode(
+              reader,
+              reader.uint32()
+            ),
+          };
           break;
         case 5:
-          message.ca = ProofCA.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "ca",
+            ca: ProofCA.decode(reader, reader.uint32()),
+          };
           break;
         default:
           reader.skipType(tag & 7);
@@ -351,102 +356,121 @@ export const Proof = {
   fromJSON(object: any): Proof {
     const message = { ...baseProof } as Proof;
     if (object.graviton !== undefined && object.graviton !== null) {
-      message.graviton = ProofGraviton.fromJSON(object.graviton);
-    } else {
-      message.graviton = undefined;
+      message.payload = {
+        $case: "graviton",
+        graviton: ProofGraviton.fromJSON(object.graviton),
+      };
     }
     if (object.iden3 !== undefined && object.iden3 !== null) {
-      message.iden3 = ProofIden3.fromJSON(object.iden3);
-    } else {
-      message.iden3 = undefined;
+      message.payload = {
+        $case: "iden3",
+        iden3: ProofIden3.fromJSON(object.iden3),
+      };
     }
     if (
       object.ethereumStorage !== undefined &&
       object.ethereumStorage !== null
     ) {
-      message.ethereumStorage = ProofEthereumStorage.fromJSON(
-        object.ethereumStorage
-      );
-    } else {
-      message.ethereumStorage = undefined;
+      message.payload = {
+        $case: "ethereumStorage",
+        ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage),
+      };
     }
     if (
       object.ethereumAccount !== undefined &&
       object.ethereumAccount !== null
     ) {
-      message.ethereumAccount = ProofEthereumAccount.fromJSON(
-        object.ethereumAccount
-      );
-    } else {
-      message.ethereumAccount = undefined;
+      message.payload = {
+        $case: "ethereumAccount",
+        ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount),
+      };
     }
     if (object.ca !== undefined && object.ca !== null) {
-      message.ca = ProofCA.fromJSON(object.ca);
-    } else {
-      message.ca = undefined;
+      message.payload = { $case: "ca", ca: ProofCA.fromJSON(object.ca) };
     }
     return message;
   },
 
   toJSON(message: Proof): unknown {
     const obj: any = {};
-    message.graviton !== undefined &&
-      (obj.graviton = message.graviton
-        ? ProofGraviton.toJSON(message.graviton)
+    message.payload?.$case === "graviton" &&
+      (obj.graviton = message.payload?.graviton
+        ? ProofGraviton.toJSON(message.payload?.graviton)
         : undefined);
-    message.iden3 !== undefined &&
-      (obj.iden3 = message.iden3
-        ? ProofIden3.toJSON(message.iden3)
+    message.payload?.$case === "iden3" &&
+      (obj.iden3 = message.payload?.iden3
+        ? ProofIden3.toJSON(message.payload?.iden3)
         : undefined);
-    message.ethereumStorage !== undefined &&
-      (obj.ethereumStorage = message.ethereumStorage
-        ? ProofEthereumStorage.toJSON(message.ethereumStorage)
+    message.payload?.$case === "ethereumStorage" &&
+      (obj.ethereumStorage = message.payload?.ethereumStorage
+        ? ProofEthereumStorage.toJSON(message.payload?.ethereumStorage)
         : undefined);
-    message.ethereumAccount !== undefined &&
-      (obj.ethereumAccount = message.ethereumAccount
-        ? ProofEthereumAccount.toJSON(message.ethereumAccount)
+    message.payload?.$case === "ethereumAccount" &&
+      (obj.ethereumAccount = message.payload?.ethereumAccount
+        ? ProofEthereumAccount.toJSON(message.payload?.ethereumAccount)
         : undefined);
-    message.ca !== undefined &&
-      (obj.ca = message.ca ? ProofCA.toJSON(message.ca) : undefined);
+    message.payload?.$case === "ca" &&
+      (obj.ca = message.payload?.ca
+        ? ProofCA.toJSON(message.payload?.ca)
+        : undefined);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Proof>): Proof {
     const message = { ...baseProof } as Proof;
-    if (object.graviton !== undefined && object.graviton !== null) {
-      message.graviton = ProofGraviton.fromPartial(object.graviton);
-    } else {
-      message.graviton = undefined;
-    }
-    if (object.iden3 !== undefined && object.iden3 !== null) {
-      message.iden3 = ProofIden3.fromPartial(object.iden3);
-    } else {
-      message.iden3 = undefined;
+    if (
+      object.payload?.$case === "graviton" &&
+      object.payload?.graviton !== undefined &&
+      object.payload?.graviton !== null
+    ) {
+      message.payload = {
+        $case: "graviton",
+        graviton: ProofGraviton.fromPartial(object.payload.graviton),
+      };
     }
     if (
-      object.ethereumStorage !== undefined &&
-      object.ethereumStorage !== null
+      object.payload?.$case === "iden3" &&
+      object.payload?.iden3 !== undefined &&
+      object.payload?.iden3 !== null
     ) {
-      message.ethereumStorage = ProofEthereumStorage.fromPartial(
-        object.ethereumStorage
-      );
-    } else {
-      message.ethereumStorage = undefined;
+      message.payload = {
+        $case: "iden3",
+        iden3: ProofIden3.fromPartial(object.payload.iden3),
+      };
     }
     if (
-      object.ethereumAccount !== undefined &&
-      object.ethereumAccount !== null
+      object.payload?.$case === "ethereumStorage" &&
+      object.payload?.ethereumStorage !== undefined &&
+      object.payload?.ethereumStorage !== null
     ) {
-      message.ethereumAccount = ProofEthereumAccount.fromPartial(
-        object.ethereumAccount
-      );
-    } else {
-      message.ethereumAccount = undefined;
+      message.payload = {
+        $case: "ethereumStorage",
+        ethereumStorage: ProofEthereumStorage.fromPartial(
+          object.payload.ethereumStorage
+        ),
+      };
     }
-    if (object.ca !== undefined && object.ca !== null) {
-      message.ca = ProofCA.fromPartial(object.ca);
-    } else {
-      message.ca = undefined;
+    if (
+      object.payload?.$case === "ethereumAccount" &&
+      object.payload?.ethereumAccount !== undefined &&
+      object.payload?.ethereumAccount !== null
+    ) {
+      message.payload = {
+        $case: "ethereumAccount",
+        ethereumAccount: ProofEthereumAccount.fromPartial(
+          object.payload.ethereumAccount
+        ),
+      };
+    }
+    if (
+      object.payload?.$case === "ca" &&
+      object.payload?.ca !== undefined &&
+      object.payload?.ca !== null
+    ) {
+      message.payload = {
+        $case: "ca",
+        ca: ProofCA.fromPartial(object.payload.ca),
+      };
     }
     return message;
   },
@@ -501,8 +525,6 @@ export const ProofGraviton = {
     const message = { ...baseProofGraviton } as ProofGraviton;
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
-    } else {
-      message.siblings = new Uint8Array();
     }
     return message;
   },
@@ -557,8 +579,6 @@ export const ProofIden3 = {
     const message = { ...baseProofIden3 } as ProofIden3;
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
-    } else {
-      message.siblings = new Uint8Array();
     }
     return message;
   },
@@ -608,13 +628,9 @@ export const ProofCA = {
     const message = { ...baseProofCA } as ProofCA;
     if (object.type !== undefined && object.type !== null) {
       message.type = signatureTypeFromJSON(object.type);
-    } else {
-      message.type = 0;
     }
     if (object.bundle !== undefined && object.bundle !== null) {
       message.bundle = CAbundle.fromJSON(object.bundle);
-    } else {
-      message.bundle = undefined;
     }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = bytesFromBase64(object.signature);
@@ -641,18 +657,12 @@ export const ProofCA = {
     const message = { ...baseProofCA } as ProofCA;
     if (object.type !== undefined && object.type !== null) {
       message.type = object.type;
-    } else {
-      message.type = 0;
     }
     if (object.bundle !== undefined && object.bundle !== null) {
       message.bundle = CAbundle.fromPartial(object.bundle);
-    } else {
-      message.bundle = undefined;
     }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = object.signature;
-    } else {
-      message.signature = new Uint8Array();
     }
     return message;
   },
@@ -720,13 +730,9 @@ export const CAbundle = {
     const message = { ...baseCAbundle } as CAbundle;
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = new Uint8Array();
     }
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
-    } else {
-      message.address = new Uint8Array();
     }
     return message;
   },
@@ -818,13 +824,9 @@ export const ProofEthereumStorage = {
     message.siblings = [];
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
-    } else {
-      message.key = new Uint8Array();
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
-    } else {
-      message.value = new Uint8Array();
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
@@ -949,23 +951,15 @@ export const ProofEthereumAccount = {
     message.siblings = [];
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
-    } else {
-      message.nonce = new Uint8Array();
     }
     if (object.balance !== undefined && object.balance !== null) {
       message.balance = object.balance;
-    } else {
-      message.balance = new Uint8Array();
     }
     if (object.storageHash !== undefined && object.storageHash !== null) {
       message.storageHash = object.storageHash;
-    } else {
-      message.storageHash = new Uint8Array();
     }
     if (object.codeHash !== undefined && object.codeHash !== null) {
       message.codeHash = object.codeHash;
-    } else {
-      message.codeHash = new Uint8Array();
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
@@ -1016,6 +1010,10 @@ export type DeepPartial<T> = T extends Builtin
   ? Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;

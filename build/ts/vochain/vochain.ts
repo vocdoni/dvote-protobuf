@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { VoteEnvelope, Proof } from "../common/vote";
+import { Proof, VoteEnvelope } from "../common/vote";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -234,10 +234,11 @@ export function censusOriginToJSON(object: CensusOrigin): string {
 }
 
 export interface Tx {
-  vote: VoteEnvelope | undefined;
-  newProcess: NewProcessTx | undefined;
-  admin: AdminTx | undefined;
-  setProcess: SetProcessTx | undefined;
+  payload?:
+    | { $case: "vote"; vote: VoteEnvelope }
+    | { $case: "newProcess"; newProcess: NewProcessTx }
+    | { $case: "admin"; admin: AdminTx }
+    | { $case: "setProcess"; setProcess: SetProcessTx };
 }
 
 export interface SignedTx {
@@ -411,21 +412,24 @@ const baseTx: object = {};
 
 export const Tx = {
   encode(message: Tx, writer: Writer = Writer.create()): Writer {
-    if (message.vote !== undefined) {
-      VoteEnvelope.encode(message.vote, writer.uint32(10).fork()).ldelim();
+    if (message.payload?.$case === "vote") {
+      VoteEnvelope.encode(
+        message.payload.vote,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
-    if (message.newProcess !== undefined) {
+    if (message.payload?.$case === "newProcess") {
       NewProcessTx.encode(
-        message.newProcess,
+        message.payload.newProcess,
         writer.uint32(18).fork()
       ).ldelim();
     }
-    if (message.admin !== undefined) {
-      AdminTx.encode(message.admin, writer.uint32(26).fork()).ldelim();
+    if (message.payload?.$case === "admin") {
+      AdminTx.encode(message.payload.admin, writer.uint32(26).fork()).ldelim();
     }
-    if (message.setProcess !== undefined) {
+    if (message.payload?.$case === "setProcess") {
       SetProcessTx.encode(
-        message.setProcess,
+        message.payload.setProcess,
         writer.uint32(34).fork()
       ).ldelim();
     }
@@ -440,16 +444,28 @@ export const Tx = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.vote = VoteEnvelope.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "vote",
+            vote: VoteEnvelope.decode(reader, reader.uint32()),
+          };
           break;
         case 2:
-          message.newProcess = NewProcessTx.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "newProcess",
+            newProcess: NewProcessTx.decode(reader, reader.uint32()),
+          };
           break;
         case 3:
-          message.admin = AdminTx.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "admin",
+            admin: AdminTx.decode(reader, reader.uint32()),
+          };
           break;
         case 4:
-          message.setProcess = SetProcessTx.decode(reader, reader.uint32());
+          message.payload = {
+            $case: "setProcess",
+            setProcess: SetProcessTx.decode(reader, reader.uint32()),
+          };
           break;
         default:
           reader.skipType(tag & 7);
@@ -462,66 +478,94 @@ export const Tx = {
   fromJSON(object: any): Tx {
     const message = { ...baseTx } as Tx;
     if (object.vote !== undefined && object.vote !== null) {
-      message.vote = VoteEnvelope.fromJSON(object.vote);
-    } else {
-      message.vote = undefined;
+      message.payload = {
+        $case: "vote",
+        vote: VoteEnvelope.fromJSON(object.vote),
+      };
     }
     if (object.newProcess !== undefined && object.newProcess !== null) {
-      message.newProcess = NewProcessTx.fromJSON(object.newProcess);
-    } else {
-      message.newProcess = undefined;
+      message.payload = {
+        $case: "newProcess",
+        newProcess: NewProcessTx.fromJSON(object.newProcess),
+      };
     }
     if (object.admin !== undefined && object.admin !== null) {
-      message.admin = AdminTx.fromJSON(object.admin);
-    } else {
-      message.admin = undefined;
+      message.payload = {
+        $case: "admin",
+        admin: AdminTx.fromJSON(object.admin),
+      };
     }
     if (object.setProcess !== undefined && object.setProcess !== null) {
-      message.setProcess = SetProcessTx.fromJSON(object.setProcess);
-    } else {
-      message.setProcess = undefined;
+      message.payload = {
+        $case: "setProcess",
+        setProcess: SetProcessTx.fromJSON(object.setProcess),
+      };
     }
     return message;
   },
 
   toJSON(message: Tx): unknown {
     const obj: any = {};
-    message.vote !== undefined &&
-      (obj.vote = message.vote ? VoteEnvelope.toJSON(message.vote) : undefined);
-    message.newProcess !== undefined &&
-      (obj.newProcess = message.newProcess
-        ? NewProcessTx.toJSON(message.newProcess)
+    message.payload?.$case === "vote" &&
+      (obj.vote = message.payload?.vote
+        ? VoteEnvelope.toJSON(message.payload?.vote)
         : undefined);
-    message.admin !== undefined &&
-      (obj.admin = message.admin ? AdminTx.toJSON(message.admin) : undefined);
-    message.setProcess !== undefined &&
-      (obj.setProcess = message.setProcess
-        ? SetProcessTx.toJSON(message.setProcess)
+    message.payload?.$case === "newProcess" &&
+      (obj.newProcess = message.payload?.newProcess
+        ? NewProcessTx.toJSON(message.payload?.newProcess)
+        : undefined);
+    message.payload?.$case === "admin" &&
+      (obj.admin = message.payload?.admin
+        ? AdminTx.toJSON(message.payload?.admin)
+        : undefined);
+    message.payload?.$case === "setProcess" &&
+      (obj.setProcess = message.payload?.setProcess
+        ? SetProcessTx.toJSON(message.payload?.setProcess)
         : undefined);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Tx>): Tx {
     const message = { ...baseTx } as Tx;
-    if (object.vote !== undefined && object.vote !== null) {
-      message.vote = VoteEnvelope.fromPartial(object.vote);
-    } else {
-      message.vote = undefined;
+    if (
+      object.payload?.$case === "vote" &&
+      object.payload?.vote !== undefined &&
+      object.payload?.vote !== null
+    ) {
+      message.payload = {
+        $case: "vote",
+        vote: VoteEnvelope.fromPartial(object.payload.vote),
+      };
     }
-    if (object.newProcess !== undefined && object.newProcess !== null) {
-      message.newProcess = NewProcessTx.fromPartial(object.newProcess);
-    } else {
-      message.newProcess = undefined;
+    if (
+      object.payload?.$case === "newProcess" &&
+      object.payload?.newProcess !== undefined &&
+      object.payload?.newProcess !== null
+    ) {
+      message.payload = {
+        $case: "newProcess",
+        newProcess: NewProcessTx.fromPartial(object.payload.newProcess),
+      };
     }
-    if (object.admin !== undefined && object.admin !== null) {
-      message.admin = AdminTx.fromPartial(object.admin);
-    } else {
-      message.admin = undefined;
+    if (
+      object.payload?.$case === "admin" &&
+      object.payload?.admin !== undefined &&
+      object.payload?.admin !== null
+    ) {
+      message.payload = {
+        $case: "admin",
+        admin: AdminTx.fromPartial(object.payload.admin),
+      };
     }
-    if (object.setProcess !== undefined && object.setProcess !== null) {
-      message.setProcess = SetProcessTx.fromPartial(object.setProcess);
-    } else {
-      message.setProcess = undefined;
+    if (
+      object.payload?.$case === "setProcess" &&
+      object.payload?.setProcess !== undefined &&
+      object.payload?.setProcess !== null
+    ) {
+      message.payload = {
+        $case: "setProcess",
+        setProcess: SetProcessTx.fromPartial(object.payload.setProcess),
+      };
     }
     return message;
   },
@@ -590,13 +634,9 @@ export const SignedTx = {
     const message = { ...baseSignedTx } as SignedTx;
     if (object.tx !== undefined && object.tx !== null) {
       message.tx = object.tx;
-    } else {
-      message.tx = new Uint8Array();
     }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = object.signature;
-    } else {
-      message.signature = undefined;
     }
     return message;
   },
@@ -646,16 +686,12 @@ export const NewProcessTx = {
     const message = { ...baseNewProcessTx } as NewProcessTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = txTypeFromJSON(object.txtype);
-    } else {
-      message.txtype = 0;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = bytesFromBase64(object.nonce);
     }
     if (object.process !== undefined && object.process !== null) {
       message.process = Process.fromJSON(object.process);
-    } else {
-      message.process = undefined;
     }
     return message;
   },
@@ -678,18 +714,12 @@ export const NewProcessTx = {
     const message = { ...baseNewProcessTx } as NewProcessTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = object.txtype;
-    } else {
-      message.txtype = 0;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
-    } else {
-      message.nonce = new Uint8Array();
     }
     if (object.process !== undefined && object.process !== null) {
       message.process = Process.fromPartial(object.process);
-    } else {
-      message.process = undefined;
     }
     return message;
   },
@@ -775,8 +805,6 @@ export const SetProcessTx = {
     const message = { ...baseSetProcessTx } as SetProcessTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = txTypeFromJSON(object.txtype);
-    } else {
-      message.txtype = 0;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = bytesFromBase64(object.nonce);
@@ -786,31 +814,21 @@ export const SetProcessTx = {
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = processStatusFromJSON(object.status);
-    } else {
-      message.status = undefined;
     }
     if (object.questionIndex !== undefined && object.questionIndex !== null) {
       message.questionIndex = Number(object.questionIndex);
-    } else {
-      message.questionIndex = undefined;
     }
     if (object.censusRoot !== undefined && object.censusRoot !== null) {
       message.censusRoot = bytesFromBase64(object.censusRoot);
     }
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = String(object.censusURI);
-    } else {
-      message.censusURI = undefined;
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromJSON(object.proof);
-    } else {
-      message.proof = undefined;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromJSON(object.results);
-    } else {
-      message.results = undefined;
     }
     return message;
   },
@@ -852,48 +870,30 @@ export const SetProcessTx = {
     const message = { ...baseSetProcessTx } as SetProcessTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = object.txtype;
-    } else {
-      message.txtype = 0;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
-    } else {
-      message.nonce = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = new Uint8Array();
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;
-    } else {
-      message.status = undefined;
     }
     if (object.questionIndex !== undefined && object.questionIndex !== null) {
       message.questionIndex = object.questionIndex;
-    } else {
-      message.questionIndex = undefined;
     }
     if (object.censusRoot !== undefined && object.censusRoot !== null) {
       message.censusRoot = object.censusRoot;
-    } else {
-      message.censusRoot = undefined;
     }
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = object.censusURI;
-    } else {
-      message.censusURI = undefined;
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
-    } else {
-      message.proof = undefined;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromPartial(object.results);
-    } else {
-      message.results = undefined;
     }
     return message;
   },
@@ -991,8 +991,6 @@ export const AdminTx = {
     const message = { ...baseAdminTx } as AdminTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = txTypeFromJSON(object.txtype);
-    } else {
-      message.txtype = 0;
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = bytesFromBase64(object.processId);
@@ -1019,13 +1017,9 @@ export const AdminTx = {
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
       message.keyIndex = Number(object.keyIndex);
-    } else {
-      message.keyIndex = undefined;
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = Number(object.power);
-    } else {
-      message.power = undefined;
     }
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = bytesFromBase64(object.publicKey);
@@ -1089,64 +1083,42 @@ export const AdminTx = {
     const message = { ...baseAdminTx } as AdminTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = object.txtype;
-    } else {
-      message.txtype = 0;
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = new Uint8Array();
     }
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
-    } else {
-      message.address = undefined;
     }
     if (object.commitmentKey !== undefined && object.commitmentKey !== null) {
       message.commitmentKey = object.commitmentKey;
-    } else {
-      message.commitmentKey = undefined;
     }
     if (
       object.encryptionPrivateKey !== undefined &&
       object.encryptionPrivateKey !== null
     ) {
       message.encryptionPrivateKey = object.encryptionPrivateKey;
-    } else {
-      message.encryptionPrivateKey = undefined;
     }
     if (
       object.encryptionPublicKey !== undefined &&
       object.encryptionPublicKey !== null
     ) {
       message.encryptionPublicKey = object.encryptionPublicKey;
-    } else {
-      message.encryptionPublicKey = undefined;
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
       message.keyIndex = object.keyIndex;
-    } else {
-      message.keyIndex = undefined;
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = object.power;
-    } else {
-      message.power = undefined;
     }
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = object.publicKey;
-    } else {
-      message.publicKey = undefined;
     }
     if (object.revealKey !== undefined && object.revealKey !== null) {
       message.revealKey = object.revealKey;
-    } else {
-      message.revealKey = undefined;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
-    } else {
-      message.nonce = new Uint8Array();
     }
     return message;
   },
@@ -1351,21 +1323,15 @@ export const Process = {
     }
     if (object.startBlock !== undefined && object.startBlock !== null) {
       message.startBlock = Number(object.startBlock);
-    } else {
-      message.startBlock = 0;
     }
     if (object.blockCount !== undefined && object.blockCount !== null) {
       message.blockCount = Number(object.blockCount);
-    } else {
-      message.blockCount = 0;
     }
     if (object.censusRoot !== undefined && object.censusRoot !== null) {
       message.censusRoot = bytesFromBase64(object.censusRoot);
     }
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = String(object.censusURI);
-    } else {
-      message.censusURI = undefined;
     }
     if (object.commitmentKeys !== undefined && object.commitmentKeys !== null) {
       for (const e of object.commitmentKeys) {
@@ -1395,13 +1361,9 @@ export const Process = {
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
       message.keyIndex = Number(object.keyIndex);
-    } else {
-      message.keyIndex = undefined;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = processStatusFromJSON(object.status);
-    } else {
-      message.status = 0;
     }
     if (
       object.paramsSignature !== undefined &&
@@ -1411,43 +1373,27 @@ export const Process = {
     }
     if (object.namespace !== undefined && object.namespace !== null) {
       message.namespace = Number(object.namespace);
-    } else {
-      message.namespace = 0;
     }
     if (object.envelopeType !== undefined && object.envelopeType !== null) {
       message.envelopeType = EnvelopeType.fromJSON(object.envelopeType);
-    } else {
-      message.envelopeType = undefined;
     }
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = ProcessMode.fromJSON(object.mode);
-    } else {
-      message.mode = undefined;
     }
     if (object.questionIndex !== undefined && object.questionIndex !== null) {
       message.questionIndex = Number(object.questionIndex);
-    } else {
-      message.questionIndex = undefined;
     }
     if (object.questionCount !== undefined && object.questionCount !== null) {
       message.questionCount = Number(object.questionCount);
-    } else {
-      message.questionCount = undefined;
     }
     if (object.voteOptions !== undefined && object.voteOptions !== null) {
       message.voteOptions = ProcessVoteOptions.fromJSON(object.voteOptions);
-    } else {
-      message.voteOptions = undefined;
     }
     if (object.censusOrigin !== undefined && object.censusOrigin !== null) {
       message.censusOrigin = censusOriginFromJSON(object.censusOrigin);
-    } else {
-      message.censusOrigin = 0;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromJSON(object.results);
-    } else {
-      message.results = undefined;
     }
     if (
       object.resultsSignatures !== undefined &&
@@ -1459,8 +1405,6 @@ export const Process = {
     }
     if (object.ethIndexSlot !== undefined && object.ethIndexSlot !== null) {
       message.ethIndexSlot = Number(object.ethIndexSlot);
-    } else {
-      message.ethIndexSlot = undefined;
     }
     return message;
   },
@@ -1552,33 +1496,21 @@ export const Process = {
     message.resultsSignatures = [];
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = new Uint8Array();
     }
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = object.entityId;
-    } else {
-      message.entityId = new Uint8Array();
     }
     if (object.startBlock !== undefined && object.startBlock !== null) {
       message.startBlock = object.startBlock;
-    } else {
-      message.startBlock = 0;
     }
     if (object.blockCount !== undefined && object.blockCount !== null) {
       message.blockCount = object.blockCount;
-    } else {
-      message.blockCount = 0;
     }
     if (object.censusRoot !== undefined && object.censusRoot !== null) {
       message.censusRoot = object.censusRoot;
-    } else {
-      message.censusRoot = new Uint8Array();
     }
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = object.censusURI;
-    } else {
-      message.censusURI = undefined;
     }
     if (object.commitmentKeys !== undefined && object.commitmentKeys !== null) {
       for (const e of object.commitmentKeys) {
@@ -1608,61 +1540,39 @@ export const Process = {
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
       message.keyIndex = object.keyIndex;
-    } else {
-      message.keyIndex = undefined;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;
-    } else {
-      message.status = 0;
     }
     if (
       object.paramsSignature !== undefined &&
       object.paramsSignature !== null
     ) {
       message.paramsSignature = object.paramsSignature;
-    } else {
-      message.paramsSignature = undefined;
     }
     if (object.namespace !== undefined && object.namespace !== null) {
       message.namespace = object.namespace;
-    } else {
-      message.namespace = 0;
     }
     if (object.envelopeType !== undefined && object.envelopeType !== null) {
       message.envelopeType = EnvelopeType.fromPartial(object.envelopeType);
-    } else {
-      message.envelopeType = undefined;
     }
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = ProcessMode.fromPartial(object.mode);
-    } else {
-      message.mode = undefined;
     }
     if (object.questionIndex !== undefined && object.questionIndex !== null) {
       message.questionIndex = object.questionIndex;
-    } else {
-      message.questionIndex = undefined;
     }
     if (object.questionCount !== undefined && object.questionCount !== null) {
       message.questionCount = object.questionCount;
-    } else {
-      message.questionCount = undefined;
     }
     if (object.voteOptions !== undefined && object.voteOptions !== null) {
       message.voteOptions = ProcessVoteOptions.fromPartial(object.voteOptions);
-    } else {
-      message.voteOptions = undefined;
     }
     if (object.censusOrigin !== undefined && object.censusOrigin !== null) {
       message.censusOrigin = object.censusOrigin;
-    } else {
-      message.censusOrigin = 0;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromPartial(object.results);
-    } else {
-      message.results = undefined;
     }
     if (
       object.resultsSignatures !== undefined &&
@@ -1674,8 +1584,6 @@ export const Process = {
     }
     if (object.ethIndexSlot !== undefined && object.ethIndexSlot !== null) {
       message.ethIndexSlot = object.ethIndexSlot;
-    } else {
-      message.ethIndexSlot = undefined;
     }
     return message;
   },
@@ -1736,23 +1644,15 @@ export const EnvelopeType = {
     const message = { ...baseEnvelopeType } as EnvelopeType;
     if (object.serial !== undefined && object.serial !== null) {
       message.serial = Boolean(object.serial);
-    } else {
-      message.serial = false;
     }
     if (object.anonymous !== undefined && object.anonymous !== null) {
       message.anonymous = Boolean(object.anonymous);
-    } else {
-      message.anonymous = false;
     }
     if (object.encryptedVotes !== undefined && object.encryptedVotes !== null) {
       message.encryptedVotes = Boolean(object.encryptedVotes);
-    } else {
-      message.encryptedVotes = false;
     }
     if (object.uniqueValues !== undefined && object.uniqueValues !== null) {
       message.uniqueValues = Boolean(object.uniqueValues);
-    } else {
-      message.uniqueValues = false;
     }
     return message;
   },
@@ -1772,23 +1672,15 @@ export const EnvelopeType = {
     const message = { ...baseEnvelopeType } as EnvelopeType;
     if (object.serial !== undefined && object.serial !== null) {
       message.serial = object.serial;
-    } else {
-      message.serial = false;
     }
     if (object.anonymous !== undefined && object.anonymous !== null) {
       message.anonymous = object.anonymous;
-    } else {
-      message.anonymous = false;
     }
     if (object.encryptedVotes !== undefined && object.encryptedVotes !== null) {
       message.encryptedVotes = object.encryptedVotes;
-    } else {
-      message.encryptedVotes = false;
     }
     if (object.uniqueValues !== undefined && object.uniqueValues !== null) {
       message.uniqueValues = object.uniqueValues;
-    } else {
-      message.uniqueValues = false;
     }
     return message;
   },
@@ -1849,26 +1741,18 @@ export const ProcessMode = {
     const message = { ...baseProcessMode } as ProcessMode;
     if (object.autoStart !== undefined && object.autoStart !== null) {
       message.autoStart = Boolean(object.autoStart);
-    } else {
-      message.autoStart = false;
     }
     if (object.interruptible !== undefined && object.interruptible !== null) {
       message.interruptible = Boolean(object.interruptible);
-    } else {
-      message.interruptible = false;
     }
     if (object.dynamicCensus !== undefined && object.dynamicCensus !== null) {
       message.dynamicCensus = Boolean(object.dynamicCensus);
-    } else {
-      message.dynamicCensus = false;
     }
     if (
       object.encryptedMetaData !== undefined &&
       object.encryptedMetaData !== null
     ) {
       message.encryptedMetaData = Boolean(object.encryptedMetaData);
-    } else {
-      message.encryptedMetaData = false;
     }
     return message;
   },
@@ -1889,26 +1773,18 @@ export const ProcessMode = {
     const message = { ...baseProcessMode } as ProcessMode;
     if (object.autoStart !== undefined && object.autoStart !== null) {
       message.autoStart = object.autoStart;
-    } else {
-      message.autoStart = false;
     }
     if (object.interruptible !== undefined && object.interruptible !== null) {
       message.interruptible = object.interruptible;
-    } else {
-      message.interruptible = false;
     }
     if (object.dynamicCensus !== undefined && object.dynamicCensus !== null) {
       message.dynamicCensus = object.dynamicCensus;
-    } else {
-      message.dynamicCensus = false;
     }
     if (
       object.encryptedMetaData !== undefined &&
       object.encryptedMetaData !== null
     ) {
       message.encryptedMetaData = object.encryptedMetaData;
-    } else {
-      message.encryptedMetaData = false;
     }
     return message;
   },
@@ -1979,31 +1855,21 @@ export const ProcessVoteOptions = {
     const message = { ...baseProcessVoteOptions } as ProcessVoteOptions;
     if (object.maxCount !== undefined && object.maxCount !== null) {
       message.maxCount = Number(object.maxCount);
-    } else {
-      message.maxCount = 0;
     }
     if (object.maxValue !== undefined && object.maxValue !== null) {
       message.maxValue = Number(object.maxValue);
-    } else {
-      message.maxValue = 0;
     }
     if (
       object.maxVoteOverwrites !== undefined &&
       object.maxVoteOverwrites !== null
     ) {
       message.maxVoteOverwrites = Number(object.maxVoteOverwrites);
-    } else {
-      message.maxVoteOverwrites = 0;
     }
     if (object.maxTotalCost !== undefined && object.maxTotalCost !== null) {
       message.maxTotalCost = Number(object.maxTotalCost);
-    } else {
-      message.maxTotalCost = 0;
     }
     if (object.costExponent !== undefined && object.costExponent !== null) {
       message.costExponent = Number(object.costExponent);
-    } else {
-      message.costExponent = 0;
     }
     return message;
   },
@@ -2025,31 +1891,21 @@ export const ProcessVoteOptions = {
     const message = { ...baseProcessVoteOptions } as ProcessVoteOptions;
     if (object.maxCount !== undefined && object.maxCount !== null) {
       message.maxCount = object.maxCount;
-    } else {
-      message.maxCount = 0;
     }
     if (object.maxValue !== undefined && object.maxValue !== null) {
       message.maxValue = object.maxValue;
-    } else {
-      message.maxValue = 0;
     }
     if (
       object.maxVoteOverwrites !== undefined &&
       object.maxVoteOverwrites !== null
     ) {
       message.maxVoteOverwrites = object.maxVoteOverwrites;
-    } else {
-      message.maxVoteOverwrites = 0;
     }
     if (object.maxTotalCost !== undefined && object.maxTotalCost !== null) {
       message.maxTotalCost = object.maxTotalCost;
-    } else {
-      message.maxTotalCost = 0;
     }
     if (object.costExponent !== undefined && object.costExponent !== null) {
       message.costExponent = object.costExponent;
-    } else {
-      message.costExponent = 0;
     }
     return message;
   },
@@ -2239,13 +2095,9 @@ export const Validator = {
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = Number(object.power);
-    } else {
-      message.power = 0;
     }
     if (object.name !== undefined && object.name !== null) {
       message.name = String(object.name);
-    } else {
-      message.name = "";
     }
     return message;
   },
@@ -2269,23 +2121,15 @@ export const Validator = {
     const message = { ...baseValidator } as Validator;
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
-    } else {
-      message.address = new Uint8Array();
     }
     if (object.pubKey !== undefined && object.pubKey !== null) {
       message.pubKey = object.pubKey;
-    } else {
-      message.pubKey = new Uint8Array();
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = object.power;
-    } else {
-      message.power = 0;
     }
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
-    } else {
-      message.name = "";
     }
     return message;
   },
@@ -2364,8 +2208,6 @@ export const Vote = {
     message.encryptionKeyIndexes = [];
     if (object.height !== undefined && object.height !== null) {
       message.height = Number(object.height);
-    } else {
-      message.height = 0;
     }
     if (object.nullifier !== undefined && object.nullifier !== null) {
       message.nullifier = bytesFromBase64(object.nullifier);
@@ -2424,23 +2266,15 @@ export const Vote = {
     message.encryptionKeyIndexes = [];
     if (object.height !== undefined && object.height !== null) {
       message.height = object.height;
-    } else {
-      message.height = 0;
     }
     if (object.nullifier !== undefined && object.nullifier !== null) {
       message.nullifier = object.nullifier;
-    } else {
-      message.nullifier = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = new Uint8Array();
     }
     if (object.votePackage !== undefined && object.votePackage !== null) {
       message.votePackage = object.votePackage;
-    } else {
-      message.votePackage = new Uint8Array();
     }
     if (
       object.encryptionKeyIndexes !== undefined &&
@@ -2452,8 +2286,6 @@ export const Vote = {
     }
     if (object.weight !== undefined && object.weight !== null) {
       message.weight = object.weight;
-    } else {
-      message.weight = new Uint8Array();
     }
     return message;
   },
@@ -2563,18 +2395,12 @@ export const TendermintHeader = {
     const message = { ...baseTendermintHeader } as TendermintHeader;
     if (object.chainId !== undefined && object.chainId !== null) {
       message.chainId = String(object.chainId);
-    } else {
-      message.chainId = "";
     }
     if (object.height !== undefined && object.height !== null) {
       message.height = Number(object.height);
-    } else {
-      message.height = 0;
     }
     if (object.timestamp !== undefined && object.timestamp !== null) {
       message.timestamp = Number(object.timestamp);
-    } else {
-      message.timestamp = 0;
     }
     if (object.blockID !== undefined && object.blockID !== null) {
       message.blockID = bytesFromBase64(object.blockID);
@@ -2684,77 +2510,51 @@ export const TendermintHeader = {
     const message = { ...baseTendermintHeader } as TendermintHeader;
     if (object.chainId !== undefined && object.chainId !== null) {
       message.chainId = object.chainId;
-    } else {
-      message.chainId = "";
     }
     if (object.height !== undefined && object.height !== null) {
       message.height = object.height;
-    } else {
-      message.height = 0;
     }
     if (object.timestamp !== undefined && object.timestamp !== null) {
       message.timestamp = object.timestamp;
-    } else {
-      message.timestamp = 0;
     }
     if (object.blockID !== undefined && object.blockID !== null) {
       message.blockID = object.blockID;
-    } else {
-      message.blockID = new Uint8Array();
     }
     if (object.lastCommitHash !== undefined && object.lastCommitHash !== null) {
       message.lastCommitHash = object.lastCommitHash;
-    } else {
-      message.lastCommitHash = new Uint8Array();
     }
     if (object.dataHash !== undefined && object.dataHash !== null) {
       message.dataHash = object.dataHash;
-    } else {
-      message.dataHash = new Uint8Array();
     }
     if (object.validatorsHash !== undefined && object.validatorsHash !== null) {
       message.validatorsHash = object.validatorsHash;
-    } else {
-      message.validatorsHash = new Uint8Array();
     }
     if (
       object.nextValidatorsHash !== undefined &&
       object.nextValidatorsHash !== null
     ) {
       message.nextValidatorsHash = object.nextValidatorsHash;
-    } else {
-      message.nextValidatorsHash = new Uint8Array();
     }
     if (object.consensusHash !== undefined && object.consensusHash !== null) {
       message.consensusHash = object.consensusHash;
-    } else {
-      message.consensusHash = new Uint8Array();
     }
     if (object.appHash !== undefined && object.appHash !== null) {
       message.appHash = object.appHash;
-    } else {
-      message.appHash = new Uint8Array();
     }
     if (
       object.lastResultsHash !== undefined &&
       object.lastResultsHash !== null
     ) {
       message.lastResultsHash = object.lastResultsHash;
-    } else {
-      message.lastResultsHash = new Uint8Array();
     }
     if (object.evidenceHash !== undefined && object.evidenceHash !== null) {
       message.evidenceHash = object.evidenceHash;
-    } else {
-      message.evidenceHash = new Uint8Array();
     }
     if (
       object.proposerAddress !== undefined &&
       object.proposerAddress !== null
     ) {
       message.proposerAddress = object.proposerAddress;
-    } else {
-      message.proposerAddress = new Uint8Array();
     }
     return message;
   },
@@ -2850,13 +2650,9 @@ export const ProcessResult = {
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
-    } else {
-      message.processId = undefined;
     }
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = object.entityId;
-    } else {
-      message.entityId = undefined;
     }
     return message;
   },
@@ -3094,6 +2890,10 @@ export type DeepPartial<T> = T extends Builtin
   ? Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
   ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;

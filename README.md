@@ -25,6 +25,7 @@ Or optionally:
 ```sh
 $ make protoc/bin/protoc
 $ make protoc-dart-plugin
+$ make protoc-ts-plugin
 $ make protoc-go-plugin
 ```
 
@@ -44,6 +45,7 @@ Then, run `make all` to build all the targets
 ## Build
 
 + Build DART models: `make dart`
++ Build JS/TS models: `make ts`
 + Build GoLang models: `make golang`
 
 ## Artifacts
@@ -51,3 +53,7 @@ Then, run `make all` to build all the targets
 Import the files from:
 - `build/dart/*`
 - `go-vocdonitypes/*`
+
+## Usage
+
+See [example/index.ts](./example/index.ts) for a TypeScript usage example.

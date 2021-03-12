@@ -110,7 +110,7 @@ ts: js
 build/ts: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
-		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_out=$@ $(PWD)/$$f ; \
+		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 
