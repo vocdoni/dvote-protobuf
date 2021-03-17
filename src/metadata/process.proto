@@ -25,6 +25,12 @@ message ProcessMetadata {
     }
     repeated Question questions = 5;
 
+    message Results {
+        string aggregation = 1;
+        string display = 2;
+    }
+    Results results = 6;
+
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
     // processes can be tagged and organized by custom values.

@@ -27,9 +27,10 @@ const ProcessMetadata$json = const {
     const {'1': 'description', '3': 3, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.DescriptionEntry', '10': 'description'},
     const {'1': 'media', '3': 4, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.MediaEntry', '10': 'media'},
     const {'1': 'questions', '3': 5, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Question', '10': 'questions'},
+    const {'1': 'results', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.Results', '10': 'results'},
     const {'1': 'meta', '3': 100, '4': 3, '5': 11, '6': '.dvote.types.v1.ProcessMetadata.MetaEntry', '10': 'meta'},
   ],
-  '3': const [ProcessMetadata_TitleEntry$json, ProcessMetadata_DescriptionEntry$json, ProcessMetadata_MediaEntry$json, ProcessMetadata_Question$json, ProcessMetadata_MetaEntry$json],
+  '3': const [ProcessMetadata_TitleEntry$json, ProcessMetadata_DescriptionEntry$json, ProcessMetadata_MediaEntry$json, ProcessMetadata_Question$json, ProcessMetadata_Results$json, ProcessMetadata_MetaEntry$json],
 };
 
 @$core.Deprecated('Use processMetadataDescriptor instead')
@@ -114,6 +115,15 @@ const ProcessMetadata_Question_VoteOption_TitleEntry$json = const {
 };
 
 @$core.Deprecated('Use processMetadataDescriptor instead')
+const ProcessMetadata_Results$json = const {
+  '1': 'Results',
+  '2': const [
+    const {'1': 'aggregation', '3': 1, '4': 1, '5': 9, '10': 'aggregation'},
+    const {'1': 'display', '3': 2, '4': 1, '5': 9, '10': 'display'},
+  ],
+};
+
+@$core.Deprecated('Use processMetadataDescriptor instead')
 const ProcessMetadata_MetaEntry$json = const {
   '1': 'MetaEntry',
   '2': const [
@@ -124,4 +134,4 @@ const ProcessMetadata_MetaEntry$json = const {
 };
 
 /// Descriptor for `ProcessMetadata`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List processMetadataDescriptor = $convert.base64Decode('Cg9Qcm9jZXNzTWV0YWRhdGESGAoHdmVyc2lvbhgBIAEoCVIHdmVyc2lvbhJACgV0aXRsZRgCIAMoCzIqLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5UaXRsZUVudHJ5UgV0aXRsZRJSCgtkZXNjcmlwdGlvbhgDIAMoCzIwLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5EZXNjcmlwdGlvbkVudHJ5UgtkZXNjcmlwdGlvbhJACgVtZWRpYRgEIAMoCzIqLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5NZWRpYUVudHJ5UgVtZWRpYRJGCglxdWVzdGlvbnMYBSADKAsyKC5kdm90ZS50eXBlcy52MS5Qcm9jZXNzTWV0YWRhdGEuUXVlc3Rpb25SCXF1ZXN0aW9ucxI9CgRtZXRhGGQgAygLMikuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01ldGFkYXRhLk1ldGFFbnRyeVIEbWV0YRo4CgpUaXRsZUVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaPgoQRGVzY3JpcHRpb25FbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjgKCk1lZGlhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARqwBAoIUXVlc3Rpb24SSQoFdGl0bGUYASADKAsyMy5kdm90ZS50eXBlcy52MS5Qcm9jZXNzTWV0YWRhdGEuUXVlc3Rpb24uVGl0bGVFbnRyeVIFdGl0bGUSWwoLZGVzY3JpcHRpb24YAiADKAsyOS5kdm90ZS50eXBlcy52MS5Qcm9jZXNzTWV0YWRhdGEuUXVlc3Rpb24uRGVzY3JpcHRpb25FbnRyeVILZGVzY3JpcHRpb24STQoHY2hvaWNlcxgDIAMoCzIzLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5RdWVzdGlvbi5Wb3RlT3B0aW9uUgdjaG9pY2VzGjgKClRpdGxlRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo+ChBEZXNjcmlwdGlvbkVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEasgEKClZvdGVPcHRpb24SVAoFdGl0bGUYASADKAsyPi5kdm90ZS50eXBlcy52MS5Qcm9jZXNzTWV0YWRhdGEuUXVlc3Rpb24uVm90ZU9wdGlvbi5UaXRsZUVudHJ5UgV0aXRsZRIUCgV2YWx1ZRgCIAEoBVIFdmFsdWUaOAoKVGl0bGVFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjcKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
+final $typed_data.Uint8List processMetadataDescriptor = $convert.base64Decode('Cg9Qcm9jZXNzTWV0YWRhdGESGAoHdmVyc2lvbhgBIAEoCVIHdmVyc2lvbhJACgV0aXRsZRgCIAMoCzIqLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5UaXRsZUVudHJ5UgV0aXRsZRJSCgtkZXNjcmlwdGlvbhgDIAMoCzIwLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5EZXNjcmlwdGlvbkVudHJ5UgtkZXNjcmlwdGlvbhJACgVtZWRpYRgEIAMoCzIqLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5NZWRpYUVudHJ5UgVtZWRpYRJGCglxdWVzdGlvbnMYBSADKAsyKC5kdm90ZS50eXBlcy52MS5Qcm9jZXNzTWV0YWRhdGEuUXVlc3Rpb25SCXF1ZXN0aW9ucxJBCgdyZXN1bHRzGAYgASgLMicuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01ldGFkYXRhLlJlc3VsdHNSB3Jlc3VsdHMSPQoEbWV0YRhkIAMoCzIpLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NNZXRhZGF0YS5NZXRhRW50cnlSBG1ldGEaOAoKVGl0bGVFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGj4KEERlc2NyaXB0aW9uRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo4CgpNZWRpYUVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEasAQKCFF1ZXN0aW9uEkkKBXRpdGxlGAEgAygLMjMuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01ldGFkYXRhLlF1ZXN0aW9uLlRpdGxlRW50cnlSBXRpdGxlElsKC2Rlc2NyaXB0aW9uGAIgAygLMjkuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01ldGFkYXRhLlF1ZXN0aW9uLkRlc2NyaXB0aW9uRW50cnlSC2Rlc2NyaXB0aW9uEk0KB2Nob2ljZXMYAyADKAsyMy5kdm90ZS50eXBlcy52MS5Qcm9jZXNzTWV0YWRhdGEuUXVlc3Rpb24uVm90ZU9wdGlvblIHY2hvaWNlcxo4CgpUaXRsZUVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaPgoQRGVzY3JpcHRpb25FbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGrIBCgpWb3RlT3B0aW9uElQKBXRpdGxlGAEgAygLMj4uZHZvdGUudHlwZXMudjEuUHJvY2Vzc01ldGFkYXRhLlF1ZXN0aW9uLlZvdGVPcHRpb24uVGl0bGVFbnRyeVIFdGl0bGUSFAoFdmFsdWUYAiABKAVSBXZhbHVlGjgKClRpdGxlRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARpFCgdSZXN1bHRzEiAKC2FnZ3JlZ2F0aW9uGAEgASgJUgthZ2dyZWdhdGlvbhIYCgdkaXNwbGF5GAIgASgJUgdkaXNwbGF5GjcKCU1ldGFFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
