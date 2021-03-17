@@ -9,8 +9,8 @@ option go_package = "go.vocdoni.io/proto/build/go/models";
 message VoteEnvelope {
         bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
         bytes processId = 2;  // The process for which the vote is casted
-        Proof proof = 3;  // Merkle proof, ZK Proof or Ethereum storage proof
-        bytes votePackage = 4;   // base64 encoded bytes[] of the VotePackage
+        Proof proof = 3;  // One of ProofGraviton, ProofIden3, ProofEthereumStorage, ProofEthereumAccount, or ProofCA
+        bytes votePackage = 4;   // JSON string of the Vote Package, encoded as bytes
 
         // optional bytes nullifier = 5;
         bytes nullifier = 5;  // Hash of the private key + processId
