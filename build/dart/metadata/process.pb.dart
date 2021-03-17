@@ -162,6 +162,67 @@ class ProcessMetadata_Question extends $pb.GeneratedMessage {
   $core.List<ProcessMetadata_Question_VoteOption> get choices => $_getList(2);
 }
 
+class ProcessMetadata_Results extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProcessMetadata.Results', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'aggregation')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'display')
+    ..hasRequiredFields = false
+  ;
+
+  ProcessMetadata_Results._() : super();
+  factory ProcessMetadata_Results({
+    $core.String aggregation,
+    $core.String display,
+  }) {
+    final _result = create();
+    if (aggregation != null) {
+      _result.aggregation = aggregation;
+    }
+    if (display != null) {
+      _result.display = display;
+    }
+    return _result;
+  }
+  factory ProcessMetadata_Results.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProcessMetadata_Results.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProcessMetadata_Results clone() => ProcessMetadata_Results()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProcessMetadata_Results copyWith(void Function(ProcessMetadata_Results) updates) => super.copyWith((message) => updates(message as ProcessMetadata_Results)) as ProcessMetadata_Results; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata_Results create() => ProcessMetadata_Results._();
+  ProcessMetadata_Results createEmptyInstance() => create();
+  static $pb.PbList<ProcessMetadata_Results> createRepeated() => $pb.PbList<ProcessMetadata_Results>();
+  @$core.pragma('dart2js:noInline')
+  static ProcessMetadata_Results getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Results>(create);
+  static ProcessMetadata_Results _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get aggregation => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set aggregation($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAggregation() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAggregation() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get display => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set display($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDisplay() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDisplay() => clearField(2);
+}
+
 class ProcessMetadata extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProcessMetadata', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
@@ -169,6 +230,7 @@ class ProcessMetadata extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description', entryClassName: 'ProcessMetadata.DescriptionEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote.types.v1'))
     ..m<$core.String, $core.String>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'media', entryClassName: 'ProcessMetadata.MediaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote.types.v1'))
     ..pc<ProcessMetadata_Question>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questions', $pb.PbFieldType.PM, subBuilder: ProcessMetadata_Question.create)
+    ..aOM<ProcessMetadata_Results>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', subBuilder: ProcessMetadata_Results.create)
     ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'ProcessMetadata.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote.types.v1'))
     ..hasRequiredFields = false
   ;
@@ -180,6 +242,7 @@ class ProcessMetadata extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String> description,
     $core.Map<$core.String, $core.String> media,
     $core.Iterable<ProcessMetadata_Question> questions,
+    ProcessMetadata_Results results,
     $core.Map<$core.String, $core.String> meta,
   }) {
     final _result = create();
@@ -197,6 +260,9 @@ class ProcessMetadata extends $pb.GeneratedMessage {
     }
     if (questions != null) {
       _result.questions.addAll(questions);
+    }
+    if (results != null) {
+      _result.results = results;
     }
     if (meta != null) {
       _result.meta.addAll(meta);
@@ -245,7 +311,18 @@ class ProcessMetadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<ProcessMetadata_Question> get questions => $_getList(4);
 
+  @$pb.TagNumber(6)
+  ProcessMetadata_Results get results => $_getN(5);
+  @$pb.TagNumber(6)
+  set results(ProcessMetadata_Results v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasResults() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearResults() => clearField(6);
+  @$pb.TagNumber(6)
+  ProcessMetadata_Results ensureResults() => $_ensure(5);
+
   @$pb.TagNumber(100)
-  $core.Map<$core.String, $core.String> get meta => $_getMap(5);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(6);
 }
 
