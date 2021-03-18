@@ -58,9 +58,9 @@ export interface VoteEnvelope {
   nonce: Uint8Array;
   /** The process for which the vote is casted */
   processId: Uint8Array;
-  /** Merkle proof, ZK Proof or Ethereum storage proof */
+  /** One of ProofGraviton, ProofIden3, ProofEthereumStorage, ProofEthereumAccount, or ProofCA */
   proof: Proof | undefined;
-  /** base64 encoded bytes[] of the VotePackage */
+  /** JSON string of the Vote Package (potentially encrypted), encoded as bytes. */
   votePackage: Uint8Array;
   /** optional bytes nullifier = 5; */
   nullifier: Uint8Array;

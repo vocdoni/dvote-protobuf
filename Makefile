@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PATH  := $(PATH):$(HOME)/.pub-cache/bin:./protoc
+PATH  := $(PATH):$(HOME)/.pub-cache/bin:$(PWD)/bin:$(HOME)/go/bin
 .DEFAULT_GOAL := help
 
 PROJECT_NAME=$(shell basename "$(PWD)")
@@ -41,11 +41,6 @@ define install_protoc_go
 	fi
 endef
 
-define install_protoc_ts
-	@npm install ts-proto
-	rm package.json package-lock.json
-endef
-
 #-----------------------------------------------------------------------
 # HELP
 #-----------------------------------------------------------------------
@@ -67,7 +62,7 @@ init: protoc protoc-dart-plugin protoc-ts-plugin protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
-	rm -Rf build bin include node_modules
+	rm -Rf build include
 
 ## :
 
@@ -104,10 +99,10 @@ build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) $(VOCH
 	@touch $@
 
 ## js: Generate the TypeScript protobuf artifacts
-js: protoc protoc-ts-plugin build/ts
+js: protoc $(PROTOC_TS_PLUGIN) build/ts
 ts: js
 
-build/ts: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
+build/ts: $(COMMON_SOURCES) $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
 		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
@@ -122,7 +117,6 @@ build/ts: $(COMMON_SOURCES) $(VOCHAIN_SOURCES)
 .PHONY: protoc
 protoc:
 	$(call install_protoc)
-	@echo "Using protoc from $(PROTOC)"
 
 # DART
 .PHONY: protoc-dart-plugin
@@ -130,9 +124,9 @@ protoc-dart-plugin:
 	pub global activate protoc_plugin
 
 # TS
-.PHONY: protoc-ts-plugin
-protoc-ts-plugin:
-	$(call install_protoc_ts)
+$(PROTOC_TS_PLUGIN):
+	@npm install ts-proto
+	@rm package-lock.json
 
 # GO
 .PHONY: protoc-go-plugin
