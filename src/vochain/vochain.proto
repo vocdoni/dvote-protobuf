@@ -2,9 +2,76 @@ syntax = "proto3";
 
 package dvote.types.v1;
 
-import "common/vote.proto";
-
 option go_package = "go.vocdoni.io/proto/build/go/models";
+
+message VoteEnvelope {
+        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+        bytes processId = 2;  // The process for which the vote is casted
+        Proof proof = 3;  // One of ProofGraviton, ProofIden3, ProofEthereumStorage, ProofEthereumAccount, or ProofCA
+        bytes votePackage = 4;   // JSON string of the Vote Package (potentially encrypted), encoded as bytes.
+
+        // optional bytes nullifier = 5;
+        bytes nullifier = 5;  // Hash of the private key + processId
+
+        repeated uint32 encryptionKeyIndexes = 6; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
+}
+
+message Proof {
+        oneof payload {
+                // Proof used for signed envelopes
+                ProofGraviton graviton = 1;
+                // Proof used for anonymous votes
+                ProofIden3 iden3 = 2;
+                // Proof used on EVM census based processes
+                ProofEthereumStorage ethereumStorage = 3;
+                // Proof used by oracles to update the census of EVM processes
+                ProofEthereumAccount ethereumAccount = 4;
+                // Proof Certification Authority
+                ProofCA ca = 5;
+         }
+}
+
+enum SignatureType {
+        UNKNOWN = 0;
+        ECDSA = 1;
+        ECDSA_PIDSALTED = 2;
+        ECDSA_BLIND = 3;
+        ECDSA_BLIND_PIDSALTED = 4;
+}
+
+message ProofGraviton {
+        bytes siblings = 1;
+}
+
+message ProofIden3 {
+        bytes siblings = 1;
+}
+
+message ProofCA {
+        SignatureType type = 1;
+        CAbundle bundle = 2;
+        bytes signature = 3;
+}
+
+message CAbundle {
+        bytes processId = 1;
+        bytes address = 2;
+}
+
+message ProofEthereumStorage {
+        bytes key = 1;
+        bytes value = 2;
+        repeated bytes siblings = 3;
+}
+
+message ProofEthereumAccount {
+        bytes nonce = 1;
+        bytes balance = 2;  // Big Int encoded as bytes
+        bytes storageHash = 3;
+        bytes codeHash = 4;
+        repeated bytes siblings = 5;
+}
+
 
 enum TxType {
 	TX_UNKNOWN = 0;

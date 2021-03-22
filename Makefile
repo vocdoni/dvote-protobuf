@@ -4,7 +4,6 @@ PATH  := $(PATH):$(HOME)/.pub-cache/bin:$(PWD)/bin:$(HOME)/go/bin
 
 PROJECT_NAME=$(shell basename "$(PWD)")
 CLIENT_STORE_SOURCES=$(wildcard src/client-store/*.proto)
-COMMON_SOURCES=$(wildcard src/common/*.proto)
 METADATA_SOURCES=$(wildcard src/metadata/*.proto)
 VOCHAIN_SOURCES=$(wildcard src/vochain/*.proto)
 IPFSSYNC_SOURCES=$(wildcard src/ipfsSync/*.proto)
@@ -77,7 +76,7 @@ all: protoc build/dart build/ts build/go/models
 ## golang: Generate the Golang protobuf artifacts
 golang: protoc protoc-go-plugin build/go/models
 
-build/go/models: $(COMMON_SOURCES) $(VOCHAIN_SOURCES) $(IPFSSYNC_SOURCES)
+build/go/models: $(VOCHAIN_SOURCES) $(IPFSSYNC_SOURCES)
 	rm -rf $@
 	mkdir -p $@
 	for f in $^ ; do \
@@ -91,7 +90,7 @@ build/go/models: $(COMMON_SOURCES) $(VOCHAIN_SOURCES) $(IPFSSYNC_SOURCES)
 ## dart: Generate the Dart protobuf artifacts
 dart: protoc protoc-dart-plugin build/dart
 
-build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) $(VOCHAIN_SOURCES)
+build/dart: $(CLIENT_STORE_SOURCES) $(METADATA_SOURCES) $(VOCHAIN_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
 		$(PROTOC) --experimental_allow_proto3_optional -I=$(PWD)/src --dart_out=$(PWD)/$@ $(PWD)/$$f ; \
@@ -102,7 +101,7 @@ build/dart: $(CLIENT_STORE_SOURCES) $(COMMON_SOURCES) $(METADATA_SOURCES) $(VOCH
 js: protoc $(PROTOC_TS_PLUGIN) build/ts
 ts: js
 
-build/ts: $(COMMON_SOURCES) $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES)
+build/ts: $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES)
 	mkdir -p $@
 	for f in $^ ; do \
 		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
