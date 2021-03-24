@@ -3,14 +3,14 @@ import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
-export interface BackupLink {
+export interface AccountBackup {
   version: string;
-  questions: BackupLink_Questions[];
-  auth: BackupLink_Auth;
+  questions: AccountBackup_Questions[];
+  auth: AccountBackup_Auth;
   key: Uint8Array;
 }
 
-export enum BackupLink_Questions {
+export enum AccountBackup_Questions {
   STUFFED_TOY = 0,
   FAVORITE_TEACHER = 1,
   DRIVING_INSTRUCTOR = 2,
@@ -19,87 +19,87 @@ export enum BackupLink_Questions {
   UNRECOGNIZED = -1,
 }
 
-export function backupLink_QuestionsFromJSON(
+export function accountBackup_QuestionsFromJSON(
   object: any
-): BackupLink_Questions {
+): AccountBackup_Questions {
   switch (object) {
     case 0:
     case "STUFFED_TOY":
-      return BackupLink_Questions.STUFFED_TOY;
+      return AccountBackup_Questions.STUFFED_TOY;
     case 1:
     case "FAVORITE_TEACHER":
-      return BackupLink_Questions.FAVORITE_TEACHER;
+      return AccountBackup_Questions.FAVORITE_TEACHER;
     case 2:
     case "DRIVING_INSTRUCTOR":
-      return BackupLink_Questions.DRIVING_INSTRUCTOR;
+      return AccountBackup_Questions.DRIVING_INSTRUCTOR;
     case 3:
     case "FIRST_KISSED":
-      return BackupLink_Questions.FIRST_KISSED;
+      return AccountBackup_Questions.FIRST_KISSED;
     case 4:
     case "CHILDHOOD_NICKNAME":
-      return BackupLink_Questions.CHILDHOOD_NICKNAME;
+      return AccountBackup_Questions.CHILDHOOD_NICKNAME;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return BackupLink_Questions.UNRECOGNIZED;
+      return AccountBackup_Questions.UNRECOGNIZED;
   }
 }
 
-export function backupLink_QuestionsToJSON(
-  object: BackupLink_Questions
+export function accountBackup_QuestionsToJSON(
+  object: AccountBackup_Questions
 ): string {
   switch (object) {
-    case BackupLink_Questions.STUFFED_TOY:
+    case AccountBackup_Questions.STUFFED_TOY:
       return "STUFFED_TOY";
-    case BackupLink_Questions.FAVORITE_TEACHER:
+    case AccountBackup_Questions.FAVORITE_TEACHER:
       return "FAVORITE_TEACHER";
-    case BackupLink_Questions.DRIVING_INSTRUCTOR:
+    case AccountBackup_Questions.DRIVING_INSTRUCTOR:
       return "DRIVING_INSTRUCTOR";
-    case BackupLink_Questions.FIRST_KISSED:
+    case AccountBackup_Questions.FIRST_KISSED:
       return "FIRST_KISSED";
-    case BackupLink_Questions.CHILDHOOD_NICKNAME:
+    case AccountBackup_Questions.CHILDHOOD_NICKNAME:
       return "CHILDHOOD_NICKNAME";
     default:
       return "UNKNOWN";
   }
 }
 
-export enum BackupLink_Auth {
+export enum AccountBackup_Auth {
   PIN = 0,
   PASS = 1,
   UNRECOGNIZED = -1,
 }
 
-export function backupLink_AuthFromJSON(object: any): BackupLink_Auth {
+export function accountBackup_AuthFromJSON(object: any): AccountBackup_Auth {
   switch (object) {
     case 0:
     case "PIN":
-      return BackupLink_Auth.PIN;
+      return AccountBackup_Auth.PIN;
     case 1:
     case "PASS":
-      return BackupLink_Auth.PASS;
+      return AccountBackup_Auth.PASS;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return BackupLink_Auth.UNRECOGNIZED;
+      return AccountBackup_Auth.UNRECOGNIZED;
   }
 }
 
-export function backupLink_AuthToJSON(object: BackupLink_Auth): string {
+export function accountBackup_AuthToJSON(object: AccountBackup_Auth): string {
   switch (object) {
-    case BackupLink_Auth.PIN:
+    case AccountBackup_Auth.PIN:
       return "PIN";
-    case BackupLink_Auth.PASS:
+    case AccountBackup_Auth.PASS:
       return "PASS";
     default:
       return "UNKNOWN";
   }
 }
 
-const baseBackupLink: object = { version: "", questions: 0, auth: 0 };
+const baseAccountBackup: object = { version: "", questions: 0, auth: 0 };
 
-export const BackupLink = {
-  encode(message: BackupLink, writer: Writer = Writer.create()): Writer {
+export const AccountBackup = {
+  encode(message: AccountBackup, writer: Writer = Writer.create()): Writer {
     if (message.version !== "") {
       writer.uint32(10).string(message.version);
     }
@@ -117,10 +117,10 @@ export const BackupLink = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BackupLink {
+  decode(input: Reader | Uint8Array, length?: number): AccountBackup {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBackupLink } as BackupLink;
+    const message = { ...baseAccountBackup } as AccountBackup;
     message.questions = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -152,19 +152,19 @@ export const BackupLink = {
     return message;
   },
 
-  fromJSON(object: any): BackupLink {
-    const message = { ...baseBackupLink } as BackupLink;
+  fromJSON(object: any): AccountBackup {
+    const message = { ...baseAccountBackup } as AccountBackup;
     message.questions = [];
     if (object.version !== undefined && object.version !== null) {
       message.version = String(object.version);
     }
     if (object.questions !== undefined && object.questions !== null) {
       for (const e of object.questions) {
-        message.questions.push(backupLink_QuestionsFromJSON(e));
+        message.questions.push(accountBackup_QuestionsFromJSON(e));
       }
     }
     if (object.auth !== undefined && object.auth !== null) {
-      message.auth = backupLink_AuthFromJSON(object.auth);
+      message.auth = accountBackup_AuthFromJSON(object.auth);
     }
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
@@ -172,18 +172,18 @@ export const BackupLink = {
     return message;
   },
 
-  toJSON(message: BackupLink): unknown {
+  toJSON(message: AccountBackup): unknown {
     const obj: any = {};
     message.version !== undefined && (obj.version = message.version);
     if (message.questions) {
       obj.questions = message.questions.map((e) =>
-        backupLink_QuestionsToJSON(e)
+        accountBackup_QuestionsToJSON(e)
       );
     } else {
       obj.questions = [];
     }
     message.auth !== undefined &&
-      (obj.auth = backupLink_AuthToJSON(message.auth));
+      (obj.auth = accountBackup_AuthToJSON(message.auth));
     message.key !== undefined &&
       (obj.key = base64FromBytes(
         message.key !== undefined ? message.key : new Uint8Array()
@@ -191,8 +191,8 @@ export const BackupLink = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<BackupLink>): BackupLink {
-    const message = { ...baseBackupLink } as BackupLink;
+  fromPartial(object: DeepPartial<AccountBackup>): AccountBackup {
+    const message = { ...baseAccountBackup } as AccountBackup;
     message.questions = [];
     if (object.version !== undefined && object.version !== null) {
       message.version = object.version;
