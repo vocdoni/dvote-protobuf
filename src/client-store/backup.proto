@@ -2,7 +2,6 @@ syntax = "proto3";
 package dvote.types.v1;
 
 message AccountBackup {
-    string version = 1;
     enum Questions {
         STUFFED_TOY = 0;
         FAVORITE_TEACHER = 1;
@@ -10,11 +9,11 @@ message AccountBackup {
         FIRST_KISSED = 3;
         CHILDHOOD_NICKNAME = 4;
     }
-    repeated Questions questions = 2;
+    repeated Questions questions = 1;
     enum Auth {
         PIN = 0;
         PASS = 1;
     }
-    Auth auth = 3;
-    bytes key = 4;
+    Auth auth = 2;
+    bytes key = 3;
 }

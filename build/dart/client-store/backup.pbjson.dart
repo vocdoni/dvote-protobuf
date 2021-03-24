@@ -12,10 +12,9 @@ import 'dart:typed_data' as $typed_data;
 const AccountBackup$json = const {
   '1': 'AccountBackup',
   '2': const [
-    const {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
-    const {'1': 'questions', '3': 2, '4': 3, '5': 14, '6': '.dvote.types.v1.AccountBackup.Questions', '10': 'questions'},
-    const {'1': 'auth', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v1.AccountBackup.Auth', '10': 'auth'},
-    const {'1': 'key', '3': 4, '4': 1, '5': 12, '10': 'key'},
+    const {'1': 'questions', '3': 1, '4': 3, '5': 14, '6': '.dvote.types.v1.AccountBackup.Questions', '10': 'questions'},
+    const {'1': 'auth', '3': 2, '4': 1, '5': 14, '6': '.dvote.types.v1.AccountBackup.Auth', '10': 'auth'},
+    const {'1': 'key', '3': 3, '4': 1, '5': 12, '10': 'key'},
   ],
   '4': const [AccountBackup_Questions$json, AccountBackup_Auth$json],
 };
@@ -42,4 +41,4 @@ const AccountBackup_Auth$json = const {
 };
 
 /// Descriptor for `AccountBackup`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountBackupDescriptor = $convert.base64Decode('Cg1BY2NvdW50QmFja3VwEhgKB3ZlcnNpb24YASABKAlSB3ZlcnNpb24SRQoJcXVlc3Rpb25zGAIgAygOMicuZHZvdGUudHlwZXMudjEuQWNjb3VudEJhY2t1cC5RdWVzdGlvbnNSCXF1ZXN0aW9ucxI2CgRhdXRoGAMgASgOMiIuZHZvdGUudHlwZXMudjEuQWNjb3VudEJhY2t1cC5BdXRoUgRhdXRoEhAKA2tleRgEIAEoDFIDa2V5InQKCVF1ZXN0aW9ucxIPCgtTVFVGRkVEX1RPWRAAEhQKEEZBVk9SSVRFX1RFQUNIRVIQARIWChJEUklWSU5HX0lOU1RSVUNUT1IQAhIQCgxGSVJTVF9LSVNTRUQQAxIWChJDSElMREhPT0RfTklDS05BTUUQBCIZCgRBdXRoEgcKA1BJThAAEggKBFBBU1MQAQ==');
+final $typed_data.Uint8List accountBackupDescriptor = $convert.base64Decode('Cg1BY2NvdW50QmFja3VwEkUKCXF1ZXN0aW9ucxgBIAMoDjInLmR2b3RlLnR5cGVzLnYxLkFjY291bnRCYWNrdXAuUXVlc3Rpb25zUglxdWVzdGlvbnMSNgoEYXV0aBgCIAEoDjIiLmR2b3RlLnR5cGVzLnYxLkFjY291bnRCYWNrdXAuQXV0aFIEYXV0aBIQCgNrZXkYAyABKAxSA2tleSJ0CglRdWVzdGlvbnMSDwoLU1RVRkZFRF9UT1kQABIUChBGQVZPUklURV9URUFDSEVSEAESFgoSRFJJVklOR19JTlNUUlVDVE9SEAISEAoMRklSU1RfS0lTU0VEEAMSFgoSQ0hJTERIT09EX05JQ0tOQU1FEAQiGQoEQXV0aBIHCgNQSU4QABIICgRQQVNTEAE=');

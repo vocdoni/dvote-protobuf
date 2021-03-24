@@ -15,24 +15,19 @@ export 'backup.pbenum.dart';
 
 class AccountBackup extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AccountBackup', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..pc<AccountBackup_Questions>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questions', $pb.PbFieldType.PE, valueOf: AccountBackup_Questions.valueOf, enumValues: AccountBackup_Questions.values)
-    ..e<AccountBackup_Auth>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'auth', $pb.PbFieldType.OE, defaultOrMaker: AccountBackup_Auth.PIN, valueOf: AccountBackup_Auth.valueOf, enumValues: AccountBackup_Auth.values)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.OY)
+    ..pc<AccountBackup_Questions>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questions', $pb.PbFieldType.PE, valueOf: AccountBackup_Questions.valueOf, enumValues: AccountBackup_Questions.values)
+    ..e<AccountBackup_Auth>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'auth', $pb.PbFieldType.OE, defaultOrMaker: AccountBackup_Auth.PIN, valueOf: AccountBackup_Auth.valueOf, enumValues: AccountBackup_Auth.values)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
   AccountBackup._() : super();
   factory AccountBackup({
-    $core.String version,
     $core.Iterable<AccountBackup_Questions> questions,
     AccountBackup_Auth auth,
     $core.List<$core.int> key,
   }) {
     final _result = create();
-    if (version != null) {
-      _result.version = version;
-    }
     if (questions != null) {
       _result.questions.addAll(questions);
     }
@@ -66,33 +61,24 @@ class AccountBackup extends $pb.GeneratedMessage {
   static AccountBackup _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get version => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set version($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasVersion() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearVersion() => clearField(1);
+  $core.List<AccountBackup_Questions> get questions => $_getList(0);
 
   @$pb.TagNumber(2)
-  $core.List<AccountBackup_Questions> get questions => $_getList(1);
+  AccountBackup_Auth get auth => $_getN(1);
+  @$pb.TagNumber(2)
+  set auth(AccountBackup_Auth v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAuth() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAuth() => clearField(2);
 
   @$pb.TagNumber(3)
-  AccountBackup_Auth get auth => $_getN(2);
+  $core.List<$core.int> get key => $_getN(2);
   @$pb.TagNumber(3)
-  set auth(AccountBackup_Auth v) { setField(3, v); }
+  set key($core.List<$core.int> v) { $_setBytes(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasAuth() => $_has(2);
+  $core.bool hasKey() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAuth() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.List<$core.int> get key => $_getN(3);
-  @$pb.TagNumber(4)
-  set key($core.List<$core.int> v) { $_setBytes(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasKey() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearKey() => clearField(4);
+  void clearKey() => clearField(3);
 }
 

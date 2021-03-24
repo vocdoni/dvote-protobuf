@@ -4,7 +4,6 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "dvote.types.v1";
 
 export interface AccountBackup {
-  version: string;
   questions: AccountBackup_Questions[];
   auth: AccountBackup_Auth;
   key: Uint8Array;
@@ -96,23 +95,20 @@ export function accountBackup_AuthToJSON(object: AccountBackup_Auth): string {
   }
 }
 
-const baseAccountBackup: object = { version: "", questions: 0, auth: 0 };
+const baseAccountBackup: object = { questions: 0, auth: 0 };
 
 export const AccountBackup = {
   encode(message: AccountBackup, writer: Writer = Writer.create()): Writer {
-    if (message.version !== "") {
-      writer.uint32(10).string(message.version);
-    }
-    writer.uint32(18).fork();
+    writer.uint32(10).fork();
     for (const v of message.questions) {
       writer.int32(v);
     }
     writer.ldelim();
     if (message.auth !== 0) {
-      writer.uint32(24).int32(message.auth);
+      writer.uint32(16).int32(message.auth);
     }
     if (message.key.length !== 0) {
-      writer.uint32(34).bytes(message.key);
+      writer.uint32(26).bytes(message.key);
     }
     return writer;
   },
@@ -126,9 +122,6 @@ export const AccountBackup = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.version = reader.string();
-          break;
-        case 2:
           if ((tag & 7) === 2) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
@@ -138,10 +131,10 @@ export const AccountBackup = {
             message.questions.push(reader.int32() as any);
           }
           break;
-        case 3:
+        case 2:
           message.auth = reader.int32() as any;
           break;
-        case 4:
+        case 3:
           message.key = reader.bytes();
           break;
         default:
@@ -155,9 +148,6 @@ export const AccountBackup = {
   fromJSON(object: any): AccountBackup {
     const message = { ...baseAccountBackup } as AccountBackup;
     message.questions = [];
-    if (object.version !== undefined && object.version !== null) {
-      message.version = String(object.version);
-    }
     if (object.questions !== undefined && object.questions !== null) {
       for (const e of object.questions) {
         message.questions.push(accountBackup_QuestionsFromJSON(e));
@@ -174,7 +164,6 @@ export const AccountBackup = {
 
   toJSON(message: AccountBackup): unknown {
     const obj: any = {};
-    message.version !== undefined && (obj.version = message.version);
     if (message.questions) {
       obj.questions = message.questions.map((e) =>
         accountBackup_QuestionsToJSON(e)
@@ -194,9 +183,6 @@ export const AccountBackup = {
   fromPartial(object: DeepPartial<AccountBackup>): AccountBackup {
     const message = { ...baseAccountBackup } as AccountBackup;
     message.questions = [];
-    if (object.version !== undefined && object.version !== null) {
-      message.version = object.version;
-    }
     if (object.questions !== undefined && object.questions !== null) {
       for (const e of object.questions) {
         message.questions.push(e);
