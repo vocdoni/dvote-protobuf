@@ -57,7 +57,7 @@ help:
 ## :
 
 ## init: Install external dependencies
-init: protoc protoc-dart-plugin protoc-ts-plugin protoc-go-plugin
+init: protoc protoc-dart-plugin $(PROTOC_TS_PLUGIN) protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
