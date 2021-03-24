@@ -11,11 +11,14 @@ export interface AccountBackup {
 }
 
 export enum AccountBackup_Questions {
-  STUFFED_TOY = 0,
-  FAVORITE_TEACHER = 1,
-  DRIVING_INSTRUCTOR = 2,
-  FIRST_KISSED = 3,
-  CHILDHOOD_NICKNAME = 4,
+  EMPTY = 0,
+  /**
+   * DRIVING_INSTRUCTOR - STUFFED_TOY = 1;
+   * FAVORITE_TEACHER = 2;
+   */
+  DRIVING_INSTRUCTOR = 3,
+  FIRST_KISSED = 4,
+  CHILDHOOD_NICKNAME = 5,
   UNRECOGNIZED = -1,
 }
 
@@ -24,18 +27,15 @@ export function accountBackup_QuestionsFromJSON(
 ): AccountBackup_Questions {
   switch (object) {
     case 0:
-    case "STUFFED_TOY":
-      return AccountBackup_Questions.STUFFED_TOY;
-    case 1:
-    case "FAVORITE_TEACHER":
-      return AccountBackup_Questions.FAVORITE_TEACHER;
-    case 2:
+    case "EMPTY":
+      return AccountBackup_Questions.EMPTY;
+    case 3:
     case "DRIVING_INSTRUCTOR":
       return AccountBackup_Questions.DRIVING_INSTRUCTOR;
-    case 3:
+    case 4:
     case "FIRST_KISSED":
       return AccountBackup_Questions.FIRST_KISSED;
-    case 4:
+    case 5:
     case "CHILDHOOD_NICKNAME":
       return AccountBackup_Questions.CHILDHOOD_NICKNAME;
     case -1:
@@ -49,16 +49,56 @@ export function accountBackup_QuestionsToJSON(
   object: AccountBackup_Questions
 ): string {
   switch (object) {
-    case AccountBackup_Questions.STUFFED_TOY:
-      return "STUFFED_TOY";
-    case AccountBackup_Questions.FAVORITE_TEACHER:
-      return "FAVORITE_TEACHER";
+    case AccountBackup_Questions.EMPTY:
+      return "EMPTY";
     case AccountBackup_Questions.DRIVING_INSTRUCTOR:
       return "DRIVING_INSTRUCTOR";
     case AccountBackup_Questions.FIRST_KISSED:
       return "FIRST_KISSED";
     case AccountBackup_Questions.CHILDHOOD_NICKNAME:
       return "CHILDHOOD_NICKNAME";
+    default:
+      return "UNKNOWN";
+  }
+}
+
+export enum AccountBackup_DeprecatedQuestions {
+  EMPTY_DEPRECATED = 0,
+  STUFFED_TOY = 1,
+  FAVORITE_TEACHER = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function accountBackup_DeprecatedQuestionsFromJSON(
+  object: any
+): AccountBackup_DeprecatedQuestions {
+  switch (object) {
+    case 0:
+    case "EMPTY_DEPRECATED":
+      return AccountBackup_DeprecatedQuestions.EMPTY_DEPRECATED;
+    case 1:
+    case "STUFFED_TOY":
+      return AccountBackup_DeprecatedQuestions.STUFFED_TOY;
+    case 2:
+    case "FAVORITE_TEACHER":
+      return AccountBackup_DeprecatedQuestions.FAVORITE_TEACHER;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return AccountBackup_DeprecatedQuestions.UNRECOGNIZED;
+  }
+}
+
+export function accountBackup_DeprecatedQuestionsToJSON(
+  object: AccountBackup_DeprecatedQuestions
+): string {
+  switch (object) {
+    case AccountBackup_DeprecatedQuestions.EMPTY_DEPRECATED:
+      return "EMPTY_DEPRECATED";
+    case AccountBackup_DeprecatedQuestions.STUFFED_TOY:
+      return "STUFFED_TOY";
+    case AccountBackup_DeprecatedQuestions.FAVORITE_TEACHER:
+      return "FAVORITE_TEACHER";
     default:
       return "UNKNOWN";
   }
