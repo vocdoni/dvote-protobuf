@@ -11,10 +11,17 @@ Check out the source code generated for each of the available languages.
 
 ## Get started
 
+In order to be able to build this project, you need some dependencies in your machine:
+
+- [go](https://golang.org/doc/install) for the go bindings
+- [dart](https://dart.dev/get-dart) for the dart bindings
+- [npm & node](https://nodejs.org/en/download/) for the ts bindings
+- build essentials like `make`
+
 If `protoc` is installed in the host system, it will be used by default.
 To force installing protoc, set PROTOC variable to blank: `PROTOC= make <action>`
 
-To install `protoc` and the plugins for Dart and Go:
+To install `protoc` and the plugins for Dart, Go and TS:
 
 ```sh
 $ make init

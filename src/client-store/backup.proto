@@ -1,10 +1,20 @@
 syntax = "proto3";
 package dvote.types.v1;
 
-
 message BackupLink {
     string version = 1;
-    repeated string questions = 2;
-    string auth = 3;
-    string key = 4;
-} 
+    enum Questions {
+        STUFFED_TOY = 0;
+        FAVORITE_TEACHER = 1;
+        DRIVING_INSTRUCTOR = 2;
+        FIRST_KISSED = 3;
+        CHILDHOOD_NICKNAME = 4;
+    }
+    repeated Questions questions = 2;
+    enum Auth {
+        PIN = 0;
+        PASS = 1;
+    }
+    Auth auth = 3;
+    bytes key = 4;
+}
