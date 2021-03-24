@@ -5,16 +5,14 @@ message AccountBackup {
     string version = 1;
     enum Questions {
         EMPTY = 0;
-        // STUFFED_TOY = 1;
-        // FAVORITE_TEACHER = 2;
+        STUFFED_TOY = 1;
+        FAVORITE_TEACHER = 2;
         DRIVING_INSTRUCTOR = 3;
         FIRST_KISSED = 4;
         CHILDHOOD_NICKNAME = 5;
     }
     enum DeprecatedQuestions {
         EMPTY_DEPRECATED = 0;
-        STUFFED_TOY = 1;
-        FAVORITE_TEACHER = 2;
     }
     repeated Questions questions = 2;
     enum Auth {

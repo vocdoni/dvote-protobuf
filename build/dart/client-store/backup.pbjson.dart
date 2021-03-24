@@ -25,6 +25,8 @@ const AccountBackup_Questions$json = const {
   '1': 'Questions',
   '2': const [
     const {'1': 'EMPTY', '2': 0},
+    const {'1': 'STUFFED_TOY', '2': 1},
+    const {'1': 'FAVORITE_TEACHER', '2': 2},
     const {'1': 'DRIVING_INSTRUCTOR', '2': 3},
     const {'1': 'FIRST_KISSED', '2': 4},
     const {'1': 'CHILDHOOD_NICKNAME', '2': 5},
@@ -36,8 +38,6 @@ const AccountBackup_DeprecatedQuestions$json = const {
   '1': 'DeprecatedQuestions',
   '2': const [
     const {'1': 'EMPTY_DEPRECATED', '2': 0},
-    const {'1': 'STUFFED_TOY', '2': 1},
-    const {'1': 'FAVORITE_TEACHER', '2': 2},
   ],
 };
 
@@ -51,4 +51,4 @@ const AccountBackup_Auth$json = const {
 };
 
 /// Descriptor for `AccountBackup`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountBackupDescriptor = $convert.base64Decode('Cg1BY2NvdW50QmFja3VwEhgKB3ZlcnNpb24YASABKAlSB3ZlcnNpb24SRQoJcXVlc3Rpb25zGAIgAygOMicuZHZvdGUudHlwZXMudjEuQWNjb3VudEJhY2t1cC5RdWVzdGlvbnNSCXF1ZXN0aW9ucxI2CgRhdXRoGAMgASgOMiIuZHZvdGUudHlwZXMudjEuQWNjb3VudEJhY2t1cC5BdXRoUgRhdXRoEhAKA2tleRgEIAEoDFIDa2V5IlgKCVF1ZXN0aW9ucxIJCgVFTVBUWRAAEhYKEkRSSVZJTkdfSU5TVFJVQ1RPUhADEhAKDEZJUlNUX0tJU1NFRBAEEhYKEkNISUxESE9PRF9OSUNLTkFNRRAFIlIKE0RlcHJlY2F0ZWRRdWVzdGlvbnMSFAoQRU1QVFlfREVQUkVDQVRFRBAAEg8KC1NUVUZGRURfVE9ZEAESFAoQRkFWT1JJVEVfVEVBQ0hFUhACIhkKBEF1dGgSBwoDUElOEAASCAoEUEFTUxAB');
+final $typed_data.Uint8List accountBackupDescriptor = $convert.base64Decode('Cg1BY2NvdW50QmFja3VwEhgKB3ZlcnNpb24YASABKAlSB3ZlcnNpb24SRQoJcXVlc3Rpb25zGAIgAygOMicuZHZvdGUudHlwZXMudjEuQWNjb3VudEJhY2t1cC5RdWVzdGlvbnNSCXF1ZXN0aW9ucxI2CgRhdXRoGAMgASgOMiIuZHZvdGUudHlwZXMudjEuQWNjb3VudEJhY2t1cC5BdXRoUgRhdXRoEhAKA2tleRgEIAEoDFIDa2V5In8KCVF1ZXN0aW9ucxIJCgVFTVBUWRAAEg8KC1NUVUZGRURfVE9ZEAESFAoQRkFWT1JJVEVfVEVBQ0hFUhACEhYKEkRSSVZJTkdfSU5TVFJVQ1RPUhADEhAKDEZJUlNUX0tJU1NFRBAEEhYKEkNISUxESE9PRF9OSUNLTkFNRRAFIisKE0RlcHJlY2F0ZWRRdWVzdGlvbnMSFAoQRU1QVFlfREVQUkVDQVRFRBAAIhkKBEF1dGgSBwoDUElOEAASCAoEUEFTUxAB');
