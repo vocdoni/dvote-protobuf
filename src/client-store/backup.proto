@@ -16,4 +16,5 @@ message AccountBackup {
     }
     Auth auth = 2;
     bytes key = 3;
+    string alias = 4;
 }

@@ -15,6 +15,7 @@ const AccountBackup$json = const {
     const {'1': 'questions', '3': 1, '4': 3, '5': 14, '6': '.dvote.types.v1.AccountBackup.Questions', '10': 'questions'},
     const {'1': 'auth', '3': 2, '4': 1, '5': 14, '6': '.dvote.types.v1.AccountBackup.Auth', '10': 'auth'},
     const {'1': 'key', '3': 3, '4': 1, '5': 12, '10': 'key'},
+    const {'1': 'alias', '3': 4, '4': 1, '5': 9, '10': 'alias'},
   ],
   '4': const [AccountBackup_Questions$json, AccountBackup_Auth$json],
 };
@@ -41,4 +42,4 @@ const AccountBackup_Auth$json = const {
 };
 
 /// Descriptor for `AccountBackup`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountBackupDescriptor = $convert.base64Decode('Cg1BY2NvdW50QmFja3VwEkUKCXF1ZXN0aW9ucxgBIAMoDjInLmR2b3RlLnR5cGVzLnYxLkFjY291bnRCYWNrdXAuUXVlc3Rpb25zUglxdWVzdGlvbnMSNgoEYXV0aBgCIAEoDjIiLmR2b3RlLnR5cGVzLnYxLkFjY291bnRCYWNrdXAuQXV0aFIEYXV0aBIQCgNrZXkYAyABKAxSA2tleSJ0CglRdWVzdGlvbnMSDwoLU1RVRkZFRF9UT1kQABIUChBGQVZPUklURV9URUFDSEVSEAESFgoSRFJJVklOR19JTlNUUlVDVE9SEAISEAoMRklSU1RfS0lTU0VEEAMSFgoSQ0hJTERIT09EX05JQ0tOQU1FEAQiGQoEQXV0aBIHCgNQSU4QABIICgRQQVNTEAE=');
+final $typed_data.Uint8List accountBackupDescriptor = $convert.base64Decode('Cg1BY2NvdW50QmFja3VwEkUKCXF1ZXN0aW9ucxgBIAMoDjInLmR2b3RlLnR5cGVzLnYxLkFjY291bnRCYWNrdXAuUXVlc3Rpb25zUglxdWVzdGlvbnMSNgoEYXV0aBgCIAEoDjIiLmR2b3RlLnR5cGVzLnYxLkFjY291bnRCYWNrdXAuQXV0aFIEYXV0aBIQCgNrZXkYAyABKAxSA2tleRIUCgVhbGlhcxgEIAEoCVIFYWxpYXMidAoJUXVlc3Rpb25zEg8KC1NUVUZGRURfVE9ZEAASFAoQRkFWT1JJVEVfVEVBQ0hFUhABEhYKEkRSSVZJTkdfSU5TVFJVQ1RPUhACEhAKDEZJUlNUX0tJU1NFRBADEhYKEkNISUxESE9PRF9OSUNLTkFNRRAEIhkKBEF1dGgSBwoDUElOEAASCAoEUEFTUxAB');

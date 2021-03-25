@@ -18,6 +18,7 @@ class AccountBackup extends $pb.GeneratedMessage {
     ..pc<AccountBackup_Questions>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questions', $pb.PbFieldType.PE, valueOf: AccountBackup_Questions.valueOf, enumValues: AccountBackup_Questions.values)
     ..e<AccountBackup_Auth>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'auth', $pb.PbFieldType.OE, defaultOrMaker: AccountBackup_Auth.PIN, valueOf: AccountBackup_Auth.valueOf, enumValues: AccountBackup_Auth.values)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.OY)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'alias')
     ..hasRequiredFields = false
   ;
 
@@ -26,6 +27,7 @@ class AccountBackup extends $pb.GeneratedMessage {
     $core.Iterable<AccountBackup_Questions> questions,
     AccountBackup_Auth auth,
     $core.List<$core.int> key,
+    $core.String alias,
   }) {
     final _result = create();
     if (questions != null) {
@@ -36,6 +38,9 @@ class AccountBackup extends $pb.GeneratedMessage {
     }
     if (key != null) {
       _result.key = key;
+    }
+    if (alias != null) {
+      _result.alias = alias;
     }
     return _result;
   }
@@ -80,5 +85,14 @@ class AccountBackup extends $pb.GeneratedMessage {
   $core.bool hasKey() => $_has(2);
   @$pb.TagNumber(3)
   void clearKey() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get alias => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set alias($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAlias() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAlias() => clearField(4);
 }
 

@@ -7,6 +7,7 @@ export interface AccountBackup {
   questions: AccountBackup_Questions[];
   auth: AccountBackup_Auth;
   key: Uint8Array;
+  alias: string;
 }
 
 export enum AccountBackup_Questions {
@@ -95,7 +96,7 @@ export function accountBackup_AuthToJSON(object: AccountBackup_Auth): string {
   }
 }
 
-const baseAccountBackup: object = { questions: 0, auth: 0 };
+const baseAccountBackup: object = { questions: 0, auth: 0, alias: "" };
 
 export const AccountBackup = {
   encode(message: AccountBackup, writer: Writer = Writer.create()): Writer {
@@ -109,6 +110,9 @@ export const AccountBackup = {
     }
     if (message.key.length !== 0) {
       writer.uint32(26).bytes(message.key);
+    }
+    if (message.alias !== "") {
+      writer.uint32(34).string(message.alias);
     }
     return writer;
   },
@@ -137,6 +141,9 @@ export const AccountBackup = {
         case 3:
           message.key = reader.bytes();
           break;
+        case 4:
+          message.alias = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -159,6 +166,9 @@ export const AccountBackup = {
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
+    if (object.alias !== undefined && object.alias !== null) {
+      message.alias = String(object.alias);
+    }
     return message;
   },
 
@@ -177,6 +187,7 @@ export const AccountBackup = {
       (obj.key = base64FromBytes(
         message.key !== undefined ? message.key : new Uint8Array()
       ));
+    message.alias !== undefined && (obj.alias = message.alias);
     return obj;
   },
 
@@ -193,6 +204,9 @@ export const AccountBackup = {
     }
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    }
+    if (object.alias !== undefined && object.alias !== null) {
+      message.alias = object.alias;
     }
     return message;
   },
