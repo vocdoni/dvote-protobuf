@@ -1,5 +1,10 @@
-import { VoteEnvelope, Proof, ProofGraviton } from "../build/ts/common/vote"
-import { SignedTx, Tx } from "../build/ts/vochain/vochain"
+import {
+    SignedTx,
+    Tx,
+    VoteEnvelope,
+    Proof,
+    ProofGraviton,
+} from "../build/ts/vochain/vochain"
 import { Reader } from "protobufjs"
 
 const dummyArray = new Uint8Array([100, 150, 200, 250])
