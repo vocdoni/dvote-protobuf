@@ -1,0 +1,40 @@
+/// Type: Client side helper model
+
+syntax = "proto3";
+package dvote.types.v1;
+
+import "metadata/entity.proto";
+import "client-store/key.proto";
+
+// Helper to serialize and store a set of entries
+message AccountsStore {
+    repeated Account items = 1; 
+}
+
+message Account {
+    string alias = 1;
+
+    Key key = 2; // Associated keys
+
+    // Pointer to fetch the subscribed entities
+    message Peers {
+        repeated EntityReference entities = 1;
+        repeated PeerIdentity identities = 2;  // external identities that we have interacted with
+    }
+    Peers peers = 3;
+
+    string appVersion = 4; // App version information
+    bool backedUp = 5; // App user has backed up their account
+    string appAnalyticsID = 6; // Random anonymized id for app analytics
+    string webAnalyticsID = 7; // Random anonymized id for app analytics
+
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // identities can be organized by custom values.
+    map<string, string> meta = 100;
+}
+
+message PeerIdentity {
+    string alias = 1;
+    string identityId = 2; 
+}

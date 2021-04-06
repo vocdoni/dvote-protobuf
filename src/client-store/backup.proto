@@ -1,6 +1,8 @@
 syntax = "proto3";
 package dvote.types.v1;
 
+import "metadata/account.proto";
+
 message AccountBackup {
     enum Questions {
         STUFFED_TOY = 0;
@@ -10,11 +12,14 @@ message AccountBackup {
         CHILDHOOD_NICKNAME = 4;
     }
     repeated Questions questions = 1;
+    
     enum Auth {
         PIN = 0;
         PASS = 1;
     }
     Auth auth = 2;
-    bytes key = 3;
-    string alias = 4;
+    
+    string alias = 3;
+    Key key = 4; // Associated key
+   
 }
