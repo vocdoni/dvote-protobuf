@@ -3,38 +3,49 @@
 syntax = "proto3";
 package dvote.types.v1;
 
+import "client-store/wallet.proto";
 import "metadata/entity.proto";
-import "client-store/key.proto";
 
-// Helper to serialize and store a set of entries
+/// Helper to serialize and store a list of entries at once
 message AccountsStore {
     repeated Account items = 1; 
 }
 
+/// An account, containing the credentials and info of both entities and app voters
 message Account {
-    string alias = 1;
+    /// The name of the entity or an alias to help users identify the account
+    string name = 1;
 
-    Key key = 2; // Associated keys
+    /// The underlying root wallet, usable with the original passphrase or pin
+    Wallet wallet = 2;
 
-    // Pointer to fetch the subscribed entities
-    message Peers {
-        repeated EntityReference entities = 1;
-        repeated PeerIdentity identities = 2;  // external identities that we have interacted with
+    /// Does the user have a back up of the account?
+    bool hasBackup = 3;
+
+    /// Additional fields, depending on the context of usage
+
+    message AppVoter {
+        /// Random anonymized id for analytics
+        string appAnalyticsID = 1;
+        
+        /// Subscribed entities
+        repeated EntityReference entities = 2;
     }
-    Peers peers = 3;
+    message WebEntity {
+        string webAnalyticsID = 1; // Random anonymized id for analytics
+    }
 
-    string appVersion = 4; // App version information
-    bool backedUp = 5; // App user has backed up their account
-    string appAnalyticsID = 6; // Random anonymized id for app analytics
-    string webAnalyticsID = 7; // Random anonymized id for app analytics
+    message Extra {
+        oneof content {
+            AppVoter appVoter = 1;
+            WebEntity webEntity = 2;
+        }
+    }
+    Extra extra = 4;
+
 
     // EXTERNAL FIELDS
     // Allow to use arbitrary key/values so that
     // identities can be organized by custom values.
     map<string, string> meta = 100;
-}
-
-message PeerIdentity {
-    string alias = 1;
-    string identityId = 2; 
 }
