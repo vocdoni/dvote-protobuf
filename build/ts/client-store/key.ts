@@ -4,54 +4,20 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "dvote.types.v1";
 
 export interface Key {
-  type: Key_Type;
   /**
    * Human friendly seed phrase, derived with an HD path to produce a root private key
    * The root private key will still be uniquely derived for each entity
    */
   encryptedMnemonic: string;
-  /** Accouts have an N:N mapping with entities and private keys */
-  encryptedRootPrivateKey: string;
-  rootPublicKey: string;
-  rootAddress: string;
+  path: string;
+  locale: string;
+  address: string;
   /**
+   * EXTERNAL FIELDS
    * Allow to use arbitrary key/values so that
    * keys can be organized by custom values.
    */
   meta: { [key: string]: string };
-}
-
-export enum Key_Type {
-  /** SECP256K1 - ETHEREUM */
-  SECP256K1 = 0,
-  BABYJUBJUB = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function key_TypeFromJSON(object: any): Key_Type {
-  switch (object) {
-    case 0:
-    case "SECP256K1":
-      return Key_Type.SECP256K1;
-    case 1:
-    case "BABYJUBJUB":
-      return Key_Type.BABYJUBJUB;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Key_Type.UNRECOGNIZED;
-  }
-}
-
-export function key_TypeToJSON(object: Key_Type): string {
-  switch (object) {
-    case Key_Type.SECP256K1:
-      return "SECP256K1";
-    case Key_Type.BABYJUBJUB:
-      return "BABYJUBJUB";
-    default:
-      return "UNKNOWN";
-  }
 }
 
 export interface Key_MetaEntry {
@@ -60,29 +26,25 @@ export interface Key_MetaEntry {
 }
 
 const baseKey: object = {
-  type: 0,
   encryptedMnemonic: "",
-  encryptedRootPrivateKey: "",
-  rootPublicKey: "",
-  rootAddress: "",
+  path: "",
+  locale: "",
+  address: "",
 };
 
 export const Key = {
   encode(message: Key, writer: Writer = Writer.create()): Writer {
-    if (message.type !== 0) {
-      writer.uint32(8).int32(message.type);
-    }
     if (message.encryptedMnemonic !== "") {
-      writer.uint32(18).string(message.encryptedMnemonic);
+      writer.uint32(10).string(message.encryptedMnemonic);
     }
-    if (message.encryptedRootPrivateKey !== "") {
-      writer.uint32(26).string(message.encryptedRootPrivateKey);
+    if (message.path !== "") {
+      writer.uint32(18).string(message.path);
     }
-    if (message.rootPublicKey !== "") {
-      writer.uint32(34).string(message.rootPublicKey);
+    if (message.locale !== "") {
+      writer.uint32(26).string(message.locale);
     }
-    if (message.rootAddress !== "") {
-      writer.uint32(42).string(message.rootAddress);
+    if (message.address !== "") {
+      writer.uint32(34).string(message.address);
     }
     Object.entries(message.meta).forEach(([key, value]) => {
       Key_MetaEntry.encode(
@@ -102,19 +64,16 @@ export const Key = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.type = reader.int32() as any;
-          break;
-        case 2:
           message.encryptedMnemonic = reader.string();
           break;
+        case 2:
+          message.path = reader.string();
+          break;
         case 3:
-          message.encryptedRootPrivateKey = reader.string();
+          message.locale = reader.string();
           break;
         case 4:
-          message.rootPublicKey = reader.string();
-          break;
-        case 5:
-          message.rootAddress = reader.string();
+          message.address = reader.string();
           break;
         case 100:
           const entry100 = Key_MetaEntry.decode(reader, reader.uint32());
@@ -133,26 +92,20 @@ export const Key = {
   fromJSON(object: any): Key {
     const message = { ...baseKey } as Key;
     message.meta = {};
-    if (object.type !== undefined && object.type !== null) {
-      message.type = key_TypeFromJSON(object.type);
-    }
     if (
       object.encryptedMnemonic !== undefined &&
       object.encryptedMnemonic !== null
     ) {
       message.encryptedMnemonic = String(object.encryptedMnemonic);
     }
-    if (
-      object.encryptedRootPrivateKey !== undefined &&
-      object.encryptedRootPrivateKey !== null
-    ) {
-      message.encryptedRootPrivateKey = String(object.encryptedRootPrivateKey);
+    if (object.path !== undefined && object.path !== null) {
+      message.path = String(object.path);
     }
-    if (object.rootPublicKey !== undefined && object.rootPublicKey !== null) {
-      message.rootPublicKey = String(object.rootPublicKey);
+    if (object.locale !== undefined && object.locale !== null) {
+      message.locale = String(object.locale);
     }
-    if (object.rootAddress !== undefined && object.rootAddress !== null) {
-      message.rootAddress = String(object.rootAddress);
+    if (object.address !== undefined && object.address !== null) {
+      message.address = String(object.address);
     }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
@@ -164,15 +117,11 @@ export const Key = {
 
   toJSON(message: Key): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = key_TypeToJSON(message.type));
     message.encryptedMnemonic !== undefined &&
       (obj.encryptedMnemonic = message.encryptedMnemonic);
-    message.encryptedRootPrivateKey !== undefined &&
-      (obj.encryptedRootPrivateKey = message.encryptedRootPrivateKey);
-    message.rootPublicKey !== undefined &&
-      (obj.rootPublicKey = message.rootPublicKey);
-    message.rootAddress !== undefined &&
-      (obj.rootAddress = message.rootAddress);
+    message.path !== undefined && (obj.path = message.path);
+    message.locale !== undefined && (obj.locale = message.locale);
+    message.address !== undefined && (obj.address = message.address);
     obj.meta = {};
     if (message.meta) {
       Object.entries(message.meta).forEach(([k, v]) => {
@@ -185,26 +134,20 @@ export const Key = {
   fromPartial(object: DeepPartial<Key>): Key {
     const message = { ...baseKey } as Key;
     message.meta = {};
-    if (object.type !== undefined && object.type !== null) {
-      message.type = object.type;
-    }
     if (
       object.encryptedMnemonic !== undefined &&
       object.encryptedMnemonic !== null
     ) {
       message.encryptedMnemonic = object.encryptedMnemonic;
     }
-    if (
-      object.encryptedRootPrivateKey !== undefined &&
-      object.encryptedRootPrivateKey !== null
-    ) {
-      message.encryptedRootPrivateKey = object.encryptedRootPrivateKey;
+    if (object.path !== undefined && object.path !== null) {
+      message.path = object.path;
     }
-    if (object.rootPublicKey !== undefined && object.rootPublicKey !== null) {
-      message.rootPublicKey = object.rootPublicKey;
+    if (object.locale !== undefined && object.locale !== null) {
+      message.locale = object.locale;
     }
-    if (object.rootAddress !== undefined && object.rootAddress !== null) {
-      message.rootAddress = object.rootAddress;
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
     }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
