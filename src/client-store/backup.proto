@@ -4,13 +4,14 @@ package dvote.types.v1;
 import "client-store/wallet.proto";
 
 message WalletBackup {
-    /// A name to help identify it
+    /// A name to help identify the wallet backed up
     string name = 1;
 
     /// When it was exported. Unix timestamp (seconds)
     uint64 timestamp = 2;
 
     /// Data to import the wallet, given the original passphrase or pin
+    /// Contains the encrypted mnemonic
     Wallet wallet = 3;
 
     /// Data to recover the original passphrase, given some recovery questions
@@ -22,6 +23,7 @@ message WalletBackup {
             FIRST_KISSED = 3;
             CHILDHOOD_NICKNAME = 4;
         }
+        /// The indexes of the questions used
         repeated QuestionEnum questionIds = 1;
 
         bytes encryptedPassphrase = 2;

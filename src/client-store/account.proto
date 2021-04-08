@@ -19,8 +19,11 @@ message Account {
     /// The underlying root wallet, usable with the original passphrase or pin
     Wallet wallet = 2;
 
+    /// The root address of the wallet, used to detect duplicate accounts
+    string address = 3;
+
     /// Does the user have a back up of the account?
-    bool hasBackup = 3;
+    bool hasBackup = 4;
 
     /// Additional fields, depending on the context of usage
 
@@ -41,7 +44,7 @@ message Account {
             WebEntity webEntity = 2;
         }
     }
-    Extra extra = 4;
+    Extra extra = 5;
 
 
     // EXTERNAL FIELDS
