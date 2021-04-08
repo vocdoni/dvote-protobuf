@@ -1,0 +1,54 @@
+/// Type: Client side helper model
+
+syntax = "proto3";
+package dvote.types.v1;
+
+import "client-store/wallet.proto";
+import "metadata/entity.proto";
+
+/// Helper to serialize and store a list of entries at once
+message AccountsStore {
+    repeated Account items = 1; 
+}
+
+/// An account, containing the credentials and info of both entities and app voters
+message Account {
+    /// The name of the entity or an alias to help users identify the account
+    string name = 1;
+
+    /// The underlying root wallet, usable with the original passphrase or pin
+    Wallet wallet = 2;
+
+    /// The root address of the wallet, used to detect duplicate accounts
+    string address = 3;
+
+    /// Does the user have a back up of the account?
+    bool hasBackup = 4;
+
+    /// Additional fields, depending on the context of usage
+
+    message AppVoter {
+        /// Random anonymized id for analytics
+        string appAnalyticsID = 1;
+        
+        /// Subscribed entities
+        repeated EntityReference entities = 2;
+    }
+    message WebEntity {
+        string webAnalyticsID = 1; // Random anonymized id for analytics
+    }
+
+    message Extra {
+        oneof content {
+            AppVoter appVoter = 1;
+            WebEntity webEntity = 2;
+        }
+    }
+    Extra extra = 5;
+
+
+    // EXTERNAL FIELDS
+    // Allow to use arbitrary key/values so that
+    // identities can be organized by custom values.
+    map<string, string> meta = 100;
+}

@@ -1,20 +1,32 @@
 syntax = "proto3";
 package dvote.types.v1;
 
-message AccountBackup {
-    enum Questions {
-        STUFFED_TOY = 0;
-        FAVORITE_TEACHER = 1;
-        DRIVING_INSTRUCTOR = 2;
-        FIRST_KISSED = 3;
-        CHILDHOOD_NICKNAME = 4;
+import "client-store/wallet.proto";
+
+message WalletBackup {
+    /// A name to help identify the wallet backed up
+    string name = 1;
+
+    /// When it was exported. Unix timestamp (seconds)
+    uint64 timestamp = 2;
+
+    /// Data to import the wallet, given the original passphrase or pin
+    /// Contains the encrypted mnemonic
+    Wallet wallet = 3;
+
+    /// Data to recover the original passphrase, given some recovery questions
+    message Recovery {
+        enum QuestionEnum {
+            STUFFED_TOY = 0;
+            FAVORITE_TEACHER = 1;
+            DRIVING_INSTRUCTOR = 2;
+            FIRST_KISSED = 3;
+            CHILDHOOD_NICKNAME = 4;
+        }
+        /// The indexes of the questions used
+        repeated QuestionEnum questionIds = 1;
+
+        bytes encryptedPassphrase = 2;
     }
-    repeated Questions questions = 1;
-    enum Auth {
-        PIN = 0;
-        PASS = 1;
-    }
-    Auth auth = 2;
-    bytes key = 3;
-    string alias = 4;
+    Recovery passphraseRecovery = 4;
 }

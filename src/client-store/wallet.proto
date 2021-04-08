@@ -1,0 +1,19 @@
+/// Type: Client side helper model
+
+syntax = "proto3";
+package dvote.types.v1;
+
+/// An encrypted wallet with the details to allow its usage, given a passphrase or a pin
+message Wallet {
+    /// Human friendly seed phrase, derived with an HD path to produce a root private key
+    /// The root private key will still be uniquely derived for each entity
+    bytes encryptedMnemonic = 1;
+    string hdPath = 2;
+    string locale = 3;
+
+    enum AuthMethod {
+        PASS = 0;
+        PIN = 1;
+    }
+    AuthMethod authMethod = 4;
+}
