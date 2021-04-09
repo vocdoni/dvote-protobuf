@@ -16,10 +16,10 @@ define install_protoc
 	@if [ "$(PROTOC)" == "bin/protoc" -a ! -x bin/protoc ]; then \
 	case "$$(uname)" in \
 		linux|Linux) \
-			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip > protoc.zip \
+			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.15.8/protoc-3.15.8-linux-x86_64.zip > protoc.zip \
 			;;\
 		darwin|Darwin) \
-			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-osx-x86_64.zip > protoc.zip \
+			curl -L https://github.com/protocolbuffers/protobuf/releases/download/v3.15.8/protoc-3.15.8-osx-x86_64.zip > protoc.zip \
 			;;\
 		*) \
 			echo "Unsupported platform: $$(uname)" ;\
