@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -124,7 +125,7 @@ export const EntityMetadataStore = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): EntityMetadataStore {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEntityMetadataStore } as EntityMetadataStore;
     message.items = [];
@@ -242,7 +243,7 @@ export const EntityMetadata = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): EntityMetadata {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEntityMetadata } as EntityMetadata;
     message.languages = [];
@@ -627,7 +628,7 @@ export const EntityMetadata_NameEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_NameEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_NameEntry,
@@ -705,7 +706,7 @@ export const EntityMetadata_DescriptionEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_DescriptionEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_DescriptionEntry,
@@ -783,7 +784,7 @@ export const EntityMetadata_VotingProcesses = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_VotingProcesses {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_VotingProcesses,
@@ -883,7 +884,7 @@ export const EntityMetadata_NewsFeedEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_NewsFeedEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_NewsFeedEntry,
@@ -958,7 +959,7 @@ export const EntityMetadata_Media = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): EntityMetadata_Media {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEntityMetadata_Media } as EntityMetadata_Media;
     while (reader.pos < end) {
@@ -1048,7 +1049,7 @@ export const EntityMetadata_Action = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): EntityMetadata_Action {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEntityMetadata_Action } as EntityMetadata_Action;
     message.name = {};
@@ -1199,7 +1200,7 @@ export const EntityMetadata_Action_NameEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_Action_NameEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_Action_NameEntry,
@@ -1294,7 +1295,7 @@ export const EntityMetadata_Action_ImageSource = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_Action_ImageSource {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_Action_ImageSource,
@@ -1426,7 +1427,7 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_Action_ImageSource_CaptionEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_Action_ImageSource_CaptionEntry,
@@ -1504,7 +1505,7 @@ export const EntityMetadata_MetaEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): EntityMetadata_MetaEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseEntityMetadata_MetaEntry,
@@ -1576,7 +1577,7 @@ export const EntityReference = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): EntityReference {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEntityReference } as EntityReference;
     message.entryPoints = [];
@@ -1651,3 +1652,10 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

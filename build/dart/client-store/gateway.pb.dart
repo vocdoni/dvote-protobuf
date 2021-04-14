@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/gateway.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -19,9 +19,9 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
 
   BootNodeGateways_NetworkNodes_DVote._() : super();
   factory BootNodeGateways_NetworkNodes_DVote({
-    $core.String uri,
-    $core.Iterable<$core.String> apis,
-    $core.String pubKey,
+    $core.String? uri,
+    $core.Iterable<$core.String>? apis,
+    $core.String? pubKey,
   }) {
     final _result = create();
     if (uri != null) {
@@ -54,7 +54,7 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
   static $pb.PbList<BootNodeGateways_NetworkNodes_DVote> createRepeated() => $pb.PbList<BootNodeGateways_NetworkNodes_DVote>();
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_DVote getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways_NetworkNodes_DVote>(create);
-  static BootNodeGateways_NetworkNodes_DVote _defaultInstance;
+  static BootNodeGateways_NetworkNodes_DVote? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get uri => $_getSZ(0);
@@ -86,7 +86,7 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
 
   BootNodeGateways_NetworkNodes_Web3._() : super();
   factory BootNodeGateways_NetworkNodes_Web3({
-    $core.String uri,
+    $core.String? uri,
   }) {
     final _result = create();
     if (uri != null) {
@@ -113,7 +113,7 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
   static $pb.PbList<BootNodeGateways_NetworkNodes_Web3> createRepeated() => $pb.PbList<BootNodeGateways_NetworkNodes_Web3>();
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_Web3 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways_NetworkNodes_Web3>(create);
-  static BootNodeGateways_NetworkNodes_Web3 _defaultInstance;
+  static BootNodeGateways_NetworkNodes_Web3? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get uri => $_getSZ(0);
@@ -134,8 +134,8 @@ class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
 
   BootNodeGateways_NetworkNodes._() : super();
   factory BootNodeGateways_NetworkNodes({
-    $core.Iterable<BootNodeGateways_NetworkNodes_DVote> dvote,
-    $core.Iterable<BootNodeGateways_NetworkNodes_Web3> web3,
+    $core.Iterable<BootNodeGateways_NetworkNodes_DVote>? dvote,
+    $core.Iterable<BootNodeGateways_NetworkNodes_Web3>? web3,
   }) {
     final _result = create();
     if (dvote != null) {
@@ -165,7 +165,7 @@ class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {
   static $pb.PbList<BootNodeGateways_NetworkNodes> createRepeated() => $pb.PbList<BootNodeGateways_NetworkNodes>();
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways_NetworkNodes>(create);
-  static BootNodeGateways_NetworkNodes _defaultInstance;
+  static BootNodeGateways_NetworkNodes? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<BootNodeGateways_NetworkNodes_DVote> get dvote => $_getList(0);
@@ -186,11 +186,11 @@ class BootNodeGateways extends $pb.GeneratedMessage {
 
   BootNodeGateways._() : super();
   factory BootNodeGateways({
-    BootNodeGateways_NetworkNodes homestead,
-    BootNodeGateways_NetworkNodes goerli,
-    BootNodeGateways_NetworkNodes xdai,
-    BootNodeGateways_NetworkNodes sokol,
-    $core.Map<$core.String, $core.String> meta,
+    BootNodeGateways_NetworkNodes? homestead,
+    BootNodeGateways_NetworkNodes? goerli,
+    BootNodeGateways_NetworkNodes? xdai,
+    BootNodeGateways_NetworkNodes? sokol,
+    $core.Map<$core.String, $core.String>? meta,
   }) {
     final _result = create();
     if (homestead != null) {
@@ -229,7 +229,7 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   static $pb.PbList<BootNodeGateways> createRepeated() => $pb.PbList<BootNodeGateways>();
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways>(create);
-  static BootNodeGateways _defaultInstance;
+  static BootNodeGateways? _defaultInstance;
 
   @$pb.TagNumber(1)
   BootNodeGateways_NetworkNodes get homestead => $_getN(0);

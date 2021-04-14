@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: metadata/entity.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -17,7 +17,7 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
 
   EntityMetadataStore._() : super();
   factory EntityMetadataStore({
-    $core.Iterable<EntityMetadata> items,
+    $core.Iterable<EntityMetadata>? items,
   }) {
     final _result = create();
     if (items != null) {
@@ -44,7 +44,7 @@ class EntityMetadataStore extends $pb.GeneratedMessage {
   static $pb.PbList<EntityMetadataStore> createRepeated() => $pb.PbList<EntityMetadataStore>();
   @$core.pragma('dart2js:noInline')
   static EntityMetadataStore getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityMetadataStore>(create);
-  static EntityMetadataStore _defaultInstance;
+  static EntityMetadataStore? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<EntityMetadata> get items => $_getList(0);
@@ -59,8 +59,8 @@ class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
 
   EntityMetadata_VotingProcesses._() : super();
   factory EntityMetadata_VotingProcesses({
-    $core.Iterable<$core.String> active,
-    $core.Iterable<$core.String> ended,
+    $core.Iterable<$core.String>? active,
+    $core.Iterable<$core.String>? ended,
   }) {
     final _result = create();
     if (active != null) {
@@ -90,7 +90,7 @@ class EntityMetadata_VotingProcesses extends $pb.GeneratedMessage {
   static $pb.PbList<EntityMetadata_VotingProcesses> createRepeated() => $pb.PbList<EntityMetadata_VotingProcesses>();
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_VotingProcesses getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityMetadata_VotingProcesses>(create);
-  static EntityMetadata_VotingProcesses _defaultInstance;
+  static EntityMetadata_VotingProcesses? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.String> get active => $_getList(0);
@@ -108,8 +108,8 @@ class EntityMetadata_Media extends $pb.GeneratedMessage {
 
   EntityMetadata_Media._() : super();
   factory EntityMetadata_Media({
-    $core.String avatar,
-    $core.String header,
+    $core.String? avatar,
+    $core.String? header,
   }) {
     final _result = create();
     if (avatar != null) {
@@ -139,7 +139,7 @@ class EntityMetadata_Media extends $pb.GeneratedMessage {
   static $pb.PbList<EntityMetadata_Media> createRepeated() => $pb.PbList<EntityMetadata_Media>();
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Media getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityMetadata_Media>(create);
-  static EntityMetadata_Media _defaultInstance;
+  static EntityMetadata_Media? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get avatar => $_getSZ(0);
@@ -172,11 +172,11 @@ class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
 
   EntityMetadata_Action_ImageSource._() : super();
   factory EntityMetadata_Action_ImageSource({
-    $core.String type,
-    $core.String name,
-    $core.String orientation,
-    $core.String overlay,
-    $core.Map<$core.String, $core.String> caption,
+    $core.String? type,
+    $core.String? name,
+    $core.String? orientation,
+    $core.String? overlay,
+    $core.Map<$core.String, $core.String>? caption,
   }) {
     final _result = create();
     if (type != null) {
@@ -215,7 +215,7 @@ class EntityMetadata_Action_ImageSource extends $pb.GeneratedMessage {
   static $pb.PbList<EntityMetadata_Action_ImageSource> createRepeated() => $pb.PbList<EntityMetadata_Action_ImageSource>();
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Action_ImageSource getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityMetadata_Action_ImageSource>(create);
-  static EntityMetadata_Action_ImageSource _defaultInstance;
+  static EntityMetadata_Action_ImageSource? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get type => $_getSZ(0);
@@ -270,12 +270,12 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
 
   EntityMetadata_Action._() : super();
   factory EntityMetadata_Action({
-    $core.String type,
-    $core.Map<$core.String, $core.String> name,
-    $core.String visible,
-    $core.String url,
-    $core.Iterable<EntityMetadata_Action_ImageSource> imageSources,
-    $core.String actionKey,
+    $core.String? type,
+    $core.Map<$core.String, $core.String>? name,
+    $core.String? visible,
+    $core.String? url,
+    $core.Iterable<EntityMetadata_Action_ImageSource>? imageSources,
+    $core.String? actionKey,
   }) {
     final _result = create();
     if (type != null) {
@@ -317,7 +317,7 @@ class EntityMetadata_Action extends $pb.GeneratedMessage {
   static $pb.PbList<EntityMetadata_Action> createRepeated() => $pb.PbList<EntityMetadata_Action>();
   @$core.pragma('dart2js:noInline')
   static EntityMetadata_Action getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityMetadata_Action>(create);
-  static EntityMetadata_Action _defaultInstance;
+  static EntityMetadata_Action? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get type => $_getSZ(0);
@@ -382,19 +382,19 @@ class EntityMetadata extends $pb.GeneratedMessage {
 
   EntityMetadata._() : super();
   factory EntityMetadata({
-    $core.String version,
-    $core.Iterable<$core.String> languages,
-    $core.Map<$core.String, $core.String> name,
-    $core.Map<$core.String, $core.String> description,
-    EntityMetadata_VotingProcesses votingProcesses,
-    $core.Map<$core.String, $core.String> newsFeed,
-    EntityMetadata_Media media,
-    $core.Iterable<EntityMetadata_Action> actions,
-    $core.Iterable<EntityReference> bootEntities,
-    $core.Iterable<EntityReference> fallbackBootNodeEntities,
-    $core.Iterable<EntityReference> trustedEntities,
-    $core.Iterable<EntityReference> censusServiceManagedEntities,
-    $core.Map<$core.String, $core.String> meta,
+    $core.String? version,
+    $core.Iterable<$core.String>? languages,
+    $core.Map<$core.String, $core.String>? name,
+    $core.Map<$core.String, $core.String>? description,
+    EntityMetadata_VotingProcesses? votingProcesses,
+    $core.Map<$core.String, $core.String>? newsFeed,
+    EntityMetadata_Media? media,
+    $core.Iterable<EntityMetadata_Action>? actions,
+    $core.Iterable<EntityReference>? bootEntities,
+    $core.Iterable<EntityReference>? fallbackBootNodeEntities,
+    $core.Iterable<EntityReference>? trustedEntities,
+    $core.Iterable<EntityReference>? censusServiceManagedEntities,
+    $core.Map<$core.String, $core.String>? meta,
   }) {
     final _result = create();
     if (version != null) {
@@ -457,7 +457,7 @@ class EntityMetadata extends $pb.GeneratedMessage {
   static $pb.PbList<EntityMetadata> createRepeated() => $pb.PbList<EntityMetadata>();
   @$core.pragma('dart2js:noInline')
   static EntityMetadata getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityMetadata>(create);
-  static EntityMetadata _defaultInstance;
+  static EntityMetadata? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get version => $_getSZ(0);
@@ -530,8 +530,8 @@ class EntityReference extends $pb.GeneratedMessage {
 
   EntityReference._() : super();
   factory EntityReference({
-    $core.String entityId,
-    $core.Iterable<$core.String> entryPoints,
+    $core.String? entityId,
+    $core.Iterable<$core.String>? entryPoints,
   }) {
     final _result = create();
     if (entityId != null) {
@@ -561,7 +561,7 @@ class EntityReference extends $pb.GeneratedMessage {
   static $pb.PbList<EntityReference> createRepeated() => $pb.PbList<EntityReference>();
   @$core.pragma('dart2js:noInline')
   static EntityReference getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EntityReference>(create);
-  static EntityReference _defaultInstance;
+  static EntityReference? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get entityId => $_getSZ(0);

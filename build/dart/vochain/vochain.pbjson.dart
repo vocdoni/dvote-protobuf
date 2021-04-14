@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: vochain/vochain.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
 import 'dart:core' as $core;
@@ -324,11 +324,12 @@ const EnvelopeType$json = const {
     const {'1': 'anonymous', '3': 2, '4': 1, '5': 8, '10': 'anonymous'},
     const {'1': 'encryptedVotes', '3': 3, '4': 1, '5': 8, '10': 'encryptedVotes'},
     const {'1': 'uniqueValues', '3': 4, '4': 1, '5': 8, '10': 'uniqueValues'},
+    const {'1': 'costFromWeight', '3': 5, '4': 1, '5': 8, '10': 'costFromWeight'},
   ],
 };
 
 /// Descriptor for `EnvelopeType`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List envelopeTypeDescriptor = $convert.base64Decode('CgxFbnZlbG9wZVR5cGUSFgoGc2VyaWFsGAEgASgIUgZzZXJpYWwSHAoJYW5vbnltb3VzGAIgASgIUglhbm9ueW1vdXMSJgoOZW5jcnlwdGVkVm90ZXMYAyABKAhSDmVuY3J5cHRlZFZvdGVzEiIKDHVuaXF1ZVZhbHVlcxgEIAEoCFIMdW5pcXVlVmFsdWVz');
+final $typed_data.Uint8List envelopeTypeDescriptor = $convert.base64Decode('CgxFbnZlbG9wZVR5cGUSFgoGc2VyaWFsGAEgASgIUgZzZXJpYWwSHAoJYW5vbnltb3VzGAIgASgIUglhbm9ueW1vdXMSJgoOZW5jcnlwdGVkVm90ZXMYAyABKAhSDmVuY3J5cHRlZFZvdGVzEiIKDHVuaXF1ZVZhbHVlcxgEIAEoCFIMdW5pcXVlVmFsdWVzEiYKDmNvc3RGcm9tV2VpZ2h0GAUgASgIUg5jb3N0RnJvbVdlaWdodA==');
 @$core.Deprecated('Use processModeDescriptor instead')
 const ProcessMode$json = const {
   '1': 'ProcessMode',

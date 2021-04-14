@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -427,6 +427,7 @@ export interface EnvelopeType {
   anonymous: boolean;
   encryptedVotes: boolean;
   uniqueValues: boolean;
+  costFromWeight: boolean;
 }
 
 export interface ProcessMode {
@@ -543,10 +544,14 @@ export const VoteEnvelope = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): VoteEnvelope {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVoteEnvelope } as VoteEnvelope;
     message.encryptionKeyIndexes = [];
+    message.nonce = new Uint8Array();
+    message.processId = new Uint8Array();
+    message.votePackage = new Uint8Array();
+    message.nullifier = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -586,6 +591,10 @@ export const VoteEnvelope = {
   fromJSON(object: any): VoteEnvelope {
     const message = { ...baseVoteEnvelope } as VoteEnvelope;
     message.encryptionKeyIndexes = [];
+    message.nonce = new Uint8Array();
+    message.processId = new Uint8Array();
+    message.votePackage = new Uint8Array();
+    message.nullifier = new Uint8Array();
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = bytesFromBase64(object.nonce);
     }
@@ -707,7 +716,7 @@ export const Proof = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Proof {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProof } as Proof;
     while (reader.pos < end) {
@@ -891,9 +900,10 @@ export const ProofGraviton = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProofGraviton {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofGraviton } as ProofGraviton;
+    message.siblings = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -910,6 +920,7 @@ export const ProofGraviton = {
 
   fromJSON(object: any): ProofGraviton {
     const message = { ...baseProofGraviton } as ProofGraviton;
+    message.siblings = new Uint8Array();
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = bytesFromBase64(object.siblings);
     }
@@ -945,9 +956,10 @@ export const ProofIden3 = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProofIden3 {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofIden3 } as ProofIden3;
+    message.siblings = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -964,6 +976,7 @@ export const ProofIden3 = {
 
   fromJSON(object: any): ProofIden3 {
     const message = { ...baseProofIden3 } as ProofIden3;
+    message.siblings = new Uint8Array();
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = bytesFromBase64(object.siblings);
     }
@@ -1005,9 +1018,10 @@ export const ProofCA = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProofCA {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofCA } as ProofCA;
+    message.signature = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1030,6 +1044,7 @@ export const ProofCA = {
 
   fromJSON(object: any): ProofCA {
     const message = { ...baseProofCA } as ProofCA;
+    message.signature = new Uint8Array();
     if (object.type !== undefined && object.type !== null) {
       message.type = signatureTypeFromJSON(object.type);
     }
@@ -1086,9 +1101,11 @@ export const CAbundle = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): CAbundle {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCAbundle } as CAbundle;
+    message.processId = new Uint8Array();
+    message.address = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1108,6 +1125,8 @@ export const CAbundle = {
 
   fromJSON(object: any): CAbundle {
     const message = { ...baseCAbundle } as CAbundle;
+    message.processId = new Uint8Array();
+    message.address = new Uint8Array();
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = bytesFromBase64(object.processId);
     }
@@ -1162,10 +1181,12 @@ export const ProofEthereumStorage = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProofEthereumStorage {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofEthereumStorage } as ProofEthereumStorage;
     message.siblings = [];
+    message.key = new Uint8Array();
+    message.value = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1189,6 +1210,8 @@ export const ProofEthereumStorage = {
   fromJSON(object: any): ProofEthereumStorage {
     const message = { ...baseProofEthereumStorage } as ProofEthereumStorage;
     message.siblings = [];
+    message.key = new Uint8Array();
+    message.value = new Uint8Array();
     if (object.key !== undefined && object.key !== null) {
       message.key = bytesFromBase64(object.key);
     }
@@ -1267,10 +1290,14 @@ export const ProofEthereumAccount = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProofEthereumAccount {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofEthereumAccount } as ProofEthereumAccount;
     message.siblings = [];
+    message.nonce = new Uint8Array();
+    message.balance = new Uint8Array();
+    message.storageHash = new Uint8Array();
+    message.codeHash = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1300,6 +1327,10 @@ export const ProofEthereumAccount = {
   fromJSON(object: any): ProofEthereumAccount {
     const message = { ...baseProofEthereumAccount } as ProofEthereumAccount;
     message.siblings = [];
+    message.nonce = new Uint8Array();
+    message.balance = new Uint8Array();
+    message.storageHash = new Uint8Array();
+    message.codeHash = new Uint8Array();
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = bytesFromBase64(object.nonce);
     }
@@ -1403,7 +1434,7 @@ export const Tx = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Tx {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTx } as Tx;
     while (reader.pos < end) {
@@ -1551,9 +1582,10 @@ export const SignedTx = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): SignedTx {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSignedTx } as SignedTx;
+    message.tx = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1573,6 +1605,7 @@ export const SignedTx = {
 
   fromJSON(object: any): SignedTx {
     const message = { ...baseSignedTx } as SignedTx;
+    message.tx = new Uint8Array();
     if (object.tx !== undefined && object.tx !== null) {
       message.tx = bytesFromBase64(object.tx);
     }
@@ -1625,9 +1658,10 @@ export const NewProcessTx = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): NewProcessTx {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseNewProcessTx } as NewProcessTx;
+    message.nonce = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1650,6 +1684,7 @@ export const NewProcessTx = {
 
   fromJSON(object: any): NewProcessTx {
     const message = { ...baseNewProcessTx } as NewProcessTx;
+    message.nonce = new Uint8Array();
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = txTypeFromJSON(object.txtype);
     }
@@ -1726,9 +1761,11 @@ export const SetProcessTx = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): SetProcessTx {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSetProcessTx } as SetProcessTx;
+    message.nonce = new Uint8Array();
+    message.processId = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1769,6 +1806,8 @@ export const SetProcessTx = {
 
   fromJSON(object: any): SetProcessTx {
     const message = { ...baseSetProcessTx } as SetProcessTx;
+    message.nonce = new Uint8Array();
+    message.processId = new Uint8Array();
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = txTypeFromJSON(object.txtype);
     }
@@ -1906,9 +1945,11 @@ export const AdminTx = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): AdminTx {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAdminTx } as AdminTx;
+    message.processId = new Uint8Array();
+    message.nonce = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1955,6 +1996,8 @@ export const AdminTx = {
 
   fromJSON(object: any): AdminTx {
     const message = { ...baseAdminTx } as AdminTx;
+    message.processId = new Uint8Array();
+    message.nonce = new Uint8Array();
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = txTypeFromJSON(object.txtype);
     }
@@ -2183,7 +2226,7 @@ export const Process = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Process {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProcess } as Process;
     message.commitmentKeys = [];
@@ -2191,6 +2234,9 @@ export const Process = {
     message.encryptionPublicKeys = [];
     message.revealKeys = [];
     message.resultsSignatures = [];
+    message.processId = new Uint8Array();
+    message.entityId = new Uint8Array();
+    message.censusRoot = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2281,6 +2327,9 @@ export const Process = {
     message.encryptionPublicKeys = [];
     message.revealKeys = [];
     message.resultsSignatures = [];
+    message.processId = new Uint8Array();
+    message.entityId = new Uint8Array();
+    message.censusRoot = new Uint8Array();
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = bytesFromBase64(object.processId);
     }
@@ -2560,6 +2609,7 @@ const baseEnvelopeType: object = {
   anonymous: false,
   encryptedVotes: false,
   uniqueValues: false,
+  costFromWeight: false,
 };
 
 export const EnvelopeType = {
@@ -2576,11 +2626,14 @@ export const EnvelopeType = {
     if (message.uniqueValues === true) {
       writer.uint32(32).bool(message.uniqueValues);
     }
+    if (message.costFromWeight === true) {
+      writer.uint32(40).bool(message.costFromWeight);
+    }
     return writer;
   },
 
   decode(input: Reader | Uint8Array, length?: number): EnvelopeType {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseEnvelopeType } as EnvelopeType;
     while (reader.pos < end) {
@@ -2597,6 +2650,9 @@ export const EnvelopeType = {
           break;
         case 4:
           message.uniqueValues = reader.bool();
+          break;
+        case 5:
+          message.costFromWeight = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2620,6 +2676,9 @@ export const EnvelopeType = {
     if (object.uniqueValues !== undefined && object.uniqueValues !== null) {
       message.uniqueValues = Boolean(object.uniqueValues);
     }
+    if (object.costFromWeight !== undefined && object.costFromWeight !== null) {
+      message.costFromWeight = Boolean(object.costFromWeight);
+    }
     return message;
   },
 
@@ -2631,6 +2690,8 @@ export const EnvelopeType = {
       (obj.encryptedVotes = message.encryptedVotes);
     message.uniqueValues !== undefined &&
       (obj.uniqueValues = message.uniqueValues);
+    message.costFromWeight !== undefined &&
+      (obj.costFromWeight = message.costFromWeight);
     return obj;
   },
 
@@ -2647,6 +2708,9 @@ export const EnvelopeType = {
     }
     if (object.uniqueValues !== undefined && object.uniqueValues !== null) {
       message.uniqueValues = object.uniqueValues;
+    }
+    if (object.costFromWeight !== undefined && object.costFromWeight !== null) {
+      message.costFromWeight = object.costFromWeight;
     }
     return message;
   },
@@ -2677,7 +2741,7 @@ export const ProcessMode = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProcessMode {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProcessMode } as ProcessMode;
     while (reader.pos < end) {
@@ -2788,7 +2852,7 @@ export const ProcessVoteOptions = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProcessVoteOptions {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProcessVoteOptions } as ProcessVoteOptions;
     while (reader.pos < end) {
@@ -2888,7 +2952,7 @@ export const OracleList = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): OracleList {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseOracleList } as OracleList;
     message.oracles = [];
@@ -2952,7 +3016,7 @@ export const ValidatorList = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ValidatorList {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidatorList } as ValidatorList;
     message.validators = [];
@@ -3025,9 +3089,11 @@ export const Validator = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Validator {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseValidator } as Validator;
+    message.address = new Uint8Array();
+    message.pubKey = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3053,6 +3119,8 @@ export const Validator = {
 
   fromJSON(object: any): Validator {
     const message = { ...baseValidator } as Validator;
+    message.address = new Uint8Array();
+    message.pubKey = new Uint8Array();
     if (object.address !== undefined && object.address !== null) {
       message.address = bytesFromBase64(object.address);
     }
@@ -3129,10 +3197,14 @@ export const Vote = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Vote {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVote } as Vote;
     message.encryptionKeyIndexes = [];
+    message.nullifier = new Uint8Array();
+    message.processId = new Uint8Array();
+    message.votePackage = new Uint8Array();
+    message.weight = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3172,6 +3244,10 @@ export const Vote = {
   fromJSON(object: any): Vote {
     const message = { ...baseVote } as Vote;
     message.encryptionKeyIndexes = [];
+    message.nullifier = new Uint8Array();
+    message.processId = new Uint8Array();
+    message.votePackage = new Uint8Array();
+    message.weight = new Uint8Array();
     if (object.height !== undefined && object.height !== null) {
       message.height = Number(object.height);
     }
@@ -3304,9 +3380,19 @@ export const TendermintHeader = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): TendermintHeader {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTendermintHeader } as TendermintHeader;
+    message.blockID = new Uint8Array();
+    message.lastCommitHash = new Uint8Array();
+    message.dataHash = new Uint8Array();
+    message.validatorsHash = new Uint8Array();
+    message.nextValidatorsHash = new Uint8Array();
+    message.consensusHash = new Uint8Array();
+    message.appHash = new Uint8Array();
+    message.lastResultsHash = new Uint8Array();
+    message.evidenceHash = new Uint8Array();
+    message.proposerAddress = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3359,6 +3445,16 @@ export const TendermintHeader = {
 
   fromJSON(object: any): TendermintHeader {
     const message = { ...baseTendermintHeader } as TendermintHeader;
+    message.blockID = new Uint8Array();
+    message.lastCommitHash = new Uint8Array();
+    message.dataHash = new Uint8Array();
+    message.validatorsHash = new Uint8Array();
+    message.nextValidatorsHash = new Uint8Array();
+    message.consensusHash = new Uint8Array();
+    message.appHash = new Uint8Array();
+    message.lastResultsHash = new Uint8Array();
+    message.evidenceHash = new Uint8Array();
+    message.proposerAddress = new Uint8Array();
     if (object.chainId !== undefined && object.chainId !== null) {
       message.chainId = String(object.chainId);
     }
@@ -3543,7 +3639,7 @@ export const ProcessResult = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProcessResult {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProcessResult } as ProcessResult;
     message.votes = [];
@@ -3635,7 +3731,7 @@ export const QuestionResult = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): QuestionResult {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseQuestionResult } as QuestionResult;
     message.question = [];
@@ -3699,7 +3795,7 @@ export const ProcessEndingList = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): ProcessEndingList {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProcessEndingList } as ProcessEndingList;
     message.processList = [];
@@ -3763,7 +3859,7 @@ export const StoredKeys = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): StoredKeys {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseStoredKeys } as StoredKeys;
     message.pids = [];
@@ -3871,6 +3967,8 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();

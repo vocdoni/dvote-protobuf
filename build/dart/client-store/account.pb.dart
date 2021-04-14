@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/account.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -20,7 +20,7 @@ class AccountsStore extends $pb.GeneratedMessage {
 
   AccountsStore._() : super();
   factory AccountsStore({
-    $core.Iterable<Account> items,
+    $core.Iterable<Account>? items,
   }) {
     final _result = create();
     if (items != null) {
@@ -47,7 +47,7 @@ class AccountsStore extends $pb.GeneratedMessage {
   static $pb.PbList<AccountsStore> createRepeated() => $pb.PbList<AccountsStore>();
   @$core.pragma('dart2js:noInline')
   static AccountsStore getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AccountsStore>(create);
-  static AccountsStore _defaultInstance;
+  static AccountsStore? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Account> get items => $_getList(0);
@@ -62,8 +62,8 @@ class Account_AppVoter extends $pb.GeneratedMessage {
 
   Account_AppVoter._() : super();
   factory Account_AppVoter({
-    $core.String appAnalyticsID,
-    $core.Iterable<$1.EntityReference> entities,
+    $core.String? appAnalyticsID,
+    $core.Iterable<$1.EntityReference>? entities,
   }) {
     final _result = create();
     if (appAnalyticsID != null) {
@@ -93,7 +93,7 @@ class Account_AppVoter extends $pb.GeneratedMessage {
   static $pb.PbList<Account_AppVoter> createRepeated() => $pb.PbList<Account_AppVoter>();
   @$core.pragma('dart2js:noInline')
   static Account_AppVoter getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_AppVoter>(create);
-  static Account_AppVoter _defaultInstance;
+  static Account_AppVoter? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get appAnalyticsID => $_getSZ(0);
@@ -116,7 +116,7 @@ class Account_WebEntity extends $pb.GeneratedMessage {
 
   Account_WebEntity._() : super();
   factory Account_WebEntity({
-    $core.String webAnalyticsID,
+    $core.String? webAnalyticsID,
   }) {
     final _result = create();
     if (webAnalyticsID != null) {
@@ -143,7 +143,7 @@ class Account_WebEntity extends $pb.GeneratedMessage {
   static $pb.PbList<Account_WebEntity> createRepeated() => $pb.PbList<Account_WebEntity>();
   @$core.pragma('dart2js:noInline')
   static Account_WebEntity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_WebEntity>(create);
-  static Account_WebEntity _defaultInstance;
+  static Account_WebEntity? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get webAnalyticsID => $_getSZ(0);
@@ -176,8 +176,8 @@ class Account_Extra extends $pb.GeneratedMessage {
 
   Account_Extra._() : super();
   factory Account_Extra({
-    Account_AppVoter appVoter,
-    Account_WebEntity webEntity,
+    Account_AppVoter? appVoter,
+    Account_WebEntity? webEntity,
   }) {
     final _result = create();
     if (appVoter != null) {
@@ -207,9 +207,9 @@ class Account_Extra extends $pb.GeneratedMessage {
   static $pb.PbList<Account_Extra> createRepeated() => $pb.PbList<Account_Extra>();
   @$core.pragma('dart2js:noInline')
   static Account_Extra getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_Extra>(create);
-  static Account_Extra _defaultInstance;
+  static Account_Extra? _defaultInstance;
 
-  Account_Extra_Content whichContent() => _Account_Extra_ContentByTag[$_whichOneof(0)];
+  Account_Extra_Content whichContent() => _Account_Extra_ContentByTag[$_whichOneof(0)]!;
   void clearContent() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -248,12 +248,12 @@ class Account extends $pb.GeneratedMessage {
 
   Account._() : super();
   factory Account({
-    $core.String name,
-    $0.Wallet wallet,
-    $core.String address,
-    $core.bool hasBackup,
-    Account_Extra extra,
-    $core.Map<$core.String, $core.String> meta,
+    $core.String? name,
+    $0.Wallet? wallet,
+    $core.String? address,
+    $core.bool? hasBackup,
+    Account_Extra? extra,
+    $core.Map<$core.String, $core.String>? meta,
   }) {
     final _result = create();
     if (name != null) {
@@ -295,7 +295,7 @@ class Account extends $pb.GeneratedMessage {
   static $pb.PbList<Account> createRepeated() => $pb.PbList<Account>();
   @$core.pragma('dart2js:noInline')
   static Account getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account>(create);
-  static Account _defaultInstance;
+  static Account? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
