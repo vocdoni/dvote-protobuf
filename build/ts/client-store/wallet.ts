@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -67,9 +68,10 @@ export const Wallet = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Wallet {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWallet } as Wallet;
+    message.encryptedMnemonic = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -95,6 +97,7 @@ export const Wallet = {
 
   fromJSON(object: any): Wallet {
     const message = { ...baseWallet } as Wallet;
+    message.encryptedMnemonic = new Uint8Array();
     if (
       object.encryptedMnemonic !== undefined &&
       object.encryptedMnemonic !== null
@@ -196,3 +199,10 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

@@ -1,7 +1,8 @@
 /* eslint-disable */
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 import { Wallet } from "../client-store/wallet";
 import { EntityReference } from "../metadata/entity";
-import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -63,7 +64,7 @@ export const AccountsStore = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): AccountsStore {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccountsStore } as AccountsStore;
     message.items = [];
@@ -143,7 +144,7 @@ export const Account = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Account {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccount } as Account;
     message.meta = {};
@@ -268,7 +269,7 @@ export const Account_AppVoter = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Account_AppVoter {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccount_AppVoter } as Account_AppVoter;
     message.entities = [];
@@ -345,7 +346,7 @@ export const Account_WebEntity = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Account_WebEntity {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccount_WebEntity } as Account_WebEntity;
     while (reader.pos < end) {
@@ -406,7 +407,7 @@ export const Account_Extra = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Account_Extra {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccount_Extra } as Account_Extra;
     while (reader.pos < end) {
@@ -502,7 +503,7 @@ export const Account_MetaEntry = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): Account_MetaEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
     while (reader.pos < end) {
@@ -566,3 +567,10 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

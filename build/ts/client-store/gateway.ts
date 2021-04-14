@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -76,7 +77,7 @@ export const BootNodeGateways = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): BootNodeGateways {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBootNodeGateways } as BootNodeGateways;
     message.meta = {};
@@ -230,7 +231,7 @@ export const BootNodeGateways_NetworkNodes = {
     input: Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_NetworkNodes {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseBootNodeGateways_NetworkNodes,
@@ -345,7 +346,7 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     input: Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_NetworkNodes_DVote {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseBootNodeGateways_NetworkNodes_DVote,
@@ -441,7 +442,7 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     input: Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_NetworkNodes_Web3 {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseBootNodeGateways_NetworkNodes_Web3,
@@ -509,7 +510,7 @@ export const BootNodeGateways_MetaEntry = {
     input: Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_MetaEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseBootNodeGateways_MetaEntry,
@@ -581,3 +582,10 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

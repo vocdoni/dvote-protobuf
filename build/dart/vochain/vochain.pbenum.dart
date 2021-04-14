@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: vochain/vochain.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
@@ -25,7 +25,7 @@ class SignatureType extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, SignatureType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static SignatureType valueOf($core.int value) => _byValue[value];
+  static SignatureType? valueOf($core.int value) => _byValue[value];
 
   const SignatureType._($core.int v, $core.String n) : super(v, n);
 }
@@ -62,7 +62,7 @@ class TxType extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, TxType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static TxType valueOf($core.int value) => _byValue[value];
+  static TxType? valueOf($core.int value) => _byValue[value];
 
   const TxType._($core.int v, $core.String n) : super(v, n);
 }
@@ -85,7 +85,7 @@ class ProcessStatus extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, ProcessStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ProcessStatus valueOf($core.int value) => _byValue[value];
+  static ProcessStatus? valueOf($core.int value) => _byValue[value];
 
   const ProcessStatus._($core.int v, $core.String n) : super(v, n);
 }
@@ -114,7 +114,7 @@ class CensusOrigin extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, CensusOrigin> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CensusOrigin valueOf($core.int value) => _byValue[value];
+  static CensusOrigin? valueOf($core.int value) => _byValue[value];
 
   const CensusOrigin._($core.int v, $core.String n) : super(v, n);
 }

@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
 import { Wallet } from "../client-store/wallet";
 
 export const protobufPackage = "dvote.types.v1";
@@ -102,7 +102,7 @@ export const WalletBackup = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): WalletBackup {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWalletBackup } as WalletBackup;
     while (reader.pos < end) {
@@ -208,10 +208,11 @@ export const WalletBackup_Recovery = {
   },
 
   decode(input: Reader | Uint8Array, length?: number): WalletBackup_Recovery {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
     message.questionIds = [];
+    message.encryptedPassphrase = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -239,6 +240,7 @@ export const WalletBackup_Recovery = {
   fromJSON(object: any): WalletBackup_Recovery {
     const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
     message.questionIds = [];
+    message.encryptedPassphrase = new Uint8Array();
     if (object.questionIds !== undefined && object.questionIds !== null) {
       for (const e of object.questionIds) {
         message.questionIds.push(walletBackup_Recovery_QuestionEnumFromJSON(e));
@@ -346,6 +348,8 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
