@@ -11,6 +11,7 @@ export interface BootNodeGateways {
   goerli: BootNodeGateways_NetworkNodes | undefined;
   xdai: BootNodeGateways_NetworkNodes | undefined;
   sokol: BootNodeGateways_NetworkNodes | undefined;
+  rinkeby: BootNodeGateways_NetworkNodes | undefined;
   /**
    * EXTERNAL FIELDS
    * Allow to use arbitrary key/values so that
@@ -67,6 +68,12 @@ export const BootNodeGateways = {
         writer.uint32(34).fork()
       ).ldelim();
     }
+    if (message.rinkeby !== undefined) {
+      BootNodeGateways_NetworkNodes.encode(
+        message.rinkeby,
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
     Object.entries(message.meta).forEach(([key, value]) => {
       BootNodeGateways_MetaEntry.encode(
         { key: key as any, value },
@@ -108,6 +115,12 @@ export const BootNodeGateways = {
             reader.uint32()
           );
           break;
+        case 5:
+          message.rinkeby = BootNodeGateways_NetworkNodes.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         case 100:
           const entry100 = BootNodeGateways_MetaEntry.decode(
             reader,
@@ -142,6 +155,9 @@ export const BootNodeGateways = {
     if (object.sokol !== undefined && object.sokol !== null) {
       message.sokol = BootNodeGateways_NetworkNodes.fromJSON(object.sokol);
     }
+    if (object.rinkeby !== undefined && object.rinkeby !== null) {
+      message.rinkeby = BootNodeGateways_NetworkNodes.fromJSON(object.rinkeby);
+    }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
         message.meta[key] = String(value);
@@ -168,6 +184,10 @@ export const BootNodeGateways = {
       (obj.sokol = message.sokol
         ? BootNodeGateways_NetworkNodes.toJSON(message.sokol)
         : undefined);
+    message.rinkeby !== undefined &&
+      (obj.rinkeby = message.rinkeby
+        ? BootNodeGateways_NetworkNodes.toJSON(message.rinkeby)
+        : undefined);
     obj.meta = {};
     if (message.meta) {
       Object.entries(message.meta).forEach(([k, v]) => {
@@ -193,6 +213,11 @@ export const BootNodeGateways = {
     }
     if (object.sokol !== undefined && object.sokol !== null) {
       message.sokol = BootNodeGateways_NetworkNodes.fromPartial(object.sokol);
+    }
+    if (object.rinkeby !== undefined && object.rinkeby !== null) {
+      message.rinkeby = BootNodeGateways_NetworkNodes.fromPartial(
+        object.rinkeby
+      );
     }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {

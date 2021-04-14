@@ -180,6 +180,7 @@ class BootNodeGateways extends $pb.GeneratedMessage {
     ..aOM<BootNodeGateways_NetworkNodes>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'goerli', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..aOM<BootNodeGateways_NetworkNodes>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'xdai', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..aOM<BootNodeGateways_NetworkNodes>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sokol', subBuilder: BootNodeGateways_NetworkNodes.create)
+    ..aOM<BootNodeGateways_NetworkNodes>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rinkeby', subBuilder: BootNodeGateways_NetworkNodes.create)
     ..m<$core.String, $core.String>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'meta', entryClassName: 'BootNodeGateways.MetaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('dvote.types.v1'))
     ..hasRequiredFields = false
   ;
@@ -190,6 +191,7 @@ class BootNodeGateways extends $pb.GeneratedMessage {
     BootNodeGateways_NetworkNodes? goerli,
     BootNodeGateways_NetworkNodes? xdai,
     BootNodeGateways_NetworkNodes? sokol,
+    BootNodeGateways_NetworkNodes? rinkeby,
     $core.Map<$core.String, $core.String>? meta,
   }) {
     final _result = create();
@@ -204,6 +206,9 @@ class BootNodeGateways extends $pb.GeneratedMessage {
     }
     if (sokol != null) {
       _result.sokol = sokol;
+    }
+    if (rinkeby != null) {
+      _result.rinkeby = rinkeby;
     }
     if (meta != null) {
       _result.meta.addAll(meta);
@@ -275,7 +280,18 @@ class BootNodeGateways extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   BootNodeGateways_NetworkNodes ensureSokol() => $_ensure(3);
 
+  @$pb.TagNumber(5)
+  BootNodeGateways_NetworkNodes get rinkeby => $_getN(4);
+  @$pb.TagNumber(5)
+  set rinkeby(BootNodeGateways_NetworkNodes v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRinkeby() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRinkeby() => clearField(5);
+  @$pb.TagNumber(5)
+  BootNodeGateways_NetworkNodes ensureRinkeby() => $_ensure(4);
+
   @$pb.TagNumber(100)
-  $core.Map<$core.String, $core.String> get meta => $_getMap(4);
+  $core.Map<$core.String, $core.String> get meta => $_getMap(5);
 }
 
