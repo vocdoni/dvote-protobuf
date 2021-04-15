@@ -4,6 +4,11 @@ package dvote.types.v1;
 
 option go_package = "go.vocdoni.io/proto/build/go/models";
 
+message VoteEnvelopeList {
+	repeated VoteEnvelope voteEnvelopes = 1;
+	repeated bytes weights = 2;
+}
+
 message VoteEnvelope {
         bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
         bytes processId = 2;  // The process for which the vote is casted
