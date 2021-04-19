@@ -250,6 +250,10 @@ message Vote {
 	bytes weight = 6;
 }
 
+message TendermintHeaderList {
+	repeated TendermintHeader blockHeaders = 1;
+}
+
 message TendermintHeader {
   // basic block info
   string chain_id = 2 ;

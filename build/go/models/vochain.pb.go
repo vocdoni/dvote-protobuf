@@ -2098,6 +2098,53 @@ func (x *Vote) GetWeight() []byte {
 	return nil
 }
 
+type TendermintHeaderList struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BlockHeaders []*TendermintHeader `protobuf:"bytes,1,rep,name=blockHeaders,proto3" json:"blockHeaders,omitempty"`
+}
+
+func (x *TendermintHeaderList) Reset() {
+	*x = TendermintHeaderList{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vochain_vochain_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TendermintHeaderList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TendermintHeaderList) ProtoMessage() {}
+
+func (x *TendermintHeaderList) ProtoReflect() protoreflect.Message {
+	mi := &file_vochain_vochain_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TendermintHeaderList.ProtoReflect.Descriptor instead.
+func (*TendermintHeaderList) Descriptor() ([]byte, []int) {
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *TendermintHeaderList) GetBlockHeaders() []*TendermintHeader {
+	if x != nil {
+		return x.BlockHeaders
+	}
+	return nil
+}
+
 type TendermintHeader struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2126,7 +2173,7 @@ type TendermintHeader struct {
 func (x *TendermintHeader) Reset() {
 	*x = TendermintHeader{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[22]
+		mi := &file_vochain_vochain_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2139,7 +2186,7 @@ func (x *TendermintHeader) String() string {
 func (*TendermintHeader) ProtoMessage() {}
 
 func (x *TendermintHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[22]
+	mi := &file_vochain_vochain_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2152,7 +2199,7 @@ func (x *TendermintHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TendermintHeader.ProtoReflect.Descriptor instead.
 func (*TendermintHeader) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{22}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *TendermintHeader) GetChainId() string {
@@ -2260,7 +2307,7 @@ type ProcessResult struct {
 func (x *ProcessResult) Reset() {
 	*x = ProcessResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[23]
+		mi := &file_vochain_vochain_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2273,7 +2320,7 @@ func (x *ProcessResult) String() string {
 func (*ProcessResult) ProtoMessage() {}
 
 func (x *ProcessResult) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[23]
+	mi := &file_vochain_vochain_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2286,7 +2333,7 @@ func (x *ProcessResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessResult.ProtoReflect.Descriptor instead.
 func (*ProcessResult) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{23}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ProcessResult) GetVotes() []*QuestionResult {
@@ -2321,7 +2368,7 @@ type QuestionResult struct {
 func (x *QuestionResult) Reset() {
 	*x = QuestionResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[24]
+		mi := &file_vochain_vochain_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2334,7 +2381,7 @@ func (x *QuestionResult) String() string {
 func (*QuestionResult) ProtoMessage() {}
 
 func (x *QuestionResult) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[24]
+	mi := &file_vochain_vochain_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2347,7 +2394,7 @@ func (x *QuestionResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuestionResult.ProtoReflect.Descriptor instead.
 func (*QuestionResult) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{24}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *QuestionResult) GetQuestion() [][]byte {
@@ -2368,7 +2415,7 @@ type ProcessEndingList struct {
 func (x *ProcessEndingList) Reset() {
 	*x = ProcessEndingList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[25]
+		mi := &file_vochain_vochain_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2381,7 +2428,7 @@ func (x *ProcessEndingList) String() string {
 func (*ProcessEndingList) ProtoMessage() {}
 
 func (x *ProcessEndingList) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[25]
+	mi := &file_vochain_vochain_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2394,7 +2441,7 @@ func (x *ProcessEndingList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessEndingList.ProtoReflect.Descriptor instead.
 func (*ProcessEndingList) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{25}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ProcessEndingList) GetProcessList() [][]byte {
@@ -2416,7 +2463,7 @@ type StoredKeys struct {
 func (x *StoredKeys) Reset() {
 	*x = StoredKeys{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[26]
+		mi := &file_vochain_vochain_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2429,7 +2476,7 @@ func (x *StoredKeys) String() string {
 func (*StoredKeys) ProtoMessage() {}
 
 func (x *StoredKeys) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[26]
+	mi := &file_vochain_vochain_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2442,7 +2489,7 @@ func (x *StoredKeys) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoredKeys.ProtoReflect.Descriptor instead.
 func (*StoredKeys) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{26}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *StoredKeys) GetPids() [][]byte {
@@ -2865,7 +2912,7 @@ func file_vochain_vochain_proto_rawDescGZIP() []byte {
 }
 
 var file_vochain_vochain_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_vochain_vochain_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_vochain_vochain_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_vochain_vochain_proto_goTypes = []interface{}{
 	(SignatureType)(0),           // 0: dvote.types.v1.SignatureType
 	(TxType)(0),                  // 1: dvote.types.v1.TxType
@@ -2893,11 +2940,12 @@ var file_vochain_vochain_proto_goTypes = []interface{}{
 	(*ValidatorList)(nil),        // 23: dvote.types.v1.ValidatorList
 	(*Validator)(nil),            // 24: dvote.types.v1.Validator
 	(*Vote)(nil),                 // 25: dvote.types.v1.Vote
-	(*TendermintHeader)(nil),     // 26: dvote.types.v1.TendermintHeader
-	(*ProcessResult)(nil),        // 27: dvote.types.v1.ProcessResult
-	(*QuestionResult)(nil),       // 28: dvote.types.v1.QuestionResult
-	(*ProcessEndingList)(nil),    // 29: dvote.types.v1.ProcessEndingList
-	(*StoredKeys)(nil),           // 30: dvote.types.v1.StoredKeys
+	(*TendermintHeaderList)(nil), // 26: dvote.types.v1.TendermintHeaderList
+	(*TendermintHeader)(nil),     // 27: dvote.types.v1.TendermintHeader
+	(*ProcessResult)(nil),        // 28: dvote.types.v1.ProcessResult
+	(*QuestionResult)(nil),       // 29: dvote.types.v1.QuestionResult
+	(*ProcessEndingList)(nil),    // 30: dvote.types.v1.ProcessEndingList
+	(*StoredKeys)(nil),           // 31: dvote.types.v1.StoredKeys
 }
 var file_vochain_vochain_proto_depIdxs = []int32{
 	5,  // 0: dvote.types.v1.VoteEnvelopeList.voteEnvelopes:type_name -> dvote.types.v1.VoteEnvelope
@@ -2918,21 +2966,22 @@ var file_vochain_vochain_proto_depIdxs = []int32{
 	1,  // 15: dvote.types.v1.SetProcessTx.txtype:type_name -> dvote.types.v1.TxType
 	2,  // 16: dvote.types.v1.SetProcessTx.status:type_name -> dvote.types.v1.ProcessStatus
 	6,  // 17: dvote.types.v1.SetProcessTx.proof:type_name -> dvote.types.v1.Proof
-	27, // 18: dvote.types.v1.SetProcessTx.results:type_name -> dvote.types.v1.ProcessResult
+	28, // 18: dvote.types.v1.SetProcessTx.results:type_name -> dvote.types.v1.ProcessResult
 	1,  // 19: dvote.types.v1.AdminTx.txtype:type_name -> dvote.types.v1.TxType
 	2,  // 20: dvote.types.v1.Process.status:type_name -> dvote.types.v1.ProcessStatus
 	19, // 21: dvote.types.v1.Process.envelopeType:type_name -> dvote.types.v1.EnvelopeType
 	20, // 22: dvote.types.v1.Process.mode:type_name -> dvote.types.v1.ProcessMode
 	21, // 23: dvote.types.v1.Process.voteOptions:type_name -> dvote.types.v1.ProcessVoteOptions
 	3,  // 24: dvote.types.v1.Process.censusOrigin:type_name -> dvote.types.v1.CensusOrigin
-	27, // 25: dvote.types.v1.Process.results:type_name -> dvote.types.v1.ProcessResult
+	28, // 25: dvote.types.v1.Process.results:type_name -> dvote.types.v1.ProcessResult
 	24, // 26: dvote.types.v1.ValidatorList.validators:type_name -> dvote.types.v1.Validator
-	28, // 27: dvote.types.v1.ProcessResult.votes:type_name -> dvote.types.v1.QuestionResult
-	28, // [28:28] is the sub-list for method output_type
-	28, // [28:28] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	27, // 27: dvote.types.v1.TendermintHeaderList.blockHeaders:type_name -> dvote.types.v1.TendermintHeader
+	29, // 28: dvote.types.v1.ProcessResult.votes:type_name -> dvote.types.v1.QuestionResult
+	29, // [29:29] is the sub-list for method output_type
+	29, // [29:29] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_vochain_vochain_proto_init() }
@@ -3206,7 +3255,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TendermintHeader); i {
+			switch v := v.(*TendermintHeaderList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3218,7 +3267,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProcessResult); i {
+			switch v := v.(*TendermintHeader); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3230,7 +3279,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuestionResult); i {
+			switch v := v.(*ProcessResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3242,7 +3291,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProcessEndingList); i {
+			switch v := v.(*QuestionResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3254,6 +3303,18 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProcessEndingList); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vochain_vochain_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StoredKeys); i {
 			case 0:
 				return &v.state
@@ -3283,14 +3344,14 @@ func file_vochain_vochain_proto_init() {
 	file_vochain_vochain_proto_msgTypes[12].OneofWrappers = []interface{}{}
 	file_vochain_vochain_proto_msgTypes[13].OneofWrappers = []interface{}{}
 	file_vochain_vochain_proto_msgTypes[14].OneofWrappers = []interface{}{}
-	file_vochain_vochain_proto_msgTypes[23].OneofWrappers = []interface{}{}
+	file_vochain_vochain_proto_msgTypes[24].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vochain_vochain_proto_rawDesc,
 			NumEnums:      4,
-			NumMessages:   27,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
