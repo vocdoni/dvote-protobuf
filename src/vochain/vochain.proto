@@ -111,6 +111,10 @@ message SignedTx {
         // this message type in order to preserve consistency on the Vochain
 }
 
+message SignedTxList {
+	repeated SignedTx txList = 1;
+}
+
 message NewProcessTx {
 	TxType txtype = 1;
 	bytes nonce = 2;
