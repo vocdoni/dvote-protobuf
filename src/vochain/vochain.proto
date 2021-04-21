@@ -4,10 +4,6 @@ package dvote.types.v1;
 
 option go_package = "go.vocdoni.io/proto/build/go/models";
 
-message EnvelopePackageList {
-	repeated EnvelopePackage envelopes = 1;
-}
-
 message EnvelopePackage {
 	VoteEnvelope envelope = 1;
 	bytes weight = 2;
@@ -117,9 +113,7 @@ message SignedTx {
         // this message type in order to preserve consistency on the Vochain
 }
 
-message SignedTxList {
-	repeated SignedTx txList = 1;
-}
+
 
 message NewProcessTx {
 	TxType txtype = 1;
@@ -240,9 +234,7 @@ message OracleList {
 	repeated bytes oracles = 1;
 }
 
-message ValidatorList {
-	repeated Validator validators = 1;
-}
+
 
 message Validator {
 	bytes address = 1;
@@ -258,10 +250,6 @@ message Vote {
 	bytes votePackage = 4;
 	repeated uint32 encryptionKeyIndexes = 5;
 	bytes weight = 6;
-}
-
-message TendermintHeaderList {
-	repeated TendermintHeader blockHeaders = 1;
 }
 
 message TendermintHeader {
@@ -310,6 +298,7 @@ message StoredKeys {
 	repeated bytes pids = 1;
 }
 
+/// API TYPES ///
 
 message VochainStats {
 	uint32 blockHeight = 1;
@@ -333,4 +322,35 @@ message VochainStats {
 	// MaxTxsPerMinute int64     
 
 	bool syncing = 10;
+}
+
+message BlockHeaderList {
+	repeated BlockHeader blockHeaders = 1;
+}
+
+message BlockHeader {
+  // basic block info
+  string chain_id = 1;
+  int64 height = 2;
+  int64 timestamp = 3;
+  bytes blockHash = 4;
+  uint64 numTxs = 5;
+
+  // prev block info
+  bytes lastBlockHash  = 6;
+
+  // consensus info
+  bytes proposer_address = 7;  // original proposer of the block
+}
+
+message ValidatorList {
+	repeated Validator validators = 1;
+}
+
+message EnvelopePackageList {
+	repeated EnvelopePackage envelopes = 1;
+}
+
+message SignedTxList {
+	repeated SignedTx txList = 1;
 }
