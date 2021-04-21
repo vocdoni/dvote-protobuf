@@ -4,9 +4,15 @@ package dvote.types.v1;
 
 option go_package = "go.vocdoni.io/proto/build/go/models";
 
-message VoteEnvelopeList {
-	repeated VoteEnvelope voteEnvelopes = 1;
-	repeated bytes weights = 2;
+message EnvelopePackageList {
+	repeated EnvelopePackage envelopes = 1;
+}
+
+message EnvelopePackage {
+	VoteEnvelope envelope = 1;
+	bytes weight = 2;
+	int32 txIndex = 3;
+	uint32 height = 4;
 }
 
 message VoteEnvelope {
