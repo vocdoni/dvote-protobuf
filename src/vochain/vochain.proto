@@ -309,3 +309,28 @@ message ProcessEndingList {
 message StoredKeys {
 	repeated bytes pids = 1;
 }
+
+
+message VochainStats {
+	uint32 blockHeight = 1;
+	int32 blockTimeStamp = 2;
+	int64 entityCount = 3;
+	uint64 envelopeCount = 4;
+	int64 processCount = 5;
+	int32 validatorCount = 6;
+	repeated int32 blockTime = 7;
+	string chainID = 8;
+	int64 genesisTimeStamp = 9;
+
+	// TransactionHeight int64   
+	// AvgTxsPerBlock    float64 
+	// AvgTxsPerMinute   float64 
+	// MaxBytes          int64  
+	// MaxTxsBlockHash   string 
+	// MaxTxsBlockHeight int64  
+	// MaxTxsMinute    time.Time 
+	// MaxTxsPerBlock  int64     
+	// MaxTxsPerMinute int64     
+
+	bool syncing = 10;
+}
