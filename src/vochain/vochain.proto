@@ -170,8 +170,11 @@ message Process {
 	CensusOrigin censusOrigin = 20;
 	ProcessResult results = 21;
 	repeated bytes resultsSignatures = 22;
-
 	optional uint32 ethIndexSlot = 23;
+	// SourceBlockHeight is the block height of the origin blockchain (if any)
+	optional uint64 sourceBlockHeight = 24;
+	// Owner is the creator of a process (if any) otherwise is assumed the creator is the entityId
+	optional bytes owner = 25;
 }
 
 enum ProcessStatus {

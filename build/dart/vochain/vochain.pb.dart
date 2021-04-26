@@ -1288,6 +1288,8 @@ class Process extends $pb.GeneratedMessage {
     ..aOM<ProcessResult>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', subBuilder: ProcessResult.create)
     ..p<$core.List<$core.int>>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'resultsSignatures', $pb.PbFieldType.PY, protoName: 'resultsSignatures')
     ..a<$core.int>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethIndexSlot', $pb.PbFieldType.OU3, protoName: 'ethIndexSlot')
+    ..a<$fixnum.Int64>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceBlockHeight', $pb.PbFieldType.OU6, protoName: 'sourceBlockHeight', defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'owner', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -1316,6 +1318,8 @@ class Process extends $pb.GeneratedMessage {
     ProcessResult? results,
     $core.Iterable<$core.List<$core.int>>? resultsSignatures,
     $core.int? ethIndexSlot,
+    $fixnum.Int64? sourceBlockHeight,
+    $core.List<$core.int>? owner,
   }) {
     final _result = create();
     if (processId != null) {
@@ -1386,6 +1390,12 @@ class Process extends $pb.GeneratedMessage {
     }
     if (ethIndexSlot != null) {
       _result.ethIndexSlot = ethIndexSlot;
+    }
+    if (sourceBlockHeight != null) {
+      _result.sourceBlockHeight = sourceBlockHeight;
+    }
+    if (owner != null) {
+      _result.owner = owner;
     }
     return _result;
   }
@@ -1594,6 +1604,24 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasEthIndexSlot() => $_has(22);
   @$pb.TagNumber(23)
   void clearEthIndexSlot() => clearField(23);
+
+  @$pb.TagNumber(24)
+  $fixnum.Int64 get sourceBlockHeight => $_getI64(23);
+  @$pb.TagNumber(24)
+  set sourceBlockHeight($fixnum.Int64 v) { $_setInt64(23, v); }
+  @$pb.TagNumber(24)
+  $core.bool hasSourceBlockHeight() => $_has(23);
+  @$pb.TagNumber(24)
+  void clearSourceBlockHeight() => clearField(24);
+
+  @$pb.TagNumber(25)
+  $core.List<$core.int> get owner => $_getN(24);
+  @$pb.TagNumber(25)
+  set owner($core.List<$core.int> v) { $_setBytes(24, v); }
+  @$pb.TagNumber(25)
+  $core.bool hasOwner() => $_has(24);
+  @$pb.TagNumber(25)
+  void clearOwner() => clearField(25);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {
