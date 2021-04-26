@@ -420,6 +420,10 @@ export interface Process {
   results: ProcessResult | undefined;
   resultsSignatures: Uint8Array[];
   ethIndexSlot?: number | undefined;
+  /** SourceBlockHeight is the block height of the origin blockchain (if any) */
+  sourceBlockHeight?: number | undefined;
+  /** Owner is the creator of a process (if any) otherwise is assumed the creator is the entityId */
+  owner?: Uint8Array | undefined;
 }
 
 export interface EnvelopeType {
@@ -2222,6 +2226,12 @@ export const Process = {
     if (message.ethIndexSlot !== undefined) {
       writer.uint32(184).uint32(message.ethIndexSlot);
     }
+    if (message.sourceBlockHeight !== undefined) {
+      writer.uint32(192).uint64(message.sourceBlockHeight);
+    }
+    if (message.owner !== undefined) {
+      writer.uint32(202).bytes(message.owner);
+    }
     return writer;
   },
 
@@ -2311,6 +2321,12 @@ export const Process = {
           break;
         case 23:
           message.ethIndexSlot = reader.uint32();
+          break;
+        case 24:
+          message.sourceBlockHeight = longToNumber(reader.uint64() as Long);
+          break;
+        case 25:
+          message.owner = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2421,6 +2437,15 @@ export const Process = {
     if (object.ethIndexSlot !== undefined && object.ethIndexSlot !== null) {
       message.ethIndexSlot = Number(object.ethIndexSlot);
     }
+    if (
+      object.sourceBlockHeight !== undefined &&
+      object.sourceBlockHeight !== null
+    ) {
+      message.sourceBlockHeight = Number(object.sourceBlockHeight);
+    }
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = bytesFromBase64(object.owner);
+    }
     return message;
   },
 
@@ -2499,6 +2524,13 @@ export const Process = {
     }
     message.ethIndexSlot !== undefined &&
       (obj.ethIndexSlot = message.ethIndexSlot);
+    message.sourceBlockHeight !== undefined &&
+      (obj.sourceBlockHeight = message.sourceBlockHeight);
+    message.owner !== undefined &&
+      (obj.owner =
+        message.owner !== undefined
+          ? base64FromBytes(message.owner)
+          : undefined);
     return obj;
   },
 
@@ -2599,6 +2631,15 @@ export const Process = {
     }
     if (object.ethIndexSlot !== undefined && object.ethIndexSlot !== null) {
       message.ethIndexSlot = object.ethIndexSlot;
+    }
+    if (
+      object.sourceBlockHeight !== undefined &&
+      object.sourceBlockHeight !== null
+    ) {
+      message.sourceBlockHeight = object.sourceBlockHeight;
+    }
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = object.owner;
     }
     return message;
   },
