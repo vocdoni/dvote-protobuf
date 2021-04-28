@@ -9,6 +9,7 @@ message EnvelopePackage {
 	bytes weight = 2;
 	int32 txIndex = 3;
 	uint32 height = 4;
+	bytes txHash = 5;
 }
 
 message VoteEnvelope {
