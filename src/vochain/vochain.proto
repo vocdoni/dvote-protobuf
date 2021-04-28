@@ -355,6 +355,7 @@ message TxPackage {
 	SignedTx tx = 1;
 	uint32 blockHeight = 2;
 	int32 index = 3;
+	bytes hash = 4;
 }
 
 message TxPackageList {
