@@ -330,7 +330,7 @@ message BlockHeaderList {
 
 message BlockHeader {
   // basic block info
-  string chain_id = 1;
+  string chainId = 1;
   int64 height = 2;
   int64 timestamp = 3;
   bytes blockHash = 4;
@@ -340,7 +340,7 @@ message BlockHeader {
   bytes lastBlockHash  = 6;
 
   // consensus info
-  bytes proposer_address = 7;  // original proposer of the block
+  bytes proposerAddress = 7;  // original proposer of the block
 }
 
 message ValidatorList {
@@ -351,6 +351,12 @@ message EnvelopePackageList {
 	repeated EnvelopePackage envelopes = 1;
 }
 
-message SignedTxList {
-	repeated SignedTx txList = 1;
+message TxPackage {
+	SignedTx tx = 1;
+	uint32 blockHeight = 2;
+	int32 index = 3;
+}
+
+message TxPackageList {
+	repeated TxPackage txList = 1;
 }
