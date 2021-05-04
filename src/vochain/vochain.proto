@@ -31,14 +31,6 @@ message Proof {
          }
 }
 
-enum SignatureType {
-        UNKNOWN = 0;
-        ECDSA = 1;
-        ECDSA_PIDSALTED = 2;
-        ECDSA_BLIND = 3;
-        ECDSA_BLIND_PIDSALTED = 4;
-}
-
 message ProofGraviton {
         bytes siblings = 1;
 }
@@ -48,7 +40,15 @@ message ProofIden3 {
 }
 
 message ProofCA {
-        SignatureType type = 1;
+        enum Type {
+                UNKNOWN = 0;
+                ECDSA = 1;
+                ECDSA_PIDSALTED = 2;
+                ECDSA_BLIND = 3;
+                ECDSA_BLIND_PIDSALTED = 4;
+        }
+
+        Type type = 1;
         CAbundle bundle = 2;
         bytes signature = 3;
 }
