@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: vochain/vochain.proto
 //
-// @dart = 2.12
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -27,12 +27,12 @@ class VoteEnvelope extends $pb.GeneratedMessage {
 
   VoteEnvelope._() : super();
   factory VoteEnvelope({
-    $core.List<$core.int>? nonce,
-    $core.List<$core.int>? processId,
-    Proof? proof,
-    $core.List<$core.int>? votePackage,
-    $core.List<$core.int>? nullifier,
-    $core.Iterable<$core.int>? encryptionKeyIndexes,
+    $core.List<$core.int> nonce,
+    $core.List<$core.int> processId,
+    Proof proof,
+    $core.List<$core.int> votePackage,
+    $core.List<$core.int> nullifier,
+    $core.Iterable<$core.int> encryptionKeyIndexes,
   }) {
     final _result = create();
     if (nonce != null) {
@@ -74,7 +74,7 @@ class VoteEnvelope extends $pb.GeneratedMessage {
   static $pb.PbList<VoteEnvelope> createRepeated() => $pb.PbList<VoteEnvelope>();
   @$core.pragma('dart2js:noInline')
   static VoteEnvelope getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VoteEnvelope>(create);
-  static VoteEnvelope? _defaultInstance;
+  static VoteEnvelope _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get nonce => $_getN(0);
@@ -157,11 +157,11 @@ class Proof extends $pb.GeneratedMessage {
 
   Proof._() : super();
   factory Proof({
-    ProofGraviton? graviton,
-    ProofIden3? iden3,
-    ProofEthereumStorage? ethereumStorage,
-    ProofEthereumAccount? ethereumAccount,
-    ProofCA? ca,
+    ProofGraviton graviton,
+    ProofIden3 iden3,
+    ProofEthereumStorage ethereumStorage,
+    ProofEthereumAccount ethereumAccount,
+    ProofCA ca,
   }) {
     final _result = create();
     if (graviton != null) {
@@ -200,9 +200,9 @@ class Proof extends $pb.GeneratedMessage {
   static $pb.PbList<Proof> createRepeated() => $pb.PbList<Proof>();
   @$core.pragma('dart2js:noInline')
   static Proof getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Proof>(create);
-  static Proof? _defaultInstance;
+  static Proof _defaultInstance;
 
-  Proof_Payload whichPayload() => _Proof_PayloadByTag[$_whichOneof(0)]!;
+  Proof_Payload whichPayload() => _Proof_PayloadByTag[$_whichOneof(0)];
   void clearPayload() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -269,7 +269,7 @@ class ProofGraviton extends $pb.GeneratedMessage {
 
   ProofGraviton._() : super();
   factory ProofGraviton({
-    $core.List<$core.int>? siblings,
+    $core.List<$core.int> siblings,
   }) {
     final _result = create();
     if (siblings != null) {
@@ -296,7 +296,7 @@ class ProofGraviton extends $pb.GeneratedMessage {
   static $pb.PbList<ProofGraviton> createRepeated() => $pb.PbList<ProofGraviton>();
   @$core.pragma('dart2js:noInline')
   static ProofGraviton getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofGraviton>(create);
-  static ProofGraviton? _defaultInstance;
+  static ProofGraviton _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get siblings => $_getN(0);
@@ -316,7 +316,7 @@ class ProofIden3 extends $pb.GeneratedMessage {
 
   ProofIden3._() : super();
   factory ProofIden3({
-    $core.List<$core.int>? siblings,
+    $core.List<$core.int> siblings,
   }) {
     final _result = create();
     if (siblings != null) {
@@ -343,7 +343,7 @@ class ProofIden3 extends $pb.GeneratedMessage {
   static $pb.PbList<ProofIden3> createRepeated() => $pb.PbList<ProofIden3>();
   @$core.pragma('dart2js:noInline')
   static ProofIden3 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofIden3>(create);
-  static ProofIden3? _defaultInstance;
+  static ProofIden3 _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get siblings => $_getN(0);
@@ -357,7 +357,7 @@ class ProofIden3 extends $pb.GeneratedMessage {
 
 class ProofCA extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofCA', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..e<SignatureType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: SignatureType.UNKNOWN, valueOf: SignatureType.valueOf, enumValues: SignatureType.values)
+    ..e<ProofCA_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofCA_Type.UNKNOWN, valueOf: ProofCA_Type.valueOf, enumValues: ProofCA_Type.values)
     ..aOM<CAbundle>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bundle', subBuilder: CAbundle.create)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
@@ -365,9 +365,9 @@ class ProofCA extends $pb.GeneratedMessage {
 
   ProofCA._() : super();
   factory ProofCA({
-    SignatureType? type,
-    CAbundle? bundle,
-    $core.List<$core.int>? signature,
+    ProofCA_Type type,
+    CAbundle bundle,
+    $core.List<$core.int> signature,
   }) {
     final _result = create();
     if (type != null) {
@@ -400,12 +400,12 @@ class ProofCA extends $pb.GeneratedMessage {
   static $pb.PbList<ProofCA> createRepeated() => $pb.PbList<ProofCA>();
   @$core.pragma('dart2js:noInline')
   static ProofCA getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofCA>(create);
-  static ProofCA? _defaultInstance;
+  static ProofCA _defaultInstance;
 
   @$pb.TagNumber(1)
-  SignatureType get type => $_getN(0);
+  ProofCA_Type get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type(SignatureType v) { setField(1, v); }
+  set type(ProofCA_Type v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -441,8 +441,8 @@ class CAbundle extends $pb.GeneratedMessage {
 
   CAbundle._() : super();
   factory CAbundle({
-    $core.List<$core.int>? processId,
-    $core.List<$core.int>? address,
+    $core.List<$core.int> processId,
+    $core.List<$core.int> address,
   }) {
     final _result = create();
     if (processId != null) {
@@ -472,7 +472,7 @@ class CAbundle extends $pb.GeneratedMessage {
   static $pb.PbList<CAbundle> createRepeated() => $pb.PbList<CAbundle>();
   @$core.pragma('dart2js:noInline')
   static CAbundle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CAbundle>(create);
-  static CAbundle? _defaultInstance;
+  static CAbundle _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get processId => $_getN(0);
@@ -503,9 +503,9 @@ class ProofEthereumStorage extends $pb.GeneratedMessage {
 
   ProofEthereumStorage._() : super();
   factory ProofEthereumStorage({
-    $core.List<$core.int>? key,
-    $core.List<$core.int>? value,
-    $core.Iterable<$core.List<$core.int>>? siblings,
+    $core.List<$core.int> key,
+    $core.List<$core.int> value,
+    $core.Iterable<$core.List<$core.int>> siblings,
   }) {
     final _result = create();
     if (key != null) {
@@ -538,7 +538,7 @@ class ProofEthereumStorage extends $pb.GeneratedMessage {
   static $pb.PbList<ProofEthereumStorage> createRepeated() => $pb.PbList<ProofEthereumStorage>();
   @$core.pragma('dart2js:noInline')
   static ProofEthereumStorage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofEthereumStorage>(create);
-  static ProofEthereumStorage? _defaultInstance;
+  static ProofEthereumStorage _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get key => $_getN(0);
@@ -574,11 +574,11 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
 
   ProofEthereumAccount._() : super();
   factory ProofEthereumAccount({
-    $core.List<$core.int>? nonce,
-    $core.List<$core.int>? balance,
-    $core.List<$core.int>? storageHash,
-    $core.List<$core.int>? codeHash,
-    $core.Iterable<$core.List<$core.int>>? siblings,
+    $core.List<$core.int> nonce,
+    $core.List<$core.int> balance,
+    $core.List<$core.int> storageHash,
+    $core.List<$core.int> codeHash,
+    $core.Iterable<$core.List<$core.int>> siblings,
   }) {
     final _result = create();
     if (nonce != null) {
@@ -617,7 +617,7 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
   static $pb.PbList<ProofEthereumAccount> createRepeated() => $pb.PbList<ProofEthereumAccount>();
   @$core.pragma('dart2js:noInline')
   static ProofEthereumAccount getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofEthereumAccount>(create);
-  static ProofEthereumAccount? _defaultInstance;
+  static ProofEthereumAccount _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get nonce => $_getN(0);
@@ -686,10 +686,10 @@ class Tx extends $pb.GeneratedMessage {
 
   Tx._() : super();
   factory Tx({
-    VoteEnvelope? vote,
-    NewProcessTx? newProcess,
-    AdminTx? admin,
-    SetProcessTx? setProcess,
+    VoteEnvelope vote,
+    NewProcessTx newProcess,
+    AdminTx admin,
+    SetProcessTx setProcess,
   }) {
     final _result = create();
     if (vote != null) {
@@ -725,9 +725,9 @@ class Tx extends $pb.GeneratedMessage {
   static $pb.PbList<Tx> createRepeated() => $pb.PbList<Tx>();
   @$core.pragma('dart2js:noInline')
   static Tx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Tx>(create);
-  static Tx? _defaultInstance;
+  static Tx _defaultInstance;
 
-  Tx_Payload whichPayload() => _Tx_PayloadByTag[$_whichOneof(0)]!;
+  Tx_Payload whichPayload() => _Tx_PayloadByTag[$_whichOneof(0)];
   void clearPayload() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -784,8 +784,8 @@ class SignedTx extends $pb.GeneratedMessage {
 
   SignedTx._() : super();
   factory SignedTx({
-    $core.List<$core.int>? tx,
-    $core.List<$core.int>? signature,
+    $core.List<$core.int> tx,
+    $core.List<$core.int> signature,
   }) {
     final _result = create();
     if (tx != null) {
@@ -815,7 +815,7 @@ class SignedTx extends $pb.GeneratedMessage {
   static $pb.PbList<SignedTx> createRepeated() => $pb.PbList<SignedTx>();
   @$core.pragma('dart2js:noInline')
   static SignedTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignedTx>(create);
-  static SignedTx? _defaultInstance;
+  static SignedTx _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get tx => $_getN(0);
@@ -846,9 +846,9 @@ class NewProcessTx extends $pb.GeneratedMessage {
 
   NewProcessTx._() : super();
   factory NewProcessTx({
-    TxType? txtype,
-    $core.List<$core.int>? nonce,
-    Process? process,
+    TxType txtype,
+    $core.List<$core.int> nonce,
+    Process process,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -881,7 +881,7 @@ class NewProcessTx extends $pb.GeneratedMessage {
   static $pb.PbList<NewProcessTx> createRepeated() => $pb.PbList<NewProcessTx>();
   @$core.pragma('dart2js:noInline')
   static NewProcessTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NewProcessTx>(create);
-  static NewProcessTx? _defaultInstance;
+  static NewProcessTx _defaultInstance;
 
   @$pb.TagNumber(1)
   TxType get txtype => $_getN(0);
@@ -929,15 +929,15 @@ class SetProcessTx extends $pb.GeneratedMessage {
 
   SetProcessTx._() : super();
   factory SetProcessTx({
-    TxType? txtype,
-    $core.List<$core.int>? nonce,
-    $core.List<$core.int>? processId,
-    ProcessStatus? status,
-    $core.int? questionIndex,
-    $core.List<$core.int>? censusRoot,
-    $core.String? censusURI,
-    Proof? proof,
-    ProcessResult? results,
+    TxType txtype,
+    $core.List<$core.int> nonce,
+    $core.List<$core.int> processId,
+    ProcessStatus status,
+    $core.int questionIndex,
+    $core.List<$core.int> censusRoot,
+    $core.String censusURI,
+    Proof proof,
+    ProcessResult results,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -988,7 +988,7 @@ class SetProcessTx extends $pb.GeneratedMessage {
   static $pb.PbList<SetProcessTx> createRepeated() => $pb.PbList<SetProcessTx>();
   @$core.pragma('dart2js:noInline')
   static SetProcessTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetProcessTx>(create);
-  static SetProcessTx? _defaultInstance;
+  static SetProcessTx _defaultInstance;
 
   @$pb.TagNumber(1)
   TxType get txtype => $_getN(0);
@@ -1094,17 +1094,17 @@ class AdminTx extends $pb.GeneratedMessage {
 
   AdminTx._() : super();
   factory AdminTx({
-    TxType? txtype,
-    $core.List<$core.int>? processId,
-    $core.List<$core.int>? address,
-    $core.List<$core.int>? commitmentKey,
-    $core.List<$core.int>? encryptionPrivateKey,
-    $core.List<$core.int>? encryptionPublicKey,
-    $core.int? keyIndex,
-    $fixnum.Int64? power,
-    $core.List<$core.int>? publicKey,
-    $core.List<$core.int>? revealKey,
-    $core.List<$core.int>? nonce,
+    TxType txtype,
+    $core.List<$core.int> processId,
+    $core.List<$core.int> address,
+    $core.List<$core.int> commitmentKey,
+    $core.List<$core.int> encryptionPrivateKey,
+    $core.List<$core.int> encryptionPublicKey,
+    $core.int keyIndex,
+    $fixnum.Int64 power,
+    $core.List<$core.int> publicKey,
+    $core.List<$core.int> revealKey,
+    $core.List<$core.int> nonce,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -1161,7 +1161,7 @@ class AdminTx extends $pb.GeneratedMessage {
   static $pb.PbList<AdminTx> createRepeated() => $pb.PbList<AdminTx>();
   @$core.pragma('dart2js:noInline')
   static AdminTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AdminTx>(create);
-  static AdminTx? _defaultInstance;
+  static AdminTx _defaultInstance;
 
   @$pb.TagNumber(1)
   TxType get txtype => $_getN(0);
@@ -1295,31 +1295,31 @@ class Process extends $pb.GeneratedMessage {
 
   Process._() : super();
   factory Process({
-    $core.List<$core.int>? processId,
-    $core.List<$core.int>? entityId,
-    $core.int? startBlock,
-    $core.int? blockCount,
-    $core.List<$core.int>? censusRoot,
-    $core.String? censusURI,
-    $core.Iterable<$core.String>? commitmentKeys,
-    $core.Iterable<$core.String>? encryptionPrivateKeys,
-    $core.Iterable<$core.String>? encryptionPublicKeys,
-    $core.Iterable<$core.String>? revealKeys,
-    $core.int? keyIndex,
-    ProcessStatus? status,
-    $core.List<$core.int>? paramsSignature,
-    $core.int? namespace,
-    EnvelopeType? envelopeType,
-    ProcessMode? mode,
-    $core.int? questionIndex,
-    $core.int? questionCount,
-    ProcessVoteOptions? voteOptions,
-    CensusOrigin? censusOrigin,
-    ProcessResult? results,
-    $core.Iterable<$core.List<$core.int>>? resultsSignatures,
-    $core.int? ethIndexSlot,
-    $fixnum.Int64? sourceBlockHeight,
-    $core.List<$core.int>? owner,
+    $core.List<$core.int> processId,
+    $core.List<$core.int> entityId,
+    $core.int startBlock,
+    $core.int blockCount,
+    $core.List<$core.int> censusRoot,
+    $core.String censusURI,
+    $core.Iterable<$core.String> commitmentKeys,
+    $core.Iterable<$core.String> encryptionPrivateKeys,
+    $core.Iterable<$core.String> encryptionPublicKeys,
+    $core.Iterable<$core.String> revealKeys,
+    $core.int keyIndex,
+    ProcessStatus status,
+    $core.List<$core.int> paramsSignature,
+    $core.int namespace,
+    EnvelopeType envelopeType,
+    ProcessMode mode,
+    $core.int questionIndex,
+    $core.int questionCount,
+    ProcessVoteOptions voteOptions,
+    CensusOrigin censusOrigin,
+    ProcessResult results,
+    $core.Iterable<$core.List<$core.int>> resultsSignatures,
+    $core.int ethIndexSlot,
+    $fixnum.Int64 sourceBlockHeight,
+    $core.List<$core.int> owner,
   }) {
     final _result = create();
     if (processId != null) {
@@ -1418,7 +1418,7 @@ class Process extends $pb.GeneratedMessage {
   static $pb.PbList<Process> createRepeated() => $pb.PbList<Process>();
   @$core.pragma('dart2js:noInline')
   static Process getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Process>(create);
-  static Process? _defaultInstance;
+  static Process _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get processId => $_getN(0);
@@ -1636,11 +1636,11 @@ class EnvelopeType extends $pb.GeneratedMessage {
 
   EnvelopeType._() : super();
   factory EnvelopeType({
-    $core.bool? serial,
-    $core.bool? anonymous,
-    $core.bool? encryptedVotes,
-    $core.bool? uniqueValues,
-    $core.bool? costFromWeight,
+    $core.bool serial,
+    $core.bool anonymous,
+    $core.bool encryptedVotes,
+    $core.bool uniqueValues,
+    $core.bool costFromWeight,
   }) {
     final _result = create();
     if (serial != null) {
@@ -1679,7 +1679,7 @@ class EnvelopeType extends $pb.GeneratedMessage {
   static $pb.PbList<EnvelopeType> createRepeated() => $pb.PbList<EnvelopeType>();
   @$core.pragma('dart2js:noInline')
   static EnvelopeType getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EnvelopeType>(create);
-  static EnvelopeType? _defaultInstance;
+  static EnvelopeType _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get serial => $_getBF(0);
@@ -1738,10 +1738,10 @@ class ProcessMode extends $pb.GeneratedMessage {
 
   ProcessMode._() : super();
   factory ProcessMode({
-    $core.bool? autoStart,
-    $core.bool? interruptible,
-    $core.bool? dynamicCensus,
-    $core.bool? encryptedMetaData,
+    $core.bool autoStart,
+    $core.bool interruptible,
+    $core.bool dynamicCensus,
+    $core.bool encryptedMetaData,
   }) {
     final _result = create();
     if (autoStart != null) {
@@ -1777,7 +1777,7 @@ class ProcessMode extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessMode> createRepeated() => $pb.PbList<ProcessMode>();
   @$core.pragma('dart2js:noInline')
   static ProcessMode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMode>(create);
-  static ProcessMode? _defaultInstance;
+  static ProcessMode _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get autoStart => $_getBF(0);
@@ -1828,11 +1828,11 @@ class ProcessVoteOptions extends $pb.GeneratedMessage {
 
   ProcessVoteOptions._() : super();
   factory ProcessVoteOptions({
-    $core.int? maxCount,
-    $core.int? maxValue,
-    $core.int? maxVoteOverwrites,
-    $core.int? maxTotalCost,
-    $core.int? costExponent,
+    $core.int maxCount,
+    $core.int maxValue,
+    $core.int maxVoteOverwrites,
+    $core.int maxTotalCost,
+    $core.int costExponent,
   }) {
     final _result = create();
     if (maxCount != null) {
@@ -1871,7 +1871,7 @@ class ProcessVoteOptions extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessVoteOptions> createRepeated() => $pb.PbList<ProcessVoteOptions>();
   @$core.pragma('dart2js:noInline')
   static ProcessVoteOptions getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessVoteOptions>(create);
-  static ProcessVoteOptions? _defaultInstance;
+  static ProcessVoteOptions _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get maxCount => $_getIZ(0);
@@ -1927,7 +1927,7 @@ class OracleList extends $pb.GeneratedMessage {
 
   OracleList._() : super();
   factory OracleList({
-    $core.Iterable<$core.List<$core.int>>? oracles,
+    $core.Iterable<$core.List<$core.int>> oracles,
   }) {
     final _result = create();
     if (oracles != null) {
@@ -1954,7 +1954,7 @@ class OracleList extends $pb.GeneratedMessage {
   static $pb.PbList<OracleList> createRepeated() => $pb.PbList<OracleList>();
   @$core.pragma('dart2js:noInline')
   static OracleList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OracleList>(create);
-  static OracleList? _defaultInstance;
+  static OracleList _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.List<$core.int>> get oracles => $_getList(0);
@@ -1968,7 +1968,7 @@ class ValidatorList extends $pb.GeneratedMessage {
 
   ValidatorList._() : super();
   factory ValidatorList({
-    $core.Iterable<Validator>? validators,
+    $core.Iterable<Validator> validators,
   }) {
     final _result = create();
     if (validators != null) {
@@ -1995,7 +1995,7 @@ class ValidatorList extends $pb.GeneratedMessage {
   static $pb.PbList<ValidatorList> createRepeated() => $pb.PbList<ValidatorList>();
   @$core.pragma('dart2js:noInline')
   static ValidatorList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ValidatorList>(create);
-  static ValidatorList? _defaultInstance;
+  static ValidatorList _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Validator> get validators => $_getList(0);
@@ -2012,10 +2012,10 @@ class Validator extends $pb.GeneratedMessage {
 
   Validator._() : super();
   factory Validator({
-    $core.List<$core.int>? address,
-    $core.List<$core.int>? pubKey,
-    $fixnum.Int64? power,
-    $core.String? name,
+    $core.List<$core.int> address,
+    $core.List<$core.int> pubKey,
+    $fixnum.Int64 power,
+    $core.String name,
   }) {
     final _result = create();
     if (address != null) {
@@ -2051,7 +2051,7 @@ class Validator extends $pb.GeneratedMessage {
   static $pb.PbList<Validator> createRepeated() => $pb.PbList<Validator>();
   @$core.pragma('dart2js:noInline')
   static Validator getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Validator>(create);
-  static Validator? _defaultInstance;
+  static Validator _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get address => $_getN(0);
@@ -2103,12 +2103,12 @@ class Vote extends $pb.GeneratedMessage {
 
   Vote._() : super();
   factory Vote({
-    $core.int? height,
-    $core.List<$core.int>? nullifier,
-    $core.List<$core.int>? processId,
-    $core.List<$core.int>? votePackage,
-    $core.Iterable<$core.int>? encryptionKeyIndexes,
-    $core.List<$core.int>? weight,
+    $core.int height,
+    $core.List<$core.int> nullifier,
+    $core.List<$core.int> processId,
+    $core.List<$core.int> votePackage,
+    $core.Iterable<$core.int> encryptionKeyIndexes,
+    $core.List<$core.int> weight,
   }) {
     final _result = create();
     if (height != null) {
@@ -2150,7 +2150,7 @@ class Vote extends $pb.GeneratedMessage {
   static $pb.PbList<Vote> createRepeated() => $pb.PbList<Vote>();
   @$core.pragma('dart2js:noInline')
   static Vote getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Vote>(create);
-  static Vote? _defaultInstance;
+  static Vote _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get height => $_getIZ(0);
@@ -2221,19 +2221,19 @@ class TendermintHeader extends $pb.GeneratedMessage {
 
   TendermintHeader._() : super();
   factory TendermintHeader({
-    $core.String? chainId,
-    $fixnum.Int64? height,
-    $fixnum.Int64? timestamp,
-    $core.List<$core.int>? blockID,
-    $core.List<$core.int>? lastCommitHash,
-    $core.List<$core.int>? dataHash,
-    $core.List<$core.int>? validatorsHash,
-    $core.List<$core.int>? nextValidatorsHash,
-    $core.List<$core.int>? consensusHash,
-    $core.List<$core.int>? appHash,
-    $core.List<$core.int>? lastResultsHash,
-    $core.List<$core.int>? evidenceHash,
-    $core.List<$core.int>? proposerAddress,
+    $core.String chainId,
+    $fixnum.Int64 height,
+    $fixnum.Int64 timestamp,
+    $core.List<$core.int> blockID,
+    $core.List<$core.int> lastCommitHash,
+    $core.List<$core.int> dataHash,
+    $core.List<$core.int> validatorsHash,
+    $core.List<$core.int> nextValidatorsHash,
+    $core.List<$core.int> consensusHash,
+    $core.List<$core.int> appHash,
+    $core.List<$core.int> lastResultsHash,
+    $core.List<$core.int> evidenceHash,
+    $core.List<$core.int> proposerAddress,
   }) {
     final _result = create();
     if (chainId != null) {
@@ -2296,7 +2296,7 @@ class TendermintHeader extends $pb.GeneratedMessage {
   static $pb.PbList<TendermintHeader> createRepeated() => $pb.PbList<TendermintHeader>();
   @$core.pragma('dart2js:noInline')
   static TendermintHeader getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TendermintHeader>(create);
-  static TendermintHeader? _defaultInstance;
+  static TendermintHeader _defaultInstance;
 
   @$pb.TagNumber(2)
   $core.String get chainId => $_getSZ(0);
@@ -2426,9 +2426,9 @@ class ProcessResult extends $pb.GeneratedMessage {
 
   ProcessResult._() : super();
   factory ProcessResult({
-    $core.Iterable<QuestionResult>? votes,
-    $core.List<$core.int>? processId,
-    $core.List<$core.int>? entityId,
+    $core.Iterable<QuestionResult> votes,
+    $core.List<$core.int> processId,
+    $core.List<$core.int> entityId,
   }) {
     final _result = create();
     if (votes != null) {
@@ -2461,7 +2461,7 @@ class ProcessResult extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessResult> createRepeated() => $pb.PbList<ProcessResult>();
   @$core.pragma('dart2js:noInline')
   static ProcessResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessResult>(create);
-  static ProcessResult? _defaultInstance;
+  static ProcessResult _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<QuestionResult> get votes => $_getList(0);
@@ -2493,7 +2493,7 @@ class QuestionResult extends $pb.GeneratedMessage {
 
   QuestionResult._() : super();
   factory QuestionResult({
-    $core.Iterable<$core.List<$core.int>>? question,
+    $core.Iterable<$core.List<$core.int>> question,
   }) {
     final _result = create();
     if (question != null) {
@@ -2520,7 +2520,7 @@ class QuestionResult extends $pb.GeneratedMessage {
   static $pb.PbList<QuestionResult> createRepeated() => $pb.PbList<QuestionResult>();
   @$core.pragma('dart2js:noInline')
   static QuestionResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QuestionResult>(create);
-  static QuestionResult? _defaultInstance;
+  static QuestionResult _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.List<$core.int>> get question => $_getList(0);
@@ -2534,7 +2534,7 @@ class ProcessEndingList extends $pb.GeneratedMessage {
 
   ProcessEndingList._() : super();
   factory ProcessEndingList({
-    $core.Iterable<$core.List<$core.int>>? processList,
+    $core.Iterable<$core.List<$core.int>> processList,
   }) {
     final _result = create();
     if (processList != null) {
@@ -2561,7 +2561,7 @@ class ProcessEndingList extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessEndingList> createRepeated() => $pb.PbList<ProcessEndingList>();
   @$core.pragma('dart2js:noInline')
   static ProcessEndingList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessEndingList>(create);
-  static ProcessEndingList? _defaultInstance;
+  static ProcessEndingList _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.List<$core.int>> get processList => $_getList(0);
@@ -2575,7 +2575,7 @@ class StoredKeys extends $pb.GeneratedMessage {
 
   StoredKeys._() : super();
   factory StoredKeys({
-    $core.Iterable<$core.List<$core.int>>? pids,
+    $core.Iterable<$core.List<$core.int>> pids,
   }) {
     final _result = create();
     if (pids != null) {
@@ -2602,7 +2602,7 @@ class StoredKeys extends $pb.GeneratedMessage {
   static $pb.PbList<StoredKeys> createRepeated() => $pb.PbList<StoredKeys>();
   @$core.pragma('dart2js:noInline')
   static StoredKeys getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StoredKeys>(create);
-  static StoredKeys? _defaultInstance;
+  static StoredKeys _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.List<$core.int>> get pids => $_getList(0);

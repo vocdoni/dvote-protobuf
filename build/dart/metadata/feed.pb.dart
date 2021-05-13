@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: metadata/feed.proto
 //
-// @dart = 2.12
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -17,7 +17,7 @@ class FeedStore extends $pb.GeneratedMessage {
 
   FeedStore._() : super();
   factory FeedStore({
-    $core.Iterable<Feed>? items,
+    $core.Iterable<Feed> items,
   }) {
     final _result = create();
     if (items != null) {
@@ -44,7 +44,7 @@ class FeedStore extends $pb.GeneratedMessage {
   static $pb.PbList<FeedStore> createRepeated() => $pb.PbList<FeedStore>();
   @$core.pragma('dart2js:noInline')
   static FeedStore getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FeedStore>(create);
-  static FeedStore? _defaultInstance;
+  static FeedStore _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Feed> get items => $_getList(0);
@@ -67,16 +67,16 @@ class Feed extends $pb.GeneratedMessage {
 
   Feed._() : super();
   factory Feed({
-    $core.String? version,
-    $core.String? title,
-    $core.String? homePageUrl,
-    $core.String? description,
-    $core.String? feedUrl,
-    $core.String? icon,
-    $core.String? favicon,
-    $core.bool? expired,
-    $core.Iterable<FeedPost>? items,
-    $core.Map<$core.String, $core.String>? meta,
+    $core.String version,
+    $core.String title,
+    $core.String homePageUrl,
+    $core.String description,
+    $core.String feedUrl,
+    $core.String icon,
+    $core.String favicon,
+    $core.bool expired,
+    $core.Iterable<FeedPost> items,
+    $core.Map<$core.String, $core.String> meta,
   }) {
     final _result = create();
     if (version != null) {
@@ -130,7 +130,7 @@ class Feed extends $pb.GeneratedMessage {
   static $pb.PbList<Feed> createRepeated() => $pb.PbList<Feed>();
   @$core.pragma('dart2js:noInline')
   static Feed getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Feed>(create);
-  static Feed? _defaultInstance;
+  static Feed _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get version => $_getSZ(0);
@@ -220,8 +220,8 @@ class FeedPost_Author extends $pb.GeneratedMessage {
 
   FeedPost_Author._() : super();
   factory FeedPost_Author({
-    $core.String? name,
-    $core.String? url,
+    $core.String name,
+    $core.String url,
   }) {
     final _result = create();
     if (name != null) {
@@ -251,7 +251,7 @@ class FeedPost_Author extends $pb.GeneratedMessage {
   static $pb.PbList<FeedPost_Author> createRepeated() => $pb.PbList<FeedPost_Author>();
   @$core.pragma('dart2js:noInline')
   static FeedPost_Author getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FeedPost_Author>(create);
-  static FeedPost_Author? _defaultInstance;
+  static FeedPost_Author _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -290,17 +290,17 @@ class FeedPost extends $pb.GeneratedMessage {
 
   FeedPost._() : super();
   factory FeedPost({
-    $core.String? id,
-    $core.String? title,
-    $core.String? summary,
-    $core.String? contentText,
-    $core.String? contentHtml,
-    $core.String? url,
-    $core.String? image,
-    $core.Iterable<$core.String>? tags,
-    $core.String? datePublished,
-    $core.String? dateModified,
-    FeedPost_Author? author,
+    $core.String id,
+    $core.String title,
+    $core.String summary,
+    $core.String contentText,
+    $core.String contentHtml,
+    $core.String url,
+    $core.String image,
+    $core.Iterable<$core.String> tags,
+    $core.String datePublished,
+    $core.String dateModified,
+    FeedPost_Author author,
   }) {
     final _result = create();
     if (id != null) {
@@ -357,7 +357,7 @@ class FeedPost extends $pb.GeneratedMessage {
   static $pb.PbList<FeedPost> createRepeated() => $pb.PbList<FeedPost>();
   @$core.pragma('dart2js:noInline')
   static FeedPost getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FeedPost>(create);
-  static FeedPost? _defaultInstance;
+  static FeedPost _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);

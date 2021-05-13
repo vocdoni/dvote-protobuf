@@ -120,7 +120,7 @@ protoc:
 # DART
 .PHONY: protoc-dart-plugin
 protoc-dart-plugin:
-	pub global activate protoc_plugin
+	dart pub global activate protoc_plugin
 
 # TS
 $(PROTOC_TS_PLUGIN):

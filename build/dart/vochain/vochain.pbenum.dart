@@ -2,33 +2,12 @@
 //  Generated code. Do not modify.
 //  source: vochain/vochain.proto
 //
-// @dart = 2.12
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
-
-class SignatureType extends $pb.ProtobufEnum {
-  static const SignatureType UNKNOWN = SignatureType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
-  static const SignatureType ECDSA = SignatureType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA');
-  static const SignatureType ECDSA_PIDSALTED = SignatureType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA_PIDSALTED');
-  static const SignatureType ECDSA_BLIND = SignatureType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA_BLIND');
-  static const SignatureType ECDSA_BLIND_PIDSALTED = SignatureType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA_BLIND_PIDSALTED');
-
-  static const $core.List<SignatureType> values = <SignatureType> [
-    UNKNOWN,
-    ECDSA,
-    ECDSA_PIDSALTED,
-    ECDSA_BLIND,
-    ECDSA_BLIND_PIDSALTED,
-  ];
-
-  static final $core.Map<$core.int, SignatureType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static SignatureType? valueOf($core.int value) => _byValue[value];
-
-  const SignatureType._($core.int v, $core.String n) : super(v, n);
-}
 
 class TxType extends $pb.ProtobufEnum {
   static const TxType TX_UNKNOWN = TxType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TX_UNKNOWN');
@@ -62,7 +41,7 @@ class TxType extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, TxType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static TxType? valueOf($core.int value) => _byValue[value];
+  static TxType valueOf($core.int value) => _byValue[value];
 
   const TxType._($core.int v, $core.String n) : super(v, n);
 }
@@ -85,7 +64,7 @@ class ProcessStatus extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, ProcessStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ProcessStatus? valueOf($core.int value) => _byValue[value];
+  static ProcessStatus valueOf($core.int value) => _byValue[value];
 
   const ProcessStatus._($core.int v, $core.String n) : super(v, n);
 }
@@ -114,8 +93,29 @@ class CensusOrigin extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, CensusOrigin> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CensusOrigin? valueOf($core.int value) => _byValue[value];
+  static CensusOrigin valueOf($core.int value) => _byValue[value];
 
   const CensusOrigin._($core.int v, $core.String n) : super(v, n);
+}
+
+class ProofCA_Type extends $pb.ProtobufEnum {
+  static const ProofCA_Type UNKNOWN = ProofCA_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
+  static const ProofCA_Type ECDSA = ProofCA_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA');
+  static const ProofCA_Type ECDSA_PIDSALTED = ProofCA_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA_PIDSALTED');
+  static const ProofCA_Type ECDSA_BLIND = ProofCA_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA_BLIND');
+  static const ProofCA_Type ECDSA_BLIND_PIDSALTED = ProofCA_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA_BLIND_PIDSALTED');
+
+  static const $core.List<ProofCA_Type> values = <ProofCA_Type> [
+    UNKNOWN,
+    ECDSA,
+    ECDSA_PIDSALTED,
+    ECDSA_BLIND,
+    ECDSA_BLIND_PIDSALTED,
+  ];
+
+  static final $core.Map<$core.int, ProofCA_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ProofCA_Type valueOf($core.int value) => _byValue[value];
+
+  const ProofCA_Type._($core.int v, $core.String n) : super(v, n);
 }
 
