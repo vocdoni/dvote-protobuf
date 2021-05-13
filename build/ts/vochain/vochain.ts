@@ -4,56 +4,6 @@ import * as Long from "long";
 
 export const protobufPackage = "dvote.types.v1";
 
-export enum SignatureType {
-  UNKNOWN = 0,
-  ECDSA = 1,
-  ECDSA_PIDSALTED = 2,
-  ECDSA_BLIND = 3,
-  ECDSA_BLIND_PIDSALTED = 4,
-  UNRECOGNIZED = -1,
-}
-
-export function signatureTypeFromJSON(object: any): SignatureType {
-  switch (object) {
-    case 0:
-    case "UNKNOWN":
-      return SignatureType.UNKNOWN;
-    case 1:
-    case "ECDSA":
-      return SignatureType.ECDSA;
-    case 2:
-    case "ECDSA_PIDSALTED":
-      return SignatureType.ECDSA_PIDSALTED;
-    case 3:
-    case "ECDSA_BLIND":
-      return SignatureType.ECDSA_BLIND;
-    case 4:
-    case "ECDSA_BLIND_PIDSALTED":
-      return SignatureType.ECDSA_BLIND_PIDSALTED;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return SignatureType.UNRECOGNIZED;
-  }
-}
-
-export function signatureTypeToJSON(object: SignatureType): string {
-  switch (object) {
-    case SignatureType.UNKNOWN:
-      return "UNKNOWN";
-    case SignatureType.ECDSA:
-      return "ECDSA";
-    case SignatureType.ECDSA_PIDSALTED:
-      return "ECDSA_PIDSALTED";
-    case SignatureType.ECDSA_BLIND:
-      return "ECDSA_BLIND";
-    case SignatureType.ECDSA_BLIND_PIDSALTED:
-      return "ECDSA_BLIND_PIDSALTED";
-    default:
-      return "UNKNOWN";
-  }
-}
-
 export enum TxType {
   TX_UNKNOWN = 0,
   NEW_PROCESS = 1,
@@ -315,9 +265,59 @@ export interface ProofIden3 {
 }
 
 export interface ProofCA {
-  type: SignatureType;
+  type: ProofCA_Type;
   bundle: CAbundle | undefined;
   signature: Uint8Array;
+}
+
+export enum ProofCA_Type {
+  UNKNOWN = 0,
+  ECDSA = 1,
+  ECDSA_PIDSALTED = 2,
+  ECDSA_BLIND = 3,
+  ECDSA_BLIND_PIDSALTED = 4,
+  UNRECOGNIZED = -1,
+}
+
+export function proofCA_TypeFromJSON(object: any): ProofCA_Type {
+  switch (object) {
+    case 0:
+    case "UNKNOWN":
+      return ProofCA_Type.UNKNOWN;
+    case 1:
+    case "ECDSA":
+      return ProofCA_Type.ECDSA;
+    case 2:
+    case "ECDSA_PIDSALTED":
+      return ProofCA_Type.ECDSA_PIDSALTED;
+    case 3:
+    case "ECDSA_BLIND":
+      return ProofCA_Type.ECDSA_BLIND;
+    case 4:
+    case "ECDSA_BLIND_PIDSALTED":
+      return ProofCA_Type.ECDSA_BLIND_PIDSALTED;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ProofCA_Type.UNRECOGNIZED;
+  }
+}
+
+export function proofCA_TypeToJSON(object: ProofCA_Type): string {
+  switch (object) {
+    case ProofCA_Type.UNKNOWN:
+      return "UNKNOWN";
+    case ProofCA_Type.ECDSA:
+      return "ECDSA";
+    case ProofCA_Type.ECDSA_PIDSALTED:
+      return "ECDSA_PIDSALTED";
+    case ProofCA_Type.ECDSA_BLIND:
+      return "ECDSA_BLIND";
+    case ProofCA_Type.ECDSA_BLIND_PIDSALTED:
+      return "ECDSA_BLIND_PIDSALTED";
+    default:
+      return "UNKNOWN";
+  }
 }
 
 export interface CAbundle {
@@ -1050,7 +1050,7 @@ export const ProofCA = {
     const message = { ...baseProofCA } as ProofCA;
     message.signature = new Uint8Array();
     if (object.type !== undefined && object.type !== null) {
-      message.type = signatureTypeFromJSON(object.type);
+      message.type = proofCA_TypeFromJSON(object.type);
     }
     if (object.bundle !== undefined && object.bundle !== null) {
       message.bundle = CAbundle.fromJSON(object.bundle);
@@ -1063,8 +1063,7 @@ export const ProofCA = {
 
   toJSON(message: ProofCA): unknown {
     const obj: any = {};
-    message.type !== undefined &&
-      (obj.type = signatureTypeToJSON(message.type));
+    message.type !== undefined && (obj.type = proofCA_TypeToJSON(message.type));
     message.bundle !== undefined &&
       (obj.bundle = message.bundle
         ? CAbundle.toJSON(message.bundle)
@@ -3986,7 +3985,14 @@ function base64FromBytes(arr: Uint8Array): string {
   return btoa(bin.join(""));
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
