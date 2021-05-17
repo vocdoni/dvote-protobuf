@@ -2,26 +2,12 @@
 //  Generated code. Do not modify.
 //  source: vochain/vochain.proto
 //
-// @dart = 2.12
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use signatureTypeDescriptor instead')
-const SignatureType$json = const {
-  '1': 'SignatureType',
-  '2': const [
-    const {'1': 'UNKNOWN', '2': 0},
-    const {'1': 'ECDSA', '2': 1},
-    const {'1': 'ECDSA_PIDSALTED', '2': 2},
-    const {'1': 'ECDSA_BLIND', '2': 3},
-    const {'1': 'ECDSA_BLIND_PIDSALTED', '2': 4},
-  ],
-};
-
-/// Descriptor for `SignatureType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List signatureTypeDescriptor = $convert.base64Decode('Cg1TaWduYXR1cmVUeXBlEgsKB1VOS05PV04QABIJCgVFQ0RTQRABEhMKD0VDRFNBX1BJRFNBTFRFRBACEg8KC0VDRFNBX0JMSU5EEAMSGQoVRUNEU0FfQkxJTkRfUElEU0FMVEVEEAQ=');
 @$core.Deprecated('Use txTypeDescriptor instead')
 const TxType$json = const {
   '1': 'TxType',
@@ -133,14 +119,27 @@ final $typed_data.Uint8List proofIden3Descriptor = $convert.base64Decode('CgpQcm
 const ProofCA$json = const {
   '1': 'ProofCA',
   '2': const [
-    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.SignatureType', '10': 'type'},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofCA.Type', '10': 'type'},
     const {'1': 'bundle', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.CAbundle', '10': 'bundle'},
     const {'1': 'signature', '3': 3, '4': 1, '5': 12, '10': 'signature'},
+  ],
+  '4': const [ProofCA_Type$json],
+};
+
+@$core.Deprecated('Use proofCADescriptor instead')
+const ProofCA_Type$json = const {
+  '1': 'Type',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
+    const {'1': 'ECDSA', '2': 1},
+    const {'1': 'ECDSA_PIDSALTED', '2': 2},
+    const {'1': 'ECDSA_BLIND', '2': 3},
+    const {'1': 'ECDSA_BLIND_PIDSALTED', '2': 4},
   ],
 };
 
 /// Descriptor for `ProofCA`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofCADescriptor = $convert.base64Decode('CgdQcm9vZkNBEjEKBHR5cGUYASABKA4yHS5kdm90ZS50eXBlcy52MS5TaWduYXR1cmVUeXBlUgR0eXBlEjAKBmJ1bmRsZRgCIAEoCzIYLmR2b3RlLnR5cGVzLnYxLkNBYnVuZGxlUgZidW5kbGUSHAoJc2lnbmF0dXJlGAMgASgMUglzaWduYXR1cmU=');
+final $typed_data.Uint8List proofCADescriptor = $convert.base64Decode('CgdQcm9vZkNBEjAKBHR5cGUYASABKA4yHC5kdm90ZS50eXBlcy52MS5Qcm9vZkNBLlR5cGVSBHR5cGUSMAoGYnVuZGxlGAIgASgLMhguZHZvdGUudHlwZXMudjEuQ0FidW5kbGVSBmJ1bmRsZRIcCglzaWduYXR1cmUYAyABKAxSCXNpZ25hdHVyZSJfCgRUeXBlEgsKB1VOS05PV04QABIJCgVFQ0RTQRABEhMKD0VDRFNBX1BJRFNBTFRFRBACEg8KC0VDRFNBX0JMSU5EEAMSGQoVRUNEU0FfQkxJTkRfUElEU0FMVEVEEAQ=');
 @$core.Deprecated('Use cAbundleDescriptor instead')
 const CAbundle$json = const {
   '1': 'CAbundle',

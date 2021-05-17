@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/wallet.proto
 //
-// @dart = 2.12
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -24,10 +24,10 @@ class Wallet extends $pb.GeneratedMessage {
 
   Wallet._() : super();
   factory Wallet({
-    $core.List<$core.int>? encryptedMnemonic,
-    $core.String? hdPath,
-    $core.String? locale,
-    Wallet_AuthMethod? authMethod,
+    $core.List<$core.int> encryptedMnemonic,
+    $core.String hdPath,
+    $core.String locale,
+    Wallet_AuthMethod authMethod,
   }) {
     final _result = create();
     if (encryptedMnemonic != null) {
@@ -63,7 +63,7 @@ class Wallet extends $pb.GeneratedMessage {
   static $pb.PbList<Wallet> createRepeated() => $pb.PbList<Wallet>();
   @$core.pragma('dart2js:noInline')
   static Wallet getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Wallet>(create);
-  static Wallet? _defaultInstance;
+  static Wallet _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get encryptedMnemonic => $_getN(0);

@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: metadata/process.proto
 //
-// @dart = 2.12
+// @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -17,7 +17,7 @@ class ProcessMetadataStore extends $pb.GeneratedMessage {
 
   ProcessMetadataStore._() : super();
   factory ProcessMetadataStore({
-    $core.Iterable<ProcessMetadata>? items,
+    $core.Iterable<ProcessMetadata> items,
   }) {
     final _result = create();
     if (items != null) {
@@ -44,7 +44,7 @@ class ProcessMetadataStore extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessMetadataStore> createRepeated() => $pb.PbList<ProcessMetadataStore>();
   @$core.pragma('dart2js:noInline')
   static ProcessMetadataStore getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadataStore>(create);
-  static ProcessMetadataStore? _defaultInstance;
+  static ProcessMetadataStore _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<ProcessMetadata> get items => $_getList(0);
@@ -59,8 +59,8 @@ class ProcessMetadata_Question_VoteOption extends $pb.GeneratedMessage {
 
   ProcessMetadata_Question_VoteOption._() : super();
   factory ProcessMetadata_Question_VoteOption({
-    $core.Map<$core.String, $core.String>? title,
-    $core.int? value,
+    $core.Map<$core.String, $core.String> title,
+    $core.int value,
   }) {
     final _result = create();
     if (title != null) {
@@ -90,7 +90,7 @@ class ProcessMetadata_Question_VoteOption extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessMetadata_Question_VoteOption> createRepeated() => $pb.PbList<ProcessMetadata_Question_VoteOption>();
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata_Question_VoteOption getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Question_VoteOption>(create);
-  static ProcessMetadata_Question_VoteOption? _defaultInstance;
+  static ProcessMetadata_Question_VoteOption _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.Map<$core.String, $core.String> get title => $_getMap(0);
@@ -115,9 +115,9 @@ class ProcessMetadata_Question extends $pb.GeneratedMessage {
 
   ProcessMetadata_Question._() : super();
   factory ProcessMetadata_Question({
-    $core.Map<$core.String, $core.String>? title,
-    $core.Map<$core.String, $core.String>? description,
-    $core.Iterable<ProcessMetadata_Question_VoteOption>? choices,
+    $core.Map<$core.String, $core.String> title,
+    $core.Map<$core.String, $core.String> description,
+    $core.Iterable<ProcessMetadata_Question_VoteOption> choices,
   }) {
     final _result = create();
     if (title != null) {
@@ -150,7 +150,7 @@ class ProcessMetadata_Question extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessMetadata_Question> createRepeated() => $pb.PbList<ProcessMetadata_Question>();
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata_Question getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Question>(create);
-  static ProcessMetadata_Question? _defaultInstance;
+  static ProcessMetadata_Question _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.Map<$core.String, $core.String> get title => $_getMap(0);
@@ -171,8 +171,8 @@ class ProcessMetadata_Results extends $pb.GeneratedMessage {
 
   ProcessMetadata_Results._() : super();
   factory ProcessMetadata_Results({
-    $core.String? aggregation,
-    $core.String? display,
+    $core.String aggregation,
+    $core.String display,
   }) {
     final _result = create();
     if (aggregation != null) {
@@ -202,7 +202,7 @@ class ProcessMetadata_Results extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessMetadata_Results> createRepeated() => $pb.PbList<ProcessMetadata_Results>();
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata_Results getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata_Results>(create);
-  static ProcessMetadata_Results? _defaultInstance;
+  static ProcessMetadata_Results _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get aggregation => $_getSZ(0);
@@ -237,13 +237,13 @@ class ProcessMetadata extends $pb.GeneratedMessage {
 
   ProcessMetadata._() : super();
   factory ProcessMetadata({
-    $core.String? version,
-    $core.Map<$core.String, $core.String>? title,
-    $core.Map<$core.String, $core.String>? description,
-    $core.Map<$core.String, $core.String>? media,
-    $core.Iterable<ProcessMetadata_Question>? questions,
-    ProcessMetadata_Results? results,
-    $core.Map<$core.String, $core.String>? meta,
+    $core.String version,
+    $core.Map<$core.String, $core.String> title,
+    $core.Map<$core.String, $core.String> description,
+    $core.Map<$core.String, $core.String> media,
+    $core.Iterable<ProcessMetadata_Question> questions,
+    ProcessMetadata_Results results,
+    $core.Map<$core.String, $core.String> meta,
   }) {
     final _result = create();
     if (version != null) {
@@ -288,7 +288,7 @@ class ProcessMetadata extends $pb.GeneratedMessage {
   static $pb.PbList<ProcessMetadata> createRepeated() => $pb.PbList<ProcessMetadata>();
   @$core.pragma('dart2js:noInline')
   static ProcessMetadata getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProcessMetadata>(create);
-  static ProcessMetadata? _defaultInstance;
+  static ProcessMetadata _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get version => $_getSZ(0);
