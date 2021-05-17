@@ -494,9 +494,10 @@ export const EntityMetadata = {
       obj.trustedEntities = [];
     }
     if (message.censusServiceManagedEntities) {
-      obj.censusServiceManagedEntities = message.censusServiceManagedEntities.map(
-        (e) => (e ? EntityReference.toJSON(e) : undefined)
-      );
+      obj.censusServiceManagedEntities =
+        message.censusServiceManagedEntities.map((e) =>
+          e ? EntityReference.toJSON(e) : undefined
+        );
     } else {
       obj.censusServiceManagedEntities = [];
     }
@@ -1638,7 +1639,14 @@ export const EntityReference = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
