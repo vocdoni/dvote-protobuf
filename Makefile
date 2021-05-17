@@ -107,7 +107,7 @@ build/ts: $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES)
 		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
 	done
 	@touch $@
-
+	npm i --package-lock-only
 
 #-----------------------------------------------------------------------
 # COMPILERS
