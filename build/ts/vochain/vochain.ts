@@ -424,6 +424,8 @@ export interface Process {
   sourceBlockHeight?: number | undefined;
   /** Owner is the creator of a process (if any) otherwise is assumed the creator is the entityId */
   owner?: Uint8Array | undefined;
+  /** Metadata is the content hashed URI of the JSON meta data (See Data Origins) */
+  metadata?: string | undefined;
 }
 
 export interface EnvelopeType {
@@ -2231,6 +2233,9 @@ export const Process = {
     if (message.owner !== undefined) {
       writer.uint32(202).bytes(message.owner);
     }
+    if (message.metadata !== undefined) {
+      writer.uint32(210).string(message.metadata);
+    }
     return writer;
   },
 
@@ -2326,6 +2331,9 @@ export const Process = {
           break;
         case 25:
           message.owner = reader.bytes();
+          break;
+        case 26:
+          message.metadata = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2445,6 +2453,9 @@ export const Process = {
     if (object.owner !== undefined && object.owner !== null) {
       message.owner = bytesFromBase64(object.owner);
     }
+    if (object.metadata !== undefined && object.metadata !== null) {
+      message.metadata = String(object.metadata);
+    }
     return message;
   },
 
@@ -2530,6 +2541,7 @@ export const Process = {
         message.owner !== undefined
           ? base64FromBytes(message.owner)
           : undefined);
+    message.metadata !== undefined && (obj.metadata = message.metadata);
     return obj;
   },
 
@@ -2639,6 +2651,9 @@ export const Process = {
     }
     if (object.owner !== undefined && object.owner !== null) {
       message.owner = object.owner;
+    }
+    if (object.metadata !== undefined && object.metadata !== null) {
+      message.metadata = object.metadata;
     }
     return message;
   },

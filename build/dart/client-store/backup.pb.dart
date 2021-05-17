@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: client-store/backup.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -25,8 +25,8 @@ class WalletBackup_Recovery extends $pb.GeneratedMessage {
 
   WalletBackup_Recovery._() : super();
   factory WalletBackup_Recovery({
-    $core.Iterable<WalletBackup_Recovery_QuestionEnum> questionIds,
-    $core.List<$core.int> encryptedPassphrase,
+    $core.Iterable<WalletBackup_Recovery_QuestionEnum>? questionIds,
+    $core.List<$core.int>? encryptedPassphrase,
   }) {
     final _result = create();
     if (questionIds != null) {
@@ -56,7 +56,7 @@ class WalletBackup_Recovery extends $pb.GeneratedMessage {
   static $pb.PbList<WalletBackup_Recovery> createRepeated() => $pb.PbList<WalletBackup_Recovery>();
   @$core.pragma('dart2js:noInline')
   static WalletBackup_Recovery getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WalletBackup_Recovery>(create);
-  static WalletBackup_Recovery _defaultInstance;
+  static WalletBackup_Recovery? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<WalletBackup_Recovery_QuestionEnum> get questionIds => $_getList(0);
@@ -82,10 +82,10 @@ class WalletBackup extends $pb.GeneratedMessage {
 
   WalletBackup._() : super();
   factory WalletBackup({
-    $core.String name,
-    $fixnum.Int64 timestamp,
-    $0.Wallet wallet,
-    WalletBackup_Recovery passphraseRecovery,
+    $core.String? name,
+    $fixnum.Int64? timestamp,
+    $0.Wallet? wallet,
+    WalletBackup_Recovery? passphraseRecovery,
   }) {
     final _result = create();
     if (name != null) {
@@ -121,7 +121,7 @@ class WalletBackup extends $pb.GeneratedMessage {
   static $pb.PbList<WalletBackup> createRepeated() => $pb.PbList<WalletBackup>();
   @$core.pragma('dart2js:noInline')
   static WalletBackup getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WalletBackup>(create);
-  static WalletBackup _defaultInstance;
+  static WalletBackup? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);

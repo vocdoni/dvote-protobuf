@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: vochain/vochain.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
 import 'dart:core' as $core;
@@ -304,6 +304,7 @@ const Process$json = const {
     const {'1': 'ethIndexSlot', '3': 23, '4': 1, '5': 13, '9': 5, '10': 'ethIndexSlot', '17': true},
     const {'1': 'sourceBlockHeight', '3': 24, '4': 1, '5': 4, '9': 6, '10': 'sourceBlockHeight', '17': true},
     const {'1': 'owner', '3': 25, '4': 1, '5': 12, '9': 7, '10': 'owner', '17': true},
+    const {'1': 'metadata', '3': 26, '4': 1, '5': 9, '9': 8, '10': 'metadata', '17': true},
   ],
   '8': const [
     const {'1': '_censusURI'},
@@ -314,11 +315,12 @@ const Process$json = const {
     const {'1': '_ethIndexSlot'},
     const {'1': '_sourceBlockHeight'},
     const {'1': '_owner'},
+    const {'1': '_metadata'},
   ],
 };
 
 /// Descriptor for `Process`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List processDescriptor = $convert.base64Decode('CgdQcm9jZXNzEhwKCXByb2Nlc3NJZBgBIAEoDFIJcHJvY2Vzc0lkEhoKCGVudGl0eUlkGAIgASgMUghlbnRpdHlJZBIeCgpzdGFydEJsb2NrGAMgASgNUgpzdGFydEJsb2NrEh4KCmJsb2NrQ291bnQYBCABKA1SCmJsb2NrQ291bnQSHgoKY2Vuc3VzUm9vdBgFIAEoDFIKY2Vuc3VzUm9vdBIhCgljZW5zdXNVUkkYBiABKAlIAFIJY2Vuc3VzVVJJiAEBEiYKDmNvbW1pdG1lbnRLZXlzGAcgAygJUg5jb21taXRtZW50S2V5cxI0ChVlbmNyeXB0aW9uUHJpdmF0ZUtleXMYCCADKAlSFWVuY3J5cHRpb25Qcml2YXRlS2V5cxIyChRlbmNyeXB0aW9uUHVibGljS2V5cxgJIAMoCVIUZW5jcnlwdGlvblB1YmxpY0tleXMSHgoKcmV2ZWFsS2V5cxgKIAMoCVIKcmV2ZWFsS2V5cxIfCghrZXlJbmRleBgLIAEoDUgBUghrZXlJbmRleIgBARI1CgZzdGF0dXMYDCABKA4yHS5kdm90ZS50eXBlcy52MS5Qcm9jZXNzU3RhdHVzUgZzdGF0dXMSLQoPcGFyYW1zU2lnbmF0dXJlGA0gASgMSAJSD3BhcmFtc1NpZ25hdHVyZYgBARIcCgluYW1lc3BhY2UYDiABKA1SCW5hbWVzcGFjZRJACgxlbnZlbG9wZVR5cGUYDyABKAsyHC5kdm90ZS50eXBlcy52MS5FbnZlbG9wZVR5cGVSDGVudmVsb3BlVHlwZRIvCgRtb2RlGBAgASgLMhsuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01vZGVSBG1vZGUSKQoNcXVlc3Rpb25JbmRleBgRIAEoDUgDUg1xdWVzdGlvbkluZGV4iAEBEikKDXF1ZXN0aW9uQ291bnQYEiABKA1IBFINcXVlc3Rpb25Db3VudIgBARJECgt2b3RlT3B0aW9ucxgTIAEoCzIiLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NWb3RlT3B0aW9uc1ILdm90ZU9wdGlvbnMSQAoMY2Vuc3VzT3JpZ2luGBQgASgOMhwuZHZvdGUudHlwZXMudjEuQ2Vuc3VzT3JpZ2luUgxjZW5zdXNPcmlnaW4SNwoHcmVzdWx0cxgVIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NSZXN1bHRSB3Jlc3VsdHMSLAoRcmVzdWx0c1NpZ25hdHVyZXMYFiADKAxSEXJlc3VsdHNTaWduYXR1cmVzEicKDGV0aEluZGV4U2xvdBgXIAEoDUgFUgxldGhJbmRleFNsb3SIAQESMQoRc291cmNlQmxvY2tIZWlnaHQYGCABKARIBlIRc291cmNlQmxvY2tIZWlnaHSIAQESGQoFb3duZXIYGSABKAxIB1IFb3duZXKIAQFCDAoKX2NlbnN1c1VSSUILCglfa2V5SW5kZXhCEgoQX3BhcmFtc1NpZ25hdHVyZUIQCg5fcXVlc3Rpb25JbmRleEIQCg5fcXVlc3Rpb25Db3VudEIPCg1fZXRoSW5kZXhTbG90QhQKEl9zb3VyY2VCbG9ja0hlaWdodEIICgZfb3duZXI=');
+final $typed_data.Uint8List processDescriptor = $convert.base64Decode('CgdQcm9jZXNzEhwKCXByb2Nlc3NJZBgBIAEoDFIJcHJvY2Vzc0lkEhoKCGVudGl0eUlkGAIgASgMUghlbnRpdHlJZBIeCgpzdGFydEJsb2NrGAMgASgNUgpzdGFydEJsb2NrEh4KCmJsb2NrQ291bnQYBCABKA1SCmJsb2NrQ291bnQSHgoKY2Vuc3VzUm9vdBgFIAEoDFIKY2Vuc3VzUm9vdBIhCgljZW5zdXNVUkkYBiABKAlIAFIJY2Vuc3VzVVJJiAEBEiYKDmNvbW1pdG1lbnRLZXlzGAcgAygJUg5jb21taXRtZW50S2V5cxI0ChVlbmNyeXB0aW9uUHJpdmF0ZUtleXMYCCADKAlSFWVuY3J5cHRpb25Qcml2YXRlS2V5cxIyChRlbmNyeXB0aW9uUHVibGljS2V5cxgJIAMoCVIUZW5jcnlwdGlvblB1YmxpY0tleXMSHgoKcmV2ZWFsS2V5cxgKIAMoCVIKcmV2ZWFsS2V5cxIfCghrZXlJbmRleBgLIAEoDUgBUghrZXlJbmRleIgBARI1CgZzdGF0dXMYDCABKA4yHS5kdm90ZS50eXBlcy52MS5Qcm9jZXNzU3RhdHVzUgZzdGF0dXMSLQoPcGFyYW1zU2lnbmF0dXJlGA0gASgMSAJSD3BhcmFtc1NpZ25hdHVyZYgBARIcCgluYW1lc3BhY2UYDiABKA1SCW5hbWVzcGFjZRJACgxlbnZlbG9wZVR5cGUYDyABKAsyHC5kdm90ZS50eXBlcy52MS5FbnZlbG9wZVR5cGVSDGVudmVsb3BlVHlwZRIvCgRtb2RlGBAgASgLMhsuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01vZGVSBG1vZGUSKQoNcXVlc3Rpb25JbmRleBgRIAEoDUgDUg1xdWVzdGlvbkluZGV4iAEBEikKDXF1ZXN0aW9uQ291bnQYEiABKA1IBFINcXVlc3Rpb25Db3VudIgBARJECgt2b3RlT3B0aW9ucxgTIAEoCzIiLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NWb3RlT3B0aW9uc1ILdm90ZU9wdGlvbnMSQAoMY2Vuc3VzT3JpZ2luGBQgASgOMhwuZHZvdGUudHlwZXMudjEuQ2Vuc3VzT3JpZ2luUgxjZW5zdXNPcmlnaW4SNwoHcmVzdWx0cxgVIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NSZXN1bHRSB3Jlc3VsdHMSLAoRcmVzdWx0c1NpZ25hdHVyZXMYFiADKAxSEXJlc3VsdHNTaWduYXR1cmVzEicKDGV0aEluZGV4U2xvdBgXIAEoDUgFUgxldGhJbmRleFNsb3SIAQESMQoRc291cmNlQmxvY2tIZWlnaHQYGCABKARIBlIRc291cmNlQmxvY2tIZWlnaHSIAQESGQoFb3duZXIYGSABKAxIB1IFb3duZXKIAQESHwoIbWV0YWRhdGEYGiABKAlICFIIbWV0YWRhdGGIAQFCDAoKX2NlbnN1c1VSSUILCglfa2V5SW5kZXhCEgoQX3BhcmFtc1NpZ25hdHVyZUIQCg5fcXVlc3Rpb25JbmRleEIQCg5fcXVlc3Rpb25Db3VudEIPCg1fZXRoSW5kZXhTbG90QhQKEl9zb3VyY2VCbG9ja0hlaWdodEIICgZfb3duZXJCCwoJX21ldGFkYXRh');
 @$core.Deprecated('Use envelopeTypeDescriptor instead')
 const EnvelopeType$json = const {
   '1': 'EnvelopeType',
