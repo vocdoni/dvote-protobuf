@@ -26,11 +26,44 @@ export interface WalletBackup_Recovery {
 }
 
 export enum WalletBackup_Recovery_QuestionEnum {
-  STUFFED_TOY = 0,
-  FAVORITE_TEACHER = 1,
-  DRIVING_INSTRUCTOR = 2,
-  FIRST_KISSED = 3,
-  CHILDHOOD_NICKNAME = 4,
+  /** FAVORITE_BOOK - What is your favorite book? */
+  FAVORITE_BOOK = 0,
+  /** FIRST_PET - What was the name of your first pet? */
+  FIRST_PET = 1,
+  /** WHERE_HIGH_SCHOOL_COLLEGE - Where did you go to high school/college? */
+  WHERE_HIGH_SCHOOL_COLLEGE = 2,
+  /** CITY_OF_BIRTH - What city were you born in? */
+  CITY_OF_BIRTH = 3,
+  /** FAVORITE_CHILDHOOD_FRIEND - What is the name of your favorite childhood friend? */
+  FAVORITE_CHILDHOOD_FRIEND = 4,
+  /** WHERE_FATHER_AND_MOTHER_MET - Where did your mother and father meet? */
+  WHERE_FATHER_AND_MOTHER_MET = 5,
+  /** FAVORITE_MOVIE - What is your favorite movie? */
+  FAVORITE_MOVIE = 6,
+  /** FAVORITE_SPORT_HIGH_SCHOOL - What was your favorite sport in high school? */
+  FAVORITE_SPORT_HIGH_SCHOOL = 7,
+  /** FAVORITE_TEACHER_HIGH_SCHOOL - What was your favorite teacher in high school? */
+  FAVORITE_TEACHER_HIGH_SCHOOL = 8,
+  /** FAVORITE_BAND - What is your favorite band? */
+  FAVORITE_BAND = 9,
+  /** CHILDHOOD_SPORTS_HERO - Who is your childhood sports hero? */
+  CHILDHOOD_SPORTS_HERO = 10,
+  /** COMPANY_FIRST_JOB - What is the name of the company where you had your first job? */
+  COMPANY_FIRST_JOB = 11,
+  /** CHILD_NICKNAME - What was your nickname as a child? */
+  CHILD_NICKNAME = 12,
+  /** NAME_FIRST_PARTNER - What is the name of your first partner? */
+  NAME_FIRST_PARTNER = 13,
+  /** WHERE_MEET_PARTNER - Where did you meet your partner? */
+  WHERE_MEET_PARTNER = 14,
+  /** MOTHER_MAIDEN_NAME - What is your mother's maiden name */
+  MOTHER_MAIDEN_NAME = 15,
+  /** MATERNAL_GRANDMOTHER_FULL_NAME - What is your maternal grandmother's full name? */
+  MATERNAL_GRANDMOTHER_FULL_NAME = 16,
+  /** PARENTAL_GRANDMOTHER_FULL_NAME - What is your paternal grandmother's full name? */
+  PARENTAL_GRANDMOTHER_FULL_NAME = 17,
+  /** NAME_OLDEST_COUSIN - What is the name of your oldest cousin? */
+  NAME_OLDEST_COUSIN = 18,
   UNRECOGNIZED = -1,
 }
 
@@ -39,20 +72,62 @@ export function walletBackup_Recovery_QuestionEnumFromJSON(
 ): WalletBackup_Recovery_QuestionEnum {
   switch (object) {
     case 0:
-    case "STUFFED_TOY":
-      return WalletBackup_Recovery_QuestionEnum.STUFFED_TOY;
+    case "FAVORITE_BOOK":
+      return WalletBackup_Recovery_QuestionEnum.FAVORITE_BOOK;
     case 1:
-    case "FAVORITE_TEACHER":
-      return WalletBackup_Recovery_QuestionEnum.FAVORITE_TEACHER;
+    case "FIRST_PET":
+      return WalletBackup_Recovery_QuestionEnum.FIRST_PET;
     case 2:
-    case "DRIVING_INSTRUCTOR":
-      return WalletBackup_Recovery_QuestionEnum.DRIVING_INSTRUCTOR;
+    case "WHERE_HIGH_SCHOOL_COLLEGE":
+      return WalletBackup_Recovery_QuestionEnum.WHERE_HIGH_SCHOOL_COLLEGE;
     case 3:
-    case "FIRST_KISSED":
-      return WalletBackup_Recovery_QuestionEnum.FIRST_KISSED;
+    case "CITY_OF_BIRTH":
+      return WalletBackup_Recovery_QuestionEnum.CITY_OF_BIRTH;
     case 4:
-    case "CHILDHOOD_NICKNAME":
-      return WalletBackup_Recovery_QuestionEnum.CHILDHOOD_NICKNAME;
+    case "FAVORITE_CHILDHOOD_FRIEND":
+      return WalletBackup_Recovery_QuestionEnum.FAVORITE_CHILDHOOD_FRIEND;
+    case 5:
+    case "WHERE_FATHER_AND_MOTHER_MET":
+      return WalletBackup_Recovery_QuestionEnum.WHERE_FATHER_AND_MOTHER_MET;
+    case 6:
+    case "FAVORITE_MOVIE":
+      return WalletBackup_Recovery_QuestionEnum.FAVORITE_MOVIE;
+    case 7:
+    case "FAVORITE_SPORT_HIGH_SCHOOL":
+      return WalletBackup_Recovery_QuestionEnum.FAVORITE_SPORT_HIGH_SCHOOL;
+    case 8:
+    case "FAVORITE_TEACHER_HIGH_SCHOOL":
+      return WalletBackup_Recovery_QuestionEnum.FAVORITE_TEACHER_HIGH_SCHOOL;
+    case 9:
+    case "FAVORITE_BAND":
+      return WalletBackup_Recovery_QuestionEnum.FAVORITE_BAND;
+    case 10:
+    case "CHILDHOOD_SPORTS_HERO":
+      return WalletBackup_Recovery_QuestionEnum.CHILDHOOD_SPORTS_HERO;
+    case 11:
+    case "COMPANY_FIRST_JOB":
+      return WalletBackup_Recovery_QuestionEnum.COMPANY_FIRST_JOB;
+    case 12:
+    case "CHILD_NICKNAME":
+      return WalletBackup_Recovery_QuestionEnum.CHILD_NICKNAME;
+    case 13:
+    case "NAME_FIRST_PARTNER":
+      return WalletBackup_Recovery_QuestionEnum.NAME_FIRST_PARTNER;
+    case 14:
+    case "WHERE_MEET_PARTNER":
+      return WalletBackup_Recovery_QuestionEnum.WHERE_MEET_PARTNER;
+    case 15:
+    case "MOTHER_MAIDEN_NAME":
+      return WalletBackup_Recovery_QuestionEnum.MOTHER_MAIDEN_NAME;
+    case 16:
+    case "MATERNAL_GRANDMOTHER_FULL_NAME":
+      return WalletBackup_Recovery_QuestionEnum.MATERNAL_GRANDMOTHER_FULL_NAME;
+    case 17:
+    case "PARENTAL_GRANDMOTHER_FULL_NAME":
+      return WalletBackup_Recovery_QuestionEnum.PARENTAL_GRANDMOTHER_FULL_NAME;
+    case 18:
+    case "NAME_OLDEST_COUSIN":
+      return WalletBackup_Recovery_QuestionEnum.NAME_OLDEST_COUSIN;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -64,16 +139,44 @@ export function walletBackup_Recovery_QuestionEnumToJSON(
   object: WalletBackup_Recovery_QuestionEnum
 ): string {
   switch (object) {
-    case WalletBackup_Recovery_QuestionEnum.STUFFED_TOY:
-      return "STUFFED_TOY";
-    case WalletBackup_Recovery_QuestionEnum.FAVORITE_TEACHER:
-      return "FAVORITE_TEACHER";
-    case WalletBackup_Recovery_QuestionEnum.DRIVING_INSTRUCTOR:
-      return "DRIVING_INSTRUCTOR";
-    case WalletBackup_Recovery_QuestionEnum.FIRST_KISSED:
-      return "FIRST_KISSED";
-    case WalletBackup_Recovery_QuestionEnum.CHILDHOOD_NICKNAME:
-      return "CHILDHOOD_NICKNAME";
+    case WalletBackup_Recovery_QuestionEnum.FAVORITE_BOOK:
+      return "FAVORITE_BOOK";
+    case WalletBackup_Recovery_QuestionEnum.FIRST_PET:
+      return "FIRST_PET";
+    case WalletBackup_Recovery_QuestionEnum.WHERE_HIGH_SCHOOL_COLLEGE:
+      return "WHERE_HIGH_SCHOOL_COLLEGE";
+    case WalletBackup_Recovery_QuestionEnum.CITY_OF_BIRTH:
+      return "CITY_OF_BIRTH";
+    case WalletBackup_Recovery_QuestionEnum.FAVORITE_CHILDHOOD_FRIEND:
+      return "FAVORITE_CHILDHOOD_FRIEND";
+    case WalletBackup_Recovery_QuestionEnum.WHERE_FATHER_AND_MOTHER_MET:
+      return "WHERE_FATHER_AND_MOTHER_MET";
+    case WalletBackup_Recovery_QuestionEnum.FAVORITE_MOVIE:
+      return "FAVORITE_MOVIE";
+    case WalletBackup_Recovery_QuestionEnum.FAVORITE_SPORT_HIGH_SCHOOL:
+      return "FAVORITE_SPORT_HIGH_SCHOOL";
+    case WalletBackup_Recovery_QuestionEnum.FAVORITE_TEACHER_HIGH_SCHOOL:
+      return "FAVORITE_TEACHER_HIGH_SCHOOL";
+    case WalletBackup_Recovery_QuestionEnum.FAVORITE_BAND:
+      return "FAVORITE_BAND";
+    case WalletBackup_Recovery_QuestionEnum.CHILDHOOD_SPORTS_HERO:
+      return "CHILDHOOD_SPORTS_HERO";
+    case WalletBackup_Recovery_QuestionEnum.COMPANY_FIRST_JOB:
+      return "COMPANY_FIRST_JOB";
+    case WalletBackup_Recovery_QuestionEnum.CHILD_NICKNAME:
+      return "CHILD_NICKNAME";
+    case WalletBackup_Recovery_QuestionEnum.NAME_FIRST_PARTNER:
+      return "NAME_FIRST_PARTNER";
+    case WalletBackup_Recovery_QuestionEnum.WHERE_MEET_PARTNER:
+      return "WHERE_MEET_PARTNER";
+    case WalletBackup_Recovery_QuestionEnum.MOTHER_MAIDEN_NAME:
+      return "MOTHER_MAIDEN_NAME";
+    case WalletBackup_Recovery_QuestionEnum.MATERNAL_GRANDMOTHER_FULL_NAME:
+      return "MATERNAL_GRANDMOTHER_FULL_NAME";
+    case WalletBackup_Recovery_QuestionEnum.PARENTAL_GRANDMOTHER_FULL_NAME:
+      return "PARENTAL_GRANDMOTHER_FULL_NAME";
+    case WalletBackup_Recovery_QuestionEnum.NAME_OLDEST_COUSIN:
+      return "NAME_OLDEST_COUSIN";
     default:
       return "UNKNOWN";
   }
@@ -326,14 +429,7 @@ function base64FromBytes(arr: Uint8Array): string {
   return btoa(bin.join(""));
 }
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

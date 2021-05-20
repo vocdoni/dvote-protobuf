@@ -17,11 +17,44 @@ message WalletBackup {
     /// Data to recover the original passphrase, given some recovery questions
     message Recovery {
         enum QuestionEnum {
-            STUFFED_TOY = 0;
-            FAVORITE_TEACHER = 1;
-            DRIVING_INSTRUCTOR = 2;
-            FIRST_KISSED = 3;
-            CHILDHOOD_NICKNAME = 4;
+            // What is your favorite book?
+            FAVORITE_BOOK = 0;
+            // What was the name of your first pet?
+            FIRST_PET = 1;
+            // Where did you go to high school/college?
+            WHERE_HIGH_SCHOOL_COLLEGE = 2;
+            // What city were you born in?
+            CITY_OF_BIRTH = 3;
+            // What is the name of your favorite childhood friend?
+            FAVORITE_CHILDHOOD_FRIEND = 4;
+            // Where did your mother and father meet?
+            WHERE_FATHER_AND_MOTHER_MET = 5;
+            // What is your favorite movie?
+            FAVORITE_MOVIE = 6;
+            // What was your favorite sport in high school?
+            FAVORITE_SPORT_HIGH_SCHOOL = 7;
+            // What was your favorite teacher in high school?
+            FAVORITE_TEACHER_HIGH_SCHOOL = 8;
+            // What is your favorite band?
+            FAVORITE_BAND = 9;
+            // Who is your childhood sports hero?
+            CHILDHOOD_SPORTS_HERO = 10;
+            // What is the name of the company where you had your first job?
+            COMPANY_FIRST_JOB = 11;
+            // What was your nickname as a child?
+            CHILD_NICKNAME = 12;
+            // What is the name of your first partner?
+            NAME_FIRST_PARTNER = 13;
+            // Where did you meet your partner?
+            WHERE_MEET_PARTNER = 14;
+            // What is your mother's maiden name
+            MOTHER_MAIDEN_NAME = 15;
+            // What is your maternal grandmother's full name?
+            MATERNAL_GRANDMOTHER_FULL_NAME = 16;
+            // What is your paternal grandmother's full name?
+            PARENTAL_GRANDMOTHER_FULL_NAME = 17;
+            // What is the name of your oldest cousin?
+            NAME_OLDEST_COUSIN = 18;
         }
         /// The indexes of the questions used
         repeated QuestionEnum questionIds = 1;
