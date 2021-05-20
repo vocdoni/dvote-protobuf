@@ -43,11 +43,11 @@ message WalletBackup {
             COMPANY_FIRST_JOB = 11;
             // What was your nickname as a child?
             CHILD_NICKNAME = 12;
-            // What is the name of your first partner?
+            // What is the name of your first girlfriend or boyfriend?
             NAME_FIRST_PARTNER = 13;
             // Where did you meet your partner?
             WHERE_MEET_PARTNER = 14;
-            // What is your mother's maiden name
+            // What is your mother's maiden name?
             MOTHER_MAIDEN_NAME = 15;
             // What is your maternal grandmother's full name?
             MATERNAL_GRANDMOTHER_FULL_NAME = 16;
