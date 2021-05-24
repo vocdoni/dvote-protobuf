@@ -177,6 +177,8 @@ message Process {
 	optional bytes owner = 25;
 	// Metadata is the content hashed URI of the JSON meta data (See Data Origins)
 	optional string metadata = 26;
+	// SourceNetworkId is the identifier of the network origin (where the process have been created)
+	SourceNetworkId sourceNetworkId = 27;
 }
 
 enum ProcessStatus {
@@ -186,6 +188,18 @@ enum ProcessStatus {
 	CANCELED = 3;
 	PAUSED = 4;
 	RESULTS = 5;
+}
+
+enum SourceNetworkId {
+	UNKNOWN = 0;
+	ETH_MAINNET = 1;
+	ETH_RINKEBY = 2;
+	ETH_GOERLI = 3;
+	POA_XDAI = 4;
+	POA_SOKOL = 5;
+	POLYGON = 6;
+	BSC = 7;
+	ETH_MAINNET_SIGNALING = 8;
 }
 
 enum CensusOrigin {
