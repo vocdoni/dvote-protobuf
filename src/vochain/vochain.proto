@@ -104,6 +104,10 @@ message SignedTx {
 	// signature is only required in those transactions that actually need signature.
         // I.e zk-Snarks based transactions won't needed, however the transaction should use
         // this message type in order to preserve consistency on the Vochain
+    // if the signature has been performed on the base64 representation of the tx bytes.
+        // by default this bool should not be used (only for special cases where the signing
+		// provider cannot perform signatures over binary data).
+    optional bool b64encoded = 3; 
 }
 
 message NewProcessTx {
