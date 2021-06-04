@@ -69,6 +69,37 @@ class ProcessStatus extends $pb.ProtobufEnum {
   const ProcessStatus._($core.int v, $core.String n) : super(v, n);
 }
 
+class SourceNetworkId extends $pb.ProtobufEnum {
+  static const SourceNetworkId UNKNOWN = SourceNetworkId._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
+  static const SourceNetworkId ETH_MAINNET = SourceNetworkId._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_MAINNET');
+  static const SourceNetworkId ETH_RINKEBY = SourceNetworkId._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_RINKEBY');
+  static const SourceNetworkId ETH_GOERLI = SourceNetworkId._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_GOERLI');
+  static const SourceNetworkId POA_XDAI = SourceNetworkId._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POA_XDAI');
+  static const SourceNetworkId POA_SOKOL = SourceNetworkId._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POA_SOKOL');
+  static const SourceNetworkId POLYGON = SourceNetworkId._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POLYGON');
+  static const SourceNetworkId BSC = SourceNetworkId._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BSC');
+  static const SourceNetworkId ETH_MAINNET_SIGNALING = SourceNetworkId._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_MAINNET_SIGNALING');
+  static const SourceNetworkId ETH_RINKEBY_SIGNALING = SourceNetworkId._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_RINKEBY_SIGNALING');
+
+  static const $core.List<SourceNetworkId> values = <SourceNetworkId> [
+    UNKNOWN,
+    ETH_MAINNET,
+    ETH_RINKEBY,
+    ETH_GOERLI,
+    POA_XDAI,
+    POA_SOKOL,
+    POLYGON,
+    BSC,
+    ETH_MAINNET_SIGNALING,
+    ETH_RINKEBY_SIGNALING,
+  ];
+
+  static final $core.Map<$core.int, SourceNetworkId> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static SourceNetworkId? valueOf($core.int value) => _byValue[value];
+
+  const SourceNetworkId._($core.int v, $core.String n) : super(v, n);
+}
+
 class CensusOrigin extends $pb.ProtobufEnum {
   static const CensusOrigin CENSUS_UNKNOWN = CensusOrigin._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CENSUS_UNKNOWN');
   static const CensusOrigin OFF_CHAIN_TREE = CensusOrigin._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OFF_CHAIN_TREE');

@@ -31,8 +31,21 @@ export interface BootNodeGateways_NetworkNodes_DVote {
   pubKey: string;
 }
 
-export interface BootNodeGateways_NetworkNodes_Web3 {
+export interface BootNodeGateways_NetworkNodes_Web3 {}
+
+export interface BootNodeGateways_NetworkNodes_Web3_Endpoints {
   uri: string;
+}
+
+export interface BootNodeGateways_NetworkNodes_Web3_Contracts {
+  ensPublicRegistry: string;
+  ensPublicResolver: string;
+  entityResolver: string;
+  genesis: string;
+  namespaces: string;
+  processes: string;
+  tokenStorageProofs: string;
+  results: string;
 }
 
 export interface BootNodeGateways_MetaEntry {
@@ -450,16 +463,13 @@ export const BootNodeGateways_NetworkNodes_DVote = {
   },
 };
 
-const baseBootNodeGateways_NetworkNodes_Web3: object = { uri: "" };
+const baseBootNodeGateways_NetworkNodes_Web3: object = {};
 
 export const BootNodeGateways_NetworkNodes_Web3 = {
   encode(
-    message: BootNodeGateways_NetworkNodes_Web3,
+    _: BootNodeGateways_NetworkNodes_Web3,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.uri !== "") {
-      writer.uint32(10).string(message.uri);
-    }
     return writer;
   },
 
@@ -475,6 +485,61 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): BootNodeGateways_NetworkNodes_Web3 {
+    const message = {
+      ...baseBootNodeGateways_NetworkNodes_Web3,
+    } as BootNodeGateways_NetworkNodes_Web3;
+    return message;
+  },
+
+  toJSON(_: BootNodeGateways_NetworkNodes_Web3): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<BootNodeGateways_NetworkNodes_Web3>
+  ): BootNodeGateways_NetworkNodes_Web3 {
+    const message = {
+      ...baseBootNodeGateways_NetworkNodes_Web3,
+    } as BootNodeGateways_NetworkNodes_Web3;
+    return message;
+  },
+};
+
+const baseBootNodeGateways_NetworkNodes_Web3_Endpoints: object = { uri: "" };
+
+export const BootNodeGateways_NetworkNodes_Web3_Endpoints = {
+  encode(
+    message: BootNodeGateways_NetworkNodes_Web3_Endpoints,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.uri !== "") {
+      writer.uint32(10).string(message.uri);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): BootNodeGateways_NetworkNodes_Web3_Endpoints {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseBootNodeGateways_NetworkNodes_Web3_Endpoints,
+    } as BootNodeGateways_NetworkNodes_Web3_Endpoints;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
         case 1:
           message.uri = reader.string();
           break;
@@ -486,30 +551,217 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     return message;
   },
 
-  fromJSON(object: any): BootNodeGateways_NetworkNodes_Web3 {
+  fromJSON(object: any): BootNodeGateways_NetworkNodes_Web3_Endpoints {
     const message = {
-      ...baseBootNodeGateways_NetworkNodes_Web3,
-    } as BootNodeGateways_NetworkNodes_Web3;
+      ...baseBootNodeGateways_NetworkNodes_Web3_Endpoints,
+    } as BootNodeGateways_NetworkNodes_Web3_Endpoints;
     if (object.uri !== undefined && object.uri !== null) {
       message.uri = String(object.uri);
     }
     return message;
   },
 
-  toJSON(message: BootNodeGateways_NetworkNodes_Web3): unknown {
+  toJSON(message: BootNodeGateways_NetworkNodes_Web3_Endpoints): unknown {
     const obj: any = {};
     message.uri !== undefined && (obj.uri = message.uri);
     return obj;
   },
 
   fromPartial(
-    object: DeepPartial<BootNodeGateways_NetworkNodes_Web3>
-  ): BootNodeGateways_NetworkNodes_Web3 {
+    object: DeepPartial<BootNodeGateways_NetworkNodes_Web3_Endpoints>
+  ): BootNodeGateways_NetworkNodes_Web3_Endpoints {
     const message = {
-      ...baseBootNodeGateways_NetworkNodes_Web3,
-    } as BootNodeGateways_NetworkNodes_Web3;
+      ...baseBootNodeGateways_NetworkNodes_Web3_Endpoints,
+    } as BootNodeGateways_NetworkNodes_Web3_Endpoints;
     if (object.uri !== undefined && object.uri !== null) {
       message.uri = object.uri;
+    }
+    return message;
+  },
+};
+
+const baseBootNodeGateways_NetworkNodes_Web3_Contracts: object = {
+  ensPublicRegistry: "",
+  ensPublicResolver: "",
+  entityResolver: "",
+  genesis: "",
+  namespaces: "",
+  processes: "",
+  tokenStorageProofs: "",
+  results: "",
+};
+
+export const BootNodeGateways_NetworkNodes_Web3_Contracts = {
+  encode(
+    message: BootNodeGateways_NetworkNodes_Web3_Contracts,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.ensPublicRegistry !== "") {
+      writer.uint32(10).string(message.ensPublicRegistry);
+    }
+    if (message.ensPublicResolver !== "") {
+      writer.uint32(18).string(message.ensPublicResolver);
+    }
+    if (message.entityResolver !== "") {
+      writer.uint32(26).string(message.entityResolver);
+    }
+    if (message.genesis !== "") {
+      writer.uint32(34).string(message.genesis);
+    }
+    if (message.namespaces !== "") {
+      writer.uint32(42).string(message.namespaces);
+    }
+    if (message.processes !== "") {
+      writer.uint32(50).string(message.processes);
+    }
+    if (message.tokenStorageProofs !== "") {
+      writer.uint32(58).string(message.tokenStorageProofs);
+    }
+    if (message.results !== "") {
+      writer.uint32(66).string(message.results);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): BootNodeGateways_NetworkNodes_Web3_Contracts {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseBootNodeGateways_NetworkNodes_Web3_Contracts,
+    } as BootNodeGateways_NetworkNodes_Web3_Contracts;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.ensPublicRegistry = reader.string();
+          break;
+        case 2:
+          message.ensPublicResolver = reader.string();
+          break;
+        case 3:
+          message.entityResolver = reader.string();
+          break;
+        case 4:
+          message.genesis = reader.string();
+          break;
+        case 5:
+          message.namespaces = reader.string();
+          break;
+        case 6:
+          message.processes = reader.string();
+          break;
+        case 7:
+          message.tokenStorageProofs = reader.string();
+          break;
+        case 8:
+          message.results = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): BootNodeGateways_NetworkNodes_Web3_Contracts {
+    const message = {
+      ...baseBootNodeGateways_NetworkNodes_Web3_Contracts,
+    } as BootNodeGateways_NetworkNodes_Web3_Contracts;
+    if (
+      object.ensPublicRegistry !== undefined &&
+      object.ensPublicRegistry !== null
+    ) {
+      message.ensPublicRegistry = String(object.ensPublicRegistry);
+    }
+    if (
+      object.ensPublicResolver !== undefined &&
+      object.ensPublicResolver !== null
+    ) {
+      message.ensPublicResolver = String(object.ensPublicResolver);
+    }
+    if (object.entityResolver !== undefined && object.entityResolver !== null) {
+      message.entityResolver = String(object.entityResolver);
+    }
+    if (object.genesis !== undefined && object.genesis !== null) {
+      message.genesis = String(object.genesis);
+    }
+    if (object.namespaces !== undefined && object.namespaces !== null) {
+      message.namespaces = String(object.namespaces);
+    }
+    if (object.processes !== undefined && object.processes !== null) {
+      message.processes = String(object.processes);
+    }
+    if (
+      object.tokenStorageProofs !== undefined &&
+      object.tokenStorageProofs !== null
+    ) {
+      message.tokenStorageProofs = String(object.tokenStorageProofs);
+    }
+    if (object.results !== undefined && object.results !== null) {
+      message.results = String(object.results);
+    }
+    return message;
+  },
+
+  toJSON(message: BootNodeGateways_NetworkNodes_Web3_Contracts): unknown {
+    const obj: any = {};
+    message.ensPublicRegistry !== undefined &&
+      (obj.ensPublicRegistry = message.ensPublicRegistry);
+    message.ensPublicResolver !== undefined &&
+      (obj.ensPublicResolver = message.ensPublicResolver);
+    message.entityResolver !== undefined &&
+      (obj.entityResolver = message.entityResolver);
+    message.genesis !== undefined && (obj.genesis = message.genesis);
+    message.namespaces !== undefined && (obj.namespaces = message.namespaces);
+    message.processes !== undefined && (obj.processes = message.processes);
+    message.tokenStorageProofs !== undefined &&
+      (obj.tokenStorageProofs = message.tokenStorageProofs);
+    message.results !== undefined && (obj.results = message.results);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<BootNodeGateways_NetworkNodes_Web3_Contracts>
+  ): BootNodeGateways_NetworkNodes_Web3_Contracts {
+    const message = {
+      ...baseBootNodeGateways_NetworkNodes_Web3_Contracts,
+    } as BootNodeGateways_NetworkNodes_Web3_Contracts;
+    if (
+      object.ensPublicRegistry !== undefined &&
+      object.ensPublicRegistry !== null
+    ) {
+      message.ensPublicRegistry = object.ensPublicRegistry;
+    }
+    if (
+      object.ensPublicResolver !== undefined &&
+      object.ensPublicResolver !== null
+    ) {
+      message.ensPublicResolver = object.ensPublicResolver;
+    }
+    if (object.entityResolver !== undefined && object.entityResolver !== null) {
+      message.entityResolver = object.entityResolver;
+    }
+    if (object.genesis !== undefined && object.genesis !== null) {
+      message.genesis = object.genesis;
+    }
+    if (object.namespaces !== undefined && object.namespaces !== null) {
+      message.namespaces = object.namespaces;
+    }
+    if (object.processes !== undefined && object.processes !== null) {
+      message.processes = object.processes;
+    }
+    if (
+      object.tokenStorageProofs !== undefined &&
+      object.tokenStorageProofs !== null
+    ) {
+      message.tokenStorageProofs = object.tokenStorageProofs;
+    }
+    if (object.results !== undefined && object.results !== null) {
+      message.results = object.results;
     }
     return message;
   },
@@ -593,7 +845,14 @@ export const BootNodeGateways_MetaEntry = {
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
