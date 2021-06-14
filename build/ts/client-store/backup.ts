@@ -52,11 +52,11 @@ export enum WalletBackup_Recovery_QuestionEnum {
   COMPANY_FIRST_JOB = 11,
   /** CHILD_NICKNAME - What was your nickname as a child? */
   CHILD_NICKNAME = 12,
-  /** NAME_FIRST_PARTNER - What is the name of your first partner? */
+  /** NAME_FIRST_PARTNER - What is the name of your first girlfriend or boyfriend? */
   NAME_FIRST_PARTNER = 13,
   /** WHERE_MEET_PARTNER - Where did you meet your partner? */
   WHERE_MEET_PARTNER = 14,
-  /** MOTHER_MAIDEN_NAME - What is your mother's maiden name */
+  /** MOTHER_MAIDEN_NAME - What is your mother's maiden name? */
   MOTHER_MAIDEN_NAME = 15,
   /** MATERNAL_GRANDMOTHER_FULL_NAME - What is your maternal grandmother's full name? */
   MATERNAL_GRANDMOTHER_FULL_NAME = 16,
@@ -429,7 +429,14 @@ function base64FromBytes(arr: Uint8Array): string {
   return btoa(bin.join(""));
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

@@ -1291,6 +1291,7 @@ class Process extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceBlockHeight', $pb.PbFieldType.OU6, protoName: 'sourceBlockHeight', defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'owner', $pb.PbFieldType.OY)
     ..aOS(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata')
+    ..e<SourceNetworkId>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNetworkId', $pb.PbFieldType.OE, protoName: 'sourceNetworkId', defaultOrMaker: SourceNetworkId.UNKNOWN, valueOf: SourceNetworkId.valueOf, enumValues: SourceNetworkId.values)
     ..hasRequiredFields = false
   ;
 
@@ -1322,6 +1323,7 @@ class Process extends $pb.GeneratedMessage {
     $fixnum.Int64? sourceBlockHeight,
     $core.List<$core.int>? owner,
     $core.String? metadata,
+    SourceNetworkId? sourceNetworkId,
   }) {
     final _result = create();
     if (processId != null) {
@@ -1401,6 +1403,9 @@ class Process extends $pb.GeneratedMessage {
     }
     if (metadata != null) {
       _result.metadata = metadata;
+    }
+    if (sourceNetworkId != null) {
+      _result.sourceNetworkId = sourceNetworkId;
     }
     return _result;
   }
@@ -1636,6 +1641,15 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasMetadata() => $_has(25);
   @$pb.TagNumber(26)
   void clearMetadata() => clearField(26);
+
+  @$pb.TagNumber(27)
+  SourceNetworkId get sourceNetworkId => $_getN(26);
+  @$pb.TagNumber(27)
+  set sourceNetworkId(SourceNetworkId v) { setField(27, v); }
+  @$pb.TagNumber(27)
+  $core.bool hasSourceNetworkId() => $_has(26);
+  @$pb.TagNumber(27)
+  void clearSourceNetworkId() => clearField(27);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {

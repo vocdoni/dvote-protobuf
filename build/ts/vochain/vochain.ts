@@ -158,6 +158,86 @@ export function processStatusToJSON(object: ProcessStatus): string {
   }
 }
 
+export enum SourceNetworkId {
+  UNKNOWN = 0,
+  ETH_MAINNET = 1,
+  ETH_RINKEBY = 2,
+  ETH_GOERLI = 3,
+  POA_XDAI = 4,
+  POA_SOKOL = 5,
+  POLYGON = 6,
+  BSC = 7,
+  ETH_MAINNET_SIGNALING = 8,
+  ETH_RINKEBY_SIGNALING = 9,
+  UNRECOGNIZED = -1,
+}
+
+export function sourceNetworkIdFromJSON(object: any): SourceNetworkId {
+  switch (object) {
+    case 0:
+    case "UNKNOWN":
+      return SourceNetworkId.UNKNOWN;
+    case 1:
+    case "ETH_MAINNET":
+      return SourceNetworkId.ETH_MAINNET;
+    case 2:
+    case "ETH_RINKEBY":
+      return SourceNetworkId.ETH_RINKEBY;
+    case 3:
+    case "ETH_GOERLI":
+      return SourceNetworkId.ETH_GOERLI;
+    case 4:
+    case "POA_XDAI":
+      return SourceNetworkId.POA_XDAI;
+    case 5:
+    case "POA_SOKOL":
+      return SourceNetworkId.POA_SOKOL;
+    case 6:
+    case "POLYGON":
+      return SourceNetworkId.POLYGON;
+    case 7:
+    case "BSC":
+      return SourceNetworkId.BSC;
+    case 8:
+    case "ETH_MAINNET_SIGNALING":
+      return SourceNetworkId.ETH_MAINNET_SIGNALING;
+    case 9:
+    case "ETH_RINKEBY_SIGNALING":
+      return SourceNetworkId.ETH_RINKEBY_SIGNALING;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SourceNetworkId.UNRECOGNIZED;
+  }
+}
+
+export function sourceNetworkIdToJSON(object: SourceNetworkId): string {
+  switch (object) {
+    case SourceNetworkId.UNKNOWN:
+      return "UNKNOWN";
+    case SourceNetworkId.ETH_MAINNET:
+      return "ETH_MAINNET";
+    case SourceNetworkId.ETH_RINKEBY:
+      return "ETH_RINKEBY";
+    case SourceNetworkId.ETH_GOERLI:
+      return "ETH_GOERLI";
+    case SourceNetworkId.POA_XDAI:
+      return "POA_XDAI";
+    case SourceNetworkId.POA_SOKOL:
+      return "POA_SOKOL";
+    case SourceNetworkId.POLYGON:
+      return "POLYGON";
+    case SourceNetworkId.BSC:
+      return "BSC";
+    case SourceNetworkId.ETH_MAINNET_SIGNALING:
+      return "ETH_MAINNET_SIGNALING";
+    case SourceNetworkId.ETH_RINKEBY_SIGNALING:
+      return "ETH_RINKEBY_SIGNALING";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export enum CensusOrigin {
   CENSUS_UNKNOWN = 0,
   OFF_CHAIN_TREE = 1,
@@ -426,6 +506,8 @@ export interface Process {
   owner?: Uint8Array | undefined;
   /** Metadata is the content hashed URI of the JSON meta data (See Data Origins) */
   metadata?: string | undefined;
+  /** SourceNetworkId is the identifier of the network origin (where the process have been created) */
+  sourceNetworkId: SourceNetworkId;
 }
 
 export interface EnvelopeType {
@@ -2148,6 +2230,7 @@ const baseProcess: object = {
   status: 0,
   namespace: 0,
   censusOrigin: 0,
+  sourceNetworkId: 0,
 };
 
 export const Process = {
@@ -2235,6 +2318,9 @@ export const Process = {
     }
     if (message.metadata !== undefined) {
       writer.uint32(210).string(message.metadata);
+    }
+    if (message.sourceNetworkId !== 0) {
+      writer.uint32(216).int32(message.sourceNetworkId);
     }
     return writer;
   },
@@ -2334,6 +2420,9 @@ export const Process = {
           break;
         case 26:
           message.metadata = reader.string();
+          break;
+        case 27:
+          message.sourceNetworkId = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -2456,6 +2545,12 @@ export const Process = {
     if (object.metadata !== undefined && object.metadata !== null) {
       message.metadata = String(object.metadata);
     }
+    if (
+      object.sourceNetworkId !== undefined &&
+      object.sourceNetworkId !== null
+    ) {
+      message.sourceNetworkId = sourceNetworkIdFromJSON(object.sourceNetworkId);
+    }
     return message;
   },
 
@@ -2542,6 +2637,8 @@ export const Process = {
           ? base64FromBytes(message.owner)
           : undefined);
     message.metadata !== undefined && (obj.metadata = message.metadata);
+    message.sourceNetworkId !== undefined &&
+      (obj.sourceNetworkId = sourceNetworkIdToJSON(message.sourceNetworkId));
     return obj;
   },
 
@@ -2654,6 +2751,12 @@ export const Process = {
     }
     if (object.metadata !== undefined && object.metadata !== null) {
       message.metadata = object.metadata;
+    }
+    if (
+      object.sourceNetworkId !== undefined &&
+      object.sourceNetworkId !== null
+    ) {
+      message.sourceNetworkId = object.sourceNetworkId;
     }
     return message;
   },
@@ -4000,7 +4103,14 @@ function base64FromBytes(arr: Uint8Array): string {
   return btoa(bin.join(""));
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>

@@ -13,9 +13,21 @@ message BootNodeGateways {
             string pubKey = 3;
         }
         message Web3 {
-            string uri = 1;
+            message Endpoints {
+                string uri = 1;
+            }
+            message Contracts {
+                string ensPublicRegistry = 1;
+                string ensPublicResolver = 2;
+                string entityResolver = 3;
+                string genesis = 4;
+                string namespaces = 5;
+                string processes = 6;
+                string tokenStorageProofs = 7;
+                string results = 8;
+            }
         }
-
+        
         repeated DVote dvote = 1;
         repeated Web3 web3 = 2;
     }

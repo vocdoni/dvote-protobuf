@@ -78,14 +78,14 @@ class BootNodeGateways_NetworkNodes_DVote extends $pb.GeneratedMessage {
   void clearPubKey() => clearField(3);
 }
 
-class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes.Web3', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+class BootNodeGateways_NetworkNodes_Web3_Endpoints extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes.Web3.Endpoints', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uri')
     ..hasRequiredFields = false
   ;
 
-  BootNodeGateways_NetworkNodes_Web3._() : super();
-  factory BootNodeGateways_NetworkNodes_Web3({
+  BootNodeGateways_NetworkNodes_Web3_Endpoints._() : super();
+  factory BootNodeGateways_NetworkNodes_Web3_Endpoints({
     $core.String? uri,
   }) {
     final _result = create();
@@ -94,6 +94,189 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
     }
     return _result;
   }
+  factory BootNodeGateways_NetworkNodes_Web3_Endpoints.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BootNodeGateways_NetworkNodes_Web3_Endpoints.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes_Web3_Endpoints clone() => BootNodeGateways_NetworkNodes_Web3_Endpoints()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes_Web3_Endpoints copyWith(void Function(BootNodeGateways_NetworkNodes_Web3_Endpoints) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_Web3_Endpoints)) as BootNodeGateways_NetworkNodes_Web3_Endpoints; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BootNodeGateways_NetworkNodes_Web3_Endpoints create() => BootNodeGateways_NetworkNodes_Web3_Endpoints._();
+  BootNodeGateways_NetworkNodes_Web3_Endpoints createEmptyInstance() => create();
+  static $pb.PbList<BootNodeGateways_NetworkNodes_Web3_Endpoints> createRepeated() => $pb.PbList<BootNodeGateways_NetworkNodes_Web3_Endpoints>();
+  @$core.pragma('dart2js:noInline')
+  static BootNodeGateways_NetworkNodes_Web3_Endpoints getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways_NetworkNodes_Web3_Endpoints>(create);
+  static BootNodeGateways_NetworkNodes_Web3_Endpoints? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uri => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uri($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUri() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUri() => clearField(1);
+}
+
+class BootNodeGateways_NetworkNodes_Web3_Contracts extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes.Web3.Contracts', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ensPublicRegistry', protoName: 'ensPublicRegistry')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ensPublicResolver', protoName: 'ensPublicResolver')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityResolver', protoName: 'entityResolver')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'genesis')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'namespaces')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processes')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tokenStorageProofs', protoName: 'tokenStorageProofs')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results')
+    ..hasRequiredFields = false
+  ;
+
+  BootNodeGateways_NetworkNodes_Web3_Contracts._() : super();
+  factory BootNodeGateways_NetworkNodes_Web3_Contracts({
+    $core.String? ensPublicRegistry,
+    $core.String? ensPublicResolver,
+    $core.String? entityResolver,
+    $core.String? genesis,
+    $core.String? namespaces,
+    $core.String? processes,
+    $core.String? tokenStorageProofs,
+    $core.String? results,
+  }) {
+    final _result = create();
+    if (ensPublicRegistry != null) {
+      _result.ensPublicRegistry = ensPublicRegistry;
+    }
+    if (ensPublicResolver != null) {
+      _result.ensPublicResolver = ensPublicResolver;
+    }
+    if (entityResolver != null) {
+      _result.entityResolver = entityResolver;
+    }
+    if (genesis != null) {
+      _result.genesis = genesis;
+    }
+    if (namespaces != null) {
+      _result.namespaces = namespaces;
+    }
+    if (processes != null) {
+      _result.processes = processes;
+    }
+    if (tokenStorageProofs != null) {
+      _result.tokenStorageProofs = tokenStorageProofs;
+    }
+    if (results != null) {
+      _result.results = results;
+    }
+    return _result;
+  }
+  factory BootNodeGateways_NetworkNodes_Web3_Contracts.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BootNodeGateways_NetworkNodes_Web3_Contracts.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes_Web3_Contracts clone() => BootNodeGateways_NetworkNodes_Web3_Contracts()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BootNodeGateways_NetworkNodes_Web3_Contracts copyWith(void Function(BootNodeGateways_NetworkNodes_Web3_Contracts) updates) => super.copyWith((message) => updates(message as BootNodeGateways_NetworkNodes_Web3_Contracts)) as BootNodeGateways_NetworkNodes_Web3_Contracts; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static BootNodeGateways_NetworkNodes_Web3_Contracts create() => BootNodeGateways_NetworkNodes_Web3_Contracts._();
+  BootNodeGateways_NetworkNodes_Web3_Contracts createEmptyInstance() => create();
+  static $pb.PbList<BootNodeGateways_NetworkNodes_Web3_Contracts> createRepeated() => $pb.PbList<BootNodeGateways_NetworkNodes_Web3_Contracts>();
+  @$core.pragma('dart2js:noInline')
+  static BootNodeGateways_NetworkNodes_Web3_Contracts getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways_NetworkNodes_Web3_Contracts>(create);
+  static BootNodeGateways_NetworkNodes_Web3_Contracts? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get ensPublicRegistry => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set ensPublicRegistry($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEnsPublicRegistry() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEnsPublicRegistry() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get ensPublicResolver => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set ensPublicResolver($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEnsPublicResolver() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEnsPublicResolver() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get entityResolver => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set entityResolver($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEntityResolver() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEntityResolver() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get genesis => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set genesis($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasGenesis() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearGenesis() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get namespaces => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set namespaces($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasNamespaces() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearNamespaces() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get processes => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set processes($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasProcesses() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearProcesses() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get tokenStorageProofs => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set tokenStorageProofs($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasTokenStorageProofs() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTokenStorageProofs() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get results => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set results($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasResults() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearResults() => clearField(8);
+}
+
+class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'BootNodeGateways.NetworkNodes.Web3', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  BootNodeGateways_NetworkNodes_Web3._() : super();
+  factory BootNodeGateways_NetworkNodes_Web3() => create();
   factory BootNodeGateways_NetworkNodes_Web3.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory BootNodeGateways_NetworkNodes_Web3.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -114,15 +297,6 @@ class BootNodeGateways_NetworkNodes_Web3 extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BootNodeGateways_NetworkNodes_Web3 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BootNodeGateways_NetworkNodes_Web3>(create);
   static BootNodeGateways_NetworkNodes_Web3? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get uri => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set uri($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasUri() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearUri() => clearField(1);
 }
 
 class BootNodeGateways_NetworkNodes extends $pb.GeneratedMessage {

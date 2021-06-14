@@ -45,8 +45,29 @@ const BootNodeGateways_NetworkNodes_DVote$json = const {
 @$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
 const BootNodeGateways_NetworkNodes_Web3$json = const {
   '1': 'Web3',
+  '3': const [BootNodeGateways_NetworkNodes_Web3_Endpoints$json, BootNodeGateways_NetworkNodes_Web3_Contracts$json],
+};
+
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
+const BootNodeGateways_NetworkNodes_Web3_Endpoints$json = const {
+  '1': 'Endpoints',
   '2': const [
     const {'1': 'uri', '3': 1, '4': 1, '5': 9, '10': 'uri'},
+  ],
+};
+
+@$core.Deprecated('Use bootNodeGatewaysDescriptor instead')
+const BootNodeGateways_NetworkNodes_Web3_Contracts$json = const {
+  '1': 'Contracts',
+  '2': const [
+    const {'1': 'ensPublicRegistry', '3': 1, '4': 1, '5': 9, '10': 'ensPublicRegistry'},
+    const {'1': 'ensPublicResolver', '3': 2, '4': 1, '5': 9, '10': 'ensPublicResolver'},
+    const {'1': 'entityResolver', '3': 3, '4': 1, '5': 9, '10': 'entityResolver'},
+    const {'1': 'genesis', '3': 4, '4': 1, '5': 9, '10': 'genesis'},
+    const {'1': 'namespaces', '3': 5, '4': 1, '5': 9, '10': 'namespaces'},
+    const {'1': 'processes', '3': 6, '4': 1, '5': 9, '10': 'processes'},
+    const {'1': 'tokenStorageProofs', '3': 7, '4': 1, '5': 9, '10': 'tokenStorageProofs'},
+    const {'1': 'results', '3': 8, '4': 1, '5': 9, '10': 'results'},
   ],
 };
 
@@ -61,4 +82,4 @@ const BootNodeGateways_MetaEntry$json = const {
 };
 
 /// Descriptor for `BootNodeGateways`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List bootNodeGatewaysDescriptor = $convert.base64Decode('ChBCb290Tm9kZUdhdGV3YXlzEksKCWhvbWVzdGVhZBgBIAEoCzItLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTmV0d29ya05vZGVzUglob21lc3RlYWQSRQoGZ29lcmxpGAIgASgLMi0uZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXNSBmdvZXJsaRJBCgR4ZGFpGAMgASgLMi0uZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXNSBHhkYWkSQwoFc29rb2wYBCABKAsyLS5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk5ldHdvcmtOb2Rlc1IFc29rb2wSRwoHcmlua2VieRgFIAEoCzItLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTmV0d29ya05vZGVzUgdyaW5rZWJ5Ej4KBG1ldGEYZCADKAsyKi5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk1ldGFFbnRyeVIEbWV0YRqCAgoMTmV0d29ya05vZGVzEkkKBWR2b3RlGAEgAygLMjMuZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXMuRFZvdGVSBWR2b3RlEkYKBHdlYjMYAiADKAsyMi5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk5ldHdvcmtOb2Rlcy5XZWIzUgR3ZWIzGkUKBURWb3RlEhAKA3VyaRgBIAEoCVIDdXJpEhIKBGFwaXMYAiADKAlSBGFwaXMSFgoGcHViS2V5GAMgASgJUgZwdWJLZXkaGAoEV2ViMxIQCgN1cmkYASABKAlSA3VyaRo3CglNZXRhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ==');
+final $typed_data.Uint8List bootNodeGatewaysDescriptor = $convert.base64Decode('ChBCb290Tm9kZUdhdGV3YXlzEksKCWhvbWVzdGVhZBgBIAEoCzItLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTmV0d29ya05vZGVzUglob21lc3RlYWQSRQoGZ29lcmxpGAIgASgLMi0uZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXNSBmdvZXJsaRJBCgR4ZGFpGAMgASgLMi0uZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXNSBHhkYWkSQwoFc29rb2wYBCABKAsyLS5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk5ldHdvcmtOb2Rlc1IFc29rb2wSRwoHcmlua2VieRgFIAEoCzItLmR2b3RlLnR5cGVzLnYxLkJvb3ROb2RlR2F0ZXdheXMuTmV0d29ya05vZGVzUgdyaW5rZWJ5Ej4KBG1ldGEYZCADKAsyKi5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk1ldGFFbnRyeVIEbWV0YRrEBAoMTmV0d29ya05vZGVzEkkKBWR2b3RlGAEgAygLMjMuZHZvdGUudHlwZXMudjEuQm9vdE5vZGVHYXRld2F5cy5OZXR3b3JrTm9kZXMuRFZvdGVSBWR2b3RlEkYKBHdlYjMYAiADKAsyMi5kdm90ZS50eXBlcy52MS5Cb290Tm9kZUdhdGV3YXlzLk5ldHdvcmtOb2Rlcy5XZWIzUgR3ZWIzGkUKBURWb3RlEhAKA3VyaRgBIAEoCVIDdXJpEhIKBGFwaXMYAiADKAlSBGFwaXMSFgoGcHViS2V5GAMgASgJUgZwdWJLZXka2QIKBFdlYjMaHQoJRW5kcG9pbnRzEhAKA3VyaRgBIAEoCVIDdXJpGrECCglDb250cmFjdHMSLAoRZW5zUHVibGljUmVnaXN0cnkYASABKAlSEWVuc1B1YmxpY1JlZ2lzdHJ5EiwKEWVuc1B1YmxpY1Jlc29sdmVyGAIgASgJUhFlbnNQdWJsaWNSZXNvbHZlchImCg5lbnRpdHlSZXNvbHZlchgDIAEoCVIOZW50aXR5UmVzb2x2ZXISGAoHZ2VuZXNpcxgEIAEoCVIHZ2VuZXNpcxIeCgpuYW1lc3BhY2VzGAUgASgJUgpuYW1lc3BhY2VzEhwKCXByb2Nlc3NlcxgGIAEoCVIJcHJvY2Vzc2VzEi4KEnRva2VuU3RvcmFnZVByb29mcxgHIAEoCVISdG9rZW5TdG9yYWdlUHJvb2ZzEhgKB3Jlc3VsdHMYCCABKAlSB3Jlc3VsdHMaNwoJTWV0YUVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE=');
