@@ -96,7 +96,7 @@ message ProofArbo {
 }
 
 enum TxType {
-	TX_UNKNOWN = 0;
+	TX_TYPE_UNKNOWN = 0;
 	NEW_PROCESS = 1;
 	SET_PROCESS_STATUS = 2;
 	SET_PROCESS_CENSUS = 3;
@@ -204,7 +204,7 @@ message Process {
 }
 
 enum ProcessStatus {
-	PROCESS_UNKNOWN = 0;
+	PROCESS_STATUS_UNKNOWN = 0;
 	READY = 1;
 	ENDED = 2;
 	CANCELED = 3;
@@ -213,7 +213,7 @@ enum ProcessStatus {
 }
 
 enum SourceNetworkId {
-	UNKNOWN = 0;
+	SOURCE_NETWORK_ID_UNKNOWN = 0;
 	ETH_MAINNET = 1;
 	ETH_RINKEBY = 2;
 	ETH_GOERLI = 3;
@@ -226,7 +226,7 @@ enum SourceNetworkId {
 }
 
 enum CensusOrigin {
-	CENSUS_UNKNOWN = 0;
+	CENSUS_ORIGIN_UNKNOWN = 0;
 	OFF_CHAIN_TREE = 1;
 	OFF_CHAIN_TREE_WEIGHTED = 2;
 	OFF_CHAIN_CA = 3;
