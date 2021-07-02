@@ -16,6 +16,19 @@ message VoteEnvelope {
         repeated uint32 encryptionKeyIndexes = 6; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 }
 
+message Census {
+        enum Type {
+        	UNKNOWN = 0;
+        	GRAVITON = 1;
+        	IDEN3 = 2;
+        	ETHEREUMSTORAGE = 3;
+        	ETHEREUMACCOUNT = 4;
+        	CA = 5;
+        	ARBO_POSEIDON = 6;
+        	ARBO_BLAKE2B = 7;
+        }
+}
+
 message Proof {
         oneof payload {
                 // Proof used for signed envelopes
@@ -28,6 +41,8 @@ message Proof {
                 ProofEthereumAccount ethereumAccount = 4;
                 // Proof Certification Authority
                 ProofCA ca = 5;
+                // Proof used for census using arbo
+                ProofArbo arbo = 6;
          }
 }
 
@@ -37,6 +52,20 @@ message ProofGraviton {
 
 message ProofIden3 {
         bytes siblings = 1;
+}
+
+message ProofEthereumStorage {
+        bytes key = 1;
+        bytes value = 2;
+        repeated bytes siblings = 3;
+}
+
+message ProofEthereumAccount {
+        bytes nonce = 1;
+        bytes balance = 2;  // Big Int encoded as bytes
+        bytes storageHash = 3;
+        bytes codeHash = 4;
+        repeated bytes siblings = 5;
 }
 
 message ProofCA {
@@ -58,20 +87,14 @@ message CAbundle {
         bytes address = 2;
 }
 
-message ProofEthereumStorage {
-        bytes key = 1;
-        bytes value = 2;
-        repeated bytes siblings = 3;
+message ProofArbo {
+        enum Type {
+                BLAKE2B = 0;
+                POSEIDON = 1;
+        }
+        Type type = 1;
+        bytes siblings = 2;
 }
-
-message ProofEthereumAccount {
-        bytes nonce = 1;
-        bytes balance = 2;  // Big Int encoded as bytes
-        bytes storageHash = 3;
-        bytes codeHash = 4;
-        repeated bytes siblings = 5;
-}
-
 
 enum TxType {
 	TX_UNKNOWN = 0;
