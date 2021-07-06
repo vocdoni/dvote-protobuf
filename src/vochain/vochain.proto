@@ -261,6 +261,7 @@ message ProcessMode {
 	bool interruptible = 2;
 	bool dynamicCensus = 3;
 	bool encryptedMetaData = 4;
+	bool preRegister = 5;
 }
 
 message ProcessVoteOptions {
