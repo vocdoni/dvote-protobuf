@@ -7,13 +7,21 @@ option go_package = "go.vocdoni.io/proto/build/go/models";
 message VoteEnvelope {
         bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
         bytes processId = 2;  // The process for which the vote is casted
-        Proof proof = 3;  // One of ProofGraviton, ProofIden3, ProofEthereumStorage, ProofEthereumAccount, or ProofCA
+        Proof proof = 3;  // Franchise proof
         bytes votePackage = 4;   // JSON string of the Vote Package (potentially encrypted), encoded as bytes.
 
         // optional bytes nullifier = 5;
         bytes nullifier = 5;  // Hash of the private key + processId
 
         repeated uint32 encryptionKeyIndexes = 6; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
+}
+
+message RegisterKeyTx {
+        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+        bytes processId = 2;  // The process for which the vote is casted
+        Proof proof = 3;  // Franchise proof
+        bytes newKey = 4;   // New key to register
+        optional bytes weight = 5;   // Weight to delegate to newKey
 }
 
 message Census {
@@ -110,6 +118,7 @@ enum TxType {
 	REMOVE_VALIDATOR = 10;
 	VOTE = 11;
 	SET_PROCESS_RESULTS = 12;
+	REGISTER_VOTER_KEY = 13;
 }
 
 message Tx {
@@ -118,6 +127,7 @@ message Tx {
 		NewProcessTx newProcess = 2;
 		AdminTx admin = 3;
 		SetProcessTx setProcess = 4;
+		RegisterKeyTx registerKey = 5;
 	}
 }
 
