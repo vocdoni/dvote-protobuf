@@ -26,14 +26,14 @@ message RegisterKeyTx {
 
 message Census {
         enum Type {
-        	UNKNOWN = 0;
-        	GRAVITON = 1;
-        	IDEN3 = 2;
-        	ETHEREUMSTORAGE = 3;
-        	ETHEREUMACCOUNT = 4;
-        	CA = 5;
-        	ARBO_POSEIDON = 6;
-        	ARBO_BLAKE2B = 7;
+                UNKNOWN = 0;
+                ARBO_BLAKE2B = 1;
+                ARBO_POSEIDON = 2;
+                ETHEREUMSTORAGE = 3;
+                ETHEREUMACCOUNT = 4;
+                CA = 5;
+                GRAVITON = 1001;
+                IDEN3 = 1002;
         }
 }
 
