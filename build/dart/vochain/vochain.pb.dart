@@ -127,12 +127,42 @@ class VoteEnvelope extends $pb.GeneratedMessage {
   $core.List<$core.int> get encryptionKeyIndexes => $_getList(5);
 }
 
+class Census extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Census', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  Census._() : super();
+  factory Census() => create();
+  factory Census.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Census.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Census clone() => Census()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Census copyWith(void Function(Census) updates) => super.copyWith((message) => updates(message as Census)) as Census; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Census create() => Census._();
+  Census createEmptyInstance() => create();
+  static $pb.PbList<Census> createRepeated() => $pb.PbList<Census>();
+  @$core.pragma('dart2js:noInline')
+  static Census getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Census>(create);
+  static Census? _defaultInstance;
+}
+
 enum Proof_Payload {
   graviton, 
   iden3, 
   ethereumStorage, 
   ethereumAccount, 
   ca, 
+  arbo, 
   notSet
 }
 
@@ -143,15 +173,17 @@ class Proof extends $pb.GeneratedMessage {
     3 : Proof_Payload.ethereumStorage,
     4 : Proof_Payload.ethereumAccount,
     5 : Proof_Payload.ca,
+    6 : Proof_Payload.arbo,
     0 : Proof_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5])
+    ..oo(0, [1, 2, 3, 4, 5, 6])
     ..aOM<ProofGraviton>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'graviton', subBuilder: ProofGraviton.create)
     ..aOM<ProofIden3>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iden3', subBuilder: ProofIden3.create)
     ..aOM<ProofEthereumStorage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumStorage', protoName: 'ethereumStorage', subBuilder: ProofEthereumStorage.create)
     ..aOM<ProofEthereumAccount>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumAccount', protoName: 'ethereumAccount', subBuilder: ProofEthereumAccount.create)
     ..aOM<ProofCA>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ca', subBuilder: ProofCA.create)
+    ..aOM<ProofArbo>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arbo', subBuilder: ProofArbo.create)
     ..hasRequiredFields = false
   ;
 
@@ -162,6 +194,7 @@ class Proof extends $pb.GeneratedMessage {
     ProofEthereumStorage? ethereumStorage,
     ProofEthereumAccount? ethereumAccount,
     ProofCA? ca,
+    ProofArbo? arbo,
   }) {
     final _result = create();
     if (graviton != null) {
@@ -178,6 +211,9 @@ class Proof extends $pb.GeneratedMessage {
     }
     if (ca != null) {
       _result.ca = ca;
+    }
+    if (arbo != null) {
+      _result.arbo = arbo;
     }
     return _result;
   }
@@ -259,6 +295,17 @@ class Proof extends $pb.GeneratedMessage {
   void clearCa() => clearField(5);
   @$pb.TagNumber(5)
   ProofCA ensureCa() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  ProofArbo get arbo => $_getN(5);
+  @$pb.TagNumber(6)
+  set arbo(ProofArbo v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasArbo() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearArbo() => clearField(6);
+  @$pb.TagNumber(6)
+  ProofArbo ensureArbo() => $_ensure(5);
 }
 
 class ProofGraviton extends $pb.GeneratedMessage {
@@ -353,144 +400,6 @@ class ProofIden3 extends $pb.GeneratedMessage {
   $core.bool hasSiblings() => $_has(0);
   @$pb.TagNumber(1)
   void clearSiblings() => clearField(1);
-}
-
-class ProofCA extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofCA', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..e<ProofCA_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofCA_Type.UNKNOWN, valueOf: ProofCA_Type.valueOf, enumValues: ProofCA_Type.values)
-    ..aOM<CAbundle>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bundle', subBuilder: CAbundle.create)
-    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  ProofCA._() : super();
-  factory ProofCA({
-    ProofCA_Type? type,
-    CAbundle? bundle,
-    $core.List<$core.int>? signature,
-  }) {
-    final _result = create();
-    if (type != null) {
-      _result.type = type;
-    }
-    if (bundle != null) {
-      _result.bundle = bundle;
-    }
-    if (signature != null) {
-      _result.signature = signature;
-    }
-    return _result;
-  }
-  factory ProofCA.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ProofCA.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ProofCA clone() => ProofCA()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ProofCA copyWith(void Function(ProofCA) updates) => super.copyWith((message) => updates(message as ProofCA)) as ProofCA; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ProofCA create() => ProofCA._();
-  ProofCA createEmptyInstance() => create();
-  static $pb.PbList<ProofCA> createRepeated() => $pb.PbList<ProofCA>();
-  @$core.pragma('dart2js:noInline')
-  static ProofCA getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofCA>(create);
-  static ProofCA? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  ProofCA_Type get type => $_getN(0);
-  @$pb.TagNumber(1)
-  set type(ProofCA_Type v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasType() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearType() => clearField(1);
-
-  @$pb.TagNumber(2)
-  CAbundle get bundle => $_getN(1);
-  @$pb.TagNumber(2)
-  set bundle(CAbundle v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasBundle() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearBundle() => clearField(2);
-  @$pb.TagNumber(2)
-  CAbundle ensureBundle() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  $core.List<$core.int> get signature => $_getN(2);
-  @$pb.TagNumber(3)
-  set signature($core.List<$core.int> v) { $_setBytes(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasSignature() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSignature() => clearField(3);
-}
-
-class CAbundle extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CAbundle', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
-    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  CAbundle._() : super();
-  factory CAbundle({
-    $core.List<$core.int>? processId,
-    $core.List<$core.int>? address,
-  }) {
-    final _result = create();
-    if (processId != null) {
-      _result.processId = processId;
-    }
-    if (address != null) {
-      _result.address = address;
-    }
-    return _result;
-  }
-  factory CAbundle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CAbundle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  CAbundle clone() => CAbundle()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  CAbundle copyWith(void Function(CAbundle) updates) => super.copyWith((message) => updates(message as CAbundle)) as CAbundle; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static CAbundle create() => CAbundle._();
-  CAbundle createEmptyInstance() => create();
-  static $pb.PbList<CAbundle> createRepeated() => $pb.PbList<CAbundle>();
-  @$core.pragma('dart2js:noInline')
-  static CAbundle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CAbundle>(create);
-  static CAbundle? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<$core.int> get processId => $_getN(0);
-  @$pb.TagNumber(1)
-  set processId($core.List<$core.int> v) { $_setBytes(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasProcessId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearProcessId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.List<$core.int> get address => $_getN(1);
-  @$pb.TagNumber(2)
-  set address($core.List<$core.int> v) { $_setBytes(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasAddress() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearAddress() => clearField(2);
 }
 
 class ProofEthereumStorage extends $pb.GeneratedMessage {
@@ -657,6 +566,205 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $core.List<$core.List<$core.int>> get siblings => $_getList(4);
+}
+
+class ProofCA extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofCA', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<ProofCA_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofCA_Type.UNKNOWN, valueOf: ProofCA_Type.valueOf, enumValues: ProofCA_Type.values)
+    ..aOM<CAbundle>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bundle', subBuilder: CAbundle.create)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  ProofCA._() : super();
+  factory ProofCA({
+    ProofCA_Type? type,
+    CAbundle? bundle,
+    $core.List<$core.int>? signature,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (bundle != null) {
+      _result.bundle = bundle;
+    }
+    if (signature != null) {
+      _result.signature = signature;
+    }
+    return _result;
+  }
+  factory ProofCA.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProofCA.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProofCA clone() => ProofCA()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProofCA copyWith(void Function(ProofCA) updates) => super.copyWith((message) => updates(message as ProofCA)) as ProofCA; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProofCA create() => ProofCA._();
+  ProofCA createEmptyInstance() => create();
+  static $pb.PbList<ProofCA> createRepeated() => $pb.PbList<ProofCA>();
+  @$core.pragma('dart2js:noInline')
+  static ProofCA getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofCA>(create);
+  static ProofCA? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ProofCA_Type get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(ProofCA_Type v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  CAbundle get bundle => $_getN(1);
+  @$pb.TagNumber(2)
+  set bundle(CAbundle v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBundle() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBundle() => clearField(2);
+  @$pb.TagNumber(2)
+  CAbundle ensureBundle() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get signature => $_getN(2);
+  @$pb.TagNumber(3)
+  set signature($core.List<$core.int> v) { $_setBytes(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSignature() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSignature() => clearField(3);
+}
+
+class CAbundle extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CAbundle', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  CAbundle._() : super();
+  factory CAbundle({
+    $core.List<$core.int>? processId,
+    $core.List<$core.int>? address,
+  }) {
+    final _result = create();
+    if (processId != null) {
+      _result.processId = processId;
+    }
+    if (address != null) {
+      _result.address = address;
+    }
+    return _result;
+  }
+  factory CAbundle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CAbundle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CAbundle clone() => CAbundle()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CAbundle copyWith(void Function(CAbundle) updates) => super.copyWith((message) => updates(message as CAbundle)) as CAbundle; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CAbundle create() => CAbundle._();
+  CAbundle createEmptyInstance() => create();
+  static $pb.PbList<CAbundle> createRepeated() => $pb.PbList<CAbundle>();
+  @$core.pragma('dart2js:noInline')
+  static CAbundle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CAbundle>(create);
+  static CAbundle? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get processId => $_getN(0);
+  @$pb.TagNumber(1)
+  set processId($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasProcessId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearProcessId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get address => $_getN(1);
+  @$pb.TagNumber(2)
+  set address($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAddress() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAddress() => clearField(2);
+}
+
+class ProofArbo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofArbo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<ProofArbo_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofArbo_Type.BLAKE2B, valueOf: ProofArbo_Type.valueOf, enumValues: ProofArbo_Type.values)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siblings', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  ProofArbo._() : super();
+  factory ProofArbo({
+    ProofArbo_Type? type,
+    $core.List<$core.int>? siblings,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (siblings != null) {
+      _result.siblings = siblings;
+    }
+    return _result;
+  }
+  factory ProofArbo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProofArbo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProofArbo clone() => ProofArbo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProofArbo copyWith(void Function(ProofArbo) updates) => super.copyWith((message) => updates(message as ProofArbo)) as ProofArbo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProofArbo create() => ProofArbo._();
+  ProofArbo createEmptyInstance() => create();
+  static $pb.PbList<ProofArbo> createRepeated() => $pb.PbList<ProofArbo>();
+  @$core.pragma('dart2js:noInline')
+  static ProofArbo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofArbo>(create);
+  static ProofArbo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ProofArbo_Type get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(ProofArbo_Type v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get siblings => $_getN(1);
+  @$pb.TagNumber(2)
+  set siblings($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSiblings() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSiblings() => clearField(2);
 }
 
 enum Tx_Payload {
@@ -1291,6 +1399,7 @@ class Process extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceBlockHeight', $pb.PbFieldType.OU6, protoName: 'sourceBlockHeight', defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'owner', $pb.PbFieldType.OY)
     ..aOS(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata')
+    ..e<SourceNetworkId>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNetworkId', $pb.PbFieldType.OE, protoName: 'sourceNetworkId', defaultOrMaker: SourceNetworkId.UNKNOWN, valueOf: SourceNetworkId.valueOf, enumValues: SourceNetworkId.values)
     ..hasRequiredFields = false
   ;
 
@@ -1322,6 +1431,7 @@ class Process extends $pb.GeneratedMessage {
     $fixnum.Int64? sourceBlockHeight,
     $core.List<$core.int>? owner,
     $core.String? metadata,
+    SourceNetworkId? sourceNetworkId,
   }) {
     final _result = create();
     if (processId != null) {
@@ -1401,6 +1511,9 @@ class Process extends $pb.GeneratedMessage {
     }
     if (metadata != null) {
       _result.metadata = metadata;
+    }
+    if (sourceNetworkId != null) {
+      _result.sourceNetworkId = sourceNetworkId;
     }
     return _result;
   }
@@ -1636,6 +1749,15 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasMetadata() => $_has(25);
   @$pb.TagNumber(26)
   void clearMetadata() => clearField(26);
+
+  @$pb.TagNumber(27)
+  SourceNetworkId get sourceNetworkId => $_getN(26);
+  @$pb.TagNumber(27)
+  set sourceNetworkId(SourceNetworkId v) { setField(27, v); }
+  @$pb.TagNumber(27)
+  $core.bool hasSourceNetworkId() => $_has(26);
+  @$pb.TagNumber(27)
+  void clearSourceNetworkId() => clearField(27);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {

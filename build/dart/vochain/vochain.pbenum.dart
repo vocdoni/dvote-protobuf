@@ -69,6 +69,37 @@ class ProcessStatus extends $pb.ProtobufEnum {
   const ProcessStatus._($core.int v, $core.String n) : super(v, n);
 }
 
+class SourceNetworkId extends $pb.ProtobufEnum {
+  static const SourceNetworkId UNKNOWN = SourceNetworkId._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
+  static const SourceNetworkId ETH_MAINNET = SourceNetworkId._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_MAINNET');
+  static const SourceNetworkId ETH_RINKEBY = SourceNetworkId._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_RINKEBY');
+  static const SourceNetworkId ETH_GOERLI = SourceNetworkId._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_GOERLI');
+  static const SourceNetworkId POA_XDAI = SourceNetworkId._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POA_XDAI');
+  static const SourceNetworkId POA_SOKOL = SourceNetworkId._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POA_SOKOL');
+  static const SourceNetworkId POLYGON = SourceNetworkId._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POLYGON');
+  static const SourceNetworkId BSC = SourceNetworkId._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BSC');
+  static const SourceNetworkId ETH_MAINNET_SIGNALING = SourceNetworkId._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_MAINNET_SIGNALING');
+  static const SourceNetworkId ETH_RINKEBY_SIGNALING = SourceNetworkId._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_RINKEBY_SIGNALING');
+
+  static const $core.List<SourceNetworkId> values = <SourceNetworkId> [
+    UNKNOWN,
+    ETH_MAINNET,
+    ETH_RINKEBY,
+    ETH_GOERLI,
+    POA_XDAI,
+    POA_SOKOL,
+    POLYGON,
+    BSC,
+    ETH_MAINNET_SIGNALING,
+    ETH_RINKEBY_SIGNALING,
+  ];
+
+  static final $core.Map<$core.int, SourceNetworkId> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static SourceNetworkId? valueOf($core.int value) => _byValue[value];
+
+  const SourceNetworkId._($core.int v, $core.String n) : super(v, n);
+}
+
 class CensusOrigin extends $pb.ProtobufEnum {
   static const CensusOrigin CENSUS_UNKNOWN = CensusOrigin._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CENSUS_UNKNOWN');
   static const CensusOrigin OFF_CHAIN_TREE = CensusOrigin._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OFF_CHAIN_TREE');
@@ -98,6 +129,33 @@ class CensusOrigin extends $pb.ProtobufEnum {
   const CensusOrigin._($core.int v, $core.String n) : super(v, n);
 }
 
+class Census_Type extends $pb.ProtobufEnum {
+  static const Census_Type UNKNOWN = Census_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
+  static const Census_Type GRAVITON = Census_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GRAVITON');
+  static const Census_Type IDEN3 = Census_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IDEN3');
+  static const Census_Type ETHEREUMSTORAGE = Census_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETHEREUMSTORAGE');
+  static const Census_Type ETHEREUMACCOUNT = Census_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETHEREUMACCOUNT');
+  static const Census_Type CA = Census_Type._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CA');
+  static const Census_Type ARBO_POSEIDON = Census_Type._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_POSEIDON');
+  static const Census_Type ARBO_BLAKE2B = Census_Type._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_BLAKE2B');
+
+  static const $core.List<Census_Type> values = <Census_Type> [
+    UNKNOWN,
+    GRAVITON,
+    IDEN3,
+    ETHEREUMSTORAGE,
+    ETHEREUMACCOUNT,
+    CA,
+    ARBO_POSEIDON,
+    ARBO_BLAKE2B,
+  ];
+
+  static final $core.Map<$core.int, Census_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static Census_Type? valueOf($core.int value) => _byValue[value];
+
+  const Census_Type._($core.int v, $core.String n) : super(v, n);
+}
+
 class ProofCA_Type extends $pb.ProtobufEnum {
   static const ProofCA_Type UNKNOWN = ProofCA_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
   static const ProofCA_Type ECDSA = ProofCA_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ECDSA');
@@ -117,5 +175,20 @@ class ProofCA_Type extends $pb.ProtobufEnum {
   static ProofCA_Type? valueOf($core.int value) => _byValue[value];
 
   const ProofCA_Type._($core.int v, $core.String n) : super(v, n);
+}
+
+class ProofArbo_Type extends $pb.ProtobufEnum {
+  static const ProofArbo_Type BLAKE2B = ProofArbo_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BLAKE2B');
+  static const ProofArbo_Type POSEIDON = ProofArbo_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POSEIDON');
+
+  static const $core.List<ProofArbo_Type> values = <ProofArbo_Type> [
+    BLAKE2B,
+    POSEIDON,
+  ];
+
+  static final $core.Map<$core.int, ProofArbo_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ProofArbo_Type? valueOf($core.int value) => _byValue[value];
+
+  const ProofArbo_Type._($core.int v, $core.String n) : super(v, n);
 }
 
