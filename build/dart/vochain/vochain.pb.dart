@@ -164,6 +164,7 @@ enum Proof_Payload {
   ca, 
   arbo, 
   zkSnark, 
+  minimeStorage, 
   notSet
 }
 
@@ -176,10 +177,11 @@ class Proof extends $pb.GeneratedMessage {
     5 : Proof_Payload.ca,
     6 : Proof_Payload.arbo,
     7 : Proof_Payload.zkSnark,
+    8 : Proof_Payload.minimeStorage,
     0 : Proof_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
     ..aOM<ProofGraviton>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'graviton', subBuilder: ProofGraviton.create)
     ..aOM<ProofIden3>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iden3', subBuilder: ProofIden3.create)
     ..aOM<ProofEthereumStorage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumStorage', protoName: 'ethereumStorage', subBuilder: ProofEthereumStorage.create)
@@ -187,6 +189,7 @@ class Proof extends $pb.GeneratedMessage {
     ..aOM<ProofCA>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ca', subBuilder: ProofCA.create)
     ..aOM<ProofArbo>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arbo', subBuilder: ProofArbo.create)
     ..aOM<ProofZkSNARK>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'zkSnark', protoName: 'zkSnark', subBuilder: ProofZkSNARK.create)
+    ..aOM<ProofMinime>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minimeStorage', protoName: 'minimeStorage', subBuilder: ProofMinime.create)
     ..hasRequiredFields = false
   ;
 
@@ -199,6 +202,7 @@ class Proof extends $pb.GeneratedMessage {
     ProofCA? ca,
     ProofArbo? arbo,
     ProofZkSNARK? zkSnark,
+    ProofMinime? minimeStorage,
   }) {
     final _result = create();
     if (graviton != null) {
@@ -221,6 +225,9 @@ class Proof extends $pb.GeneratedMessage {
     }
     if (zkSnark != null) {
       _result.zkSnark = zkSnark;
+    }
+    if (minimeStorage != null) {
+      _result.minimeStorage = minimeStorage;
     }
     return _result;
   }
@@ -324,6 +331,17 @@ class Proof extends $pb.GeneratedMessage {
   void clearZkSnark() => clearField(7);
   @$pb.TagNumber(7)
   ProofZkSNARK ensureZkSnark() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  ProofMinime get minimeStorage => $_getN(7);
+  @$pb.TagNumber(8)
+  set minimeStorage(ProofMinime v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasMinimeStorage() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearMinimeStorage() => clearField(8);
+  @$pb.TagNumber(8)
+  ProofMinime ensureMinimeStorage() => $_ensure(7);
 }
 
 class ProofGraviton extends $pb.GeneratedMessage {
@@ -584,6 +602,71 @@ class ProofEthereumAccount extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $core.List<$core.List<$core.int>> get siblings => $_getList(4);
+}
+
+class ProofMinime extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofMinime', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..aOM<ProofEthereumStorage>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofPrevBlock', protoName: 'proofPrevBlock', subBuilder: ProofEthereumStorage.create)
+    ..aOM<ProofEthereumStorage>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofNextBlock', protoName: 'proofNextBlock', subBuilder: ProofEthereumStorage.create)
+    ..hasRequiredFields = false
+  ;
+
+  ProofMinime._() : super();
+  factory ProofMinime({
+    ProofEthereumStorage? proofPrevBlock,
+    ProofEthereumStorage? proofNextBlock,
+  }) {
+    final _result = create();
+    if (proofPrevBlock != null) {
+      _result.proofPrevBlock = proofPrevBlock;
+    }
+    if (proofNextBlock != null) {
+      _result.proofNextBlock = proofNextBlock;
+    }
+    return _result;
+  }
+  factory ProofMinime.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProofMinime.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProofMinime clone() => ProofMinime()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProofMinime copyWith(void Function(ProofMinime) updates) => super.copyWith((message) => updates(message as ProofMinime)) as ProofMinime; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProofMinime create() => ProofMinime._();
+  ProofMinime createEmptyInstance() => create();
+  static $pb.PbList<ProofMinime> createRepeated() => $pb.PbList<ProofMinime>();
+  @$core.pragma('dart2js:noInline')
+  static ProofMinime getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofMinime>(create);
+  static ProofMinime? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ProofEthereumStorage get proofPrevBlock => $_getN(0);
+  @$pb.TagNumber(1)
+  set proofPrevBlock(ProofEthereumStorage v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasProofPrevBlock() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearProofPrevBlock() => clearField(1);
+  @$pb.TagNumber(1)
+  ProofEthereumStorage ensureProofPrevBlock() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ProofEthereumStorage get proofNextBlock => $_getN(1);
+  @$pb.TagNumber(2)
+  set proofNextBlock(ProofEthereumStorage v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProofNextBlock() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearProofNextBlock() => clearField(2);
+  @$pb.TagNumber(2)
+  ProofEthereumStorage ensureProofNextBlock() => $_ensure(1);
 }
 
 class ProofCA extends $pb.GeneratedMessage {

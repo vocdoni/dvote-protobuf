@@ -45,6 +45,8 @@ message Proof {
                 ProofArbo arbo = 6;
                 // zkSnark proof
                 ProofZkSNARK zkSnark = 7;
+                // Proof used in Minime token based census
+                ProofMinime minimeStorage = 8;
          }
 }
 
@@ -68,6 +70,11 @@ message ProofEthereumAccount {
         bytes storageHash = 3;
         bytes codeHash = 4;
         repeated bytes siblings = 5;
+}
+
+message ProofMinime {
+	ProofEthereumStorage proofPrevBlock = 1;
+	ProofEthereumStorage proofNextBlock = 2;
 }
 
 message ProofCA {

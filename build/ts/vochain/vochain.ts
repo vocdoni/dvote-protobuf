@@ -405,7 +405,8 @@ export interface Proof {
     | { $case: "ethereumAccount"; ethereumAccount: ProofEthereumAccount }
     | { $case: "ca"; ca: ProofCA }
     | { $case: "arbo"; arbo: ProofArbo }
-    | { $case: "zkSnark"; zkSnark: ProofZkSNARK };
+    | { $case: "zkSnark"; zkSnark: ProofZkSNARK }
+    | { $case: "minimeStorage"; minimeStorage: ProofMinime };
 }
 
 export interface ProofGraviton {
@@ -429,6 +430,11 @@ export interface ProofEthereumAccount {
   storageHash: Uint8Array;
   codeHash: Uint8Array;
   siblings: Uint8Array[];
+}
+
+export interface ProofMinime {
+  proofPrevBlock: ProofEthereumStorage | undefined;
+  proofNextBlock: ProofEthereumStorage | undefined;
 }
 
 export interface ProofCA {
@@ -998,6 +1004,12 @@ export const Proof = {
         writer.uint32(58).fork()
       ).ldelim();
     }
+    if (message.payload?.$case === "minimeStorage") {
+      ProofMinime.encode(
+        message.payload.minimeStorage,
+        writer.uint32(66).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -1056,6 +1068,12 @@ export const Proof = {
             zkSnark: ProofZkSNARK.decode(reader, reader.uint32()),
           };
           break;
+        case 8:
+          message.payload = {
+            $case: "minimeStorage",
+            minimeStorage: ProofMinime.decode(reader, reader.uint32()),
+          };
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1111,6 +1129,12 @@ export const Proof = {
         zkSnark: ProofZkSNARK.fromJSON(object.zkSnark),
       };
     }
+    if (object.minimeStorage !== undefined && object.minimeStorage !== null) {
+      message.payload = {
+        $case: "minimeStorage",
+        minimeStorage: ProofMinime.fromJSON(object.minimeStorage),
+      };
+    }
     return message;
   },
 
@@ -1143,6 +1167,10 @@ export const Proof = {
     message.payload?.$case === "zkSnark" &&
       (obj.zkSnark = message.payload?.zkSnark
         ? ProofZkSNARK.toJSON(message.payload?.zkSnark)
+        : undefined);
+    message.payload?.$case === "minimeStorage" &&
+      (obj.minimeStorage = message.payload?.minimeStorage
+        ? ProofMinime.toJSON(message.payload?.minimeStorage)
         : undefined);
     return obj;
   },
@@ -1221,6 +1249,16 @@ export const Proof = {
       message.payload = {
         $case: "zkSnark",
         zkSnark: ProofZkSNARK.fromPartial(object.payload.zkSnark),
+      };
+    }
+    if (
+      object.payload?.$case === "minimeStorage" &&
+      object.payload?.minimeStorage !== undefined &&
+      object.payload?.minimeStorage !== null
+    ) {
+      message.payload = {
+        $case: "minimeStorage",
+        minimeStorage: ProofMinime.fromPartial(object.payload.minimeStorage),
       };
     }
     return message;
@@ -1578,6 +1616,96 @@ export const ProofEthereumAccount = {
       for (const e of object.siblings) {
         message.siblings.push(e);
       }
+    }
+    return message;
+  },
+};
+
+const baseProofMinime: object = {};
+
+export const ProofMinime = {
+  encode(message: ProofMinime, writer: Writer = Writer.create()): Writer {
+    if (message.proofPrevBlock !== undefined) {
+      ProofEthereumStorage.encode(
+        message.proofPrevBlock,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.proofNextBlock !== undefined) {
+      ProofEthereumStorage.encode(
+        message.proofNextBlock,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ProofMinime {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseProofMinime } as ProofMinime;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.proofPrevBlock = ProofEthereumStorage.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.proofNextBlock = ProofEthereumStorage.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProofMinime {
+    const message = { ...baseProofMinime } as ProofMinime;
+    if (object.proofPrevBlock !== undefined && object.proofPrevBlock !== null) {
+      message.proofPrevBlock = ProofEthereumStorage.fromJSON(
+        object.proofPrevBlock
+      );
+    }
+    if (object.proofNextBlock !== undefined && object.proofNextBlock !== null) {
+      message.proofNextBlock = ProofEthereumStorage.fromJSON(
+        object.proofNextBlock
+      );
+    }
+    return message;
+  },
+
+  toJSON(message: ProofMinime): unknown {
+    const obj: any = {};
+    message.proofPrevBlock !== undefined &&
+      (obj.proofPrevBlock = message.proofPrevBlock
+        ? ProofEthereumStorage.toJSON(message.proofPrevBlock)
+        : undefined);
+    message.proofNextBlock !== undefined &&
+      (obj.proofNextBlock = message.proofNextBlock
+        ? ProofEthereumStorage.toJSON(message.proofNextBlock)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ProofMinime>): ProofMinime {
+    const message = { ...baseProofMinime } as ProofMinime;
+    if (object.proofPrevBlock !== undefined && object.proofPrevBlock !== null) {
+      message.proofPrevBlock = ProofEthereumStorage.fromPartial(
+        object.proofPrevBlock
+      );
+    }
+    if (object.proofNextBlock !== undefined && object.proofNextBlock !== null) {
+      message.proofNextBlock = ProofEthereumStorage.fromPartial(
+        object.proofNextBlock
+      );
     }
     return message;
   },
