@@ -131,6 +131,7 @@ const Proof$json = const {
     const {'1': 'ca', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofCA', '9': 0, '10': 'ca'},
     const {'1': 'arbo', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofArbo', '9': 0, '10': 'arbo'},
     const {'1': 'zkSnark', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofZkSNARK', '9': 0, '10': 'zkSnark'},
+    const {'1': 'minimeStorage', '3': 8, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofMinime', '9': 0, '10': 'minimeStorage'},
   ],
   '8': const [
     const {'1': 'payload'},
@@ -138,7 +139,7 @@ const Proof$json = const {
 };
 
 /// Descriptor for `Proof`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhEi8KBGFyYm8YBiABKAsyGS5kdm90ZS50eXBlcy52MS5Qcm9vZkFyYm9IAFIEYXJibxI4Cgd6a1NuYXJrGAcgASgLMhwuZHZvdGUudHlwZXMudjEuUHJvb2Zaa1NOQVJLSABSB3prU25hcmtCCQoHcGF5bG9hZA==');
+final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhEi8KBGFyYm8YBiABKAsyGS5kdm90ZS50eXBlcy52MS5Qcm9vZkFyYm9IAFIEYXJibxI4Cgd6a1NuYXJrGAcgASgLMhwuZHZvdGUudHlwZXMudjEuUHJvb2Zaa1NOQVJLSABSB3prU25hcmsSQwoNbWluaW1lU3RvcmFnZRgIIAEoCzIbLmR2b3RlLnR5cGVzLnYxLlByb29mTWluaW1lSABSDW1pbmltZVN0b3JhZ2VCCQoHcGF5bG9hZA==');
 @$core.Deprecated('Use proofGravitonDescriptor instead')
 const ProofGraviton$json = const {
   '1': 'ProofGraviton',
@@ -185,6 +186,17 @@ const ProofEthereumAccount$json = const {
 
 /// Descriptor for `ProofEthereumAccount`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List proofEthereumAccountDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtQWNjb3VudBIUCgVub25jZRgBIAEoDFIFbm9uY2USGAoHYmFsYW5jZRgCIAEoDFIHYmFsYW5jZRIgCgtzdG9yYWdlSGFzaBgDIAEoDFILc3RvcmFnZUhhc2gSGgoIY29kZUhhc2gYBCABKAxSCGNvZGVIYXNoEhoKCHNpYmxpbmdzGAUgAygMUghzaWJsaW5ncw==');
+@$core.Deprecated('Use proofMinimeDescriptor instead')
+const ProofMinime$json = const {
+  '1': 'ProofMinime',
+  '2': const [
+    const {'1': 'proofPrevBlock', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumStorage', '10': 'proofPrevBlock'},
+    const {'1': 'proofNextBlock', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumStorage', '10': 'proofNextBlock'},
+  ],
+};
+
+/// Descriptor for `ProofMinime`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofMinimeDescriptor = $convert.base64Decode('CgtQcm9vZk1pbmltZRJMCg5wcm9vZlByZXZCbG9jaxgBIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlUg5wcm9vZlByZXZCbG9jaxJMCg5wcm9vZk5leHRCbG9jaxgCIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlUg5wcm9vZk5leHRCbG9jaw==');
 @$core.Deprecated('Use proofCADescriptor instead')
 const ProofCA$json = const {
   '1': 'ProofCA',
