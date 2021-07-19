@@ -163,6 +163,7 @@ enum Proof_Payload {
   ethereumAccount, 
   ca, 
   arbo, 
+  zkSnark, 
   notSet
 }
 
@@ -174,16 +175,18 @@ class Proof extends $pb.GeneratedMessage {
     4 : Proof_Payload.ethereumAccount,
     5 : Proof_Payload.ca,
     6 : Proof_Payload.arbo,
+    7 : Proof_Payload.zkSnark,
     0 : Proof_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7])
     ..aOM<ProofGraviton>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'graviton', subBuilder: ProofGraviton.create)
     ..aOM<ProofIden3>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iden3', subBuilder: ProofIden3.create)
     ..aOM<ProofEthereumStorage>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumStorage', protoName: 'ethereumStorage', subBuilder: ProofEthereumStorage.create)
     ..aOM<ProofEthereumAccount>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethereumAccount', protoName: 'ethereumAccount', subBuilder: ProofEthereumAccount.create)
     ..aOM<ProofCA>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ca', subBuilder: ProofCA.create)
     ..aOM<ProofArbo>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arbo', subBuilder: ProofArbo.create)
+    ..aOM<ProofZkSNARK>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'zkSnark', protoName: 'zkSnark', subBuilder: ProofZkSNARK.create)
     ..hasRequiredFields = false
   ;
 
@@ -195,6 +198,7 @@ class Proof extends $pb.GeneratedMessage {
     ProofEthereumAccount? ethereumAccount,
     ProofCA? ca,
     ProofArbo? arbo,
+    ProofZkSNARK? zkSnark,
   }) {
     final _result = create();
     if (graviton != null) {
@@ -214,6 +218,9 @@ class Proof extends $pb.GeneratedMessage {
     }
     if (arbo != null) {
       _result.arbo = arbo;
+    }
+    if (zkSnark != null) {
+      _result.zkSnark = zkSnark;
     }
     return _result;
   }
@@ -306,6 +313,17 @@ class Proof extends $pb.GeneratedMessage {
   void clearArbo() => clearField(6);
   @$pb.TagNumber(6)
   ProofArbo ensureArbo() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  ProofZkSNARK get zkSnark => $_getN(6);
+  @$pb.TagNumber(7)
+  set zkSnark(ProofZkSNARK v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasZkSnark() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearZkSnark() => clearField(7);
+  @$pb.TagNumber(7)
+  ProofZkSNARK ensureZkSnark() => $_ensure(6);
 }
 
 class ProofGraviton extends $pb.GeneratedMessage {
@@ -765,6 +783,85 @@ class ProofArbo extends $pb.GeneratedMessage {
   $core.bool hasSiblings() => $_has(1);
   @$pb.TagNumber(2)
   void clearSiblings() => clearField(2);
+}
+
+class ProofZkSNARK extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofZkSNARK', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<ProofZkSNARK_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofZkSNARK_Type.UNKNOWN, valueOf: ProofZkSNARK_Type.valueOf, enumValues: ProofZkSNARK_Type.values)
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'a')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'b')
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c')
+    ..pPS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'publicInputs', protoName: 'publicInputs')
+    ..hasRequiredFields = false
+  ;
+
+  ProofZkSNARK._() : super();
+  factory ProofZkSNARK({
+    ProofZkSNARK_Type? type,
+    $core.Iterable<$core.String>? a,
+    $core.Iterable<$core.String>? b,
+    $core.Iterable<$core.String>? c,
+    $core.Iterable<$core.String>? publicInputs,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (a != null) {
+      _result.a.addAll(a);
+    }
+    if (b != null) {
+      _result.b.addAll(b);
+    }
+    if (c != null) {
+      _result.c.addAll(c);
+    }
+    if (publicInputs != null) {
+      _result.publicInputs.addAll(publicInputs);
+    }
+    return _result;
+  }
+  factory ProofZkSNARK.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProofZkSNARK.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProofZkSNARK clone() => ProofZkSNARK()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProofZkSNARK copyWith(void Function(ProofZkSNARK) updates) => super.copyWith((message) => updates(message as ProofZkSNARK)) as ProofZkSNARK; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProofZkSNARK create() => ProofZkSNARK._();
+  ProofZkSNARK createEmptyInstance() => create();
+  static $pb.PbList<ProofZkSNARK> createRepeated() => $pb.PbList<ProofZkSNARK>();
+  @$core.pragma('dart2js:noInline')
+  static ProofZkSNARK getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProofZkSNARK>(create);
+  static ProofZkSNARK? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ProofZkSNARK_Type get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(ProofZkSNARK_Type v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get a => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.String> get b => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.String> get c => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.List<$core.String> get publicInputs => $_getList(4);
 }
 
 enum Tx_Payload {

@@ -404,7 +404,8 @@ export interface Proof {
     | { $case: "ethereumStorage"; ethereumStorage: ProofEthereumStorage }
     | { $case: "ethereumAccount"; ethereumAccount: ProofEthereumAccount }
     | { $case: "ca"; ca: ProofCA }
-    | { $case: "arbo"; arbo: ProofArbo };
+    | { $case: "arbo"; arbo: ProofArbo }
+    | { $case: "zkSnark"; zkSnark: ProofZkSNARK };
 }
 
 export interface ProofGraviton {
@@ -523,6 +524,48 @@ export function proofArbo_TypeToJSON(object: ProofArbo_Type): string {
       return "BLAKE2B";
     case ProofArbo_Type.POSEIDON:
       return "POSEIDON";
+    default:
+      return "UNKNOWN";
+  }
+}
+
+/** Groth16 zkSNARK proof + public inputs */
+export interface ProofZkSNARK {
+  type: ProofZkSNARK_Type;
+  /** a represents a G1 point */
+  a: string[];
+  /**
+   * b represents a G2 point, represented by an array of arrays: []string => [2][3]bigint)
+   * [u, v, w, x, y, z] => [[u, v, w], [x, y, z]]
+   */
+  b: string[];
+  /** c represents a G1 point */
+  c: string[];
+  publicInputs: string[];
+}
+
+/** Type determines which to circuit corresponds the zkProof */
+export enum ProofZkSNARK_Type {
+  UNKNOWN = 0,
+  UNRECOGNIZED = -1,
+}
+
+export function proofZkSNARK_TypeFromJSON(object: any): ProofZkSNARK_Type {
+  switch (object) {
+    case 0:
+    case "UNKNOWN":
+      return ProofZkSNARK_Type.UNKNOWN;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ProofZkSNARK_Type.UNRECOGNIZED;
+  }
+}
+
+export function proofZkSNARK_TypeToJSON(object: ProofZkSNARK_Type): string {
+  switch (object) {
+    case ProofZkSNARK_Type.UNKNOWN:
+      return "UNKNOWN";
     default:
       return "UNKNOWN";
   }
@@ -949,6 +992,12 @@ export const Proof = {
     if (message.payload?.$case === "arbo") {
       ProofArbo.encode(message.payload.arbo, writer.uint32(50).fork()).ldelim();
     }
+    if (message.payload?.$case === "zkSnark") {
+      ProofZkSNARK.encode(
+        message.payload.zkSnark,
+        writer.uint32(58).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -1001,6 +1050,12 @@ export const Proof = {
             arbo: ProofArbo.decode(reader, reader.uint32()),
           };
           break;
+        case 7:
+          message.payload = {
+            $case: "zkSnark",
+            zkSnark: ProofZkSNARK.decode(reader, reader.uint32()),
+          };
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1050,6 +1105,12 @@ export const Proof = {
         arbo: ProofArbo.fromJSON(object.arbo),
       };
     }
+    if (object.zkSnark !== undefined && object.zkSnark !== null) {
+      message.payload = {
+        $case: "zkSnark",
+        zkSnark: ProofZkSNARK.fromJSON(object.zkSnark),
+      };
+    }
     return message;
   },
 
@@ -1078,6 +1139,10 @@ export const Proof = {
     message.payload?.$case === "arbo" &&
       (obj.arbo = message.payload?.arbo
         ? ProofArbo.toJSON(message.payload?.arbo)
+        : undefined);
+    message.payload?.$case === "zkSnark" &&
+      (obj.zkSnark = message.payload?.zkSnark
+        ? ProofZkSNARK.toJSON(message.payload?.zkSnark)
         : undefined);
     return obj;
   },
@@ -1146,6 +1211,16 @@ export const Proof = {
       message.payload = {
         $case: "arbo",
         arbo: ProofArbo.fromPartial(object.payload.arbo),
+      };
+    }
+    if (
+      object.payload?.$case === "zkSnark" &&
+      object.payload?.zkSnark !== undefined &&
+      object.payload?.zkSnark !== null
+    ) {
+      message.payload = {
+        $case: "zkSnark",
+        zkSnark: ProofZkSNARK.fromPartial(object.payload.zkSnark),
       };
     }
     return message;
@@ -1732,6 +1807,160 @@ export const ProofArbo = {
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
+    }
+    return message;
+  },
+};
+
+const baseProofZkSNARK: object = {
+  type: 0,
+  a: "",
+  b: "",
+  c: "",
+  publicInputs: "",
+};
+
+export const ProofZkSNARK = {
+  encode(message: ProofZkSNARK, writer: Writer = Writer.create()): Writer {
+    if (message.type !== 0) {
+      writer.uint32(8).int32(message.type);
+    }
+    for (const v of message.a) {
+      writer.uint32(18).string(v!);
+    }
+    for (const v of message.b) {
+      writer.uint32(26).string(v!);
+    }
+    for (const v of message.c) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.publicInputs) {
+      writer.uint32(42).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ProofZkSNARK {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseProofZkSNARK } as ProofZkSNARK;
+    message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.type = reader.int32() as any;
+          break;
+        case 2:
+          message.a.push(reader.string());
+          break;
+        case 3:
+          message.b.push(reader.string());
+          break;
+        case 4:
+          message.c.push(reader.string());
+          break;
+        case 5:
+          message.publicInputs.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProofZkSNARK {
+    const message = { ...baseProofZkSNARK } as ProofZkSNARK;
+    message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = proofZkSNARK_TypeFromJSON(object.type);
+    }
+    if (object.a !== undefined && object.a !== null) {
+      for (const e of object.a) {
+        message.a.push(String(e));
+      }
+    }
+    if (object.b !== undefined && object.b !== null) {
+      for (const e of object.b) {
+        message.b.push(String(e));
+      }
+    }
+    if (object.c !== undefined && object.c !== null) {
+      for (const e of object.c) {
+        message.c.push(String(e));
+      }
+    }
+    if (object.publicInputs !== undefined && object.publicInputs !== null) {
+      for (const e of object.publicInputs) {
+        message.publicInputs.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: ProofZkSNARK): unknown {
+    const obj: any = {};
+    message.type !== undefined &&
+      (obj.type = proofZkSNARK_TypeToJSON(message.type));
+    if (message.a) {
+      obj.a = message.a.map((e) => e);
+    } else {
+      obj.a = [];
+    }
+    if (message.b) {
+      obj.b = message.b.map((e) => e);
+    } else {
+      obj.b = [];
+    }
+    if (message.c) {
+      obj.c = message.c.map((e) => e);
+    } else {
+      obj.c = [];
+    }
+    if (message.publicInputs) {
+      obj.publicInputs = message.publicInputs.map((e) => e);
+    } else {
+      obj.publicInputs = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ProofZkSNARK>): ProofZkSNARK {
+    const message = { ...baseProofZkSNARK } as ProofZkSNARK;
+    message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.a !== undefined && object.a !== null) {
+      for (const e of object.a) {
+        message.a.push(e);
+      }
+    }
+    if (object.b !== undefined && object.b !== null) {
+      for (const e of object.b) {
+        message.b.push(e);
+      }
+    }
+    if (object.c !== undefined && object.c !== null) {
+      for (const e of object.c) {
+        message.c.push(e);
+      }
+    }
+    if (object.publicInputs !== undefined && object.publicInputs !== null) {
+      for (const e of object.publicInputs) {
+        message.publicInputs.push(e);
+      }
     }
     return message;
   },

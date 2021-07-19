@@ -192,3 +192,16 @@ class ProofArbo_Type extends $pb.ProtobufEnum {
   const ProofArbo_Type._($core.int v, $core.String n) : super(v, n);
 }
 
+class ProofZkSNARK_Type extends $pb.ProtobufEnum {
+  static const ProofZkSNARK_Type UNKNOWN = ProofZkSNARK_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
+
+  static const $core.List<ProofZkSNARK_Type> values = <ProofZkSNARK_Type> [
+    UNKNOWN,
+  ];
+
+  static final $core.Map<$core.int, ProofZkSNARK_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ProofZkSNARK_Type? valueOf($core.int value) => _byValue[value];
+
+  const ProofZkSNARK_Type._($core.int v, $core.String n) : super(v, n);
+}
+

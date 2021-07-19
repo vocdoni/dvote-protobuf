@@ -130,6 +130,7 @@ const Proof$json = const {
     const {'1': 'ethereumAccount', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumAccount', '9': 0, '10': 'ethereumAccount'},
     const {'1': 'ca', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofCA', '9': 0, '10': 'ca'},
     const {'1': 'arbo', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofArbo', '9': 0, '10': 'arbo'},
+    const {'1': 'zkSnark', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofZkSNARK', '9': 0, '10': 'zkSnark'},
   ],
   '8': const [
     const {'1': 'payload'},
@@ -137,7 +138,7 @@ const Proof$json = const {
 };
 
 /// Descriptor for `Proof`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhEi8KBGFyYm8YBiABKAsyGS5kdm90ZS50eXBlcy52MS5Qcm9vZkFyYm9IAFIEYXJib0IJCgdwYXlsb2Fk');
+final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhEi8KBGFyYm8YBiABKAsyGS5kdm90ZS50eXBlcy52MS5Qcm9vZkFyYm9IAFIEYXJibxI4Cgd6a1NuYXJrGAcgASgLMhwuZHZvdGUudHlwZXMudjEuUHJvb2Zaa1NOQVJLSABSB3prU25hcmtCCQoHcGF5bG9hZA==');
 @$core.Deprecated('Use proofGravitonDescriptor instead')
 const ProofGraviton$json = const {
   '1': 'ProofGraviton',
@@ -241,6 +242,29 @@ const ProofArbo_Type$json = const {
 
 /// Descriptor for `ProofArbo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List proofArboDescriptor = $convert.base64Decode('CglQcm9vZkFyYm8SMgoEdHlwZRgBIAEoDjIeLmR2b3RlLnR5cGVzLnYxLlByb29mQXJiby5UeXBlUgR0eXBlEhoKCHNpYmxpbmdzGAIgASgMUghzaWJsaW5ncyIhCgRUeXBlEgsKB0JMQUtFMkIQABIMCghQT1NFSURPThAB');
+@$core.Deprecated('Use proofZkSNARKDescriptor instead')
+const ProofZkSNARK$json = const {
+  '1': 'ProofZkSNARK',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofZkSNARK.Type', '10': 'type'},
+    const {'1': 'a', '3': 2, '4': 3, '5': 9, '10': 'a'},
+    const {'1': 'b', '3': 3, '4': 3, '5': 9, '10': 'b'},
+    const {'1': 'c', '3': 4, '4': 3, '5': 9, '10': 'c'},
+    const {'1': 'publicInputs', '3': 5, '4': 3, '5': 9, '10': 'publicInputs'},
+  ],
+  '4': const [ProofZkSNARK_Type$json],
+};
+
+@$core.Deprecated('Use proofZkSNARKDescriptor instead')
+const ProofZkSNARK_Type$json = const {
+  '1': 'Type',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
+  ],
+};
+
+/// Descriptor for `ProofZkSNARK`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofZkSNARKDescriptor = $convert.base64Decode('CgxQcm9vZlprU05BUksSNQoEdHlwZRgBIAEoDjIhLmR2b3RlLnR5cGVzLnYxLlByb29mWmtTTkFSSy5UeXBlUgR0eXBlEgwKAWEYAiADKAlSAWESDAoBYhgDIAMoCVIBYhIMCgFjGAQgAygJUgFjEiIKDHB1YmxpY0lucHV0cxgFIAMoCVIMcHVibGljSW5wdXRzIhMKBFR5cGUSCwoHVU5LTk9XThAA');
 @$core.Deprecated('Use txDescriptor instead')
 const Tx$json = const {
   '1': 'Tx',
