@@ -18,6 +18,7 @@ export enum TxType {
   REMOVE_VALIDATOR = 10,
   VOTE = 11,
   SET_PROCESS_RESULTS = 12,
+  REGISTER_VOTER_KEY = 13,
   UNRECOGNIZED = -1,
 }
 
@@ -62,6 +63,9 @@ export function txTypeFromJSON(object: any): TxType {
     case 12:
     case "SET_PROCESS_RESULTS":
       return TxType.SET_PROCESS_RESULTS;
+    case 13:
+    case "REGISTER_VOTER_KEY":
+      return TxType.REGISTER_VOTER_KEY;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -97,6 +101,8 @@ export function txTypeToJSON(object: TxType): string {
       return "VOTE";
     case TxType.SET_PROCESS_RESULTS:
       return "SET_PROCESS_RESULTS";
+    case TxType.REGISTER_VOTER_KEY:
+      return "REGISTER_VOTER_KEY";
     default:
       return "UNKNOWN";
   }
@@ -317,7 +323,7 @@ export interface VoteEnvelope {
   nonce: Uint8Array;
   /** The process for which the vote is casted */
   processId: Uint8Array;
-  /** One of ProofGraviton, ProofIden3, ProofEthereumStorage, ProofEthereumAccount, or ProofCA */
+  /** Franchise proof */
   proof: Proof | undefined;
   /** JSON string of the Vote Package (potentially encrypted), encoded as bytes. */
   votePackage: Uint8Array;
@@ -331,13 +337,13 @@ export interface Census {}
 
 export enum Census_Type {
   UNKNOWN = 0,
-  GRAVITON = 1,
-  IDEN3 = 2,
+  ARBO_BLAKE2B = 1,
+  ARBO_POSEIDON = 2,
   ETHEREUMSTORAGE = 3,
   ETHEREUMACCOUNT = 4,
   CA = 5,
-  ARBO_POSEIDON = 6,
-  ARBO_BLAKE2B = 7,
+  GRAVITON = 1001,
+  IDEN3 = 1002,
   UNRECOGNIZED = -1,
 }
 
@@ -347,11 +353,11 @@ export function census_TypeFromJSON(object: any): Census_Type {
     case "UNKNOWN":
       return Census_Type.UNKNOWN;
     case 1:
-    case "GRAVITON":
-      return Census_Type.GRAVITON;
+    case "ARBO_BLAKE2B":
+      return Census_Type.ARBO_BLAKE2B;
     case 2:
-    case "IDEN3":
-      return Census_Type.IDEN3;
+    case "ARBO_POSEIDON":
+      return Census_Type.ARBO_POSEIDON;
     case 3:
     case "ETHEREUMSTORAGE":
       return Census_Type.ETHEREUMSTORAGE;
@@ -361,12 +367,12 @@ export function census_TypeFromJSON(object: any): Census_Type {
     case 5:
     case "CA":
       return Census_Type.CA;
-    case 6:
-    case "ARBO_POSEIDON":
-      return Census_Type.ARBO_POSEIDON;
-    case 7:
-    case "ARBO_BLAKE2B":
-      return Census_Type.ARBO_BLAKE2B;
+    case 1001:
+    case "GRAVITON":
+      return Census_Type.GRAVITON;
+    case 1002:
+    case "IDEN3":
+      return Census_Type.IDEN3;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -378,20 +384,20 @@ export function census_TypeToJSON(object: Census_Type): string {
   switch (object) {
     case Census_Type.UNKNOWN:
       return "UNKNOWN";
-    case Census_Type.GRAVITON:
-      return "GRAVITON";
-    case Census_Type.IDEN3:
-      return "IDEN3";
+    case Census_Type.ARBO_BLAKE2B:
+      return "ARBO_BLAKE2B";
+    case Census_Type.ARBO_POSEIDON:
+      return "ARBO_POSEIDON";
     case Census_Type.ETHEREUMSTORAGE:
       return "ETHEREUMSTORAGE";
     case Census_Type.ETHEREUMACCOUNT:
       return "ETHEREUMACCOUNT";
     case Census_Type.CA:
       return "CA";
-    case Census_Type.ARBO_POSEIDON:
-      return "ARBO_POSEIDON";
-    case Census_Type.ARBO_BLAKE2B:
-      return "ARBO_BLAKE2B";
+    case Census_Type.GRAVITON:
+      return "GRAVITON";
+    case Census_Type.IDEN3:
+      return "IDEN3";
     default:
       return "UNKNOWN";
   }
@@ -582,7 +588,8 @@ export interface Tx {
     | { $case: "vote"; vote: VoteEnvelope }
     | { $case: "newProcess"; newProcess: NewProcessTx }
     | { $case: "admin"; admin: AdminTx }
-    | { $case: "setProcess"; setProcess: SetProcessTx };
+    | { $case: "setProcess"; setProcess: SetProcessTx }
+    | { $case: "registerKey"; registerKey: RegisterKeyTx };
 }
 
 export interface SignedTx {
@@ -622,6 +629,19 @@ export interface AdminTx {
   publicKey?: Uint8Array | undefined;
   revealKey?: Uint8Array | undefined;
   nonce: Uint8Array;
+}
+
+export interface RegisterKeyTx {
+  /** Unique number per vote attempt, so that replay attacks can't reuse this payload */
+  nonce: Uint8Array;
+  /** The process for which the vote is casted */
+  processId: Uint8Array;
+  /** Franchise proof */
+  proof: Proof | undefined;
+  /** New key to register */
+  newKey: Uint8Array;
+  /** Weight to delegate to newKey */
+  weight?: Uint8Array | undefined;
 }
 
 export interface Process {
@@ -680,6 +700,7 @@ export interface ProcessMode {
   interruptible: boolean;
   dynamicCensus: boolean;
   encryptedMetaData: boolean;
+  preRegister: boolean;
 }
 
 export interface ProcessVoteOptions {
@@ -2119,6 +2140,12 @@ export const Tx = {
         writer.uint32(34).fork()
       ).ldelim();
     }
+    if (message.payload?.$case === "registerKey") {
+      RegisterKeyTx.encode(
+        message.payload.registerKey,
+        writer.uint32(42).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -2151,6 +2178,12 @@ export const Tx = {
           message.payload = {
             $case: "setProcess",
             setProcess: SetProcessTx.decode(reader, reader.uint32()),
+          };
+          break;
+        case 5:
+          message.payload = {
+            $case: "registerKey",
+            registerKey: RegisterKeyTx.decode(reader, reader.uint32()),
           };
           break;
         default:
@@ -2187,6 +2220,12 @@ export const Tx = {
         setProcess: SetProcessTx.fromJSON(object.setProcess),
       };
     }
+    if (object.registerKey !== undefined && object.registerKey !== null) {
+      message.payload = {
+        $case: "registerKey",
+        registerKey: RegisterKeyTx.fromJSON(object.registerKey),
+      };
+    }
     return message;
   },
 
@@ -2207,6 +2246,10 @@ export const Tx = {
     message.payload?.$case === "setProcess" &&
       (obj.setProcess = message.payload?.setProcess
         ? SetProcessTx.toJSON(message.payload?.setProcess)
+        : undefined);
+    message.payload?.$case === "registerKey" &&
+      (obj.registerKey = message.payload?.registerKey
+        ? RegisterKeyTx.toJSON(message.payload?.registerKey)
         : undefined);
     return obj;
   },
@@ -2251,6 +2294,16 @@ export const Tx = {
       message.payload = {
         $case: "setProcess",
         setProcess: SetProcessTx.fromPartial(object.payload.setProcess),
+      };
+    }
+    if (
+      object.payload?.$case === "registerKey" &&
+      object.payload?.registerKey !== undefined &&
+      object.payload?.registerKey !== null
+    ) {
+      message.payload = {
+        $case: "registerKey",
+        registerKey: RegisterKeyTx.fromPartial(object.payload.registerKey),
       };
     }
     return message;
@@ -2817,6 +2870,129 @@ export const AdminTx = {
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    }
+    return message;
+  },
+};
+
+const baseRegisterKeyTx: object = {};
+
+export const RegisterKeyTx = {
+  encode(message: RegisterKeyTx, writer: Writer = Writer.create()): Writer {
+    if (message.nonce.length !== 0) {
+      writer.uint32(10).bytes(message.nonce);
+    }
+    if (message.processId.length !== 0) {
+      writer.uint32(18).bytes(message.processId);
+    }
+    if (message.proof !== undefined) {
+      Proof.encode(message.proof, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.newKey.length !== 0) {
+      writer.uint32(34).bytes(message.newKey);
+    }
+    if (message.weight !== undefined) {
+      writer.uint32(42).bytes(message.weight);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): RegisterKeyTx {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseRegisterKeyTx } as RegisterKeyTx;
+    message.nonce = new Uint8Array();
+    message.processId = new Uint8Array();
+    message.newKey = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nonce = reader.bytes();
+          break;
+        case 2:
+          message.processId = reader.bytes();
+          break;
+        case 3:
+          message.proof = Proof.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.newKey = reader.bytes();
+          break;
+        case 5:
+          message.weight = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): RegisterKeyTx {
+    const message = { ...baseRegisterKeyTx } as RegisterKeyTx;
+    message.nonce = new Uint8Array();
+    message.processId = new Uint8Array();
+    message.newKey = new Uint8Array();
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = bytesFromBase64(object.nonce);
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = bytesFromBase64(object.processId);
+    }
+    if (object.proof !== undefined && object.proof !== null) {
+      message.proof = Proof.fromJSON(object.proof);
+    }
+    if (object.newKey !== undefined && object.newKey !== null) {
+      message.newKey = bytesFromBase64(object.newKey);
+    }
+    if (object.weight !== undefined && object.weight !== null) {
+      message.weight = bytesFromBase64(object.weight);
+    }
+    return message;
+  },
+
+  toJSON(message: RegisterKeyTx): unknown {
+    const obj: any = {};
+    message.nonce !== undefined &&
+      (obj.nonce = base64FromBytes(
+        message.nonce !== undefined ? message.nonce : new Uint8Array()
+      ));
+    message.processId !== undefined &&
+      (obj.processId = base64FromBytes(
+        message.processId !== undefined ? message.processId : new Uint8Array()
+      ));
+    message.proof !== undefined &&
+      (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
+    message.newKey !== undefined &&
+      (obj.newKey = base64FromBytes(
+        message.newKey !== undefined ? message.newKey : new Uint8Array()
+      ));
+    message.weight !== undefined &&
+      (obj.weight =
+        message.weight !== undefined
+          ? base64FromBytes(message.weight)
+          : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<RegisterKeyTx>): RegisterKeyTx {
+    const message = { ...baseRegisterKeyTx } as RegisterKeyTx;
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.proof !== undefined && object.proof !== null) {
+      message.proof = Proof.fromPartial(object.proof);
+    }
+    if (object.newKey !== undefined && object.newKey !== null) {
+      message.newKey = object.newKey;
+    }
+    if (object.weight !== undefined && object.weight !== null) {
+      message.weight = object.weight;
     }
     return message;
   },
@@ -3481,6 +3657,7 @@ const baseProcessMode: object = {
   interruptible: false,
   dynamicCensus: false,
   encryptedMetaData: false,
+  preRegister: false,
 };
 
 export const ProcessMode = {
@@ -3496,6 +3673,9 @@ export const ProcessMode = {
     }
     if (message.encryptedMetaData === true) {
       writer.uint32(32).bool(message.encryptedMetaData);
+    }
+    if (message.preRegister === true) {
+      writer.uint32(40).bool(message.preRegister);
     }
     return writer;
   },
@@ -3518,6 +3698,9 @@ export const ProcessMode = {
           break;
         case 4:
           message.encryptedMetaData = reader.bool();
+          break;
+        case 5:
+          message.preRegister = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -3544,6 +3727,9 @@ export const ProcessMode = {
     ) {
       message.encryptedMetaData = Boolean(object.encryptedMetaData);
     }
+    if (object.preRegister !== undefined && object.preRegister !== null) {
+      message.preRegister = Boolean(object.preRegister);
+    }
     return message;
   },
 
@@ -3556,6 +3742,8 @@ export const ProcessMode = {
       (obj.dynamicCensus = message.dynamicCensus);
     message.encryptedMetaData !== undefined &&
       (obj.encryptedMetaData = message.encryptedMetaData);
+    message.preRegister !== undefined &&
+      (obj.preRegister = message.preRegister);
     return obj;
   },
 
@@ -3575,6 +3763,9 @@ export const ProcessMode = {
       object.encryptedMetaData !== null
     ) {
       message.encryptedMetaData = object.encryptedMetaData;
+    }
+    if (object.preRegister !== undefined && object.preRegister !== null) {
+      message.preRegister = object.preRegister;
     }
     return message;
   },

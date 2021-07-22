@@ -952,6 +952,7 @@ enum Tx_Payload {
   newProcess, 
   admin, 
   setProcess, 
+  registerKey, 
   notSet
 }
 
@@ -961,14 +962,16 @@ class Tx extends $pb.GeneratedMessage {
     2 : Tx_Payload.newProcess,
     3 : Tx_Payload.admin,
     4 : Tx_Payload.setProcess,
+    5 : Tx_Payload.registerKey,
     0 : Tx_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Tx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4])
+    ..oo(0, [1, 2, 3, 4, 5])
     ..aOM<VoteEnvelope>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vote', subBuilder: VoteEnvelope.create)
     ..aOM<NewProcessTx>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newProcess', protoName: 'newProcess', subBuilder: NewProcessTx.create)
     ..aOM<AdminTx>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'admin', subBuilder: AdminTx.create)
     ..aOM<SetProcessTx>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setProcess', protoName: 'setProcess', subBuilder: SetProcessTx.create)
+    ..aOM<RegisterKeyTx>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'registerKey', protoName: 'registerKey', subBuilder: RegisterKeyTx.create)
     ..hasRequiredFields = false
   ;
 
@@ -978,6 +981,7 @@ class Tx extends $pb.GeneratedMessage {
     NewProcessTx? newProcess,
     AdminTx? admin,
     SetProcessTx? setProcess,
+    RegisterKeyTx? registerKey,
   }) {
     final _result = create();
     if (vote != null) {
@@ -991,6 +995,9 @@ class Tx extends $pb.GeneratedMessage {
     }
     if (setProcess != null) {
       _result.setProcess = setProcess;
+    }
+    if (registerKey != null) {
+      _result.registerKey = registerKey;
     }
     return _result;
   }
@@ -1061,6 +1068,17 @@ class Tx extends $pb.GeneratedMessage {
   void clearSetProcess() => clearField(4);
   @$pb.TagNumber(4)
   SetProcessTx ensureSetProcess() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  RegisterKeyTx get registerKey => $_getN(4);
+  @$pb.TagNumber(5)
+  set registerKey(RegisterKeyTx v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRegisterKey() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRegisterKey() => clearField(5);
+  @$pb.TagNumber(5)
+  RegisterKeyTx ensureRegisterKey() => $_ensure(4);
 }
 
 class SignedTx extends $pb.GeneratedMessage {
@@ -1549,6 +1567,111 @@ class AdminTx extends $pb.GeneratedMessage {
   $core.bool hasNonce() => $_has(10);
   @$pb.TagNumber(11)
   void clearNonce() => clearField(11);
+}
+
+class RegisterKeyTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RegisterKeyTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
+    ..aOM<Proof>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: Proof.create)
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newKey', $pb.PbFieldType.OY, protoName: 'newKey')
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  RegisterKeyTx._() : super();
+  factory RegisterKeyTx({
+    $core.List<$core.int>? nonce,
+    $core.List<$core.int>? processId,
+    Proof? proof,
+    $core.List<$core.int>? newKey,
+    $core.List<$core.int>? weight,
+  }) {
+    final _result = create();
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (processId != null) {
+      _result.processId = processId;
+    }
+    if (proof != null) {
+      _result.proof = proof;
+    }
+    if (newKey != null) {
+      _result.newKey = newKey;
+    }
+    if (weight != null) {
+      _result.weight = weight;
+    }
+    return _result;
+  }
+  factory RegisterKeyTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RegisterKeyTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RegisterKeyTx clone() => RegisterKeyTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RegisterKeyTx copyWith(void Function(RegisterKeyTx) updates) => super.copyWith((message) => updates(message as RegisterKeyTx)) as RegisterKeyTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RegisterKeyTx create() => RegisterKeyTx._();
+  RegisterKeyTx createEmptyInstance() => create();
+  static $pb.PbList<RegisterKeyTx> createRepeated() => $pb.PbList<RegisterKeyTx>();
+  @$core.pragma('dart2js:noInline')
+  static RegisterKeyTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RegisterKeyTx>(create);
+  static RegisterKeyTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get nonce => $_getN(0);
+  @$pb.TagNumber(1)
+  set nonce($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasNonce() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearNonce() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get processId => $_getN(1);
+  @$pb.TagNumber(2)
+  set processId($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProcessId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearProcessId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  Proof get proof => $_getN(2);
+  @$pb.TagNumber(3)
+  set proof(Proof v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasProof() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearProof() => clearField(3);
+  @$pb.TagNumber(3)
+  Proof ensureProof() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get newKey => $_getN(3);
+  @$pb.TagNumber(4)
+  set newKey($core.List<$core.int> v) { $_setBytes(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasNewKey() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNewKey() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<$core.int> get weight => $_getN(4);
+  @$pb.TagNumber(5)
+  set weight($core.List<$core.int> v) { $_setBytes(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasWeight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearWeight() => clearField(5);
 }
 
 class Process extends $pb.GeneratedMessage {
@@ -2049,6 +2172,7 @@ class ProcessMode extends $pb.GeneratedMessage {
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'interruptible')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dynamicCensus', protoName: 'dynamicCensus')
     ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptedMetaData', protoName: 'encryptedMetaData')
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preRegister', protoName: 'preRegister')
     ..hasRequiredFields = false
   ;
 
@@ -2058,6 +2182,7 @@ class ProcessMode extends $pb.GeneratedMessage {
     $core.bool? interruptible,
     $core.bool? dynamicCensus,
     $core.bool? encryptedMetaData,
+    $core.bool? preRegister,
   }) {
     final _result = create();
     if (autoStart != null) {
@@ -2071,6 +2196,9 @@ class ProcessMode extends $pb.GeneratedMessage {
     }
     if (encryptedMetaData != null) {
       _result.encryptedMetaData = encryptedMetaData;
+    }
+    if (preRegister != null) {
+      _result.preRegister = preRegister;
     }
     return _result;
   }
@@ -2130,6 +2258,15 @@ class ProcessMode extends $pb.GeneratedMessage {
   $core.bool hasEncryptedMetaData() => $_has(3);
   @$pb.TagNumber(4)
   void clearEncryptedMetaData() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get preRegister => $_getBF(4);
+  @$pb.TagNumber(5)
+  set preRegister($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPreRegister() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPreRegister() => clearField(5);
 }
 
 class ProcessVoteOptions extends $pb.GeneratedMessage {

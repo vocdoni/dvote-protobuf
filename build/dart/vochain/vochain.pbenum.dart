@@ -23,6 +23,7 @@ class TxType extends $pb.ProtobufEnum {
   static const TxType REMOVE_VALIDATOR = TxType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REMOVE_VALIDATOR');
   static const TxType VOTE = TxType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VOTE');
   static const TxType SET_PROCESS_RESULTS = TxType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_PROCESS_RESULTS');
+  static const TxType REGISTER_VOTER_KEY = TxType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REGISTER_VOTER_KEY');
 
   static const $core.List<TxType> values = <TxType> [
     TX_UNKNOWN,
@@ -38,6 +39,7 @@ class TxType extends $pb.ProtobufEnum {
     REMOVE_VALIDATOR,
     VOTE,
     SET_PROCESS_RESULTS,
+    REGISTER_VOTER_KEY,
   ];
 
   static final $core.Map<$core.int, TxType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -131,23 +133,23 @@ class CensusOrigin extends $pb.ProtobufEnum {
 
 class Census_Type extends $pb.ProtobufEnum {
   static const Census_Type UNKNOWN = Census_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN');
-  static const Census_Type GRAVITON = Census_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GRAVITON');
-  static const Census_Type IDEN3 = Census_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IDEN3');
+  static const Census_Type ARBO_BLAKE2B = Census_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_BLAKE2B');
+  static const Census_Type ARBO_POSEIDON = Census_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_POSEIDON');
   static const Census_Type ETHEREUMSTORAGE = Census_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETHEREUMSTORAGE');
   static const Census_Type ETHEREUMACCOUNT = Census_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETHEREUMACCOUNT');
   static const Census_Type CA = Census_Type._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CA');
-  static const Census_Type ARBO_POSEIDON = Census_Type._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_POSEIDON');
-  static const Census_Type ARBO_BLAKE2B = Census_Type._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_BLAKE2B');
+  static const Census_Type GRAVITON = Census_Type._(1001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GRAVITON');
+  static const Census_Type IDEN3 = Census_Type._(1002, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IDEN3');
 
   static const $core.List<Census_Type> values = <Census_Type> [
     UNKNOWN,
-    GRAVITON,
-    IDEN3,
+    ARBO_BLAKE2B,
+    ARBO_POSEIDON,
     ETHEREUMSTORAGE,
     ETHEREUMACCOUNT,
     CA,
-    ARBO_POSEIDON,
-    ARBO_BLAKE2B,
+    GRAVITON,
+    IDEN3,
   ];
 
   static final $core.Map<$core.int, Census_Type> _byValue = $pb.ProtobufEnum.initByValue(values);

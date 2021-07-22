@@ -25,11 +25,12 @@ const TxType$json = const {
     const {'1': 'REMOVE_VALIDATOR', '2': 10},
     const {'1': 'VOTE', '2': 11},
     const {'1': 'SET_PROCESS_RESULTS', '2': 12},
+    const {'1': 'REGISTER_VOTER_KEY', '2': 13},
   ],
 };
 
 /// Descriptor for `TxType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List txTypeDescriptor = $convert.base64Decode('CgZUeFR5cGUSDgoKVFhfVU5LTk9XThAAEg8KC05FV19QUk9DRVNTEAESFgoSU0VUX1BST0NFU1NfU1RBVFVTEAISFgoSU0VUX1BST0NFU1NfQ0VOU1VTEAMSHgoaU0VUX1BST0NFU1NfUVVFU1RJT05fSU5ERVgQBBIUChBBRERfUFJPQ0VTU19LRVlTEAUSFwoTUkVWRUFMX1BST0NFU1NfS0VZUxAGEg4KCkFERF9PUkFDTEUQBxIRCg1SRU1PVkVfT1JBQ0xFEAgSEQoNQUREX1ZBTElEQVRPUhAJEhQKEFJFTU9WRV9WQUxJREFUT1IQChIICgRWT1RFEAsSFwoTU0VUX1BST0NFU1NfUkVTVUxUUxAM');
+final $typed_data.Uint8List txTypeDescriptor = $convert.base64Decode('CgZUeFR5cGUSDgoKVFhfVU5LTk9XThAAEg8KC05FV19QUk9DRVNTEAESFgoSU0VUX1BST0NFU1NfU1RBVFVTEAISFgoSU0VUX1BST0NFU1NfQ0VOU1VTEAMSHgoaU0VUX1BST0NFU1NfUVVFU1RJT05fSU5ERVgQBBIUChBBRERfUFJPQ0VTU19LRVlTEAUSFwoTUkVWRUFMX1BST0NFU1NfS0VZUxAGEg4KCkFERF9PUkFDTEUQBxIRCg1SRU1PVkVfT1JBQ0xFEAgSEQoNQUREX1ZBTElEQVRPUhAJEhQKEFJFTU9WRV9WQUxJREFUT1IQChIICgRWT1RFEAsSFwoTU0VUX1BST0NFU1NfUkVTVUxUUxAMEhYKElJFR0lTVEVSX1ZPVEVSX0tFWRAN');
 @$core.Deprecated('Use processStatusDescriptor instead')
 const ProcessStatus$json = const {
   '1': 'ProcessStatus',
@@ -108,18 +109,18 @@ const Census_Type$json = const {
   '1': 'Type',
   '2': const [
     const {'1': 'UNKNOWN', '2': 0},
-    const {'1': 'GRAVITON', '2': 1},
-    const {'1': 'IDEN3', '2': 2},
+    const {'1': 'ARBO_BLAKE2B', '2': 1},
+    const {'1': 'ARBO_POSEIDON', '2': 2},
     const {'1': 'ETHEREUMSTORAGE', '2': 3},
     const {'1': 'ETHEREUMACCOUNT', '2': 4},
     const {'1': 'CA', '2': 5},
-    const {'1': 'ARBO_POSEIDON', '2': 6},
-    const {'1': 'ARBO_BLAKE2B', '2': 7},
+    const {'1': 'GRAVITON', '2': 1001},
+    const {'1': 'IDEN3', '2': 1002},
   ],
 };
 
 /// Descriptor for `Census`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusDescriptor = $convert.base64Decode('CgZDZW5zdXMigwEKBFR5cGUSCwoHVU5LTk9XThAAEgwKCEdSQVZJVE9OEAESCQoFSURFTjMQAhITCg9FVEhFUkVVTVNUT1JBR0UQAxITCg9FVEhFUkVVTUFDQ09VTlQQBBIGCgJDQRAFEhEKDUFSQk9fUE9TRUlET04QBhIQCgxBUkJPX0JMQUtFMkIQBw==');
+final $typed_data.Uint8List censusDescriptor = $convert.base64Decode('CgZDZW5zdXMihQEKBFR5cGUSCwoHVU5LTk9XThAAEhAKDEFSQk9fQkxBS0UyQhABEhEKDUFSQk9fUE9TRUlET04QAhITCg9FVEhFUkVVTVNUT1JBR0UQAxITCg9FVEhFUkVVTUFDQ09VTlQQBBIGCgJDQRAFEg0KCEdSQVZJVE9OEOkHEgoKBUlERU4zEOoH');
 @$core.Deprecated('Use proofDescriptor instead')
 const Proof$json = const {
   '1': 'Proof',
@@ -285,6 +286,7 @@ const Tx$json = const {
     const {'1': 'newProcess', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.NewProcessTx', '9': 0, '10': 'newProcess'},
     const {'1': 'admin', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.AdminTx', '9': 0, '10': 'admin'},
     const {'1': 'setProcess', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.SetProcessTx', '9': 0, '10': 'setProcess'},
+    const {'1': 'registerKey', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.RegisterKeyTx', '9': 0, '10': 'registerKey'},
   ],
   '8': const [
     const {'1': 'payload'},
@@ -292,7 +294,7 @@ const Tx$json = const {
 };
 
 /// Descriptor for `Tx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List txDescriptor = $convert.base64Decode('CgJUeBIyCgR2b3RlGAEgASgLMhwuZHZvdGUudHlwZXMudjEuVm90ZUVudmVsb3BlSABSBHZvdGUSPgoKbmV3UHJvY2VzcxgCIAEoCzIcLmR2b3RlLnR5cGVzLnYxLk5ld1Byb2Nlc3NUeEgAUgpuZXdQcm9jZXNzEi8KBWFkbWluGAMgASgLMhcuZHZvdGUudHlwZXMudjEuQWRtaW5UeEgAUgVhZG1pbhI+CgpzZXRQcm9jZXNzGAQgASgLMhwuZHZvdGUudHlwZXMudjEuU2V0UHJvY2Vzc1R4SABSCnNldFByb2Nlc3NCCQoHcGF5bG9hZA==');
+final $typed_data.Uint8List txDescriptor = $convert.base64Decode('CgJUeBIyCgR2b3RlGAEgASgLMhwuZHZvdGUudHlwZXMudjEuVm90ZUVudmVsb3BlSABSBHZvdGUSPgoKbmV3UHJvY2VzcxgCIAEoCzIcLmR2b3RlLnR5cGVzLnYxLk5ld1Byb2Nlc3NUeEgAUgpuZXdQcm9jZXNzEi8KBWFkbWluGAMgASgLMhcuZHZvdGUudHlwZXMudjEuQWRtaW5UeEgAUgVhZG1pbhI+CgpzZXRQcm9jZXNzGAQgASgLMhwuZHZvdGUudHlwZXMudjEuU2V0UHJvY2Vzc1R4SABSCnNldFByb2Nlc3MSQQoLcmVnaXN0ZXJLZXkYBSABKAsyHS5kdm90ZS50eXBlcy52MS5SZWdpc3RlcktleVR4SABSC3JlZ2lzdGVyS2V5QgkKB3BheWxvYWQ=');
 @$core.Deprecated('Use signedTxDescriptor instead')
 const SignedTx$json = const {
   '1': 'SignedTx',
@@ -375,6 +377,23 @@ const AdminTx$json = const {
 
 /// Descriptor for `AdminTx`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List adminTxDescriptor = $convert.base64Decode('CgdBZG1pblR4Ei4KBnR4dHlwZRgBIAEoDjIWLmR2b3RlLnR5cGVzLnYxLlR4VHlwZVIGdHh0eXBlEhwKCXByb2Nlc3NJZBgCIAEoDFIJcHJvY2Vzc0lkEh0KB2FkZHJlc3MYAyABKAxIAFIHYWRkcmVzc4gBARIpCg1jb21taXRtZW50S2V5GAQgASgMSAFSDWNvbW1pdG1lbnRLZXmIAQESNwoUZW5jcnlwdGlvblByaXZhdGVLZXkYBSABKAxIAlIUZW5jcnlwdGlvblByaXZhdGVLZXmIAQESNQoTZW5jcnlwdGlvblB1YmxpY0tleRgGIAEoDEgDUhNlbmNyeXB0aW9uUHVibGljS2V5iAEBEh8KCGtleUluZGV4GAcgASgNSARSCGtleUluZGV4iAEBEhkKBXBvd2VyGAggASgESAVSBXBvd2VyiAEBEiEKCXB1YmxpY0tleRgJIAEoDEgGUglwdWJsaWNLZXmIAQESIQoJcmV2ZWFsS2V5GAogASgMSAdSCXJldmVhbEtleYgBARIUCgVub25jZRgLIAEoDFIFbm9uY2VCCgoIX2FkZHJlc3NCEAoOX2NvbW1pdG1lbnRLZXlCFwoVX2VuY3J5cHRpb25Qcml2YXRlS2V5QhYKFF9lbmNyeXB0aW9uUHVibGljS2V5QgsKCV9rZXlJbmRleEIICgZfcG93ZXJCDAoKX3B1YmxpY0tleUIMCgpfcmV2ZWFsS2V5');
+@$core.Deprecated('Use registerKeyTxDescriptor instead')
+const RegisterKeyTx$json = const {
+  '1': 'RegisterKeyTx',
+  '2': const [
+    const {'1': 'nonce', '3': 1, '4': 1, '5': 12, '10': 'nonce'},
+    const {'1': 'processId', '3': 2, '4': 1, '5': 12, '10': 'processId'},
+    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.Proof', '10': 'proof'},
+    const {'1': 'newKey', '3': 4, '4': 1, '5': 12, '10': 'newKey'},
+    const {'1': 'weight', '3': 5, '4': 1, '5': 12, '9': 0, '10': 'weight', '17': true},
+  ],
+  '8': const [
+    const {'1': '_weight'},
+  ],
+};
+
+/// Descriptor for `RegisterKeyTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List registerKeyTxDescriptor = $convert.base64Decode('Cg1SZWdpc3RlcktleVR4EhQKBW5vbmNlGAEgASgMUgVub25jZRIcCglwcm9jZXNzSWQYAiABKAxSCXByb2Nlc3NJZBIrCgVwcm9vZhgDIAEoCzIVLmR2b3RlLnR5cGVzLnYxLlByb29mUgVwcm9vZhIWCgZuZXdLZXkYBCABKAxSBm5ld0tleRIbCgZ3ZWlnaHQYBSABKAxIAFIGd2VpZ2h0iAEBQgkKB193ZWlnaHQ=');
 @$core.Deprecated('Use processDescriptor instead')
 const Process$json = const {
   '1': 'Process',
@@ -444,11 +463,12 @@ const ProcessMode$json = const {
     const {'1': 'interruptible', '3': 2, '4': 1, '5': 8, '10': 'interruptible'},
     const {'1': 'dynamicCensus', '3': 3, '4': 1, '5': 8, '10': 'dynamicCensus'},
     const {'1': 'encryptedMetaData', '3': 4, '4': 1, '5': 8, '10': 'encryptedMetaData'},
+    const {'1': 'preRegister', '3': 5, '4': 1, '5': 8, '10': 'preRegister'},
   ],
 };
 
 /// Descriptor for `ProcessMode`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List processModeDescriptor = $convert.base64Decode('CgtQcm9jZXNzTW9kZRIcCglhdXRvU3RhcnQYASABKAhSCWF1dG9TdGFydBIkCg1pbnRlcnJ1cHRpYmxlGAIgASgIUg1pbnRlcnJ1cHRpYmxlEiQKDWR5bmFtaWNDZW5zdXMYAyABKAhSDWR5bmFtaWNDZW5zdXMSLAoRZW5jcnlwdGVkTWV0YURhdGEYBCABKAhSEWVuY3J5cHRlZE1ldGFEYXRh');
+final $typed_data.Uint8List processModeDescriptor = $convert.base64Decode('CgtQcm9jZXNzTW9kZRIcCglhdXRvU3RhcnQYASABKAhSCWF1dG9TdGFydBIkCg1pbnRlcnJ1cHRpYmxlGAIgASgIUg1pbnRlcnJ1cHRpYmxlEiQKDWR5bmFtaWNDZW5zdXMYAyABKAhSDWR5bmFtaWNDZW5zdXMSLAoRZW5jcnlwdGVkTWV0YURhdGEYBCABKAhSEWVuY3J5cHRlZE1ldGFEYXRhEiAKC3ByZVJlZ2lzdGVyGAUgASgIUgtwcmVSZWdpc3Rlcg==');
 @$core.Deprecated('Use processVoteOptionsDescriptor instead')
 const ProcessVoteOptions$json = const {
   '1': 'ProcessVoteOptions',
