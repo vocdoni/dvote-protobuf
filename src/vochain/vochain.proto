@@ -7,7 +7,7 @@ option go_package = "go.vocdoni.io/proto/build/go/models";
 message VoteEnvelope {
         bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
         bytes processId = 2;  // The process for which the vote is casted
-        Proof proof = 3;  // One of ProofGraviton, ProofIden3, ProofEthereumStorage, ProofEthereumAccount, or ProofCA
+        Proof proof = 3;  // Franchise proof
         bytes votePackage = 4;   // JSON string of the Vote Package (potentially encrypted), encoded as bytes.
 
         // optional bytes nullifier = 5;
@@ -18,14 +18,14 @@ message VoteEnvelope {
 
 message Census {
         enum Type {
-        	UNKNOWN = 0;
-        	GRAVITON = 1;
-        	IDEN3 = 2;
-        	ETHEREUMSTORAGE = 3;
-        	ETHEREUMACCOUNT = 4;
-        	CA = 5;
-        	ARBO_POSEIDON = 6;
-        	ARBO_BLAKE2B = 7;
+                UNKNOWN = 0;
+                ARBO_BLAKE2B = 1;
+                ARBO_POSEIDON = 2;
+                ETHEREUMSTORAGE = 3;
+                ETHEREUMACCOUNT = 4;
+                CA = 5;
+                GRAVITON = 1001;
+                IDEN3 = 1002;
         }
 }
 
@@ -137,6 +137,7 @@ enum TxType {
 	REMOVE_VALIDATOR = 10;
 	VOTE = 11;
 	SET_PROCESS_RESULTS = 12;
+	REGISTER_VOTER_KEY = 13;
 }
 
 message Tx {
@@ -145,6 +146,7 @@ message Tx {
 		NewProcessTx newProcess = 2;
 		AdminTx admin = 3;
 		SetProcessTx setProcess = 4;
+		RegisterKeyTx registerKey = 5;
 	}
 }
 
@@ -186,6 +188,14 @@ message AdminTx {
 	optional bytes publicKey = 9;
 	optional bytes revealKey = 10;
 	bytes nonce = 11;
+}
+
+message RegisterKeyTx {
+        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+        bytes processId = 2;  // The process for which the vote is casted
+        Proof proof = 3;  // Franchise proof
+        bytes newKey = 4;   // New key to register
+        optional bytes weight = 5;   // Weight to delegate to newKey
 }
 
 message Process {
@@ -278,6 +288,7 @@ message ProcessMode {
 	bool interruptible = 2;
 	bool dynamicCensus = 3;
 	bool encryptedMetaData = 4;
+	bool preRegister = 5;
 }
 
 message ProcessVoteOptions {
