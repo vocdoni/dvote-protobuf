@@ -45,6 +45,25 @@ const ProcessStatus$json = const {
 
 /// Descriptor for `ProcessStatus`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List processStatusDescriptor = $convert.base64Decode('Cg1Qcm9jZXNzU3RhdHVzEhMKD1BST0NFU1NfVU5LTk9XThAAEgkKBVJFQURZEAESCQoFRU5ERUQQAhIMCghDQU5DRUxFRBADEgoKBlBBVVNFRBAEEgsKB1JFU1VMVFMQBQ==');
+@$core.Deprecated('Use sourceNetworkIdDescriptor instead')
+const SourceNetworkId$json = const {
+  '1': 'SourceNetworkId',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
+    const {'1': 'ETH_MAINNET', '2': 1},
+    const {'1': 'ETH_RINKEBY', '2': 2},
+    const {'1': 'ETH_GOERLI', '2': 3},
+    const {'1': 'POA_XDAI', '2': 4},
+    const {'1': 'POA_SOKOL', '2': 5},
+    const {'1': 'POLYGON', '2': 6},
+    const {'1': 'BSC', '2': 7},
+    const {'1': 'ETH_MAINNET_SIGNALING', '2': 8},
+    const {'1': 'ETH_RINKEBY_SIGNALING', '2': 9},
+  ],
+};
+
+/// Descriptor for `SourceNetworkId`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List sourceNetworkIdDescriptor = $convert.base64Decode('Cg9Tb3VyY2VOZXR3b3JrSWQSCwoHVU5LTk9XThAAEg8KC0VUSF9NQUlOTkVUEAESDwoLRVRIX1JJTktFQlkQAhIOCgpFVEhfR09FUkxJEAMSDAoIUE9BX1hEQUkQBBINCglQT0FfU09LT0wQBRILCgdQT0xZR09OEAYSBwoDQlNDEAcSGQoVRVRIX01BSU5ORVRfU0lHTkFMSU5HEAgSGQoVRVRIX1JJTktFQllfU0lHTkFMSU5HEAk=');
 @$core.Deprecated('Use censusOriginDescriptor instead')
 const CensusOrigin$json = const {
   '1': 'CensusOrigin',
@@ -78,6 +97,29 @@ const VoteEnvelope$json = const {
 
 /// Descriptor for `VoteEnvelope`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List voteEnvelopeDescriptor = $convert.base64Decode('CgxWb3RlRW52ZWxvcGUSFAoFbm9uY2UYASABKAxSBW5vbmNlEhwKCXByb2Nlc3NJZBgCIAEoDFIJcHJvY2Vzc0lkEisKBXByb29mGAMgASgLMhUuZHZvdGUudHlwZXMudjEuUHJvb2ZSBXByb29mEiAKC3ZvdGVQYWNrYWdlGAQgASgMUgt2b3RlUGFja2FnZRIcCgludWxsaWZpZXIYBSABKAxSCW51bGxpZmllchIyChRlbmNyeXB0aW9uS2V5SW5kZXhlcxgGIAMoDVIUZW5jcnlwdGlvbktleUluZGV4ZXM=');
+@$core.Deprecated('Use censusDescriptor instead')
+const Census$json = const {
+  '1': 'Census',
+  '4': const [Census_Type$json],
+};
+
+@$core.Deprecated('Use censusDescriptor instead')
+const Census_Type$json = const {
+  '1': 'Type',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
+    const {'1': 'GRAVITON', '2': 1},
+    const {'1': 'IDEN3', '2': 2},
+    const {'1': 'ETHEREUMSTORAGE', '2': 3},
+    const {'1': 'ETHEREUMACCOUNT', '2': 4},
+    const {'1': 'CA', '2': 5},
+    const {'1': 'ARBO_POSEIDON', '2': 6},
+    const {'1': 'ARBO_BLAKE2B', '2': 7},
+  ],
+};
+
+/// Descriptor for `Census`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List censusDescriptor = $convert.base64Decode('CgZDZW5zdXMigwEKBFR5cGUSCwoHVU5LTk9XThAAEgwKCEdSQVZJVE9OEAESCQoFSURFTjMQAhITCg9FVEhFUkVVTVNUT1JBR0UQAxITCg9FVEhFUkVVTUFDQ09VTlQQBBIGCgJDQRAFEhEKDUFSQk9fUE9TRUlET04QBhIQCgxBUkJPX0JMQUtFMkIQBw==');
 @$core.Deprecated('Use proofDescriptor instead')
 const Proof$json = const {
   '1': 'Proof',
@@ -87,6 +129,9 @@ const Proof$json = const {
     const {'1': 'ethereumStorage', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumStorage', '9': 0, '10': 'ethereumStorage'},
     const {'1': 'ethereumAccount', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumAccount', '9': 0, '10': 'ethereumAccount'},
     const {'1': 'ca', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofCA', '9': 0, '10': 'ca'},
+    const {'1': 'arbo', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofArbo', '9': 0, '10': 'arbo'},
+    const {'1': 'zkSnark', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofZkSNARK', '9': 0, '10': 'zkSnark'},
+    const {'1': 'minimeStorage', '3': 8, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofMinime', '9': 0, '10': 'minimeStorage'},
   ],
   '8': const [
     const {'1': 'payload'},
@@ -94,7 +139,7 @@ const Proof$json = const {
 };
 
 /// Descriptor for `Proof`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhQgkKB3BheWxvYWQ=');
+final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhI7CghncmF2aXRvbhgBIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb29mR3Jhdml0b25IAFIIZ3Jhdml0b24SMgoFaWRlbjMYAiABKAsyGi5kdm90ZS50eXBlcy52MS5Qcm9vZklkZW4zSABSBWlkZW4zElAKD2V0aGVyZXVtU3RvcmFnZRgDIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlSABSD2V0aGVyZXVtU3RvcmFnZRJQCg9ldGhlcmV1bUFjY291bnQYBCABKAsyJC5kdm90ZS50eXBlcy52MS5Qcm9vZkV0aGVyZXVtQWNjb3VudEgAUg9ldGhlcmV1bUFjY291bnQSKQoCY2EYBSABKAsyFy5kdm90ZS50eXBlcy52MS5Qcm9vZkNBSABSAmNhEi8KBGFyYm8YBiABKAsyGS5kdm90ZS50eXBlcy52MS5Qcm9vZkFyYm9IAFIEYXJibxI4Cgd6a1NuYXJrGAcgASgLMhwuZHZvdGUudHlwZXMudjEuUHJvb2Zaa1NOQVJLSABSB3prU25hcmsSQwoNbWluaW1lU3RvcmFnZRgIIAEoCzIbLmR2b3RlLnR5cGVzLnYxLlByb29mTWluaW1lSABSDW1pbmltZVN0b3JhZ2VCCQoHcGF5bG9hZA==');
 @$core.Deprecated('Use proofGravitonDescriptor instead')
 const ProofGraviton$json = const {
   '1': 'ProofGraviton',
@@ -115,6 +160,43 @@ const ProofIden3$json = const {
 
 /// Descriptor for `ProofIden3`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List proofIden3Descriptor = $convert.base64Decode('CgpQcm9vZklkZW4zEhoKCHNpYmxpbmdzGAEgASgMUghzaWJsaW5ncw==');
+@$core.Deprecated('Use proofEthereumStorageDescriptor instead')
+const ProofEthereumStorage$json = const {
+  '1': 'ProofEthereumStorage',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 12, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
+    const {'1': 'siblings', '3': 3, '4': 3, '5': 12, '10': 'siblings'},
+  ],
+};
+
+/// Descriptor for `ProofEthereumStorage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofEthereumStorageDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtU3RvcmFnZRIQCgNrZXkYASABKAxSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWUSGgoIc2libGluZ3MYAyADKAxSCHNpYmxpbmdz');
+@$core.Deprecated('Use proofEthereumAccountDescriptor instead')
+const ProofEthereumAccount$json = const {
+  '1': 'ProofEthereumAccount',
+  '2': const [
+    const {'1': 'nonce', '3': 1, '4': 1, '5': 12, '10': 'nonce'},
+    const {'1': 'balance', '3': 2, '4': 1, '5': 12, '10': 'balance'},
+    const {'1': 'storageHash', '3': 3, '4': 1, '5': 12, '10': 'storageHash'},
+    const {'1': 'codeHash', '3': 4, '4': 1, '5': 12, '10': 'codeHash'},
+    const {'1': 'siblings', '3': 5, '4': 3, '5': 12, '10': 'siblings'},
+  ],
+};
+
+/// Descriptor for `ProofEthereumAccount`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofEthereumAccountDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtQWNjb3VudBIUCgVub25jZRgBIAEoDFIFbm9uY2USGAoHYmFsYW5jZRgCIAEoDFIHYmFsYW5jZRIgCgtzdG9yYWdlSGFzaBgDIAEoDFILc3RvcmFnZUhhc2gSGgoIY29kZUhhc2gYBCABKAxSCGNvZGVIYXNoEhoKCHNpYmxpbmdzGAUgAygMUghzaWJsaW5ncw==');
+@$core.Deprecated('Use proofMinimeDescriptor instead')
+const ProofMinime$json = const {
+  '1': 'ProofMinime',
+  '2': const [
+    const {'1': 'proofPrevBlock', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumStorage', '10': 'proofPrevBlock'},
+    const {'1': 'proofNextBlock', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.ProofEthereumStorage', '10': 'proofNextBlock'},
+  ],
+};
+
+/// Descriptor for `ProofMinime`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofMinimeDescriptor = $convert.base64Decode('CgtQcm9vZk1pbmltZRJMCg5wcm9vZlByZXZCbG9jaxgBIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlUg5wcm9vZlByZXZCbG9jaxJMCg5wcm9vZk5leHRCbG9jaxgCIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlByb29mRXRoZXJldW1TdG9yYWdlUg5wcm9vZk5leHRCbG9jaw==');
 @$core.Deprecated('Use proofCADescriptor instead')
 const ProofCA$json = const {
   '1': 'ProofCA',
@@ -151,32 +233,50 @@ const CAbundle$json = const {
 
 /// Descriptor for `CAbundle`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cAbundleDescriptor = $convert.base64Decode('CghDQWJ1bmRsZRIcCglwcm9jZXNzSWQYASABKAxSCXByb2Nlc3NJZBIYCgdhZGRyZXNzGAIgASgMUgdhZGRyZXNz');
-@$core.Deprecated('Use proofEthereumStorageDescriptor instead')
-const ProofEthereumStorage$json = const {
-  '1': 'ProofEthereumStorage',
+@$core.Deprecated('Use proofArboDescriptor instead')
+const ProofArbo$json = const {
+  '1': 'ProofArbo',
   '2': const [
-    const {'1': 'key', '3': 1, '4': 1, '5': 12, '10': 'key'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
-    const {'1': 'siblings', '3': 3, '4': 3, '5': 12, '10': 'siblings'},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofArbo.Type', '10': 'type'},
+    const {'1': 'siblings', '3': 2, '4': 1, '5': 12, '10': 'siblings'},
+  ],
+  '4': const [ProofArbo_Type$json],
+};
+
+@$core.Deprecated('Use proofArboDescriptor instead')
+const ProofArbo_Type$json = const {
+  '1': 'Type',
+  '2': const [
+    const {'1': 'BLAKE2B', '2': 0},
+    const {'1': 'POSEIDON', '2': 1},
   ],
 };
 
-/// Descriptor for `ProofEthereumStorage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofEthereumStorageDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtU3RvcmFnZRIQCgNrZXkYASABKAxSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWUSGgoIc2libGluZ3MYAyADKAxSCHNpYmxpbmdz');
-@$core.Deprecated('Use proofEthereumAccountDescriptor instead')
-const ProofEthereumAccount$json = const {
-  '1': 'ProofEthereumAccount',
+/// Descriptor for `ProofArbo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofArboDescriptor = $convert.base64Decode('CglQcm9vZkFyYm8SMgoEdHlwZRgBIAEoDjIeLmR2b3RlLnR5cGVzLnYxLlByb29mQXJiby5UeXBlUgR0eXBlEhoKCHNpYmxpbmdzGAIgASgMUghzaWJsaW5ncyIhCgRUeXBlEgsKB0JMQUtFMkIQABIMCghQT1NFSURPThAB');
+@$core.Deprecated('Use proofZkSNARKDescriptor instead')
+const ProofZkSNARK$json = const {
+  '1': 'ProofZkSNARK',
   '2': const [
-    const {'1': 'nonce', '3': 1, '4': 1, '5': 12, '10': 'nonce'},
-    const {'1': 'balance', '3': 2, '4': 1, '5': 12, '10': 'balance'},
-    const {'1': 'storageHash', '3': 3, '4': 1, '5': 12, '10': 'storageHash'},
-    const {'1': 'codeHash', '3': 4, '4': 1, '5': 12, '10': 'codeHash'},
-    const {'1': 'siblings', '3': 5, '4': 3, '5': 12, '10': 'siblings'},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofZkSNARK.Type', '10': 'type'},
+    const {'1': 'a', '3': 2, '4': 3, '5': 9, '10': 'a'},
+    const {'1': 'b', '3': 3, '4': 3, '5': 9, '10': 'b'},
+    const {'1': 'c', '3': 4, '4': 3, '5': 9, '10': 'c'},
+    const {'1': 'publicInputs', '3': 5, '4': 3, '5': 9, '10': 'publicInputs'},
+  ],
+  '4': const [ProofZkSNARK_Type$json],
+};
+
+@$core.Deprecated('Use proofZkSNARKDescriptor instead')
+const ProofZkSNARK_Type$json = const {
+  '1': 'Type',
+  '2': const [
+    const {'1': 'UNKNOWN', '2': 0},
   ],
 };
 
-/// Descriptor for `ProofEthereumAccount`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofEthereumAccountDescriptor = $convert.base64Decode('ChRQcm9vZkV0aGVyZXVtQWNjb3VudBIUCgVub25jZRgBIAEoDFIFbm9uY2USGAoHYmFsYW5jZRgCIAEoDFIHYmFsYW5jZRIgCgtzdG9yYWdlSGFzaBgDIAEoDFILc3RvcmFnZUhhc2gSGgoIY29kZUhhc2gYBCABKAxSCGNvZGVIYXNoEhoKCHNpYmxpbmdzGAUgAygMUghzaWJsaW5ncw==');
+/// Descriptor for `ProofZkSNARK`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List proofZkSNARKDescriptor = $convert.base64Decode('CgxQcm9vZlprU05BUksSNQoEdHlwZRgBIAEoDjIhLmR2b3RlLnR5cGVzLnYxLlByb29mWmtTTkFSSy5UeXBlUgR0eXBlEgwKAWEYAiADKAlSAWESDAoBYhgDIAMoCVIBYhIMCgFjGAQgAygJUgFjEiIKDHB1YmxpY0lucHV0cxgFIAMoCVIMcHVibGljSW5wdXRzIhMKBFR5cGUSCwoHVU5LTk9XThAA');
 @$core.Deprecated('Use txDescriptor instead')
 const Tx$json = const {
   '1': 'Tx',
@@ -305,6 +405,7 @@ const Process$json = const {
     const {'1': 'sourceBlockHeight', '3': 24, '4': 1, '5': 4, '9': 6, '10': 'sourceBlockHeight', '17': true},
     const {'1': 'owner', '3': 25, '4': 1, '5': 12, '9': 7, '10': 'owner', '17': true},
     const {'1': 'metadata', '3': 26, '4': 1, '5': 9, '9': 8, '10': 'metadata', '17': true},
+    const {'1': 'sourceNetworkId', '3': 27, '4': 1, '5': 14, '6': '.dvote.types.v1.SourceNetworkId', '10': 'sourceNetworkId'},
   ],
   '8': const [
     const {'1': '_censusURI'},
@@ -320,7 +421,7 @@ const Process$json = const {
 };
 
 /// Descriptor for `Process`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List processDescriptor = $convert.base64Decode('CgdQcm9jZXNzEhwKCXByb2Nlc3NJZBgBIAEoDFIJcHJvY2Vzc0lkEhoKCGVudGl0eUlkGAIgASgMUghlbnRpdHlJZBIeCgpzdGFydEJsb2NrGAMgASgNUgpzdGFydEJsb2NrEh4KCmJsb2NrQ291bnQYBCABKA1SCmJsb2NrQ291bnQSHgoKY2Vuc3VzUm9vdBgFIAEoDFIKY2Vuc3VzUm9vdBIhCgljZW5zdXNVUkkYBiABKAlIAFIJY2Vuc3VzVVJJiAEBEiYKDmNvbW1pdG1lbnRLZXlzGAcgAygJUg5jb21taXRtZW50S2V5cxI0ChVlbmNyeXB0aW9uUHJpdmF0ZUtleXMYCCADKAlSFWVuY3J5cHRpb25Qcml2YXRlS2V5cxIyChRlbmNyeXB0aW9uUHVibGljS2V5cxgJIAMoCVIUZW5jcnlwdGlvblB1YmxpY0tleXMSHgoKcmV2ZWFsS2V5cxgKIAMoCVIKcmV2ZWFsS2V5cxIfCghrZXlJbmRleBgLIAEoDUgBUghrZXlJbmRleIgBARI1CgZzdGF0dXMYDCABKA4yHS5kdm90ZS50eXBlcy52MS5Qcm9jZXNzU3RhdHVzUgZzdGF0dXMSLQoPcGFyYW1zU2lnbmF0dXJlGA0gASgMSAJSD3BhcmFtc1NpZ25hdHVyZYgBARIcCgluYW1lc3BhY2UYDiABKA1SCW5hbWVzcGFjZRJACgxlbnZlbG9wZVR5cGUYDyABKAsyHC5kdm90ZS50eXBlcy52MS5FbnZlbG9wZVR5cGVSDGVudmVsb3BlVHlwZRIvCgRtb2RlGBAgASgLMhsuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01vZGVSBG1vZGUSKQoNcXVlc3Rpb25JbmRleBgRIAEoDUgDUg1xdWVzdGlvbkluZGV4iAEBEikKDXF1ZXN0aW9uQ291bnQYEiABKA1IBFINcXVlc3Rpb25Db3VudIgBARJECgt2b3RlT3B0aW9ucxgTIAEoCzIiLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NWb3RlT3B0aW9uc1ILdm90ZU9wdGlvbnMSQAoMY2Vuc3VzT3JpZ2luGBQgASgOMhwuZHZvdGUudHlwZXMudjEuQ2Vuc3VzT3JpZ2luUgxjZW5zdXNPcmlnaW4SNwoHcmVzdWx0cxgVIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NSZXN1bHRSB3Jlc3VsdHMSLAoRcmVzdWx0c1NpZ25hdHVyZXMYFiADKAxSEXJlc3VsdHNTaWduYXR1cmVzEicKDGV0aEluZGV4U2xvdBgXIAEoDUgFUgxldGhJbmRleFNsb3SIAQESMQoRc291cmNlQmxvY2tIZWlnaHQYGCABKARIBlIRc291cmNlQmxvY2tIZWlnaHSIAQESGQoFb3duZXIYGSABKAxIB1IFb3duZXKIAQESHwoIbWV0YWRhdGEYGiABKAlICFIIbWV0YWRhdGGIAQFCDAoKX2NlbnN1c1VSSUILCglfa2V5SW5kZXhCEgoQX3BhcmFtc1NpZ25hdHVyZUIQCg5fcXVlc3Rpb25JbmRleEIQCg5fcXVlc3Rpb25Db3VudEIPCg1fZXRoSW5kZXhTbG90QhQKEl9zb3VyY2VCbG9ja0hlaWdodEIICgZfb3duZXJCCwoJX21ldGFkYXRh');
+final $typed_data.Uint8List processDescriptor = $convert.base64Decode('CgdQcm9jZXNzEhwKCXByb2Nlc3NJZBgBIAEoDFIJcHJvY2Vzc0lkEhoKCGVudGl0eUlkGAIgASgMUghlbnRpdHlJZBIeCgpzdGFydEJsb2NrGAMgASgNUgpzdGFydEJsb2NrEh4KCmJsb2NrQ291bnQYBCABKA1SCmJsb2NrQ291bnQSHgoKY2Vuc3VzUm9vdBgFIAEoDFIKY2Vuc3VzUm9vdBIhCgljZW5zdXNVUkkYBiABKAlIAFIJY2Vuc3VzVVJJiAEBEiYKDmNvbW1pdG1lbnRLZXlzGAcgAygJUg5jb21taXRtZW50S2V5cxI0ChVlbmNyeXB0aW9uUHJpdmF0ZUtleXMYCCADKAlSFWVuY3J5cHRpb25Qcml2YXRlS2V5cxIyChRlbmNyeXB0aW9uUHVibGljS2V5cxgJIAMoCVIUZW5jcnlwdGlvblB1YmxpY0tleXMSHgoKcmV2ZWFsS2V5cxgKIAMoCVIKcmV2ZWFsS2V5cxIfCghrZXlJbmRleBgLIAEoDUgBUghrZXlJbmRleIgBARI1CgZzdGF0dXMYDCABKA4yHS5kdm90ZS50eXBlcy52MS5Qcm9jZXNzU3RhdHVzUgZzdGF0dXMSLQoPcGFyYW1zU2lnbmF0dXJlGA0gASgMSAJSD3BhcmFtc1NpZ25hdHVyZYgBARIcCgluYW1lc3BhY2UYDiABKA1SCW5hbWVzcGFjZRJACgxlbnZlbG9wZVR5cGUYDyABKAsyHC5kdm90ZS50eXBlcy52MS5FbnZlbG9wZVR5cGVSDGVudmVsb3BlVHlwZRIvCgRtb2RlGBAgASgLMhsuZHZvdGUudHlwZXMudjEuUHJvY2Vzc01vZGVSBG1vZGUSKQoNcXVlc3Rpb25JbmRleBgRIAEoDUgDUg1xdWVzdGlvbkluZGV4iAEBEikKDXF1ZXN0aW9uQ291bnQYEiABKA1IBFINcXVlc3Rpb25Db3VudIgBARJECgt2b3RlT3B0aW9ucxgTIAEoCzIiLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NWb3RlT3B0aW9uc1ILdm90ZU9wdGlvbnMSQAoMY2Vuc3VzT3JpZ2luGBQgASgOMhwuZHZvdGUudHlwZXMudjEuQ2Vuc3VzT3JpZ2luUgxjZW5zdXNPcmlnaW4SNwoHcmVzdWx0cxgVIAEoCzIdLmR2b3RlLnR5cGVzLnYxLlByb2Nlc3NSZXN1bHRSB3Jlc3VsdHMSLAoRcmVzdWx0c1NpZ25hdHVyZXMYFiADKAxSEXJlc3VsdHNTaWduYXR1cmVzEicKDGV0aEluZGV4U2xvdBgXIAEoDUgFUgxldGhJbmRleFNsb3SIAQESMQoRc291cmNlQmxvY2tIZWlnaHQYGCABKARIBlIRc291cmNlQmxvY2tIZWlnaHSIAQESGQoFb3duZXIYGSABKAxIB1IFb3duZXKIAQESHwoIbWV0YWRhdGEYGiABKAlICFIIbWV0YWRhdGGIAQESSQoPc291cmNlTmV0d29ya0lkGBsgASgOMh8uZHZvdGUudHlwZXMudjEuU291cmNlTmV0d29ya0lkUg9zb3VyY2VOZXR3b3JrSWRCDAoKX2NlbnN1c1VSSUILCglfa2V5SW5kZXhCEgoQX3BhcmFtc1NpZ25hdHVyZUIQCg5fcXVlc3Rpb25JbmRleEIQCg5fcXVlc3Rpb25Db3VudEIPCg1fZXRoSW5kZXhTbG90QhQKEl9zb3VyY2VCbG9ja0hlaWdodEIICgZfb3duZXJCCwoJX21ldGFkYXRh');
 @$core.Deprecated('Use envelopeTypeDescriptor instead')
 const EnvelopeType$json = const {
   '1': 'EnvelopeType',

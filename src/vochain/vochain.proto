@@ -16,14 +16,6 @@ message VoteEnvelope {
         repeated uint32 encryptionKeyIndexes = 6; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 }
 
-message RegisterKeyTx {
-        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
-        bytes processId = 2;  // The process for which the vote is casted
-        Proof proof = 3;  // Franchise proof
-        bytes newKey = 4;   // New key to register
-        optional bytes weight = 5;   // Weight to delegate to newKey
-}
-
 message Census {
         enum Type {
                 UNKNOWN = 0;
@@ -51,6 +43,10 @@ message Proof {
                 ProofCA ca = 5;
                 // Proof used for census using arbo
                 ProofArbo arbo = 6;
+                // zkSnark proof
+                ProofZkSNARK zkSnark = 7;
+                // Proof used in Minime token based census
+                ProofMinime minimeStorage = 8;
          }
 }
 
@@ -74,6 +70,11 @@ message ProofEthereumAccount {
         bytes storageHash = 3;
         bytes codeHash = 4;
         repeated bytes siblings = 5;
+}
+
+message ProofMinime {
+	ProofEthereumStorage proofPrevBlock = 1;
+	ProofEthereumStorage proofNextBlock = 2;
 }
 
 message ProofCA {
@@ -102,6 +103,24 @@ message ProofArbo {
         }
         Type type = 1;
         bytes siblings = 2;
+}
+
+// Groth16 zkSNARK proof + public inputs
+message ProofZkSNARK {
+        // Type determines which to circuit corresponds the zkProof
+        enum Type {
+                UNKNOWN = 0;
+        }
+        Type type = 1;
+
+        // a represents a G1 point
+        repeated string a = 2;
+        // b represents a G2 point, represented by an array of arrays: []string => [2][3]bigint)
+        // [u, v, w, x, y, z] => [[u, v, w], [x, y, z]]
+        repeated string b = 3;
+        // c represents a G1 point
+        repeated string c = 4;
+        repeated string publicInputs = 5;
 }
 
 enum TxType {
@@ -169,6 +188,14 @@ message AdminTx {
 	optional bytes publicKey = 9;
 	optional bytes revealKey = 10;
 	bytes nonce = 11;
+}
+
+message RegisterKeyTx {
+        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+        bytes processId = 2;  // The process for which the vote is casted
+        Proof proof = 3;  // Franchise proof
+        bytes newKey = 4;   // New key to register
+        optional bytes weight = 5;   // Weight to delegate to newKey
 }
 
 message Process {

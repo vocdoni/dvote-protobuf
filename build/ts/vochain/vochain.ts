@@ -158,6 +158,86 @@ export function processStatusToJSON(object: ProcessStatus): string {
   }
 }
 
+export enum SourceNetworkId {
+  UNKNOWN = 0,
+  ETH_MAINNET = 1,
+  ETH_RINKEBY = 2,
+  ETH_GOERLI = 3,
+  POA_XDAI = 4,
+  POA_SOKOL = 5,
+  POLYGON = 6,
+  BSC = 7,
+  ETH_MAINNET_SIGNALING = 8,
+  ETH_RINKEBY_SIGNALING = 9,
+  UNRECOGNIZED = -1,
+}
+
+export function sourceNetworkIdFromJSON(object: any): SourceNetworkId {
+  switch (object) {
+    case 0:
+    case "UNKNOWN":
+      return SourceNetworkId.UNKNOWN;
+    case 1:
+    case "ETH_MAINNET":
+      return SourceNetworkId.ETH_MAINNET;
+    case 2:
+    case "ETH_RINKEBY":
+      return SourceNetworkId.ETH_RINKEBY;
+    case 3:
+    case "ETH_GOERLI":
+      return SourceNetworkId.ETH_GOERLI;
+    case 4:
+    case "POA_XDAI":
+      return SourceNetworkId.POA_XDAI;
+    case 5:
+    case "POA_SOKOL":
+      return SourceNetworkId.POA_SOKOL;
+    case 6:
+    case "POLYGON":
+      return SourceNetworkId.POLYGON;
+    case 7:
+    case "BSC":
+      return SourceNetworkId.BSC;
+    case 8:
+    case "ETH_MAINNET_SIGNALING":
+      return SourceNetworkId.ETH_MAINNET_SIGNALING;
+    case 9:
+    case "ETH_RINKEBY_SIGNALING":
+      return SourceNetworkId.ETH_RINKEBY_SIGNALING;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SourceNetworkId.UNRECOGNIZED;
+  }
+}
+
+export function sourceNetworkIdToJSON(object: SourceNetworkId): string {
+  switch (object) {
+    case SourceNetworkId.UNKNOWN:
+      return "UNKNOWN";
+    case SourceNetworkId.ETH_MAINNET:
+      return "ETH_MAINNET";
+    case SourceNetworkId.ETH_RINKEBY:
+      return "ETH_RINKEBY";
+    case SourceNetworkId.ETH_GOERLI:
+      return "ETH_GOERLI";
+    case SourceNetworkId.POA_XDAI:
+      return "POA_XDAI";
+    case SourceNetworkId.POA_SOKOL:
+      return "POA_SOKOL";
+    case SourceNetworkId.POLYGON:
+      return "POLYGON";
+    case SourceNetworkId.BSC:
+      return "BSC";
+    case SourceNetworkId.ETH_MAINNET_SIGNALING:
+      return "ETH_MAINNET_SIGNALING";
+    case SourceNetworkId.ETH_RINKEBY_SIGNALING:
+      return "ETH_RINKEBY_SIGNALING";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export enum CensusOrigin {
   CENSUS_UNKNOWN = 0,
   OFF_CHAIN_TREE = 1,
@@ -247,13 +327,86 @@ export interface VoteEnvelope {
   encryptionKeyIndexes: number[];
 }
 
+export interface Census {}
+
+export enum Census_Type {
+  UNKNOWN = 0,
+  GRAVITON = 1,
+  IDEN3 = 2,
+  ETHEREUMSTORAGE = 3,
+  ETHEREUMACCOUNT = 4,
+  CA = 5,
+  ARBO_POSEIDON = 6,
+  ARBO_BLAKE2B = 7,
+  UNRECOGNIZED = -1,
+}
+
+export function census_TypeFromJSON(object: any): Census_Type {
+  switch (object) {
+    case 0:
+    case "UNKNOWN":
+      return Census_Type.UNKNOWN;
+    case 1:
+    case "GRAVITON":
+      return Census_Type.GRAVITON;
+    case 2:
+    case "IDEN3":
+      return Census_Type.IDEN3;
+    case 3:
+    case "ETHEREUMSTORAGE":
+      return Census_Type.ETHEREUMSTORAGE;
+    case 4:
+    case "ETHEREUMACCOUNT":
+      return Census_Type.ETHEREUMACCOUNT;
+    case 5:
+    case "CA":
+      return Census_Type.CA;
+    case 6:
+    case "ARBO_POSEIDON":
+      return Census_Type.ARBO_POSEIDON;
+    case 7:
+    case "ARBO_BLAKE2B":
+      return Census_Type.ARBO_BLAKE2B;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return Census_Type.UNRECOGNIZED;
+  }
+}
+
+export function census_TypeToJSON(object: Census_Type): string {
+  switch (object) {
+    case Census_Type.UNKNOWN:
+      return "UNKNOWN";
+    case Census_Type.GRAVITON:
+      return "GRAVITON";
+    case Census_Type.IDEN3:
+      return "IDEN3";
+    case Census_Type.ETHEREUMSTORAGE:
+      return "ETHEREUMSTORAGE";
+    case Census_Type.ETHEREUMACCOUNT:
+      return "ETHEREUMACCOUNT";
+    case Census_Type.CA:
+      return "CA";
+    case Census_Type.ARBO_POSEIDON:
+      return "ARBO_POSEIDON";
+    case Census_Type.ARBO_BLAKE2B:
+      return "ARBO_BLAKE2B";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export interface Proof {
   payload?:
     | { $case: "graviton"; graviton: ProofGraviton }
     | { $case: "iden3"; iden3: ProofIden3 }
     | { $case: "ethereumStorage"; ethereumStorage: ProofEthereumStorage }
     | { $case: "ethereumAccount"; ethereumAccount: ProofEthereumAccount }
-    | { $case: "ca"; ca: ProofCA };
+    | { $case: "ca"; ca: ProofCA }
+    | { $case: "arbo"; arbo: ProofArbo }
+    | { $case: "zkSnark"; zkSnark: ProofZkSNARK }
+    | { $case: "minimeStorage"; minimeStorage: ProofMinime };
 }
 
 export interface ProofGraviton {
@@ -262,6 +415,26 @@ export interface ProofGraviton {
 
 export interface ProofIden3 {
   siblings: Uint8Array;
+}
+
+export interface ProofEthereumStorage {
+  key: Uint8Array;
+  value: Uint8Array;
+  siblings: Uint8Array[];
+}
+
+export interface ProofEthereumAccount {
+  nonce: Uint8Array;
+  /** Big Int encoded as bytes */
+  balance: Uint8Array;
+  storageHash: Uint8Array;
+  codeHash: Uint8Array;
+  siblings: Uint8Array[];
+}
+
+export interface ProofMinime {
+  proofPrevBlock: ProofEthereumStorage | undefined;
+  proofNextBlock: ProofEthereumStorage | undefined;
 }
 
 export interface ProofCA {
@@ -325,19 +498,83 @@ export interface CAbundle {
   address: Uint8Array;
 }
 
-export interface ProofEthereumStorage {
-  key: Uint8Array;
-  value: Uint8Array;
-  siblings: Uint8Array[];
+export interface ProofArbo {
+  type: ProofArbo_Type;
+  siblings: Uint8Array;
 }
 
-export interface ProofEthereumAccount {
-  nonce: Uint8Array;
-  /** Big Int encoded as bytes */
-  balance: Uint8Array;
-  storageHash: Uint8Array;
-  codeHash: Uint8Array;
-  siblings: Uint8Array[];
+export enum ProofArbo_Type {
+  BLAKE2B = 0,
+  POSEIDON = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function proofArbo_TypeFromJSON(object: any): ProofArbo_Type {
+  switch (object) {
+    case 0:
+    case "BLAKE2B":
+      return ProofArbo_Type.BLAKE2B;
+    case 1:
+    case "POSEIDON":
+      return ProofArbo_Type.POSEIDON;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ProofArbo_Type.UNRECOGNIZED;
+  }
+}
+
+export function proofArbo_TypeToJSON(object: ProofArbo_Type): string {
+  switch (object) {
+    case ProofArbo_Type.BLAKE2B:
+      return "BLAKE2B";
+    case ProofArbo_Type.POSEIDON:
+      return "POSEIDON";
+    default:
+      return "UNKNOWN";
+  }
+}
+
+/** Groth16 zkSNARK proof + public inputs */
+export interface ProofZkSNARK {
+  type: ProofZkSNARK_Type;
+  /** a represents a G1 point */
+  a: string[];
+  /**
+   * b represents a G2 point, represented by an array of arrays: []string => [2][3]bigint)
+   * [u, v, w, x, y, z] => [[u, v, w], [x, y, z]]
+   */
+  b: string[];
+  /** c represents a G1 point */
+  c: string[];
+  publicInputs: string[];
+}
+
+/** Type determines which to circuit corresponds the zkProof */
+export enum ProofZkSNARK_Type {
+  UNKNOWN = 0,
+  UNRECOGNIZED = -1,
+}
+
+export function proofZkSNARK_TypeFromJSON(object: any): ProofZkSNARK_Type {
+  switch (object) {
+    case 0:
+    case "UNKNOWN":
+      return ProofZkSNARK_Type.UNKNOWN;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ProofZkSNARK_Type.UNRECOGNIZED;
+  }
+}
+
+export function proofZkSNARK_TypeToJSON(object: ProofZkSNARK_Type): string {
+  switch (object) {
+    case ProofZkSNARK_Type.UNKNOWN:
+      return "UNKNOWN";
+    default:
+      return "UNKNOWN";
+  }
 }
 
 export interface Tx {
@@ -426,6 +663,8 @@ export interface Process {
   owner?: Uint8Array | undefined;
   /** Metadata is the content hashed URI of the JSON meta data (See Data Origins) */
   metadata?: string | undefined;
+  /** SourceNetworkId is the identifier of the network origin (where the process have been created) */
+  sourceNetworkId: SourceNetworkId;
 }
 
 export interface EnvelopeType {
@@ -687,6 +926,44 @@ export const VoteEnvelope = {
   },
 };
 
+const baseCensus: object = {};
+
+export const Census = {
+  encode(_: Census, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): Census {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseCensus } as Census;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): Census {
+    const message = { ...baseCensus } as Census;
+    return message;
+  },
+
+  toJSON(_: Census): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<Census>): Census {
+    const message = { ...baseCensus } as Census;
+    return message;
+  },
+};
+
 const baseProof: object = {};
 
 export const Proof = {
@@ -717,6 +994,21 @@ export const Proof = {
     }
     if (message.payload?.$case === "ca") {
       ProofCA.encode(message.payload.ca, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.payload?.$case === "arbo") {
+      ProofArbo.encode(message.payload.arbo, writer.uint32(50).fork()).ldelim();
+    }
+    if (message.payload?.$case === "zkSnark") {
+      ProofZkSNARK.encode(
+        message.payload.zkSnark,
+        writer.uint32(58).fork()
+      ).ldelim();
+    }
+    if (message.payload?.$case === "minimeStorage") {
+      ProofMinime.encode(
+        message.payload.minimeStorage,
+        writer.uint32(66).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -764,6 +1056,24 @@ export const Proof = {
             ca: ProofCA.decode(reader, reader.uint32()),
           };
           break;
+        case 6:
+          message.payload = {
+            $case: "arbo",
+            arbo: ProofArbo.decode(reader, reader.uint32()),
+          };
+          break;
+        case 7:
+          message.payload = {
+            $case: "zkSnark",
+            zkSnark: ProofZkSNARK.decode(reader, reader.uint32()),
+          };
+          break;
+        case 8:
+          message.payload = {
+            $case: "minimeStorage",
+            minimeStorage: ProofMinime.decode(reader, reader.uint32()),
+          };
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -807,6 +1117,24 @@ export const Proof = {
     if (object.ca !== undefined && object.ca !== null) {
       message.payload = { $case: "ca", ca: ProofCA.fromJSON(object.ca) };
     }
+    if (object.arbo !== undefined && object.arbo !== null) {
+      message.payload = {
+        $case: "arbo",
+        arbo: ProofArbo.fromJSON(object.arbo),
+      };
+    }
+    if (object.zkSnark !== undefined && object.zkSnark !== null) {
+      message.payload = {
+        $case: "zkSnark",
+        zkSnark: ProofZkSNARK.fromJSON(object.zkSnark),
+      };
+    }
+    if (object.minimeStorage !== undefined && object.minimeStorage !== null) {
+      message.payload = {
+        $case: "minimeStorage",
+        minimeStorage: ProofMinime.fromJSON(object.minimeStorage),
+      };
+    }
     return message;
   },
 
@@ -831,6 +1159,18 @@ export const Proof = {
     message.payload?.$case === "ca" &&
       (obj.ca = message.payload?.ca
         ? ProofCA.toJSON(message.payload?.ca)
+        : undefined);
+    message.payload?.$case === "arbo" &&
+      (obj.arbo = message.payload?.arbo
+        ? ProofArbo.toJSON(message.payload?.arbo)
+        : undefined);
+    message.payload?.$case === "zkSnark" &&
+      (obj.zkSnark = message.payload?.zkSnark
+        ? ProofZkSNARK.toJSON(message.payload?.zkSnark)
+        : undefined);
+    message.payload?.$case === "minimeStorage" &&
+      (obj.minimeStorage = message.payload?.minimeStorage
+        ? ProofMinime.toJSON(message.payload?.minimeStorage)
         : undefined);
     return obj;
   },
@@ -889,6 +1229,36 @@ export const Proof = {
       message.payload = {
         $case: "ca",
         ca: ProofCA.fromPartial(object.payload.ca),
+      };
+    }
+    if (
+      object.payload?.$case === "arbo" &&
+      object.payload?.arbo !== undefined &&
+      object.payload?.arbo !== null
+    ) {
+      message.payload = {
+        $case: "arbo",
+        arbo: ProofArbo.fromPartial(object.payload.arbo),
+      };
+    }
+    if (
+      object.payload?.$case === "zkSnark" &&
+      object.payload?.zkSnark !== undefined &&
+      object.payload?.zkSnark !== null
+    ) {
+      message.payload = {
+        $case: "zkSnark",
+        zkSnark: ProofZkSNARK.fromPartial(object.payload.zkSnark),
+      };
+    }
+    if (
+      object.payload?.$case === "minimeStorage" &&
+      object.payload?.minimeStorage !== undefined &&
+      object.payload?.minimeStorage !== null
+    ) {
+      message.payload = {
+        $case: "minimeStorage",
+        minimeStorage: ProofMinime.fromPartial(object.payload.minimeStorage),
       };
     }
     return message;
@@ -1002,165 +1372,6 @@ export const ProofIden3 = {
     const message = { ...baseProofIden3 } as ProofIden3;
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
-    }
-    return message;
-  },
-};
-
-const baseProofCA: object = { type: 0 };
-
-export const ProofCA = {
-  encode(message: ProofCA, writer: Writer = Writer.create()): Writer {
-    if (message.type !== 0) {
-      writer.uint32(8).int32(message.type);
-    }
-    if (message.bundle !== undefined) {
-      CAbundle.encode(message.bundle, writer.uint32(18).fork()).ldelim();
-    }
-    if (message.signature.length !== 0) {
-      writer.uint32(26).bytes(message.signature);
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): ProofCA {
-    const reader = input instanceof Reader ? input : new Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofCA } as ProofCA;
-    message.signature = new Uint8Array();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.type = reader.int32() as any;
-          break;
-        case 2:
-          message.bundle = CAbundle.decode(reader, reader.uint32());
-          break;
-        case 3:
-          message.signature = reader.bytes();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ProofCA {
-    const message = { ...baseProofCA } as ProofCA;
-    message.signature = new Uint8Array();
-    if (object.type !== undefined && object.type !== null) {
-      message.type = proofCA_TypeFromJSON(object.type);
-    }
-    if (object.bundle !== undefined && object.bundle !== null) {
-      message.bundle = CAbundle.fromJSON(object.bundle);
-    }
-    if (object.signature !== undefined && object.signature !== null) {
-      message.signature = bytesFromBase64(object.signature);
-    }
-    return message;
-  },
-
-  toJSON(message: ProofCA): unknown {
-    const obj: any = {};
-    message.type !== undefined && (obj.type = proofCA_TypeToJSON(message.type));
-    message.bundle !== undefined &&
-      (obj.bundle = message.bundle
-        ? CAbundle.toJSON(message.bundle)
-        : undefined);
-    message.signature !== undefined &&
-      (obj.signature = base64FromBytes(
-        message.signature !== undefined ? message.signature : new Uint8Array()
-      ));
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<ProofCA>): ProofCA {
-    const message = { ...baseProofCA } as ProofCA;
-    if (object.type !== undefined && object.type !== null) {
-      message.type = object.type;
-    }
-    if (object.bundle !== undefined && object.bundle !== null) {
-      message.bundle = CAbundle.fromPartial(object.bundle);
-    }
-    if (object.signature !== undefined && object.signature !== null) {
-      message.signature = object.signature;
-    }
-    return message;
-  },
-};
-
-const baseCAbundle: object = {};
-
-export const CAbundle = {
-  encode(message: CAbundle, writer: Writer = Writer.create()): Writer {
-    if (message.processId.length !== 0) {
-      writer.uint32(10).bytes(message.processId);
-    }
-    if (message.address.length !== 0) {
-      writer.uint32(18).bytes(message.address);
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): CAbundle {
-    const reader = input instanceof Reader ? input : new Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCAbundle } as CAbundle;
-    message.processId = new Uint8Array();
-    message.address = new Uint8Array();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.processId = reader.bytes();
-          break;
-        case 2:
-          message.address = reader.bytes();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): CAbundle {
-    const message = { ...baseCAbundle } as CAbundle;
-    message.processId = new Uint8Array();
-    message.address = new Uint8Array();
-    if (object.processId !== undefined && object.processId !== null) {
-      message.processId = bytesFromBase64(object.processId);
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = bytesFromBase64(object.address);
-    }
-    return message;
-  },
-
-  toJSON(message: CAbundle): unknown {
-    const obj: any = {};
-    message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
-    message.address !== undefined &&
-      (obj.address = base64FromBytes(
-        message.address !== undefined ? message.address : new Uint8Array()
-      ));
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<CAbundle>): CAbundle {
-    const message = { ...baseCAbundle } as CAbundle;
-    if (object.processId !== undefined && object.processId !== null) {
-      message.processId = object.processId;
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
     }
     return message;
   },
@@ -1404,6 +1615,479 @@ export const ProofEthereumAccount = {
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
         message.siblings.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseProofMinime: object = {};
+
+export const ProofMinime = {
+  encode(message: ProofMinime, writer: Writer = Writer.create()): Writer {
+    if (message.proofPrevBlock !== undefined) {
+      ProofEthereumStorage.encode(
+        message.proofPrevBlock,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.proofNextBlock !== undefined) {
+      ProofEthereumStorage.encode(
+        message.proofNextBlock,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ProofMinime {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseProofMinime } as ProofMinime;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.proofPrevBlock = ProofEthereumStorage.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.proofNextBlock = ProofEthereumStorage.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProofMinime {
+    const message = { ...baseProofMinime } as ProofMinime;
+    if (object.proofPrevBlock !== undefined && object.proofPrevBlock !== null) {
+      message.proofPrevBlock = ProofEthereumStorage.fromJSON(
+        object.proofPrevBlock
+      );
+    }
+    if (object.proofNextBlock !== undefined && object.proofNextBlock !== null) {
+      message.proofNextBlock = ProofEthereumStorage.fromJSON(
+        object.proofNextBlock
+      );
+    }
+    return message;
+  },
+
+  toJSON(message: ProofMinime): unknown {
+    const obj: any = {};
+    message.proofPrevBlock !== undefined &&
+      (obj.proofPrevBlock = message.proofPrevBlock
+        ? ProofEthereumStorage.toJSON(message.proofPrevBlock)
+        : undefined);
+    message.proofNextBlock !== undefined &&
+      (obj.proofNextBlock = message.proofNextBlock
+        ? ProofEthereumStorage.toJSON(message.proofNextBlock)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ProofMinime>): ProofMinime {
+    const message = { ...baseProofMinime } as ProofMinime;
+    if (object.proofPrevBlock !== undefined && object.proofPrevBlock !== null) {
+      message.proofPrevBlock = ProofEthereumStorage.fromPartial(
+        object.proofPrevBlock
+      );
+    }
+    if (object.proofNextBlock !== undefined && object.proofNextBlock !== null) {
+      message.proofNextBlock = ProofEthereumStorage.fromPartial(
+        object.proofNextBlock
+      );
+    }
+    return message;
+  },
+};
+
+const baseProofCA: object = { type: 0 };
+
+export const ProofCA = {
+  encode(message: ProofCA, writer: Writer = Writer.create()): Writer {
+    if (message.type !== 0) {
+      writer.uint32(8).int32(message.type);
+    }
+    if (message.bundle !== undefined) {
+      CAbundle.encode(message.bundle, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.signature.length !== 0) {
+      writer.uint32(26).bytes(message.signature);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ProofCA {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseProofCA } as ProofCA;
+    message.signature = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.type = reader.int32() as any;
+          break;
+        case 2:
+          message.bundle = CAbundle.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.signature = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProofCA {
+    const message = { ...baseProofCA } as ProofCA;
+    message.signature = new Uint8Array();
+    if (object.type !== undefined && object.type !== null) {
+      message.type = proofCA_TypeFromJSON(object.type);
+    }
+    if (object.bundle !== undefined && object.bundle !== null) {
+      message.bundle = CAbundle.fromJSON(object.bundle);
+    }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = bytesFromBase64(object.signature);
+    }
+    return message;
+  },
+
+  toJSON(message: ProofCA): unknown {
+    const obj: any = {};
+    message.type !== undefined && (obj.type = proofCA_TypeToJSON(message.type));
+    message.bundle !== undefined &&
+      (obj.bundle = message.bundle
+        ? CAbundle.toJSON(message.bundle)
+        : undefined);
+    message.signature !== undefined &&
+      (obj.signature = base64FromBytes(
+        message.signature !== undefined ? message.signature : new Uint8Array()
+      ));
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ProofCA>): ProofCA {
+    const message = { ...baseProofCA } as ProofCA;
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.bundle !== undefined && object.bundle !== null) {
+      message.bundle = CAbundle.fromPartial(object.bundle);
+    }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = object.signature;
+    }
+    return message;
+  },
+};
+
+const baseCAbundle: object = {};
+
+export const CAbundle = {
+  encode(message: CAbundle, writer: Writer = Writer.create()): Writer {
+    if (message.processId.length !== 0) {
+      writer.uint32(10).bytes(message.processId);
+    }
+    if (message.address.length !== 0) {
+      writer.uint32(18).bytes(message.address);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): CAbundle {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseCAbundle } as CAbundle;
+    message.processId = new Uint8Array();
+    message.address = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.processId = reader.bytes();
+          break;
+        case 2:
+          message.address = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): CAbundle {
+    const message = { ...baseCAbundle } as CAbundle;
+    message.processId = new Uint8Array();
+    message.address = new Uint8Array();
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = bytesFromBase64(object.processId);
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = bytesFromBase64(object.address);
+    }
+    return message;
+  },
+
+  toJSON(message: CAbundle): unknown {
+    const obj: any = {};
+    message.processId !== undefined &&
+      (obj.processId = base64FromBytes(
+        message.processId !== undefined ? message.processId : new Uint8Array()
+      ));
+    message.address !== undefined &&
+      (obj.address = base64FromBytes(
+        message.address !== undefined ? message.address : new Uint8Array()
+      ));
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<CAbundle>): CAbundle {
+    const message = { ...baseCAbundle } as CAbundle;
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    return message;
+  },
+};
+
+const baseProofArbo: object = { type: 0 };
+
+export const ProofArbo = {
+  encode(message: ProofArbo, writer: Writer = Writer.create()): Writer {
+    if (message.type !== 0) {
+      writer.uint32(8).int32(message.type);
+    }
+    if (message.siblings.length !== 0) {
+      writer.uint32(18).bytes(message.siblings);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ProofArbo {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseProofArbo } as ProofArbo;
+    message.siblings = new Uint8Array();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.type = reader.int32() as any;
+          break;
+        case 2:
+          message.siblings = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProofArbo {
+    const message = { ...baseProofArbo } as ProofArbo;
+    message.siblings = new Uint8Array();
+    if (object.type !== undefined && object.type !== null) {
+      message.type = proofArbo_TypeFromJSON(object.type);
+    }
+    if (object.siblings !== undefined && object.siblings !== null) {
+      message.siblings = bytesFromBase64(object.siblings);
+    }
+    return message;
+  },
+
+  toJSON(message: ProofArbo): unknown {
+    const obj: any = {};
+    message.type !== undefined &&
+      (obj.type = proofArbo_TypeToJSON(message.type));
+    message.siblings !== undefined &&
+      (obj.siblings = base64FromBytes(
+        message.siblings !== undefined ? message.siblings : new Uint8Array()
+      ));
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ProofArbo>): ProofArbo {
+    const message = { ...baseProofArbo } as ProofArbo;
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.siblings !== undefined && object.siblings !== null) {
+      message.siblings = object.siblings;
+    }
+    return message;
+  },
+};
+
+const baseProofZkSNARK: object = {
+  type: 0,
+  a: "",
+  b: "",
+  c: "",
+  publicInputs: "",
+};
+
+export const ProofZkSNARK = {
+  encode(message: ProofZkSNARK, writer: Writer = Writer.create()): Writer {
+    if (message.type !== 0) {
+      writer.uint32(8).int32(message.type);
+    }
+    for (const v of message.a) {
+      writer.uint32(18).string(v!);
+    }
+    for (const v of message.b) {
+      writer.uint32(26).string(v!);
+    }
+    for (const v of message.c) {
+      writer.uint32(34).string(v!);
+    }
+    for (const v of message.publicInputs) {
+      writer.uint32(42).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ProofZkSNARK {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseProofZkSNARK } as ProofZkSNARK;
+    message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.type = reader.int32() as any;
+          break;
+        case 2:
+          message.a.push(reader.string());
+          break;
+        case 3:
+          message.b.push(reader.string());
+          break;
+        case 4:
+          message.c.push(reader.string());
+          break;
+        case 5:
+          message.publicInputs.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProofZkSNARK {
+    const message = { ...baseProofZkSNARK } as ProofZkSNARK;
+    message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = proofZkSNARK_TypeFromJSON(object.type);
+    }
+    if (object.a !== undefined && object.a !== null) {
+      for (const e of object.a) {
+        message.a.push(String(e));
+      }
+    }
+    if (object.b !== undefined && object.b !== null) {
+      for (const e of object.b) {
+        message.b.push(String(e));
+      }
+    }
+    if (object.c !== undefined && object.c !== null) {
+      for (const e of object.c) {
+        message.c.push(String(e));
+      }
+    }
+    if (object.publicInputs !== undefined && object.publicInputs !== null) {
+      for (const e of object.publicInputs) {
+        message.publicInputs.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: ProofZkSNARK): unknown {
+    const obj: any = {};
+    message.type !== undefined &&
+      (obj.type = proofZkSNARK_TypeToJSON(message.type));
+    if (message.a) {
+      obj.a = message.a.map((e) => e);
+    } else {
+      obj.a = [];
+    }
+    if (message.b) {
+      obj.b = message.b.map((e) => e);
+    } else {
+      obj.b = [];
+    }
+    if (message.c) {
+      obj.c = message.c.map((e) => e);
+    } else {
+      obj.c = [];
+    }
+    if (message.publicInputs) {
+      obj.publicInputs = message.publicInputs.map((e) => e);
+    } else {
+      obj.publicInputs = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ProofZkSNARK>): ProofZkSNARK {
+    const message = { ...baseProofZkSNARK } as ProofZkSNARK;
+    message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.a !== undefined && object.a !== null) {
+      for (const e of object.a) {
+        message.a.push(e);
+      }
+    }
+    if (object.b !== undefined && object.b !== null) {
+      for (const e of object.b) {
+        message.b.push(e);
+      }
+    }
+    if (object.c !== undefined && object.c !== null) {
+      for (const e of object.c) {
+        message.c.push(e);
+      }
+    }
+    if (object.publicInputs !== undefined && object.publicInputs !== null) {
+      for (const e of object.publicInputs) {
+        message.publicInputs.push(e);
       }
     }
     return message;
@@ -2148,6 +2832,7 @@ const baseProcess: object = {
   status: 0,
   namespace: 0,
   censusOrigin: 0,
+  sourceNetworkId: 0,
 };
 
 export const Process = {
@@ -2235,6 +2920,9 @@ export const Process = {
     }
     if (message.metadata !== undefined) {
       writer.uint32(210).string(message.metadata);
+    }
+    if (message.sourceNetworkId !== 0) {
+      writer.uint32(216).int32(message.sourceNetworkId);
     }
     return writer;
   },
@@ -2334,6 +3022,9 @@ export const Process = {
           break;
         case 26:
           message.metadata = reader.string();
+          break;
+        case 27:
+          message.sourceNetworkId = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -2456,6 +3147,12 @@ export const Process = {
     if (object.metadata !== undefined && object.metadata !== null) {
       message.metadata = String(object.metadata);
     }
+    if (
+      object.sourceNetworkId !== undefined &&
+      object.sourceNetworkId !== null
+    ) {
+      message.sourceNetworkId = sourceNetworkIdFromJSON(object.sourceNetworkId);
+    }
     return message;
   },
 
@@ -2542,6 +3239,8 @@ export const Process = {
           ? base64FromBytes(message.owner)
           : undefined);
     message.metadata !== undefined && (obj.metadata = message.metadata);
+    message.sourceNetworkId !== undefined &&
+      (obj.sourceNetworkId = sourceNetworkIdToJSON(message.sourceNetworkId));
     return obj;
   },
 
@@ -2654,6 +3353,12 @@ export const Process = {
     }
     if (object.metadata !== undefined && object.metadata !== null) {
       message.metadata = object.metadata;
+    }
+    if (
+      object.sourceNetworkId !== undefined &&
+      object.sourceNetworkId !== null
+    ) {
+      message.sourceNetworkId = object.sourceNetworkId;
     }
     return message;
   },
@@ -3994,13 +4699,20 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (let i = 0; i < arr.byteLength; ++i) {
-    bin.push(String.fromCharCode(arr[i]));
+  for (const byte of arr) {
+    bin.push(String.fromCharCode(byte));
   }
   return btoa(bin.join(""));
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
