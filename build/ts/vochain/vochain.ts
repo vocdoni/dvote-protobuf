@@ -767,6 +767,7 @@ export interface ProcessResult {
   votes: QuestionResult[];
   processId?: Uint8Array | undefined;
   entityId?: Uint8Array | undefined;
+  signature?: Uint8Array | undefined;
 }
 
 export interface QuestionResult {
@@ -4586,6 +4587,9 @@ export const ProcessResult = {
     if (message.entityId !== undefined) {
       writer.uint32(26).bytes(message.entityId);
     }
+    if (message.signature !== undefined) {
+      writer.uint32(34).bytes(message.signature);
+    }
     return writer;
   },
 
@@ -4605,6 +4609,9 @@ export const ProcessResult = {
           break;
         case 3:
           message.entityId = reader.bytes();
+          break;
+        case 4:
+          message.signature = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -4628,6 +4635,9 @@ export const ProcessResult = {
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = bytesFromBase64(object.entityId);
     }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = bytesFromBase64(object.signature);
+    }
     return message;
   },
 
@@ -4650,6 +4660,11 @@ export const ProcessResult = {
         message.entityId !== undefined
           ? base64FromBytes(message.entityId)
           : undefined);
+    message.signature !== undefined &&
+      (obj.signature =
+        message.signature !== undefined
+          ? base64FromBytes(message.signature)
+          : undefined);
     return obj;
   },
 
@@ -4666,6 +4681,9 @@ export const ProcessResult = {
     }
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = object.entityId;
+    }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = object.signature;
     }
     return message;
   },

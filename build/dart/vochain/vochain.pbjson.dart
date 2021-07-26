@@ -560,15 +560,17 @@ const ProcessResult$json = const {
     const {'1': 'votes', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v1.QuestionResult', '10': 'votes'},
     const {'1': 'processId', '3': 2, '4': 1, '5': 12, '9': 0, '10': 'processId', '17': true},
     const {'1': 'entityId', '3': 3, '4': 1, '5': 12, '9': 1, '10': 'entityId', '17': true},
+    const {'1': 'signature', '3': 4, '4': 1, '5': 12, '9': 2, '10': 'signature', '17': true},
   ],
   '8': const [
     const {'1': '_processId'},
     const {'1': '_entityId'},
+    const {'1': '_signature'},
   ],
 };
 
 /// Descriptor for `ProcessResult`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List processResultDescriptor = $convert.base64Decode('Cg1Qcm9jZXNzUmVzdWx0EjQKBXZvdGVzGAEgAygLMh4uZHZvdGUudHlwZXMudjEuUXVlc3Rpb25SZXN1bHRSBXZvdGVzEiEKCXByb2Nlc3NJZBgCIAEoDEgAUglwcm9jZXNzSWSIAQESHwoIZW50aXR5SWQYAyABKAxIAVIIZW50aXR5SWSIAQFCDAoKX3Byb2Nlc3NJZEILCglfZW50aXR5SWQ=');
+final $typed_data.Uint8List processResultDescriptor = $convert.base64Decode('Cg1Qcm9jZXNzUmVzdWx0EjQKBXZvdGVzGAEgAygLMh4uZHZvdGUudHlwZXMudjEuUXVlc3Rpb25SZXN1bHRSBXZvdGVzEiEKCXByb2Nlc3NJZBgCIAEoDEgAUglwcm9jZXNzSWSIAQESHwoIZW50aXR5SWQYAyABKAxIAVIIZW50aXR5SWSIAQESIQoJc2lnbmF0dXJlGAQgASgMSAJSCXNpZ25hdHVyZYgBAUIMCgpfcHJvY2Vzc0lkQgsKCV9lbnRpdHlJZEIMCgpfc2lnbmF0dXJl');
 @$core.Deprecated('Use questionResultDescriptor instead')
 const QuestionResult$json = const {
   '1': 'QuestionResult',

@@ -2874,6 +2874,7 @@ class ProcessResult extends $pb.GeneratedMessage {
     ..pc<QuestionResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votes', $pb.PbFieldType.PM, subBuilder: QuestionResult.create)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityId', $pb.PbFieldType.OY, protoName: 'entityId')
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -2882,6 +2883,7 @@ class ProcessResult extends $pb.GeneratedMessage {
     $core.Iterable<QuestionResult>? votes,
     $core.List<$core.int>? processId,
     $core.List<$core.int>? entityId,
+    $core.List<$core.int>? signature,
   }) {
     final _result = create();
     if (votes != null) {
@@ -2892,6 +2894,9 @@ class ProcessResult extends $pb.GeneratedMessage {
     }
     if (entityId != null) {
       _result.entityId = entityId;
+    }
+    if (signature != null) {
+      _result.signature = signature;
     }
     return _result;
   }
@@ -2936,6 +2941,15 @@ class ProcessResult extends $pb.GeneratedMessage {
   $core.bool hasEntityId() => $_has(2);
   @$pb.TagNumber(3)
   void clearEntityId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get signature => $_getN(3);
+  @$pb.TagNumber(4)
+  set signature($core.List<$core.int> v) { $_setBytes(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSignature() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSignature() => clearField(4);
 }
 
 class QuestionResult extends $pb.GeneratedMessage {
