@@ -354,6 +354,7 @@ message ProcessResult {
 	repeated QuestionResult votes = 1;
 	optional bytes processId = 2;
 	optional bytes entityId = 3;
+	optional bytes signature = 4;
 }
 
 message QuestionResult {
