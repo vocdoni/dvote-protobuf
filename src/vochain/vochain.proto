@@ -115,8 +115,8 @@ message ProofZkSNARK {
 
         // a represents a G1 point
         repeated string a = 2;
-        // b represents a G2 point, represented by an array of arrays: []string => [2][3]bigint)
-        // [u, v, w, x, y, z] => [[u, v, w], [x, y, z]]
+        // b represents a G2 point, represented by an array of arrays: []string => [2][2]bigint)
+        // [w, x, y, z] => [[w, x], [y, z]]
         repeated string b = 3;
         // c represents a G1 point
         repeated string c = 4;

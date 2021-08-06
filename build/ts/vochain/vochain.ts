@@ -547,8 +547,8 @@ export interface ProofZkSNARK {
   /** a represents a G1 point */
   a: string[];
   /**
-   * b represents a G2 point, represented by an array of arrays: []string => [2][3]bigint)
-   * [u, v, w, x, y, z] => [[u, v, w], [x, y, z]]
+   * b represents a G2 point, represented by an array of arrays: []string => [2][2]bigint)
+   * [w, x, y, z] => [[w, x], [y, z]]
    */
   b: string[];
   /** c represents a G1 point */

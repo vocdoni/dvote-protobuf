@@ -1277,8 +1277,8 @@ type ProofZkSNARK struct {
 	Type ProofZkSNARK_Type `protobuf:"varint,1,opt,name=type,proto3,enum=dvote.types.v1.ProofZkSNARK_Type" json:"type,omitempty"`
 	// a represents a G1 point
 	A []string `protobuf:"bytes,2,rep,name=a,proto3" json:"a,omitempty"`
-	// b represents a G2 point, represented by an array of arrays: []string => [2][3]bigint)
-	// [u, v, w, x, y, z] => [[u, v, w], [x, y, z]]
+	// b represents a G2 point, represented by an array of arrays: []string => [2][2]bigint)
+	// [w, x, y, z] => [[w, x], [y, z]]
 	B []string `protobuf:"bytes,3,rep,name=b,proto3" json:"b,omitempty"`
 	// c represents a G1 point
 	C            []string `protobuf:"bytes,4,rep,name=c,proto3" json:"c,omitempty"`
