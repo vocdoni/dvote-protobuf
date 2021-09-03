@@ -107,11 +107,12 @@ message ProofArbo {
 
 // Groth16 zkSNARK proof + public inputs
 message ProofZkSNARK {
-        // Type determines which to circuit corresponds the zkProof
-        enum Type {
-                UNKNOWN = 0;
-        }
-        Type type = 1;
+        // circuitParametersIndex defines the index of the parameter set of the
+        // circuit. Each process has defined a set of available parameters for
+        // the same circuit, the 'parametersIndex' defines the index of the set
+        // for which the ProofZkSNARK belongs for the circuit used in that
+        // process.
+        circuitParametersIndex number = 1;
 
         // a represents a G1 point in Affine coordinates
         repeated string a = 2;
