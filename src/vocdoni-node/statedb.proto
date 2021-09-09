@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package dvote.types.v1;
+
+import "vochain/vochain.proto";
+
+option go_package = "go.vocdoni.io/proto/build/go/models";
+
+// Process as it is stored in the Arbo-based StateDB
+message StateDBProcess {
+    // vochain Process
+    Process process = 1;
+    // root of the StateDB SubTree that contains the proces' votes
+    bytes votesRoot = 2;
+}
+
+// Vote as it is stored in the Arbo-based StateDB
+message StateDBVote {
+    // hash of the protobuf-marshalled Vote
+    bytes voteHash = 1;
+    // processId from Vote.processId
+    bytes processId = 2;
+    // nullifier from Vote.nullifier
+    bytes nullifier = 3;
+}
