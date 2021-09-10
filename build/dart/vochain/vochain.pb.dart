@@ -870,7 +870,7 @@ class ProofArbo extends $pb.GeneratedMessage {
 
 class ProofZkSNARK extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofZkSNARK', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..e<ProofZkSNARK_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofZkSNARK_Type.UNKNOWN, valueOf: ProofZkSNARK_Type.valueOf, enumValues: ProofZkSNARK_Type.values)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'circuitParametersIndex', $pb.PbFieldType.O3, protoName: 'circuitParametersIndex')
     ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'a')
     ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'b')
     ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c')
@@ -880,15 +880,15 @@ class ProofZkSNARK extends $pb.GeneratedMessage {
 
   ProofZkSNARK._() : super();
   factory ProofZkSNARK({
-    ProofZkSNARK_Type? type,
+    $core.int? circuitParametersIndex,
     $core.Iterable<$core.String>? a,
     $core.Iterable<$core.String>? b,
     $core.Iterable<$core.String>? c,
     $core.Iterable<$core.String>? publicInputs,
   }) {
     final _result = create();
-    if (type != null) {
-      _result.type = type;
+    if (circuitParametersIndex != null) {
+      _result.circuitParametersIndex = circuitParametersIndex;
     }
     if (a != null) {
       _result.a.addAll(a);
@@ -926,13 +926,13 @@ class ProofZkSNARK extends $pb.GeneratedMessage {
   static ProofZkSNARK? _defaultInstance;
 
   @$pb.TagNumber(1)
-  ProofZkSNARK_Type get type => $_getN(0);
+  $core.int get circuitParametersIndex => $_getIZ(0);
   @$pb.TagNumber(1)
-  set type(ProofZkSNARK_Type v) { setField(1, v); }
+  set circuitParametersIndex($core.int v) { $_setSignedInt32(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasType() => $_has(0);
+  $core.bool hasCircuitParametersIndex() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearCircuitParametersIndex() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.List<$core.String> get a => $_getList(1);

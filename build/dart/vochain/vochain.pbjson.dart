@@ -259,25 +259,16 @@ final $typed_data.Uint8List proofArboDescriptor = $convert.base64Decode('CglQcm9
 const ProofZkSNARK$json = const {
   '1': 'ProofZkSNARK',
   '2': const [
-    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofZkSNARK.Type', '10': 'type'},
+    const {'1': 'circuitParametersIndex', '3': 1, '4': 1, '5': 5, '10': 'circuitParametersIndex'},
     const {'1': 'a', '3': 2, '4': 3, '5': 9, '10': 'a'},
     const {'1': 'b', '3': 3, '4': 3, '5': 9, '10': 'b'},
     const {'1': 'c', '3': 4, '4': 3, '5': 9, '10': 'c'},
     const {'1': 'publicInputs', '3': 5, '4': 3, '5': 9, '10': 'publicInputs'},
   ],
-  '4': const [ProofZkSNARK_Type$json],
-};
-
-@$core.Deprecated('Use proofZkSNARKDescriptor instead')
-const ProofZkSNARK_Type$json = const {
-  '1': 'Type',
-  '2': const [
-    const {'1': 'UNKNOWN', '2': 0},
-  ],
 };
 
 /// Descriptor for `ProofZkSNARK`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofZkSNARKDescriptor = $convert.base64Decode('CgxQcm9vZlprU05BUksSNQoEdHlwZRgBIAEoDjIhLmR2b3RlLnR5cGVzLnYxLlByb29mWmtTTkFSSy5UeXBlUgR0eXBlEgwKAWEYAiADKAlSAWESDAoBYhgDIAMoCVIBYhIMCgFjGAQgAygJUgFjEiIKDHB1YmxpY0lucHV0cxgFIAMoCVIMcHVibGljSW5wdXRzIhMKBFR5cGUSCwoHVU5LTk9XThAA');
+final $typed_data.Uint8List proofZkSNARKDescriptor = $convert.base64Decode('CgxQcm9vZlprU05BUksSNgoWY2lyY3VpdFBhcmFtZXRlcnNJbmRleBgBIAEoBVIWY2lyY3VpdFBhcmFtZXRlcnNJbmRleBIMCgFhGAIgAygJUgFhEgwKAWIYAyADKAlSAWISDAoBYxgEIAMoCVIBYxIiCgxwdWJsaWNJbnB1dHMYBSADKAlSDHB1YmxpY0lucHV0cw==');
 @$core.Deprecated('Use txDescriptor instead')
 const Tx$json = const {
   '1': 'Tx',
