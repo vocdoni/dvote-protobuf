@@ -182,13 +182,11 @@ message AdminTx {
 	TxType txtype = 1;
 	bytes processId = 2;
 	optional bytes address = 3;
-	optional bytes commitmentKey = 4;
 	optional bytes encryptionPrivateKey = 5;
 	optional bytes encryptionPublicKey = 6;
 	optional uint32 keyIndex = 7;
 	optional uint64 power = 8;
 	optional bytes publicKey = 9;
-	optional bytes revealKey = 10;
 	bytes nonce = 11;
 }
 
@@ -212,14 +210,10 @@ message Process {
 	bytes censusRoot = 5;
 	// CensusURI where to find the census
 	optional string censusURI = 6;
-	// CommitmentKeys are the reveal keys hashed
-	repeated string commitmentKeys = 7;
 	// EncryptionPrivateKeys are the keys required to decrypt the votes
 	repeated string encryptionPrivateKeys = 8;
 	// EncryptionPublicKeys are the keys required to encrypt the votes
 	repeated string encryptionPublicKeys = 9;
-	// RevealKeys are the seed of the CommitmentKeys
-	repeated string revealKeys = 10;
 	optional uint32 keyIndex = 11;
 	ProcessStatus status = 12;
 	optional bytes paramsSignature = 13;
