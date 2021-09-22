@@ -1387,13 +1387,11 @@ class AdminTx extends $pb.GeneratedMessage {
     ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'commitmentKey', $pb.PbFieldType.OY, protoName: 'commitmentKey')
     ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionPrivateKey', $pb.PbFieldType.OY, protoName: 'encryptionPrivateKey')
     ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionPublicKey', $pb.PbFieldType.OY, protoName: 'encryptionPublicKey')
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyIndex', $pb.PbFieldType.OU3, protoName: 'keyIndex')
     ..a<$fixnum.Int64>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'power', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'publicKey', $pb.PbFieldType.OY, protoName: 'publicKey')
-    ..a<$core.List<$core.int>>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'revealKey', $pb.PbFieldType.OY, protoName: 'revealKey')
     ..a<$core.List<$core.int>>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
@@ -1403,13 +1401,11 @@ class AdminTx extends $pb.GeneratedMessage {
     TxType? txtype,
     $core.List<$core.int>? processId,
     $core.List<$core.int>? address,
-    $core.List<$core.int>? commitmentKey,
     $core.List<$core.int>? encryptionPrivateKey,
     $core.List<$core.int>? encryptionPublicKey,
     $core.int? keyIndex,
     $fixnum.Int64? power,
     $core.List<$core.int>? publicKey,
-    $core.List<$core.int>? revealKey,
     $core.List<$core.int>? nonce,
   }) {
     final _result = create();
@@ -1421,9 +1417,6 @@ class AdminTx extends $pb.GeneratedMessage {
     }
     if (address != null) {
       _result.address = address;
-    }
-    if (commitmentKey != null) {
-      _result.commitmentKey = commitmentKey;
     }
     if (encryptionPrivateKey != null) {
       _result.encryptionPrivateKey = encryptionPrivateKey;
@@ -1439,9 +1432,6 @@ class AdminTx extends $pb.GeneratedMessage {
     }
     if (publicKey != null) {
       _result.publicKey = publicKey;
-    }
-    if (revealKey != null) {
-      _result.revealKey = revealKey;
     }
     if (nonce != null) {
       _result.nonce = nonce;
@@ -1496,75 +1486,57 @@ class AdminTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearAddress() => clearField(3);
 
-  @$pb.TagNumber(4)
-  $core.List<$core.int> get commitmentKey => $_getN(3);
-  @$pb.TagNumber(4)
-  set commitmentKey($core.List<$core.int> v) { $_setBytes(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasCommitmentKey() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearCommitmentKey() => clearField(4);
-
   @$pb.TagNumber(5)
-  $core.List<$core.int> get encryptionPrivateKey => $_getN(4);
+  $core.List<$core.int> get encryptionPrivateKey => $_getN(3);
   @$pb.TagNumber(5)
-  set encryptionPrivateKey($core.List<$core.int> v) { $_setBytes(4, v); }
+  set encryptionPrivateKey($core.List<$core.int> v) { $_setBytes(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasEncryptionPrivateKey() => $_has(4);
+  $core.bool hasEncryptionPrivateKey() => $_has(3);
   @$pb.TagNumber(5)
   void clearEncryptionPrivateKey() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.List<$core.int> get encryptionPublicKey => $_getN(5);
+  $core.List<$core.int> get encryptionPublicKey => $_getN(4);
   @$pb.TagNumber(6)
-  set encryptionPublicKey($core.List<$core.int> v) { $_setBytes(5, v); }
+  set encryptionPublicKey($core.List<$core.int> v) { $_setBytes(4, v); }
   @$pb.TagNumber(6)
-  $core.bool hasEncryptionPublicKey() => $_has(5);
+  $core.bool hasEncryptionPublicKey() => $_has(4);
   @$pb.TagNumber(6)
   void clearEncryptionPublicKey() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.int get keyIndex => $_getIZ(6);
+  $core.int get keyIndex => $_getIZ(5);
   @$pb.TagNumber(7)
-  set keyIndex($core.int v) { $_setUnsignedInt32(6, v); }
+  set keyIndex($core.int v) { $_setUnsignedInt32(5, v); }
   @$pb.TagNumber(7)
-  $core.bool hasKeyIndex() => $_has(6);
+  $core.bool hasKeyIndex() => $_has(5);
   @$pb.TagNumber(7)
   void clearKeyIndex() => clearField(7);
 
   @$pb.TagNumber(8)
-  $fixnum.Int64 get power => $_getI64(7);
+  $fixnum.Int64 get power => $_getI64(6);
   @$pb.TagNumber(8)
-  set power($fixnum.Int64 v) { $_setInt64(7, v); }
+  set power($fixnum.Int64 v) { $_setInt64(6, v); }
   @$pb.TagNumber(8)
-  $core.bool hasPower() => $_has(7);
+  $core.bool hasPower() => $_has(6);
   @$pb.TagNumber(8)
   void clearPower() => clearField(8);
 
   @$pb.TagNumber(9)
-  $core.List<$core.int> get publicKey => $_getN(8);
+  $core.List<$core.int> get publicKey => $_getN(7);
   @$pb.TagNumber(9)
-  set publicKey($core.List<$core.int> v) { $_setBytes(8, v); }
+  set publicKey($core.List<$core.int> v) { $_setBytes(7, v); }
   @$pb.TagNumber(9)
-  $core.bool hasPublicKey() => $_has(8);
+  $core.bool hasPublicKey() => $_has(7);
   @$pb.TagNumber(9)
   void clearPublicKey() => clearField(9);
 
-  @$pb.TagNumber(10)
-  $core.List<$core.int> get revealKey => $_getN(9);
-  @$pb.TagNumber(10)
-  set revealKey($core.List<$core.int> v) { $_setBytes(9, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasRevealKey() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearRevealKey() => clearField(10);
-
   @$pb.TagNumber(11)
-  $core.List<$core.int> get nonce => $_getN(10);
+  $core.List<$core.int> get nonce => $_getN(8);
   @$pb.TagNumber(11)
-  set nonce($core.List<$core.int> v) { $_setBytes(10, v); }
+  set nonce($core.List<$core.int> v) { $_setBytes(8, v); }
   @$pb.TagNumber(11)
-  $core.bool hasNonce() => $_has(10);
+  $core.bool hasNonce() => $_has(8);
   @$pb.TagNumber(11)
   void clearNonce() => clearField(11);
 }
@@ -1682,10 +1654,8 @@ class Process extends $pb.GeneratedMessage {
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockCount', $pb.PbFieldType.OU3, protoName: 'blockCount')
     ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusRoot', $pb.PbFieldType.OY, protoName: 'censusRoot')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusURI', protoName: 'censusURI')
-    ..pPS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'commitmentKeys', protoName: 'commitmentKeys')
     ..pPS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionPrivateKeys', protoName: 'encryptionPrivateKeys')
     ..pPS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionPublicKeys', protoName: 'encryptionPublicKeys')
-    ..pPS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'revealKeys', protoName: 'revealKeys')
     ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyIndex', $pb.PbFieldType.OU3, protoName: 'keyIndex')
     ..e<ProcessStatus>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: ProcessStatus.PROCESS_UNKNOWN, valueOf: ProcessStatus.valueOf, enumValues: ProcessStatus.values)
     ..a<$core.List<$core.int>>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paramsSignature', $pb.PbFieldType.OY, protoName: 'paramsSignature')
@@ -1714,10 +1684,8 @@ class Process extends $pb.GeneratedMessage {
     $core.int? blockCount,
     $core.List<$core.int>? censusRoot,
     $core.String? censusURI,
-    $core.Iterable<$core.String>? commitmentKeys,
     $core.Iterable<$core.String>? encryptionPrivateKeys,
     $core.Iterable<$core.String>? encryptionPublicKeys,
-    $core.Iterable<$core.String>? revealKeys,
     $core.int? keyIndex,
     ProcessStatus? status,
     $core.List<$core.int>? paramsSignature,
@@ -1755,17 +1723,11 @@ class Process extends $pb.GeneratedMessage {
     if (censusURI != null) {
       _result.censusURI = censusURI;
     }
-    if (commitmentKeys != null) {
-      _result.commitmentKeys.addAll(commitmentKeys);
-    }
     if (encryptionPrivateKeys != null) {
       _result.encryptionPrivateKeys.addAll(encryptionPrivateKeys);
     }
     if (encryptionPublicKeys != null) {
       _result.encryptionPublicKeys.addAll(encryptionPublicKeys);
-    }
-    if (revealKeys != null) {
-      _result.revealKeys.addAll(revealKeys);
     }
     if (keyIndex != null) {
       _result.keyIndex = keyIndex;
@@ -1895,170 +1857,164 @@ class Process extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearCensusURI() => clearField(6);
 
-  @$pb.TagNumber(7)
-  $core.List<$core.String> get commitmentKeys => $_getList(6);
-
   @$pb.TagNumber(8)
-  $core.List<$core.String> get encryptionPrivateKeys => $_getList(7);
+  $core.List<$core.String> get encryptionPrivateKeys => $_getList(6);
 
   @$pb.TagNumber(9)
-  $core.List<$core.String> get encryptionPublicKeys => $_getList(8);
-
-  @$pb.TagNumber(10)
-  $core.List<$core.String> get revealKeys => $_getList(9);
+  $core.List<$core.String> get encryptionPublicKeys => $_getList(7);
 
   @$pb.TagNumber(11)
-  $core.int get keyIndex => $_getIZ(10);
+  $core.int get keyIndex => $_getIZ(8);
   @$pb.TagNumber(11)
-  set keyIndex($core.int v) { $_setUnsignedInt32(10, v); }
+  set keyIndex($core.int v) { $_setUnsignedInt32(8, v); }
   @$pb.TagNumber(11)
-  $core.bool hasKeyIndex() => $_has(10);
+  $core.bool hasKeyIndex() => $_has(8);
   @$pb.TagNumber(11)
   void clearKeyIndex() => clearField(11);
 
   @$pb.TagNumber(12)
-  ProcessStatus get status => $_getN(11);
+  ProcessStatus get status => $_getN(9);
   @$pb.TagNumber(12)
   set status(ProcessStatus v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasStatus() => $_has(11);
+  $core.bool hasStatus() => $_has(9);
   @$pb.TagNumber(12)
   void clearStatus() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.List<$core.int> get paramsSignature => $_getN(12);
+  $core.List<$core.int> get paramsSignature => $_getN(10);
   @$pb.TagNumber(13)
-  set paramsSignature($core.List<$core.int> v) { $_setBytes(12, v); }
+  set paramsSignature($core.List<$core.int> v) { $_setBytes(10, v); }
   @$pb.TagNumber(13)
-  $core.bool hasParamsSignature() => $_has(12);
+  $core.bool hasParamsSignature() => $_has(10);
   @$pb.TagNumber(13)
   void clearParamsSignature() => clearField(13);
 
   @$pb.TagNumber(14)
-  $core.int get namespace => $_getIZ(13);
+  $core.int get namespace => $_getIZ(11);
   @$pb.TagNumber(14)
-  set namespace($core.int v) { $_setUnsignedInt32(13, v); }
+  set namespace($core.int v) { $_setUnsignedInt32(11, v); }
   @$pb.TagNumber(14)
-  $core.bool hasNamespace() => $_has(13);
+  $core.bool hasNamespace() => $_has(11);
   @$pb.TagNumber(14)
   void clearNamespace() => clearField(14);
 
   @$pb.TagNumber(15)
-  EnvelopeType get envelopeType => $_getN(14);
+  EnvelopeType get envelopeType => $_getN(12);
   @$pb.TagNumber(15)
   set envelopeType(EnvelopeType v) { setField(15, v); }
   @$pb.TagNumber(15)
-  $core.bool hasEnvelopeType() => $_has(14);
+  $core.bool hasEnvelopeType() => $_has(12);
   @$pb.TagNumber(15)
   void clearEnvelopeType() => clearField(15);
   @$pb.TagNumber(15)
-  EnvelopeType ensureEnvelopeType() => $_ensure(14);
+  EnvelopeType ensureEnvelopeType() => $_ensure(12);
 
   @$pb.TagNumber(16)
-  ProcessMode get mode => $_getN(15);
+  ProcessMode get mode => $_getN(13);
   @$pb.TagNumber(16)
   set mode(ProcessMode v) { setField(16, v); }
   @$pb.TagNumber(16)
-  $core.bool hasMode() => $_has(15);
+  $core.bool hasMode() => $_has(13);
   @$pb.TagNumber(16)
   void clearMode() => clearField(16);
   @$pb.TagNumber(16)
-  ProcessMode ensureMode() => $_ensure(15);
+  ProcessMode ensureMode() => $_ensure(13);
 
   @$pb.TagNumber(17)
-  $core.int get questionIndex => $_getIZ(16);
+  $core.int get questionIndex => $_getIZ(14);
   @$pb.TagNumber(17)
-  set questionIndex($core.int v) { $_setUnsignedInt32(16, v); }
+  set questionIndex($core.int v) { $_setUnsignedInt32(14, v); }
   @$pb.TagNumber(17)
-  $core.bool hasQuestionIndex() => $_has(16);
+  $core.bool hasQuestionIndex() => $_has(14);
   @$pb.TagNumber(17)
   void clearQuestionIndex() => clearField(17);
 
   @$pb.TagNumber(18)
-  $core.int get questionCount => $_getIZ(17);
+  $core.int get questionCount => $_getIZ(15);
   @$pb.TagNumber(18)
-  set questionCount($core.int v) { $_setUnsignedInt32(17, v); }
+  set questionCount($core.int v) { $_setUnsignedInt32(15, v); }
   @$pb.TagNumber(18)
-  $core.bool hasQuestionCount() => $_has(17);
+  $core.bool hasQuestionCount() => $_has(15);
   @$pb.TagNumber(18)
   void clearQuestionCount() => clearField(18);
 
   @$pb.TagNumber(19)
-  ProcessVoteOptions get voteOptions => $_getN(18);
+  ProcessVoteOptions get voteOptions => $_getN(16);
   @$pb.TagNumber(19)
   set voteOptions(ProcessVoteOptions v) { setField(19, v); }
   @$pb.TagNumber(19)
-  $core.bool hasVoteOptions() => $_has(18);
+  $core.bool hasVoteOptions() => $_has(16);
   @$pb.TagNumber(19)
   void clearVoteOptions() => clearField(19);
   @$pb.TagNumber(19)
-  ProcessVoteOptions ensureVoteOptions() => $_ensure(18);
+  ProcessVoteOptions ensureVoteOptions() => $_ensure(16);
 
   @$pb.TagNumber(20)
-  CensusOrigin get censusOrigin => $_getN(19);
+  CensusOrigin get censusOrigin => $_getN(17);
   @$pb.TagNumber(20)
   set censusOrigin(CensusOrigin v) { setField(20, v); }
   @$pb.TagNumber(20)
-  $core.bool hasCensusOrigin() => $_has(19);
+  $core.bool hasCensusOrigin() => $_has(17);
   @$pb.TagNumber(20)
   void clearCensusOrigin() => clearField(20);
 
   @$pb.TagNumber(21)
-  ProcessResult get results => $_getN(20);
+  ProcessResult get results => $_getN(18);
   @$pb.TagNumber(21)
   set results(ProcessResult v) { setField(21, v); }
   @$pb.TagNumber(21)
-  $core.bool hasResults() => $_has(20);
+  $core.bool hasResults() => $_has(18);
   @$pb.TagNumber(21)
   void clearResults() => clearField(21);
   @$pb.TagNumber(21)
-  ProcessResult ensureResults() => $_ensure(20);
+  ProcessResult ensureResults() => $_ensure(18);
 
   @$pb.TagNumber(22)
-  $core.List<$core.List<$core.int>> get resultsSignatures => $_getList(21);
+  $core.List<$core.List<$core.int>> get resultsSignatures => $_getList(19);
 
   @$pb.TagNumber(23)
-  $core.int get ethIndexSlot => $_getIZ(22);
+  $core.int get ethIndexSlot => $_getIZ(20);
   @$pb.TagNumber(23)
-  set ethIndexSlot($core.int v) { $_setUnsignedInt32(22, v); }
+  set ethIndexSlot($core.int v) { $_setUnsignedInt32(20, v); }
   @$pb.TagNumber(23)
-  $core.bool hasEthIndexSlot() => $_has(22);
+  $core.bool hasEthIndexSlot() => $_has(20);
   @$pb.TagNumber(23)
   void clearEthIndexSlot() => clearField(23);
 
   @$pb.TagNumber(24)
-  $fixnum.Int64 get sourceBlockHeight => $_getI64(23);
+  $fixnum.Int64 get sourceBlockHeight => $_getI64(21);
   @$pb.TagNumber(24)
-  set sourceBlockHeight($fixnum.Int64 v) { $_setInt64(23, v); }
+  set sourceBlockHeight($fixnum.Int64 v) { $_setInt64(21, v); }
   @$pb.TagNumber(24)
-  $core.bool hasSourceBlockHeight() => $_has(23);
+  $core.bool hasSourceBlockHeight() => $_has(21);
   @$pb.TagNumber(24)
   void clearSourceBlockHeight() => clearField(24);
 
   @$pb.TagNumber(25)
-  $core.List<$core.int> get owner => $_getN(24);
+  $core.List<$core.int> get owner => $_getN(22);
   @$pb.TagNumber(25)
-  set owner($core.List<$core.int> v) { $_setBytes(24, v); }
+  set owner($core.List<$core.int> v) { $_setBytes(22, v); }
   @$pb.TagNumber(25)
-  $core.bool hasOwner() => $_has(24);
+  $core.bool hasOwner() => $_has(22);
   @$pb.TagNumber(25)
   void clearOwner() => clearField(25);
 
   @$pb.TagNumber(26)
-  $core.String get metadata => $_getSZ(25);
+  $core.String get metadata => $_getSZ(23);
   @$pb.TagNumber(26)
-  set metadata($core.String v) { $_setString(25, v); }
+  set metadata($core.String v) { $_setString(23, v); }
   @$pb.TagNumber(26)
-  $core.bool hasMetadata() => $_has(25);
+  $core.bool hasMetadata() => $_has(23);
   @$pb.TagNumber(26)
   void clearMetadata() => clearField(26);
 
   @$pb.TagNumber(27)
-  SourceNetworkId get sourceNetworkId => $_getN(26);
+  SourceNetworkId get sourceNetworkId => $_getN(24);
   @$pb.TagNumber(27)
   set sourceNetworkId(SourceNetworkId v) { setField(27, v); }
   @$pb.TagNumber(27)
-  $core.bool hasSourceNetworkId() => $_has(26);
+  $core.bool hasSourceNetworkId() => $_has(24);
   @$pb.TagNumber(27)
   void clearSourceNetworkId() => clearField(27);
 }
