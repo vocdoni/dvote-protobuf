@@ -543,44 +543,25 @@ export function proofArbo_TypeToJSON(object: ProofArbo_Type): string {
 
 /** Groth16 zkSNARK proof + public inputs */
 export interface ProofZkSNARK {
-  type: ProofZkSNARK_Type;
-  /** a represents a G1 point */
+  /**
+   * circuitParametersIndex defines the index of the parameter set of the
+   * circuit. Each process has defined a set of available parameters for
+   * the same circuit, the 'parametersIndex' defines the index of the set
+   * for which the ProofZkSNARK belongs for the circuit used in that
+   * process.
+   */
+  circuitParametersIndex: number;
+  /** a represents a G1 point in Affine coordinates */
   a: string[];
   /**
-   * b represents a G2 point, represented by an array of arrays: []string => [2][2]bigint)
+   * b represents a G2 point in Affine coordinates, represented by an
+   * array of arrays: []string => [2][2]bigint).
    * [w, x, y, z] => [[w, x], [y, z]]
    */
   b: string[];
-  /** c represents a G1 point */
+  /** c represents a G1 point in Affine coordinates */
   c: string[];
   publicInputs: string[];
-}
-
-/** Type determines which to circuit corresponds the zkProof */
-export enum ProofZkSNARK_Type {
-  UNKNOWN = 0,
-  UNRECOGNIZED = -1,
-}
-
-export function proofZkSNARK_TypeFromJSON(object: any): ProofZkSNARK_Type {
-  switch (object) {
-    case 0:
-    case "UNKNOWN":
-      return ProofZkSNARK_Type.UNKNOWN;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return ProofZkSNARK_Type.UNRECOGNIZED;
-  }
-}
-
-export function proofZkSNARK_TypeToJSON(object: ProofZkSNARK_Type): string {
-  switch (object) {
-    case ProofZkSNARK_Type.UNKNOWN:
-      return "UNKNOWN";
-    default:
-      return "UNKNOWN";
-  }
 }
 
 export interface Tx {
@@ -621,13 +602,11 @@ export interface AdminTx {
   txtype: TxType;
   processId: Uint8Array;
   address?: Uint8Array | undefined;
-  commitmentKey?: Uint8Array | undefined;
   encryptionPrivateKey?: Uint8Array | undefined;
   encryptionPublicKey?: Uint8Array | undefined;
   keyIndex?: number | undefined;
   power?: number | undefined;
   publicKey?: Uint8Array | undefined;
-  revealKey?: Uint8Array | undefined;
   nonce: Uint8Array;
 }
 
@@ -656,14 +635,10 @@ export interface Process {
   censusRoot: Uint8Array;
   /** CensusURI where to find the census */
   censusURI?: string | undefined;
-  /** CommitmentKeys are the reveal keys hashed */
-  commitmentKeys: string[];
   /** EncryptionPrivateKeys are the keys required to decrypt the votes */
   encryptionPrivateKeys: string[];
   /** EncryptionPublicKeys are the keys required to encrypt the votes */
   encryptionPublicKeys: string[];
-  /** RevealKeys are the seed of the CommitmentKeys */
-  revealKeys: string[];
   keyIndex?: number | undefined;
   status: ProcessStatus;
   paramsSignature?: Uint8Array | undefined;
@@ -1963,7 +1938,7 @@ export const ProofArbo = {
 };
 
 const baseProofZkSNARK: object = {
-  type: 0,
+  circuitParametersIndex: 0,
   a: "",
   b: "",
   c: "",
@@ -1972,8 +1947,8 @@ const baseProofZkSNARK: object = {
 
 export const ProofZkSNARK = {
   encode(message: ProofZkSNARK, writer: Writer = Writer.create()): Writer {
-    if (message.type !== 0) {
-      writer.uint32(8).int32(message.type);
+    if (message.circuitParametersIndex !== 0) {
+      writer.uint32(8).int32(message.circuitParametersIndex);
     }
     for (const v of message.a) {
       writer.uint32(18).string(v!);
@@ -2002,7 +1977,7 @@ export const ProofZkSNARK = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.type = reader.int32() as any;
+          message.circuitParametersIndex = reader.int32();
           break;
         case 2:
           message.a.push(reader.string());
@@ -2030,8 +2005,11 @@ export const ProofZkSNARK = {
     message.b = [];
     message.c = [];
     message.publicInputs = [];
-    if (object.type !== undefined && object.type !== null) {
-      message.type = proofZkSNARK_TypeFromJSON(object.type);
+    if (
+      object.circuitParametersIndex !== undefined &&
+      object.circuitParametersIndex !== null
+    ) {
+      message.circuitParametersIndex = Number(object.circuitParametersIndex);
     }
     if (object.a !== undefined && object.a !== null) {
       for (const e of object.a) {
@@ -2058,8 +2036,8 @@ export const ProofZkSNARK = {
 
   toJSON(message: ProofZkSNARK): unknown {
     const obj: any = {};
-    message.type !== undefined &&
-      (obj.type = proofZkSNARK_TypeToJSON(message.type));
+    message.circuitParametersIndex !== undefined &&
+      (obj.circuitParametersIndex = message.circuitParametersIndex);
     if (message.a) {
       obj.a = message.a.map((e) => e);
     } else {
@@ -2089,8 +2067,11 @@ export const ProofZkSNARK = {
     message.b = [];
     message.c = [];
     message.publicInputs = [];
-    if (object.type !== undefined && object.type !== null) {
-      message.type = object.type;
+    if (
+      object.circuitParametersIndex !== undefined &&
+      object.circuitParametersIndex !== null
+    ) {
+      message.circuitParametersIndex = object.circuitParametersIndex;
     }
     if (object.a !== undefined && object.a !== null) {
       for (const e of object.a) {
@@ -2660,9 +2641,6 @@ export const AdminTx = {
     if (message.address !== undefined) {
       writer.uint32(26).bytes(message.address);
     }
-    if (message.commitmentKey !== undefined) {
-      writer.uint32(34).bytes(message.commitmentKey);
-    }
     if (message.encryptionPrivateKey !== undefined) {
       writer.uint32(42).bytes(message.encryptionPrivateKey);
     }
@@ -2677,9 +2655,6 @@ export const AdminTx = {
     }
     if (message.publicKey !== undefined) {
       writer.uint32(74).bytes(message.publicKey);
-    }
-    if (message.revealKey !== undefined) {
-      writer.uint32(82).bytes(message.revealKey);
     }
     if (message.nonce.length !== 0) {
       writer.uint32(90).bytes(message.nonce);
@@ -2705,9 +2680,6 @@ export const AdminTx = {
         case 3:
           message.address = reader.bytes();
           break;
-        case 4:
-          message.commitmentKey = reader.bytes();
-          break;
         case 5:
           message.encryptionPrivateKey = reader.bytes();
           break;
@@ -2722,9 +2694,6 @@ export const AdminTx = {
           break;
         case 9:
           message.publicKey = reader.bytes();
-          break;
-        case 10:
-          message.revealKey = reader.bytes();
           break;
         case 11:
           message.nonce = reader.bytes();
@@ -2750,9 +2719,6 @@ export const AdminTx = {
     if (object.address !== undefined && object.address !== null) {
       message.address = bytesFromBase64(object.address);
     }
-    if (object.commitmentKey !== undefined && object.commitmentKey !== null) {
-      message.commitmentKey = bytesFromBase64(object.commitmentKey);
-    }
     if (
       object.encryptionPrivateKey !== undefined &&
       object.encryptionPrivateKey !== null
@@ -2776,9 +2742,6 @@ export const AdminTx = {
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = bytesFromBase64(object.publicKey);
     }
-    if (object.revealKey !== undefined && object.revealKey !== null) {
-      message.revealKey = bytesFromBase64(object.revealKey);
-    }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = bytesFromBase64(object.nonce);
     }
@@ -2797,11 +2760,6 @@ export const AdminTx = {
         message.address !== undefined
           ? base64FromBytes(message.address)
           : undefined);
-    message.commitmentKey !== undefined &&
-      (obj.commitmentKey =
-        message.commitmentKey !== undefined
-          ? base64FromBytes(message.commitmentKey)
-          : undefined);
     message.encryptionPrivateKey !== undefined &&
       (obj.encryptionPrivateKey =
         message.encryptionPrivateKey !== undefined
@@ -2818,11 +2776,6 @@ export const AdminTx = {
       (obj.publicKey =
         message.publicKey !== undefined
           ? base64FromBytes(message.publicKey)
-          : undefined);
-    message.revealKey !== undefined &&
-      (obj.revealKey =
-        message.revealKey !== undefined
-          ? base64FromBytes(message.revealKey)
           : undefined);
     message.nonce !== undefined &&
       (obj.nonce = base64FromBytes(
@@ -2841,9 +2794,6 @@ export const AdminTx = {
     }
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
-    }
-    if (object.commitmentKey !== undefined && object.commitmentKey !== null) {
-      message.commitmentKey = object.commitmentKey;
     }
     if (
       object.encryptionPrivateKey !== undefined &&
@@ -2865,9 +2815,6 @@ export const AdminTx = {
     }
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = object.publicKey;
-    }
-    if (object.revealKey !== undefined && object.revealKey !== null) {
-      message.revealKey = object.revealKey;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
@@ -3002,10 +2949,8 @@ export const RegisterKeyTx = {
 const baseProcess: object = {
   startBlock: 0,
   blockCount: 0,
-  commitmentKeys: "",
   encryptionPrivateKeys: "",
   encryptionPublicKeys: "",
-  revealKeys: "",
   status: 0,
   namespace: 0,
   censusOrigin: 0,
@@ -3032,17 +2977,11 @@ export const Process = {
     if (message.censusURI !== undefined) {
       writer.uint32(50).string(message.censusURI);
     }
-    for (const v of message.commitmentKeys) {
-      writer.uint32(58).string(v!);
-    }
     for (const v of message.encryptionPrivateKeys) {
       writer.uint32(66).string(v!);
     }
     for (const v of message.encryptionPublicKeys) {
       writer.uint32(74).string(v!);
-    }
-    for (const v of message.revealKeys) {
-      writer.uint32(82).string(v!);
     }
     if (message.keyIndex !== undefined) {
       writer.uint32(88).uint32(message.keyIndex);
@@ -3108,10 +3047,8 @@ export const Process = {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProcess } as Process;
-    message.commitmentKeys = [];
     message.encryptionPrivateKeys = [];
     message.encryptionPublicKeys = [];
-    message.revealKeys = [];
     message.resultsSignatures = [];
     message.processId = new Uint8Array();
     message.entityId = new Uint8Array();
@@ -3137,17 +3074,11 @@ export const Process = {
         case 6:
           message.censusURI = reader.string();
           break;
-        case 7:
-          message.commitmentKeys.push(reader.string());
-          break;
         case 8:
           message.encryptionPrivateKeys.push(reader.string());
           break;
         case 9:
           message.encryptionPublicKeys.push(reader.string());
-          break;
-        case 10:
-          message.revealKeys.push(reader.string());
           break;
         case 11:
           message.keyIndex = reader.uint32();
@@ -3213,10 +3144,8 @@ export const Process = {
 
   fromJSON(object: any): Process {
     const message = { ...baseProcess } as Process;
-    message.commitmentKeys = [];
     message.encryptionPrivateKeys = [];
     message.encryptionPublicKeys = [];
-    message.revealKeys = [];
     message.resultsSignatures = [];
     message.processId = new Uint8Array();
     message.entityId = new Uint8Array();
@@ -3239,11 +3168,6 @@ export const Process = {
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = String(object.censusURI);
     }
-    if (object.commitmentKeys !== undefined && object.commitmentKeys !== null) {
-      for (const e of object.commitmentKeys) {
-        message.commitmentKeys.push(String(e));
-      }
-    }
     if (
       object.encryptionPrivateKeys !== undefined &&
       object.encryptionPrivateKeys !== null
@@ -3258,11 +3182,6 @@ export const Process = {
     ) {
       for (const e of object.encryptionPublicKeys) {
         message.encryptionPublicKeys.push(String(e));
-      }
-    }
-    if (object.revealKeys !== undefined && object.revealKeys !== null) {
-      for (const e of object.revealKeys) {
-        message.revealKeys.push(String(e));
       }
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
@@ -3350,11 +3269,6 @@ export const Process = {
         message.censusRoot !== undefined ? message.censusRoot : new Uint8Array()
       ));
     message.censusURI !== undefined && (obj.censusURI = message.censusURI);
-    if (message.commitmentKeys) {
-      obj.commitmentKeys = message.commitmentKeys.map((e) => e);
-    } else {
-      obj.commitmentKeys = [];
-    }
     if (message.encryptionPrivateKeys) {
       obj.encryptionPrivateKeys = message.encryptionPrivateKeys.map((e) => e);
     } else {
@@ -3364,11 +3278,6 @@ export const Process = {
       obj.encryptionPublicKeys = message.encryptionPublicKeys.map((e) => e);
     } else {
       obj.encryptionPublicKeys = [];
-    }
-    if (message.revealKeys) {
-      obj.revealKeys = message.revealKeys.map((e) => e);
-    } else {
-      obj.revealKeys = [];
     }
     message.keyIndex !== undefined && (obj.keyIndex = message.keyIndex);
     message.status !== undefined &&
@@ -3423,10 +3332,8 @@ export const Process = {
 
   fromPartial(object: DeepPartial<Process>): Process {
     const message = { ...baseProcess } as Process;
-    message.commitmentKeys = [];
     message.encryptionPrivateKeys = [];
     message.encryptionPublicKeys = [];
-    message.revealKeys = [];
     message.resultsSignatures = [];
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
@@ -3446,11 +3353,6 @@ export const Process = {
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = object.censusURI;
     }
-    if (object.commitmentKeys !== undefined && object.commitmentKeys !== null) {
-      for (const e of object.commitmentKeys) {
-        message.commitmentKeys.push(e);
-      }
-    }
     if (
       object.encryptionPrivateKeys !== undefined &&
       object.encryptionPrivateKeys !== null
@@ -3465,11 +3367,6 @@ export const Process = {
     ) {
       for (const e of object.encryptionPublicKeys) {
         message.encryptionPublicKeys.push(e);
-      }
-    }
-    if (object.revealKeys !== undefined && object.revealKeys !== null) {
-      for (const e of object.revealKeys) {
-        message.revealKeys.push(e);
       }
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
