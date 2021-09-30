@@ -3,14 +3,15 @@ import {
     Tx,
     VoteEnvelope,
     Proof,
-    ProofGraviton,
+    ProofArbo,
+    ProofArbo_Type,
 } from "../build/ts/vochain/vochain"
 import { Reader } from "protobufjs"
 
 const dummyArray = new Uint8Array([100, 150, 200, 250])
 
 // Serialize
-let proof = Proof.fromPartial({ payload: { $case: "graviton", graviton: ProofGraviton.fromPartial({ siblings: dummyArray }) } })
+let proof = Proof.fromPartial({ payload: { $case: "graviton", graviton: ProofArbo.fromPartial({ siblings: dummyArray, type: ProofArbo_Type.BLAKE2B }) } })
 let envelope = VoteEnvelope.fromPartial({ encryptionKeyIndexes: [], nonce: dummyArray, votePackage: dummyArray, nullifier: dummyArray, processId: dummyArray, proof })
 
 let tx = Tx.fromPartial({ payload: { $case: "vote", vote: envelope } })
@@ -30,3 +31,4 @@ switch (recoveredTx.payload.$case) {
 }
 
 console.log(recoveredEnvelope)
+
