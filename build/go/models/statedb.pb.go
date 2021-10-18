@@ -145,6 +145,53 @@ func (x *StateDBVote) GetNullifier() []byte {
 	return nil
 }
 
+type ProcessIdList struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProcessIds [][]byte `protobuf:"bytes,1,rep,name=processIds,proto3" json:"processIds,omitempty"`
+}
+
+func (x *ProcessIdList) Reset() {
+	*x = ProcessIdList{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vocdoni_node_statedb_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProcessIdList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProcessIdList) ProtoMessage() {}
+
+func (x *ProcessIdList) ProtoReflect() protoreflect.Message {
+	mi := &file_vocdoni_node_statedb_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProcessIdList.ProtoReflect.Descriptor instead.
+func (*ProcessIdList) Descriptor() ([]byte, []int) {
+	return file_vocdoni_node_statedb_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ProcessIdList) GetProcessIds() [][]byte {
+	if x != nil {
+		return x.ProcessIds
+	}
+	return nil
+}
+
 var File_vocdoni_node_statedb_proto protoreflect.FileDescriptor
 
 var file_vocdoni_node_statedb_proto_rawDesc = []byte{
@@ -164,10 +211,13 @@ var file_vocdoni_node_statedb_proto_rawDesc = []byte{
 	0x68, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x12,
 	0x1c, 0x0a, 0x09, 0x6e, 0x75, 0x6c, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x0c, 0x52, 0x09, 0x6e, 0x75, 0x6c, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x72, 0x42, 0x25, 0x5a,
-	0x23, 0x67, 0x6f, 0x2e, 0x76, 0x6f, 0x63, 0x64, 0x6f, 0x6e, 0x69, 0x2e, 0x69, 0x6f, 0x2f, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x2f, 0x67, 0x6f, 0x2f, 0x6d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x28, 0x0c, 0x52, 0x09, 0x6e, 0x75, 0x6c, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x72, 0x22, 0x2f, 0x0a,
+	0x0d, 0x50, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1e,
+	0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0c, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x73, 0x42, 0x25,
+	0x5a, 0x23, 0x67, 0x6f, 0x2e, 0x76, 0x6f, 0x63, 0x64, 0x6f, 0x6e, 0x69, 0x2e, 0x69, 0x6f, 0x2f,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x2f, 0x67, 0x6f, 0x2f, 0x6d,
+	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -182,14 +232,15 @@ func file_vocdoni_node_statedb_proto_rawDescGZIP() []byte {
 	return file_vocdoni_node_statedb_proto_rawDescData
 }
 
-var file_vocdoni_node_statedb_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_vocdoni_node_statedb_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_vocdoni_node_statedb_proto_goTypes = []interface{}{
 	(*StateDBProcess)(nil), // 0: dvote.types.v1.StateDBProcess
 	(*StateDBVote)(nil),    // 1: dvote.types.v1.StateDBVote
-	(*Process)(nil),        // 2: dvote.types.v1.Process
+	(*ProcessIdList)(nil),  // 2: dvote.types.v1.ProcessIdList
+	(*Process)(nil),        // 3: dvote.types.v1.Process
 }
 var file_vocdoni_node_statedb_proto_depIdxs = []int32{
-	2, // 0: dvote.types.v1.StateDBProcess.process:type_name -> dvote.types.v1.Process
+	3, // 0: dvote.types.v1.StateDBProcess.process:type_name -> dvote.types.v1.Process
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -228,6 +279,18 @@ func file_vocdoni_node_statedb_proto_init() {
 				return nil
 			}
 		}
+		file_vocdoni_node_statedb_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProcessIdList); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -235,7 +298,7 @@ func file_vocdoni_node_statedb_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vocdoni_node_statedb_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

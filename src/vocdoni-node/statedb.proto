@@ -23,3 +23,7 @@ message StateDBVote {
     // nullifier from Vote.nullifier
     bytes nullifier = 3;
 }
+
+message ProcessIdList {
+    repeated bytes processIds = 1;
+}
