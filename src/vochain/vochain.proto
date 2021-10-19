@@ -125,6 +125,14 @@ message ProofZkSNARK {
         repeated string publicInputs = 5;
 }
 
+// Account represents an entity with an amount of tokens, usually attached to an address.
+message Account {
+	uint64 balance =1;
+	uint32 nonce =2;
+	string infoURI = 3;
+	repeated bytes delegateAddrs = 4;
+}
+
 enum TxType {
 	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
