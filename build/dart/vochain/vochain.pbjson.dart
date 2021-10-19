@@ -269,6 +269,19 @@ const ProofZkSNARK$json = const {
 
 /// Descriptor for `ProofZkSNARK`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List proofZkSNARKDescriptor = $convert.base64Decode('CgxQcm9vZlprU05BUksSNgoWY2lyY3VpdFBhcmFtZXRlcnNJbmRleBgBIAEoBVIWY2lyY3VpdFBhcmFtZXRlcnNJbmRleBIMCgFhGAIgAygJUgFhEgwKAWIYAyADKAlSAWISDAoBYxgEIAMoCVIBYxIiCgxwdWJsaWNJbnB1dHMYBSADKAlSDHB1YmxpY0lucHV0cw==');
+@$core.Deprecated('Use accountDescriptor instead')
+const Account$json = const {
+  '1': 'Account',
+  '2': const [
+    const {'1': 'balance', '3': 1, '4': 1, '5': 4, '10': 'balance'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
+    const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '10': 'infoURI'},
+    const {'1': 'delegateAddrs', '3': 4, '4': 3, '5': 12, '10': 'delegateAddrs'},
+  ],
+};
+
+/// Descriptor for `Account`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List accountDescriptor = $convert.base64Decode('CgdBY2NvdW50EhgKB2JhbGFuY2UYASABKARSB2JhbGFuY2USFAoFbm9uY2UYAiABKA1SBW5vbmNlEhgKB2luZm9VUkkYAyABKAlSB2luZm9VUkkSJAoNZGVsZWdhdGVBZGRycxgEIAMoDFINZGVsZWdhdGVBZGRycw==');
 @$core.Deprecated('Use txDescriptor instead')
 const Tx$json = const {
   '1': 'Tx',
