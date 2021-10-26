@@ -273,12 +273,18 @@ export const WalletBackup = {
     const message = { ...baseWalletBackup } as WalletBackup;
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
+    } else {
+      message.name = "";
     }
     if (object.timestamp !== undefined && object.timestamp !== null) {
       message.timestamp = object.timestamp;
+    } else {
+      message.timestamp = 0;
     }
     if (object.wallet !== undefined && object.wallet !== null) {
       message.wallet = Wallet.fromPartial(object.wallet);
+    } else {
+      message.wallet = undefined;
     }
     if (
       object.passphraseRecovery !== undefined &&
@@ -287,6 +293,8 @@ export const WalletBackup = {
       message.passphraseRecovery = WalletBackup_Recovery.fromPartial(
         object.passphraseRecovery
       );
+    } else {
+      message.passphraseRecovery = undefined;
     }
     return message;
   },
@@ -391,6 +399,8 @@ export const WalletBackup_Recovery = {
       object.encryptedPassphrase !== null
     ) {
       message.encryptedPassphrase = object.encryptedPassphrase;
+    } else {
+      message.encryptedPassphrase = new Uint8Array();
     }
     return message;
   },

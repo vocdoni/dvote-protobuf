@@ -347,6 +347,8 @@ export const ProcessMetadata = {
     message.meta = {};
     if (object.version !== undefined && object.version !== null) {
       message.version = object.version;
+    } else {
+      message.version = "";
     }
     if (object.title !== undefined && object.title !== null) {
       Object.entries(object.title).forEach(([key, value]) => {
@@ -376,6 +378,8 @@ export const ProcessMetadata = {
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessMetadata_Results.fromPartial(object.results);
+    } else {
+      message.results = undefined;
     }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
@@ -458,9 +462,13 @@ export const ProcessMetadata_TitleEntry = {
     } as ProcessMetadata_TitleEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -536,9 +544,13 @@ export const ProcessMetadata_DescriptionEntry = {
     } as ProcessMetadata_DescriptionEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -614,9 +626,13 @@ export const ProcessMetadata_MediaEntry = {
     } as ProcessMetadata_MediaEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -849,9 +865,13 @@ export const ProcessMetadata_Question_TitleEntry = {
     } as ProcessMetadata_Question_TitleEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -930,9 +950,13 @@ export const ProcessMetadata_Question_DescriptionEntry = {
     } as ProcessMetadata_Question_DescriptionEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -1034,6 +1058,8 @@ export const ProcessMetadata_Question_VoteOption = {
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = 0;
     }
     return message;
   },
@@ -1112,9 +1138,13 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
     } as ProcessMetadata_Question_VoteOption_TitleEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -1188,9 +1218,13 @@ export const ProcessMetadata_Results = {
     } as ProcessMetadata_Results;
     if (object.aggregation !== undefined && object.aggregation !== null) {
       message.aggregation = object.aggregation;
+    } else {
+      message.aggregation = "";
     }
     if (object.display !== undefined && object.display !== null) {
       message.display = object.display;
+    } else {
+      message.display = "";
     }
     return message;
   },
@@ -1266,9 +1300,13 @@ export const ProcessMetadata_MetaEntry = {
     } as ProcessMetadata_MetaEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },

@@ -564,6 +564,14 @@ export interface ProofZkSNARK {
   publicInputs: string[];
 }
 
+/** Account represents an entity with an amount of tokens, usually attached to an address. */
+export interface Account {
+  balance: number;
+  nonce: number;
+  infoURI: string;
+  delegateAddrs: Uint8Array[];
+}
+
 export interface Tx {
   payload?:
     | { $case: "vote"; vote: VoteEnvelope }
@@ -660,6 +668,13 @@ export interface Process {
   metadata?: string | undefined;
   /** SourceNetworkId is the identifier of the network origin (where the process have been created) */
   sourceNetworkId: SourceNetworkId;
+  /** MaxCensusSize is set by the Process creator. */
+  maxCensusSize?: number | undefined;
+  /**
+   * RollingCensusSize is set by the vocdoni-node when Mode.PreRegister =
+   * true and the StartBlock has been reached.
+   */
+  rollingCensusSize?: number | undefined;
 }
 
 export interface EnvelopeType {
@@ -898,18 +913,28 @@ export const VoteEnvelope = {
     message.encryptionKeyIndexes = [];
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    } else {
+      message.nonce = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
+    } else {
+      message.proof = undefined;
     }
     if (object.votePackage !== undefined && object.votePackage !== null) {
       message.votePackage = object.votePackage;
+    } else {
+      message.votePackage = new Uint8Array();
     }
     if (object.nullifier !== undefined && object.nullifier !== null) {
       message.nullifier = object.nullifier;
+    } else {
+      message.nullifier = new Uint8Array();
     }
     if (
       object.encryptionKeyIndexes !== undefined &&
@@ -1313,6 +1338,8 @@ export const ProofGraviton = {
     const message = { ...baseProofGraviton } as ProofGraviton;
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
+    } else {
+      message.siblings = new Uint8Array();
     }
     return message;
   },
@@ -1369,6 +1396,8 @@ export const ProofIden3 = {
     const message = { ...baseProofIden3 } as ProofIden3;
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
+    } else {
+      message.siblings = new Uint8Array();
     }
     return message;
   },
@@ -1464,9 +1493,13 @@ export const ProofEthereumStorage = {
     message.siblings = [];
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = new Uint8Array();
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = new Uint8Array();
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
@@ -1599,15 +1632,23 @@ export const ProofEthereumAccount = {
     message.siblings = [];
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    } else {
+      message.nonce = new Uint8Array();
     }
     if (object.balance !== undefined && object.balance !== null) {
       message.balance = object.balance;
+    } else {
+      message.balance = new Uint8Array();
     }
     if (object.storageHash !== undefined && object.storageHash !== null) {
       message.storageHash = object.storageHash;
+    } else {
+      message.storageHash = new Uint8Array();
     }
     if (object.codeHash !== undefined && object.codeHash !== null) {
       message.codeHash = object.codeHash;
+    } else {
+      message.codeHash = new Uint8Array();
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
@@ -1698,11 +1739,15 @@ export const ProofMinime = {
       message.proofPrevBlock = ProofEthereumStorage.fromPartial(
         object.proofPrevBlock
       );
+    } else {
+      message.proofPrevBlock = undefined;
     }
     if (object.proofNextBlock !== undefined && object.proofNextBlock !== null) {
       message.proofNextBlock = ProofEthereumStorage.fromPartial(
         object.proofNextBlock
       );
+    } else {
+      message.proofNextBlock = undefined;
     }
     return message;
   },
@@ -1782,12 +1827,18 @@ export const ProofCA = {
     const message = { ...baseProofCA } as ProofCA;
     if (object.type !== undefined && object.type !== null) {
       message.type = object.type;
+    } else {
+      message.type = 0;
     }
     if (object.bundle !== undefined && object.bundle !== null) {
       message.bundle = CAbundle.fromPartial(object.bundle);
+    } else {
+      message.bundle = undefined;
     }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = object.signature;
+    } else {
+      message.signature = new Uint8Array();
     }
     return message;
   },
@@ -1859,9 +1910,13 @@ export const CAbundle = {
     const message = { ...baseCAbundle } as CAbundle;
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
+    } else {
+      message.address = new Uint8Array();
     }
     return message;
   },
@@ -1929,9 +1984,13 @@ export const ProofArbo = {
     const message = { ...baseProofArbo } as ProofArbo;
     if (object.type !== undefined && object.type !== null) {
       message.type = object.type;
+    } else {
+      message.type = 0;
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
+    } else {
+      message.siblings = new Uint8Array();
     }
     return message;
   },
@@ -2072,6 +2131,8 @@ export const ProofZkSNARK = {
       object.circuitParametersIndex !== null
     ) {
       message.circuitParametersIndex = object.circuitParametersIndex;
+    } else {
+      message.circuitParametersIndex = 0;
     }
     if (object.a !== undefined && object.a !== null) {
       for (const e of object.a) {
@@ -2091,6 +2152,115 @@ export const ProofZkSNARK = {
     if (object.publicInputs !== undefined && object.publicInputs !== null) {
       for (const e of object.publicInputs) {
         message.publicInputs.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseAccount: object = { balance: 0, nonce: 0, infoURI: "" };
+
+export const Account = {
+  encode(message: Account, writer: Writer = Writer.create()): Writer {
+    if (message.balance !== 0) {
+      writer.uint32(8).uint64(message.balance);
+    }
+    if (message.nonce !== 0) {
+      writer.uint32(16).uint32(message.nonce);
+    }
+    if (message.infoURI !== "") {
+      writer.uint32(26).string(message.infoURI);
+    }
+    for (const v of message.delegateAddrs) {
+      writer.uint32(34).bytes(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): Account {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseAccount } as Account;
+    message.delegateAddrs = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.balance = longToNumber(reader.uint64() as Long);
+          break;
+        case 2:
+          message.nonce = reader.uint32();
+          break;
+        case 3:
+          message.infoURI = reader.string();
+          break;
+        case 4:
+          message.delegateAddrs.push(reader.bytes());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Account {
+    const message = { ...baseAccount } as Account;
+    message.delegateAddrs = [];
+    if (object.balance !== undefined && object.balance !== null) {
+      message.balance = Number(object.balance);
+    }
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = Number(object.nonce);
+    }
+    if (object.infoURI !== undefined && object.infoURI !== null) {
+      message.infoURI = String(object.infoURI);
+    }
+    if (object.delegateAddrs !== undefined && object.delegateAddrs !== null) {
+      for (const e of object.delegateAddrs) {
+        message.delegateAddrs.push(bytesFromBase64(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: Account): unknown {
+    const obj: any = {};
+    message.balance !== undefined && (obj.balance = message.balance);
+    message.nonce !== undefined && (obj.nonce = message.nonce);
+    message.infoURI !== undefined && (obj.infoURI = message.infoURI);
+    if (message.delegateAddrs) {
+      obj.delegateAddrs = message.delegateAddrs.map((e) =>
+        base64FromBytes(e !== undefined ? e : new Uint8Array())
+      );
+    } else {
+      obj.delegateAddrs = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<Account>): Account {
+    const message = { ...baseAccount } as Account;
+    message.delegateAddrs = [];
+    if (object.balance !== undefined && object.balance !== null) {
+      message.balance = object.balance;
+    } else {
+      message.balance = 0;
+    }
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    } else {
+      message.nonce = 0;
+    }
+    if (object.infoURI !== undefined && object.infoURI !== null) {
+      message.infoURI = object.infoURI;
+    } else {
+      message.infoURI = "";
+    }
+    if (object.delegateAddrs !== undefined && object.delegateAddrs !== null) {
+      for (const e of object.delegateAddrs) {
+        message.delegateAddrs.push(e);
       }
     }
     return message;
@@ -2357,9 +2527,13 @@ export const SignedTx = {
     const message = { ...baseSignedTx } as SignedTx;
     if (object.tx !== undefined && object.tx !== null) {
       message.tx = object.tx;
+    } else {
+      message.tx = new Uint8Array();
     }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = object.signature;
+    } else {
+      message.signature = undefined;
     }
     return message;
   },
@@ -2439,12 +2613,18 @@ export const NewProcessTx = {
     const message = { ...baseNewProcessTx } as NewProcessTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = object.txtype;
+    } else {
+      message.txtype = 0;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    } else {
+      message.nonce = new Uint8Array();
     }
     if (object.process !== undefined && object.process !== null) {
       message.process = Process.fromPartial(object.process);
+    } else {
+      message.process = undefined;
     }
     return message;
   },
@@ -2599,30 +2779,48 @@ export const SetProcessTx = {
     const message = { ...baseSetProcessTx } as SetProcessTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = object.txtype;
+    } else {
+      message.txtype = 0;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    } else {
+      message.nonce = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;
+    } else {
+      message.status = undefined;
     }
     if (object.questionIndex !== undefined && object.questionIndex !== null) {
       message.questionIndex = object.questionIndex;
+    } else {
+      message.questionIndex = undefined;
     }
     if (object.censusRoot !== undefined && object.censusRoot !== null) {
       message.censusRoot = object.censusRoot;
+    } else {
+      message.censusRoot = undefined;
     }
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = object.censusURI;
+    } else {
+      message.censusURI = undefined;
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
+    } else {
+      message.proof = undefined;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromPartial(object.results);
+    } else {
+      message.results = undefined;
     }
     return message;
   },
@@ -2788,36 +2986,54 @@ export const AdminTx = {
     const message = { ...baseAdminTx } as AdminTx;
     if (object.txtype !== undefined && object.txtype !== null) {
       message.txtype = object.txtype;
+    } else {
+      message.txtype = 0;
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
+    } else {
+      message.address = undefined;
     }
     if (
       object.encryptionPrivateKey !== undefined &&
       object.encryptionPrivateKey !== null
     ) {
       message.encryptionPrivateKey = object.encryptionPrivateKey;
+    } else {
+      message.encryptionPrivateKey = undefined;
     }
     if (
       object.encryptionPublicKey !== undefined &&
       object.encryptionPublicKey !== null
     ) {
       message.encryptionPublicKey = object.encryptionPublicKey;
+    } else {
+      message.encryptionPublicKey = undefined;
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
       message.keyIndex = object.keyIndex;
+    } else {
+      message.keyIndex = undefined;
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = object.power;
+    } else {
+      message.power = undefined;
     }
     if (object.publicKey !== undefined && object.publicKey !== null) {
       message.publicKey = object.publicKey;
+    } else {
+      message.publicKey = undefined;
     }
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    } else {
+      message.nonce = new Uint8Array();
     }
     return message;
   },
@@ -2929,18 +3145,28 @@ export const RegisterKeyTx = {
     const message = { ...baseRegisterKeyTx } as RegisterKeyTx;
     if (object.nonce !== undefined && object.nonce !== null) {
       message.nonce = object.nonce;
+    } else {
+      message.nonce = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
+    } else {
+      message.proof = undefined;
     }
     if (object.newKey !== undefined && object.newKey !== null) {
       message.newKey = object.newKey;
+    } else {
+      message.newKey = new Uint8Array();
     }
     if (object.weight !== undefined && object.weight !== null) {
       message.weight = object.weight;
+    } else {
+      message.weight = undefined;
     }
     return message;
   },
@@ -3040,6 +3266,12 @@ export const Process = {
     if (message.sourceNetworkId !== 0) {
       writer.uint32(216).int32(message.sourceNetworkId);
     }
+    if (message.maxCensusSize !== undefined) {
+      writer.uint32(224).uint64(message.maxCensusSize);
+    }
+    if (message.rollingCensusSize !== undefined) {
+      writer.uint32(232).uint64(message.rollingCensusSize);
+    }
     return writer;
   },
 
@@ -3133,6 +3365,12 @@ export const Process = {
           break;
         case 27:
           message.sourceNetworkId = reader.int32() as any;
+          break;
+        case 28:
+          message.maxCensusSize = longToNumber(reader.uint64() as Long);
+          break;
+        case 29:
+          message.rollingCensusSize = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -3249,6 +3487,15 @@ export const Process = {
     ) {
       message.sourceNetworkId = sourceNetworkIdFromJSON(object.sourceNetworkId);
     }
+    if (object.maxCensusSize !== undefined && object.maxCensusSize !== null) {
+      message.maxCensusSize = Number(object.maxCensusSize);
+    }
+    if (
+      object.rollingCensusSize !== undefined &&
+      object.rollingCensusSize !== null
+    ) {
+      message.rollingCensusSize = Number(object.rollingCensusSize);
+    }
     return message;
   },
 
@@ -3327,6 +3574,10 @@ export const Process = {
     message.metadata !== undefined && (obj.metadata = message.metadata);
     message.sourceNetworkId !== undefined &&
       (obj.sourceNetworkId = sourceNetworkIdToJSON(message.sourceNetworkId));
+    message.maxCensusSize !== undefined &&
+      (obj.maxCensusSize = message.maxCensusSize);
+    message.rollingCensusSize !== undefined &&
+      (obj.rollingCensusSize = message.rollingCensusSize);
     return obj;
   },
 
@@ -3337,21 +3588,33 @@ export const Process = {
     message.resultsSignatures = [];
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = object.entityId;
+    } else {
+      message.entityId = new Uint8Array();
     }
     if (object.startBlock !== undefined && object.startBlock !== null) {
       message.startBlock = object.startBlock;
+    } else {
+      message.startBlock = 0;
     }
     if (object.blockCount !== undefined && object.blockCount !== null) {
       message.blockCount = object.blockCount;
+    } else {
+      message.blockCount = 0;
     }
     if (object.censusRoot !== undefined && object.censusRoot !== null) {
       message.censusRoot = object.censusRoot;
+    } else {
+      message.censusRoot = new Uint8Array();
     }
     if (object.censusURI !== undefined && object.censusURI !== null) {
       message.censusURI = object.censusURI;
+    } else {
+      message.censusURI = undefined;
     }
     if (
       object.encryptionPrivateKeys !== undefined &&
@@ -3371,39 +3634,61 @@ export const Process = {
     }
     if (object.keyIndex !== undefined && object.keyIndex !== null) {
       message.keyIndex = object.keyIndex;
+    } else {
+      message.keyIndex = undefined;
     }
     if (object.status !== undefined && object.status !== null) {
       message.status = object.status;
+    } else {
+      message.status = 0;
     }
     if (
       object.paramsSignature !== undefined &&
       object.paramsSignature !== null
     ) {
       message.paramsSignature = object.paramsSignature;
+    } else {
+      message.paramsSignature = undefined;
     }
     if (object.namespace !== undefined && object.namespace !== null) {
       message.namespace = object.namespace;
+    } else {
+      message.namespace = 0;
     }
     if (object.envelopeType !== undefined && object.envelopeType !== null) {
       message.envelopeType = EnvelopeType.fromPartial(object.envelopeType);
+    } else {
+      message.envelopeType = undefined;
     }
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = ProcessMode.fromPartial(object.mode);
+    } else {
+      message.mode = undefined;
     }
     if (object.questionIndex !== undefined && object.questionIndex !== null) {
       message.questionIndex = object.questionIndex;
+    } else {
+      message.questionIndex = undefined;
     }
     if (object.questionCount !== undefined && object.questionCount !== null) {
       message.questionCount = object.questionCount;
+    } else {
+      message.questionCount = undefined;
     }
     if (object.voteOptions !== undefined && object.voteOptions !== null) {
       message.voteOptions = ProcessVoteOptions.fromPartial(object.voteOptions);
+    } else {
+      message.voteOptions = undefined;
     }
     if (object.censusOrigin !== undefined && object.censusOrigin !== null) {
       message.censusOrigin = object.censusOrigin;
+    } else {
+      message.censusOrigin = 0;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromPartial(object.results);
+    } else {
+      message.results = undefined;
     }
     if (
       object.resultsSignatures !== undefined &&
@@ -3415,24 +3700,47 @@ export const Process = {
     }
     if (object.ethIndexSlot !== undefined && object.ethIndexSlot !== null) {
       message.ethIndexSlot = object.ethIndexSlot;
+    } else {
+      message.ethIndexSlot = undefined;
     }
     if (
       object.sourceBlockHeight !== undefined &&
       object.sourceBlockHeight !== null
     ) {
       message.sourceBlockHeight = object.sourceBlockHeight;
+    } else {
+      message.sourceBlockHeight = undefined;
     }
     if (object.owner !== undefined && object.owner !== null) {
       message.owner = object.owner;
+    } else {
+      message.owner = undefined;
     }
     if (object.metadata !== undefined && object.metadata !== null) {
       message.metadata = object.metadata;
+    } else {
+      message.metadata = undefined;
     }
     if (
       object.sourceNetworkId !== undefined &&
       object.sourceNetworkId !== null
     ) {
       message.sourceNetworkId = object.sourceNetworkId;
+    } else {
+      message.sourceNetworkId = 0;
+    }
+    if (object.maxCensusSize !== undefined && object.maxCensusSize !== null) {
+      message.maxCensusSize = object.maxCensusSize;
+    } else {
+      message.maxCensusSize = undefined;
+    }
+    if (
+      object.rollingCensusSize !== undefined &&
+      object.rollingCensusSize !== null
+    ) {
+      message.rollingCensusSize = object.rollingCensusSize;
+    } else {
+      message.rollingCensusSize = undefined;
     }
     return message;
   },
@@ -3533,18 +3841,28 @@ export const EnvelopeType = {
     const message = { ...baseEnvelopeType } as EnvelopeType;
     if (object.serial !== undefined && object.serial !== null) {
       message.serial = object.serial;
+    } else {
+      message.serial = false;
     }
     if (object.anonymous !== undefined && object.anonymous !== null) {
       message.anonymous = object.anonymous;
+    } else {
+      message.anonymous = false;
     }
     if (object.encryptedVotes !== undefined && object.encryptedVotes !== null) {
       message.encryptedVotes = object.encryptedVotes;
+    } else {
+      message.encryptedVotes = false;
     }
     if (object.uniqueValues !== undefined && object.uniqueValues !== null) {
       message.uniqueValues = object.uniqueValues;
+    } else {
+      message.uniqueValues = false;
     }
     if (object.costFromWeight !== undefined && object.costFromWeight !== null) {
       message.costFromWeight = object.costFromWeight;
+    } else {
+      message.costFromWeight = false;
     }
     return message;
   },
@@ -3649,21 +3967,31 @@ export const ProcessMode = {
     const message = { ...baseProcessMode } as ProcessMode;
     if (object.autoStart !== undefined && object.autoStart !== null) {
       message.autoStart = object.autoStart;
+    } else {
+      message.autoStart = false;
     }
     if (object.interruptible !== undefined && object.interruptible !== null) {
       message.interruptible = object.interruptible;
+    } else {
+      message.interruptible = false;
     }
     if (object.dynamicCensus !== undefined && object.dynamicCensus !== null) {
       message.dynamicCensus = object.dynamicCensus;
+    } else {
+      message.dynamicCensus = false;
     }
     if (
       object.encryptedMetaData !== undefined &&
       object.encryptedMetaData !== null
     ) {
       message.encryptedMetaData = object.encryptedMetaData;
+    } else {
+      message.encryptedMetaData = false;
     }
     if (object.preRegister !== undefined && object.preRegister !== null) {
       message.preRegister = object.preRegister;
+    } else {
+      message.preRegister = false;
     }
     return message;
   },
@@ -3770,21 +4098,31 @@ export const ProcessVoteOptions = {
     const message = { ...baseProcessVoteOptions } as ProcessVoteOptions;
     if (object.maxCount !== undefined && object.maxCount !== null) {
       message.maxCount = object.maxCount;
+    } else {
+      message.maxCount = 0;
     }
     if (object.maxValue !== undefined && object.maxValue !== null) {
       message.maxValue = object.maxValue;
+    } else {
+      message.maxValue = 0;
     }
     if (
       object.maxVoteOverwrites !== undefined &&
       object.maxVoteOverwrites !== null
     ) {
       message.maxVoteOverwrites = object.maxVoteOverwrites;
+    } else {
+      message.maxVoteOverwrites = 0;
     }
     if (object.maxTotalCost !== undefined && object.maxTotalCost !== null) {
       message.maxTotalCost = object.maxTotalCost;
+    } else {
+      message.maxTotalCost = 0;
     }
     if (object.costExponent !== undefined && object.costExponent !== null) {
       message.costExponent = object.costExponent;
+    } else {
+      message.costExponent = 0;
     }
     return message;
   },
@@ -4004,15 +4342,23 @@ export const Validator = {
     const message = { ...baseValidator } as Validator;
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
+    } else {
+      message.address = new Uint8Array();
     }
     if (object.pubKey !== undefined && object.pubKey !== null) {
       message.pubKey = object.pubKey;
+    } else {
+      message.pubKey = new Uint8Array();
     }
     if (object.power !== undefined && object.power !== null) {
       message.power = object.power;
+    } else {
+      message.power = 0;
     }
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
+    } else {
+      message.name = "";
     }
     return message;
   },
@@ -4157,15 +4503,23 @@ export const Vote = {
     message.encryptionKeyIndexes = [];
     if (object.height !== undefined && object.height !== null) {
       message.height = object.height;
+    } else {
+      message.height = 0;
     }
     if (object.nullifier !== undefined && object.nullifier !== null) {
       message.nullifier = object.nullifier;
+    } else {
+      message.nullifier = new Uint8Array();
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = new Uint8Array();
     }
     if (object.votePackage !== undefined && object.votePackage !== null) {
       message.votePackage = object.votePackage;
+    } else {
+      message.votePackage = new Uint8Array();
     }
     if (
       object.encryptionKeyIndexes !== undefined &&
@@ -4177,6 +4531,8 @@ export const Vote = {
     }
     if (object.weight !== undefined && object.weight !== null) {
       message.weight = object.weight;
+    } else {
+      message.weight = new Uint8Array();
     }
     return message;
   },
@@ -4421,51 +4777,77 @@ export const TendermintHeader = {
     const message = { ...baseTendermintHeader } as TendermintHeader;
     if (object.chainId !== undefined && object.chainId !== null) {
       message.chainId = object.chainId;
+    } else {
+      message.chainId = "";
     }
     if (object.height !== undefined && object.height !== null) {
       message.height = object.height;
+    } else {
+      message.height = 0;
     }
     if (object.timestamp !== undefined && object.timestamp !== null) {
       message.timestamp = object.timestamp;
+    } else {
+      message.timestamp = 0;
     }
     if (object.blockID !== undefined && object.blockID !== null) {
       message.blockID = object.blockID;
+    } else {
+      message.blockID = new Uint8Array();
     }
     if (object.lastCommitHash !== undefined && object.lastCommitHash !== null) {
       message.lastCommitHash = object.lastCommitHash;
+    } else {
+      message.lastCommitHash = new Uint8Array();
     }
     if (object.dataHash !== undefined && object.dataHash !== null) {
       message.dataHash = object.dataHash;
+    } else {
+      message.dataHash = new Uint8Array();
     }
     if (object.validatorsHash !== undefined && object.validatorsHash !== null) {
       message.validatorsHash = object.validatorsHash;
+    } else {
+      message.validatorsHash = new Uint8Array();
     }
     if (
       object.nextValidatorsHash !== undefined &&
       object.nextValidatorsHash !== null
     ) {
       message.nextValidatorsHash = object.nextValidatorsHash;
+    } else {
+      message.nextValidatorsHash = new Uint8Array();
     }
     if (object.consensusHash !== undefined && object.consensusHash !== null) {
       message.consensusHash = object.consensusHash;
+    } else {
+      message.consensusHash = new Uint8Array();
     }
     if (object.appHash !== undefined && object.appHash !== null) {
       message.appHash = object.appHash;
+    } else {
+      message.appHash = new Uint8Array();
     }
     if (
       object.lastResultsHash !== undefined &&
       object.lastResultsHash !== null
     ) {
       message.lastResultsHash = object.lastResultsHash;
+    } else {
+      message.lastResultsHash = new Uint8Array();
     }
     if (object.evidenceHash !== undefined && object.evidenceHash !== null) {
       message.evidenceHash = object.evidenceHash;
+    } else {
+      message.evidenceHash = new Uint8Array();
     }
     if (
       object.proposerAddress !== undefined &&
       object.proposerAddress !== null
     ) {
       message.proposerAddress = object.proposerAddress;
+    } else {
+      message.proposerAddress = new Uint8Array();
     }
     return message;
   },
@@ -4575,12 +4957,18 @@ export const ProcessResult = {
     }
     if (object.processId !== undefined && object.processId !== null) {
       message.processId = object.processId;
+    } else {
+      message.processId = undefined;
     }
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = object.entityId;
+    } else {
+      message.entityId = undefined;
     }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = object.signature;
+    } else {
+      message.signature = undefined;
     }
     return message;
   },

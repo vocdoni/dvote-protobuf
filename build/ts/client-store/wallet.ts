@@ -138,15 +138,23 @@ export const Wallet = {
       object.encryptedMnemonic !== null
     ) {
       message.encryptedMnemonic = object.encryptedMnemonic;
+    } else {
+      message.encryptedMnemonic = new Uint8Array();
     }
     if (object.hdPath !== undefined && object.hdPath !== null) {
       message.hdPath = object.hdPath;
+    } else {
+      message.hdPath = "";
     }
     if (object.locale !== undefined && object.locale !== null) {
       message.locale = object.locale;
+    } else {
+      message.locale = "";
     }
     if (object.authMethod !== undefined && object.authMethod !== null) {
       message.authMethod = object.authMethod;
+    } else {
+      message.authMethod = 0;
     }
     return message;
   },

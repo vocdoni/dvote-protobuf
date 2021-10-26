@@ -204,20 +204,30 @@ export const BootNodeGateways = {
       message.homestead = BootNodeGateways_NetworkNodes.fromPartial(
         object.homestead
       );
+    } else {
+      message.homestead = undefined;
     }
     if (object.goerli !== undefined && object.goerli !== null) {
       message.goerli = BootNodeGateways_NetworkNodes.fromPartial(object.goerli);
+    } else {
+      message.goerli = undefined;
     }
     if (object.xdai !== undefined && object.xdai !== null) {
       message.xdai = BootNodeGateways_NetworkNodes.fromPartial(object.xdai);
+    } else {
+      message.xdai = undefined;
     }
     if (object.sokol !== undefined && object.sokol !== null) {
       message.sokol = BootNodeGateways_NetworkNodes.fromPartial(object.sokol);
+    } else {
+      message.sokol = undefined;
     }
     if (object.rinkeby !== undefined && object.rinkeby !== null) {
       message.rinkeby = BootNodeGateways_NetworkNodes.fromPartial(
         object.rinkeby
       );
+    } else {
+      message.rinkeby = undefined;
     }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
@@ -437,6 +447,8 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     message.apis = [];
     if (object.uri !== undefined && object.uri !== null) {
       message.uri = object.uri;
+    } else {
+      message.uri = "";
     }
     if (object.apis !== undefined && object.apis !== null) {
       for (const e of object.apis) {
@@ -445,6 +457,8 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     }
     if (object.pubKey !== undefined && object.pubKey !== null) {
       message.pubKey = object.pubKey;
+    } else {
+      message.pubKey = "";
     }
     return message;
   },
@@ -510,6 +524,8 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     } as BootNodeGateways_NetworkNodes_Web3;
     if (object.uri !== undefined && object.uri !== null) {
       message.uri = object.uri;
+    } else {
+      message.uri = "";
     }
     return message;
   },
@@ -585,9 +601,13 @@ export const BootNodeGateways_MetaEntry = {
     } as BootNodeGateways_MetaEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },

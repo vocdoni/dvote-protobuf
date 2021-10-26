@@ -231,18 +231,28 @@ export const Account = {
     message.meta = {};
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
+    } else {
+      message.name = "";
     }
     if (object.wallet !== undefined && object.wallet !== null) {
       message.wallet = Wallet.fromPartial(object.wallet);
+    } else {
+      message.wallet = undefined;
     }
     if (object.address !== undefined && object.address !== null) {
       message.address = object.address;
+    } else {
+      message.address = "";
     }
     if (object.hasBackup !== undefined && object.hasBackup !== null) {
       message.hasBackup = object.hasBackup;
+    } else {
+      message.hasBackup = false;
     }
     if (object.extra !== undefined && object.extra !== null) {
       message.extra = Account_Extra.fromPartial(object.extra);
+    } else {
+      message.extra = undefined;
     }
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
@@ -325,6 +335,8 @@ export const Account_AppVoter = {
     message.entities = [];
     if (object.appAnalyticsID !== undefined && object.appAnalyticsID !== null) {
       message.appAnalyticsID = object.appAnalyticsID;
+    } else {
+      message.appAnalyticsID = "";
     }
     if (object.entities !== undefined && object.entities !== null) {
       for (const e of object.entities) {
@@ -382,6 +394,8 @@ export const Account_WebEntity = {
     const message = { ...baseAccount_WebEntity } as Account_WebEntity;
     if (object.webAnalyticsID !== undefined && object.webAnalyticsID !== null) {
       message.webAnalyticsID = object.webAnalyticsID;
+    } else {
+      message.webAnalyticsID = "";
     }
     return message;
   },
@@ -545,9 +559,13 @@ export const Account_MetaEntry = {
     const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },

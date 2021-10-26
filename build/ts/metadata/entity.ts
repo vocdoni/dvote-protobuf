@@ -524,6 +524,8 @@ export const EntityMetadata = {
     message.meta = {};
     if (object.version !== undefined && object.version !== null) {
       message.version = object.version;
+    } else {
+      message.version = "";
     }
     if (object.languages !== undefined && object.languages !== null) {
       for (const e of object.languages) {
@@ -551,6 +553,8 @@ export const EntityMetadata = {
       message.votingProcesses = EntityMetadata_VotingProcesses.fromPartial(
         object.votingProcesses
       );
+    } else {
+      message.votingProcesses = undefined;
     }
     if (object.newsFeed !== undefined && object.newsFeed !== null) {
       Object.entries(object.newsFeed).forEach(([key, value]) => {
@@ -561,6 +565,8 @@ export const EntityMetadata = {
     }
     if (object.media !== undefined && object.media !== null) {
       message.media = EntityMetadata_Media.fromPartial(object.media);
+    } else {
+      message.media = undefined;
     }
     if (object.actions !== undefined && object.actions !== null) {
       for (const e of object.actions) {
@@ -679,9 +685,13 @@ export const EntityMetadata_NameEntry = {
     } as EntityMetadata_NameEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -757,9 +767,13 @@ export const EntityMetadata_DescriptionEntry = {
     } as EntityMetadata_DescriptionEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -935,9 +949,13 @@ export const EntityMetadata_NewsFeedEntry = {
     } as EntityMetadata_NewsFeedEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -1002,9 +1020,13 @@ export const EntityMetadata_Media = {
     const message = { ...baseEntityMetadata_Media } as EntityMetadata_Media;
     if (object.avatar !== undefined && object.avatar !== null) {
       message.avatar = object.avatar;
+    } else {
+      message.avatar = "";
     }
     if (object.header !== undefined && object.header !== null) {
       message.header = object.header;
+    } else {
+      message.header = "";
     }
     return message;
   },
@@ -1153,9 +1175,13 @@ export const EntityMetadata_Action = {
     message.imageSources = [];
     if (object.type !== undefined && object.type !== null) {
       message.type = object.type;
+    } else {
+      message.type = "";
     }
     if (object.actionKey !== undefined && object.actionKey !== null) {
       message.actionKey = object.actionKey;
+    } else {
+      message.actionKey = "";
     }
     if (object.name !== undefined && object.name !== null) {
       Object.entries(object.name).forEach(([key, value]) => {
@@ -1166,9 +1192,13 @@ export const EntityMetadata_Action = {
     }
     if (object.visible !== undefined && object.visible !== null) {
       message.visible = object.visible;
+    } else {
+      message.visible = "";
     }
     if (object.url !== undefined && object.url !== null) {
       message.url = object.url;
+    } else {
+      message.url = "";
     }
     if (object.imageSources !== undefined && object.imageSources !== null) {
       for (const e of object.imageSources) {
@@ -1251,9 +1281,13 @@ export const EntityMetadata_Action_NameEntry = {
     } as EntityMetadata_Action_NameEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -1384,15 +1418,23 @@ export const EntityMetadata_Action_ImageSource = {
     message.caption = {};
     if (object.type !== undefined && object.type !== null) {
       message.type = object.type;
+    } else {
+      message.type = "";
     }
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
+    } else {
+      message.name = "";
     }
     if (object.orientation !== undefined && object.orientation !== null) {
       message.orientation = object.orientation;
+    } else {
+      message.orientation = "";
     }
     if (object.overlay !== undefined && object.overlay !== null) {
       message.overlay = object.overlay;
+    } else {
+      message.overlay = "";
     }
     if (object.caption !== undefined && object.caption !== null) {
       Object.entries(object.caption).forEach(([key, value]) => {
@@ -1478,9 +1520,13 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     } as EntityMetadata_Action_ImageSource_CaptionEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -1556,9 +1602,13 @@ export const EntityMetadata_MetaEntry = {
     } as EntityMetadata_MetaEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
+    } else {
+      message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
+    } else {
+      message.value = "";
     }
     return message;
   },
@@ -1629,6 +1679,8 @@ export const EntityReference = {
     message.entryPoints = [];
     if (object.entityId !== undefined && object.entityId !== null) {
       message.entityId = object.entityId;
+    } else {
+      message.entityId = "";
     }
     if (object.entryPoints !== undefined && object.entryPoints !== null) {
       for (const e of object.entryPoints) {
