@@ -1757,7 +1757,8 @@ class Process extends $pb.GeneratedMessage {
     ..aOS(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata')
     ..e<SourceNetworkId>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNetworkId', $pb.PbFieldType.OE, protoName: 'sourceNetworkId', defaultOrMaker: SourceNetworkId.UNKNOWN, valueOf: SourceNetworkId.valueOf, enumValues: SourceNetworkId.values)
     ..a<$fixnum.Int64>(28, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxCensusSize', $pb.PbFieldType.OU6, protoName: 'maxCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusSize', $pb.PbFieldType.OU6, protoName: 'rollingCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusRoot', $pb.PbFieldType.OY, protoName: 'rollingCensusRoot')
+    ..a<$fixnum.Int64>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusSize', $pb.PbFieldType.OU6, protoName: 'rollingCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false
   ;
 
@@ -1789,6 +1790,7 @@ class Process extends $pb.GeneratedMessage {
     $core.String? metadata,
     SourceNetworkId? sourceNetworkId,
     $fixnum.Int64? maxCensusSize,
+    $core.List<$core.int>? rollingCensusRoot,
     $fixnum.Int64? rollingCensusSize,
   }) {
     final _result = create();
@@ -1869,6 +1871,9 @@ class Process extends $pb.GeneratedMessage {
     }
     if (maxCensusSize != null) {
       _result.maxCensusSize = maxCensusSize;
+    }
+    if (rollingCensusRoot != null) {
+      _result.rollingCensusRoot = rollingCensusRoot;
     }
     if (rollingCensusSize != null) {
       _result.rollingCensusSize = rollingCensusSize;
@@ -2121,13 +2126,22 @@ class Process extends $pb.GeneratedMessage {
   void clearMaxCensusSize() => clearField(28);
 
   @$pb.TagNumber(29)
-  $fixnum.Int64 get rollingCensusSize => $_getI64(26);
+  $core.List<$core.int> get rollingCensusRoot => $_getN(26);
   @$pb.TagNumber(29)
-  set rollingCensusSize($fixnum.Int64 v) { $_setInt64(26, v); }
+  set rollingCensusRoot($core.List<$core.int> v) { $_setBytes(26, v); }
   @$pb.TagNumber(29)
-  $core.bool hasRollingCensusSize() => $_has(26);
+  $core.bool hasRollingCensusRoot() => $_has(26);
   @$pb.TagNumber(29)
-  void clearRollingCensusSize() => clearField(29);
+  void clearRollingCensusRoot() => clearField(29);
+
+  @$pb.TagNumber(30)
+  $fixnum.Int64 get rollingCensusSize => $_getI64(27);
+  @$pb.TagNumber(30)
+  set rollingCensusSize($fixnum.Int64 v) { $_setInt64(27, v); }
+  @$pb.TagNumber(30)
+  $core.bool hasRollingCensusSize() => $_has(27);
+  @$pb.TagNumber(30)
+  void clearRollingCensusSize() => clearField(30);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {
