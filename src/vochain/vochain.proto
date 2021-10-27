@@ -245,9 +245,12 @@ message Process {
 	SourceNetworkId sourceNetworkId = 27;
 	// MaxCensusSize is set by the Process creator.
 	optional uint64 maxCensusSize = 28;
+	// RollingCensusRoot merkle root of the rolling census.  Set by the
+	// vocdoni-node when Mode.Process = true
+	optional bytes rollingCensusRoot = 29;
 	// RollingCensusSize is set by the vocdoni-node when Mode.PreRegister =
 	// true and the StartBlock has been reached.
-	optional uint64 rollingCensusSize = 29;
+	optional uint64 rollingCensusSize = 30;
 }
 
 enum ProcessStatus {
