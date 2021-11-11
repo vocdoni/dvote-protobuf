@@ -1759,6 +1759,7 @@ class Process extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(28, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxCensusSize', $pb.PbFieldType.OU6, protoName: 'maxCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusRoot', $pb.PbFieldType.OY, protoName: 'rollingCensusRoot')
     ..a<$fixnum.Int64>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusSize', $pb.PbFieldType.OU6, protoName: 'rollingCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifiersRoot', $pb.PbFieldType.OY, protoName: 'nullifiersRoot')
     ..hasRequiredFields = false
   ;
 
@@ -1792,6 +1793,7 @@ class Process extends $pb.GeneratedMessage {
     $fixnum.Int64? maxCensusSize,
     $core.List<$core.int>? rollingCensusRoot,
     $fixnum.Int64? rollingCensusSize,
+    $core.List<$core.int>? nullifiersRoot,
   }) {
     final _result = create();
     if (processId != null) {
@@ -1877,6 +1879,9 @@ class Process extends $pb.GeneratedMessage {
     }
     if (rollingCensusSize != null) {
       _result.rollingCensusSize = rollingCensusSize;
+    }
+    if (nullifiersRoot != null) {
+      _result.nullifiersRoot = nullifiersRoot;
     }
     return _result;
   }
@@ -2142,6 +2147,15 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasRollingCensusSize() => $_has(27);
   @$pb.TagNumber(30)
   void clearRollingCensusSize() => clearField(30);
+
+  @$pb.TagNumber(31)
+  $core.List<$core.int> get nullifiersRoot => $_getN(28);
+  @$pb.TagNumber(31)
+  set nullifiersRoot($core.List<$core.int> v) { $_setBytes(28, v); }
+  @$pb.TagNumber(31)
+  $core.bool hasNullifiersRoot() => $_has(28);
+  @$pb.TagNumber(31)
+  void clearNullifiersRoot() => clearField(31);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {

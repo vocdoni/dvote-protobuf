@@ -133,29 +133,10 @@ export const Wallet = {
 
   fromPartial(object: DeepPartial<Wallet>): Wallet {
     const message = { ...baseWallet } as Wallet;
-    if (
-      object.encryptedMnemonic !== undefined &&
-      object.encryptedMnemonic !== null
-    ) {
-      message.encryptedMnemonic = object.encryptedMnemonic;
-    } else {
-      message.encryptedMnemonic = new Uint8Array();
-    }
-    if (object.hdPath !== undefined && object.hdPath !== null) {
-      message.hdPath = object.hdPath;
-    } else {
-      message.hdPath = "";
-    }
-    if (object.locale !== undefined && object.locale !== null) {
-      message.locale = object.locale;
-    } else {
-      message.locale = "";
-    }
-    if (object.authMethod !== undefined && object.authMethod !== null) {
-      message.authMethod = object.authMethod;
-    } else {
-      message.authMethod = 0;
-    }
+    message.encryptedMnemonic = object.encryptedMnemonic ?? new Uint8Array();
+    message.hdPath = object.hdPath ?? "";
+    message.locale = object.locale ?? "";
+    message.authMethod = object.authMethod ?? 0;
     return message;
   },
 };

@@ -228,32 +228,20 @@ export const Account = {
 
   fromPartial(object: DeepPartial<Account>): Account {
     const message = { ...baseAccount } as Account;
-    message.meta = {};
-    if (object.name !== undefined && object.name !== null) {
-      message.name = object.name;
-    } else {
-      message.name = "";
-    }
+    message.name = object.name ?? "";
     if (object.wallet !== undefined && object.wallet !== null) {
       message.wallet = Wallet.fromPartial(object.wallet);
     } else {
       message.wallet = undefined;
     }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    } else {
-      message.address = "";
-    }
-    if (object.hasBackup !== undefined && object.hasBackup !== null) {
-      message.hasBackup = object.hasBackup;
-    } else {
-      message.hasBackup = false;
-    }
+    message.address = object.address ?? "";
+    message.hasBackup = object.hasBackup ?? false;
     if (object.extra !== undefined && object.extra !== null) {
       message.extra = Account_Extra.fromPartial(object.extra);
     } else {
       message.extra = undefined;
     }
+    message.meta = {};
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -332,12 +320,8 @@ export const Account_AppVoter = {
 
   fromPartial(object: DeepPartial<Account_AppVoter>): Account_AppVoter {
     const message = { ...baseAccount_AppVoter } as Account_AppVoter;
+    message.appAnalyticsID = object.appAnalyticsID ?? "";
     message.entities = [];
-    if (object.appAnalyticsID !== undefined && object.appAnalyticsID !== null) {
-      message.appAnalyticsID = object.appAnalyticsID;
-    } else {
-      message.appAnalyticsID = "";
-    }
     if (object.entities !== undefined && object.entities !== null) {
       for (const e of object.entities) {
         message.entities.push(EntityReference.fromPartial(e));
@@ -392,11 +376,7 @@ export const Account_WebEntity = {
 
   fromPartial(object: DeepPartial<Account_WebEntity>): Account_WebEntity {
     const message = { ...baseAccount_WebEntity } as Account_WebEntity;
-    if (object.webAnalyticsID !== undefined && object.webAnalyticsID !== null) {
-      message.webAnalyticsID = object.webAnalyticsID;
-    } else {
-      message.webAnalyticsID = "";
-    }
+    message.webAnalyticsID = object.webAnalyticsID ?? "";
     return message;
   },
 };
@@ -557,16 +537,8 @@ export const Account_MetaEntry = {
 
   fromPartial(object: DeepPartial<Account_MetaEntry>): Account_MetaEntry {
     const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    } else {
-      message.key = "";
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    } else {
-      message.value = "";
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };

@@ -271,16 +271,8 @@ export const WalletBackup = {
 
   fromPartial(object: DeepPartial<WalletBackup>): WalletBackup {
     const message = { ...baseWalletBackup } as WalletBackup;
-    if (object.name !== undefined && object.name !== null) {
-      message.name = object.name;
-    } else {
-      message.name = "";
-    }
-    if (object.timestamp !== undefined && object.timestamp !== null) {
-      message.timestamp = object.timestamp;
-    } else {
-      message.timestamp = 0;
-    }
+    message.name = object.name ?? "";
+    message.timestamp = object.timestamp ?? 0;
     if (object.wallet !== undefined && object.wallet !== null) {
       message.wallet = Wallet.fromPartial(object.wallet);
     } else {
@@ -394,14 +386,8 @@ export const WalletBackup_Recovery = {
         message.questionIds.push(e);
       }
     }
-    if (
-      object.encryptedPassphrase !== undefined &&
-      object.encryptedPassphrase !== null
-    ) {
-      message.encryptedPassphrase = object.encryptedPassphrase;
-    } else {
-      message.encryptedPassphrase = new Uint8Array();
-    }
+    message.encryptedPassphrase =
+      object.encryptedPassphrase ?? new Uint8Array();
     return message;
   },
 };
