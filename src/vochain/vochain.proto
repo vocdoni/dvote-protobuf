@@ -251,6 +251,9 @@ message Process {
 	// RollingCensusSize is set by the vocdoni-node when Mode.PreRegister =
 	// true and the StartBlock has been reached.
 	optional uint64 rollingCensusSize = 30;
+	// NullifiersRoot is the root of the pre-census nullifiers merkle tree.
+	// Used when Mode.PreRegister = true.
+	optional bytes nullifiersRoot = 31;
 }
 
 enum ProcessStatus {
