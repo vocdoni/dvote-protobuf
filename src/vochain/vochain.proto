@@ -103,6 +103,7 @@ message ProofArbo {
         }
         Type type = 1;
         bytes siblings = 2;
+        bytes value = 3;
 }
 
 // Groth16 zkSNARK proof + public inputs
