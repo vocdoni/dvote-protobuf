@@ -811,6 +811,7 @@ class ProofArbo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofArbo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..e<ProofArbo_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofArbo_Type.BLAKE2B, valueOf: ProofArbo_Type.valueOf, enumValues: ProofArbo_Type.values)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siblings', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -818,6 +819,7 @@ class ProofArbo extends $pb.GeneratedMessage {
   factory ProofArbo({
     ProofArbo_Type? type,
     $core.List<$core.int>? siblings,
+    $core.List<$core.int>? value,
   }) {
     final _result = create();
     if (type != null) {
@@ -825,6 +827,9 @@ class ProofArbo extends $pb.GeneratedMessage {
     }
     if (siblings != null) {
       _result.siblings = siblings;
+    }
+    if (value != null) {
+      _result.value = value;
     }
     return _result;
   }
@@ -866,6 +871,15 @@ class ProofArbo extends $pb.GeneratedMessage {
   $core.bool hasSiblings() => $_has(1);
   @$pb.TagNumber(2)
   void clearSiblings() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get value => $_getN(2);
+  @$pb.TagNumber(3)
+  set value($core.List<$core.int> v) { $_setBytes(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasValue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearValue() => clearField(3);
 }
 
 class ProofZkSNARK extends $pb.GeneratedMessage {
