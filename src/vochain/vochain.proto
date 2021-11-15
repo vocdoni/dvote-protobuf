@@ -52,6 +52,7 @@ message Proof {
 
 message ProofGraviton {
         bytes siblings = 1;
+		bytes value = 2;
 }
 
 message ProofIden3 {
