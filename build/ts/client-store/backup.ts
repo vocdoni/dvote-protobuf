@@ -271,12 +271,14 @@ export const WalletBackup = {
 
   fromPartial(object: DeepPartial<WalletBackup>): WalletBackup {
     const message = { ...baseWalletBackup } as WalletBackup;
-    message.name = object.name ?? "";
-    message.timestamp = object.timestamp ?? 0;
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.timestamp !== undefined && object.timestamp !== null) {
+      message.timestamp = object.timestamp;
+    }
     if (object.wallet !== undefined && object.wallet !== null) {
       message.wallet = Wallet.fromPartial(object.wallet);
-    } else {
-      message.wallet = undefined;
     }
     if (
       object.passphraseRecovery !== undefined &&
@@ -285,8 +287,6 @@ export const WalletBackup = {
       message.passphraseRecovery = WalletBackup_Recovery.fromPartial(
         object.passphraseRecovery
       );
-    } else {
-      message.passphraseRecovery = undefined;
     }
     return message;
   },
@@ -386,15 +386,18 @@ export const WalletBackup_Recovery = {
         message.questionIds.push(e);
       }
     }
-    message.encryptedPassphrase =
-      object.encryptedPassphrase ?? new Uint8Array();
+    if (
+      object.encryptedPassphrase !== undefined &&
+      object.encryptedPassphrase !== null
+    ) {
+      message.encryptedPassphrase = object.encryptedPassphrase;
+    }
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
-declare var global: any | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   if (typeof self !== "undefined") return self;

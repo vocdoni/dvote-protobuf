@@ -286,21 +286,37 @@ export const Feed = {
 
   fromPartial(object: DeepPartial<Feed>): Feed {
     const message = { ...baseFeed } as Feed;
-    message.version = object.version ?? "";
-    message.title = object.title ?? "";
-    message.homePageUrl = object.homePageUrl ?? "";
-    message.description = object.description ?? "";
-    message.feedUrl = object.feedUrl ?? "";
-    message.icon = object.icon ?? "";
-    message.favicon = object.favicon ?? "";
-    message.expired = object.expired ?? false;
     message.items = [];
+    message.meta = {};
+    if (object.version !== undefined && object.version !== null) {
+      message.version = object.version;
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.homePageUrl !== undefined && object.homePageUrl !== null) {
+      message.homePageUrl = object.homePageUrl;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = object.description;
+    }
+    if (object.feedUrl !== undefined && object.feedUrl !== null) {
+      message.feedUrl = object.feedUrl;
+    }
+    if (object.icon !== undefined && object.icon !== null) {
+      message.icon = object.icon;
+    }
+    if (object.favicon !== undefined && object.favicon !== null) {
+      message.favicon = object.favicon;
+    }
+    if (object.expired !== undefined && object.expired !== null) {
+      message.expired = object.expired;
+    }
     if (object.items !== undefined && object.items !== null) {
       for (const e of object.items) {
         message.items.push(FeedPost.fromPartial(e));
       }
     }
-    message.meta = {};
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -366,8 +382,12 @@ export const Feed_MetaEntry = {
 
   fromPartial(object: DeepPartial<Feed_MetaEntry>): Feed_MetaEntry {
     const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -542,25 +562,41 @@ export const FeedPost = {
 
   fromPartial(object: DeepPartial<FeedPost>): FeedPost {
     const message = { ...baseFeedPost } as FeedPost;
-    message.id = object.id ?? "";
-    message.title = object.title ?? "";
-    message.summary = object.summary ?? "";
-    message.contentText = object.contentText ?? "";
-    message.contentHtml = object.contentHtml ?? "";
-    message.url = object.url ?? "";
-    message.image = object.image ?? "";
     message.tags = [];
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.summary !== undefined && object.summary !== null) {
+      message.summary = object.summary;
+    }
+    if (object.contentText !== undefined && object.contentText !== null) {
+      message.contentText = object.contentText;
+    }
+    if (object.contentHtml !== undefined && object.contentHtml !== null) {
+      message.contentHtml = object.contentHtml;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
+    if (object.image !== undefined && object.image !== null) {
+      message.image = object.image;
+    }
     if (object.tags !== undefined && object.tags !== null) {
       for (const e of object.tags) {
         message.tags.push(e);
       }
     }
-    message.datePublished = object.datePublished ?? "";
-    message.dateModified = object.dateModified ?? "";
+    if (object.datePublished !== undefined && object.datePublished !== null) {
+      message.datePublished = object.datePublished;
+    }
+    if (object.dateModified !== undefined && object.dateModified !== null) {
+      message.dateModified = object.dateModified;
+    }
     if (object.author !== undefined && object.author !== null) {
       message.author = FeedPost_Author.fromPartial(object.author);
-    } else {
-      message.author = undefined;
     }
     return message;
   },
@@ -620,8 +656,12 @@ export const FeedPost_Author = {
 
   fromPartial(object: DeepPartial<FeedPost_Author>): FeedPost_Author {
     const message = { ...baseFeedPost_Author } as FeedPost_Author;
-    message.name = object.name ?? "";
-    message.url = object.url ?? "";
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
     return message;
   },
 };

@@ -507,6 +507,7 @@ export interface CAbundle {
 export interface ProofArbo {
   type: ProofArbo_Type;
   siblings: Uint8Array;
+  value: Uint8Array;
 }
 
 export enum ProofArbo_Type {
@@ -920,16 +921,22 @@ export const VoteEnvelope = {
 
   fromPartial(object: DeepPartial<VoteEnvelope>): VoteEnvelope {
     const message = { ...baseVoteEnvelope } as VoteEnvelope;
-    message.nonce = object.nonce ?? new Uint8Array();
-    message.processId = object.processId ?? new Uint8Array();
+    message.encryptionKeyIndexes = [];
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
-    } else {
-      message.proof = undefined;
     }
-    message.votePackage = object.votePackage ?? new Uint8Array();
-    message.nullifier = object.nullifier ?? new Uint8Array();
-    message.encryptionKeyIndexes = [];
+    if (object.votePackage !== undefined && object.votePackage !== null) {
+      message.votePackage = object.votePackage;
+    }
+    if (object.nullifier !== undefined && object.nullifier !== null) {
+      message.nullifier = object.nullifier;
+    }
     if (
       object.encryptionKeyIndexes !== undefined &&
       object.encryptionKeyIndexes !== null
@@ -1330,7 +1337,9 @@ export const ProofGraviton = {
 
   fromPartial(object: DeepPartial<ProofGraviton>): ProofGraviton {
     const message = { ...baseProofGraviton } as ProofGraviton;
-    message.siblings = object.siblings ?? new Uint8Array();
+    if (object.siblings !== undefined && object.siblings !== null) {
+      message.siblings = object.siblings;
+    }
     return message;
   },
 };
@@ -1384,7 +1393,9 @@ export const ProofIden3 = {
 
   fromPartial(object: DeepPartial<ProofIden3>): ProofIden3 {
     const message = { ...baseProofIden3 } as ProofIden3;
-    message.siblings = object.siblings ?? new Uint8Array();
+    if (object.siblings !== undefined && object.siblings !== null) {
+      message.siblings = object.siblings;
+    }
     return message;
   },
 };
@@ -1476,9 +1487,13 @@ export const ProofEthereumStorage = {
 
   fromPartial(object: DeepPartial<ProofEthereumStorage>): ProofEthereumStorage {
     const message = { ...baseProofEthereumStorage } as ProofEthereumStorage;
-    message.key = object.key ?? new Uint8Array();
-    message.value = object.value ?? new Uint8Array();
     message.siblings = [];
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
         message.siblings.push(e);
@@ -1607,11 +1622,19 @@ export const ProofEthereumAccount = {
 
   fromPartial(object: DeepPartial<ProofEthereumAccount>): ProofEthereumAccount {
     const message = { ...baseProofEthereumAccount } as ProofEthereumAccount;
-    message.nonce = object.nonce ?? new Uint8Array();
-    message.balance = object.balance ?? new Uint8Array();
-    message.storageHash = object.storageHash ?? new Uint8Array();
-    message.codeHash = object.codeHash ?? new Uint8Array();
     message.siblings = [];
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
+    if (object.balance !== undefined && object.balance !== null) {
+      message.balance = object.balance;
+    }
+    if (object.storageHash !== undefined && object.storageHash !== null) {
+      message.storageHash = object.storageHash;
+    }
+    if (object.codeHash !== undefined && object.codeHash !== null) {
+      message.codeHash = object.codeHash;
+    }
     if (object.siblings !== undefined && object.siblings !== null) {
       for (const e of object.siblings) {
         message.siblings.push(e);
@@ -1701,15 +1724,11 @@ export const ProofMinime = {
       message.proofPrevBlock = ProofEthereumStorage.fromPartial(
         object.proofPrevBlock
       );
-    } else {
-      message.proofPrevBlock = undefined;
     }
     if (object.proofNextBlock !== undefined && object.proofNextBlock !== null) {
       message.proofNextBlock = ProofEthereumStorage.fromPartial(
         object.proofNextBlock
       );
-    } else {
-      message.proofNextBlock = undefined;
     }
     return message;
   },
@@ -1787,13 +1806,15 @@ export const ProofCA = {
 
   fromPartial(object: DeepPartial<ProofCA>): ProofCA {
     const message = { ...baseProofCA } as ProofCA;
-    message.type = object.type ?? 0;
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
     if (object.bundle !== undefined && object.bundle !== null) {
       message.bundle = CAbundle.fromPartial(object.bundle);
-    } else {
-      message.bundle = undefined;
     }
-    message.signature = object.signature ?? new Uint8Array();
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = object.signature;
+    }
     return message;
   },
 };
@@ -1862,8 +1883,12 @@ export const CAbundle = {
 
   fromPartial(object: DeepPartial<CAbundle>): CAbundle {
     const message = { ...baseCAbundle } as CAbundle;
-    message.processId = object.processId ?? new Uint8Array();
-    message.address = object.address ?? new Uint8Array();
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
     return message;
   },
 };
@@ -1878,6 +1903,9 @@ export const ProofArbo = {
     if (message.siblings.length !== 0) {
       writer.uint32(18).bytes(message.siblings);
     }
+    if (message.value.length !== 0) {
+      writer.uint32(26).bytes(message.value);
+    }
     return writer;
   },
 
@@ -1886,6 +1914,7 @@ export const ProofArbo = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofArbo } as ProofArbo;
     message.siblings = new Uint8Array();
+    message.value = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1894,6 +1923,9 @@ export const ProofArbo = {
           break;
         case 2:
           message.siblings = reader.bytes();
+          break;
+        case 3:
+          message.value = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1906,11 +1938,15 @@ export const ProofArbo = {
   fromJSON(object: any): ProofArbo {
     const message = { ...baseProofArbo } as ProofArbo;
     message.siblings = new Uint8Array();
+    message.value = new Uint8Array();
     if (object.type !== undefined && object.type !== null) {
       message.type = proofArbo_TypeFromJSON(object.type);
     }
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = bytesFromBase64(object.siblings);
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = bytesFromBase64(object.value);
     }
     return message;
   },
@@ -1923,13 +1959,24 @@ export const ProofArbo = {
       (obj.siblings = base64FromBytes(
         message.siblings !== undefined ? message.siblings : new Uint8Array()
       ));
+    message.value !== undefined &&
+      (obj.value = base64FromBytes(
+        message.value !== undefined ? message.value : new Uint8Array()
+      ));
     return obj;
   },
 
   fromPartial(object: DeepPartial<ProofArbo>): ProofArbo {
     const message = { ...baseProofArbo } as ProofArbo;
-    message.type = object.type ?? 0;
-    message.siblings = object.siblings ?? new Uint8Array();
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.siblings !== undefined && object.siblings !== null) {
+      message.siblings = object.siblings;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -2060,26 +2107,31 @@ export const ProofZkSNARK = {
 
   fromPartial(object: DeepPartial<ProofZkSNARK>): ProofZkSNARK {
     const message = { ...baseProofZkSNARK } as ProofZkSNARK;
-    message.circuitParametersIndex = object.circuitParametersIndex ?? 0;
     message.a = [];
+    message.b = [];
+    message.c = [];
+    message.publicInputs = [];
+    if (
+      object.circuitParametersIndex !== undefined &&
+      object.circuitParametersIndex !== null
+    ) {
+      message.circuitParametersIndex = object.circuitParametersIndex;
+    }
     if (object.a !== undefined && object.a !== null) {
       for (const e of object.a) {
         message.a.push(e);
       }
     }
-    message.b = [];
     if (object.b !== undefined && object.b !== null) {
       for (const e of object.b) {
         message.b.push(e);
       }
     }
-    message.c = [];
     if (object.c !== undefined && object.c !== null) {
       for (const e of object.c) {
         message.c.push(e);
       }
     }
-    message.publicInputs = [];
     if (object.publicInputs !== undefined && object.publicInputs !== null) {
       for (const e of object.publicInputs) {
         message.publicInputs.push(e);
@@ -2173,10 +2225,16 @@ export const Account = {
 
   fromPartial(object: DeepPartial<Account>): Account {
     const message = { ...baseAccount } as Account;
-    message.balance = object.balance ?? 0;
-    message.nonce = object.nonce ?? 0;
-    message.infoURI = object.infoURI ?? "";
     message.delegateAddrs = [];
+    if (object.balance !== undefined && object.balance !== null) {
+      message.balance = object.balance;
+    }
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
+    if (object.infoURI !== undefined && object.infoURI !== null) {
+      message.infoURI = object.infoURI;
+    }
     if (object.delegateAddrs !== undefined && object.delegateAddrs !== null) {
       for (const e of object.delegateAddrs) {
         message.delegateAddrs.push(e);
@@ -2444,8 +2502,12 @@ export const SignedTx = {
 
   fromPartial(object: DeepPartial<SignedTx>): SignedTx {
     const message = { ...baseSignedTx } as SignedTx;
-    message.tx = object.tx ?? new Uint8Array();
-    message.signature = object.signature ?? undefined;
+    if (object.tx !== undefined && object.tx !== null) {
+      message.tx = object.tx;
+    }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = object.signature;
+    }
     return message;
   },
 };
@@ -2522,12 +2584,14 @@ export const NewProcessTx = {
 
   fromPartial(object: DeepPartial<NewProcessTx>): NewProcessTx {
     const message = { ...baseNewProcessTx } as NewProcessTx;
-    message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? new Uint8Array();
+    if (object.txtype !== undefined && object.txtype !== null) {
+      message.txtype = object.txtype;
+    }
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
     if (object.process !== undefined && object.process !== null) {
       message.process = Process.fromPartial(object.process);
-    } else {
-      message.process = undefined;
     }
     return message;
   },
@@ -2680,22 +2744,32 @@ export const SetProcessTx = {
 
   fromPartial(object: DeepPartial<SetProcessTx>): SetProcessTx {
     const message = { ...baseSetProcessTx } as SetProcessTx;
-    message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? new Uint8Array();
-    message.processId = object.processId ?? new Uint8Array();
-    message.status = object.status ?? undefined;
-    message.questionIndex = object.questionIndex ?? undefined;
-    message.censusRoot = object.censusRoot ?? undefined;
-    message.censusURI = object.censusURI ?? undefined;
+    if (object.txtype !== undefined && object.txtype !== null) {
+      message.txtype = object.txtype;
+    }
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    }
+    if (object.questionIndex !== undefined && object.questionIndex !== null) {
+      message.questionIndex = object.questionIndex;
+    }
+    if (object.censusRoot !== undefined && object.censusRoot !== null) {
+      message.censusRoot = object.censusRoot;
+    }
+    if (object.censusURI !== undefined && object.censusURI !== null) {
+      message.censusURI = object.censusURI;
+    }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
-    } else {
-      message.proof = undefined;
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromPartial(object.results);
-    } else {
-      message.results = undefined;
     }
     return message;
   },
@@ -2859,15 +2933,39 @@ export const AdminTx = {
 
   fromPartial(object: DeepPartial<AdminTx>): AdminTx {
     const message = { ...baseAdminTx } as AdminTx;
-    message.txtype = object.txtype ?? 0;
-    message.processId = object.processId ?? new Uint8Array();
-    message.address = object.address ?? undefined;
-    message.encryptionPrivateKey = object.encryptionPrivateKey ?? undefined;
-    message.encryptionPublicKey = object.encryptionPublicKey ?? undefined;
-    message.keyIndex = object.keyIndex ?? undefined;
-    message.power = object.power ?? undefined;
-    message.publicKey = object.publicKey ?? undefined;
-    message.nonce = object.nonce ?? new Uint8Array();
+    if (object.txtype !== undefined && object.txtype !== null) {
+      message.txtype = object.txtype;
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    if (
+      object.encryptionPrivateKey !== undefined &&
+      object.encryptionPrivateKey !== null
+    ) {
+      message.encryptionPrivateKey = object.encryptionPrivateKey;
+    }
+    if (
+      object.encryptionPublicKey !== undefined &&
+      object.encryptionPublicKey !== null
+    ) {
+      message.encryptionPublicKey = object.encryptionPublicKey;
+    }
+    if (object.keyIndex !== undefined && object.keyIndex !== null) {
+      message.keyIndex = object.keyIndex;
+    }
+    if (object.power !== undefined && object.power !== null) {
+      message.power = object.power;
+    }
+    if (object.publicKey !== undefined && object.publicKey !== null) {
+      message.publicKey = object.publicKey;
+    }
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
     return message;
   },
 };
@@ -2976,15 +3074,21 @@ export const RegisterKeyTx = {
 
   fromPartial(object: DeepPartial<RegisterKeyTx>): RegisterKeyTx {
     const message = { ...baseRegisterKeyTx } as RegisterKeyTx;
-    message.nonce = object.nonce ?? new Uint8Array();
-    message.processId = object.processId ?? new Uint8Array();
+    if (object.nonce !== undefined && object.nonce !== null) {
+      message.nonce = object.nonce;
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
     if (object.proof !== undefined && object.proof !== null) {
       message.proof = Proof.fromPartial(object.proof);
-    } else {
-      message.proof = undefined;
     }
-    message.newKey = object.newKey ?? new Uint8Array();
-    message.weight = object.weight ?? undefined;
+    if (object.newKey !== undefined && object.newKey !== null) {
+      message.newKey = object.newKey;
+    }
+    if (object.weight !== undefined && object.weight !== null) {
+      message.weight = object.weight;
+    }
     return message;
   },
 };
@@ -3431,13 +3535,27 @@ export const Process = {
 
   fromPartial(object: DeepPartial<Process>): Process {
     const message = { ...baseProcess } as Process;
-    message.processId = object.processId ?? new Uint8Array();
-    message.entityId = object.entityId ?? new Uint8Array();
-    message.startBlock = object.startBlock ?? 0;
-    message.blockCount = object.blockCount ?? 0;
-    message.censusRoot = object.censusRoot ?? new Uint8Array();
-    message.censusURI = object.censusURI ?? undefined;
     message.encryptionPrivateKeys = [];
+    message.encryptionPublicKeys = [];
+    message.resultsSignatures = [];
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.entityId !== undefined && object.entityId !== null) {
+      message.entityId = object.entityId;
+    }
+    if (object.startBlock !== undefined && object.startBlock !== null) {
+      message.startBlock = object.startBlock;
+    }
+    if (object.blockCount !== undefined && object.blockCount !== null) {
+      message.blockCount = object.blockCount;
+    }
+    if (object.censusRoot !== undefined && object.censusRoot !== null) {
+      message.censusRoot = object.censusRoot;
+    }
+    if (object.censusURI !== undefined && object.censusURI !== null) {
+      message.censusURI = object.censusURI;
+    }
     if (
       object.encryptionPrivateKeys !== undefined &&
       object.encryptionPrivateKeys !== null
@@ -3446,7 +3564,6 @@ export const Process = {
         message.encryptionPrivateKeys.push(e);
       }
     }
-    message.encryptionPublicKeys = [];
     if (
       object.encryptionPublicKeys !== undefined &&
       object.encryptionPublicKeys !== null
@@ -3455,34 +3572,42 @@ export const Process = {
         message.encryptionPublicKeys.push(e);
       }
     }
-    message.keyIndex = object.keyIndex ?? undefined;
-    message.status = object.status ?? 0;
-    message.paramsSignature = object.paramsSignature ?? undefined;
-    message.namespace = object.namespace ?? 0;
+    if (object.keyIndex !== undefined && object.keyIndex !== null) {
+      message.keyIndex = object.keyIndex;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    }
+    if (
+      object.paramsSignature !== undefined &&
+      object.paramsSignature !== null
+    ) {
+      message.paramsSignature = object.paramsSignature;
+    }
+    if (object.namespace !== undefined && object.namespace !== null) {
+      message.namespace = object.namespace;
+    }
     if (object.envelopeType !== undefined && object.envelopeType !== null) {
       message.envelopeType = EnvelopeType.fromPartial(object.envelopeType);
-    } else {
-      message.envelopeType = undefined;
     }
     if (object.mode !== undefined && object.mode !== null) {
       message.mode = ProcessMode.fromPartial(object.mode);
-    } else {
-      message.mode = undefined;
     }
-    message.questionIndex = object.questionIndex ?? undefined;
-    message.questionCount = object.questionCount ?? undefined;
+    if (object.questionIndex !== undefined && object.questionIndex !== null) {
+      message.questionIndex = object.questionIndex;
+    }
+    if (object.questionCount !== undefined && object.questionCount !== null) {
+      message.questionCount = object.questionCount;
+    }
     if (object.voteOptions !== undefined && object.voteOptions !== null) {
       message.voteOptions = ProcessVoteOptions.fromPartial(object.voteOptions);
-    } else {
-      message.voteOptions = undefined;
     }
-    message.censusOrigin = object.censusOrigin ?? 0;
+    if (object.censusOrigin !== undefined && object.censusOrigin !== null) {
+      message.censusOrigin = object.censusOrigin;
+    }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessResult.fromPartial(object.results);
-    } else {
-      message.results = undefined;
     }
-    message.resultsSignatures = [];
     if (
       object.resultsSignatures !== undefined &&
       object.resultsSignatures !== null
@@ -3491,15 +3616,45 @@ export const Process = {
         message.resultsSignatures.push(e);
       }
     }
-    message.ethIndexSlot = object.ethIndexSlot ?? undefined;
-    message.sourceBlockHeight = object.sourceBlockHeight ?? undefined;
-    message.owner = object.owner ?? undefined;
-    message.metadata = object.metadata ?? undefined;
-    message.sourceNetworkId = object.sourceNetworkId ?? 0;
-    message.maxCensusSize = object.maxCensusSize ?? undefined;
-    message.rollingCensusRoot = object.rollingCensusRoot ?? undefined;
-    message.rollingCensusSize = object.rollingCensusSize ?? undefined;
-    message.nullifiersRoot = object.nullifiersRoot ?? undefined;
+    if (object.ethIndexSlot !== undefined && object.ethIndexSlot !== null) {
+      message.ethIndexSlot = object.ethIndexSlot;
+    }
+    if (
+      object.sourceBlockHeight !== undefined &&
+      object.sourceBlockHeight !== null
+    ) {
+      message.sourceBlockHeight = object.sourceBlockHeight;
+    }
+    if (object.owner !== undefined && object.owner !== null) {
+      message.owner = object.owner;
+    }
+    if (object.metadata !== undefined && object.metadata !== null) {
+      message.metadata = object.metadata;
+    }
+    if (
+      object.sourceNetworkId !== undefined &&
+      object.sourceNetworkId !== null
+    ) {
+      message.sourceNetworkId = object.sourceNetworkId;
+    }
+    if (object.maxCensusSize !== undefined && object.maxCensusSize !== null) {
+      message.maxCensusSize = object.maxCensusSize;
+    }
+    if (
+      object.rollingCensusRoot !== undefined &&
+      object.rollingCensusRoot !== null
+    ) {
+      message.rollingCensusRoot = object.rollingCensusRoot;
+    }
+    if (
+      object.rollingCensusSize !== undefined &&
+      object.rollingCensusSize !== null
+    ) {
+      message.rollingCensusSize = object.rollingCensusSize;
+    }
+    if (object.nullifiersRoot !== undefined && object.nullifiersRoot !== null) {
+      message.nullifiersRoot = object.nullifiersRoot;
+    }
     return message;
   },
 };
@@ -3597,11 +3752,21 @@ export const EnvelopeType = {
 
   fromPartial(object: DeepPartial<EnvelopeType>): EnvelopeType {
     const message = { ...baseEnvelopeType } as EnvelopeType;
-    message.serial = object.serial ?? false;
-    message.anonymous = object.anonymous ?? false;
-    message.encryptedVotes = object.encryptedVotes ?? false;
-    message.uniqueValues = object.uniqueValues ?? false;
-    message.costFromWeight = object.costFromWeight ?? false;
+    if (object.serial !== undefined && object.serial !== null) {
+      message.serial = object.serial;
+    }
+    if (object.anonymous !== undefined && object.anonymous !== null) {
+      message.anonymous = object.anonymous;
+    }
+    if (object.encryptedVotes !== undefined && object.encryptedVotes !== null) {
+      message.encryptedVotes = object.encryptedVotes;
+    }
+    if (object.uniqueValues !== undefined && object.uniqueValues !== null) {
+      message.uniqueValues = object.uniqueValues;
+    }
+    if (object.costFromWeight !== undefined && object.costFromWeight !== null) {
+      message.costFromWeight = object.costFromWeight;
+    }
     return message;
   },
 };
@@ -3703,11 +3868,24 @@ export const ProcessMode = {
 
   fromPartial(object: DeepPartial<ProcessMode>): ProcessMode {
     const message = { ...baseProcessMode } as ProcessMode;
-    message.autoStart = object.autoStart ?? false;
-    message.interruptible = object.interruptible ?? false;
-    message.dynamicCensus = object.dynamicCensus ?? false;
-    message.encryptedMetaData = object.encryptedMetaData ?? false;
-    message.preRegister = object.preRegister ?? false;
+    if (object.autoStart !== undefined && object.autoStart !== null) {
+      message.autoStart = object.autoStart;
+    }
+    if (object.interruptible !== undefined && object.interruptible !== null) {
+      message.interruptible = object.interruptible;
+    }
+    if (object.dynamicCensus !== undefined && object.dynamicCensus !== null) {
+      message.dynamicCensus = object.dynamicCensus;
+    }
+    if (
+      object.encryptedMetaData !== undefined &&
+      object.encryptedMetaData !== null
+    ) {
+      message.encryptedMetaData = object.encryptedMetaData;
+    }
+    if (object.preRegister !== undefined && object.preRegister !== null) {
+      message.preRegister = object.preRegister;
+    }
     return message;
   },
 };
@@ -3811,11 +3989,24 @@ export const ProcessVoteOptions = {
 
   fromPartial(object: DeepPartial<ProcessVoteOptions>): ProcessVoteOptions {
     const message = { ...baseProcessVoteOptions } as ProcessVoteOptions;
-    message.maxCount = object.maxCount ?? 0;
-    message.maxValue = object.maxValue ?? 0;
-    message.maxVoteOverwrites = object.maxVoteOverwrites ?? 0;
-    message.maxTotalCost = object.maxTotalCost ?? 0;
-    message.costExponent = object.costExponent ?? 0;
+    if (object.maxCount !== undefined && object.maxCount !== null) {
+      message.maxCount = object.maxCount;
+    }
+    if (object.maxValue !== undefined && object.maxValue !== null) {
+      message.maxValue = object.maxValue;
+    }
+    if (
+      object.maxVoteOverwrites !== undefined &&
+      object.maxVoteOverwrites !== null
+    ) {
+      message.maxVoteOverwrites = object.maxVoteOverwrites;
+    }
+    if (object.maxTotalCost !== undefined && object.maxTotalCost !== null) {
+      message.maxTotalCost = object.maxTotalCost;
+    }
+    if (object.costExponent !== undefined && object.costExponent !== null) {
+      message.costExponent = object.costExponent;
+    }
     return message;
   },
 };
@@ -4032,10 +4223,18 @@ export const Validator = {
 
   fromPartial(object: DeepPartial<Validator>): Validator {
     const message = { ...baseValidator } as Validator;
-    message.address = object.address ?? new Uint8Array();
-    message.pubKey = object.pubKey ?? new Uint8Array();
-    message.power = object.power ?? 0;
-    message.name = object.name ?? "";
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    }
+    if (object.pubKey !== undefined && object.pubKey !== null) {
+      message.pubKey = object.pubKey;
+    }
+    if (object.power !== undefined && object.power !== null) {
+      message.power = object.power;
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
     return message;
   },
 };
@@ -4176,11 +4375,19 @@ export const Vote = {
 
   fromPartial(object: DeepPartial<Vote>): Vote {
     const message = { ...baseVote } as Vote;
-    message.height = object.height ?? 0;
-    message.nullifier = object.nullifier ?? new Uint8Array();
-    message.processId = object.processId ?? new Uint8Array();
-    message.votePackage = object.votePackage ?? new Uint8Array();
     message.encryptionKeyIndexes = [];
+    if (object.height !== undefined && object.height !== null) {
+      message.height = object.height;
+    }
+    if (object.nullifier !== undefined && object.nullifier !== null) {
+      message.nullifier = object.nullifier;
+    }
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.votePackage !== undefined && object.votePackage !== null) {
+      message.votePackage = object.votePackage;
+    }
     if (
       object.encryptionKeyIndexes !== undefined &&
       object.encryptionKeyIndexes !== null
@@ -4189,7 +4396,9 @@ export const Vote = {
         message.encryptionKeyIndexes.push(e);
       }
     }
-    message.weight = object.weight ?? new Uint8Array();
+    if (object.weight !== undefined && object.weight !== null) {
+      message.weight = object.weight;
+    }
     return message;
   },
 };
@@ -4431,19 +4640,54 @@ export const TendermintHeader = {
 
   fromPartial(object: DeepPartial<TendermintHeader>): TendermintHeader {
     const message = { ...baseTendermintHeader } as TendermintHeader;
-    message.chainId = object.chainId ?? "";
-    message.height = object.height ?? 0;
-    message.timestamp = object.timestamp ?? 0;
-    message.blockID = object.blockID ?? new Uint8Array();
-    message.lastCommitHash = object.lastCommitHash ?? new Uint8Array();
-    message.dataHash = object.dataHash ?? new Uint8Array();
-    message.validatorsHash = object.validatorsHash ?? new Uint8Array();
-    message.nextValidatorsHash = object.nextValidatorsHash ?? new Uint8Array();
-    message.consensusHash = object.consensusHash ?? new Uint8Array();
-    message.appHash = object.appHash ?? new Uint8Array();
-    message.lastResultsHash = object.lastResultsHash ?? new Uint8Array();
-    message.evidenceHash = object.evidenceHash ?? new Uint8Array();
-    message.proposerAddress = object.proposerAddress ?? new Uint8Array();
+    if (object.chainId !== undefined && object.chainId !== null) {
+      message.chainId = object.chainId;
+    }
+    if (object.height !== undefined && object.height !== null) {
+      message.height = object.height;
+    }
+    if (object.timestamp !== undefined && object.timestamp !== null) {
+      message.timestamp = object.timestamp;
+    }
+    if (object.blockID !== undefined && object.blockID !== null) {
+      message.blockID = object.blockID;
+    }
+    if (object.lastCommitHash !== undefined && object.lastCommitHash !== null) {
+      message.lastCommitHash = object.lastCommitHash;
+    }
+    if (object.dataHash !== undefined && object.dataHash !== null) {
+      message.dataHash = object.dataHash;
+    }
+    if (object.validatorsHash !== undefined && object.validatorsHash !== null) {
+      message.validatorsHash = object.validatorsHash;
+    }
+    if (
+      object.nextValidatorsHash !== undefined &&
+      object.nextValidatorsHash !== null
+    ) {
+      message.nextValidatorsHash = object.nextValidatorsHash;
+    }
+    if (object.consensusHash !== undefined && object.consensusHash !== null) {
+      message.consensusHash = object.consensusHash;
+    }
+    if (object.appHash !== undefined && object.appHash !== null) {
+      message.appHash = object.appHash;
+    }
+    if (
+      object.lastResultsHash !== undefined &&
+      object.lastResultsHash !== null
+    ) {
+      message.lastResultsHash = object.lastResultsHash;
+    }
+    if (object.evidenceHash !== undefined && object.evidenceHash !== null) {
+      message.evidenceHash = object.evidenceHash;
+    }
+    if (
+      object.proposerAddress !== undefined &&
+      object.proposerAddress !== null
+    ) {
+      message.proposerAddress = object.proposerAddress;
+    }
     return message;
   },
 };
@@ -4550,9 +4794,15 @@ export const ProcessResult = {
         message.votes.push(QuestionResult.fromPartial(e));
       }
     }
-    message.processId = object.processId ?? undefined;
-    message.entityId = object.entityId ?? undefined;
-    message.signature = object.signature ?? undefined;
+    if (object.processId !== undefined && object.processId !== null) {
+      message.processId = object.processId;
+    }
+    if (object.entityId !== undefined && object.entityId !== null) {
+      message.entityId = object.entityId;
+    }
+    if (object.signature !== undefined && object.signature !== null) {
+      message.signature = object.signature;
+    }
     return message;
   },
 };
@@ -4751,7 +5001,6 @@ export const StoredKeys = {
 
 declare var self: any | undefined;
 declare var window: any | undefined;
-declare var global: any | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   if (typeof self !== "undefined") return self;

@@ -340,8 +340,14 @@ export const ProcessMetadata = {
 
   fromPartial(object: DeepPartial<ProcessMetadata>): ProcessMetadata {
     const message = { ...baseProcessMetadata } as ProcessMetadata;
-    message.version = object.version ?? "";
     message.title = {};
+    message.description = {};
+    message.media = {};
+    message.questions = [];
+    message.meta = {};
+    if (object.version !== undefined && object.version !== null) {
+      message.version = object.version;
+    }
     if (object.title !== undefined && object.title !== null) {
       Object.entries(object.title).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -349,7 +355,6 @@ export const ProcessMetadata = {
         }
       });
     }
-    message.description = {};
     if (object.description !== undefined && object.description !== null) {
       Object.entries(object.description).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -357,7 +362,6 @@ export const ProcessMetadata = {
         }
       });
     }
-    message.media = {};
     if (object.media !== undefined && object.media !== null) {
       Object.entries(object.media).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -365,7 +369,6 @@ export const ProcessMetadata = {
         }
       });
     }
-    message.questions = [];
     if (object.questions !== undefined && object.questions !== null) {
       for (const e of object.questions) {
         message.questions.push(ProcessMetadata_Question.fromPartial(e));
@@ -373,10 +376,7 @@ export const ProcessMetadata = {
     }
     if (object.results !== undefined && object.results !== null) {
       message.results = ProcessMetadata_Results.fromPartial(object.results);
-    } else {
-      message.results = undefined;
     }
-    message.meta = {};
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -456,8 +456,12 @@ export const ProcessMetadata_TitleEntry = {
     const message = {
       ...baseProcessMetadata_TitleEntry,
     } as ProcessMetadata_TitleEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -530,8 +534,12 @@ export const ProcessMetadata_DescriptionEntry = {
     const message = {
       ...baseProcessMetadata_DescriptionEntry,
     } as ProcessMetadata_DescriptionEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -604,8 +612,12 @@ export const ProcessMetadata_MediaEntry = {
     const message = {
       ...baseProcessMetadata_MediaEntry,
     } as ProcessMetadata_MediaEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -740,6 +752,8 @@ export const ProcessMetadata_Question = {
       ...baseProcessMetadata_Question,
     } as ProcessMetadata_Question;
     message.title = {};
+    message.description = {};
+    message.choices = [];
     if (object.title !== undefined && object.title !== null) {
       Object.entries(object.title).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -747,7 +761,6 @@ export const ProcessMetadata_Question = {
         }
       });
     }
-    message.description = {};
     if (object.description !== undefined && object.description !== null) {
       Object.entries(object.description).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -755,7 +768,6 @@ export const ProcessMetadata_Question = {
         }
       });
     }
-    message.choices = [];
     if (object.choices !== undefined && object.choices !== null) {
       for (const e of object.choices) {
         message.choices.push(
@@ -835,8 +847,12 @@ export const ProcessMetadata_Question_TitleEntry = {
     const message = {
       ...baseProcessMetadata_Question_TitleEntry,
     } as ProcessMetadata_Question_TitleEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -912,8 +928,12 @@ export const ProcessMetadata_Question_DescriptionEntry = {
     const message = {
       ...baseProcessMetadata_Question_DescriptionEntry,
     } as ProcessMetadata_Question_DescriptionEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -1012,7 +1032,9 @@ export const ProcessMetadata_Question_VoteOption = {
         }
       });
     }
-    message.value = object.value ?? 0;
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -1088,8 +1110,12 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
     const message = {
       ...baseProcessMetadata_Question_VoteOption_TitleEntry,
     } as ProcessMetadata_Question_VoteOption_TitleEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -1160,8 +1186,12 @@ export const ProcessMetadata_Results = {
     const message = {
       ...baseProcessMetadata_Results,
     } as ProcessMetadata_Results;
-    message.aggregation = object.aggregation ?? "";
-    message.display = object.display ?? "";
+    if (object.aggregation !== undefined && object.aggregation !== null) {
+      message.aggregation = object.aggregation;
+    }
+    if (object.display !== undefined && object.display !== null) {
+      message.display = object.display;
+    }
     return message;
   },
 };
@@ -1234,8 +1264,12 @@ export const ProcessMetadata_MetaEntry = {
     const message = {
       ...baseProcessMetadata_MetaEntry,
     } as ProcessMetadata_MetaEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };

@@ -512,14 +512,24 @@ export const EntityMetadata = {
 
   fromPartial(object: DeepPartial<EntityMetadata>): EntityMetadata {
     const message = { ...baseEntityMetadata } as EntityMetadata;
-    message.version = object.version ?? "";
     message.languages = [];
+    message.name = {};
+    message.description = {};
+    message.newsFeed = {};
+    message.actions = [];
+    message.bootEntities = [];
+    message.fallbackBootNodeEntities = [];
+    message.trustedEntities = [];
+    message.censusServiceManagedEntities = [];
+    message.meta = {};
+    if (object.version !== undefined && object.version !== null) {
+      message.version = object.version;
+    }
     if (object.languages !== undefined && object.languages !== null) {
       for (const e of object.languages) {
         message.languages.push(e);
       }
     }
-    message.name = {};
     if (object.name !== undefined && object.name !== null) {
       Object.entries(object.name).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -527,7 +537,6 @@ export const EntityMetadata = {
         }
       });
     }
-    message.description = {};
     if (object.description !== undefined && object.description !== null) {
       Object.entries(object.description).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -542,10 +551,7 @@ export const EntityMetadata = {
       message.votingProcesses = EntityMetadata_VotingProcesses.fromPartial(
         object.votingProcesses
       );
-    } else {
-      message.votingProcesses = undefined;
     }
-    message.newsFeed = {};
     if (object.newsFeed !== undefined && object.newsFeed !== null) {
       Object.entries(object.newsFeed).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -555,22 +561,17 @@ export const EntityMetadata = {
     }
     if (object.media !== undefined && object.media !== null) {
       message.media = EntityMetadata_Media.fromPartial(object.media);
-    } else {
-      message.media = undefined;
     }
-    message.actions = [];
     if (object.actions !== undefined && object.actions !== null) {
       for (const e of object.actions) {
         message.actions.push(EntityMetadata_Action.fromPartial(e));
       }
     }
-    message.bootEntities = [];
     if (object.bootEntities !== undefined && object.bootEntities !== null) {
       for (const e of object.bootEntities) {
         message.bootEntities.push(EntityReference.fromPartial(e));
       }
     }
-    message.fallbackBootNodeEntities = [];
     if (
       object.fallbackBootNodeEntities !== undefined &&
       object.fallbackBootNodeEntities !== null
@@ -579,7 +580,6 @@ export const EntityMetadata = {
         message.fallbackBootNodeEntities.push(EntityReference.fromPartial(e));
       }
     }
-    message.trustedEntities = [];
     if (
       object.trustedEntities !== undefined &&
       object.trustedEntities !== null
@@ -588,7 +588,6 @@ export const EntityMetadata = {
         message.trustedEntities.push(EntityReference.fromPartial(e));
       }
     }
-    message.censusServiceManagedEntities = [];
     if (
       object.censusServiceManagedEntities !== undefined &&
       object.censusServiceManagedEntities !== null
@@ -599,7 +598,6 @@ export const EntityMetadata = {
         );
       }
     }
-    message.meta = {};
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -679,8 +677,12 @@ export const EntityMetadata_NameEntry = {
     const message = {
       ...baseEntityMetadata_NameEntry,
     } as EntityMetadata_NameEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -753,8 +755,12 @@ export const EntityMetadata_DescriptionEntry = {
     const message = {
       ...baseEntityMetadata_DescriptionEntry,
     } as EntityMetadata_DescriptionEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -844,12 +850,12 @@ export const EntityMetadata_VotingProcesses = {
       ...baseEntityMetadata_VotingProcesses,
     } as EntityMetadata_VotingProcesses;
     message.active = [];
+    message.ended = [];
     if (object.active !== undefined && object.active !== null) {
       for (const e of object.active) {
         message.active.push(e);
       }
     }
-    message.ended = [];
     if (object.ended !== undefined && object.ended !== null) {
       for (const e of object.ended) {
         message.ended.push(e);
@@ -927,8 +933,12 @@ export const EntityMetadata_NewsFeedEntry = {
     const message = {
       ...baseEntityMetadata_NewsFeedEntry,
     } as EntityMetadata_NewsFeedEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -990,8 +1000,12 @@ export const EntityMetadata_Media = {
 
   fromPartial(object: DeepPartial<EntityMetadata_Media>): EntityMetadata_Media {
     const message = { ...baseEntityMetadata_Media } as EntityMetadata_Media;
-    message.avatar = object.avatar ?? "";
-    message.header = object.header ?? "";
+    if (object.avatar !== undefined && object.avatar !== null) {
+      message.avatar = object.avatar;
+    }
+    if (object.header !== undefined && object.header !== null) {
+      message.header = object.header;
+    }
     return message;
   },
 };
@@ -1135,9 +1149,14 @@ export const EntityMetadata_Action = {
     object: DeepPartial<EntityMetadata_Action>
   ): EntityMetadata_Action {
     const message = { ...baseEntityMetadata_Action } as EntityMetadata_Action;
-    message.type = object.type ?? "";
-    message.actionKey = object.actionKey ?? "";
     message.name = {};
+    message.imageSources = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.actionKey !== undefined && object.actionKey !== null) {
+      message.actionKey = object.actionKey;
+    }
     if (object.name !== undefined && object.name !== null) {
       Object.entries(object.name).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -1145,9 +1164,12 @@ export const EntityMetadata_Action = {
         }
       });
     }
-    message.visible = object.visible ?? "";
-    message.url = object.url ?? "";
-    message.imageSources = [];
+    if (object.visible !== undefined && object.visible !== null) {
+      message.visible = object.visible;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
     if (object.imageSources !== undefined && object.imageSources !== null) {
       for (const e of object.imageSources) {
         message.imageSources.push(
@@ -1227,8 +1249,12 @@ export const EntityMetadata_Action_NameEntry = {
     const message = {
       ...baseEntityMetadata_Action_NameEntry,
     } as EntityMetadata_Action_NameEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -1355,11 +1381,19 @@ export const EntityMetadata_Action_ImageSource = {
     const message = {
       ...baseEntityMetadata_Action_ImageSource,
     } as EntityMetadata_Action_ImageSource;
-    message.type = object.type ?? "";
-    message.name = object.name ?? "";
-    message.orientation = object.orientation ?? "";
-    message.overlay = object.overlay ?? "";
     message.caption = {};
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.orientation !== undefined && object.orientation !== null) {
+      message.orientation = object.orientation;
+    }
+    if (object.overlay !== undefined && object.overlay !== null) {
+      message.overlay = object.overlay;
+    }
     if (object.caption !== undefined && object.caption !== null) {
       Object.entries(object.caption).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -1442,8 +1476,12 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     const message = {
       ...baseEntityMetadata_Action_ImageSource_CaptionEntry,
     } as EntityMetadata_Action_ImageSource_CaptionEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -1516,8 +1554,12 @@ export const EntityMetadata_MetaEntry = {
     const message = {
       ...baseEntityMetadata_MetaEntry,
     } as EntityMetadata_MetaEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -1584,8 +1626,10 @@ export const EntityReference = {
 
   fromPartial(object: DeepPartial<EntityReference>): EntityReference {
     const message = { ...baseEntityReference } as EntityReference;
-    message.entityId = object.entityId ?? "";
     message.entryPoints = [];
+    if (object.entityId !== undefined && object.entityId !== null) {
+      message.entityId = object.entityId;
+    }
     if (object.entryPoints !== undefined && object.entryPoints !== null) {
       for (const e of object.entryPoints) {
         message.entryPoints.push(e);

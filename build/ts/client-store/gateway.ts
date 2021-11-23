@@ -199,36 +199,26 @@ export const BootNodeGateways = {
 
   fromPartial(object: DeepPartial<BootNodeGateways>): BootNodeGateways {
     const message = { ...baseBootNodeGateways } as BootNodeGateways;
+    message.meta = {};
     if (object.homestead !== undefined && object.homestead !== null) {
       message.homestead = BootNodeGateways_NetworkNodes.fromPartial(
         object.homestead
       );
-    } else {
-      message.homestead = undefined;
     }
     if (object.goerli !== undefined && object.goerli !== null) {
       message.goerli = BootNodeGateways_NetworkNodes.fromPartial(object.goerli);
-    } else {
-      message.goerli = undefined;
     }
     if (object.xdai !== undefined && object.xdai !== null) {
       message.xdai = BootNodeGateways_NetworkNodes.fromPartial(object.xdai);
-    } else {
-      message.xdai = undefined;
     }
     if (object.sokol !== undefined && object.sokol !== null) {
       message.sokol = BootNodeGateways_NetworkNodes.fromPartial(object.sokol);
-    } else {
-      message.sokol = undefined;
     }
     if (object.rinkeby !== undefined && object.rinkeby !== null) {
       message.rinkeby = BootNodeGateways_NetworkNodes.fromPartial(
         object.rinkeby
       );
-    } else {
-      message.rinkeby = undefined;
     }
-    message.meta = {};
     if (object.meta !== undefined && object.meta !== null) {
       Object.entries(object.meta).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -339,12 +329,12 @@ export const BootNodeGateways_NetworkNodes = {
       ...baseBootNodeGateways_NetworkNodes,
     } as BootNodeGateways_NetworkNodes;
     message.dvote = [];
+    message.web3 = [];
     if (object.dvote !== undefined && object.dvote !== null) {
       for (const e of object.dvote) {
         message.dvote.push(BootNodeGateways_NetworkNodes_DVote.fromPartial(e));
       }
     }
-    message.web3 = [];
     if (object.web3 !== undefined && object.web3 !== null) {
       for (const e of object.web3) {
         message.web3.push(BootNodeGateways_NetworkNodes_Web3.fromPartial(e));
@@ -444,14 +434,18 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     const message = {
       ...baseBootNodeGateways_NetworkNodes_DVote,
     } as BootNodeGateways_NetworkNodes_DVote;
-    message.uri = object.uri ?? "";
     message.apis = [];
+    if (object.uri !== undefined && object.uri !== null) {
+      message.uri = object.uri;
+    }
     if (object.apis !== undefined && object.apis !== null) {
       for (const e of object.apis) {
         message.apis.push(e);
       }
     }
-    message.pubKey = object.pubKey ?? "";
+    if (object.pubKey !== undefined && object.pubKey !== null) {
+      message.pubKey = object.pubKey;
+    }
     return message;
   },
 };
@@ -514,7 +508,9 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     const message = {
       ...baseBootNodeGateways_NetworkNodes_Web3,
     } as BootNodeGateways_NetworkNodes_Web3;
-    message.uri = object.uri ?? "";
+    if (object.uri !== undefined && object.uri !== null) {
+      message.uri = object.uri;
+    }
     return message;
   },
 };
@@ -587,8 +583,12 @@ export const BootNodeGateways_MetaEntry = {
     const message = {
       ...baseBootNodeGateways_MetaEntry,
     } as BootNodeGateways_MetaEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
