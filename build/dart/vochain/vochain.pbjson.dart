@@ -145,11 +145,12 @@ const ProofGraviton$json = const {
   '1': 'ProofGraviton',
   '2': const [
     const {'1': 'siblings', '3': 1, '4': 1, '5': 12, '10': 'siblings'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
   ],
 };
 
 /// Descriptor for `ProofGraviton`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofGravitonDescriptor = $convert.base64Decode('Cg1Qcm9vZkdyYXZpdG9uEhoKCHNpYmxpbmdzGAEgASgMUghzaWJsaW5ncw==');
+final $typed_data.Uint8List proofGravitonDescriptor = $convert.base64Decode('Cg1Qcm9vZkdyYXZpdG9uEhoKCHNpYmxpbmdzGAEgASgMUghzaWJsaW5ncxIUCgV2YWx1ZRgCIAEoDFIFdmFsdWU=');
 @$core.Deprecated('Use proofIden3Descriptor instead')
 const ProofIden3$json = const {
   '1': 'ProofIden3',

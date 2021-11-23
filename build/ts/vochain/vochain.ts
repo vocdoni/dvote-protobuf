@@ -411,6 +411,7 @@ export interface Proof {
 
 export interface ProofGraviton {
   siblings: Uint8Array;
+  value: Uint8Array;
 }
 
 export interface ProofIden3 {
@@ -1272,6 +1273,9 @@ export const ProofGraviton = {
     if (message.siblings.length !== 0) {
       writer.uint32(10).bytes(message.siblings);
     }
+    if (message.value.length !== 0) {
+      writer.uint32(18).bytes(message.value);
+    }
     return writer;
   },
 
@@ -1280,11 +1284,15 @@ export const ProofGraviton = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseProofGraviton } as ProofGraviton;
     message.siblings = new Uint8Array();
+    message.value = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
           message.siblings = reader.bytes();
+          break;
+        case 2:
+          message.value = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1297,8 +1305,12 @@ export const ProofGraviton = {
   fromJSON(object: any): ProofGraviton {
     const message = { ...baseProofGraviton } as ProofGraviton;
     message.siblings = new Uint8Array();
+    message.value = new Uint8Array();
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = bytesFromBase64(object.siblings);
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = bytesFromBase64(object.value);
     }
     return message;
   },
@@ -1309,6 +1321,10 @@ export const ProofGraviton = {
       (obj.siblings = base64FromBytes(
         message.siblings !== undefined ? message.siblings : new Uint8Array()
       ));
+    message.value !== undefined &&
+      (obj.value = base64FromBytes(
+        message.value !== undefined ? message.value : new Uint8Array()
+      ));
     return obj;
   },
 
@@ -1316,6 +1332,9 @@ export const ProofGraviton = {
     const message = { ...baseProofGraviton } as ProofGraviton;
     if (object.siblings !== undefined && object.siblings !== null) {
       message.siblings = object.siblings;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
     }
     return message;
   },

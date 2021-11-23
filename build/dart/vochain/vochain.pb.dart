@@ -347,16 +347,21 @@ class Proof extends $pb.GeneratedMessage {
 class ProofGraviton extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofGraviton', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siblings', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
   ProofGraviton._() : super();
   factory ProofGraviton({
     $core.List<$core.int>? siblings,
+    $core.List<$core.int>? value,
   }) {
     final _result = create();
     if (siblings != null) {
       _result.siblings = siblings;
+    }
+    if (value != null) {
+      _result.value = value;
     }
     return _result;
   }
@@ -389,6 +394,15 @@ class ProofGraviton extends $pb.GeneratedMessage {
   $core.bool hasSiblings() => $_has(0);
   @$pb.TagNumber(1)
   void clearSiblings() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
 }
 
 class ProofIden3 extends $pb.GeneratedMessage {
