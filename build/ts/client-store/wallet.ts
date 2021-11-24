@@ -97,22 +97,23 @@ export const Wallet = {
 
   fromJSON(object: any): Wallet {
     const message = { ...baseWallet } as Wallet;
-    message.encryptedMnemonic = new Uint8Array();
-    if (
+    message.encryptedMnemonic =
       object.encryptedMnemonic !== undefined &&
       object.encryptedMnemonic !== null
-    ) {
-      message.encryptedMnemonic = bytesFromBase64(object.encryptedMnemonic);
-    }
-    if (object.hdPath !== undefined && object.hdPath !== null) {
-      message.hdPath = String(object.hdPath);
-    }
-    if (object.locale !== undefined && object.locale !== null) {
-      message.locale = String(object.locale);
-    }
-    if (object.authMethod !== undefined && object.authMethod !== null) {
-      message.authMethod = wallet_AuthMethodFromJSON(object.authMethod);
-    }
+        ? bytesFromBase64(object.encryptedMnemonic)
+        : new Uint8Array();
+    message.hdPath =
+      object.hdPath !== undefined && object.hdPath !== null
+        ? String(object.hdPath)
+        : "";
+    message.locale =
+      object.locale !== undefined && object.locale !== null
+        ? String(object.locale)
+        : "";
+    message.authMethod =
+      object.authMethod !== undefined && object.authMethod !== null
+        ? wallet_AuthMethodFromJSON(object.authMethod)
+        : 0;
     return message;
   },
 
@@ -133,27 +134,17 @@ export const Wallet = {
 
   fromPartial(object: DeepPartial<Wallet>): Wallet {
     const message = { ...baseWallet } as Wallet;
-    if (
-      object.encryptedMnemonic !== undefined &&
-      object.encryptedMnemonic !== null
-    ) {
-      message.encryptedMnemonic = object.encryptedMnemonic;
-    }
-    if (object.hdPath !== undefined && object.hdPath !== null) {
-      message.hdPath = object.hdPath;
-    }
-    if (object.locale !== undefined && object.locale !== null) {
-      message.locale = object.locale;
-    }
-    if (object.authMethod !== undefined && object.authMethod !== null) {
-      message.authMethod = object.authMethod;
-    }
+    message.encryptedMnemonic = object.encryptedMnemonic ?? new Uint8Array();
+    message.hdPath = object.hdPath ?? "";
+    message.locale = object.locale ?? "";
+    message.authMethod = object.authMethod ?? 0;
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
+declare var global: any | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   if (typeof self !== "undefined") return self;
