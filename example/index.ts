@@ -9,9 +9,10 @@ import {
 import { Reader } from "protobufjs"
 
 const dummyArray = new Uint8Array([100, 150, 200, 250])
+const bigIntLeBuffer = new Uint8Array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 // Serialize
-let proof = Proof.fromPartial({ payload: { $case: "arbo", arbo: ProofArbo.fromPartial({ siblings: dummyArray, type: ProofArbo_Type.BLAKE2B, value: new Uint8Array([1]) }) } })
+let proof = Proof.fromPartial({ payload: { $case: "arbo", arbo: ProofArbo.fromPartial({ siblings: dummyArray, type: ProofArbo_Type.BLAKE2B, value: bigIntLeBuffer }) } })
 let envelope = VoteEnvelope.fromPartial({ encryptionKeyIndexes: [], nonce: dummyArray, votePackage: dummyArray, nullifier: dummyArray, processId: dummyArray, proof })
 
 let tx = Tx.fromPartial({ payload: { $case: "vote", vote: envelope } })
