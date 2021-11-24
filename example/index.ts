@@ -11,7 +11,7 @@ import { Reader } from "protobufjs"
 const dummyArray = new Uint8Array([100, 150, 200, 250])
 
 // Serialize
-let proof = Proof.fromPartial({ payload: { $case: "graviton", graviton: ProofArbo.fromPartial({ siblings: dummyArray, type: ProofArbo_Type.BLAKE2B }) } })
+let proof = Proof.fromPartial({ payload: { $case: "arbo", arbo: ProofArbo.fromPartial({ siblings: dummyArray, type: ProofArbo_Type.BLAKE2B, value: new Uint8Array([1]) }) } })
 let envelope = VoteEnvelope.fromPartial({ encryptionKeyIndexes: [], nonce: dummyArray, votePackage: dummyArray, nullifier: dummyArray, processId: dummyArray, proof })
 
 let tx = Tx.fromPartial({ payload: { $case: "vote", vote: envelope } })
