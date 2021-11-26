@@ -629,7 +629,7 @@ export interface RegisterKeyTx {
   /** New key to register */
   newKey: Uint8Array;
   /** Weight to delegate to newKey */
-  weight?: Uint8Array | undefined;
+  weight: string;
 }
 
 export interface Process {
@@ -2819,7 +2819,7 @@ export const AdminTx = {
   },
 };
 
-const baseRegisterKeyTx: object = {};
+const baseRegisterKeyTx: object = { weight: "" };
 
 export const RegisterKeyTx = {
   encode(message: RegisterKeyTx, writer: Writer = Writer.create()): Writer {
@@ -2835,8 +2835,8 @@ export const RegisterKeyTx = {
     if (message.newKey.length !== 0) {
       writer.uint32(34).bytes(message.newKey);
     }
-    if (message.weight !== undefined) {
-      writer.uint32(42).bytes(message.weight);
+    if (message.weight !== "") {
+      writer.uint32(42).string(message.weight);
     }
     return writer;
   },
@@ -2864,7 +2864,7 @@ export const RegisterKeyTx = {
           message.newKey = reader.bytes();
           break;
         case 5:
-          message.weight = reader.bytes();
+          message.weight = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -2894,8 +2894,8 @@ export const RegisterKeyTx = {
         : new Uint8Array();
     message.weight =
       object.weight !== undefined && object.weight !== null
-        ? bytesFromBase64(object.weight)
-        : undefined;
+        ? String(object.weight)
+        : "";
     return message;
   },
 
@@ -2915,11 +2915,7 @@ export const RegisterKeyTx = {
       (obj.newKey = base64FromBytes(
         message.newKey !== undefined ? message.newKey : new Uint8Array()
       ));
-    message.weight !== undefined &&
-      (obj.weight =
-        message.weight !== undefined
-          ? base64FromBytes(message.weight)
-          : undefined);
+    message.weight !== undefined && (obj.weight = message.weight);
     return obj;
   },
 
@@ -2932,7 +2928,7 @@ export const RegisterKeyTx = {
         ? Proof.fromPartial(object.proof)
         : undefined;
     message.newKey = object.newKey ?? new Uint8Array();
-    message.weight = object.weight ?? undefined;
+    message.weight = object.weight ?? "";
     return message;
   },
 };
