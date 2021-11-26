@@ -1644,7 +1644,7 @@ class RegisterKeyTx extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..aOM<Proof>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: Proof.create)
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newKey', $pb.PbFieldType.OY, protoName: 'newKey')
-    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.OY)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight')
     ..hasRequiredFields = false
   ;
 
@@ -1654,7 +1654,7 @@ class RegisterKeyTx extends $pb.GeneratedMessage {
     $core.List<$core.int>? processId,
     Proof? proof,
     $core.List<$core.int>? newKey,
-    $core.List<$core.int>? weight,
+    $core.String? weight,
   }) {
     final _result = create();
     if (nonce != null) {
@@ -1734,9 +1734,9 @@ class RegisterKeyTx extends $pb.GeneratedMessage {
   void clearNewKey() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.List<$core.int> get weight => $_getN(4);
+  $core.String get weight => $_getSZ(4);
   @$pb.TagNumber(5)
-  set weight($core.List<$core.int> v) { $_setBytes(4, v); }
+  set weight($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasWeight() => $_has(4);
   @$pb.TagNumber(5)

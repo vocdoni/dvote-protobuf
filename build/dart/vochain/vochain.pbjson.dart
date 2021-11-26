@@ -386,15 +386,12 @@ const RegisterKeyTx$json = const {
     const {'1': 'processId', '3': 2, '4': 1, '5': 12, '10': 'processId'},
     const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.Proof', '10': 'proof'},
     const {'1': 'newKey', '3': 4, '4': 1, '5': 12, '10': 'newKey'},
-    const {'1': 'weight', '3': 5, '4': 1, '5': 12, '9': 0, '10': 'weight', '17': true},
-  ],
-  '8': const [
-    const {'1': '_weight'},
+    const {'1': 'weight', '3': 5, '4': 1, '5': 9, '10': 'weight'},
   ],
 };
 
 /// Descriptor for `RegisterKeyTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List registerKeyTxDescriptor = $convert.base64Decode('Cg1SZWdpc3RlcktleVR4EhQKBW5vbmNlGAEgASgMUgVub25jZRIcCglwcm9jZXNzSWQYAiABKAxSCXByb2Nlc3NJZBIrCgVwcm9vZhgDIAEoCzIVLmR2b3RlLnR5cGVzLnYxLlByb29mUgVwcm9vZhIWCgZuZXdLZXkYBCABKAxSBm5ld0tleRIbCgZ3ZWlnaHQYBSABKAxIAFIGd2VpZ2h0iAEBQgkKB193ZWlnaHQ=');
+final $typed_data.Uint8List registerKeyTxDescriptor = $convert.base64Decode('Cg1SZWdpc3RlcktleVR4EhQKBW5vbmNlGAEgASgMUgVub25jZRIcCglwcm9jZXNzSWQYAiABKAxSCXByb2Nlc3NJZBIrCgVwcm9vZhgDIAEoCzIVLmR2b3RlLnR5cGVzLnYxLlByb29mUgVwcm9vZhIWCgZuZXdLZXkYBCABKAxSBm5ld0tleRIWCgZ3ZWlnaHQYBSABKAlSBndlaWdodA==');
 @$core.Deprecated('Use processDescriptor instead')
 const Process$json = const {
   '1': 'Process',
