@@ -204,7 +204,7 @@ message RegisterKeyTx {
         bytes processId = 2;  // The process for which the vote is casted
         Proof proof = 3;  // Franchise proof
         bytes newKey = 4;   // New key to register
-        optional bytes weight = 5;   // Weight to delegate to newKey
+        string weight = 5;   // Weight to delegate to newKey
 }
 
 message Process {
