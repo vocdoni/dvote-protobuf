@@ -97,23 +97,22 @@ export const Wallet = {
 
   fromJSON(object: any): Wallet {
     const message = { ...baseWallet } as Wallet;
-    message.encryptedMnemonic =
+    message.encryptedMnemonic = new Uint8Array();
+    if (
       object.encryptedMnemonic !== undefined &&
       object.encryptedMnemonic !== null
-        ? bytesFromBase64(object.encryptedMnemonic)
-        : new Uint8Array();
-    message.hdPath =
-      object.hdPath !== undefined && object.hdPath !== null
-        ? String(object.hdPath)
-        : "";
-    message.locale =
-      object.locale !== undefined && object.locale !== null
-        ? String(object.locale)
-        : "";
-    message.authMethod =
-      object.authMethod !== undefined && object.authMethod !== null
-        ? wallet_AuthMethodFromJSON(object.authMethod)
-        : 0;
+    ) {
+      message.encryptedMnemonic = bytesFromBase64(object.encryptedMnemonic);
+    }
+    if (object.hdPath !== undefined && object.hdPath !== null) {
+      message.hdPath = String(object.hdPath);
+    }
+    if (object.locale !== undefined && object.locale !== null) {
+      message.locale = String(object.locale);
+    }
+    if (object.authMethod !== undefined && object.authMethod !== null) {
+      message.authMethod = wallet_AuthMethodFromJSON(object.authMethod);
+    }
     return message;
   },
 
@@ -134,17 +133,27 @@ export const Wallet = {
 
   fromPartial(object: DeepPartial<Wallet>): Wallet {
     const message = { ...baseWallet } as Wallet;
-    message.encryptedMnemonic = object.encryptedMnemonic ?? new Uint8Array();
-    message.hdPath = object.hdPath ?? "";
-    message.locale = object.locale ?? "";
-    message.authMethod = object.authMethod ?? 0;
+    if (
+      object.encryptedMnemonic !== undefined &&
+      object.encryptedMnemonic !== null
+    ) {
+      message.encryptedMnemonic = object.encryptedMnemonic;
+    }
+    if (object.hdPath !== undefined && object.hdPath !== null) {
+      message.hdPath = object.hdPath;
+    }
+    if (object.locale !== undefined && object.locale !== null) {
+      message.locale = object.locale;
+    }
+    if (object.authMethod !== undefined && object.authMethod !== null) {
+      message.authMethod = object.authMethod;
+    }
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
-declare var global: any | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   if (typeof self !== "undefined") return self;
@@ -170,8 +179,8 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (const byte of arr) {
-    bin.push(String.fromCharCode(byte));
+  for (let i = 0; i < arr.byteLength; ++i) {
+    bin.push(String.fromCharCode(arr[i]));
   }
   return btoa(bin.join(""));
 }

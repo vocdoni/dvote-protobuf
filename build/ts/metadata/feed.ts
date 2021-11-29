@@ -85,7 +85,12 @@ export const FeedStore = {
 
   fromJSON(object: any): FeedStore {
     const message = { ...baseFeedStore } as FeedStore;
-    message.items = (object.items ?? []).map((e: any) => Feed.fromJSON(e));
+    message.items = [];
+    if (object.items !== undefined && object.items !== null) {
+      for (const e of object.items) {
+        message.items.push(Feed.fromJSON(e));
+      }
+    }
     return message;
   },
 
@@ -101,7 +106,12 @@ export const FeedStore = {
 
   fromPartial(object: DeepPartial<FeedStore>): FeedStore {
     const message = { ...baseFeedStore } as FeedStore;
-    message.items = (object.items ?? []).map((e) => Feed.fromPartial(e));
+    message.items = [];
+    if (object.items !== undefined && object.items !== null) {
+      for (const e of object.items) {
+        message.items.push(Feed.fromPartial(e));
+      }
+    }
     return message;
   },
 };
@@ -207,45 +217,42 @@ export const Feed = {
 
   fromJSON(object: any): Feed {
     const message = { ...baseFeed } as Feed;
-    message.version =
-      object.version !== undefined && object.version !== null
-        ? String(object.version)
-        : "";
-    message.title =
-      object.title !== undefined && object.title !== null
-        ? String(object.title)
-        : "";
-    message.homePageUrl =
-      object.homePageUrl !== undefined && object.homePageUrl !== null
-        ? String(object.homePageUrl)
-        : "";
-    message.description =
-      object.description !== undefined && object.description !== null
-        ? String(object.description)
-        : "";
-    message.feedUrl =
-      object.feedUrl !== undefined && object.feedUrl !== null
-        ? String(object.feedUrl)
-        : "";
-    message.icon =
-      object.icon !== undefined && object.icon !== null
-        ? String(object.icon)
-        : "";
-    message.favicon =
-      object.favicon !== undefined && object.favicon !== null
-        ? String(object.favicon)
-        : "";
-    message.expired =
-      object.expired !== undefined && object.expired !== null
-        ? Boolean(object.expired)
-        : false;
-    message.items = (object.items ?? []).map((e: any) => FeedPost.fromJSON(e));
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
+    message.items = [];
+    message.meta = {};
+    if (object.version !== undefined && object.version !== null) {
+      message.version = String(object.version);
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = String(object.title);
+    }
+    if (object.homePageUrl !== undefined && object.homePageUrl !== null) {
+      message.homePageUrl = String(object.homePageUrl);
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = String(object.description);
+    }
+    if (object.feedUrl !== undefined && object.feedUrl !== null) {
+      message.feedUrl = String(object.feedUrl);
+    }
+    if (object.icon !== undefined && object.icon !== null) {
+      message.icon = String(object.icon);
+    }
+    if (object.favicon !== undefined && object.favicon !== null) {
+      message.favicon = String(object.favicon);
+    }
+    if (object.expired !== undefined && object.expired !== null) {
+      message.expired = Boolean(object.expired);
+    }
+    if (object.items !== undefined && object.items !== null) {
+      for (const e of object.items) {
+        message.items.push(FeedPost.fromJSON(e));
+      }
+    }
+    if (object.meta !== undefined && object.meta !== null) {
+      Object.entries(object.meta).forEach(([key, value]) => {
+        message.meta[key] = String(value);
+      });
+    }
     return message;
   },
 
@@ -279,23 +286,44 @@ export const Feed = {
 
   fromPartial(object: DeepPartial<Feed>): Feed {
     const message = { ...baseFeed } as Feed;
-    message.version = object.version ?? "";
-    message.title = object.title ?? "";
-    message.homePageUrl = object.homePageUrl ?? "";
-    message.description = object.description ?? "";
-    message.feedUrl = object.feedUrl ?? "";
-    message.icon = object.icon ?? "";
-    message.favicon = object.favicon ?? "";
-    message.expired = object.expired ?? false;
-    message.items = (object.items ?? []).map((e) => FeedPost.fromPartial(e));
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      if (value !== undefined) {
-        acc[key] = String(value);
+    message.items = [];
+    message.meta = {};
+    if (object.version !== undefined && object.version !== null) {
+      message.version = object.version;
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.homePageUrl !== undefined && object.homePageUrl !== null) {
+      message.homePageUrl = object.homePageUrl;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = object.description;
+    }
+    if (object.feedUrl !== undefined && object.feedUrl !== null) {
+      message.feedUrl = object.feedUrl;
+    }
+    if (object.icon !== undefined && object.icon !== null) {
+      message.icon = object.icon;
+    }
+    if (object.favicon !== undefined && object.favicon !== null) {
+      message.favicon = object.favicon;
+    }
+    if (object.expired !== undefined && object.expired !== null) {
+      message.expired = object.expired;
+    }
+    if (object.items !== undefined && object.items !== null) {
+      for (const e of object.items) {
+        message.items.push(FeedPost.fromPartial(e));
       }
-      return acc;
-    }, {});
+    }
+    if (object.meta !== undefined && object.meta !== null) {
+      Object.entries(object.meta).forEach(([key, value]) => {
+        if (value !== undefined) {
+          message.meta[key] = String(value);
+        }
+      });
+    }
     return message;
   },
 };
@@ -336,12 +364,12 @@ export const Feed_MetaEntry = {
 
   fromJSON(object: any): Feed_MetaEntry {
     const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = String(object.key);
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = String(object.value);
+    }
     return message;
   },
 
@@ -354,8 +382,12 @@ export const Feed_MetaEntry = {
 
   fromPartial(object: DeepPartial<Feed_MetaEntry>): Feed_MetaEntry {
     const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
-    message.key = object.key ?? "";
-    message.value = object.value ?? "";
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    }
     return message;
   },
 };
@@ -462,43 +494,42 @@ export const FeedPost = {
 
   fromJSON(object: any): FeedPost {
     const message = { ...baseFeedPost } as FeedPost;
-    message.id =
-      object.id !== undefined && object.id !== null ? String(object.id) : "";
-    message.title =
-      object.title !== undefined && object.title !== null
-        ? String(object.title)
-        : "";
-    message.summary =
-      object.summary !== undefined && object.summary !== null
-        ? String(object.summary)
-        : "";
-    message.contentText =
-      object.contentText !== undefined && object.contentText !== null
-        ? String(object.contentText)
-        : "";
-    message.contentHtml =
-      object.contentHtml !== undefined && object.contentHtml !== null
-        ? String(object.contentHtml)
-        : "";
-    message.url =
-      object.url !== undefined && object.url !== null ? String(object.url) : "";
-    message.image =
-      object.image !== undefined && object.image !== null
-        ? String(object.image)
-        : "";
-    message.tags = (object.tags ?? []).map((e: any) => String(e));
-    message.datePublished =
-      object.datePublished !== undefined && object.datePublished !== null
-        ? String(object.datePublished)
-        : "";
-    message.dateModified =
-      object.dateModified !== undefined && object.dateModified !== null
-        ? String(object.dateModified)
-        : "";
-    message.author =
-      object.author !== undefined && object.author !== null
-        ? FeedPost_Author.fromJSON(object.author)
-        : undefined;
+    message.tags = [];
+    if (object.id !== undefined && object.id !== null) {
+      message.id = String(object.id);
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = String(object.title);
+    }
+    if (object.summary !== undefined && object.summary !== null) {
+      message.summary = String(object.summary);
+    }
+    if (object.contentText !== undefined && object.contentText !== null) {
+      message.contentText = String(object.contentText);
+    }
+    if (object.contentHtml !== undefined && object.contentHtml !== null) {
+      message.contentHtml = String(object.contentHtml);
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = String(object.url);
+    }
+    if (object.image !== undefined && object.image !== null) {
+      message.image = String(object.image);
+    }
+    if (object.tags !== undefined && object.tags !== null) {
+      for (const e of object.tags) {
+        message.tags.push(String(e));
+      }
+    }
+    if (object.datePublished !== undefined && object.datePublished !== null) {
+      message.datePublished = String(object.datePublished);
+    }
+    if (object.dateModified !== undefined && object.dateModified !== null) {
+      message.dateModified = String(object.dateModified);
+    }
+    if (object.author !== undefined && object.author !== null) {
+      message.author = FeedPost_Author.fromJSON(object.author);
+    }
     return message;
   },
 
@@ -531,20 +562,42 @@ export const FeedPost = {
 
   fromPartial(object: DeepPartial<FeedPost>): FeedPost {
     const message = { ...baseFeedPost } as FeedPost;
-    message.id = object.id ?? "";
-    message.title = object.title ?? "";
-    message.summary = object.summary ?? "";
-    message.contentText = object.contentText ?? "";
-    message.contentHtml = object.contentHtml ?? "";
-    message.url = object.url ?? "";
-    message.image = object.image ?? "";
-    message.tags = (object.tags ?? []).map((e) => e);
-    message.datePublished = object.datePublished ?? "";
-    message.dateModified = object.dateModified ?? "";
-    message.author =
-      object.author !== undefined && object.author !== null
-        ? FeedPost_Author.fromPartial(object.author)
-        : undefined;
+    message.tags = [];
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    }
+    if (object.title !== undefined && object.title !== null) {
+      message.title = object.title;
+    }
+    if (object.summary !== undefined && object.summary !== null) {
+      message.summary = object.summary;
+    }
+    if (object.contentText !== undefined && object.contentText !== null) {
+      message.contentText = object.contentText;
+    }
+    if (object.contentHtml !== undefined && object.contentHtml !== null) {
+      message.contentHtml = object.contentHtml;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
+    if (object.image !== undefined && object.image !== null) {
+      message.image = object.image;
+    }
+    if (object.tags !== undefined && object.tags !== null) {
+      for (const e of object.tags) {
+        message.tags.push(e);
+      }
+    }
+    if (object.datePublished !== undefined && object.datePublished !== null) {
+      message.datePublished = object.datePublished;
+    }
+    if (object.dateModified !== undefined && object.dateModified !== null) {
+      message.dateModified = object.dateModified;
+    }
+    if (object.author !== undefined && object.author !== null) {
+      message.author = FeedPost_Author.fromPartial(object.author);
+    }
     return message;
   },
 };
@@ -585,12 +638,12 @@ export const FeedPost_Author = {
 
   fromJSON(object: any): FeedPost_Author {
     const message = { ...baseFeedPost_Author } as FeedPost_Author;
-    message.name =
-      object.name !== undefined && object.name !== null
-        ? String(object.name)
-        : "";
-    message.url =
-      object.url !== undefined && object.url !== null ? String(object.url) : "";
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = String(object.url);
+    }
     return message;
   },
 
@@ -603,8 +656,12 @@ export const FeedPost_Author = {
 
   fromPartial(object: DeepPartial<FeedPost_Author>): FeedPost_Author {
     const message = { ...baseFeedPost_Author } as FeedPost_Author;
-    message.name = object.name ?? "";
-    message.url = object.url ?? "";
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.url !== undefined && object.url !== null) {
+      message.url = object.url;
+    }
     return message;
   },
 };

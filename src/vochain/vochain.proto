@@ -5,71 +5,74 @@ package dvote.types.v1;
 option go_package = "go.vocdoni.io/proto/build/go/models";
 
 message VoteEnvelope {
-        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
-        bytes processId = 2;  // The process for which the vote is casted
-        Proof proof = 3;  // Franchise proof
-        bytes votePackage = 4;   // JSON string of the Vote Package (potentially encrypted), encoded as bytes.
-
-        // optional bytes nullifier = 5;
-        bytes nullifier = 5;  // Hash of the private key + processId
-
-        repeated uint32 encryptionKeyIndexes = 6; // On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
+	// Unique number per vote attempt, so that replay attacks can't reuse this payload
+	bytes nonce = 1;
+	// The process for which the vote is casted
+	bytes processId = 2;
+	// Franchise proof
+	Proof proof = 3;
+	// JSON string of the Vote Package (potentially encrypted), encoded as bytes.
+	bytes votePackage = 4;
+	// Hash of the private key + processId
+	bytes nullifier = 5;
+	// On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
+	repeated uint32 encryptionKeyIndexes = 6;
 }
 
 message Census {
-        enum Type {
-                UNKNOWN = 0;
-                ARBO_BLAKE2B = 1;
-                ARBO_POSEIDON = 2;
-                ETHEREUMSTORAGE = 3;
-                ETHEREUMACCOUNT = 4;
-                CA = 5;
-                GRAVITON = 1001;
-                IDEN3 = 1002;
-        }
+	enum Type {
+		UNKNOWN = 0;
+		ARBO_BLAKE2B = 1;
+		ARBO_POSEIDON = 2;
+		ETHEREUMSTORAGE = 3;
+		ETHEREUMACCOUNT = 4;
+		CA = 5;
+		GRAVITON = 1001;
+		IDEN3 = 1002;
+	}
 }
 
 message Proof {
-        oneof payload {
-                // Proof used for signed envelopes
-                ProofGraviton graviton = 1;
-                // Proof used for anonymous votes
-                ProofIden3 iden3 = 2;
-                // Proof used on EVM census based processes
-                ProofEthereumStorage ethereumStorage = 3;
-                // Proof used by oracles to update the census of EVM processes
-                ProofEthereumAccount ethereumAccount = 4;
-                // Proof Certification Authority
-                ProofCA ca = 5;
-                // Proof used for census using arbo
-                ProofArbo arbo = 6;
-                // zkSnark proof
-                ProofZkSNARK zkSnark = 7;
-                // Proof used in Minime token based census
-                ProofMinime minimeStorage = 8;
-         }
+	oneof payload {
+		// Proof used for signed envelopes
+		ProofGraviton graviton = 1;
+		// Proof used for anonymous votes
+		ProofIden3 iden3 = 2;
+		// Proof used on EVM census based processes
+		ProofEthereumStorage ethereumStorage = 3;
+		// Proof used by oracles to update the census of EVM processes
+		ProofEthereumAccount ethereumAccount = 4;
+		// Proof Certification Authority
+		ProofCA ca = 5;
+		// Proof used for census using arbo
+		ProofArbo arbo = 6;
+		// zkSnark proof
+		ProofZkSNARK zkSnark = 7;
+		// Proof used in Minime token based census
+		ProofMinime minimeStorage = 8;
+	}
 }
 
 message ProofGraviton {
-        bytes siblings = 1;
+    bytes siblings = 1;
 }
 
 message ProofIden3 {
-        bytes siblings = 1;
+	bytes siblings = 1;
 }
 
 message ProofEthereumStorage {
-        bytes key = 1;
-        bytes value = 2;
-        repeated bytes siblings = 3;
+	bytes key = 1;
+	bytes value = 2;
+	repeated bytes siblings = 3;
 }
 
 message ProofEthereumAccount {
-        bytes nonce = 1;
-        bytes balance = 2;  // Big Int encoded as bytes
-        bytes storageHash = 3;
-        bytes codeHash = 4;
-        repeated bytes siblings = 5;
+	bytes nonce = 1;
+	bytes balance = 2;  // Big Int encoded as bytes
+	bytes storageHash = 3;
+	bytes codeHash = 4;
+	repeated bytes siblings = 5;
 }
 
 message ProofMinime {
@@ -78,58 +81,56 @@ message ProofMinime {
 }
 
 message ProofCA {
-        enum Type {
-                UNKNOWN = 0;
-                ECDSA = 1;
-                ECDSA_PIDSALTED = 2;
-                ECDSA_BLIND = 3;
-                ECDSA_BLIND_PIDSALTED = 4;
-        }
-
-        Type type = 1;
-        CAbundle bundle = 2;
-        bytes signature = 3;
+	enum Type {
+			UNKNOWN = 0;
+			ECDSA = 1;
+			ECDSA_PIDSALTED = 2;
+			ECDSA_BLIND = 3;
+			ECDSA_BLIND_PIDSALTED = 4;
+	}
+	Type type = 1;
+	CAbundle bundle = 2;
+	bytes signature = 3;
 }
 
 message CAbundle {
-        bytes processId = 1;
-        bytes address = 2;
+	bytes processId = 1;
+	bytes address = 2;
 }
 
 message ProofArbo {
-        enum Type {
-                BLAKE2B = 0;
-                POSEIDON = 1;
-        }
-        Type type = 1;
-        bytes siblings = 2;
-        bytes value = 3;
+	enum Type {
+			BLAKE2B = 0;
+			POSEIDON = 1;
+	}
+	Type type = 1;
+	bytes siblings = 2;
+	bytes value = 3;
 }
 
 // Groth16 zkSNARK proof + public inputs
 message ProofZkSNARK {
-        // circuitParametersIndex defines the index of the parameter set of the
-        // circuit. Each process has defined a set of available parameters for
-        // the same circuit, the 'parametersIndex' defines the index of the set
-        // for which the ProofZkSNARK belongs for the circuit used in that
-        // process.
-        int32 circuitParametersIndex = 1;
-
-        // a represents a G1 point in Affine coordinates
-        repeated string a = 2;
-        // b represents a G2 point in Affine coordinates, represented by an
-        // array of arrays: []string => [2][2]bigint).
-        // [w, x, y, z] => [[w, x], [y, z]]
-        repeated string b = 3;
-        // c represents a G1 point in Affine coordinates
-        repeated string c = 4;
-        repeated string publicInputs = 5;
+	// circuitParametersIndex defines the index of the parameter set of the
+	// circuit. Each process has defined a set of available parameters for
+	// the same circuit, the 'parametersIndex' defines the index of the set
+	// for which the ProofZkSNARK belongs for the circuit used in that
+	// process.
+	int32 circuitParametersIndex = 1;
+	// a represents a G1 point in Affine coordinates
+	repeated string a = 2;
+	// b represents a G2 point in Affine coordinates, represented by an
+	// array of arrays: []string => [2][2]bigint).
+	// [w, x, y, z] => [[w, x], [y, z]]
+	repeated string b = 3;
+	// c represents a G1 point in Affine coordinates
+	repeated string c = 4;
+	repeated string publicInputs = 5;
 }
 
 // Account represents an entity with an amount of tokens, usually attached to an address.
 message Account {
-	uint64 balance =1;
-	uint32 nonce =2;
+	uint64 balance = 1;
+	uint32 nonce = 2;
 	string infoURI = 3;
 	repeated bytes delegateAddrs = 4;
 }
@@ -149,6 +150,13 @@ enum TxType {
 	VOTE = 11;
 	SET_PROCESS_RESULTS = 12;
 	REGISTER_VOTER_KEY = 13;
+	MINT_TOKENS = 14;
+	SEND_TOKENS = 15;
+	SET_TRANSACTION_COSTS = 16;
+	SET_ACCOUNT_INFO = 17;
+	ADD_DELEGATE_FOR_ACCOUNT = 18;
+	DEL_DELEGATE_FOR_ACCOUNT = 19;
+	COLLECT_FAUCET = 20;
 }
 
 message Tx {
@@ -158,15 +166,23 @@ message Tx {
 		AdminTx admin = 3;
 		SetProcessTx setProcess = 4;
 		RegisterKeyTx registerKey = 5;
+		MintTokensTx mintTokens = 6;
+		SendTokensTx sendTokens = 7;
+		SetTransactionCostsTx setTransactionCosts = 8;
+		SetAccountInfoTx setAccountInfo = 9;
+		SetAccountDelegateTx setAccountDelegateTx = 10;
+		CollectFaucetTx collectFaucet = 11;
 	}
 }
 
 message SignedTx {
-	bytes tx = 1; // The bytes produced by Marshaling a Tx{} message
-	optional bytes signature = 2; // The signature for the tx bytes. 
+	// The bytes produced by Marshaling a Tx{} message
+	bytes tx = 1;
+	// The signature for the tx bytes. 
 	// signature is only required in those transactions that actually need signature.
-        // I.e zk-Snarks based transactions won't needed, however the transaction should use
-        // this message type in order to preserve consistency on the Vochain
+	// I.e zk-Snarks based transactions won't needed, however the transaction should use
+	// this message type in order to preserve consistency on the Vochain
+	optional bytes signature = 2;
 }
 
 message NewProcessTx {
@@ -200,11 +216,61 @@ message AdminTx {
 }
 
 message RegisterKeyTx {
-        bytes nonce = 1;  // Unique number per vote attempt, so that replay attacks can't reuse this payload
-        bytes processId = 2;  // The process for which the vote is casted
-        Proof proof = 3;  // Franchise proof
-        bytes newKey = 4;   // New key to register
-        string weight = 5;   // Weight to delegate to newKey
+	bytes nonce = 1;  	  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+	bytes processId = 2;  // The process for which the vote is casted
+	Proof proof = 3;  	  // Franchise proof
+	bytes newKey = 4;     // New key to register
+	string weight = 5;    // Weight to delegate to newKey
+}
+
+message MintTokensTx {
+	TxType txtype = 1;
+	uint32 nonce = 2;
+	bytes to = 3;
+	bytes value = 4;
+}
+
+message SendTokensTx {
+	TxType txtype = 1;
+	uint32 nonce = 2;
+	bytes from = 3;
+	bytes to = 4;
+	bytes value = 5;
+}
+
+message SetTransactionCostsTx {
+	TxType txtype = 1;
+	uint32 nonce = 2;
+	uint64 value = 3;
+}
+
+message SetAccountInfoTx {
+	TxType txtype = 1;
+	uint32 nonce = 2;
+	string infoURI = 3;
+}
+
+message SetAccountDelegateTx {
+	TxType txtype = 1;
+	uint32 nonce = 2;
+	bytes delegate = 3;
+}
+
+message CollectFaucetTx {
+	TxType txType = 1;
+	FaucetPackage faucetPackage = 2;
+	// nonce not required here as the faucetPayload.identifier does the job
+}
+
+message FaucetPayload {
+	uint64 identifier = 1;
+	bytes to = 2;
+	uint64 amount = 3;
+}
+
+message FaucetPackage {
+	FaucetPayload payload = 1;
+	bytes signature = 2;
 }
 
 message Process {
@@ -340,28 +406,28 @@ message Vote {
 }
 
 message TendermintHeader {
-  // basic block info
-  string chain_id = 2 ;
-  int64 height = 3;
-  int64 timestamp = 4 ;
+	// basic block info
+	string chain_id = 2 ;
+	int64 height = 3;
+	int64 timestamp = 4 ;
 
-  // prev block info
-  bytes blockID  = 5;
+	// prev block info
+	bytes blockID  = 5;
 
-  // hashes of block data
-  bytes last_commit_hash = 6;  // commit from validators from the last block
-  bytes data_hash        = 7;  // transactions
+	// hashes of block data
+	bytes last_commit_hash = 6;  // commit from validators from the last block
+	bytes data_hash        = 7;  // transactions
 
-  // hashes from the app output from the prev block
-  bytes validators_hash      = 8;   // validators for the current block
-  bytes next_validators_hash = 9;   // validators for the next block
-  bytes consensus_hash       = 10;  // consensus params for current block
-  bytes app_hash             = 11;  // state after txs from the previous block
-  bytes last_results_hash    = 12;  // root hash of all results from the txs from the previous block
+	// hashes from the app output from the prev block
+	bytes validators_hash      = 8;   // validators for the current block
+	bytes next_validators_hash = 9;   // validators for the next block
+	bytes consensus_hash       = 10;  // consensus params for current block
+	bytes app_hash             = 11;  // state after txs from the previous block
+	bytes last_results_hash    = 12;  // root hash of all results from the txs from the previous block
 
-  // consensus info
-  bytes evidence_hash    = 13;  // evidence included in the block
-  bytes proposer_address = 14;  // original proposer of the block
+	// consensus info
+	bytes evidence_hash    = 13;  // evidence included in the block
+	bytes proposer_address = 14;  // original proposer of the block
 }
 
 

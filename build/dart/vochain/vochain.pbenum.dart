@@ -24,6 +24,13 @@ class TxType extends $pb.ProtobufEnum {
   static const TxType VOTE = TxType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VOTE');
   static const TxType SET_PROCESS_RESULTS = TxType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_PROCESS_RESULTS');
   static const TxType REGISTER_VOTER_KEY = TxType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REGISTER_VOTER_KEY');
+  static const TxType MINT_TOKENS = TxType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MINT_TOKENS');
+  static const TxType SEND_TOKENS = TxType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SEND_TOKENS');
+  static const TxType SET_TRANSACTION_COSTS = TxType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_TRANSACTION_COSTS');
+  static const TxType SET_ACCOUNT_INFO = TxType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_ACCOUNT_INFO');
+  static const TxType ADD_DELEGATE_FOR_ACCOUNT = TxType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_DELEGATE_FOR_ACCOUNT');
+  static const TxType DEL_DELEGATE_FOR_ACCOUNT = TxType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DEL_DELEGATE_FOR_ACCOUNT');
+  static const TxType COLLECT_FAUCET = TxType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLLECT_FAUCET');
 
   static const $core.List<TxType> values = <TxType> [
     TX_UNKNOWN,
@@ -40,6 +47,13 @@ class TxType extends $pb.ProtobufEnum {
     VOTE,
     SET_PROCESS_RESULTS,
     REGISTER_VOTER_KEY,
+    MINT_TOKENS,
+    SEND_TOKENS,
+    SET_TRANSACTION_COSTS,
+    SET_ACCOUNT_INFO,
+    ADD_DELEGATE_FOR_ACCOUNT,
+    DEL_DELEGATE_FOR_ACCOUNT,
+    COLLECT_FAUCET,
   ];
 
   static final $core.Map<$core.int, TxType> _byValue = $pb.ProtobufEnum.initByValue(values);
