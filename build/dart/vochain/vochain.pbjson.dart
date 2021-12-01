@@ -26,11 +26,18 @@ const TxType$json = const {
     const {'1': 'VOTE', '2': 11},
     const {'1': 'SET_PROCESS_RESULTS', '2': 12},
     const {'1': 'REGISTER_VOTER_KEY', '2': 13},
+    const {'1': 'MINT_TOKENS', '2': 14},
+    const {'1': 'SEND_TOKENS', '2': 15},
+    const {'1': 'SET_TRANSACTION_COSTS', '2': 16},
+    const {'1': 'SET_ACCOUNT_INFO', '2': 17},
+    const {'1': 'ADD_DELEGATE_FOR_ACCOUNT', '2': 18},
+    const {'1': 'DEL_DELEGATE_FOR_ACCOUNT', '2': 19},
+    const {'1': 'COLLECT_FAUCET', '2': 20},
   ],
 };
 
 /// Descriptor for `TxType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List txTypeDescriptor = $convert.base64Decode('CgZUeFR5cGUSDgoKVFhfVU5LTk9XThAAEg8KC05FV19QUk9DRVNTEAESFgoSU0VUX1BST0NFU1NfU1RBVFVTEAISFgoSU0VUX1BST0NFU1NfQ0VOU1VTEAMSHgoaU0VUX1BST0NFU1NfUVVFU1RJT05fSU5ERVgQBBIUChBBRERfUFJPQ0VTU19LRVlTEAUSFwoTUkVWRUFMX1BST0NFU1NfS0VZUxAGEg4KCkFERF9PUkFDTEUQBxIRCg1SRU1PVkVfT1JBQ0xFEAgSEQoNQUREX1ZBTElEQVRPUhAJEhQKEFJFTU9WRV9WQUxJREFUT1IQChIICgRWT1RFEAsSFwoTU0VUX1BST0NFU1NfUkVTVUxUUxAMEhYKElJFR0lTVEVSX1ZPVEVSX0tFWRAN');
+final $typed_data.Uint8List txTypeDescriptor = $convert.base64Decode('CgZUeFR5cGUSDgoKVFhfVU5LTk9XThAAEg8KC05FV19QUk9DRVNTEAESFgoSU0VUX1BST0NFU1NfU1RBVFVTEAISFgoSU0VUX1BST0NFU1NfQ0VOU1VTEAMSHgoaU0VUX1BST0NFU1NfUVVFU1RJT05fSU5ERVgQBBIUChBBRERfUFJPQ0VTU19LRVlTEAUSFwoTUkVWRUFMX1BST0NFU1NfS0VZUxAGEg4KCkFERF9PUkFDTEUQBxIRCg1SRU1PVkVfT1JBQ0xFEAgSEQoNQUREX1ZBTElEQVRPUhAJEhQKEFJFTU9WRV9WQUxJREFUT1IQChIICgRWT1RFEAsSFwoTU0VUX1BST0NFU1NfUkVTVUxUUxAMEhYKElJFR0lTVEVSX1ZPVEVSX0tFWRANEg8KC01JTlRfVE9LRU5TEA4SDwoLU0VORF9UT0tFTlMQDxIZChVTRVRfVFJBTlNBQ1RJT05fQ09TVFMQEBIUChBTRVRfQUNDT1VOVF9JTkZPEBESHAoYQUREX0RFTEVHQVRFX0ZPUl9BQ0NPVU5UEBISHAoYREVMX0RFTEVHQVRFX0ZPUl9BQ0NPVU5UEBMSEgoOQ09MTEVDVF9GQVVDRVQQFA==');
 @$core.Deprecated('Use processStatusDescriptor instead')
 const ProcessStatus$json = const {
   '1': 'ProcessStatus',
@@ -292,6 +299,12 @@ const Tx$json = const {
     const {'1': 'admin', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v1.AdminTx', '9': 0, '10': 'admin'},
     const {'1': 'setProcess', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v1.SetProcessTx', '9': 0, '10': 'setProcess'},
     const {'1': 'registerKey', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.RegisterKeyTx', '9': 0, '10': 'registerKey'},
+    const {'1': 'mintTokens', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v1.MintTokensTx', '9': 0, '10': 'mintTokens'},
+    const {'1': 'sendTokens', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v1.SendTokensTx', '9': 0, '10': 'sendTokens'},
+    const {'1': 'setTransactionCosts', '3': 8, '4': 1, '5': 11, '6': '.dvote.types.v1.SetTransactionCostsTx', '9': 0, '10': 'setTransactionCosts'},
+    const {'1': 'setAccountInfo', '3': 9, '4': 1, '5': 11, '6': '.dvote.types.v1.SetAccountInfoTx', '9': 0, '10': 'setAccountInfo'},
+    const {'1': 'setAccountDelegateTx', '3': 10, '4': 1, '5': 11, '6': '.dvote.types.v1.SetAccountDelegateTx', '9': 0, '10': 'setAccountDelegateTx'},
+    const {'1': 'collectFaucet', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v1.CollectFaucetTx', '9': 0, '10': 'collectFaucet'},
   ],
   '8': const [
     const {'1': 'payload'},
@@ -299,7 +312,7 @@ const Tx$json = const {
 };
 
 /// Descriptor for `Tx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List txDescriptor = $convert.base64Decode('CgJUeBIyCgR2b3RlGAEgASgLMhwuZHZvdGUudHlwZXMudjEuVm90ZUVudmVsb3BlSABSBHZvdGUSPgoKbmV3UHJvY2VzcxgCIAEoCzIcLmR2b3RlLnR5cGVzLnYxLk5ld1Byb2Nlc3NUeEgAUgpuZXdQcm9jZXNzEi8KBWFkbWluGAMgASgLMhcuZHZvdGUudHlwZXMudjEuQWRtaW5UeEgAUgVhZG1pbhI+CgpzZXRQcm9jZXNzGAQgASgLMhwuZHZvdGUudHlwZXMudjEuU2V0UHJvY2Vzc1R4SABSCnNldFByb2Nlc3MSQQoLcmVnaXN0ZXJLZXkYBSABKAsyHS5kdm90ZS50eXBlcy52MS5SZWdpc3RlcktleVR4SABSC3JlZ2lzdGVyS2V5QgkKB3BheWxvYWQ=');
+final $typed_data.Uint8List txDescriptor = $convert.base64Decode('CgJUeBIyCgR2b3RlGAEgASgLMhwuZHZvdGUudHlwZXMudjEuVm90ZUVudmVsb3BlSABSBHZvdGUSPgoKbmV3UHJvY2VzcxgCIAEoCzIcLmR2b3RlLnR5cGVzLnYxLk5ld1Byb2Nlc3NUeEgAUgpuZXdQcm9jZXNzEi8KBWFkbWluGAMgASgLMhcuZHZvdGUudHlwZXMudjEuQWRtaW5UeEgAUgVhZG1pbhI+CgpzZXRQcm9jZXNzGAQgASgLMhwuZHZvdGUudHlwZXMudjEuU2V0UHJvY2Vzc1R4SABSCnNldFByb2Nlc3MSQQoLcmVnaXN0ZXJLZXkYBSABKAsyHS5kdm90ZS50eXBlcy52MS5SZWdpc3RlcktleVR4SABSC3JlZ2lzdGVyS2V5Ej4KCm1pbnRUb2tlbnMYBiABKAsyHC5kdm90ZS50eXBlcy52MS5NaW50VG9rZW5zVHhIAFIKbWludFRva2VucxI+CgpzZW5kVG9rZW5zGAcgASgLMhwuZHZvdGUudHlwZXMudjEuU2VuZFRva2Vuc1R4SABSCnNlbmRUb2tlbnMSWQoTc2V0VHJhbnNhY3Rpb25Db3N0cxgIIAEoCzIlLmR2b3RlLnR5cGVzLnYxLlNldFRyYW5zYWN0aW9uQ29zdHNUeEgAUhNzZXRUcmFuc2FjdGlvbkNvc3RzEkoKDnNldEFjY291bnRJbmZvGAkgASgLMiAuZHZvdGUudHlwZXMudjEuU2V0QWNjb3VudEluZm9UeEgAUg5zZXRBY2NvdW50SW5mbxJaChRzZXRBY2NvdW50RGVsZWdhdGVUeBgKIAEoCzIkLmR2b3RlLnR5cGVzLnYxLlNldEFjY291bnREZWxlZ2F0ZVR4SABSFHNldEFjY291bnREZWxlZ2F0ZVR4EkcKDWNvbGxlY3RGYXVjZXQYCyABKAsyHy5kdm90ZS50eXBlcy52MS5Db2xsZWN0RmF1Y2V0VHhIAFINY29sbGVjdEZhdWNldEIJCgdwYXlsb2Fk');
 @$core.Deprecated('Use signedTxDescriptor instead')
 const SignedTx$json = const {
   '1': 'SignedTx',
@@ -392,6 +405,103 @@ const RegisterKeyTx$json = const {
 
 /// Descriptor for `RegisterKeyTx`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List registerKeyTxDescriptor = $convert.base64Decode('Cg1SZWdpc3RlcktleVR4EhQKBW5vbmNlGAEgASgMUgVub25jZRIcCglwcm9jZXNzSWQYAiABKAxSCXByb2Nlc3NJZBIrCgVwcm9vZhgDIAEoCzIVLmR2b3RlLnR5cGVzLnYxLlByb29mUgVwcm9vZhIWCgZuZXdLZXkYBCABKAxSBm5ld0tleRIWCgZ3ZWlnaHQYBSABKAlSBndlaWdodA==');
+@$core.Deprecated('Use mintTokensTxDescriptor instead')
+const MintTokensTx$json = const {
+  '1': 'MintTokensTx',
+  '2': const [
+    const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
+    const {'1': 'to', '3': 3, '4': 1, '5': 12, '10': 'to'},
+    const {'1': 'value', '3': 4, '4': 1, '5': 12, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `MintTokensTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mintTokensTxDescriptor = $convert.base64Decode('CgxNaW50VG9rZW5zVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEg4KAnRvGAMgASgMUgJ0bxIUCgV2YWx1ZRgEIAEoDFIFdmFsdWU=');
+@$core.Deprecated('Use sendTokensTxDescriptor instead')
+const SendTokensTx$json = const {
+  '1': 'SendTokensTx',
+  '2': const [
+    const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
+    const {'1': 'from', '3': 3, '4': 1, '5': 12, '10': 'from'},
+    const {'1': 'to', '3': 4, '4': 1, '5': 12, '10': 'to'},
+    const {'1': 'value', '3': 5, '4': 1, '5': 12, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `SendTokensTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sendTokensTxDescriptor = $convert.base64Decode('CgxTZW5kVG9rZW5zVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEhIKBGZyb20YAyABKAxSBGZyb20SDgoCdG8YBCABKAxSAnRvEhQKBXZhbHVlGAUgASgMUgV2YWx1ZQ==');
+@$core.Deprecated('Use setTransactionCostsTxDescriptor instead')
+const SetTransactionCostsTx$json = const {
+  '1': 'SetTransactionCostsTx',
+  '2': const [
+    const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
+    const {'1': 'value', '3': 3, '4': 1, '5': 4, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `SetTransactionCostsTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setTransactionCostsTxDescriptor = $convert.base64Decode('ChVTZXRUcmFuc2FjdGlvbkNvc3RzVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEhQKBXZhbHVlGAMgASgEUgV2YWx1ZQ==');
+@$core.Deprecated('Use setAccountInfoTxDescriptor instead')
+const SetAccountInfoTx$json = const {
+  '1': 'SetAccountInfoTx',
+  '2': const [
+    const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
+    const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '10': 'infoURI'},
+  ],
+};
+
+/// Descriptor for `SetAccountInfoTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setAccountInfoTxDescriptor = $convert.base64Decode('ChBTZXRBY2NvdW50SW5mb1R4Ei4KBnR4dHlwZRgBIAEoDjIWLmR2b3RlLnR5cGVzLnYxLlR4VHlwZVIGdHh0eXBlEhQKBW5vbmNlGAIgASgNUgVub25jZRIYCgdpbmZvVVJJGAMgASgJUgdpbmZvVVJJ');
+@$core.Deprecated('Use setAccountDelegateTxDescriptor instead')
+const SetAccountDelegateTx$json = const {
+  '1': 'SetAccountDelegateTx',
+  '2': const [
+    const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
+    const {'1': 'delegate', '3': 3, '4': 1, '5': 12, '10': 'delegate'},
+  ],
+};
+
+/// Descriptor for `SetAccountDelegateTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setAccountDelegateTxDescriptor = $convert.base64Decode('ChRTZXRBY2NvdW50RGVsZWdhdGVUeBIuCgZ0eHR5cGUYASABKA4yFi5kdm90ZS50eXBlcy52MS5UeFR5cGVSBnR4dHlwZRIUCgVub25jZRgCIAEoDVIFbm9uY2USGgoIZGVsZWdhdGUYAyABKAxSCGRlbGVnYXRl');
+@$core.Deprecated('Use collectFaucetTxDescriptor instead')
+const CollectFaucetTx$json = const {
+  '1': 'CollectFaucetTx',
+  '2': const [
+    const {'1': 'txType', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txType'},
+    const {'1': 'faucetPackage', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '10': 'faucetPackage'},
+  ],
+};
+
+/// Descriptor for `CollectFaucetTx`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List collectFaucetTxDescriptor = $convert.base64Decode('Cg9Db2xsZWN0RmF1Y2V0VHgSLgoGdHhUeXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eFR5cGUSQwoNZmF1Y2V0UGFja2FnZRgCIAEoCzIdLmR2b3RlLnR5cGVzLnYxLkZhdWNldFBhY2thZ2VSDWZhdWNldFBhY2thZ2U=');
+@$core.Deprecated('Use faucetPayloadDescriptor instead')
+const FaucetPayload$json = const {
+  '1': 'FaucetPayload',
+  '2': const [
+    const {'1': 'identifier', '3': 1, '4': 1, '5': 4, '10': 'identifier'},
+    const {'1': 'to', '3': 2, '4': 1, '5': 12, '10': 'to'},
+    const {'1': 'amount', '3': 3, '4': 1, '5': 4, '10': 'amount'},
+  ],
+};
+
+/// Descriptor for `FaucetPayload`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List faucetPayloadDescriptor = $convert.base64Decode('Cg1GYXVjZXRQYXlsb2FkEh4KCmlkZW50aWZpZXIYASABKARSCmlkZW50aWZpZXISDgoCdG8YAiABKAxSAnRvEhYKBmFtb3VudBgDIAEoBFIGYW1vdW50');
+@$core.Deprecated('Use faucetPackageDescriptor instead')
+const FaucetPackage$json = const {
+  '1': 'FaucetPackage',
+  '2': const [
+    const {'1': 'payload', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPayload', '10': 'payload'},
+    const {'1': 'signature', '3': 2, '4': 1, '5': 12, '10': 'signature'},
+  ],
+};
+
+/// Descriptor for `FaucetPackage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List faucetPackageDescriptor = $convert.base64Decode('Cg1GYXVjZXRQYWNrYWdlEjcKB3BheWxvYWQYASABKAsyHS5kdm90ZS50eXBlcy52MS5GYXVjZXRQYXlsb2FkUgdwYXlsb2FkEhwKCXNpZ25hdHVyZRgCIAEoDFIJc2lnbmF0dXJl');
 @$core.Deprecated('Use processDescriptor instead')
 const Process$json = const {
   '1': 'Process',

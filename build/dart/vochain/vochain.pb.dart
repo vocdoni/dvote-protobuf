@@ -1050,6 +1050,12 @@ enum Tx_Payload {
   admin, 
   setProcess, 
   registerKey, 
+  mintTokens, 
+  sendTokens, 
+  setTransactionCosts, 
+  setAccountInfo, 
+  setAccountDelegateTx, 
+  collectFaucet, 
   notSet
 }
 
@@ -1060,15 +1066,27 @@ class Tx extends $pb.GeneratedMessage {
     3 : Tx_Payload.admin,
     4 : Tx_Payload.setProcess,
     5 : Tx_Payload.registerKey,
+    6 : Tx_Payload.mintTokens,
+    7 : Tx_Payload.sendTokens,
+    8 : Tx_Payload.setTransactionCosts,
+    9 : Tx_Payload.setAccountInfo,
+    10 : Tx_Payload.setAccountDelegateTx,
+    11 : Tx_Payload.collectFaucet,
     0 : Tx_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Tx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
     ..aOM<VoteEnvelope>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vote', subBuilder: VoteEnvelope.create)
     ..aOM<NewProcessTx>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newProcess', protoName: 'newProcess', subBuilder: NewProcessTx.create)
     ..aOM<AdminTx>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'admin', subBuilder: AdminTx.create)
     ..aOM<SetProcessTx>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setProcess', protoName: 'setProcess', subBuilder: SetProcessTx.create)
     ..aOM<RegisterKeyTx>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'registerKey', protoName: 'registerKey', subBuilder: RegisterKeyTx.create)
+    ..aOM<MintTokensTx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mintTokens', protoName: 'mintTokens', subBuilder: MintTokensTx.create)
+    ..aOM<SendTokensTx>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sendTokens', protoName: 'sendTokens', subBuilder: SendTokensTx.create)
+    ..aOM<SetTransactionCostsTx>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setTransactionCosts', protoName: 'setTransactionCosts', subBuilder: SetTransactionCostsTx.create)
+    ..aOM<SetAccountInfoTx>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccountInfo', protoName: 'setAccountInfo', subBuilder: SetAccountInfoTx.create)
+    ..aOM<SetAccountDelegateTx>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccountDelegateTx', protoName: 'setAccountDelegateTx', subBuilder: SetAccountDelegateTx.create)
+    ..aOM<CollectFaucetTx>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'collectFaucet', protoName: 'collectFaucet', subBuilder: CollectFaucetTx.create)
     ..hasRequiredFields = false
   ;
 
@@ -1079,6 +1097,12 @@ class Tx extends $pb.GeneratedMessage {
     AdminTx? admin,
     SetProcessTx? setProcess,
     RegisterKeyTx? registerKey,
+    MintTokensTx? mintTokens,
+    SendTokensTx? sendTokens,
+    SetTransactionCostsTx? setTransactionCosts,
+    SetAccountInfoTx? setAccountInfo,
+    SetAccountDelegateTx? setAccountDelegateTx,
+    CollectFaucetTx? collectFaucet,
   }) {
     final _result = create();
     if (vote != null) {
@@ -1095,6 +1119,24 @@ class Tx extends $pb.GeneratedMessage {
     }
     if (registerKey != null) {
       _result.registerKey = registerKey;
+    }
+    if (mintTokens != null) {
+      _result.mintTokens = mintTokens;
+    }
+    if (sendTokens != null) {
+      _result.sendTokens = sendTokens;
+    }
+    if (setTransactionCosts != null) {
+      _result.setTransactionCosts = setTransactionCosts;
+    }
+    if (setAccountInfo != null) {
+      _result.setAccountInfo = setAccountInfo;
+    }
+    if (setAccountDelegateTx != null) {
+      _result.setAccountDelegateTx = setAccountDelegateTx;
+    }
+    if (collectFaucet != null) {
+      _result.collectFaucet = collectFaucet;
     }
     return _result;
   }
@@ -1176,6 +1218,72 @@ class Tx extends $pb.GeneratedMessage {
   void clearRegisterKey() => clearField(5);
   @$pb.TagNumber(5)
   RegisterKeyTx ensureRegisterKey() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  MintTokensTx get mintTokens => $_getN(5);
+  @$pb.TagNumber(6)
+  set mintTokens(MintTokensTx v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasMintTokens() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearMintTokens() => clearField(6);
+  @$pb.TagNumber(6)
+  MintTokensTx ensureMintTokens() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  SendTokensTx get sendTokens => $_getN(6);
+  @$pb.TagNumber(7)
+  set sendTokens(SendTokensTx v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasSendTokens() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearSendTokens() => clearField(7);
+  @$pb.TagNumber(7)
+  SendTokensTx ensureSendTokens() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  SetTransactionCostsTx get setTransactionCosts => $_getN(7);
+  @$pb.TagNumber(8)
+  set setTransactionCosts(SetTransactionCostsTx v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasSetTransactionCosts() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearSetTransactionCosts() => clearField(8);
+  @$pb.TagNumber(8)
+  SetTransactionCostsTx ensureSetTransactionCosts() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  SetAccountInfoTx get setAccountInfo => $_getN(8);
+  @$pb.TagNumber(9)
+  set setAccountInfo(SetAccountInfoTx v) { setField(9, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasSetAccountInfo() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearSetAccountInfo() => clearField(9);
+  @$pb.TagNumber(9)
+  SetAccountInfoTx ensureSetAccountInfo() => $_ensure(8);
+
+  @$pb.TagNumber(10)
+  SetAccountDelegateTx get setAccountDelegateTx => $_getN(9);
+  @$pb.TagNumber(10)
+  set setAccountDelegateTx(SetAccountDelegateTx v) { setField(10, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasSetAccountDelegateTx() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearSetAccountDelegateTx() => clearField(10);
+  @$pb.TagNumber(10)
+  SetAccountDelegateTx ensureSetAccountDelegateTx() => $_ensure(9);
+
+  @$pb.TagNumber(11)
+  CollectFaucetTx get collectFaucet => $_getN(10);
+  @$pb.TagNumber(11)
+  set collectFaucet(CollectFaucetTx v) { setField(11, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasCollectFaucet() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearCollectFaucet() => clearField(11);
+  @$pb.TagNumber(11)
+  CollectFaucetTx ensureCollectFaucet() => $_ensure(10);
 }
 
 class SignedTx extends $pb.GeneratedMessage {
@@ -1741,6 +1849,624 @@ class RegisterKeyTx extends $pb.GeneratedMessage {
   $core.bool hasWeight() => $_has(4);
   @$pb.TagNumber(5)
   void clearWeight() => clearField(5);
+}
+
+class MintTokensTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MintTokensTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  MintTokensTx._() : super();
+  factory MintTokensTx({
+    TxType? txtype,
+    $core.int? nonce,
+    $core.List<$core.int>? to,
+    $core.List<$core.int>? value,
+  }) {
+    final _result = create();
+    if (txtype != null) {
+      _result.txtype = txtype;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (to != null) {
+      _result.to = to;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory MintTokensTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MintTokensTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MintTokensTx clone() => MintTokensTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MintTokensTx copyWith(void Function(MintTokensTx) updates) => super.copyWith((message) => updates(message as MintTokensTx)) as MintTokensTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MintTokensTx create() => MintTokensTx._();
+  MintTokensTx createEmptyInstance() => create();
+  static $pb.PbList<MintTokensTx> createRepeated() => $pb.PbList<MintTokensTx>();
+  @$core.pragma('dart2js:noInline')
+  static MintTokensTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MintTokensTx>(create);
+  static MintTokensTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txtype => $_getN(0);
+  @$pb.TagNumber(1)
+  set txtype(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxtype() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxtype() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nonce => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNonce() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNonce() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get to => $_getN(2);
+  @$pb.TagNumber(3)
+  set to($core.List<$core.int> v) { $_setBytes(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTo() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTo() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get value => $_getN(3);
+  @$pb.TagNumber(4)
+  set value($core.List<$core.int> v) { $_setBytes(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasValue() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearValue() => clearField(4);
+}
+
+class SendTokensTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SendTokensTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  SendTokensTx._() : super();
+  factory SendTokensTx({
+    TxType? txtype,
+    $core.int? nonce,
+    $core.List<$core.int>? from,
+    $core.List<$core.int>? to,
+    $core.List<$core.int>? value,
+  }) {
+    final _result = create();
+    if (txtype != null) {
+      _result.txtype = txtype;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (from != null) {
+      _result.from = from;
+    }
+    if (to != null) {
+      _result.to = to;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory SendTokensTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SendTokensTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SendTokensTx clone() => SendTokensTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SendTokensTx copyWith(void Function(SendTokensTx) updates) => super.copyWith((message) => updates(message as SendTokensTx)) as SendTokensTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SendTokensTx create() => SendTokensTx._();
+  SendTokensTx createEmptyInstance() => create();
+  static $pb.PbList<SendTokensTx> createRepeated() => $pb.PbList<SendTokensTx>();
+  @$core.pragma('dart2js:noInline')
+  static SendTokensTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SendTokensTx>(create);
+  static SendTokensTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txtype => $_getN(0);
+  @$pb.TagNumber(1)
+  set txtype(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxtype() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxtype() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nonce => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNonce() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNonce() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get from => $_getN(2);
+  @$pb.TagNumber(3)
+  set from($core.List<$core.int> v) { $_setBytes(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFrom() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFrom() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get to => $_getN(3);
+  @$pb.TagNumber(4)
+  set to($core.List<$core.int> v) { $_setBytes(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasTo() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTo() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<$core.int> get value => $_getN(4);
+  @$pb.TagNumber(5)
+  set value($core.List<$core.int> v) { $_setBytes(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasValue() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearValue() => clearField(5);
+}
+
+class SetTransactionCostsTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetTransactionCostsTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
+    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  SetTransactionCostsTx._() : super();
+  factory SetTransactionCostsTx({
+    TxType? txtype,
+    $core.int? nonce,
+    $fixnum.Int64? value,
+  }) {
+    final _result = create();
+    if (txtype != null) {
+      _result.txtype = txtype;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory SetTransactionCostsTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetTransactionCostsTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetTransactionCostsTx clone() => SetTransactionCostsTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetTransactionCostsTx copyWith(void Function(SetTransactionCostsTx) updates) => super.copyWith((message) => updates(message as SetTransactionCostsTx)) as SetTransactionCostsTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SetTransactionCostsTx create() => SetTransactionCostsTx._();
+  SetTransactionCostsTx createEmptyInstance() => create();
+  static $pb.PbList<SetTransactionCostsTx> createRepeated() => $pb.PbList<SetTransactionCostsTx>();
+  @$core.pragma('dart2js:noInline')
+  static SetTransactionCostsTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetTransactionCostsTx>(create);
+  static SetTransactionCostsTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txtype => $_getN(0);
+  @$pb.TagNumber(1)
+  set txtype(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxtype() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxtype() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nonce => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNonce() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNonce() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get value => $_getI64(2);
+  @$pb.TagNumber(3)
+  set value($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasValue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearValue() => clearField(3);
+}
+
+class SetAccountInfoTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetAccountInfoTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'infoURI', protoName: 'infoURI')
+    ..hasRequiredFields = false
+  ;
+
+  SetAccountInfoTx._() : super();
+  factory SetAccountInfoTx({
+    TxType? txtype,
+    $core.int? nonce,
+    $core.String? infoURI,
+  }) {
+    final _result = create();
+    if (txtype != null) {
+      _result.txtype = txtype;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (infoURI != null) {
+      _result.infoURI = infoURI;
+    }
+    return _result;
+  }
+  factory SetAccountInfoTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetAccountInfoTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetAccountInfoTx clone() => SetAccountInfoTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetAccountInfoTx copyWith(void Function(SetAccountInfoTx) updates) => super.copyWith((message) => updates(message as SetAccountInfoTx)) as SetAccountInfoTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SetAccountInfoTx create() => SetAccountInfoTx._();
+  SetAccountInfoTx createEmptyInstance() => create();
+  static $pb.PbList<SetAccountInfoTx> createRepeated() => $pb.PbList<SetAccountInfoTx>();
+  @$core.pragma('dart2js:noInline')
+  static SetAccountInfoTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetAccountInfoTx>(create);
+  static SetAccountInfoTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txtype => $_getN(0);
+  @$pb.TagNumber(1)
+  set txtype(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxtype() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxtype() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nonce => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNonce() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNonce() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get infoURI => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set infoURI($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasInfoURI() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearInfoURI() => clearField(3);
+}
+
+class SetAccountDelegateTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetAccountDelegateTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delegate', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  SetAccountDelegateTx._() : super();
+  factory SetAccountDelegateTx({
+    TxType? txtype,
+    $core.int? nonce,
+    $core.List<$core.int>? delegate,
+  }) {
+    final _result = create();
+    if (txtype != null) {
+      _result.txtype = txtype;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (delegate != null) {
+      _result.delegate = delegate;
+    }
+    return _result;
+  }
+  factory SetAccountDelegateTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetAccountDelegateTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetAccountDelegateTx clone() => SetAccountDelegateTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetAccountDelegateTx copyWith(void Function(SetAccountDelegateTx) updates) => super.copyWith((message) => updates(message as SetAccountDelegateTx)) as SetAccountDelegateTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SetAccountDelegateTx create() => SetAccountDelegateTx._();
+  SetAccountDelegateTx createEmptyInstance() => create();
+  static $pb.PbList<SetAccountDelegateTx> createRepeated() => $pb.PbList<SetAccountDelegateTx>();
+  @$core.pragma('dart2js:noInline')
+  static SetAccountDelegateTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetAccountDelegateTx>(create);
+  static SetAccountDelegateTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txtype => $_getN(0);
+  @$pb.TagNumber(1)
+  set txtype(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxtype() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxtype() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nonce => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNonce() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNonce() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get delegate => $_getN(2);
+  @$pb.TagNumber(3)
+  set delegate($core.List<$core.int> v) { $_setBytes(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDelegate() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDelegate() => clearField(3);
+}
+
+class CollectFaucetTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CollectFaucetTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txType', $pb.PbFieldType.OE, protoName: 'txType', defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..aOM<FaucetPackage>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faucetPackage', protoName: 'faucetPackage', subBuilder: FaucetPackage.create)
+    ..hasRequiredFields = false
+  ;
+
+  CollectFaucetTx._() : super();
+  factory CollectFaucetTx({
+    TxType? txType,
+    FaucetPackage? faucetPackage,
+  }) {
+    final _result = create();
+    if (txType != null) {
+      _result.txType = txType;
+    }
+    if (faucetPackage != null) {
+      _result.faucetPackage = faucetPackage;
+    }
+    return _result;
+  }
+  factory CollectFaucetTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CollectFaucetTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CollectFaucetTx clone() => CollectFaucetTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CollectFaucetTx copyWith(void Function(CollectFaucetTx) updates) => super.copyWith((message) => updates(message as CollectFaucetTx)) as CollectFaucetTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CollectFaucetTx create() => CollectFaucetTx._();
+  CollectFaucetTx createEmptyInstance() => create();
+  static $pb.PbList<CollectFaucetTx> createRepeated() => $pb.PbList<CollectFaucetTx>();
+  @$core.pragma('dart2js:noInline')
+  static CollectFaucetTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CollectFaucetTx>(create);
+  static CollectFaucetTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txType => $_getN(0);
+  @$pb.TagNumber(1)
+  set txType(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  FaucetPackage get faucetPackage => $_getN(1);
+  @$pb.TagNumber(2)
+  set faucetPackage(FaucetPackage v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFaucetPackage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFaucetPackage() => clearField(2);
+  @$pb.TagNumber(2)
+  FaucetPackage ensureFaucetPackage() => $_ensure(1);
+}
+
+class FaucetPayload extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaucetPayload', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'identifier', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OY)
+    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amount', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  FaucetPayload._() : super();
+  factory FaucetPayload({
+    $fixnum.Int64? identifier,
+    $core.List<$core.int>? to,
+    $fixnum.Int64? amount,
+  }) {
+    final _result = create();
+    if (identifier != null) {
+      _result.identifier = identifier;
+    }
+    if (to != null) {
+      _result.to = to;
+    }
+    if (amount != null) {
+      _result.amount = amount;
+    }
+    return _result;
+  }
+  factory FaucetPayload.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaucetPayload.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FaucetPayload clone() => FaucetPayload()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FaucetPayload copyWith(void Function(FaucetPayload) updates) => super.copyWith((message) => updates(message as FaucetPayload)) as FaucetPayload; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FaucetPayload create() => FaucetPayload._();
+  FaucetPayload createEmptyInstance() => create();
+  static $pb.PbList<FaucetPayload> createRepeated() => $pb.PbList<FaucetPayload>();
+  @$core.pragma('dart2js:noInline')
+  static FaucetPayload getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaucetPayload>(create);
+  static FaucetPayload? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get identifier => $_getI64(0);
+  @$pb.TagNumber(1)
+  set identifier($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIdentifier() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIdentifier() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get to => $_getN(1);
+  @$pb.TagNumber(2)
+  set to($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTo() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get amount => $_getI64(2);
+  @$pb.TagNumber(3)
+  set amount($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasAmount() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAmount() => clearField(3);
+}
+
+class FaucetPackage extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaucetPackage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..aOM<FaucetPayload>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'payload', subBuilder: FaucetPayload.create)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  FaucetPackage._() : super();
+  factory FaucetPackage({
+    FaucetPayload? payload,
+    $core.List<$core.int>? signature,
+  }) {
+    final _result = create();
+    if (payload != null) {
+      _result.payload = payload;
+    }
+    if (signature != null) {
+      _result.signature = signature;
+    }
+    return _result;
+  }
+  factory FaucetPackage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaucetPackage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FaucetPackage clone() => FaucetPackage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FaucetPackage copyWith(void Function(FaucetPackage) updates) => super.copyWith((message) => updates(message as FaucetPackage)) as FaucetPackage; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FaucetPackage create() => FaucetPackage._();
+  FaucetPackage createEmptyInstance() => create();
+  static $pb.PbList<FaucetPackage> createRepeated() => $pb.PbList<FaucetPackage>();
+  @$core.pragma('dart2js:noInline')
+  static FaucetPackage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaucetPackage>(create);
+  static FaucetPackage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  FaucetPayload get payload => $_getN(0);
+  @$pb.TagNumber(1)
+  set payload(FaucetPayload v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPayload() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPayload() => clearField(1);
+  @$pb.TagNumber(1)
+  FaucetPayload ensurePayload() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get signature => $_getN(1);
+  @$pb.TagNumber(2)
+  set signature($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSignature() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSignature() => clearField(2);
 }
 
 class Process extends $pb.GeneratedMessage {

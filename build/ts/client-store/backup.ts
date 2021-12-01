@@ -236,23 +236,23 @@ export const WalletBackup = {
 
   fromJSON(object: any): WalletBackup {
     const message = { ...baseWalletBackup } as WalletBackup;
-    message.name =
-      object.name !== undefined && object.name !== null
-        ? String(object.name)
-        : "";
-    message.timestamp =
-      object.timestamp !== undefined && object.timestamp !== null
-        ? Number(object.timestamp)
-        : 0;
-    message.wallet =
-      object.wallet !== undefined && object.wallet !== null
-        ? Wallet.fromJSON(object.wallet)
-        : undefined;
-    message.passphraseRecovery =
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    }
+    if (object.timestamp !== undefined && object.timestamp !== null) {
+      message.timestamp = Number(object.timestamp);
+    }
+    if (object.wallet !== undefined && object.wallet !== null) {
+      message.wallet = Wallet.fromJSON(object.wallet);
+    }
+    if (
       object.passphraseRecovery !== undefined &&
       object.passphraseRecovery !== null
-        ? WalletBackup_Recovery.fromJSON(object.passphraseRecovery)
-        : undefined;
+    ) {
+      message.passphraseRecovery = WalletBackup_Recovery.fromJSON(
+        object.passphraseRecovery
+      );
+    }
     return message;
   },
 
@@ -271,17 +271,23 @@ export const WalletBackup = {
 
   fromPartial(object: DeepPartial<WalletBackup>): WalletBackup {
     const message = { ...baseWalletBackup } as WalletBackup;
-    message.name = object.name ?? "";
-    message.timestamp = object.timestamp ?? 0;
-    message.wallet =
-      object.wallet !== undefined && object.wallet !== null
-        ? Wallet.fromPartial(object.wallet)
-        : undefined;
-    message.passphraseRecovery =
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    }
+    if (object.timestamp !== undefined && object.timestamp !== null) {
+      message.timestamp = object.timestamp;
+    }
+    if (object.wallet !== undefined && object.wallet !== null) {
+      message.wallet = Wallet.fromPartial(object.wallet);
+    }
+    if (
       object.passphraseRecovery !== undefined &&
       object.passphraseRecovery !== null
-        ? WalletBackup_Recovery.fromPartial(object.passphraseRecovery)
-        : undefined;
+    ) {
+      message.passphraseRecovery = WalletBackup_Recovery.fromPartial(
+        object.passphraseRecovery
+      );
+    }
     return message;
   },
 };
@@ -336,14 +342,19 @@ export const WalletBackup_Recovery = {
 
   fromJSON(object: any): WalletBackup_Recovery {
     const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
-    message.questionIds = (object.questionIds ?? []).map((e: any) =>
-      walletBackup_Recovery_QuestionEnumFromJSON(e)
-    );
-    message.encryptedPassphrase =
+    message.questionIds = [];
+    message.encryptedPassphrase = new Uint8Array();
+    if (object.questionIds !== undefined && object.questionIds !== null) {
+      for (const e of object.questionIds) {
+        message.questionIds.push(walletBackup_Recovery_QuestionEnumFromJSON(e));
+      }
+    }
+    if (
       object.encryptedPassphrase !== undefined &&
       object.encryptedPassphrase !== null
-        ? bytesFromBase64(object.encryptedPassphrase)
-        : new Uint8Array();
+    ) {
+      message.encryptedPassphrase = bytesFromBase64(object.encryptedPassphrase);
+    }
     return message;
   },
 
@@ -369,16 +380,24 @@ export const WalletBackup_Recovery = {
     object: DeepPartial<WalletBackup_Recovery>
   ): WalletBackup_Recovery {
     const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
-    message.questionIds = (object.questionIds ?? []).map((e) => e);
-    message.encryptedPassphrase =
-      object.encryptedPassphrase ?? new Uint8Array();
+    message.questionIds = [];
+    if (object.questionIds !== undefined && object.questionIds !== null) {
+      for (const e of object.questionIds) {
+        message.questionIds.push(e);
+      }
+    }
+    if (
+      object.encryptedPassphrase !== undefined &&
+      object.encryptedPassphrase !== null
+    ) {
+      message.encryptedPassphrase = object.encryptedPassphrase;
+    }
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
-declare var global: any | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   if (typeof self !== "undefined") return self;
@@ -404,8 +423,8 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (const byte of arr) {
-    bin.push(String.fromCharCode(byte));
+  for (let i = 0; i < arr.byteLength; ++i) {
+    bin.push(String.fromCharCode(arr[i]));
   }
   return btoa(bin.join(""));
 }
