@@ -84,12 +84,7 @@ export const AccountsStore = {
 
   fromJSON(object: any): AccountsStore {
     const message = { ...baseAccountsStore } as AccountsStore;
-    message.items = [];
-    if (object.items !== undefined && object.items !== null) {
-      for (const e of object.items) {
-        message.items.push(Account.fromJSON(e));
-      }
-    }
+    message.items = (object.items ?? []).map((e: any) => Account.fromJSON(e));
     return message;
   },
 
@@ -103,14 +98,11 @@ export const AccountsStore = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<AccountsStore>): AccountsStore {
+  fromPartial<I extends Exact<DeepPartial<AccountsStore>, I>>(
+    object: I
+  ): AccountsStore {
     const message = { ...baseAccountsStore } as AccountsStore;
-    message.items = [];
-    if (object.items !== undefined && object.items !== null) {
-      for (const e of object.items) {
-        message.items.push(Account.fromPartial(e));
-      }
-    }
+    message.items = object.items?.map((e) => Account.fromPartial(e)) || [];
     return message;
   },
 };
@@ -182,27 +174,32 @@ export const Account = {
 
   fromJSON(object: any): Account {
     const message = { ...baseAccount } as Account;
-    message.meta = {};
-    if (object.name !== undefined && object.name !== null) {
-      message.name = String(object.name);
-    }
-    if (object.wallet !== undefined && object.wallet !== null) {
-      message.wallet = Wallet.fromJSON(object.wallet);
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = String(object.address);
-    }
-    if (object.hasBackup !== undefined && object.hasBackup !== null) {
-      message.hasBackup = Boolean(object.hasBackup);
-    }
-    if (object.extra !== undefined && object.extra !== null) {
-      message.extra = Account_Extra.fromJSON(object.extra);
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        message.meta[key] = String(value);
-      });
-    }
+    message.name =
+      object.name !== undefined && object.name !== null
+        ? String(object.name)
+        : "";
+    message.wallet =
+      object.wallet !== undefined && object.wallet !== null
+        ? Wallet.fromJSON(object.wallet)
+        : undefined;
+    message.address =
+      object.address !== undefined && object.address !== null
+        ? String(object.address)
+        : "";
+    message.hasBackup =
+      object.hasBackup !== undefined && object.hasBackup !== null
+        ? Boolean(object.hasBackup)
+        : false;
+    message.extra =
+      object.extra !== undefined && object.extra !== null
+        ? Account_Extra.fromJSON(object.extra)
+        : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
     return message;
   },
 
@@ -226,31 +223,27 @@ export const Account = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Account>): Account {
+  fromPartial<I extends Exact<DeepPartial<Account>, I>>(object: I): Account {
     const message = { ...baseAccount } as Account;
-    message.meta = {};
-    if (object.name !== undefined && object.name !== null) {
-      message.name = object.name;
-    }
-    if (object.wallet !== undefined && object.wallet !== null) {
-      message.wallet = Wallet.fromPartial(object.wallet);
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    }
-    if (object.hasBackup !== undefined && object.hasBackup !== null) {
-      message.hasBackup = object.hasBackup;
-    }
-    if (object.extra !== undefined && object.extra !== null) {
-      message.extra = Account_Extra.fromPartial(object.extra);
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.meta[key] = String(value);
-        }
-      });
-    }
+    message.name = object.name ?? "";
+    message.wallet =
+      object.wallet !== undefined && object.wallet !== null
+        ? Wallet.fromPartial(object.wallet)
+        : undefined;
+    message.address = object.address ?? "";
+    message.hasBackup = object.hasBackup ?? false;
+    message.extra =
+      object.extra !== undefined && object.extra !== null
+        ? Account_Extra.fromPartial(object.extra)
+        : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
     return message;
   },
 };
@@ -294,15 +287,13 @@ export const Account_AppVoter = {
 
   fromJSON(object: any): Account_AppVoter {
     const message = { ...baseAccount_AppVoter } as Account_AppVoter;
-    message.entities = [];
-    if (object.appAnalyticsID !== undefined && object.appAnalyticsID !== null) {
-      message.appAnalyticsID = String(object.appAnalyticsID);
-    }
-    if (object.entities !== undefined && object.entities !== null) {
-      for (const e of object.entities) {
-        message.entities.push(EntityReference.fromJSON(e));
-      }
-    }
+    message.appAnalyticsID =
+      object.appAnalyticsID !== undefined && object.appAnalyticsID !== null
+        ? String(object.appAnalyticsID)
+        : "";
+    message.entities = (object.entities ?? []).map((e: any) =>
+      EntityReference.fromJSON(e)
+    );
     return message;
   },
 
@@ -320,17 +311,13 @@ export const Account_AppVoter = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Account_AppVoter>): Account_AppVoter {
+  fromPartial<I extends Exact<DeepPartial<Account_AppVoter>, I>>(
+    object: I
+  ): Account_AppVoter {
     const message = { ...baseAccount_AppVoter } as Account_AppVoter;
-    message.entities = [];
-    if (object.appAnalyticsID !== undefined && object.appAnalyticsID !== null) {
-      message.appAnalyticsID = object.appAnalyticsID;
-    }
-    if (object.entities !== undefined && object.entities !== null) {
-      for (const e of object.entities) {
-        message.entities.push(EntityReference.fromPartial(e));
-      }
-    }
+    message.appAnalyticsID = object.appAnalyticsID ?? "";
+    message.entities =
+      object.entities?.map((e) => EntityReference.fromPartial(e)) || [];
     return message;
   },
 };
@@ -365,9 +352,10 @@ export const Account_WebEntity = {
 
   fromJSON(object: any): Account_WebEntity {
     const message = { ...baseAccount_WebEntity } as Account_WebEntity;
-    if (object.webAnalyticsID !== undefined && object.webAnalyticsID !== null) {
-      message.webAnalyticsID = String(object.webAnalyticsID);
-    }
+    message.webAnalyticsID =
+      object.webAnalyticsID !== undefined && object.webAnalyticsID !== null
+        ? String(object.webAnalyticsID)
+        : "";
     return message;
   },
 
@@ -378,11 +366,11 @@ export const Account_WebEntity = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Account_WebEntity>): Account_WebEntity {
+  fromPartial<I extends Exact<DeepPartial<Account_WebEntity>, I>>(
+    object: I
+  ): Account_WebEntity {
     const message = { ...baseAccount_WebEntity } as Account_WebEntity;
-    if (object.webAnalyticsID !== undefined && object.webAnalyticsID !== null) {
-      message.webAnalyticsID = object.webAnalyticsID;
-    }
+    message.webAnalyticsID = object.webAnalyticsID ?? "";
     return message;
   },
 };
@@ -463,7 +451,9 @@ export const Account_Extra = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Account_Extra>): Account_Extra {
+  fromPartial<I extends Exact<DeepPartial<Account_Extra>, I>>(
+    object: I
+  ): Account_Extra {
     const message = { ...baseAccount_Extra } as Account_Extra;
     if (
       object.content?.$case === "appVoter" &&
@@ -525,12 +515,12 @@ export const Account_MetaEntry = {
 
   fromJSON(object: any): Account_MetaEntry {
     const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -541,14 +531,12 @@ export const Account_MetaEntry = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Account_MetaEntry>): Account_MetaEntry {
+  fromPartial<I extends Exact<DeepPartial<Account_MetaEntry>, I>>(
+    object: I
+  ): Account_MetaEntry {
     const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -561,6 +549,7 @@ type Builtin =
   | number
   | boolean
   | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
@@ -574,6 +563,14 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
+        Exclude<keyof I, KeysOfUnion<P>>,
+        never
+      >;
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.

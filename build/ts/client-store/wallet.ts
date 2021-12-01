@@ -97,22 +97,23 @@ export const Wallet = {
 
   fromJSON(object: any): Wallet {
     const message = { ...baseWallet } as Wallet;
-    message.encryptedMnemonic = new Uint8Array();
-    if (
+    message.encryptedMnemonic =
       object.encryptedMnemonic !== undefined &&
       object.encryptedMnemonic !== null
-    ) {
-      message.encryptedMnemonic = bytesFromBase64(object.encryptedMnemonic);
-    }
-    if (object.hdPath !== undefined && object.hdPath !== null) {
-      message.hdPath = String(object.hdPath);
-    }
-    if (object.locale !== undefined && object.locale !== null) {
-      message.locale = String(object.locale);
-    }
-    if (object.authMethod !== undefined && object.authMethod !== null) {
-      message.authMethod = wallet_AuthMethodFromJSON(object.authMethod);
-    }
+        ? bytesFromBase64(object.encryptedMnemonic)
+        : new Uint8Array();
+    message.hdPath =
+      object.hdPath !== undefined && object.hdPath !== null
+        ? String(object.hdPath)
+        : "";
+    message.locale =
+      object.locale !== undefined && object.locale !== null
+        ? String(object.locale)
+        : "";
+    message.authMethod =
+      object.authMethod !== undefined && object.authMethod !== null
+        ? wallet_AuthMethodFromJSON(object.authMethod)
+        : 0;
     return message;
   },
 
@@ -131,29 +132,19 @@ export const Wallet = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Wallet>): Wallet {
+  fromPartial<I extends Exact<DeepPartial<Wallet>, I>>(object: I): Wallet {
     const message = { ...baseWallet } as Wallet;
-    if (
-      object.encryptedMnemonic !== undefined &&
-      object.encryptedMnemonic !== null
-    ) {
-      message.encryptedMnemonic = object.encryptedMnemonic;
-    }
-    if (object.hdPath !== undefined && object.hdPath !== null) {
-      message.hdPath = object.hdPath;
-    }
-    if (object.locale !== undefined && object.locale !== null) {
-      message.locale = object.locale;
-    }
-    if (object.authMethod !== undefined && object.authMethod !== null) {
-      message.authMethod = object.authMethod;
-    }
+    message.encryptedMnemonic = object.encryptedMnemonic ?? new Uint8Array();
+    message.hdPath = object.hdPath ?? "";
+    message.locale = object.locale ?? "";
+    message.authMethod = object.authMethod ?? 0;
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
+declare var global: any | undefined;
 var globalThis: any = (() => {
   if (typeof globalThis !== "undefined") return globalThis;
   if (typeof self !== "undefined") return self;
@@ -179,8 +170,8 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (let i = 0; i < arr.byteLength; ++i) {
-    bin.push(String.fromCharCode(arr[i]));
+  for (const byte of arr) {
+    bin.push(String.fromCharCode(byte));
   }
   return btoa(bin.join(""));
 }
@@ -193,6 +184,7 @@ type Builtin =
   | number
   | boolean
   | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
@@ -206,6 +198,14 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
+        Exclude<keyof I, KeysOfUnion<P>>,
+        never
+      >;
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.

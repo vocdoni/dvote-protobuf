@@ -140,29 +140,32 @@ export const BootNodeGateways = {
 
   fromJSON(object: any): BootNodeGateways {
     const message = { ...baseBootNodeGateways } as BootNodeGateways;
-    message.meta = {};
-    if (object.homestead !== undefined && object.homestead !== null) {
-      message.homestead = BootNodeGateways_NetworkNodes.fromJSON(
-        object.homestead
-      );
-    }
-    if (object.goerli !== undefined && object.goerli !== null) {
-      message.goerli = BootNodeGateways_NetworkNodes.fromJSON(object.goerli);
-    }
-    if (object.xdai !== undefined && object.xdai !== null) {
-      message.xdai = BootNodeGateways_NetworkNodes.fromJSON(object.xdai);
-    }
-    if (object.sokol !== undefined && object.sokol !== null) {
-      message.sokol = BootNodeGateways_NetworkNodes.fromJSON(object.sokol);
-    }
-    if (object.rinkeby !== undefined && object.rinkeby !== null) {
-      message.rinkeby = BootNodeGateways_NetworkNodes.fromJSON(object.rinkeby);
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        message.meta[key] = String(value);
-      });
-    }
+    message.homestead =
+      object.homestead !== undefined && object.homestead !== null
+        ? BootNodeGateways_NetworkNodes.fromJSON(object.homestead)
+        : undefined;
+    message.goerli =
+      object.goerli !== undefined && object.goerli !== null
+        ? BootNodeGateways_NetworkNodes.fromJSON(object.goerli)
+        : undefined;
+    message.xdai =
+      object.xdai !== undefined && object.xdai !== null
+        ? BootNodeGateways_NetworkNodes.fromJSON(object.xdai)
+        : undefined;
+    message.sokol =
+      object.sokol !== undefined && object.sokol !== null
+        ? BootNodeGateways_NetworkNodes.fromJSON(object.sokol)
+        : undefined;
+    message.rinkeby =
+      object.rinkeby !== undefined && object.rinkeby !== null
+        ? BootNodeGateways_NetworkNodes.fromJSON(object.rinkeby)
+        : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
     return message;
   },
 
@@ -197,35 +200,38 @@ export const BootNodeGateways = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<BootNodeGateways>): BootNodeGateways {
+  fromPartial<I extends Exact<DeepPartial<BootNodeGateways>, I>>(
+    object: I
+  ): BootNodeGateways {
     const message = { ...baseBootNodeGateways } as BootNodeGateways;
-    message.meta = {};
-    if (object.homestead !== undefined && object.homestead !== null) {
-      message.homestead = BootNodeGateways_NetworkNodes.fromPartial(
-        object.homestead
-      );
-    }
-    if (object.goerli !== undefined && object.goerli !== null) {
-      message.goerli = BootNodeGateways_NetworkNodes.fromPartial(object.goerli);
-    }
-    if (object.xdai !== undefined && object.xdai !== null) {
-      message.xdai = BootNodeGateways_NetworkNodes.fromPartial(object.xdai);
-    }
-    if (object.sokol !== undefined && object.sokol !== null) {
-      message.sokol = BootNodeGateways_NetworkNodes.fromPartial(object.sokol);
-    }
-    if (object.rinkeby !== undefined && object.rinkeby !== null) {
-      message.rinkeby = BootNodeGateways_NetworkNodes.fromPartial(
-        object.rinkeby
-      );
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.meta[key] = String(value);
-        }
-      });
-    }
+    message.homestead =
+      object.homestead !== undefined && object.homestead !== null
+        ? BootNodeGateways_NetworkNodes.fromPartial(object.homestead)
+        : undefined;
+    message.goerli =
+      object.goerli !== undefined && object.goerli !== null
+        ? BootNodeGateways_NetworkNodes.fromPartial(object.goerli)
+        : undefined;
+    message.xdai =
+      object.xdai !== undefined && object.xdai !== null
+        ? BootNodeGateways_NetworkNodes.fromPartial(object.xdai)
+        : undefined;
+    message.sokol =
+      object.sokol !== undefined && object.sokol !== null
+        ? BootNodeGateways_NetworkNodes.fromPartial(object.sokol)
+        : undefined;
+    message.rinkeby =
+      object.rinkeby !== undefined && object.rinkeby !== null
+        ? BootNodeGateways_NetworkNodes.fromPartial(object.rinkeby)
+        : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
     return message;
   },
 };
@@ -288,18 +294,12 @@ export const BootNodeGateways_NetworkNodes = {
     const message = {
       ...baseBootNodeGateways_NetworkNodes,
     } as BootNodeGateways_NetworkNodes;
-    message.dvote = [];
-    message.web3 = [];
-    if (object.dvote !== undefined && object.dvote !== null) {
-      for (const e of object.dvote) {
-        message.dvote.push(BootNodeGateways_NetworkNodes_DVote.fromJSON(e));
-      }
-    }
-    if (object.web3 !== undefined && object.web3 !== null) {
-      for (const e of object.web3) {
-        message.web3.push(BootNodeGateways_NetworkNodes_Web3.fromJSON(e));
-      }
-    }
+    message.dvote = (object.dvote ?? []).map((e: any) =>
+      BootNodeGateways_NetworkNodes_DVote.fromJSON(e)
+    );
+    message.web3 = (object.web3 ?? []).map((e: any) =>
+      BootNodeGateways_NetworkNodes_Web3.fromJSON(e)
+    );
     return message;
   },
 
@@ -322,24 +322,20 @@ export const BootNodeGateways_NetworkNodes = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<BootNodeGateways_NetworkNodes>
+  fromPartial<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes>, I>>(
+    object: I
   ): BootNodeGateways_NetworkNodes {
     const message = {
       ...baseBootNodeGateways_NetworkNodes,
     } as BootNodeGateways_NetworkNodes;
-    message.dvote = [];
-    message.web3 = [];
-    if (object.dvote !== undefined && object.dvote !== null) {
-      for (const e of object.dvote) {
-        message.dvote.push(BootNodeGateways_NetworkNodes_DVote.fromPartial(e));
-      }
-    }
-    if (object.web3 !== undefined && object.web3 !== null) {
-      for (const e of object.web3) {
-        message.web3.push(BootNodeGateways_NetworkNodes_Web3.fromPartial(e));
-      }
-    }
+    message.dvote =
+      object.dvote?.map((e) =>
+        BootNodeGateways_NetworkNodes_DVote.fromPartial(e)
+      ) || [];
+    message.web3 =
+      object.web3?.map((e) =>
+        BootNodeGateways_NetworkNodes_Web3.fromPartial(e)
+      ) || [];
     return message;
   },
 };
@@ -401,18 +397,13 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     const message = {
       ...baseBootNodeGateways_NetworkNodes_DVote,
     } as BootNodeGateways_NetworkNodes_DVote;
-    message.apis = [];
-    if (object.uri !== undefined && object.uri !== null) {
-      message.uri = String(object.uri);
-    }
-    if (object.apis !== undefined && object.apis !== null) {
-      for (const e of object.apis) {
-        message.apis.push(String(e));
-      }
-    }
-    if (object.pubKey !== undefined && object.pubKey !== null) {
-      message.pubKey = String(object.pubKey);
-    }
+    message.uri =
+      object.uri !== undefined && object.uri !== null ? String(object.uri) : "";
+    message.apis = (object.apis ?? []).map((e: any) => String(e));
+    message.pubKey =
+      object.pubKey !== undefined && object.pubKey !== null
+        ? String(object.pubKey)
+        : "";
     return message;
   },
 
@@ -428,24 +419,15 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<BootNodeGateways_NetworkNodes_DVote>
-  ): BootNodeGateways_NetworkNodes_DVote {
+  fromPartial<
+    I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_DVote>, I>
+  >(object: I): BootNodeGateways_NetworkNodes_DVote {
     const message = {
       ...baseBootNodeGateways_NetworkNodes_DVote,
     } as BootNodeGateways_NetworkNodes_DVote;
-    message.apis = [];
-    if (object.uri !== undefined && object.uri !== null) {
-      message.uri = object.uri;
-    }
-    if (object.apis !== undefined && object.apis !== null) {
-      for (const e of object.apis) {
-        message.apis.push(e);
-      }
-    }
-    if (object.pubKey !== undefined && object.pubKey !== null) {
-      message.pubKey = object.pubKey;
-    }
+    message.uri = object.uri ?? "";
+    message.apis = object.apis?.map((e) => e) || [];
+    message.pubKey = object.pubKey ?? "";
     return message;
   },
 };
@@ -490,9 +472,8 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     const message = {
       ...baseBootNodeGateways_NetworkNodes_Web3,
     } as BootNodeGateways_NetworkNodes_Web3;
-    if (object.uri !== undefined && object.uri !== null) {
-      message.uri = String(object.uri);
-    }
+    message.uri =
+      object.uri !== undefined && object.uri !== null ? String(object.uri) : "";
     return message;
   },
 
@@ -502,15 +483,13 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<BootNodeGateways_NetworkNodes_Web3>
-  ): BootNodeGateways_NetworkNodes_Web3 {
+  fromPartial<
+    I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_Web3>, I>
+  >(object: I): BootNodeGateways_NetworkNodes_Web3 {
     const message = {
       ...baseBootNodeGateways_NetworkNodes_Web3,
     } as BootNodeGateways_NetworkNodes_Web3;
-    if (object.uri !== undefined && object.uri !== null) {
-      message.uri = object.uri;
-    }
+    message.uri = object.uri ?? "";
     return message;
   },
 };
@@ -561,12 +540,12 @@ export const BootNodeGateways_MetaEntry = {
     const message = {
       ...baseBootNodeGateways_MetaEntry,
     } as BootNodeGateways_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -577,18 +556,14 @@ export const BootNodeGateways_MetaEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<BootNodeGateways_MetaEntry>
+  fromPartial<I extends Exact<DeepPartial<BootNodeGateways_MetaEntry>, I>>(
+    object: I
   ): BootNodeGateways_MetaEntry {
     const message = {
       ...baseBootNodeGateways_MetaEntry,
     } as BootNodeGateways_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -601,6 +576,7 @@ type Builtin =
   | number
   | boolean
   | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
@@ -614,6 +590,14 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
+        Exclude<keyof I, KeysOfUnion<P>>,
+        never
+      >;
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.

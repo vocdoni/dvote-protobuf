@@ -145,12 +145,9 @@ export const EntityMetadataStore = {
 
   fromJSON(object: any): EntityMetadataStore {
     const message = { ...baseEntityMetadataStore } as EntityMetadataStore;
-    message.items = [];
-    if (object.items !== undefined && object.items !== null) {
-      for (const e of object.items) {
-        message.items.push(EntityMetadata.fromJSON(e));
-      }
-    }
+    message.items = (object.items ?? []).map((e: any) =>
+      EntityMetadata.fromJSON(e)
+    );
     return message;
   },
 
@@ -166,14 +163,12 @@ export const EntityMetadataStore = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EntityMetadataStore>): EntityMetadataStore {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadataStore>, I>>(
+    object: I
+  ): EntityMetadataStore {
     const message = { ...baseEntityMetadataStore } as EntityMetadataStore;
-    message.items = [];
-    if (object.items !== undefined && object.items !== null) {
-      for (const e of object.items) {
-        message.items.push(EntityMetadata.fromPartial(e));
-      }
-    }
+    message.items =
+      object.items?.map((e) => EntityMetadata.fromPartial(e)) || [];
     return message;
   },
 };
@@ -345,89 +340,58 @@ export const EntityMetadata = {
 
   fromJSON(object: any): EntityMetadata {
     const message = { ...baseEntityMetadata } as EntityMetadata;
-    message.languages = [];
-    message.name = {};
-    message.description = {};
-    message.newsFeed = {};
-    message.actions = [];
-    message.bootEntities = [];
-    message.fallbackBootNodeEntities = [];
-    message.trustedEntities = [];
-    message.censusServiceManagedEntities = [];
-    message.meta = {};
-    if (object.version !== undefined && object.version !== null) {
-      message.version = String(object.version);
-    }
-    if (object.languages !== undefined && object.languages !== null) {
-      for (const e of object.languages) {
-        message.languages.push(String(e));
-      }
-    }
-    if (object.name !== undefined && object.name !== null) {
-      Object.entries(object.name).forEach(([key, value]) => {
-        message.name[key] = String(value);
-      });
-    }
-    if (object.description !== undefined && object.description !== null) {
-      Object.entries(object.description).forEach(([key, value]) => {
-        message.description[key] = String(value);
-      });
-    }
-    if (
-      object.votingProcesses !== undefined &&
-      object.votingProcesses !== null
-    ) {
-      message.votingProcesses = EntityMetadata_VotingProcesses.fromJSON(
-        object.votingProcesses
-      );
-    }
-    if (object.newsFeed !== undefined && object.newsFeed !== null) {
-      Object.entries(object.newsFeed).forEach(([key, value]) => {
-        message.newsFeed[key] = String(value);
-      });
-    }
-    if (object.media !== undefined && object.media !== null) {
-      message.media = EntityMetadata_Media.fromJSON(object.media);
-    }
-    if (object.actions !== undefined && object.actions !== null) {
-      for (const e of object.actions) {
-        message.actions.push(EntityMetadata_Action.fromJSON(e));
-      }
-    }
-    if (object.bootEntities !== undefined && object.bootEntities !== null) {
-      for (const e of object.bootEntities) {
-        message.bootEntities.push(EntityReference.fromJSON(e));
-      }
-    }
-    if (
-      object.fallbackBootNodeEntities !== undefined &&
-      object.fallbackBootNodeEntities !== null
-    ) {
-      for (const e of object.fallbackBootNodeEntities) {
-        message.fallbackBootNodeEntities.push(EntityReference.fromJSON(e));
-      }
-    }
-    if (
-      object.trustedEntities !== undefined &&
-      object.trustedEntities !== null
-    ) {
-      for (const e of object.trustedEntities) {
-        message.trustedEntities.push(EntityReference.fromJSON(e));
-      }
-    }
-    if (
-      object.censusServiceManagedEntities !== undefined &&
-      object.censusServiceManagedEntities !== null
-    ) {
-      for (const e of object.censusServiceManagedEntities) {
-        message.censusServiceManagedEntities.push(EntityReference.fromJSON(e));
-      }
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        message.meta[key] = String(value);
-      });
-    }
+    message.version =
+      object.version !== undefined && object.version !== null
+        ? String(object.version)
+        : "";
+    message.languages = (object.languages ?? []).map((e: any) => String(e));
+    message.name = Object.entries(object.name ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.description = Object.entries(object.description ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.votingProcesses =
+      object.votingProcesses !== undefined && object.votingProcesses !== null
+        ? EntityMetadata_VotingProcesses.fromJSON(object.votingProcesses)
+        : undefined;
+    message.newsFeed = Object.entries(object.newsFeed ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.media =
+      object.media !== undefined && object.media !== null
+        ? EntityMetadata_Media.fromJSON(object.media)
+        : undefined;
+    message.actions = (object.actions ?? []).map((e: any) =>
+      EntityMetadata_Action.fromJSON(e)
+    );
+    message.bootEntities = (object.bootEntities ?? []).map((e: any) =>
+      EntityReference.fromJSON(e)
+    );
+    message.fallbackBootNodeEntities = (
+      object.fallbackBootNodeEntities ?? []
+    ).map((e: any) => EntityReference.fromJSON(e));
+    message.trustedEntities = (object.trustedEntities ?? []).map((e: any) =>
+      EntityReference.fromJSON(e)
+    );
+    message.censusServiceManagedEntities = (
+      object.censusServiceManagedEntities ?? []
+    ).map((e: any) => EntityReference.fromJSON(e));
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
     return message;
   },
 
@@ -510,101 +474,66 @@ export const EntityMetadata = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EntityMetadata>): EntityMetadata {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata>, I>>(
+    object: I
+  ): EntityMetadata {
     const message = { ...baseEntityMetadata } as EntityMetadata;
-    message.languages = [];
-    message.name = {};
-    message.description = {};
-    message.newsFeed = {};
-    message.actions = [];
-    message.bootEntities = [];
-    message.fallbackBootNodeEntities = [];
-    message.trustedEntities = [];
-    message.censusServiceManagedEntities = [];
-    message.meta = {};
-    if (object.version !== undefined && object.version !== null) {
-      message.version = object.version;
-    }
-    if (object.languages !== undefined && object.languages !== null) {
-      for (const e of object.languages) {
-        message.languages.push(e);
+    message.version = object.version ?? "";
+    message.languages = object.languages?.map((e) => e) || [];
+    message.name = Object.entries(object.name ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
-    if (object.name !== undefined && object.name !== null) {
-      Object.entries(object.name).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.name[key] = String(value);
-        }
-      });
-    }
-    if (object.description !== undefined && object.description !== null) {
-      Object.entries(object.description).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.description[key] = String(value);
-        }
-      });
-    }
-    if (
-      object.votingProcesses !== undefined &&
-      object.votingProcesses !== null
-    ) {
-      message.votingProcesses = EntityMetadata_VotingProcesses.fromPartial(
-        object.votingProcesses
-      );
-    }
-    if (object.newsFeed !== undefined && object.newsFeed !== null) {
-      Object.entries(object.newsFeed).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.newsFeed[key] = String(value);
-        }
-      });
-    }
-    if (object.media !== undefined && object.media !== null) {
-      message.media = EntityMetadata_Media.fromPartial(object.media);
-    }
-    if (object.actions !== undefined && object.actions !== null) {
-      for (const e of object.actions) {
-        message.actions.push(EntityMetadata_Action.fromPartial(e));
+      return acc;
+    }, {});
+    message.description = Object.entries(object.description ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
-    if (object.bootEntities !== undefined && object.bootEntities !== null) {
-      for (const e of object.bootEntities) {
-        message.bootEntities.push(EntityReference.fromPartial(e));
+      return acc;
+    }, {});
+    message.votingProcesses =
+      object.votingProcesses !== undefined && object.votingProcesses !== null
+        ? EntityMetadata_VotingProcesses.fromPartial(object.votingProcesses)
+        : undefined;
+    message.newsFeed = Object.entries(object.newsFeed ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
-    if (
-      object.fallbackBootNodeEntities !== undefined &&
-      object.fallbackBootNodeEntities !== null
-    ) {
-      for (const e of object.fallbackBootNodeEntities) {
-        message.fallbackBootNodeEntities.push(EntityReference.fromPartial(e));
+      return acc;
+    }, {});
+    message.media =
+      object.media !== undefined && object.media !== null
+        ? EntityMetadata_Media.fromPartial(object.media)
+        : undefined;
+    message.actions =
+      object.actions?.map((e) => EntityMetadata_Action.fromPartial(e)) || [];
+    message.bootEntities =
+      object.bootEntities?.map((e) => EntityReference.fromPartial(e)) || [];
+    message.fallbackBootNodeEntities =
+      object.fallbackBootNodeEntities?.map((e) =>
+        EntityReference.fromPartial(e)
+      ) || [];
+    message.trustedEntities =
+      object.trustedEntities?.map((e) => EntityReference.fromPartial(e)) || [];
+    message.censusServiceManagedEntities =
+      object.censusServiceManagedEntities?.map((e) =>
+        EntityReference.fromPartial(e)
+      ) || [];
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
-    if (
-      object.trustedEntities !== undefined &&
-      object.trustedEntities !== null
-    ) {
-      for (const e of object.trustedEntities) {
-        message.trustedEntities.push(EntityReference.fromPartial(e));
-      }
-    }
-    if (
-      object.censusServiceManagedEntities !== undefined &&
-      object.censusServiceManagedEntities !== null
-    ) {
-      for (const e of object.censusServiceManagedEntities) {
-        message.censusServiceManagedEntities.push(
-          EntityReference.fromPartial(e)
-        );
-      }
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.meta[key] = String(value);
-        }
-      });
-    }
+      return acc;
+    }, {});
     return message;
   },
 };
@@ -655,12 +584,12 @@ export const EntityMetadata_NameEntry = {
     const message = {
       ...baseEntityMetadata_NameEntry,
     } as EntityMetadata_NameEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -671,18 +600,14 @@ export const EntityMetadata_NameEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_NameEntry>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_NameEntry>, I>>(
+    object: I
   ): EntityMetadata_NameEntry {
     const message = {
       ...baseEntityMetadata_NameEntry,
     } as EntityMetadata_NameEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -733,12 +658,12 @@ export const EntityMetadata_DescriptionEntry = {
     const message = {
       ...baseEntityMetadata_DescriptionEntry,
     } as EntityMetadata_DescriptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -749,18 +674,14 @@ export const EntityMetadata_DescriptionEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_DescriptionEntry>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_DescriptionEntry>, I>>(
+    object: I
   ): EntityMetadata_DescriptionEntry {
     const message = {
       ...baseEntityMetadata_DescriptionEntry,
     } as EntityMetadata_DescriptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -813,18 +734,8 @@ export const EntityMetadata_VotingProcesses = {
     const message = {
       ...baseEntityMetadata_VotingProcesses,
     } as EntityMetadata_VotingProcesses;
-    message.active = [];
-    message.ended = [];
-    if (object.active !== undefined && object.active !== null) {
-      for (const e of object.active) {
-        message.active.push(String(e));
-      }
-    }
-    if (object.ended !== undefined && object.ended !== null) {
-      for (const e of object.ended) {
-        message.ended.push(String(e));
-      }
-    }
+    message.active = (object.active ?? []).map((e: any) => String(e));
+    message.ended = (object.ended ?? []).map((e: any) => String(e));
     return message;
   },
 
@@ -843,24 +754,14 @@ export const EntityMetadata_VotingProcesses = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_VotingProcesses>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_VotingProcesses>, I>>(
+    object: I
   ): EntityMetadata_VotingProcesses {
     const message = {
       ...baseEntityMetadata_VotingProcesses,
     } as EntityMetadata_VotingProcesses;
-    message.active = [];
-    message.ended = [];
-    if (object.active !== undefined && object.active !== null) {
-      for (const e of object.active) {
-        message.active.push(e);
-      }
-    }
-    if (object.ended !== undefined && object.ended !== null) {
-      for (const e of object.ended) {
-        message.ended.push(e);
-      }
-    }
+    message.active = object.active?.map((e) => e) || [];
+    message.ended = object.ended?.map((e) => e) || [];
     return message;
   },
 };
@@ -911,12 +812,12 @@ export const EntityMetadata_NewsFeedEntry = {
     const message = {
       ...baseEntityMetadata_NewsFeedEntry,
     } as EntityMetadata_NewsFeedEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -927,18 +828,14 @@ export const EntityMetadata_NewsFeedEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_NewsFeedEntry>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_NewsFeedEntry>, I>>(
+    object: I
   ): EntityMetadata_NewsFeedEntry {
     const message = {
       ...baseEntityMetadata_NewsFeedEntry,
     } as EntityMetadata_NewsFeedEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -982,12 +879,14 @@ export const EntityMetadata_Media = {
 
   fromJSON(object: any): EntityMetadata_Media {
     const message = { ...baseEntityMetadata_Media } as EntityMetadata_Media;
-    if (object.avatar !== undefined && object.avatar !== null) {
-      message.avatar = String(object.avatar);
-    }
-    if (object.header !== undefined && object.header !== null) {
-      message.header = String(object.header);
-    }
+    message.avatar =
+      object.avatar !== undefined && object.avatar !== null
+        ? String(object.avatar)
+        : "";
+    message.header =
+      object.header !== undefined && object.header !== null
+        ? String(object.header)
+        : "";
     return message;
   },
 
@@ -998,14 +897,12 @@ export const EntityMetadata_Media = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EntityMetadata_Media>): EntityMetadata_Media {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Media>, I>>(
+    object: I
+  ): EntityMetadata_Media {
     const message = { ...baseEntityMetadata_Media } as EntityMetadata_Media;
-    if (object.avatar !== undefined && object.avatar !== null) {
-      message.avatar = object.avatar;
-    }
-    if (object.header !== undefined && object.header !== null) {
-      message.header = object.header;
-    }
+    message.avatar = object.avatar ?? "";
+    message.header = object.header ?? "";
     return message;
   },
 };
@@ -1094,32 +991,29 @@ export const EntityMetadata_Action = {
 
   fromJSON(object: any): EntityMetadata_Action {
     const message = { ...baseEntityMetadata_Action } as EntityMetadata_Action;
-    message.name = {};
-    message.imageSources = [];
-    if (object.type !== undefined && object.type !== null) {
-      message.type = String(object.type);
-    }
-    if (object.actionKey !== undefined && object.actionKey !== null) {
-      message.actionKey = String(object.actionKey);
-    }
-    if (object.name !== undefined && object.name !== null) {
-      Object.entries(object.name).forEach(([key, value]) => {
-        message.name[key] = String(value);
-      });
-    }
-    if (object.visible !== undefined && object.visible !== null) {
-      message.visible = String(object.visible);
-    }
-    if (object.url !== undefined && object.url !== null) {
-      message.url = String(object.url);
-    }
-    if (object.imageSources !== undefined && object.imageSources !== null) {
-      for (const e of object.imageSources) {
-        message.imageSources.push(
-          EntityMetadata_Action_ImageSource.fromJSON(e)
-        );
-      }
-    }
+    message.type =
+      object.type !== undefined && object.type !== null
+        ? String(object.type)
+        : "";
+    message.actionKey =
+      object.actionKey !== undefined && object.actionKey !== null
+        ? String(object.actionKey)
+        : "";
+    message.name = Object.entries(object.name ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.visible =
+      object.visible !== undefined && object.visible !== null
+        ? String(object.visible)
+        : "";
+    message.url =
+      object.url !== undefined && object.url !== null ? String(object.url) : "";
+    message.imageSources = (object.imageSources ?? []).map((e: any) =>
+      EntityMetadata_Action_ImageSource.fromJSON(e)
+    );
     return message;
   },
 
@@ -1145,38 +1039,26 @@ export const EntityMetadata_Action = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_Action>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action>, I>>(
+    object: I
   ): EntityMetadata_Action {
     const message = { ...baseEntityMetadata_Action } as EntityMetadata_Action;
-    message.name = {};
-    message.imageSources = [];
-    if (object.type !== undefined && object.type !== null) {
-      message.type = object.type;
-    }
-    if (object.actionKey !== undefined && object.actionKey !== null) {
-      message.actionKey = object.actionKey;
-    }
-    if (object.name !== undefined && object.name !== null) {
-      Object.entries(object.name).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.name[key] = String(value);
-        }
-      });
-    }
-    if (object.visible !== undefined && object.visible !== null) {
-      message.visible = object.visible;
-    }
-    if (object.url !== undefined && object.url !== null) {
-      message.url = object.url;
-    }
-    if (object.imageSources !== undefined && object.imageSources !== null) {
-      for (const e of object.imageSources) {
-        message.imageSources.push(
-          EntityMetadata_Action_ImageSource.fromPartial(e)
-        );
+    message.type = object.type ?? "";
+    message.actionKey = object.actionKey ?? "";
+    message.name = Object.entries(object.name ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
+      return acc;
+    }, {});
+    message.visible = object.visible ?? "";
+    message.url = object.url ?? "";
+    message.imageSources =
+      object.imageSources?.map((e) =>
+        EntityMetadata_Action_ImageSource.fromPartial(e)
+      ) || [];
     return message;
   },
 };
@@ -1227,12 +1109,12 @@ export const EntityMetadata_Action_NameEntry = {
     const message = {
       ...baseEntityMetadata_Action_NameEntry,
     } as EntityMetadata_Action_NameEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -1243,18 +1125,14 @@ export const EntityMetadata_Action_NameEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_Action_NameEntry>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_NameEntry>, I>>(
+    object: I
   ): EntityMetadata_Action_NameEntry {
     const message = {
       ...baseEntityMetadata_Action_NameEntry,
     } as EntityMetadata_Action_NameEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -1338,24 +1216,28 @@ export const EntityMetadata_Action_ImageSource = {
     const message = {
       ...baseEntityMetadata_Action_ImageSource,
     } as EntityMetadata_Action_ImageSource;
-    message.caption = {};
-    if (object.type !== undefined && object.type !== null) {
-      message.type = String(object.type);
-    }
-    if (object.name !== undefined && object.name !== null) {
-      message.name = String(object.name);
-    }
-    if (object.orientation !== undefined && object.orientation !== null) {
-      message.orientation = String(object.orientation);
-    }
-    if (object.overlay !== undefined && object.overlay !== null) {
-      message.overlay = String(object.overlay);
-    }
-    if (object.caption !== undefined && object.caption !== null) {
-      Object.entries(object.caption).forEach(([key, value]) => {
-        message.caption[key] = String(value);
-      });
-    }
+    message.type =
+      object.type !== undefined && object.type !== null
+        ? String(object.type)
+        : "";
+    message.name =
+      object.name !== undefined && object.name !== null
+        ? String(object.name)
+        : "";
+    message.orientation =
+      object.orientation !== undefined && object.orientation !== null
+        ? String(object.orientation)
+        : "";
+    message.overlay =
+      object.overlay !== undefined && object.overlay !== null
+        ? String(object.overlay)
+        : "";
+    message.caption = Object.entries(object.caption ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
     return message;
   },
 
@@ -1375,32 +1257,24 @@ export const EntityMetadata_Action_ImageSource = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_Action_ImageSource>
-  ): EntityMetadata_Action_ImageSource {
+  fromPartial<
+    I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource>, I>
+  >(object: I): EntityMetadata_Action_ImageSource {
     const message = {
       ...baseEntityMetadata_Action_ImageSource,
     } as EntityMetadata_Action_ImageSource;
-    message.caption = {};
-    if (object.type !== undefined && object.type !== null) {
-      message.type = object.type;
-    }
-    if (object.name !== undefined && object.name !== null) {
-      message.name = object.name;
-    }
-    if (object.orientation !== undefined && object.orientation !== null) {
-      message.orientation = object.orientation;
-    }
-    if (object.overlay !== undefined && object.overlay !== null) {
-      message.overlay = object.overlay;
-    }
-    if (object.caption !== undefined && object.caption !== null) {
-      Object.entries(object.caption).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.caption[key] = String(value);
-        }
-      });
-    }
+    message.type = object.type ?? "";
+    message.name = object.name ?? "";
+    message.orientation = object.orientation ?? "";
+    message.overlay = object.overlay ?? "";
+    message.caption = Object.entries(object.caption ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
     return message;
   },
 };
@@ -1454,12 +1328,12 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     const message = {
       ...baseEntityMetadata_Action_ImageSource_CaptionEntry,
     } as EntityMetadata_Action_ImageSource_CaptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -1470,18 +1344,17 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_Action_ImageSource_CaptionEntry>
-  ): EntityMetadata_Action_ImageSource_CaptionEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<EntityMetadata_Action_ImageSource_CaptionEntry>,
+      I
+    >
+  >(object: I): EntityMetadata_Action_ImageSource_CaptionEntry {
     const message = {
       ...baseEntityMetadata_Action_ImageSource_CaptionEntry,
     } as EntityMetadata_Action_ImageSource_CaptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -1532,12 +1405,12 @@ export const EntityMetadata_MetaEntry = {
     const message = {
       ...baseEntityMetadata_MetaEntry,
     } as EntityMetadata_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -1548,18 +1421,14 @@ export const EntityMetadata_MetaEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<EntityMetadata_MetaEntry>
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_MetaEntry>, I>>(
+    object: I
   ): EntityMetadata_MetaEntry {
     const message = {
       ...baseEntityMetadata_MetaEntry,
     } as EntityMetadata_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -1601,15 +1470,11 @@ export const EntityReference = {
 
   fromJSON(object: any): EntityReference {
     const message = { ...baseEntityReference } as EntityReference;
-    message.entryPoints = [];
-    if (object.entityId !== undefined && object.entityId !== null) {
-      message.entityId = String(object.entityId);
-    }
-    if (object.entryPoints !== undefined && object.entryPoints !== null) {
-      for (const e of object.entryPoints) {
-        message.entryPoints.push(String(e));
-      }
-    }
+    message.entityId =
+      object.entityId !== undefined && object.entityId !== null
+        ? String(object.entityId)
+        : "";
+    message.entryPoints = (object.entryPoints ?? []).map((e: any) => String(e));
     return message;
   },
 
@@ -1624,17 +1489,12 @@ export const EntityReference = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<EntityReference>): EntityReference {
+  fromPartial<I extends Exact<DeepPartial<EntityReference>, I>>(
+    object: I
+  ): EntityReference {
     const message = { ...baseEntityReference } as EntityReference;
-    message.entryPoints = [];
-    if (object.entityId !== undefined && object.entityId !== null) {
-      message.entityId = object.entityId;
-    }
-    if (object.entryPoints !== undefined && object.entryPoints !== null) {
-      for (const e of object.entryPoints) {
-        message.entryPoints.push(e);
-      }
-    }
+    message.entityId = object.entityId ?? "";
+    message.entryPoints = object.entryPoints?.map((e) => e) || [];
     return message;
   },
 };
@@ -1647,6 +1507,7 @@ type Builtin =
   | number
   | boolean
   | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
@@ -1660,6 +1521,14 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
+        Exclude<keyof I, KeysOfUnion<P>>,
+        never
+      >;
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.

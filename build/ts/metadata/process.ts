@@ -110,12 +110,9 @@ export const ProcessMetadataStore = {
 
   fromJSON(object: any): ProcessMetadataStore {
     const message = { ...baseProcessMetadataStore } as ProcessMetadataStore;
-    message.items = [];
-    if (object.items !== undefined && object.items !== null) {
-      for (const e of object.items) {
-        message.items.push(ProcessMetadata.fromJSON(e));
-      }
-    }
+    message.items = (object.items ?? []).map((e: any) =>
+      ProcessMetadata.fromJSON(e)
+    );
     return message;
   },
 
@@ -131,14 +128,12 @@ export const ProcessMetadataStore = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<ProcessMetadataStore>): ProcessMetadataStore {
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadataStore>, I>>(
+    object: I
+  ): ProcessMetadataStore {
     const message = { ...baseProcessMetadataStore } as ProcessMetadataStore;
-    message.items = [];
-    if (object.items !== undefined && object.items !== null) {
-      for (const e of object.items) {
-        message.items.push(ProcessMetadata.fromPartial(e));
-      }
-    }
+    message.items =
+      object.items?.map((e) => ProcessMetadata.fromPartial(e)) || [];
     return message;
   },
 };
@@ -258,42 +253,41 @@ export const ProcessMetadata = {
 
   fromJSON(object: any): ProcessMetadata {
     const message = { ...baseProcessMetadata } as ProcessMetadata;
-    message.title = {};
-    message.description = {};
-    message.media = {};
-    message.questions = [];
-    message.meta = {};
-    if (object.version !== undefined && object.version !== null) {
-      message.version = String(object.version);
-    }
-    if (object.title !== undefined && object.title !== null) {
-      Object.entries(object.title).forEach(([key, value]) => {
-        message.title[key] = String(value);
-      });
-    }
-    if (object.description !== undefined && object.description !== null) {
-      Object.entries(object.description).forEach(([key, value]) => {
-        message.description[key] = String(value);
-      });
-    }
-    if (object.media !== undefined && object.media !== null) {
-      Object.entries(object.media).forEach(([key, value]) => {
-        message.media[key] = String(value);
-      });
-    }
-    if (object.questions !== undefined && object.questions !== null) {
-      for (const e of object.questions) {
-        message.questions.push(ProcessMetadata_Question.fromJSON(e));
-      }
-    }
-    if (object.results !== undefined && object.results !== null) {
-      message.results = ProcessMetadata_Results.fromJSON(object.results);
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        message.meta[key] = String(value);
-      });
-    }
+    message.version =
+      object.version !== undefined && object.version !== null
+        ? String(object.version)
+        : "";
+    message.title = Object.entries(object.title ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.description = Object.entries(object.description ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.media = Object.entries(object.media ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.questions = (object.questions ?? []).map((e: any) =>
+      ProcessMetadata_Question.fromJSON(e)
+    );
+    message.results =
+      object.results !== undefined && object.results !== null
+        ? ProcessMetadata_Results.fromJSON(object.results)
+        : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
     return message;
   },
 
@@ -338,52 +332,50 @@ export const ProcessMetadata = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<ProcessMetadata>): ProcessMetadata {
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadata>, I>>(
+    object: I
+  ): ProcessMetadata {
     const message = { ...baseProcessMetadata } as ProcessMetadata;
-    message.title = {};
-    message.description = {};
-    message.media = {};
-    message.questions = [];
-    message.meta = {};
-    if (object.version !== undefined && object.version !== null) {
-      message.version = object.version;
-    }
-    if (object.title !== undefined && object.title !== null) {
-      Object.entries(object.title).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.title[key] = String(value);
-        }
-      });
-    }
-    if (object.description !== undefined && object.description !== null) {
-      Object.entries(object.description).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.description[key] = String(value);
-        }
-      });
-    }
-    if (object.media !== undefined && object.media !== null) {
-      Object.entries(object.media).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.media[key] = String(value);
-        }
-      });
-    }
-    if (object.questions !== undefined && object.questions !== null) {
-      for (const e of object.questions) {
-        message.questions.push(ProcessMetadata_Question.fromPartial(e));
+    message.version = object.version ?? "";
+    message.title = Object.entries(object.title ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
-    if (object.results !== undefined && object.results !== null) {
-      message.results = ProcessMetadata_Results.fromPartial(object.results);
-    }
-    if (object.meta !== undefined && object.meta !== null) {
-      Object.entries(object.meta).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.meta[key] = String(value);
-        }
-      });
-    }
+      return acc;
+    }, {});
+    message.description = Object.entries(object.description ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    message.media = Object.entries(object.media ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    message.questions =
+      object.questions?.map((e) => ProcessMetadata_Question.fromPartial(e)) ||
+      [];
+    message.results =
+      object.results !== undefined && object.results !== null
+        ? ProcessMetadata_Results.fromPartial(object.results)
+        : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
     return message;
   },
 };
@@ -434,12 +426,12 @@ export const ProcessMetadata_TitleEntry = {
     const message = {
       ...baseProcessMetadata_TitleEntry,
     } as ProcessMetadata_TitleEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -450,18 +442,14 @@ export const ProcessMetadata_TitleEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_TitleEntry>
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadata_TitleEntry>, I>>(
+    object: I
   ): ProcessMetadata_TitleEntry {
     const message = {
       ...baseProcessMetadata_TitleEntry,
     } as ProcessMetadata_TitleEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -512,12 +500,12 @@ export const ProcessMetadata_DescriptionEntry = {
     const message = {
       ...baseProcessMetadata_DescriptionEntry,
     } as ProcessMetadata_DescriptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -528,18 +516,14 @@ export const ProcessMetadata_DescriptionEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_DescriptionEntry>
-  ): ProcessMetadata_DescriptionEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<ProcessMetadata_DescriptionEntry>, I>
+  >(object: I): ProcessMetadata_DescriptionEntry {
     const message = {
       ...baseProcessMetadata_DescriptionEntry,
     } as ProcessMetadata_DescriptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -590,12 +574,12 @@ export const ProcessMetadata_MediaEntry = {
     const message = {
       ...baseProcessMetadata_MediaEntry,
     } as ProcessMetadata_MediaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -606,18 +590,14 @@ export const ProcessMetadata_MediaEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_MediaEntry>
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadata_MediaEntry>, I>>(
+    object: I
   ): ProcessMetadata_MediaEntry {
     const message = {
       ...baseProcessMetadata_MediaEntry,
     } as ProcessMetadata_MediaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -700,24 +680,21 @@ export const ProcessMetadata_Question = {
     const message = {
       ...baseProcessMetadata_Question,
     } as ProcessMetadata_Question;
-    message.title = {};
-    message.description = {};
-    message.choices = [];
-    if (object.title !== undefined && object.title !== null) {
-      Object.entries(object.title).forEach(([key, value]) => {
-        message.title[key] = String(value);
-      });
-    }
-    if (object.description !== undefined && object.description !== null) {
-      Object.entries(object.description).forEach(([key, value]) => {
-        message.description[key] = String(value);
-      });
-    }
-    if (object.choices !== undefined && object.choices !== null) {
-      for (const e of object.choices) {
-        message.choices.push(ProcessMetadata_Question_VoteOption.fromJSON(e));
-      }
-    }
+    message.title = Object.entries(object.title ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.description = Object.entries(object.description ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.choices = (object.choices ?? []).map((e: any) =>
+      ProcessMetadata_Question_VoteOption.fromJSON(e)
+    );
     return message;
   },
 
@@ -745,36 +722,32 @@ export const ProcessMetadata_Question = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_Question>
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question>, I>>(
+    object: I
   ): ProcessMetadata_Question {
     const message = {
       ...baseProcessMetadata_Question,
     } as ProcessMetadata_Question;
-    message.title = {};
-    message.description = {};
-    message.choices = [];
-    if (object.title !== undefined && object.title !== null) {
-      Object.entries(object.title).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.title[key] = String(value);
-        }
-      });
-    }
-    if (object.description !== undefined && object.description !== null) {
-      Object.entries(object.description).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.description[key] = String(value);
-        }
-      });
-    }
-    if (object.choices !== undefined && object.choices !== null) {
-      for (const e of object.choices) {
-        message.choices.push(
-          ProcessMetadata_Question_VoteOption.fromPartial(e)
-        );
+    message.title = Object.entries(object.title ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
       }
-    }
+      return acc;
+    }, {});
+    message.description = Object.entries(object.description ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    message.choices =
+      object.choices?.map((e) =>
+        ProcessMetadata_Question_VoteOption.fromPartial(e)
+      ) || [];
     return message;
   },
 };
@@ -825,12 +798,12 @@ export const ProcessMetadata_Question_TitleEntry = {
     const message = {
       ...baseProcessMetadata_Question_TitleEntry,
     } as ProcessMetadata_Question_TitleEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -841,18 +814,14 @@ export const ProcessMetadata_Question_TitleEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_Question_TitleEntry>
-  ): ProcessMetadata_Question_TitleEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<ProcessMetadata_Question_TitleEntry>, I>
+  >(object: I): ProcessMetadata_Question_TitleEntry {
     const message = {
       ...baseProcessMetadata_Question_TitleEntry,
     } as ProcessMetadata_Question_TitleEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -906,12 +875,12 @@ export const ProcessMetadata_Question_DescriptionEntry = {
     const message = {
       ...baseProcessMetadata_Question_DescriptionEntry,
     } as ProcessMetadata_Question_DescriptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -922,18 +891,14 @@ export const ProcessMetadata_Question_DescriptionEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_Question_DescriptionEntry>
-  ): ProcessMetadata_Question_DescriptionEntry {
+  fromPartial<
+    I extends Exact<DeepPartial<ProcessMetadata_Question_DescriptionEntry>, I>
+  >(object: I): ProcessMetadata_Question_DescriptionEntry {
     const message = {
       ...baseProcessMetadata_Question_DescriptionEntry,
     } as ProcessMetadata_Question_DescriptionEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -994,15 +959,16 @@ export const ProcessMetadata_Question_VoteOption = {
     const message = {
       ...baseProcessMetadata_Question_VoteOption,
     } as ProcessMetadata_Question_VoteOption;
-    message.title = {};
-    if (object.title !== undefined && object.title !== null) {
-      Object.entries(object.title).forEach(([key, value]) => {
-        message.title[key] = String(value);
-      });
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = Number(object.value);
-    }
+    message.title = Object.entries(object.title ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? Number(object.value)
+        : 0;
     return message;
   },
 
@@ -1018,23 +984,21 @@ export const ProcessMetadata_Question_VoteOption = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_Question_VoteOption>
-  ): ProcessMetadata_Question_VoteOption {
+  fromPartial<
+    I extends Exact<DeepPartial<ProcessMetadata_Question_VoteOption>, I>
+  >(object: I): ProcessMetadata_Question_VoteOption {
     const message = {
       ...baseProcessMetadata_Question_VoteOption,
     } as ProcessMetadata_Question_VoteOption;
-    message.title = {};
-    if (object.title !== undefined && object.title !== null) {
-      Object.entries(object.title).forEach(([key, value]) => {
-        if (value !== undefined) {
-          message.title[key] = String(value);
-        }
-      });
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.title = Object.entries(object.title ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    message.value = object.value ?? 0;
     return message;
   },
 };
@@ -1088,12 +1052,12 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
     const message = {
       ...baseProcessMetadata_Question_VoteOption_TitleEntry,
     } as ProcessMetadata_Question_VoteOption_TitleEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -1104,18 +1068,17 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_Question_VoteOption_TitleEntry>
-  ): ProcessMetadata_Question_VoteOption_TitleEntry {
+  fromPartial<
+    I extends Exact<
+      DeepPartial<ProcessMetadata_Question_VoteOption_TitleEntry>,
+      I
+    >
+  >(object: I): ProcessMetadata_Question_VoteOption_TitleEntry {
     const message = {
       ...baseProcessMetadata_Question_VoteOption_TitleEntry,
     } as ProcessMetadata_Question_VoteOption_TitleEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -1163,12 +1126,14 @@ export const ProcessMetadata_Results = {
     const message = {
       ...baseProcessMetadata_Results,
     } as ProcessMetadata_Results;
-    if (object.aggregation !== undefined && object.aggregation !== null) {
-      message.aggregation = String(object.aggregation);
-    }
-    if (object.display !== undefined && object.display !== null) {
-      message.display = String(object.display);
-    }
+    message.aggregation =
+      object.aggregation !== undefined && object.aggregation !== null
+        ? String(object.aggregation)
+        : "";
+    message.display =
+      object.display !== undefined && object.display !== null
+        ? String(object.display)
+        : "";
     return message;
   },
 
@@ -1180,18 +1145,14 @@ export const ProcessMetadata_Results = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_Results>
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Results>, I>>(
+    object: I
   ): ProcessMetadata_Results {
     const message = {
       ...baseProcessMetadata_Results,
     } as ProcessMetadata_Results;
-    if (object.aggregation !== undefined && object.aggregation !== null) {
-      message.aggregation = object.aggregation;
-    }
-    if (object.display !== undefined && object.display !== null) {
-      message.display = object.display;
-    }
+    message.aggregation = object.aggregation ?? "";
+    message.display = object.display ?? "";
     return message;
   },
 };
@@ -1242,12 +1203,12 @@ export const ProcessMetadata_MetaEntry = {
     const message = {
       ...baseProcessMetadata_MetaEntry,
     } as ProcessMetadata_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = String(object.key);
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = String(object.value);
-    }
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
     return message;
   },
 
@@ -1258,18 +1219,14 @@ export const ProcessMetadata_MetaEntry = {
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<ProcessMetadata_MetaEntry>
+  fromPartial<I extends Exact<DeepPartial<ProcessMetadata_MetaEntry>, I>>(
+    object: I
   ): ProcessMetadata_MetaEntry {
     const message = {
       ...baseProcessMetadata_MetaEntry,
     } as ProcessMetadata_MetaEntry;
-    if (object.key !== undefined && object.key !== null) {
-      message.key = object.key;
-    }
-    if (object.value !== undefined && object.value !== null) {
-      message.value = object.value;
-    }
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
     return message;
   },
 };
@@ -1282,6 +1239,7 @@ type Builtin =
   | number
   | boolean
   | undefined;
+
 export type DeepPartial<T> = T extends Builtin
   ? T
   : T extends Array<infer U>
@@ -1295,6 +1253,14 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
+        Exclude<keyof I, KeysOfUnion<P>>,
+        never
+      >;
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
