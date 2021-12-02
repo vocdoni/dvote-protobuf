@@ -227,7 +227,7 @@ message MintTokensTx {
 	TxType txtype = 1;
 	uint32 nonce = 2;
 	bytes to = 3;
-	bytes value = 4;
+	uint64 value = 4;
 }
 
 message SendTokensTx {
@@ -235,7 +235,7 @@ message SendTokensTx {
 	uint32 nonce = 2;
 	bytes from = 3;
 	bytes to = 4;
-	bytes value = 5;
+	uint64 value = 5;
 }
 
 message SetTransactionCostsTx {
