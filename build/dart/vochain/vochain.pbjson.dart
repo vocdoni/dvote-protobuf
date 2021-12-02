@@ -412,12 +412,12 @@ const MintTokensTx$json = const {
     const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
     const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
     const {'1': 'to', '3': 3, '4': 1, '5': 12, '10': 'to'},
-    const {'1': 'value', '3': 4, '4': 1, '5': 12, '10': 'value'},
+    const {'1': 'value', '3': 4, '4': 1, '5': 4, '10': 'value'},
   ],
 };
 
 /// Descriptor for `MintTokensTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mintTokensTxDescriptor = $convert.base64Decode('CgxNaW50VG9rZW5zVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEg4KAnRvGAMgASgMUgJ0bxIUCgV2YWx1ZRgEIAEoDFIFdmFsdWU=');
+final $typed_data.Uint8List mintTokensTxDescriptor = $convert.base64Decode('CgxNaW50VG9rZW5zVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEg4KAnRvGAMgASgMUgJ0bxIUCgV2YWx1ZRgEIAEoBFIFdmFsdWU=');
 @$core.Deprecated('Use sendTokensTxDescriptor instead')
 const SendTokensTx$json = const {
   '1': 'SendTokensTx',
@@ -426,12 +426,12 @@ const SendTokensTx$json = const {
     const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
     const {'1': 'from', '3': 3, '4': 1, '5': 12, '10': 'from'},
     const {'1': 'to', '3': 4, '4': 1, '5': 12, '10': 'to'},
-    const {'1': 'value', '3': 5, '4': 1, '5': 12, '10': 'value'},
+    const {'1': 'value', '3': 5, '4': 1, '5': 4, '10': 'value'},
   ],
 };
 
 /// Descriptor for `SendTokensTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sendTokensTxDescriptor = $convert.base64Decode('CgxTZW5kVG9rZW5zVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEhIKBGZyb20YAyABKAxSBGZyb20SDgoCdG8YBCABKAxSAnRvEhQKBXZhbHVlGAUgASgMUgV2YWx1ZQ==');
+final $typed_data.Uint8List sendTokensTxDescriptor = $convert.base64Decode('CgxTZW5kVG9rZW5zVHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEhIKBGZyb20YAyABKAxSBGZyb20SDgoCdG8YBCABKAxSAnRvEhQKBXZhbHVlGAUgASgEUgV2YWx1ZQ==');
 @$core.Deprecated('Use setTransactionCostsTxDescriptor instead')
 const SetTransactionCostsTx$json = const {
   '1': 'SetTransactionCostsTx',

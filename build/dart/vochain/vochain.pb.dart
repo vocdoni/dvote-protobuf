@@ -1856,7 +1856,7 @@ class MintTokensTx extends $pb.GeneratedMessage {
     ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
+    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false
   ;
 
@@ -1865,7 +1865,7 @@ class MintTokensTx extends $pb.GeneratedMessage {
     TxType? txtype,
     $core.int? nonce,
     $core.List<$core.int>? to,
-    $core.List<$core.int>? value,
+    $fixnum.Int64? value,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -1931,9 +1931,9 @@ class MintTokensTx extends $pb.GeneratedMessage {
   void clearTo() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<$core.int> get value => $_getN(3);
+  $fixnum.Int64 get value => $_getI64(3);
   @$pb.TagNumber(4)
-  set value($core.List<$core.int> v) { $_setBytes(3, v); }
+  set value($fixnum.Int64 v) { $_setInt64(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasValue() => $_has(3);
   @$pb.TagNumber(4)
@@ -1946,7 +1946,7 @@ class SendTokensTx extends $pb.GeneratedMessage {
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
+    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false
   ;
 
@@ -1956,7 +1956,7 @@ class SendTokensTx extends $pb.GeneratedMessage {
     $core.int? nonce,
     $core.List<$core.int>? from,
     $core.List<$core.int>? to,
-    $core.List<$core.int>? value,
+    $fixnum.Int64? value,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -2034,9 +2034,9 @@ class SendTokensTx extends $pb.GeneratedMessage {
   void clearTo() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.List<$core.int> get value => $_getN(4);
+  $fixnum.Int64 get value => $_getI64(4);
   @$pb.TagNumber(5)
-  set value($core.List<$core.int> v) { $_setBytes(4, v); }
+  set value($fixnum.Int64 v) { $_setInt64(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasValue() => $_has(4);
   @$pb.TagNumber(5)
