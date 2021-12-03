@@ -343,6 +343,8 @@ enum SourceNetworkId {
 	BSC = 7;
 	ETH_MAINNET_SIGNALING = 8;
 	ETH_RINKEBY_SIGNALING = 9;
+	AVAX_FUJI = 10;
+	AVAX = 11;
 }
 
 enum CensusOrigin {

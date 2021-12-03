@@ -96,6 +96,8 @@ class SourceNetworkId extends $pb.ProtobufEnum {
   static const SourceNetworkId BSC = SourceNetworkId._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BSC');
   static const SourceNetworkId ETH_MAINNET_SIGNALING = SourceNetworkId._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_MAINNET_SIGNALING');
   static const SourceNetworkId ETH_RINKEBY_SIGNALING = SourceNetworkId._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ETH_RINKEBY_SIGNALING');
+  static const SourceNetworkId AVAX_FUJI = SourceNetworkId._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AVAX_FUJI');
+  static const SourceNetworkId AVAX = SourceNetworkId._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AVAX');
 
   static const $core.List<SourceNetworkId> values = <SourceNetworkId> [
     UNKNOWN,
@@ -108,6 +110,8 @@ class SourceNetworkId extends $pb.ProtobufEnum {
     BSC,
     ETH_MAINNET_SIGNALING,
     ETH_RINKEBY_SIGNALING,
+    AVAX_FUJI,
+    AVAX,
   ];
 
   static final $core.Map<$core.int, SourceNetworkId> _byValue = $pb.ProtobufEnum.initByValue(values);

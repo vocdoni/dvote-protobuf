@@ -217,6 +217,8 @@ export enum SourceNetworkId {
   BSC = 7,
   ETH_MAINNET_SIGNALING = 8,
   ETH_RINKEBY_SIGNALING = 9,
+  AVAX_FUJI = 10,
+  AVAX = 11,
   UNRECOGNIZED = -1,
 }
 
@@ -252,6 +254,12 @@ export function sourceNetworkIdFromJSON(object: any): SourceNetworkId {
     case 9:
     case "ETH_RINKEBY_SIGNALING":
       return SourceNetworkId.ETH_RINKEBY_SIGNALING;
+    case 10:
+    case "AVAX_FUJI":
+      return SourceNetworkId.AVAX_FUJI;
+    case 11:
+    case "AVAX":
+      return SourceNetworkId.AVAX;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -281,6 +289,10 @@ export function sourceNetworkIdToJSON(object: SourceNetworkId): string {
       return "ETH_MAINNET_SIGNALING";
     case SourceNetworkId.ETH_RINKEBY_SIGNALING:
       return "ETH_RINKEBY_SIGNALING";
+    case SourceNetworkId.AVAX_FUJI:
+      return "AVAX_FUJI";
+    case SourceNetworkId.AVAX:
+      return "AVAX";
     default:
       return "UNKNOWN";
   }
@@ -695,7 +707,7 @@ export interface MintTokensTx {
   txtype: TxType;
   nonce: number;
   to: Uint8Array;
-  value: Uint8Array;
+  value: number;
 }
 
 export interface SendTokensTx {
@@ -703,7 +715,7 @@ export interface SendTokensTx {
   nonce: number;
   from: Uint8Array;
   to: Uint8Array;
-  value: Uint8Array;
+  value: number;
 }
 
 export interface SetTransactionCostsTx {
@@ -3279,7 +3291,7 @@ export const RegisterKeyTx = {
   },
 };
 
-const baseMintTokensTx: object = { txtype: 0, nonce: 0 };
+const baseMintTokensTx: object = { txtype: 0, nonce: 0, value: 0 };
 
 export const MintTokensTx = {
   encode(message: MintTokensTx, writer: Writer = Writer.create()): Writer {
@@ -3292,8 +3304,8 @@ export const MintTokensTx = {
     if (message.to.length !== 0) {
       writer.uint32(26).bytes(message.to);
     }
-    if (message.value.length !== 0) {
-      writer.uint32(34).bytes(message.value);
+    if (message.value !== 0) {
+      writer.uint32(32).uint64(message.value);
     }
     return writer;
   },
@@ -3303,7 +3315,6 @@ export const MintTokensTx = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMintTokensTx } as MintTokensTx;
     message.to = new Uint8Array();
-    message.value = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3317,7 +3328,7 @@ export const MintTokensTx = {
           message.to = reader.bytes();
           break;
         case 4:
-          message.value = reader.bytes();
+          message.value = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -3343,8 +3354,8 @@ export const MintTokensTx = {
         : new Uint8Array();
     message.value =
       object.value !== undefined && object.value !== null
-        ? bytesFromBase64(object.value)
-        : new Uint8Array();
+        ? Number(object.value)
+        : 0;
     return message;
   },
 
@@ -3356,10 +3367,7 @@ export const MintTokensTx = {
       (obj.to = base64FromBytes(
         message.to !== undefined ? message.to : new Uint8Array()
       ));
-    message.value !== undefined &&
-      (obj.value = base64FromBytes(
-        message.value !== undefined ? message.value : new Uint8Array()
-      ));
+    message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
@@ -3370,12 +3378,12 @@ export const MintTokensTx = {
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
     message.to = object.to ?? new Uint8Array();
-    message.value = object.value ?? new Uint8Array();
+    message.value = object.value ?? 0;
     return message;
   },
 };
 
-const baseSendTokensTx: object = { txtype: 0, nonce: 0 };
+const baseSendTokensTx: object = { txtype: 0, nonce: 0, value: 0 };
 
 export const SendTokensTx = {
   encode(message: SendTokensTx, writer: Writer = Writer.create()): Writer {
@@ -3391,8 +3399,8 @@ export const SendTokensTx = {
     if (message.to.length !== 0) {
       writer.uint32(34).bytes(message.to);
     }
-    if (message.value.length !== 0) {
-      writer.uint32(42).bytes(message.value);
+    if (message.value !== 0) {
+      writer.uint32(40).uint64(message.value);
     }
     return writer;
   },
@@ -3403,7 +3411,6 @@ export const SendTokensTx = {
     const message = { ...baseSendTokensTx } as SendTokensTx;
     message.from = new Uint8Array();
     message.to = new Uint8Array();
-    message.value = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3420,7 +3427,7 @@ export const SendTokensTx = {
           message.to = reader.bytes();
           break;
         case 5:
-          message.value = reader.bytes();
+          message.value = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -3450,8 +3457,8 @@ export const SendTokensTx = {
         : new Uint8Array();
     message.value =
       object.value !== undefined && object.value !== null
-        ? bytesFromBase64(object.value)
-        : new Uint8Array();
+        ? Number(object.value)
+        : 0;
     return message;
   },
 
@@ -3467,10 +3474,7 @@ export const SendTokensTx = {
       (obj.to = base64FromBytes(
         message.to !== undefined ? message.to : new Uint8Array()
       ));
-    message.value !== undefined &&
-      (obj.value = base64FromBytes(
-        message.value !== undefined ? message.value : new Uint8Array()
-      ));
+    message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
@@ -3482,7 +3486,7 @@ export const SendTokensTx = {
     message.nonce = object.nonce ?? 0;
     message.from = object.from ?? new Uint8Array();
     message.to = object.to ?? new Uint8Array();
-    message.value = object.value ?? new Uint8Array();
+    message.value = object.value ?? 0;
     return message;
   },
 };
