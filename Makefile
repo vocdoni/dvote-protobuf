@@ -36,7 +36,6 @@ define install_protoc_go
 	if [ ! -d "$$GOPATH" ] ; then \
 		export GOPATH="$$HOME/go" ;\
 	fi ; \
-	go get google.golang.org/protobuf/cmd/protoc-gen-go ; \
 	go install google.golang.org/protobuf/cmd/protoc-gen-go ;\
 	fi
 endef
