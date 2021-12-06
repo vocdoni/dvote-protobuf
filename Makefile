@@ -107,7 +107,7 @@ build/ts: $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES) $(METADATA_SOURCES)
 		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
 	done
 	@touch $@
-	npm i --package-lock-only
+	npm i --no-package-lock
 
 #-----------------------------------------------------------------------
 # COMPILERS
@@ -124,7 +124,7 @@ protoc-dart-plugin:
 
 # TS
 $(PROTOC_TS_PLUGIN):
-	@npm install ts-proto
+	@npm install ts-proto --no-package-lock
 	@rm package-lock.json
 
 # GO
