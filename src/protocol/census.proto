@@ -1,0 +1,128 @@
+/// Type: Protocol layer definitions
+
+syntax = "proto3";
+package dvote.types.v2;
+
+option go_package = "go.vocdoni.io/proto/build/go/models/v2";
+
+///////////////////////////////////////////////////////////////////////////////
+// Census models
+///////////////////////////////////////////////////////////////////////////////
+
+/// The models below affect the whole election definition.
+message Census {
+	oneof body {
+		CensusNone none = 1;
+        
+        /// Always weighted
+		CensusArbo arbo = 11;
+		CensusCsp csp = 12;
+
+		CensusErc20 erc20 = 21;
+		CensusErc721 erc721 = 22;
+		CensusErc1155 erc1155 = 23;
+		CensusErc721 erc777 = 24;
+		CensusErcMiniMe ercMiniMe = 30;
+	}
+}
+
+// Census submodels
+
+message CensusNone {}
+message CensusArbo {
+	bytes censusRoot = 1;
+	string censusUri = 2;
+}
+message CensusCsp {
+	string cspUri = 1;
+	bytes cspPublicKey = 2;
+    /// Whether a plain or blind signature is expected as a proof
+	bool blind = 3;
+}
+message CensusErc20 {
+	bytes tokenAddress = 1;
+	int32 balanceMapSlot = 2;
+}
+message CensusErc721 {
+	// bytes tokenAddress = 1;
+	// int32 balanceMapSlot = 2;
+}
+message CensusErc1155 {
+	// bytes tokenAddress = 1;
+	// int32 balanceMapSlot = 2;
+}
+message CensusErc777 {
+	// bytes tokenAddress = 1;
+	// int32 balanceMapSlot = 2;
+}
+message CensusErcMiniMe {
+	bytes tokenAddress = 1;
+	int32 balanceMapSlot = 2;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Census Proof Models
+///////////////////////////////////////////////////////////////////////////////
+
+message Proof {
+	oneof body {
+        // SIGNED PROOFS
+		ProofNone none = 1;
+
+        /// Always weighted
+		ProofArbo arbo = 11;
+		ProofCSP csp = 12;
+
+		StorageProofERC20 proofERC20 = 21;
+		StorageProofERC721 proofERC721 = 22;
+		StorageProofERC1155 proofERC1155 = 23;
+		StorageProofERC777 proofERC777 = 24;
+		StorageProofMiniMe proofMiniMe = 30;
+
+        // ANONYMOUS PROOFS
+		ProofZkSnark zkSnark = 100;
+	}
+}
+
+// Used to vote on non-anonymous elections, or to register an anonymous key to the Vochain
+
+message ProofNone {}
+message ProofArbo {
+	repeated bytes siblings = 1;
+}
+message ProofCSP {
+	bytes payload = 1;  // {electionId, address, weight}
+	bytes signature = 2;
+}
+
+message StorageProofERC20 {
+	bytes key = 1;
+	bytes value = 2;
+	repeated bytes proof = 3;
+}
+message StorageProofERC721 {}
+message StorageProofERC1155 {}
+message StorageProofERC777 {}
+message StorageProofMiniMe {}
+
+
+/// Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
+message ProofZkSnark {
+	oneof body {
+		Poseidon1kCensus proof1k = 1;
+		Poseidon50kCensus proof50k = 2;
+		Poseidon250kCensus proof250k = 3;
+		// ...
+	}
+
+	message Poseidon1kCensus {
+        // ...
+    }
+	message Poseidon50kCensus {
+        // ...
+    }
+	message Poseidon250kCensus {
+        // ...
+    }
+}
+

@@ -1,0 +1,69 @@
+/// Type: Protocol layer definitions
+
+syntax = "proto3";
+package dvote.types.v2;
+
+option go_package = "go.vocdoni.io/proto/build/go/models/v2";
+
+import "protocol/enums.proto";
+import "protocol/organization.proto";
+import "protocol/election.proto";
+import "protocol/census.proto";
+import "protocol/ballot.proto";
+
+///////////////////////////////////////////////////////////////////////////////
+// Transactions
+///////////////////////////////////////////////////////////////////////////////
+
+// ACCOUNTS
+
+message SetOrganization {
+	Organization organization = 1;
+}
+
+// Token transfer
+
+message Transfer {
+	bytes to = 1;
+	string value = 2;  // string(bigint)
+}
+
+message Mint {
+	string amount = 1;  // string(bigint)
+}
+
+message ClaimTokens {
+	bytes nonce = 1;
+	bytes sender = 2; // address
+}
+
+// ELECTION
+
+message NewElection {
+	Election election = 1;
+}
+
+/// Register a key
+message RegisterKey {
+	bytes electionId = 1;
+	repeated Proof proofs = 2;  // Arbo proof, CSP, ERC20, etc
+	bytes newKey = 3;  // hashed(secretKey) bigint
+	string weight = 4;  // string(bigint)
+}
+
+message SubmitBallot {
+	Ballot ballot = 1;
+}
+
+// Entire election (all its proposals)
+message SetElectionStatus {
+	bytes electionId = 1;
+	ProposalStatus newStatus = 2;
+}
+
+// Only one proposal
+message SetProposalStatus {
+	bytes electionId = 1;
+	int32 proposalIndex = 2;
+	ProposalStatus newStatus = 3;
+}

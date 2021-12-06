@@ -4,7 +4,6 @@ syntax = "proto3";
 package dvote.types.v1;
 
 import "client-store/wallet.proto";
-import "metadata/entity.proto";
 
 /// Helper to serialize and store a list of entries at once
 message AccountsStore {
@@ -32,7 +31,7 @@ message Account {
         string appAnalyticsID = 1;
         
         /// Subscribed entities
-        repeated EntityReference entities = 2;
+        // repeated EntityReference entities = 2;
     }
     message WebEntity {
         string webAnalyticsID = 1; // Random anonymized id for analytics

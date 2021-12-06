@@ -1,0 +1,67 @@
+/// Type: Protocol layer definitions
+
+syntax = "proto3";
+package dvote.types.v2;
+
+option go_package = "go.vocdoni.io/proto/build/go/models/v2";
+
+///////////////////////////////////////////////////////////////////////////////
+// Results models
+///////////////////////////////////////////////////////////////////////////////
+
+// NOTE: big integers are represented as strings
+
+message Results {
+	bytes electionId = 1;
+
+    /// One result object for each Proposal within the Election
+	repeated Result results = 2;
+}
+
+/// The outcome of a proposal
+message Result {
+	oneof body {
+		ApprovalResult approvalRresult = 1;
+		SingleChoiceResult singleChoiceResult = 2;
+		QuadraticResult quadraticResult = 3;
+		RankedResult rankedResult = 4;
+		SpreadResult spreadResult = 5;
+	}
+}
+
+// Submodels
+
+message ApprovalResult {
+    /// How many (weighted) rejections
+	string rejected = 1;
+    /// How many (weighted) approvals
+	string approved = 2;
+}
+message SingleChoiceResult {
+    /// How many (weighted) votes each index got
+	repeated string votes = 1;
+}
+message QuadraticResult {
+    /// How many (weighted) points each index got
+	repeated string points = 1;
+}
+message RankedResult {
+    message RankedEntryResult {
+        message RankedEntryPositionResult {
+            /// The rank position of the choice, for which the points below have been achieved
+            int32 position = 1;
+            /// How many (weighted) points the choice got at the current rank position
+            string points = 2;
+        }
+
+        /// The results of the choice at every valid rank position
+        repeated RankedEntryResult results = 1;
+    }
+
+    /// The results of each choice
+	repeated RankedEntryResult entries = 1;
+}
+message SpreadResult {
+    /// How many (weighted) points each index got
+	repeated string points = 1;
+}

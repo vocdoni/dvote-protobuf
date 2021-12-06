@@ -1,0 +1,102 @@
+/// Type: Protocol layer definitions
+
+syntax = "proto3";
+package dvote.types.v2;
+
+option go_package = "go.vocdoni.io/proto/build/go/models/v2";
+
+import "protocol/census.proto";
+
+///////////////////////////////////////////////////////////////////////////////
+// Election > Proposal[] > *
+///////////////////////////////////////////////////////////////////////////////
+
+/// The following model defines the declaration of an election. These are just the settings, not the human readable information.
+message Election {
+	// See census.proto
+	Census primaryCensus = 1;
+	Census secondaryCensus = 2;
+	Census tertiaryCensus = 3;
+
+	int32 censusSize = 4;  // Used to select the zk circuit, determine the cost, etc
+
+	repeated Proposal proposals = 5;  // The questions that people can vote
+
+	Privacy privacy = 6;  // How data should be protected
+	Lifecycle lifecycle = 7;
+
+	string metadataUri = 8;
+	int32 startBlock = 9;
+	int32 endBlock = 10;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Election submodels (global parameters)
+///////////////////////////////////////////////////////////////////////////////
+
+/// The models below affect the whole election definition.
+message Privacy {
+	bool realTimeResults = 1;
+
+	enum VoteAnonimity {
+		/// Signed vote. Standard proof(s) are expected.
+        NONE = 0;
+		/// Anonymous vote, submitted right away.
+        /// The standard proof is part of the ZK circuit inputs. The ZK proof is expected.
+        ZK_SNARKS = 1;
+		/// Anonymous vote, with voter registration prior to the election.
+        /// The standard proof is part of the ZK circuit inputs. The ZK proof is expected.
+        ZK_SNARKS_PREREGISTER = 2;
+	}
+	VoteAnonimity voteAnonymity = 2;
+}
+
+enum Lifecycle {
+	PAUSED_MUTABLE = 0;
+	PAUSED_MUTABLE_ONCE = 1;
+	STARTED_IMMUTABLE = 2;
+	STARTED_MUTABLE = 3;
+	AUTOSTART_IMMUTABLE = 4;
+	AUTOSTART_MUTABLE = 5;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Proposal models (per-proposal parameters)
+///////////////////////////////////////////////////////////////////////////////
+
+message Proposal {
+	oneof proposal {
+        /// Binary
+		ApprovalProposal approvalProposal = 1;
+		/// choose one of [0, ... N-1]
+        SingleChoiceProposal singleChoiceProposal = 2;
+		/// allocate quadratic points below a max sum
+        QuadraticProposal quadraticProposal = 3;
+		/// 1w1v: Voting the ordered indexes
+        RankedProposal rankedProposal = 4;
+		/// assign % to each option
+        SpreadProposal spreadProposal = 5;
+	}
+}
+
+// Submodels
+message ApprovalProposal {}
+message SingleChoiceProposal {
+    int32 optionCount = 1;
+}
+message QuadraticProposal {
+    int32 optionCount = 1;
+	float costExponent = 2;
+	/// Assigning points from 0 to maxValue
+    int32 maxValue = 3;
+    /// The exponentiated sum of values must not exceed maxSum
+	int32 maxSum = 4;
+}
+message RankedProposal {
+    int32 optionCount = 1;
+	/// Up to how many indexes can be ranked
+    int32 maxItems = 2;
+}
+message SpreadProposal {
+    int32 optionCount = 1;
+}
