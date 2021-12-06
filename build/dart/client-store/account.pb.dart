@@ -10,7 +10,6 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'wallet.pb.dart' as $0;
-import '../metadata/entity.pb.dart' as $1;
 
 class AccountsStore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AccountsStore', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
@@ -56,21 +55,16 @@ class AccountsStore extends $pb.GeneratedMessage {
 class Account_AppVoter extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Account.AppVoter', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appAnalyticsID', protoName: 'appAnalyticsID')
-    ..pc<$1.EntityReference>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entities', $pb.PbFieldType.PM, subBuilder: $1.EntityReference.create)
     ..hasRequiredFields = false
   ;
 
   Account_AppVoter._() : super();
   factory Account_AppVoter({
     $core.String? appAnalyticsID,
-    $core.Iterable<$1.EntityReference>? entities,
   }) {
     final _result = create();
     if (appAnalyticsID != null) {
       _result.appAnalyticsID = appAnalyticsID;
-    }
-    if (entities != null) {
-      _result.entities.addAll(entities);
     }
     return _result;
   }
@@ -103,9 +97,6 @@ class Account_AppVoter extends $pb.GeneratedMessage {
   $core.bool hasAppAnalyticsID() => $_has(0);
   @$pb.TagNumber(1)
   void clearAppAnalyticsID() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.List<$1.EntityReference> get entities => $_getList(1);
 }
 
 class Account_WebEntity extends $pb.GeneratedMessage {

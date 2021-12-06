@@ -2,7 +2,6 @@
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import * as Long from "long";
 import { Wallet } from "../client-store/wallet";
-import { EntityReference } from "../metadata/entity";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -33,8 +32,6 @@ export interface Account {
 export interface Account_AppVoter {
   /** / Random anonymized id for analytics */
   appAnalyticsID: string;
-  /** / Subscribed entities */
-  entities: EntityReference[];
 }
 
 export interface Account_WebEntity {
@@ -255,9 +252,6 @@ export const Account_AppVoter = {
     if (message.appAnalyticsID !== "") {
       writer.uint32(10).string(message.appAnalyticsID);
     }
-    for (const v of message.entities) {
-      EntityReference.encode(v!, writer.uint32(18).fork()).ldelim();
-    }
     return writer;
   },
 
@@ -265,17 +259,11 @@ export const Account_AppVoter = {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseAccount_AppVoter } as Account_AppVoter;
-    message.entities = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
           message.appAnalyticsID = reader.string();
-          break;
-        case 2:
-          message.entities.push(
-            EntityReference.decode(reader, reader.uint32())
-          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -291,9 +279,6 @@ export const Account_AppVoter = {
       object.appAnalyticsID !== undefined && object.appAnalyticsID !== null
         ? String(object.appAnalyticsID)
         : "";
-    message.entities = (object.entities ?? []).map((e: any) =>
-      EntityReference.fromJSON(e)
-    );
     return message;
   },
 
@@ -301,13 +286,6 @@ export const Account_AppVoter = {
     const obj: any = {};
     message.appAnalyticsID !== undefined &&
       (obj.appAnalyticsID = message.appAnalyticsID);
-    if (message.entities) {
-      obj.entities = message.entities.map((e) =>
-        e ? EntityReference.toJSON(e) : undefined
-      );
-    } else {
-      obj.entities = [];
-    }
     return obj;
   },
 
@@ -316,8 +294,6 @@ export const Account_AppVoter = {
   ): Account_AppVoter {
     const message = { ...baseAccount_AppVoter } as Account_AppVoter;
     message.appAnalyticsID = object.appAnalyticsID ?? "";
-    message.entities =
-      object.entities?.map((e) => EntityReference.fromPartial(e)) || [];
     return message;
   },
 };
