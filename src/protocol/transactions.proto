@@ -1,4 +1,4 @@
-/// Type: Protocol layer definitions
+// Type: Protocol layer definitions
 
 syntax = "proto3";
 package dvote.types.v2;
@@ -43,7 +43,7 @@ message NewElection {
 	Election election = 1;
 }
 
-/// Register a key
+// Register a key
 message RegisterKey {
 	bytes electionId = 1;
 	repeated Proof proofs = 2;  // Arbo proof, CSP, ERC20, etc

@@ -189,27 +189,6 @@ export function encodeResponseError(message: string, responseBody: Uint8Array, r
 // Decoding
 ///////////////////////////////////////////////////////////////////////////////
 
-function decodeMessage(msgBytes: Uint8Array) {
-    console.log("Decoding the message")
-
-    const msg = Message.decode(Reader.create(msgBytes))
-
-    const signed = !!msg.signature?.length
-    const body = Body.decode(Reader.create(msg.body))
-    const publicKey = signed ?
-        dummyExtractPublicKey(msg.body, msg.signature, msg.signatureType) :
-        new Uint8Array()
-
-    // check body.timestamp diff
-
-    return {
-        body: body.body,
-        signed,
-        publicKey,
-        requestId: body.id
-    }
-}
-
 export function decodeTransaction(msgBytes: Uint8Array) {
     const { body, requestId, publicKey } = decodeMessage(msgBytes)
 
@@ -267,6 +246,29 @@ export function decodeResponse(msgBytes: Uint8Array) {
         response: response.body.success,
         requestId,
         publicKey
+    }
+}
+
+// Helper
+
+function decodeMessage(msgBytes: Uint8Array) {
+    console.log("Decoding the message")
+
+    const msg = Message.decode(Reader.create(msgBytes))
+
+    const signed = !!msg.signature?.length
+    const body = Body.decode(Reader.create(msg.body))
+    const publicKey = signed ?
+        dummyExtractPublicKey(msg.body, msg.signature, msg.signatureType) :
+        new Uint8Array()
+
+    // check body.timestamp diff
+
+    return {
+        body: body.body,
+        signed,
+        publicKey: Buffer.from(publicKey),
+        requestId: body.id
     }
 }
 

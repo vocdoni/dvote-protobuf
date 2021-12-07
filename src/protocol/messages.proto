@@ -1,4 +1,4 @@
-/// Type: Protocol layer definitions
+// Type: Protocol layer definitions
 
 syntax = "proto3";
 package dvote.types.v2;
@@ -12,15 +12,15 @@ import "protocol/service.proto";
 // Message > Body
 ///////////////////////////////////////////////////////////////////////////////
 
-/// Remote calls between components are a message, optionally signed
+// Remote calls between components are a message, optionally signed
 message Message {
-	/// The bytes of the {Body} model being signed
+	// The bytes of the {Body} model being signed
 	bytes body = 1;
 
-	/// Optionally signed. Not expected when:
-	/// - Submitting a vote
-	/// - Performing a read-only operation
-	/// 
+	// Optionally signed. Not expected when:
+	// - Submitting a vote
+	// - Performing a read-only operation
+	// 
 	optional bytes signature = 2;
 
 	enum Signatures {
@@ -30,10 +30,10 @@ message Message {
 	Signatures signatureType = 3;
 }
 
-/// The body contains the serialized bytes from a `Body`, which can host three types of interactions.
+// The body contains the serialized bytes from a `Body`, which can host three types of interactions.
 message Body {
 	bytes id = 1;
-    /// UNIX timestamp
+    // UNIX timestamp
 	int32 timestamp = 2;
 
 	oneof body {
@@ -51,7 +51,7 @@ message Body {
 // Transactions
 ///////////////////////////////////////////////////////////////////////////////
 
-/// Vochain or VocOne transactions, all wrapped within a `Message > Body`.
+// Vochain or VocOne transactions, all wrapped within a `Message > Body`.
 message Transaction {
 	oneof body {
 		// ACCOUNTS
@@ -70,7 +70,7 @@ message Transaction {
 }
 
 
-/// The response given to the transaction submitter:
+// The response given to the transaction submitter:
 message TransactionReceipt {
 	oneof body {
 		TransactionSuccess success = 1;
@@ -90,7 +90,7 @@ message TransactionError {
 // RPC requests
 ///////////////////////////////////////////////////////////////////////////////
 
-/// Census Service, File gateways, and similar nodes expect `Request` models, and return `Response` models, all wrapped within a `Message > Body`.
+// Census Service, File gateways, and similar nodes expect `Request` models, and return `Response` models, all wrapped within a `Message > Body`.
 message Request {
 	oneof body {
 		// ELECTION
@@ -128,7 +128,7 @@ message Request {
 	}
 }
 
-/// Responses can either be successful or fail. The `Response` body depends on the type of request made originally, and the caller is responsible for deserializing the bytes into the according model, if any.
+// Responses can either be successful or fail. The `Response` body depends on the type of request made originally, and the caller is responsible for deserializing the bytes into the according model, if any.
 message Response {
 	oneof body {
 		ResponseSuccess success = 1;
@@ -137,12 +137,12 @@ message Response {
 }
 
 message ResponseSuccess {
-	/// Serialized response, related to the request model
+	// Serialized response, related to the request model
 	bytes body = 1;
 }
 message ResponseError {
 	string message = 1;
 
-	/// Serialized response, related to the request model
+	// Serialized response, related to the request model
 	bytes body = 2;
 }

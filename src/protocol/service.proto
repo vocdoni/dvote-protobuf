@@ -1,4 +1,4 @@
-/// Type: Protocol layer definitions
+// Type: Protocol layer definitions
 
 syntax = "proto3";
 package dvote.types.v2;
@@ -77,11 +77,11 @@ message GetElection {
 // Response
 message GetElectionResponse {
 	bytes organizationId = 1;
-	/// The originally defined params
+	// The originally defined params
     Election parameters = 2;
-	/// The status of each individual proposal
+	// The status of each individual proposal
     repeated ProposalStatus statuses = 3;
-    /// How many ballots each proposal has
+    // How many ballots each proposal has
 	repeated int32 ballots = 4;
 }
 
@@ -118,7 +118,7 @@ message GetBallotResponse {
 // Request
 message GetElectionBallots {
 	bytes electionId = 1;
-    /// Used to iterate the different envelopes by chunks
+    // Used to iterate the different envelopes by chunks
     int32 fromIndex = 2;
 }
 // Response
@@ -147,13 +147,13 @@ message GetElectionCircuitInfo {
 }
 // Response
 message GetElectionCircuitInfoResponse {
-    /// Circuit index
+    // Circuit index
     int32 index = 1;
-    /// The prefix of the URI to fetch the artifacts from
+    // The prefix of the URI to fetch the artifacts from
     string baseUri = 2;
-    /// Relative path where the circuit is hosted
+    // Relative path where the circuit is hosted
     string circuitPath = 3;
-    /// Maximum census size supported by the circuit
+    // Maximum census size supported by the circuit
     int32 maxSize = 4;
 
     bytes witnessHash = 5;
@@ -169,7 +169,7 @@ message GetElectionResults {
 message GetElectionResultsResponse {
     Results results = 1;
 
-    /// Whether the results are available and final
+    // Whether the results are available and final
     bool available = 2;
 }
 
@@ -179,7 +179,7 @@ message GetElectionWeight {
 }
 // Response
 message GetElectionWeightResponse {
-    /// The total amount of vote weight that has been used
+    // The total amount of vote weight that has been used
     string weight = 1; // bigint as a string
 }
 
@@ -246,8 +246,8 @@ message PublishCensusResponse {
 
 // Request
 message GetCensusProof {
-    /// Defines the kind of census proof to receive back
-    /// Mostly:  CensusArbo, StorageProofErc20
+    // Defines the kind of census proof to receive back
+    // Mostly:  CensusArbo, StorageProofErc20
     Census census = 1;
 
     bytes key = 2;
@@ -279,13 +279,13 @@ message PinFile {
 }
 // Response
 message PinFileResponse {
-    /// The URI at which the file can be addressed
+    // The URI at which the file can be addressed
     string ipfsUri = 1; 
 }
 
 // Request
 message FetchFile {
-    /// The URI at which the file can be addressed
+    // The URI at which the file can be addressed
     string ipfsUri = 1; 
 }
 // Response
@@ -302,11 +302,11 @@ message FetchFileResponse {
 message GetBlockStatus {}
 // Response
 message GetBlockStatusResponse {
-    /// The current block height
+    // The current block height
     int32 number = 1; 
-    /// The timestamp at which the block was mined
+    // The timestamp at which the block was mined
     int32 blockTimestamp = 2;
-    /// The average block times during the last minute, 10m, 1h, 6h and 24h
+    // The average block times during the last minute, 10m, 1h, 6h and 24h
     repeated int32 blockTimes = 3;
 }
 
@@ -314,7 +314,7 @@ message GetBlockStatusResponse {
 message GetBlockCount {}
 // Response
 message GetBlockCountResponse {
-    /// The number of the last mined block
+    // The number of the last mined block
     int32 number = 1; 
 }
 
@@ -336,7 +336,7 @@ message GetTransaction {
 }
 // Response
 message GetTransactionResponse {
-    /// The bytes of the body encode a {Transaction} model
+    // The bytes of the body encode a {Transaction} model
     bytes body = 1;
 }
 
@@ -346,6 +346,6 @@ message WaitTransaction {
 }
 // Response
 message WaitTransactionResponse {
-    /// Returns after waiting for 15 seconds
+    // Returns after waiting for 15 seconds
     bool mined = 1;
 }

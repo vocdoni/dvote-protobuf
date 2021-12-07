@@ -1,4 +1,4 @@
-/// Type: Protocol layer definitions
+// Type: Protocol layer definitions
 
 syntax = "proto3";
 package dvote.types.v2;

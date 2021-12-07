@@ -1,4 +1,4 @@
-/// Type: Protocol layer definitions
+// Type: Protocol layer definitions
 
 syntax = "proto3";
 package dvote.types.v2;
@@ -9,12 +9,12 @@ option go_package = "go.vocdoni.io/proto/build/go/models/v2";
 // Census models
 ///////////////////////////////////////////////////////////////////////////////
 
-/// The models below affect the whole election definition.
+// The models below affect the whole election definition.
 message Census {
 	oneof body {
 		CensusNone none = 1;
         
-        /// Always weighted
+        // Always weighted
 		CensusArbo arbo = 11;
 		CensusCsp csp = 12;
 
@@ -36,28 +36,43 @@ message CensusArbo {
 message CensusCsp {
 	string cspUri = 1;
 	bytes cspPublicKey = 2;
-    /// Whether a plain or blind signature is expected as a proof
+    // Whether a plain or blind signature is expected as a proof
 	bool blind = 3;
 }
 message CensusErc20 {
 	bytes tokenAddress = 1;
 	int32 balanceMapSlot = 2;
+	StorageProofErc20 proof = 3;
+	// Ethereum block at which the state root is taken
+	int32 sourceEthereumBlock = 4;
 }
 message CensusErc721 {
 	// bytes tokenAddress = 1;
 	// int32 balanceMapSlot = 2;
+	// StorageProofErc721 proof = 3;
+	// Ethereum block at which the state root is taken
+	// int32 sourceEthereumBlock = 4;
 }
 message CensusErc1155 {
 	// bytes tokenAddress = 1;
 	// int32 balanceMapSlot = 2;
+	// StorageProofErc1155 proof = 3;
+	// Ethereum block at which the state root is taken
+	// int32 sourceEthereumBlock = 4;
 }
 message CensusErc777 {
 	// bytes tokenAddress = 1;
 	// int32 balanceMapSlot = 2;
+	// StorageProofErc777 proof = 3;
+	// Ethereum block at which the state root is taken
+	// int32 sourceEthereumBlock = 4;
 }
 message CensusErcMiniMe {
 	bytes tokenAddress = 1;
 	int32 balanceMapSlot = 2;
+	StorageProofMiniMe proof = 3;
+	// Ethereum block at which the state root is taken
+	int32 sourceEthereumBlock = 4;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +84,7 @@ message Proof {
         // SIGNED PROOFS
 		ProofNone none = 1;
 
-        /// Always weighted
+        // Always weighted
 		ProofArbo arbo = 11;
 		ProofCSP csp = 12;
 
@@ -106,7 +121,7 @@ message StorageProofErc777 {}
 message StorageProofMiniMe {}
 
 
-/// Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
+// Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
 message ProofZkSnark {
 	oneof body {
 		Poseidon1kCensus proof1k = 1;

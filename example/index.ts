@@ -6,6 +6,7 @@
 import { createOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
 import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus } from "./sections/census"
+import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection } from "./sections/election"
 
 function main() {
     // Transacations
@@ -22,12 +23,15 @@ function main() {
     publishCensus()
 
     // Transactions
-    // createSimpleElection()
-    // createBlindElection()
-    // createErc20Election()
-    // createDualCensusElection()
-    // createAnonymousElection()
-    // createDualAnonymousElection()
+    createSimpleElection()
+    createCspElection()   // Credential Service Provider based (non-anonymous)
+    createCspBlindElection()   // Credential Service Provider based (anonymous)
+    createErc20Election()
+    createMiniMeElection()
+    createDualCensusElection()
+    createAnonymousElection()
+    createAnonymousPreregisterElection()
+    createNonRealTimeResultsElection()
 
     // createStepByStepElection()
     // setElectionState()
@@ -44,7 +48,7 @@ function main() {
 
     // Computations
     // encodeBallot()
-    
+
     // Transactions
     // submitVote()
 
