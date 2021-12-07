@@ -246,11 +246,12 @@ message PublishCensusResponse {
 
 // Request
 message GetCensusProof {
-    string censusId = 1;
-
     /// Defines the kind of census proof to receive back
-    /// Mostly:  ProofArbo, StorageProofERC20
-    Census type = 2;
+    /// Mostly:  CensusArbo, StorageProofErc20
+    Census census = 1;
+
+    bytes key = 2;
+    // bytes value = 3;
 }
 // Response
 message GetCensusProofResponse {

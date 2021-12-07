@@ -4,7 +4,7 @@
 // No real functionality is being executed here.
 
 import { NewCensus, NewCensusResponse, AddCensusKeys, AddCensusKeysResponse, AddCensusKeys_CensusEntry, GetCensusRoot, GetCensusRootResponse, GetCensusSize, GetCensusSizeResponse, PublishCensus, PublishCensusResponse, GetCensusProof, GetCensusProofResponse } from "../../build/ts/protocol/service"
-import { } from "../../build/ts/protocol/census"
+import { Census, Proof } from "../../build/ts/protocol/census"
 import { Request } from "../../build/ts/protocol/messages"
 import { encodeRequest, decodeRequest, encodeResponseSuccess, decodeResponse, encodeResponseError } from "../common/messages"
 import { CensusType } from "../../build/ts/protocol/enums"
@@ -183,6 +183,90 @@ export function publishCensus() {
     console.log("Census 0x1234 published at", ipfsUri)
 }
 
+export function getArboProof() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetCensusProof (Arbo) request")
+
+    // By indicating CensusArbo, we are telling the CS that we want a proof for this census
+    const targetCensus = Census.fromPartial({
+        body: {
+            $case: "arbo",
+            arbo: {
+                censusRoot: new Uint8Array([0, 1, 2, 3, 4, 5]), // censusId
+                censusUri: "ipfs://1234..."
+            }
+        }
+    })
+    const requestData = GetCensusProof.fromPartial({
+        census: targetCensus,
+        key: dummyPublicKey
+    })
+    const request = Request.fromPartial({
+        body: {
+            $case: "getCensusProof",
+            getCensusProof: requestData
+        }
+    })
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyRemoteRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetCensusProof` call, we expect now to receive a `GetCensusProofResponse`
+    const responseData = GetCensusProofResponse.decode(Reader.create(response.body))
+    const { proof } = responseData
+
+    console.log("Census proof:", proof)
+}
+
+export function getErc20Proof() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetCensusProof (ERC20) request")
+
+    // By indicating CensusErc20, we are telling the CS that we want a proof for this census
+    const targetCensus = Census.fromPartial({
+        body: {
+            $case: "erc20",
+            erc20: {
+                balanceMapSlot: 2,
+                tokenAddress: new Uint8Array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200])
+            }
+        }
+    })
+    const requestData = GetCensusProof.fromPartial({
+        census: targetCensus,
+        key: dummyPublicKey
+    })
+    const request = Request.fromPartial({
+        body: {
+            $case: "getCensusProof",
+            getCensusProof: requestData
+        }
+    })
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyRemoteRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetCensusProof` call, we expect now to receive a `GetCensusProofResponse`
+    const responseData = GetCensusProofResponse.decode(Reader.create(response.body))
+    const { proof } = responseData
+
+    console.log("Census proof:", proof)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Simulated Census Service responses
 ///////////////////////////////////////////////////////////////////////////////
@@ -212,6 +296,15 @@ function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
 
         case "publishCensus":
             msgBytes = simulatePublishCensus(request.body.publishCensus, requestId)
+            break
+
+        case "getCensusProof":
+            try {
+                msgBytes = simulateGetCensusProof(request.body.getCensusProof, requestId)
+            }
+            catch (err) {
+                msgBytes = encodeResponseError(err.message, null, requestId, dummySigningKey)
+            }
             break
 
         default:
@@ -280,6 +373,44 @@ function simulatePublishCensus(request: PublishCensus, requestId: Uint8Array) {
     }).finish()
 
     return encodeResponseSuccess(publishCensusResponseBytes, requestId, dummySigningKey)
+}
+
+function simulateGetCensusProof(request: GetCensusProof, requestId: Uint8Array) {
+    const { census, key } = request
+    console.log(pad + "Get census proof for type", census.body.$case)
+
+    let getCensusProofResponseBytes: Uint8Array
+
+    switch (census.body.$case) {
+        case "arbo":
+            const arboProof = Proof.fromPartial({
+                body: {
+                    $case: "arbo",
+                    arbo: {
+                        siblings: [new Uint8Array([1, 2, 3]), new Uint8Array([4, 5, 6]), new Uint8Array([7, 8, 9])]
+                    }
+                }
+            })
+            getCensusProofResponseBytes = GetCensusProofResponse.encode({ proof: arboProof }).finish()
+            break
+        case "erc20":
+            const erc20Proof = Proof.fromPartial({
+                body: {
+                    $case: "erc20",
+                    erc20: {
+                        key,
+                        value: new Uint8Array([1, 0, 0, 0, 0]),
+                        proof: [new Uint8Array([10, 20, 30]), new Uint8Array([40, 50, 60]), new Uint8Array([70, 80, 90])]
+                    }
+                }
+            })
+            getCensusProofResponseBytes = GetCensusProofResponse.encode({ proof: erc20Proof }).finish()
+            break
+        default:
+            throw new Error("Type of census not supported")
+    }
+
+    return encodeResponseSuccess(getCensusProofResponseBytes, requestId, dummySigningKey)
 }
 
 

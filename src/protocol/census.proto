@@ -73,11 +73,11 @@ message Proof {
 		ProofArbo arbo = 11;
 		ProofCSP csp = 12;
 
-		StorageProofERC20 proofERC20 = 21;
-		StorageProofERC721 proofERC721 = 22;
-		StorageProofERC1155 proofERC1155 = 23;
-		StorageProofERC777 proofERC777 = 24;
-		StorageProofMiniMe proofMiniMe = 30;
+		StorageProofErc20 erc20 = 21;
+		StorageProofErc721 erc721 = 22;
+		StorageProofErc1155 erc1155 = 23;
+		StorageProofErc777 erc777 = 24;
+		StorageProofMiniMe miniMe = 30;
 
         // ANONYMOUS PROOFS
 		ProofZkSnark zkSnark = 100;
@@ -95,14 +95,14 @@ message ProofCSP {
 	bytes signature = 2;
 }
 
-message StorageProofERC20 {
+message StorageProofErc20 {
 	bytes key = 1;
 	bytes value = 2;
 	repeated bytes proof = 3;
 }
-message StorageProofERC721 {}
-message StorageProofERC1155 {}
-message StorageProofERC777 {}
+message StorageProofErc721 {}
+message StorageProofErc1155 {}
+message StorageProofErc777 {}
 message StorageProofMiniMe {}
 
 

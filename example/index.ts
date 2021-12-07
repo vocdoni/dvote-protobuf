@@ -5,7 +5,7 @@
 
 import { createOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
-import { addCensusKeys, getCensusRoot, getCensusSize, newCensus, publishCensus } from "./sections/census"
+import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus } from "./sections/census"
 
 function main() {
     // Transacations
@@ -20,14 +20,38 @@ function main() {
     getCensusRoot()
     getCensusSize()
     publishCensus()
-    // createElection()
-    // getCensusProof()
-    // encodeBallot()
-    // submitVote()
-    // getResults()
 
-    // serviceRequests()
-    // vochainTransactions()
+    // Transactions
+    // createSimpleElection()
+    // createBlindElection()
+    // createErc20Election()
+    // createDualCensusElection()
+    // createAnonymousElection()
+    // createDualAnonymousElection()
+
+    // createStepByStepElection()
+    // setElectionState()
+    // setProposalsState()
+
+    // registerVoterKey()
+
+    // Requests
+    // getOrganization()
+    // getElection()
+    // getElectionKeys()
+    getArboProof()
+    getErc20Proof()
+
+    // Computations
+    // encodeBallot()
+    
+    // Transactions
+    // submitVote()
+
+    // Requests
+    // getResults()
+    // getResultsWeight()
+    // networkRequests()
 }
 
 main()
