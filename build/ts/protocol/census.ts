@@ -4,7 +4,7 @@ import * as Long from "long";
 
 export const protobufPackage = "dvote.types.v2";
 
-/** / The models below affect the whole election definition. */
+/** The models below affect the whole election definition. */
 export interface Census {
   body?:
     | { $case: "none"; none: CensusNone }
@@ -27,36 +27,51 @@ export interface CensusArbo {
 export interface CensusCsp {
   cspUri: string;
   cspPublicKey: Uint8Array;
-  /** / Whether a plain or blind signature is expected as a proof */
+  /** Whether a plain or blind signature is expected as a proof */
   blind: boolean;
 }
 
 export interface CensusErc20 {
   tokenAddress: Uint8Array;
   balanceMapSlot: number;
+  proof: StorageProofErc20 | undefined;
+  /** Ethereum block at which the state root is taken */
+  sourceEthereumBlock: number;
 }
 
 /**
  * bytes tokenAddress = 1;
  * int32 balanceMapSlot = 2;
+ * StorageProofErc721 proof = 3;
+ * Ethereum block at which the state root is taken
+ * int32 sourceEthereumBlock = 4;
  */
 export interface CensusErc721 {}
 
 /**
  * bytes tokenAddress = 1;
  * int32 balanceMapSlot = 2;
+ * StorageProofErc1155 proof = 3;
+ * Ethereum block at which the state root is taken
+ * int32 sourceEthereumBlock = 4;
  */
 export interface CensusErc1155 {}
 
 /**
  * bytes tokenAddress = 1;
  * int32 balanceMapSlot = 2;
+ * StorageProofErc777 proof = 3;
+ * Ethereum block at which the state root is taken
+ * int32 sourceEthereumBlock = 4;
  */
 export interface CensusErc777 {}
 
 export interface CensusErcMiniMe {
   tokenAddress: Uint8Array;
   balanceMapSlot: number;
+  proof: StorageProofMiniMe | undefined;
+  /** Ethereum block at which the state root is taken */
+  sourceEthereumBlock: number;
 }
 
 export interface Proof {
@@ -64,11 +79,11 @@ export interface Proof {
     | { $case: "none"; none: ProofNone }
     | { $case: "arbo"; arbo: ProofArbo }
     | { $case: "csp"; csp: ProofCSP }
-    | { $case: "proofERC20"; proofERC20: StorageProofERC20 }
-    | { $case: "proofERC721"; proofERC721: StorageProofERC721 }
-    | { $case: "proofERC1155"; proofERC1155: StorageProofERC1155 }
-    | { $case: "proofERC777"; proofERC777: StorageProofERC777 }
-    | { $case: "proofMiniMe"; proofMiniMe: StorageProofMiniMe }
+    | { $case: "erc20"; erc20: StorageProofErc20 }
+    | { $case: "erc721"; erc721: StorageProofErc721 }
+    | { $case: "erc1155"; erc1155: StorageProofErc1155 }
+    | { $case: "erc777"; erc777: StorageProofErc777 }
+    | { $case: "miniMe"; miniMe: StorageProofMiniMe }
     | { $case: "zkSnark"; zkSnark: ProofZkSnark };
 }
 
@@ -84,21 +99,21 @@ export interface ProofCSP {
   signature: Uint8Array;
 }
 
-export interface StorageProofERC20 {
+export interface StorageProofErc20 {
   key: Uint8Array;
   value: Uint8Array;
   proof: Uint8Array[];
 }
 
-export interface StorageProofERC721 {}
+export interface StorageProofErc721 {}
 
-export interface StorageProofERC1155 {}
+export interface StorageProofErc1155 {}
 
-export interface StorageProofERC777 {}
+export interface StorageProofErc777 {}
 
 export interface StorageProofMiniMe {}
 
-/** / Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER` */
+/** Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER` */
 export interface ProofZkSnark {
   body?:
     | { $case: "proof1k"; proof1k: ProofZkSnark_Poseidon1kCensus }
@@ -579,7 +594,7 @@ export const CensusCsp = {
   },
 };
 
-const baseCensusErc20: object = { balanceMapSlot: 0 };
+const baseCensusErc20: object = { balanceMapSlot: 0, sourceEthereumBlock: 0 };
 
 export const CensusErc20 = {
   encode(message: CensusErc20, writer: Writer = Writer.create()): Writer {
@@ -588,6 +603,15 @@ export const CensusErc20 = {
     }
     if (message.balanceMapSlot !== 0) {
       writer.uint32(16).int32(message.balanceMapSlot);
+    }
+    if (message.proof !== undefined) {
+      StorageProofErc20.encode(
+        message.proof,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.sourceEthereumBlock !== 0) {
+      writer.uint32(32).int32(message.sourceEthereumBlock);
     }
     return writer;
   },
@@ -605,6 +629,12 @@ export const CensusErc20 = {
           break;
         case 2:
           message.balanceMapSlot = reader.int32();
+          break;
+        case 3:
+          message.proof = StorageProofErc20.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.sourceEthereumBlock = reader.int32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -624,6 +654,15 @@ export const CensusErc20 = {
       object.balanceMapSlot !== undefined && object.balanceMapSlot !== null
         ? Number(object.balanceMapSlot)
         : 0;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? StorageProofErc20.fromJSON(object.proof)
+        : undefined;
+    message.sourceEthereumBlock =
+      object.sourceEthereumBlock !== undefined &&
+      object.sourceEthereumBlock !== null
+        ? Number(object.sourceEthereumBlock)
+        : 0;
     return message;
   },
 
@@ -637,6 +676,12 @@ export const CensusErc20 = {
       ));
     message.balanceMapSlot !== undefined &&
       (obj.balanceMapSlot = message.balanceMapSlot);
+    message.proof !== undefined &&
+      (obj.proof = message.proof
+        ? StorageProofErc20.toJSON(message.proof)
+        : undefined);
+    message.sourceEthereumBlock !== undefined &&
+      (obj.sourceEthereumBlock = message.sourceEthereumBlock);
     return obj;
   },
 
@@ -646,6 +691,11 @@ export const CensusErc20 = {
     const message = { ...baseCensusErc20 } as CensusErc20;
     message.tokenAddress = object.tokenAddress ?? new Uint8Array();
     message.balanceMapSlot = object.balanceMapSlot ?? 0;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? StorageProofErc20.fromPartial(object.proof)
+        : undefined;
+    message.sourceEthereumBlock = object.sourceEthereumBlock ?? 0;
     return message;
   },
 };
@@ -770,7 +820,10 @@ export const CensusErc777 = {
   },
 };
 
-const baseCensusErcMiniMe: object = { balanceMapSlot: 0 };
+const baseCensusErcMiniMe: object = {
+  balanceMapSlot: 0,
+  sourceEthereumBlock: 0,
+};
 
 export const CensusErcMiniMe = {
   encode(message: CensusErcMiniMe, writer: Writer = Writer.create()): Writer {
@@ -779,6 +832,15 @@ export const CensusErcMiniMe = {
     }
     if (message.balanceMapSlot !== 0) {
       writer.uint32(16).int32(message.balanceMapSlot);
+    }
+    if (message.proof !== undefined) {
+      StorageProofMiniMe.encode(
+        message.proof,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.sourceEthereumBlock !== 0) {
+      writer.uint32(32).int32(message.sourceEthereumBlock);
     }
     return writer;
   },
@@ -796,6 +858,12 @@ export const CensusErcMiniMe = {
           break;
         case 2:
           message.balanceMapSlot = reader.int32();
+          break;
+        case 3:
+          message.proof = StorageProofMiniMe.decode(reader, reader.uint32());
+          break;
+        case 4:
+          message.sourceEthereumBlock = reader.int32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -815,6 +883,15 @@ export const CensusErcMiniMe = {
       object.balanceMapSlot !== undefined && object.balanceMapSlot !== null
         ? Number(object.balanceMapSlot)
         : 0;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? StorageProofMiniMe.fromJSON(object.proof)
+        : undefined;
+    message.sourceEthereumBlock =
+      object.sourceEthereumBlock !== undefined &&
+      object.sourceEthereumBlock !== null
+        ? Number(object.sourceEthereumBlock)
+        : 0;
     return message;
   },
 
@@ -828,6 +905,12 @@ export const CensusErcMiniMe = {
       ));
     message.balanceMapSlot !== undefined &&
       (obj.balanceMapSlot = message.balanceMapSlot);
+    message.proof !== undefined &&
+      (obj.proof = message.proof
+        ? StorageProofMiniMe.toJSON(message.proof)
+        : undefined);
+    message.sourceEthereumBlock !== undefined &&
+      (obj.sourceEthereumBlock = message.sourceEthereumBlock);
     return obj;
   },
 
@@ -837,6 +920,11 @@ export const CensusErcMiniMe = {
     const message = { ...baseCensusErcMiniMe } as CensusErcMiniMe;
     message.tokenAddress = object.tokenAddress ?? new Uint8Array();
     message.balanceMapSlot = object.balanceMapSlot ?? 0;
+    message.proof =
+      object.proof !== undefined && object.proof !== null
+        ? StorageProofMiniMe.fromPartial(object.proof)
+        : undefined;
+    message.sourceEthereumBlock = object.sourceEthereumBlock ?? 0;
     return message;
   },
 };
@@ -854,33 +942,33 @@ export const Proof = {
     if (message.body?.$case === "csp") {
       ProofCSP.encode(message.body.csp, writer.uint32(98).fork()).ldelim();
     }
-    if (message.body?.$case === "proofERC20") {
-      StorageProofERC20.encode(
-        message.body.proofERC20,
+    if (message.body?.$case === "erc20") {
+      StorageProofErc20.encode(
+        message.body.erc20,
         writer.uint32(170).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "proofERC721") {
-      StorageProofERC721.encode(
-        message.body.proofERC721,
+    if (message.body?.$case === "erc721") {
+      StorageProofErc721.encode(
+        message.body.erc721,
         writer.uint32(178).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "proofERC1155") {
-      StorageProofERC1155.encode(
-        message.body.proofERC1155,
+    if (message.body?.$case === "erc1155") {
+      StorageProofErc1155.encode(
+        message.body.erc1155,
         writer.uint32(186).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "proofERC777") {
-      StorageProofERC777.encode(
-        message.body.proofERC777,
+    if (message.body?.$case === "erc777") {
+      StorageProofErc777.encode(
+        message.body.erc777,
         writer.uint32(194).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "proofMiniMe") {
+    if (message.body?.$case === "miniMe") {
       StorageProofMiniMe.encode(
-        message.body.proofMiniMe,
+        message.body.miniMe,
         writer.uint32(242).fork()
       ).ldelim();
     }
@@ -920,32 +1008,32 @@ export const Proof = {
           break;
         case 21:
           message.body = {
-            $case: "proofERC20",
-            proofERC20: StorageProofERC20.decode(reader, reader.uint32()),
+            $case: "erc20",
+            erc20: StorageProofErc20.decode(reader, reader.uint32()),
           };
           break;
         case 22:
           message.body = {
-            $case: "proofERC721",
-            proofERC721: StorageProofERC721.decode(reader, reader.uint32()),
+            $case: "erc721",
+            erc721: StorageProofErc721.decode(reader, reader.uint32()),
           };
           break;
         case 23:
           message.body = {
-            $case: "proofERC1155",
-            proofERC1155: StorageProofERC1155.decode(reader, reader.uint32()),
+            $case: "erc1155",
+            erc1155: StorageProofErc1155.decode(reader, reader.uint32()),
           };
           break;
         case 24:
           message.body = {
-            $case: "proofERC777",
-            proofERC777: StorageProofERC777.decode(reader, reader.uint32()),
+            $case: "erc777",
+            erc777: StorageProofErc777.decode(reader, reader.uint32()),
           };
           break;
         case 30:
           message.body = {
-            $case: "proofMiniMe",
-            proofMiniMe: StorageProofMiniMe.decode(reader, reader.uint32()),
+            $case: "miniMe",
+            miniMe: StorageProofMiniMe.decode(reader, reader.uint32()),
           };
           break;
         case 100:
@@ -973,34 +1061,34 @@ export const Proof = {
     if (object.csp !== undefined && object.csp !== null) {
       message.body = { $case: "csp", csp: ProofCSP.fromJSON(object.csp) };
     }
-    if (object.proofERC20 !== undefined && object.proofERC20 !== null) {
+    if (object.erc20 !== undefined && object.erc20 !== null) {
       message.body = {
-        $case: "proofERC20",
-        proofERC20: StorageProofERC20.fromJSON(object.proofERC20),
+        $case: "erc20",
+        erc20: StorageProofErc20.fromJSON(object.erc20),
       };
     }
-    if (object.proofERC721 !== undefined && object.proofERC721 !== null) {
+    if (object.erc721 !== undefined && object.erc721 !== null) {
       message.body = {
-        $case: "proofERC721",
-        proofERC721: StorageProofERC721.fromJSON(object.proofERC721),
+        $case: "erc721",
+        erc721: StorageProofErc721.fromJSON(object.erc721),
       };
     }
-    if (object.proofERC1155 !== undefined && object.proofERC1155 !== null) {
+    if (object.erc1155 !== undefined && object.erc1155 !== null) {
       message.body = {
-        $case: "proofERC1155",
-        proofERC1155: StorageProofERC1155.fromJSON(object.proofERC1155),
+        $case: "erc1155",
+        erc1155: StorageProofErc1155.fromJSON(object.erc1155),
       };
     }
-    if (object.proofERC777 !== undefined && object.proofERC777 !== null) {
+    if (object.erc777 !== undefined && object.erc777 !== null) {
       message.body = {
-        $case: "proofERC777",
-        proofERC777: StorageProofERC777.fromJSON(object.proofERC777),
+        $case: "erc777",
+        erc777: StorageProofErc777.fromJSON(object.erc777),
       };
     }
-    if (object.proofMiniMe !== undefined && object.proofMiniMe !== null) {
+    if (object.miniMe !== undefined && object.miniMe !== null) {
       message.body = {
-        $case: "proofMiniMe",
-        proofMiniMe: StorageProofMiniMe.fromJSON(object.proofMiniMe),
+        $case: "miniMe",
+        miniMe: StorageProofMiniMe.fromJSON(object.miniMe),
       };
     }
     if (object.zkSnark !== undefined && object.zkSnark !== null) {
@@ -1026,25 +1114,25 @@ export const Proof = {
       (obj.csp = message.body?.csp
         ? ProofCSP.toJSON(message.body?.csp)
         : undefined);
-    message.body?.$case === "proofERC20" &&
-      (obj.proofERC20 = message.body?.proofERC20
-        ? StorageProofERC20.toJSON(message.body?.proofERC20)
+    message.body?.$case === "erc20" &&
+      (obj.erc20 = message.body?.erc20
+        ? StorageProofErc20.toJSON(message.body?.erc20)
         : undefined);
-    message.body?.$case === "proofERC721" &&
-      (obj.proofERC721 = message.body?.proofERC721
-        ? StorageProofERC721.toJSON(message.body?.proofERC721)
+    message.body?.$case === "erc721" &&
+      (obj.erc721 = message.body?.erc721
+        ? StorageProofErc721.toJSON(message.body?.erc721)
         : undefined);
-    message.body?.$case === "proofERC1155" &&
-      (obj.proofERC1155 = message.body?.proofERC1155
-        ? StorageProofERC1155.toJSON(message.body?.proofERC1155)
+    message.body?.$case === "erc1155" &&
+      (obj.erc1155 = message.body?.erc1155
+        ? StorageProofErc1155.toJSON(message.body?.erc1155)
         : undefined);
-    message.body?.$case === "proofERC777" &&
-      (obj.proofERC777 = message.body?.proofERC777
-        ? StorageProofERC777.toJSON(message.body?.proofERC777)
+    message.body?.$case === "erc777" &&
+      (obj.erc777 = message.body?.erc777
+        ? StorageProofErc777.toJSON(message.body?.erc777)
         : undefined);
-    message.body?.$case === "proofMiniMe" &&
-      (obj.proofMiniMe = message.body?.proofMiniMe
-        ? StorageProofMiniMe.toJSON(message.body?.proofMiniMe)
+    message.body?.$case === "miniMe" &&
+      (obj.miniMe = message.body?.miniMe
+        ? StorageProofMiniMe.toJSON(message.body?.miniMe)
         : undefined);
     message.body?.$case === "zkSnark" &&
       (obj.zkSnark = message.body?.zkSnark
@@ -1086,53 +1174,53 @@ export const Proof = {
       };
     }
     if (
-      object.body?.$case === "proofERC20" &&
-      object.body?.proofERC20 !== undefined &&
-      object.body?.proofERC20 !== null
+      object.body?.$case === "erc20" &&
+      object.body?.erc20 !== undefined &&
+      object.body?.erc20 !== null
     ) {
       message.body = {
-        $case: "proofERC20",
-        proofERC20: StorageProofERC20.fromPartial(object.body.proofERC20),
+        $case: "erc20",
+        erc20: StorageProofErc20.fromPartial(object.body.erc20),
       };
     }
     if (
-      object.body?.$case === "proofERC721" &&
-      object.body?.proofERC721 !== undefined &&
-      object.body?.proofERC721 !== null
+      object.body?.$case === "erc721" &&
+      object.body?.erc721 !== undefined &&
+      object.body?.erc721 !== null
     ) {
       message.body = {
-        $case: "proofERC721",
-        proofERC721: StorageProofERC721.fromPartial(object.body.proofERC721),
+        $case: "erc721",
+        erc721: StorageProofErc721.fromPartial(object.body.erc721),
       };
     }
     if (
-      object.body?.$case === "proofERC1155" &&
-      object.body?.proofERC1155 !== undefined &&
-      object.body?.proofERC1155 !== null
+      object.body?.$case === "erc1155" &&
+      object.body?.erc1155 !== undefined &&
+      object.body?.erc1155 !== null
     ) {
       message.body = {
-        $case: "proofERC1155",
-        proofERC1155: StorageProofERC1155.fromPartial(object.body.proofERC1155),
+        $case: "erc1155",
+        erc1155: StorageProofErc1155.fromPartial(object.body.erc1155),
       };
     }
     if (
-      object.body?.$case === "proofERC777" &&
-      object.body?.proofERC777 !== undefined &&
-      object.body?.proofERC777 !== null
+      object.body?.$case === "erc777" &&
+      object.body?.erc777 !== undefined &&
+      object.body?.erc777 !== null
     ) {
       message.body = {
-        $case: "proofERC777",
-        proofERC777: StorageProofERC777.fromPartial(object.body.proofERC777),
+        $case: "erc777",
+        erc777: StorageProofErc777.fromPartial(object.body.erc777),
       };
     }
     if (
-      object.body?.$case === "proofMiniMe" &&
-      object.body?.proofMiniMe !== undefined &&
-      object.body?.proofMiniMe !== null
+      object.body?.$case === "miniMe" &&
+      object.body?.miniMe !== undefined &&
+      object.body?.miniMe !== null
     ) {
       message.body = {
-        $case: "proofMiniMe",
-        proofMiniMe: StorageProofMiniMe.fromPartial(object.body.proofMiniMe),
+        $case: "miniMe",
+        miniMe: StorageProofMiniMe.fromPartial(object.body.miniMe),
       };
     }
     if (
@@ -1315,10 +1403,10 @@ export const ProofCSP = {
   },
 };
 
-const baseStorageProofERC20: object = {};
+const baseStorageProofErc20: object = {};
 
-export const StorageProofERC20 = {
-  encode(message: StorageProofERC20, writer: Writer = Writer.create()): Writer {
+export const StorageProofErc20 = {
+  encode(message: StorageProofErc20, writer: Writer = Writer.create()): Writer {
     if (message.key.length !== 0) {
       writer.uint32(10).bytes(message.key);
     }
@@ -1331,10 +1419,10 @@ export const StorageProofERC20 = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): StorageProofERC20 {
+  decode(input: Reader | Uint8Array, length?: number): StorageProofErc20 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofERC20 } as StorageProofERC20;
+    const message = { ...baseStorageProofErc20 } as StorageProofErc20;
     message.proof = [];
     message.key = new Uint8Array();
     message.value = new Uint8Array();
@@ -1358,8 +1446,8 @@ export const StorageProofERC20 = {
     return message;
   },
 
-  fromJSON(object: any): StorageProofERC20 {
-    const message = { ...baseStorageProofERC20 } as StorageProofERC20;
+  fromJSON(object: any): StorageProofErc20 {
+    const message = { ...baseStorageProofErc20 } as StorageProofErc20;
     message.key =
       object.key !== undefined && object.key !== null
         ? bytesFromBase64(object.key)
@@ -1372,7 +1460,7 @@ export const StorageProofERC20 = {
     return message;
   },
 
-  toJSON(message: StorageProofERC20): unknown {
+  toJSON(message: StorageProofErc20): unknown {
     const obj: any = {};
     message.key !== undefined &&
       (obj.key = base64FromBytes(
@@ -1392,10 +1480,10 @@ export const StorageProofERC20 = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<StorageProofERC20>, I>>(
+  fromPartial<I extends Exact<DeepPartial<StorageProofErc20>, I>>(
     object: I
-  ): StorageProofERC20 {
-    const message = { ...baseStorageProofERC20 } as StorageProofERC20;
+  ): StorageProofErc20 {
+    const message = { ...baseStorageProofErc20 } as StorageProofErc20;
     message.key = object.key ?? new Uint8Array();
     message.value = object.value ?? new Uint8Array();
     message.proof = object.proof?.map((e) => e) || [];
@@ -1403,17 +1491,17 @@ export const StorageProofERC20 = {
   },
 };
 
-const baseStorageProofERC721: object = {};
+const baseStorageProofErc721: object = {};
 
-export const StorageProofERC721 = {
-  encode(_: StorageProofERC721, writer: Writer = Writer.create()): Writer {
+export const StorageProofErc721 = {
+  encode(_: StorageProofErc721, writer: Writer = Writer.create()): Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): StorageProofERC721 {
+  decode(input: Reader | Uint8Array, length?: number): StorageProofErc721 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofERC721 } as StorageProofERC721;
+    const message = { ...baseStorageProofErc721 } as StorageProofErc721;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1425,35 +1513,35 @@ export const StorageProofERC721 = {
     return message;
   },
 
-  fromJSON(_: any): StorageProofERC721 {
-    const message = { ...baseStorageProofERC721 } as StorageProofERC721;
+  fromJSON(_: any): StorageProofErc721 {
+    const message = { ...baseStorageProofErc721 } as StorageProofErc721;
     return message;
   },
 
-  toJSON(_: StorageProofERC721): unknown {
+  toJSON(_: StorageProofErc721): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<StorageProofERC721>, I>>(
+  fromPartial<I extends Exact<DeepPartial<StorageProofErc721>, I>>(
     _: I
-  ): StorageProofERC721 {
-    const message = { ...baseStorageProofERC721 } as StorageProofERC721;
+  ): StorageProofErc721 {
+    const message = { ...baseStorageProofErc721 } as StorageProofErc721;
     return message;
   },
 };
 
-const baseStorageProofERC1155: object = {};
+const baseStorageProofErc1155: object = {};
 
-export const StorageProofERC1155 = {
-  encode(_: StorageProofERC1155, writer: Writer = Writer.create()): Writer {
+export const StorageProofErc1155 = {
+  encode(_: StorageProofErc1155, writer: Writer = Writer.create()): Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): StorageProofERC1155 {
+  decode(input: Reader | Uint8Array, length?: number): StorageProofErc1155 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofERC1155 } as StorageProofERC1155;
+    const message = { ...baseStorageProofErc1155 } as StorageProofErc1155;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1465,35 +1553,35 @@ export const StorageProofERC1155 = {
     return message;
   },
 
-  fromJSON(_: any): StorageProofERC1155 {
-    const message = { ...baseStorageProofERC1155 } as StorageProofERC1155;
+  fromJSON(_: any): StorageProofErc1155 {
+    const message = { ...baseStorageProofErc1155 } as StorageProofErc1155;
     return message;
   },
 
-  toJSON(_: StorageProofERC1155): unknown {
+  toJSON(_: StorageProofErc1155): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<StorageProofERC1155>, I>>(
+  fromPartial<I extends Exact<DeepPartial<StorageProofErc1155>, I>>(
     _: I
-  ): StorageProofERC1155 {
-    const message = { ...baseStorageProofERC1155 } as StorageProofERC1155;
+  ): StorageProofErc1155 {
+    const message = { ...baseStorageProofErc1155 } as StorageProofErc1155;
     return message;
   },
 };
 
-const baseStorageProofERC777: object = {};
+const baseStorageProofErc777: object = {};
 
-export const StorageProofERC777 = {
-  encode(_: StorageProofERC777, writer: Writer = Writer.create()): Writer {
+export const StorageProofErc777 = {
+  encode(_: StorageProofErc777, writer: Writer = Writer.create()): Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): StorageProofERC777 {
+  decode(input: Reader | Uint8Array, length?: number): StorageProofErc777 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofERC777 } as StorageProofERC777;
+    const message = { ...baseStorageProofErc777 } as StorageProofErc777;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1505,20 +1593,20 @@ export const StorageProofERC777 = {
     return message;
   },
 
-  fromJSON(_: any): StorageProofERC777 {
-    const message = { ...baseStorageProofERC777 } as StorageProofERC777;
+  fromJSON(_: any): StorageProofErc777 {
+    const message = { ...baseStorageProofErc777 } as StorageProofErc777;
     return message;
   },
 
-  toJSON(_: StorageProofERC777): unknown {
+  toJSON(_: StorageProofErc777): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<StorageProofERC777>, I>>(
+  fromPartial<I extends Exact<DeepPartial<StorageProofErc777>, I>>(
     _: I
-  ): StorageProofERC777 {
-    const message = { ...baseStorageProofERC777 } as StorageProofERC777;
+  ): StorageProofErc777 {
+    const message = { ...baseStorageProofErc777 } as StorageProofErc777;
     return message;
   },
 };

@@ -32,18 +32,18 @@ class ProposalStatus extends $pb.ProtobufEnum {
   const ProposalStatus._($core.int v, $core.String n) : super(v, n);
 }
 
-class CensusOffchainType extends $pb.ProtobufEnum {
-  static const CensusOffchainType UNKNOWN_OFFCHAIN_CENSUS_TYPE = CensusOffchainType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN_OFFCHAIN_CENSUS_TYPE');
-  static const CensusOffchainType ARBO_BLAKE2B = CensusOffchainType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_BLAKE2B');
+class CensusType extends $pb.ProtobufEnum {
+  static const CensusType UNKNOWN_CENSUS_TYPE = CensusType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UNKNOWN_CENSUS_TYPE');
+  static const CensusType ARBO_BLAKE2B = CensusType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBO_BLAKE2B');
 
-  static const $core.List<CensusOffchainType> values = <CensusOffchainType> [
-    UNKNOWN_OFFCHAIN_CENSUS_TYPE,
+  static const $core.List<CensusType> values = <CensusType> [
+    UNKNOWN_CENSUS_TYPE,
     ARBO_BLAKE2B,
   ];
 
-  static final $core.Map<$core.int, CensusOffchainType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CensusOffchainType? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, CensusType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static CensusType? valueOf($core.int value) => _byValue[value];
 
-  const CensusOffchainType._($core.int v, $core.String n) : super(v, n);
+  const CensusType._($core.int v, $core.String n) : super(v, n);
 }
 

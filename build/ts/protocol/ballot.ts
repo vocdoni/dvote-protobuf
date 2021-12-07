@@ -15,24 +15,24 @@ export interface BallotBody {
   electionId: Uint8Array;
   nullifier: Uint8Array;
   /**
-   * / The proof(s), according to the Election census types defined
-   * / Or [ProofZkSnark] if anonymous
+   * The proof(s), according to the Election census types defined
+   * Or [ProofZkSnark] if anonymous
    */
   proofs: Proof[];
   votes: BallotBody_VoteList | undefined;
 }
 
 export interface BallotBody_VoteList {
-  /** / Submitting only only one vote? */
+  /** Submitting only only one vote? */
   partial: boolean;
   /**
-   * / [v1, v2, v3...] when partial == false
-   * / [v3] when partial == true
+   * [v1, v2, v3...] when partial == false
+   * [v3] when partial == true
    */
   votes: Vote[];
   /**
-   * / Index of the proposal being submitted.
-   * / Set to 0 when `partial = false` (ignored)
+   * Index of the proposal being submitted.
+   * Set to 0 when `partial = false` (ignored)
    */
   submittedIndex: number;
 }
@@ -92,43 +92,43 @@ export interface Vote {
 }
 
 export interface EncryptedVote {
-  /** / Encrypted bytes of {Vote}  (recursive) */
+  /** Encrypted bytes of {Vote}  (recursive) */
   payload: Uint8Array;
-  /** / Keys (in order) used to encrypt the payload */
+  /** Keys (in order) used to encrypt the payload */
   encryptionKeyIndexes: number[];
 }
 
 export interface ApprovalVote {
   approved: boolean;
-  /** / 16 random bytes */
+  /** 16 random bytes */
   nonce: Uint8Array;
 }
 
 export interface SingleChoiceVote {
-  /** / Index of the chosen option */
+  /** Index of the chosen option */
   choice: number;
-  /** / 16 random bytes */
+  /** 16 random bytes */
   nonce: Uint8Array;
 }
 
 export interface QuadraticVote {
-  /** / Points assigned to each choice index */
+  /** Points assigned to each choice index */
   choicePoints: number[];
-  /** / 16 random bytes */
+  /** 16 random bytes */
   nonce: Uint8Array;
 }
 
 export interface RankedVote {
-  /** / Ranking of the chosen indexes, by preference */
+  /** Ranking of the chosen indexes, by preference */
   ranking: number[];
-  /** / 16 random bytes */
+  /** 16 random bytes */
   nonce: Uint8Array;
 }
 
 export interface SpreadVote {
-  /** / Percent of weight assigned to each choice (from 0 to 100_00) */
+  /** Percent of weight assigned to each choice (from 0 to 100_00) */
   percentages: number[];
-  /** / 16 random bytes */
+  /** 16 random bytes */
   nonce: Uint8Array;
 }
 

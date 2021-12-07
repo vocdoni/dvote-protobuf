@@ -23,14 +23,14 @@ const ProposalStatus$json = const {
 
 /// Descriptor for `ProposalStatus`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List proposalStatusDescriptor = $convert.base64Decode('Cg5Qcm9wb3NhbFN0YXR1cxIbChdVTktOT1dOX1BST1BPU0FMX1NUQVRVUxAAEgkKBVJFQURZEAESCQoFRU5ERUQQAhIMCghDQU5DRUxFRBADEgoKBlBBVVNFRBAEEgsKB1JFU1VMVFMQBQ==');
-@$core.Deprecated('Use censusOffchainTypeDescriptor instead')
-const CensusOffchainType$json = const {
-  '1': 'CensusOffchainType',
+@$core.Deprecated('Use censusTypeDescriptor instead')
+const CensusType$json = const {
+  '1': 'CensusType',
   '2': const [
-    const {'1': 'UNKNOWN_OFFCHAIN_CENSUS_TYPE', '2': 0},
+    const {'1': 'UNKNOWN_CENSUS_TYPE', '2': 0},
     const {'1': 'ARBO_BLAKE2B', '2': 1},
   ],
 };
 
-/// Descriptor for `CensusOffchainType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List censusOffchainTypeDescriptor = $convert.base64Decode('ChJDZW5zdXNPZmZjaGFpblR5cGUSIAocVU5LTk9XTl9PRkZDSEFJTl9DRU5TVVNfVFlQRRAAEhAKDEFSQk9fQkxBS0UyQhAB');
+/// Descriptor for `CensusType`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List censusTypeDescriptor = $convert.base64Decode('CgpDZW5zdXNUeXBlEhcKE1VOS05PV05fQ0VOU1VTX1RZUEUQABIQCgxBUkJPX0JMQUtFMkIQAQ==');

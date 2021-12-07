@@ -2,12 +2,12 @@
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import * as Long from "long";
 import {
-  CensusOffchainType,
+  CensusType,
   ProposalStatus,
   proposalStatusFromJSON,
   proposalStatusToJSON,
-  censusOffchainTypeFromJSON,
-  censusOffchainTypeToJSON,
+  censusTypeFromJSON,
+  censusTypeToJSON,
 } from "../protocol/enums";
 import { Election } from "../protocol/election";
 import { Organization } from "../protocol/organization";
@@ -75,11 +75,11 @@ export interface GetElection {
 /** Response */
 export interface GetElectionResponse {
   organizationId: Uint8Array;
-  /** / The originally defined params */
+  /** The originally defined params */
   parameters: Election | undefined;
-  /** / The status of each individual proposal */
+  /** The status of each individual proposal */
   statuses: ProposalStatus[];
-  /** / How many ballots each proposal has */
+  /** How many ballots each proposal has */
   ballots: number[];
 }
 
@@ -121,7 +121,7 @@ export interface GetBallotResponse {
 /** Request */
 export interface GetElectionBallots {
   electionId: Uint8Array;
-  /** / Used to iterate the different envelopes by chunks */
+  /** Used to iterate the different envelopes by chunks */
   fromIndex: number;
 }
 
@@ -153,13 +153,13 @@ export interface GetElectionCircuitInfo {
 
 /** Response */
 export interface GetElectionCircuitInfoResponse {
-  /** / Circuit index */
+  /** Circuit index */
   index: number;
-  /** / The prefix of the URI to fetch the artifacts from */
+  /** The prefix of the URI to fetch the artifacts from */
   baseUri: string;
-  /** / Relative path where the circuit is hosted */
+  /** Relative path where the circuit is hosted */
   circuitPath: string;
-  /** / Maximum census size supported by the circuit */
+  /** Maximum census size supported by the circuit */
   maxSize: number;
   witnessHash: Uint8Array;
   zKeyHash: Uint8Array;
@@ -174,7 +174,7 @@ export interface GetElectionResults {
 /** Response */
 export interface GetElectionResultsResponse {
   results: Results | undefined;
-  /** / Whether the results are available and final */
+  /** Whether the results are available and final */
   available: boolean;
 }
 
@@ -185,7 +185,7 @@ export interface GetElectionWeight {
 
 /** Response */
 export interface GetElectionWeightResponse {
-  /** / The total amount of vote weight that has been used */
+  /** The total amount of vote weight that has been used */
   weight: string;
 }
 
@@ -193,7 +193,7 @@ export interface GetElectionWeightResponse {
 export interface NewCensus {
   censusSalt: Uint8Array;
   managerPublicKeys: Uint8Array[];
-  censusType: CensusOffchainType;
+  censusType: CensusType;
 }
 
 /** Response */
@@ -217,6 +217,8 @@ export interface AddCensusKeys_CensusEntry {
 /** Response */
 export interface AddCensusKeysResponse {
   censusRoot: Uint8Array;
+  keysAdded: number;
+  keysSkipped: number;
 }
 
 /** Request */
@@ -251,12 +253,13 @@ export interface PublishCensusResponse {
 
 /** Request */
 export interface GetCensusProof {
-  censusId: string;
   /**
-   * / Defines the kind of census proof to receive back
-   * / Mostly:  ProofArbo, StorageProofERC20
+   * Defines the kind of census proof to receive back
+   * Mostly:  CensusArbo, StorageProofErc20
    */
-  type: Census | undefined;
+  census: Census | undefined;
+  /** bytes value = 3; */
+  key: Uint8Array;
 }
 
 /** Response */
@@ -282,13 +285,13 @@ export interface PinFile {
 
 /** Response */
 export interface PinFileResponse {
-  /** / The URI at which the file can be addressed */
+  /** The URI at which the file can be addressed */
   ipfsUri: string;
 }
 
 /** Request */
 export interface FetchFile {
-  /** / The URI at which the file can be addressed */
+  /** The URI at which the file can be addressed */
   ipfsUri: string;
 }
 
@@ -302,11 +305,11 @@ export interface GetBlockStatus {}
 
 /** Response */
 export interface GetBlockStatusResponse {
-  /** / The current block height */
+  /** The current block height */
   number: number;
-  /** / The timestamp at which the block was mined */
+  /** The timestamp at which the block was mined */
   blockTimestamp: number;
-  /** / The average block times during the last minute, 10m, 1h, 6h and 24h */
+  /** The average block times during the last minute, 10m, 1h, 6h and 24h */
   blockTimes: number[];
 }
 
@@ -315,7 +318,7 @@ export interface GetBlockCount {}
 
 /** Response */
 export interface GetBlockCountResponse {
-  /** / The number of the last mined block */
+  /** The number of the last mined block */
   number: number;
 }
 
@@ -332,7 +335,7 @@ export interface GetTransaction {
 
 /** Response */
 export interface GetTransactionResponse {
-  /** / The bytes of the body encode a {Transaction} model */
+  /** The bytes of the body encode a {Transaction} model */
   body: Uint8Array;
 }
 
@@ -343,7 +346,7 @@ export interface WaitTransaction {
 
 /** Response */
 export interface WaitTransactionResponse {
-  /** / Returns after waiting for 15 seconds */
+  /** Returns after waiting for 15 seconds */
   mined: boolean;
 }
 
@@ -2857,7 +2860,7 @@ export const NewCensus = {
     );
     message.censusType =
       object.censusType !== undefined && object.censusType !== null
-        ? censusOffchainTypeFromJSON(object.censusType)
+        ? censusTypeFromJSON(object.censusType)
         : 0;
     return message;
   },
@@ -2876,7 +2879,7 @@ export const NewCensus = {
       obj.managerPublicKeys = [];
     }
     message.censusType !== undefined &&
-      (obj.censusType = censusOffchainTypeToJSON(message.censusType));
+      (obj.censusType = censusTypeToJSON(message.censusType));
     return obj;
   },
 
@@ -3129,7 +3132,7 @@ export const AddCensusKeys_CensusEntry = {
   },
 };
 
-const baseAddCensusKeysResponse: object = {};
+const baseAddCensusKeysResponse: object = { keysAdded: 0, keysSkipped: 0 };
 
 export const AddCensusKeysResponse = {
   encode(
@@ -3138,6 +3141,12 @@ export const AddCensusKeysResponse = {
   ): Writer {
     if (message.censusRoot.length !== 0) {
       writer.uint32(10).bytes(message.censusRoot);
+    }
+    if (message.keysAdded !== 0) {
+      writer.uint32(16).int32(message.keysAdded);
+    }
+    if (message.keysSkipped !== 0) {
+      writer.uint32(24).int32(message.keysSkipped);
     }
     return writer;
   },
@@ -3153,6 +3162,12 @@ export const AddCensusKeysResponse = {
         case 1:
           message.censusRoot = reader.bytes();
           break;
+        case 2:
+          message.keysAdded = reader.int32();
+          break;
+        case 3:
+          message.keysSkipped = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -3167,6 +3182,14 @@ export const AddCensusKeysResponse = {
       object.censusRoot !== undefined && object.censusRoot !== null
         ? bytesFromBase64(object.censusRoot)
         : new Uint8Array();
+    message.keysAdded =
+      object.keysAdded !== undefined && object.keysAdded !== null
+        ? Number(object.keysAdded)
+        : 0;
+    message.keysSkipped =
+      object.keysSkipped !== undefined && object.keysSkipped !== null
+        ? Number(object.keysSkipped)
+        : 0;
     return message;
   },
 
@@ -3176,6 +3199,9 @@ export const AddCensusKeysResponse = {
       (obj.censusRoot = base64FromBytes(
         message.censusRoot !== undefined ? message.censusRoot : new Uint8Array()
       ));
+    message.keysAdded !== undefined && (obj.keysAdded = message.keysAdded);
+    message.keysSkipped !== undefined &&
+      (obj.keysSkipped = message.keysSkipped);
     return obj;
   },
 
@@ -3184,6 +3210,8 @@ export const AddCensusKeysResponse = {
   ): AddCensusKeysResponse {
     const message = { ...baseAddCensusKeysResponse } as AddCensusKeysResponse;
     message.censusRoot = object.censusRoot ?? new Uint8Array();
+    message.keysAdded = object.keysAdded ?? 0;
+    message.keysSkipped = object.keysSkipped ?? 0;
     return message;
   },
 };
@@ -3513,15 +3541,15 @@ export const PublishCensusResponse = {
   },
 };
 
-const baseGetCensusProof: object = { censusId: "" };
+const baseGetCensusProof: object = {};
 
 export const GetCensusProof = {
   encode(message: GetCensusProof, writer: Writer = Writer.create()): Writer {
-    if (message.censusId !== "") {
-      writer.uint32(10).string(message.censusId);
+    if (message.census !== undefined) {
+      Census.encode(message.census, writer.uint32(10).fork()).ldelim();
     }
-    if (message.type !== undefined) {
-      Census.encode(message.type, writer.uint32(18).fork()).ldelim();
+    if (message.key.length !== 0) {
+      writer.uint32(18).bytes(message.key);
     }
     return writer;
   },
@@ -3530,14 +3558,15 @@ export const GetCensusProof = {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGetCensusProof } as GetCensusProof;
+    message.key = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.censusId = reader.string();
+          message.census = Census.decode(reader, reader.uint32());
           break;
         case 2:
-          message.type = Census.decode(reader, reader.uint32());
+          message.key = reader.bytes();
           break;
         default:
           reader.skipType(tag & 7);
@@ -3549,22 +3578,25 @@ export const GetCensusProof = {
 
   fromJSON(object: any): GetCensusProof {
     const message = { ...baseGetCensusProof } as GetCensusProof;
-    message.censusId =
-      object.censusId !== undefined && object.censusId !== null
-        ? String(object.censusId)
-        : "";
-    message.type =
-      object.type !== undefined && object.type !== null
-        ? Census.fromJSON(object.type)
+    message.census =
+      object.census !== undefined && object.census !== null
+        ? Census.fromJSON(object.census)
         : undefined;
+    message.key =
+      object.key !== undefined && object.key !== null
+        ? bytesFromBase64(object.key)
+        : new Uint8Array();
     return message;
   },
 
   toJSON(message: GetCensusProof): unknown {
     const obj: any = {};
-    message.censusId !== undefined && (obj.censusId = message.censusId);
-    message.type !== undefined &&
-      (obj.type = message.type ? Census.toJSON(message.type) : undefined);
+    message.census !== undefined &&
+      (obj.census = message.census ? Census.toJSON(message.census) : undefined);
+    message.key !== undefined &&
+      (obj.key = base64FromBytes(
+        message.key !== undefined ? message.key : new Uint8Array()
+      ));
     return obj;
   },
 
@@ -3572,11 +3604,11 @@ export const GetCensusProof = {
     object: I
   ): GetCensusProof {
     const message = { ...baseGetCensusProof } as GetCensusProof;
-    message.censusId = object.censusId ?? "";
-    message.type =
-      object.type !== undefined && object.type !== null
-        ? Census.fromPartial(object.type)
+    message.census =
+      object.census !== undefined && object.census !== null
+        ? Census.fromPartial(object.census)
         : undefined;
+    message.key = object.key ?? new Uint8Array();
     return message;
   },
 };

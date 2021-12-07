@@ -60,32 +60,32 @@ export function proposalStatusToJSON(object: ProposalStatus): string {
   }
 }
 
-export enum CensusOffchainType {
-  UNKNOWN_OFFCHAIN_CENSUS_TYPE = 0,
+export enum CensusType {
+  UNKNOWN_CENSUS_TYPE = 0,
   ARBO_BLAKE2B = 1,
   UNRECOGNIZED = -1,
 }
 
-export function censusOffchainTypeFromJSON(object: any): CensusOffchainType {
+export function censusTypeFromJSON(object: any): CensusType {
   switch (object) {
     case 0:
-    case "UNKNOWN_OFFCHAIN_CENSUS_TYPE":
-      return CensusOffchainType.UNKNOWN_OFFCHAIN_CENSUS_TYPE;
+    case "UNKNOWN_CENSUS_TYPE":
+      return CensusType.UNKNOWN_CENSUS_TYPE;
     case 1:
     case "ARBO_BLAKE2B":
-      return CensusOffchainType.ARBO_BLAKE2B;
+      return CensusType.ARBO_BLAKE2B;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return CensusOffchainType.UNRECOGNIZED;
+      return CensusType.UNRECOGNIZED;
   }
 }
 
-export function censusOffchainTypeToJSON(object: CensusOffchainType): string {
+export function censusTypeToJSON(object: CensusType): string {
   switch (object) {
-    case CensusOffchainType.UNKNOWN_OFFCHAIN_CENSUS_TYPE:
-      return "UNKNOWN_OFFCHAIN_CENSUS_TYPE";
-    case CensusOffchainType.ARBO_BLAKE2B:
+    case CensusType.UNKNOWN_CENSUS_TYPE:
+      return "UNKNOWN_CENSUS_TYPE";
+    case CensusType.ARBO_BLAKE2B:
       return "ARBO_BLAKE2B";
     default:
       return "UNKNOWN";

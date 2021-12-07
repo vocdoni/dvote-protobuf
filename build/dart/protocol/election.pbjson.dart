@@ -8,9 +8,62 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use electionDescriptor instead')
+const Election$json = const {
+  '1': 'Election',
+  '2': const [
+    const {'1': 'mainCensus', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'mainCensus'},
+    const {'1': 'secondaryCensus', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'secondaryCensus'},
+    const {'1': 'tertiaryCensus', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'tertiaryCensus'},
+    const {'1': 'censusSize', '3': 11, '4': 1, '5': 5, '10': 'censusSize'},
+    const {'1': 'proposals', '3': 12, '4': 3, '5': 11, '6': '.dvote.types.v2.Proposal', '10': 'proposals'},
+    const {'1': 'privacy', '3': 13, '4': 1, '5': 11, '6': '.dvote.types.v2.Privacy', '10': 'privacy'},
+    const {'1': 'lifecycle', '3': 14, '4': 1, '5': 11, '6': '.dvote.types.v2.Lifecycle', '10': 'lifecycle'},
+    const {'1': 'metadataUri', '3': 15, '4': 1, '5': 9, '10': 'metadataUri'},
+  ],
+};
+
+/// Descriptor for `Election`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List electionDescriptor = $convert.base64Decode('CghFbGVjdGlvbhI2CgptYWluQ2Vuc3VzGAEgASgLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUgptYWluQ2Vuc3VzEkAKD3NlY29uZGFyeUNlbnN1cxgCIAEoCzIWLmR2b3RlLnR5cGVzLnYyLkNlbnN1c1IPc2Vjb25kYXJ5Q2Vuc3VzEj4KDnRlcnRpYXJ5Q2Vuc3VzGAMgASgLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUg50ZXJ0aWFyeUNlbnN1cxIeCgpjZW5zdXNTaXplGAsgASgFUgpjZW5zdXNTaXplEjYKCXByb3Bvc2FscxgMIAMoCzIYLmR2b3RlLnR5cGVzLnYyLlByb3Bvc2FsUglwcm9wb3NhbHMSMQoHcHJpdmFjeRgNIAEoCzIXLmR2b3RlLnR5cGVzLnYyLlByaXZhY3lSB3ByaXZhY3kSNwoJbGlmZWN5Y2xlGA4gASgLMhkuZHZvdGUudHlwZXMudjIuTGlmZWN5Y2xlUglsaWZlY3ljbGUSIAoLbWV0YWRhdGFVcmkYDyABKAlSC21ldGFkYXRhVXJp');
+@$core.Deprecated('Use privacyDescriptor instead')
+const Privacy$json = const {
+  '1': 'Privacy',
+  '2': const [
+    const {'1': 'realTimeResults', '3': 1, '4': 1, '5': 8, '10': 'realTimeResults'},
+    const {'1': 'censusProof', '3': 2, '4': 1, '5': 14, '6': '.dvote.types.v2.Privacy.CensusProofs', '10': 'censusProof'},
+  ],
+  '4': const [Privacy_CensusProofs$json],
+};
+
+@$core.Deprecated('Use privacyDescriptor instead')
+const Privacy_CensusProofs$json = const {
+  '1': 'CensusProofs',
+  '2': const [
+    const {'1': 'PLAIN', '2': 0},
+    const {'1': 'ZK_SNARKS', '2': 1},
+    const {'1': 'ZK_SNARKS_PREREGISTER', '2': 2},
+  ],
+};
+
+/// Descriptor for `Privacy`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List privacyDescriptor = $convert.base64Decode('CgdQcml2YWN5EigKD3JlYWxUaW1lUmVzdWx0cxgBIAEoCFIPcmVhbFRpbWVSZXN1bHRzEkYKC2NlbnN1c1Byb29mGAIgASgOMiQuZHZvdGUudHlwZXMudjIuUHJpdmFjeS5DZW5zdXNQcm9vZnNSC2NlbnN1c1Byb29mIkMKDENlbnN1c1Byb29mcxIJCgVQTEFJThAAEg0KCVpLX1NOQVJLUxABEhkKFVpLX1NOQVJLU19QUkVSRUdJU1RFUhAC');
 @$core.Deprecated('Use lifecycleDescriptor instead')
 const Lifecycle$json = const {
   '1': 'Lifecycle',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v2.Lifecycle.Types', '10': 'type'},
+    const {'1': 'startBlock', '3': 2, '4': 1, '5': 5, '9': 0, '10': 'startBlock', '17': true},
+    const {'1': 'endBlock', '3': 3, '4': 1, '5': 5, '10': 'endBlock'},
+  ],
+  '4': const [Lifecycle_Types$json],
+  '8': const [
+    const {'1': '_startBlock'},
+  ],
+};
+
+@$core.Deprecated('Use lifecycleDescriptor instead')
+const Lifecycle_Types$json = const {
+  '1': 'Types',
   '2': const [
     const {'1': 'PAUSED_MUTABLE', '2': 0},
     const {'1': 'PAUSED_MUTABLE_ONCE', '2': 1},
@@ -21,58 +74,17 @@ const Lifecycle$json = const {
   ],
 };
 
-/// Descriptor for `Lifecycle`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List lifecycleDescriptor = $convert.base64Decode('CglMaWZlY3ljbGUSEgoOUEFVU0VEX01VVEFCTEUQABIXChNQQVVTRURfTVVUQUJMRV9PTkNFEAESFQoRU1RBUlRFRF9JTU1VVEFCTEUQAhITCg9TVEFSVEVEX01VVEFCTEUQAxIXChNBVVRPU1RBUlRfSU1NVVRBQkxFEAQSFQoRQVVUT1NUQVJUX01VVEFCTEUQBQ==');
-@$core.Deprecated('Use electionDescriptor instead')
-const Election$json = const {
-  '1': 'Election',
-  '2': const [
-    const {'1': 'primaryCensus', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'primaryCensus'},
-    const {'1': 'secondaryCensus', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'secondaryCensus'},
-    const {'1': 'tertiaryCensus', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'tertiaryCensus'},
-    const {'1': 'censusSize', '3': 4, '4': 1, '5': 5, '10': 'censusSize'},
-    const {'1': 'proposals', '3': 5, '4': 3, '5': 11, '6': '.dvote.types.v2.Proposal', '10': 'proposals'},
-    const {'1': 'privacy', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v2.Privacy', '10': 'privacy'},
-    const {'1': 'lifecycle', '3': 7, '4': 1, '5': 14, '6': '.dvote.types.v2.Lifecycle', '10': 'lifecycle'},
-    const {'1': 'metadataUri', '3': 8, '4': 1, '5': 9, '10': 'metadataUri'},
-    const {'1': 'startBlock', '3': 9, '4': 1, '5': 5, '10': 'startBlock'},
-    const {'1': 'endBlock', '3': 10, '4': 1, '5': 5, '10': 'endBlock'},
-  ],
-};
-
-/// Descriptor for `Election`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List electionDescriptor = $convert.base64Decode('CghFbGVjdGlvbhI8Cg1wcmltYXJ5Q2Vuc3VzGAEgASgLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUg1wcmltYXJ5Q2Vuc3VzEkAKD3NlY29uZGFyeUNlbnN1cxgCIAEoCzIWLmR2b3RlLnR5cGVzLnYyLkNlbnN1c1IPc2Vjb25kYXJ5Q2Vuc3VzEj4KDnRlcnRpYXJ5Q2Vuc3VzGAMgASgLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUg50ZXJ0aWFyeUNlbnN1cxIeCgpjZW5zdXNTaXplGAQgASgFUgpjZW5zdXNTaXplEjYKCXByb3Bvc2FscxgFIAMoCzIYLmR2b3RlLnR5cGVzLnYyLlByb3Bvc2FsUglwcm9wb3NhbHMSMQoHcHJpdmFjeRgGIAEoCzIXLmR2b3RlLnR5cGVzLnYyLlByaXZhY3lSB3ByaXZhY3kSNwoJbGlmZWN5Y2xlGAcgASgOMhkuZHZvdGUudHlwZXMudjIuTGlmZWN5Y2xlUglsaWZlY3ljbGUSIAoLbWV0YWRhdGFVcmkYCCABKAlSC21ldGFkYXRhVXJpEh4KCnN0YXJ0QmxvY2sYCSABKAVSCnN0YXJ0QmxvY2sSGgoIZW5kQmxvY2sYCiABKAVSCGVuZEJsb2Nr');
-@$core.Deprecated('Use privacyDescriptor instead')
-const Privacy$json = const {
-  '1': 'Privacy',
-  '2': const [
-    const {'1': 'realTimeResults', '3': 1, '4': 1, '5': 8, '10': 'realTimeResults'},
-    const {'1': 'voteAnonymity', '3': 2, '4': 1, '5': 14, '6': '.dvote.types.v2.Privacy.VoteAnonimity', '10': 'voteAnonymity'},
-  ],
-  '4': const [Privacy_VoteAnonimity$json],
-};
-
-@$core.Deprecated('Use privacyDescriptor instead')
-const Privacy_VoteAnonimity$json = const {
-  '1': 'VoteAnonimity',
-  '2': const [
-    const {'1': 'NONE', '2': 0},
-    const {'1': 'ZK_SNARKS', '2': 1},
-    const {'1': 'ZK_SNARKS_PREREGISTER', '2': 2},
-  ],
-};
-
-/// Descriptor for `Privacy`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List privacyDescriptor = $convert.base64Decode('CgdQcml2YWN5EigKD3JlYWxUaW1lUmVzdWx0cxgBIAEoCFIPcmVhbFRpbWVSZXN1bHRzEksKDXZvdGVBbm9ueW1pdHkYAiABKA4yJS5kdm90ZS50eXBlcy52Mi5Qcml2YWN5LlZvdGVBbm9uaW1pdHlSDXZvdGVBbm9ueW1pdHkiQwoNVm90ZUFub25pbWl0eRIICgROT05FEAASDQoJWktfU05BUktTEAESGQoVWktfU05BUktTX1BSRVJFR0lTVEVSEAI=');
+/// Descriptor for `Lifecycle`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List lifecycleDescriptor = $convert.base64Decode('CglMaWZlY3ljbGUSMwoEdHlwZRgBIAEoDjIfLmR2b3RlLnR5cGVzLnYyLkxpZmVjeWNsZS5UeXBlc1IEdHlwZRIjCgpzdGFydEJsb2NrGAIgASgFSABSCnN0YXJ0QmxvY2uIAQESGgoIZW5kQmxvY2sYAyABKAVSCGVuZEJsb2NrIpABCgVUeXBlcxISCg5QQVVTRURfTVVUQUJMRRAAEhcKE1BBVVNFRF9NVVRBQkxFX09OQ0UQARIVChFTVEFSVEVEX0lNTVVUQUJMRRACEhMKD1NUQVJURURfTVVUQUJMRRADEhcKE0FVVE9TVEFSVF9JTU1VVEFCTEUQBBIVChFBVVRPU1RBUlRfTVVUQUJMRRAFQg0KC19zdGFydEJsb2Nr');
 @$core.Deprecated('Use proposalDescriptor instead')
 const Proposal$json = const {
   '1': 'Proposal',
   '2': const [
-    const {'1': 'approvalProposal', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.ApprovalProposal', '9': 0, '10': 'approvalProposal'},
-    const {'1': 'singleChoiceProposal', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.SingleChoiceProposal', '9': 0, '10': 'singleChoiceProposal'},
-    const {'1': 'quadraticProposal', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.QuadraticProposal', '9': 0, '10': 'quadraticProposal'},
-    const {'1': 'rankedProposal', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.RankedProposal', '9': 0, '10': 'rankedProposal'},
-    const {'1': 'spreadProposal', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v2.SpreadProposal', '9': 0, '10': 'spreadProposal'},
+    const {'1': 'approval', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.ApprovalProposal', '9': 0, '10': 'approval'},
+    const {'1': 'singleChoice', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.SingleChoiceProposal', '9': 0, '10': 'singleChoice'},
+    const {'1': 'quadratic', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.QuadraticProposal', '9': 0, '10': 'quadratic'},
+    const {'1': 'ranked', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.RankedProposal', '9': 0, '10': 'ranked'},
+    const {'1': 'spread', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v2.SpreadProposal', '9': 0, '10': 'spread'},
   ],
   '8': const [
     const {'1': 'proposal'},
@@ -80,7 +92,7 @@ const Proposal$json = const {
 };
 
 /// Descriptor for `Proposal`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proposalDescriptor = $convert.base64Decode('CghQcm9wb3NhbBJOChBhcHByb3ZhbFByb3Bvc2FsGAEgASgLMiAuZHZvdGUudHlwZXMudjIuQXBwcm92YWxQcm9wb3NhbEgAUhBhcHByb3ZhbFByb3Bvc2FsEloKFHNpbmdsZUNob2ljZVByb3Bvc2FsGAIgASgLMiQuZHZvdGUudHlwZXMudjIuU2luZ2xlQ2hvaWNlUHJvcG9zYWxIAFIUc2luZ2xlQ2hvaWNlUHJvcG9zYWwSUQoRcXVhZHJhdGljUHJvcG9zYWwYAyABKAsyIS5kdm90ZS50eXBlcy52Mi5RdWFkcmF0aWNQcm9wb3NhbEgAUhFxdWFkcmF0aWNQcm9wb3NhbBJICg5yYW5rZWRQcm9wb3NhbBgEIAEoCzIeLmR2b3RlLnR5cGVzLnYyLlJhbmtlZFByb3Bvc2FsSABSDnJhbmtlZFByb3Bvc2FsEkgKDnNwcmVhZFByb3Bvc2FsGAUgASgLMh4uZHZvdGUudHlwZXMudjIuU3ByZWFkUHJvcG9zYWxIAFIOc3ByZWFkUHJvcG9zYWxCCgoIcHJvcG9zYWw=');
+final $typed_data.Uint8List proposalDescriptor = $convert.base64Decode('CghQcm9wb3NhbBI+CghhcHByb3ZhbBgBIAEoCzIgLmR2b3RlLnR5cGVzLnYyLkFwcHJvdmFsUHJvcG9zYWxIAFIIYXBwcm92YWwSSgoMc2luZ2xlQ2hvaWNlGAIgASgLMiQuZHZvdGUudHlwZXMudjIuU2luZ2xlQ2hvaWNlUHJvcG9zYWxIAFIMc2luZ2xlQ2hvaWNlEkEKCXF1YWRyYXRpYxgDIAEoCzIhLmR2b3RlLnR5cGVzLnYyLlF1YWRyYXRpY1Byb3Bvc2FsSABSCXF1YWRyYXRpYxI4CgZyYW5rZWQYBCABKAsyHi5kdm90ZS50eXBlcy52Mi5SYW5rZWRQcm9wb3NhbEgAUgZyYW5rZWQSOAoGc3ByZWFkGAUgASgLMh4uZHZvdGUudHlwZXMudjIuU3ByZWFkUHJvcG9zYWxIAFIGc3ByZWFkQgoKCHByb3Bvc2Fs');
 @$core.Deprecated('Use approvalProposalDescriptor instead')
 const ApprovalProposal$json = const {
   '1': 'ApprovalProposal',

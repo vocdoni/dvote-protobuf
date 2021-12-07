@@ -38,7 +38,7 @@ export interface NewElection {
   election: Election | undefined;
 }
 
-/** / Register a key */
+/** Register a key */
 export interface RegisterKey {
   electionId: Uint8Array;
   /** Arbo proof, CSP, ERC20, etc */

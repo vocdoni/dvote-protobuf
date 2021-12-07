@@ -308,12 +308,12 @@ const NewCensus$json = const {
   '2': const [
     const {'1': 'censusSalt', '3': 1, '4': 1, '5': 12, '10': 'censusSalt'},
     const {'1': 'managerPublicKeys', '3': 2, '4': 3, '5': 12, '10': 'managerPublicKeys'},
-    const {'1': 'censusType', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.CensusOffchainType', '10': 'censusType'},
+    const {'1': 'censusType', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.CensusType', '10': 'censusType'},
   ],
 };
 
 /// Descriptor for `NewCensus`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List newCensusDescriptor = $convert.base64Decode('CglOZXdDZW5zdXMSHgoKY2Vuc3VzU2FsdBgBIAEoDFIKY2Vuc3VzU2FsdBIsChFtYW5hZ2VyUHVibGljS2V5cxgCIAMoDFIRbWFuYWdlclB1YmxpY0tleXMSQgoKY2Vuc3VzVHlwZRgDIAEoDjIiLmR2b3RlLnR5cGVzLnYyLkNlbnN1c09mZmNoYWluVHlwZVIKY2Vuc3VzVHlwZQ==');
+final $typed_data.Uint8List newCensusDescriptor = $convert.base64Decode('CglOZXdDZW5zdXMSHgoKY2Vuc3VzU2FsdBgBIAEoDFIKY2Vuc3VzU2FsdBIsChFtYW5hZ2VyUHVibGljS2V5cxgCIAMoDFIRbWFuYWdlclB1YmxpY0tleXMSOgoKY2Vuc3VzVHlwZRgDIAEoDjIaLmR2b3RlLnR5cGVzLnYyLkNlbnN1c1R5cGVSCmNlbnN1c1R5cGU=');
 @$core.Deprecated('Use newCensusResponseDescriptor instead')
 const NewCensusResponse$json = const {
   '1': 'NewCensusResponse',
@@ -352,11 +352,13 @@ const AddCensusKeysResponse$json = const {
   '1': 'AddCensusKeysResponse',
   '2': const [
     const {'1': 'censusRoot', '3': 1, '4': 1, '5': 12, '10': 'censusRoot'},
+    const {'1': 'keysAdded', '3': 2, '4': 1, '5': 5, '10': 'keysAdded'},
+    const {'1': 'keysSkipped', '3': 3, '4': 1, '5': 5, '10': 'keysSkipped'},
   ],
 };
 
 /// Descriptor for `AddCensusKeysResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List addCensusKeysResponseDescriptor = $convert.base64Decode('ChVBZGRDZW5zdXNLZXlzUmVzcG9uc2USHgoKY2Vuc3VzUm9vdBgBIAEoDFIKY2Vuc3VzUm9vdA==');
+final $typed_data.Uint8List addCensusKeysResponseDescriptor = $convert.base64Decode('ChVBZGRDZW5zdXNLZXlzUmVzcG9uc2USHgoKY2Vuc3VzUm9vdBgBIAEoDFIKY2Vuc3VzUm9vdBIcCglrZXlzQWRkZWQYAiABKAVSCWtleXNBZGRlZBIgCgtrZXlzU2tpcHBlZBgDIAEoBVILa2V5c1NraXBwZWQ=');
 @$core.Deprecated('Use getCensusRootDescriptor instead')
 const GetCensusRoot$json = const {
   '1': 'GetCensusRoot',
@@ -421,13 +423,13 @@ final $typed_data.Uint8List publishCensusResponseDescriptor = $convert.base64Dec
 const GetCensusProof$json = const {
   '1': 'GetCensusProof',
   '2': const [
-    const {'1': 'censusId', '3': 1, '4': 1, '5': 9, '10': 'censusId'},
-    const {'1': 'type', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'type'},
+    const {'1': 'census', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'census'},
+    const {'1': 'key', '3': 2, '4': 1, '5': 12, '10': 'key'},
   ],
 };
 
 /// Descriptor for `GetCensusProof`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getCensusProofDescriptor = $convert.base64Decode('Cg5HZXRDZW5zdXNQcm9vZhIaCghjZW5zdXNJZBgBIAEoCVIIY2Vuc3VzSWQSKgoEdHlwZRgCIAEoCzIWLmR2b3RlLnR5cGVzLnYyLkNlbnN1c1IEdHlwZQ==');
+final $typed_data.Uint8List getCensusProofDescriptor = $convert.base64Decode('Cg5HZXRDZW5zdXNQcm9vZhIuCgZjZW5zdXMYASABKAsyFi5kdm90ZS50eXBlcy52Mi5DZW5zdXNSBmNlbnN1cxIQCgNrZXkYAiABKAxSA2tleQ==');
 @$core.Deprecated('Use getCensusProofResponseDescriptor instead')
 const GetCensusProofResponse$json = const {
   '1': 'GetCensusProofResponse',

@@ -9,15 +9,32 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Lifecycle extends $pb.ProtobufEnum {
-  static const Lifecycle PAUSED_MUTABLE = Lifecycle._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAUSED_MUTABLE');
-  static const Lifecycle PAUSED_MUTABLE_ONCE = Lifecycle._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAUSED_MUTABLE_ONCE');
-  static const Lifecycle STARTED_IMMUTABLE = Lifecycle._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STARTED_IMMUTABLE');
-  static const Lifecycle STARTED_MUTABLE = Lifecycle._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STARTED_MUTABLE');
-  static const Lifecycle AUTOSTART_IMMUTABLE = Lifecycle._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUTOSTART_IMMUTABLE');
-  static const Lifecycle AUTOSTART_MUTABLE = Lifecycle._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUTOSTART_MUTABLE');
+class Privacy_CensusProofs extends $pb.ProtobufEnum {
+  static const Privacy_CensusProofs PLAIN = Privacy_CensusProofs._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PLAIN');
+  static const Privacy_CensusProofs ZK_SNARKS = Privacy_CensusProofs._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZK_SNARKS');
+  static const Privacy_CensusProofs ZK_SNARKS_PREREGISTER = Privacy_CensusProofs._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZK_SNARKS_PREREGISTER');
 
-  static const $core.List<Lifecycle> values = <Lifecycle> [
+  static const $core.List<Privacy_CensusProofs> values = <Privacy_CensusProofs> [
+    PLAIN,
+    ZK_SNARKS,
+    ZK_SNARKS_PREREGISTER,
+  ];
+
+  static final $core.Map<$core.int, Privacy_CensusProofs> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static Privacy_CensusProofs? valueOf($core.int value) => _byValue[value];
+
+  const Privacy_CensusProofs._($core.int v, $core.String n) : super(v, n);
+}
+
+class Lifecycle_Types extends $pb.ProtobufEnum {
+  static const Lifecycle_Types PAUSED_MUTABLE = Lifecycle_Types._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAUSED_MUTABLE');
+  static const Lifecycle_Types PAUSED_MUTABLE_ONCE = Lifecycle_Types._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAUSED_MUTABLE_ONCE');
+  static const Lifecycle_Types STARTED_IMMUTABLE = Lifecycle_Types._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STARTED_IMMUTABLE');
+  static const Lifecycle_Types STARTED_MUTABLE = Lifecycle_Types._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STARTED_MUTABLE');
+  static const Lifecycle_Types AUTOSTART_IMMUTABLE = Lifecycle_Types._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUTOSTART_IMMUTABLE');
+  static const Lifecycle_Types AUTOSTART_MUTABLE = Lifecycle_Types._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUTOSTART_MUTABLE');
+
+  static const $core.List<Lifecycle_Types> values = <Lifecycle_Types> [
     PAUSED_MUTABLE,
     PAUSED_MUTABLE_ONCE,
     STARTED_IMMUTABLE,
@@ -26,26 +43,9 @@ class Lifecycle extends $pb.ProtobufEnum {
     AUTOSTART_MUTABLE,
   ];
 
-  static final $core.Map<$core.int, Lifecycle> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Lifecycle? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, Lifecycle_Types> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static Lifecycle_Types? valueOf($core.int value) => _byValue[value];
 
-  const Lifecycle._($core.int v, $core.String n) : super(v, n);
-}
-
-class Privacy_VoteAnonimity extends $pb.ProtobufEnum {
-  static const Privacy_VoteAnonimity NONE = Privacy_VoteAnonimity._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
-  static const Privacy_VoteAnonimity ZK_SNARKS = Privacy_VoteAnonimity._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZK_SNARKS');
-  static const Privacy_VoteAnonimity ZK_SNARKS_PREREGISTER = Privacy_VoteAnonimity._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZK_SNARKS_PREREGISTER');
-
-  static const $core.List<Privacy_VoteAnonimity> values = <Privacy_VoteAnonimity> [
-    NONE,
-    ZK_SNARKS,
-    ZK_SNARKS_PREREGISTER,
-  ];
-
-  static final $core.Map<$core.int, Privacy_VoteAnonimity> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Privacy_VoteAnonimity? valueOf($core.int value) => _byValue[value];
-
-  const Privacy_VoteAnonimity._($core.int v, $core.String n) : super(v, n);
+  const Lifecycle_Types._($core.int v, $core.String n) : super(v, n);
 }
 

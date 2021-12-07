@@ -6,11 +6,11 @@ export const protobufPackage = "dvote.types.v2";
 
 export interface Results {
   electionId: Uint8Array;
-  /** / One result object for each Proposal within the Election */
+  /** One result object for each Proposal within the Election */
   results: Result[];
 }
 
-/** / The outcome of a proposal */
+/** The outcome of a proposal */
 export interface Result {
   body?:
     | { $case: "approvalRresult"; approvalRresult: ApprovalResult }
@@ -21,41 +21,41 @@ export interface Result {
 }
 
 export interface ApprovalResult {
-  /** / How many (weighted) rejections */
+  /** How many (weighted) rejections */
   rejected: string;
-  /** / How many (weighted) approvals */
+  /** How many (weighted) approvals */
   approved: string;
 }
 
 export interface SingleChoiceResult {
-  /** / How many (weighted) votes each index got */
+  /** How many (weighted) votes each index got */
   votes: string[];
 }
 
 export interface QuadraticResult {
-  /** / How many (weighted) points each index got */
+  /** How many (weighted) points each index got */
   points: string[];
 }
 
 export interface RankedResult {
-  /** / The results of each choice */
+  /** The results of each choice */
   entries: RankedResult_RankedEntryResult[];
 }
 
 export interface RankedResult_RankedEntryResult {
-  /** / The results of the choice at every valid rank position */
+  /** The results of the choice at every valid rank position */
   results: RankedResult_RankedEntryResult[];
 }
 
 export interface RankedResult_RankedEntryResult_RankedEntryPositionResult {
-  /** / The rank position of the choice, for which the points below have been achieved */
+  /** The rank position of the choice, for which the points below have been achieved */
   position: number;
-  /** / How many (weighted) points the choice got at the current rank position */
+  /** How many (weighted) points the choice got at the current rank position */
   points: string;
 }
 
 export interface SpreadResult {
-  /** / How many (weighted) points each index got */
+  /** How many (weighted) points each index got */
   points: string[];
 }
 

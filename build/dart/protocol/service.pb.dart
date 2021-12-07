@@ -1758,7 +1758,7 @@ class NewCensus extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NewCensus', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusSalt', $pb.PbFieldType.OY, protoName: 'censusSalt')
     ..p<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'managerPublicKeys', $pb.PbFieldType.PY, protoName: 'managerPublicKeys')
-    ..e<$5.CensusOffchainType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusType', $pb.PbFieldType.OE, protoName: 'censusType', defaultOrMaker: $5.CensusOffchainType.UNKNOWN_OFFCHAIN_CENSUS_TYPE, valueOf: $5.CensusOffchainType.valueOf, enumValues: $5.CensusOffchainType.values)
+    ..e<$5.CensusType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusType', $pb.PbFieldType.OE, protoName: 'censusType', defaultOrMaker: $5.CensusType.UNKNOWN_CENSUS_TYPE, valueOf: $5.CensusType.valueOf, enumValues: $5.CensusType.values)
     ..hasRequiredFields = false
   ;
 
@@ -1766,7 +1766,7 @@ class NewCensus extends $pb.GeneratedMessage {
   factory NewCensus({
     $core.List<$core.int>? censusSalt,
     $core.Iterable<$core.List<$core.int>>? managerPublicKeys,
-    $5.CensusOffchainType? censusType,
+    $5.CensusType? censusType,
   }) {
     final _result = create();
     if (censusSalt != null) {
@@ -1814,9 +1814,9 @@ class NewCensus extends $pb.GeneratedMessage {
   $core.List<$core.List<$core.int>> get managerPublicKeys => $_getList(1);
 
   @$pb.TagNumber(3)
-  $5.CensusOffchainType get censusType => $_getN(2);
+  $5.CensusType get censusType => $_getN(2);
   @$pb.TagNumber(3)
-  set censusType($5.CensusOffchainType v) { setField(3, v); }
+  set censusType($5.CensusType v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasCensusType() => $_has(2);
   @$pb.TagNumber(3)
@@ -2017,16 +2017,26 @@ class AddCensusKeys extends $pb.GeneratedMessage {
 class AddCensusKeysResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddCensusKeysResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusRoot', $pb.PbFieldType.OY, protoName: 'censusRoot')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keysAdded', $pb.PbFieldType.O3, protoName: 'keysAdded')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keysSkipped', $pb.PbFieldType.O3, protoName: 'keysSkipped')
     ..hasRequiredFields = false
   ;
 
   AddCensusKeysResponse._() : super();
   factory AddCensusKeysResponse({
     $core.List<$core.int>? censusRoot,
+    $core.int? keysAdded,
+    $core.int? keysSkipped,
   }) {
     final _result = create();
     if (censusRoot != null) {
       _result.censusRoot = censusRoot;
+    }
+    if (keysAdded != null) {
+      _result.keysAdded = keysAdded;
+    }
+    if (keysSkipped != null) {
+      _result.keysSkipped = keysSkipped;
     }
     return _result;
   }
@@ -2059,6 +2069,24 @@ class AddCensusKeysResponse extends $pb.GeneratedMessage {
   $core.bool hasCensusRoot() => $_has(0);
   @$pb.TagNumber(1)
   void clearCensusRoot() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get keysAdded => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set keysAdded($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasKeysAdded() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearKeysAdded() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get keysSkipped => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set keysSkipped($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasKeysSkipped() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearKeysSkipped() => clearField(3);
 }
 
 class GetCensusRoot extends $pb.GeneratedMessage {
@@ -2345,22 +2373,22 @@ class PublishCensusResponse extends $pb.GeneratedMessage {
 
 class GetCensusProof extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetCensusProof', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusId', protoName: 'censusId')
-    ..aOM<$4.Census>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', subBuilder: $4.Census.create)
+    ..aOM<$4.Census>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'census', subBuilder: $4.Census.create)
+    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
   GetCensusProof._() : super();
   factory GetCensusProof({
-    $core.String? censusId,
-    $4.Census? type,
+    $4.Census? census,
+    $core.List<$core.int>? key,
   }) {
     final _result = create();
-    if (censusId != null) {
-      _result.censusId = censusId;
+    if (census != null) {
+      _result.census = census;
     }
-    if (type != null) {
-      _result.type = type;
+    if (key != null) {
+      _result.key = key;
     }
     return _result;
   }
@@ -2386,24 +2414,24 @@ class GetCensusProof extends $pb.GeneratedMessage {
   static GetCensusProof? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get censusId => $_getSZ(0);
+  $4.Census get census => $_getN(0);
   @$pb.TagNumber(1)
-  set censusId($core.String v) { $_setString(0, v); }
+  set census($4.Census v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasCensusId() => $_has(0);
+  $core.bool hasCensus() => $_has(0);
   @$pb.TagNumber(1)
-  void clearCensusId() => clearField(1);
+  void clearCensus() => clearField(1);
+  @$pb.TagNumber(1)
+  $4.Census ensureCensus() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $4.Census get type => $_getN(1);
+  $core.List<$core.int> get key => $_getN(1);
   @$pb.TagNumber(2)
-  set type($4.Census v) { setField(2, v); }
+  set key($core.List<$core.int> v) { $_setBytes(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasType() => $_has(1);
+  $core.bool hasKey() => $_has(1);
   @$pb.TagNumber(2)
-  void clearType() => clearField(2);
-  @$pb.TagNumber(2)
-  $4.Census ensureType() => $_ensure(1);
+  void clearKey() => clearField(2);
 }
 
 class GetCensusProofResponse extends $pb.GeneratedMessage {

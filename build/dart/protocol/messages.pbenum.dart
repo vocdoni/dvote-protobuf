@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: protocol/main-wrappers.proto
+//  source: protocol/messages.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -10,12 +10,12 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class Message_Signatures extends $pb.ProtobufEnum {
-  static const Message_Signatures None = Message_Signatures._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
-  static const Message_Signatures Secp256k1 = Message_Signatures._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Secp256k1');
+  static const Message_Signatures NONE = Message_Signatures._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
+  static const Message_Signatures SECP256K1 = Message_Signatures._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SECP256K1');
 
   static const $core.List<Message_Signatures> values = <Message_Signatures> [
-    None,
-    Secp256k1,
+    NONE,
+    SECP256K1,
   ];
 
   static final $core.Map<$core.int, Message_Signatures> _byValue = $pb.ProtobufEnum.initByValue(values);

@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: protocol/main-wrappers.proto
+//  source: protocol/messages.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
@@ -26,13 +26,13 @@ const Message$json = const {
 const Message_Signatures$json = const {
   '1': 'Signatures',
   '2': const [
-    const {'1': 'None', '2': 0},
-    const {'1': 'Secp256k1', '2': 1},
+    const {'1': 'NONE', '2': 0},
+    const {'1': 'SECP256K1', '2': 1},
   ],
 };
 
 /// Descriptor for `Message`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List messageDescriptor = $convert.base64Decode('CgdNZXNzYWdlEhIKBGJvZHkYASABKAxSBGJvZHkSIQoJc2lnbmF0dXJlGAIgASgMSABSCXNpZ25hdHVyZYgBARJICg1zaWduYXR1cmVUeXBlGAMgASgOMiIuZHZvdGUudHlwZXMudjIuTWVzc2FnZS5TaWduYXR1cmVzUg1zaWduYXR1cmVUeXBlIiUKClNpZ25hdHVyZXMSCAoETm9uZRAAEg0KCVNlY3AyNTZrMRABQgwKCl9zaWduYXR1cmU=');
+final $typed_data.Uint8List messageDescriptor = $convert.base64Decode('CgdNZXNzYWdlEhIKBGJvZHkYASABKAxSBGJvZHkSIQoJc2lnbmF0dXJlGAIgASgMSABSCXNpZ25hdHVyZYgBARJICg1zaWduYXR1cmVUeXBlGAMgASgOMiIuZHZvdGUudHlwZXMudjIuTWVzc2FnZS5TaWduYXR1cmVzUg1zaWduYXR1cmVUeXBlIiUKClNpZ25hdHVyZXMSCAoETk9ORRAAEg0KCVNFQ1AyNTZLMRABQgwKCl9zaWduYXR1cmU=');
 @$core.Deprecated('Use bodyDescriptor instead')
 const Body$json = const {
   '1': 'Body',
@@ -111,29 +111,29 @@ final $typed_data.Uint8List transactionErrorDescriptor = $convert.base64Decode('
 const Request$json = const {
   '1': 'Request',
   '2': const [
-    const {'1': 'GetElection', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElection', '9': 0, '10': 'GetElection'},
-    const {'1': 'GetElectionList', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionList', '9': 0, '10': 'GetElectionList'},
-    const {'1': 'GetOrganization', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.GetOrganization', '9': 0, '10': 'GetOrganization'},
-    const {'1': 'GetBallot', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBallot', '9': 0, '10': 'GetBallot'},
-    const {'1': 'GetElectionBallots', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionBallots', '9': 0, '10': 'GetElectionBallots'},
-    const {'1': 'GetElectionKeys', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionKeys', '9': 0, '10': 'GetElectionKeys'},
-    const {'1': 'GetElectionCircuitInfo', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionCircuitInfo', '9': 0, '10': 'GetElectionCircuitInfo'},
-    const {'1': 'GetElectionResults', '3': 8, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionResults', '9': 0, '10': 'GetElectionResults'},
-    const {'1': 'GetElectionWeight', '3': 9, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionWeight', '9': 0, '10': 'GetElectionWeight'},
-    const {'1': 'NewCensus', '3': 31, '4': 1, '5': 11, '6': '.dvote.types.v2.NewCensus', '9': 0, '10': 'NewCensus'},
-    const {'1': 'AddCensusKeys', '3': 32, '4': 1, '5': 11, '6': '.dvote.types.v2.AddCensusKeys', '9': 0, '10': 'AddCensusKeys'},
-    const {'1': 'GetCensusRoot', '3': 33, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusRoot', '9': 0, '10': 'GetCensusRoot'},
-    const {'1': 'GetCensusSize', '3': 34, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusSize', '9': 0, '10': 'GetCensusSize'},
-    const {'1': 'PublishCensus', '3': 35, '4': 1, '5': 11, '6': '.dvote.types.v2.PublishCensus', '9': 0, '10': 'PublishCensus'},
-    const {'1': 'GetCensusProof', '3': 36, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusProof', '9': 0, '10': 'GetCensusProof'},
-    const {'1': 'DumpCensus', '3': 37, '4': 1, '5': 11, '6': '.dvote.types.v2.DumpCensus', '9': 0, '10': 'DumpCensus'},
-    const {'1': 'PinFile', '3': 51, '4': 1, '5': 11, '6': '.dvote.types.v2.PinFile', '9': 0, '10': 'PinFile'},
-    const {'1': 'FetchFile', '3': 52, '4': 1, '5': 11, '6': '.dvote.types.v2.FetchFile', '9': 0, '10': 'FetchFile'},
-    const {'1': 'GetBlockStatus', '3': 61, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBlockStatus', '9': 0, '10': 'GetBlockStatus'},
-    const {'1': 'GetBlockCount', '3': 62, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBlockCount', '9': 0, '10': 'GetBlockCount'},
-    const {'1': 'EstimateElectionPrice', '3': 63, '4': 1, '5': 11, '6': '.dvote.types.v2.EstimateElectionPrice', '9': 0, '10': 'EstimateElectionPrice'},
-    const {'1': 'GetTransaction', '3': 81, '4': 1, '5': 11, '6': '.dvote.types.v2.GetTransaction', '9': 0, '10': 'GetTransaction'},
-    const {'1': 'WaitTransaction', '3': 82, '4': 1, '5': 11, '6': '.dvote.types.v2.WaitTransaction', '9': 0, '10': 'WaitTransaction'},
+    const {'1': 'getElection', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElection', '9': 0, '10': 'getElection'},
+    const {'1': 'getElectionList', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionList', '9': 0, '10': 'getElectionList'},
+    const {'1': 'getOrganization', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.GetOrganization', '9': 0, '10': 'getOrganization'},
+    const {'1': 'getBallot', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBallot', '9': 0, '10': 'getBallot'},
+    const {'1': 'getElectionBallots', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionBallots', '9': 0, '10': 'getElectionBallots'},
+    const {'1': 'getElectionKeys', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionKeys', '9': 0, '10': 'getElectionKeys'},
+    const {'1': 'getElectionCircuitInfo', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionCircuitInfo', '9': 0, '10': 'getElectionCircuitInfo'},
+    const {'1': 'getElectionResults', '3': 8, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionResults', '9': 0, '10': 'getElectionResults'},
+    const {'1': 'getElectionWeight', '3': 9, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionWeight', '9': 0, '10': 'getElectionWeight'},
+    const {'1': 'newCensus', '3': 31, '4': 1, '5': 11, '6': '.dvote.types.v2.NewCensus', '9': 0, '10': 'newCensus'},
+    const {'1': 'addCensusKeys', '3': 32, '4': 1, '5': 11, '6': '.dvote.types.v2.AddCensusKeys', '9': 0, '10': 'addCensusKeys'},
+    const {'1': 'getCensusRoot', '3': 33, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusRoot', '9': 0, '10': 'getCensusRoot'},
+    const {'1': 'getCensusSize', '3': 34, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusSize', '9': 0, '10': 'getCensusSize'},
+    const {'1': 'publishCensus', '3': 35, '4': 1, '5': 11, '6': '.dvote.types.v2.PublishCensus', '9': 0, '10': 'publishCensus'},
+    const {'1': 'getCensusProof', '3': 36, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusProof', '9': 0, '10': 'getCensusProof'},
+    const {'1': 'dumpCensus', '3': 37, '4': 1, '5': 11, '6': '.dvote.types.v2.DumpCensus', '9': 0, '10': 'dumpCensus'},
+    const {'1': 'pinFile', '3': 51, '4': 1, '5': 11, '6': '.dvote.types.v2.PinFile', '9': 0, '10': 'pinFile'},
+    const {'1': 'fetchFile', '3': 52, '4': 1, '5': 11, '6': '.dvote.types.v2.FetchFile', '9': 0, '10': 'fetchFile'},
+    const {'1': 'getBlockStatus', '3': 61, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBlockStatus', '9': 0, '10': 'getBlockStatus'},
+    const {'1': 'getBlockCount', '3': 62, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBlockCount', '9': 0, '10': 'getBlockCount'},
+    const {'1': 'estimateElectionPrice', '3': 63, '4': 1, '5': 11, '6': '.dvote.types.v2.EstimateElectionPrice', '9': 0, '10': 'estimateElectionPrice'},
+    const {'1': 'getTransaction', '3': 81, '4': 1, '5': 11, '6': '.dvote.types.v2.GetTransaction', '9': 0, '10': 'getTransaction'},
+    const {'1': 'waitTransaction', '3': 82, '4': 1, '5': 11, '6': '.dvote.types.v2.WaitTransaction', '9': 0, '10': 'waitTransaction'},
   ],
   '8': const [
     const {'1': 'body'},
@@ -141,13 +141,13 @@ const Request$json = const {
 };
 
 /// Descriptor for `Request`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List requestDescriptor = $convert.base64Decode('CgdSZXF1ZXN0Ej8KC0dldEVsZWN0aW9uGAEgASgLMhsuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25IAFILR2V0RWxlY3Rpb24SSwoPR2V0RWxlY3Rpb25MaXN0GAIgASgLMh8uZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25MaXN0SABSD0dldEVsZWN0aW9uTGlzdBJLCg9HZXRPcmdhbml6YXRpb24YAyABKAsyHy5kdm90ZS50eXBlcy52Mi5HZXRPcmdhbml6YXRpb25IAFIPR2V0T3JnYW5pemF0aW9uEjkKCUdldEJhbGxvdBgEIAEoCzIZLmR2b3RlLnR5cGVzLnYyLkdldEJhbGxvdEgAUglHZXRCYWxsb3QSVAoSR2V0RWxlY3Rpb25CYWxsb3RzGAUgASgLMiIuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25CYWxsb3RzSABSEkdldEVsZWN0aW9uQmFsbG90cxJLCg9HZXRFbGVjdGlvbktleXMYBiABKAsyHy5kdm90ZS50eXBlcy52Mi5HZXRFbGVjdGlvbktleXNIAFIPR2V0RWxlY3Rpb25LZXlzEmAKFkdldEVsZWN0aW9uQ2lyY3VpdEluZm8YByABKAsyJi5kdm90ZS50eXBlcy52Mi5HZXRFbGVjdGlvbkNpcmN1aXRJbmZvSABSFkdldEVsZWN0aW9uQ2lyY3VpdEluZm8SVAoSR2V0RWxlY3Rpb25SZXN1bHRzGAggASgLMiIuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25SZXN1bHRzSABSEkdldEVsZWN0aW9uUmVzdWx0cxJRChFHZXRFbGVjdGlvbldlaWdodBgJIAEoCzIhLmR2b3RlLnR5cGVzLnYyLkdldEVsZWN0aW9uV2VpZ2h0SABSEUdldEVsZWN0aW9uV2VpZ2h0EjkKCU5ld0NlbnN1cxgfIAEoCzIZLmR2b3RlLnR5cGVzLnYyLk5ld0NlbnN1c0gAUglOZXdDZW5zdXMSRQoNQWRkQ2Vuc3VzS2V5cxggIAEoCzIdLmR2b3RlLnR5cGVzLnYyLkFkZENlbnN1c0tleXNIAFINQWRkQ2Vuc3VzS2V5cxJFCg1HZXRDZW5zdXNSb290GCEgASgLMh0uZHZvdGUudHlwZXMudjIuR2V0Q2Vuc3VzUm9vdEgAUg1HZXRDZW5zdXNSb290EkUKDUdldENlbnN1c1NpemUYIiABKAsyHS5kdm90ZS50eXBlcy52Mi5HZXRDZW5zdXNTaXplSABSDUdldENlbnN1c1NpemUSRQoNUHVibGlzaENlbnN1cxgjIAEoCzIdLmR2b3RlLnR5cGVzLnYyLlB1Ymxpc2hDZW5zdXNIAFINUHVibGlzaENlbnN1cxJICg5HZXRDZW5zdXNQcm9vZhgkIAEoCzIeLmR2b3RlLnR5cGVzLnYyLkdldENlbnN1c1Byb29mSABSDkdldENlbnN1c1Byb29mEjwKCkR1bXBDZW5zdXMYJSABKAsyGi5kdm90ZS50eXBlcy52Mi5EdW1wQ2Vuc3VzSABSCkR1bXBDZW5zdXMSMwoHUGluRmlsZRgzIAEoCzIXLmR2b3RlLnR5cGVzLnYyLlBpbkZpbGVIAFIHUGluRmlsZRI5CglGZXRjaEZpbGUYNCABKAsyGS5kdm90ZS50eXBlcy52Mi5GZXRjaEZpbGVIAFIJRmV0Y2hGaWxlEkgKDkdldEJsb2NrU3RhdHVzGD0gASgLMh4uZHZvdGUudHlwZXMudjIuR2V0QmxvY2tTdGF0dXNIAFIOR2V0QmxvY2tTdGF0dXMSRQoNR2V0QmxvY2tDb3VudBg+IAEoCzIdLmR2b3RlLnR5cGVzLnYyLkdldEJsb2NrQ291bnRIAFINR2V0QmxvY2tDb3VudBJdChVFc3RpbWF0ZUVsZWN0aW9uUHJpY2UYPyABKAsyJS5kdm90ZS50eXBlcy52Mi5Fc3RpbWF0ZUVsZWN0aW9uUHJpY2VIAFIVRXN0aW1hdGVFbGVjdGlvblByaWNlEkgKDkdldFRyYW5zYWN0aW9uGFEgASgLMh4uZHZvdGUudHlwZXMudjIuR2V0VHJhbnNhY3Rpb25IAFIOR2V0VHJhbnNhY3Rpb24SSwoPV2FpdFRyYW5zYWN0aW9uGFIgASgLMh8uZHZvdGUudHlwZXMudjIuV2FpdFRyYW5zYWN0aW9uSABSD1dhaXRUcmFuc2FjdGlvbkIGCgRib2R5');
+final $typed_data.Uint8List requestDescriptor = $convert.base64Decode('CgdSZXF1ZXN0Ej8KC2dldEVsZWN0aW9uGAEgASgLMhsuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25IAFILZ2V0RWxlY3Rpb24SSwoPZ2V0RWxlY3Rpb25MaXN0GAIgASgLMh8uZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25MaXN0SABSD2dldEVsZWN0aW9uTGlzdBJLCg9nZXRPcmdhbml6YXRpb24YAyABKAsyHy5kdm90ZS50eXBlcy52Mi5HZXRPcmdhbml6YXRpb25IAFIPZ2V0T3JnYW5pemF0aW9uEjkKCWdldEJhbGxvdBgEIAEoCzIZLmR2b3RlLnR5cGVzLnYyLkdldEJhbGxvdEgAUglnZXRCYWxsb3QSVAoSZ2V0RWxlY3Rpb25CYWxsb3RzGAUgASgLMiIuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25CYWxsb3RzSABSEmdldEVsZWN0aW9uQmFsbG90cxJLCg9nZXRFbGVjdGlvbktleXMYBiABKAsyHy5kdm90ZS50eXBlcy52Mi5HZXRFbGVjdGlvbktleXNIAFIPZ2V0RWxlY3Rpb25LZXlzEmAKFmdldEVsZWN0aW9uQ2lyY3VpdEluZm8YByABKAsyJi5kdm90ZS50eXBlcy52Mi5HZXRFbGVjdGlvbkNpcmN1aXRJbmZvSABSFmdldEVsZWN0aW9uQ2lyY3VpdEluZm8SVAoSZ2V0RWxlY3Rpb25SZXN1bHRzGAggASgLMiIuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25SZXN1bHRzSABSEmdldEVsZWN0aW9uUmVzdWx0cxJRChFnZXRFbGVjdGlvbldlaWdodBgJIAEoCzIhLmR2b3RlLnR5cGVzLnYyLkdldEVsZWN0aW9uV2VpZ2h0SABSEWdldEVsZWN0aW9uV2VpZ2h0EjkKCW5ld0NlbnN1cxgfIAEoCzIZLmR2b3RlLnR5cGVzLnYyLk5ld0NlbnN1c0gAUgluZXdDZW5zdXMSRQoNYWRkQ2Vuc3VzS2V5cxggIAEoCzIdLmR2b3RlLnR5cGVzLnYyLkFkZENlbnN1c0tleXNIAFINYWRkQ2Vuc3VzS2V5cxJFCg1nZXRDZW5zdXNSb290GCEgASgLMh0uZHZvdGUudHlwZXMudjIuR2V0Q2Vuc3VzUm9vdEgAUg1nZXRDZW5zdXNSb290EkUKDWdldENlbnN1c1NpemUYIiABKAsyHS5kdm90ZS50eXBlcy52Mi5HZXRDZW5zdXNTaXplSABSDWdldENlbnN1c1NpemUSRQoNcHVibGlzaENlbnN1cxgjIAEoCzIdLmR2b3RlLnR5cGVzLnYyLlB1Ymxpc2hDZW5zdXNIAFINcHVibGlzaENlbnN1cxJICg5nZXRDZW5zdXNQcm9vZhgkIAEoCzIeLmR2b3RlLnR5cGVzLnYyLkdldENlbnN1c1Byb29mSABSDmdldENlbnN1c1Byb29mEjwKCmR1bXBDZW5zdXMYJSABKAsyGi5kdm90ZS50eXBlcy52Mi5EdW1wQ2Vuc3VzSABSCmR1bXBDZW5zdXMSMwoHcGluRmlsZRgzIAEoCzIXLmR2b3RlLnR5cGVzLnYyLlBpbkZpbGVIAFIHcGluRmlsZRI5CglmZXRjaEZpbGUYNCABKAsyGS5kdm90ZS50eXBlcy52Mi5GZXRjaEZpbGVIAFIJZmV0Y2hGaWxlEkgKDmdldEJsb2NrU3RhdHVzGD0gASgLMh4uZHZvdGUudHlwZXMudjIuR2V0QmxvY2tTdGF0dXNIAFIOZ2V0QmxvY2tTdGF0dXMSRQoNZ2V0QmxvY2tDb3VudBg+IAEoCzIdLmR2b3RlLnR5cGVzLnYyLkdldEJsb2NrQ291bnRIAFINZ2V0QmxvY2tDb3VudBJdChVlc3RpbWF0ZUVsZWN0aW9uUHJpY2UYPyABKAsyJS5kdm90ZS50eXBlcy52Mi5Fc3RpbWF0ZUVsZWN0aW9uUHJpY2VIAFIVZXN0aW1hdGVFbGVjdGlvblByaWNlEkgKDmdldFRyYW5zYWN0aW9uGFEgASgLMh4uZHZvdGUudHlwZXMudjIuR2V0VHJhbnNhY3Rpb25IAFIOZ2V0VHJhbnNhY3Rpb24SSwoPd2FpdFRyYW5zYWN0aW9uGFIgASgLMh8uZHZvdGUudHlwZXMudjIuV2FpdFRyYW5zYWN0aW9uSABSD3dhaXRUcmFuc2FjdGlvbkIGCgRib2R5');
 @$core.Deprecated('Use responseDescriptor instead')
 const Response$json = const {
   '1': 'Response',
   '2': const [
-    const {'1': 'successResponse', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.SuccessResponse', '9': 0, '10': 'successResponse'},
-    const {'1': 'errorResponse', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.ErrorResponse', '9': 0, '10': 'errorResponse'},
+    const {'1': 'success', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.ResponseSuccess', '9': 0, '10': 'success'},
+    const {'1': 'error', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.ResponseError', '9': 0, '10': 'error'},
   ],
   '8': const [
     const {'1': 'body'},
@@ -155,25 +155,25 @@ const Response$json = const {
 };
 
 /// Descriptor for `Response`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List responseDescriptor = $convert.base64Decode('CghSZXNwb25zZRJLCg9zdWNjZXNzUmVzcG9uc2UYASABKAsyHy5kdm90ZS50eXBlcy52Mi5TdWNjZXNzUmVzcG9uc2VIAFIPc3VjY2Vzc1Jlc3BvbnNlEkUKDWVycm9yUmVzcG9uc2UYAiABKAsyHS5kdm90ZS50eXBlcy52Mi5FcnJvclJlc3BvbnNlSABSDWVycm9yUmVzcG9uc2VCBgoEYm9keQ==');
-@$core.Deprecated('Use successResponseDescriptor instead')
-const SuccessResponse$json = const {
-  '1': 'SuccessResponse',
+final $typed_data.Uint8List responseDescriptor = $convert.base64Decode('CghSZXNwb25zZRI7CgdzdWNjZXNzGAEgASgLMh8uZHZvdGUudHlwZXMudjIuUmVzcG9uc2VTdWNjZXNzSABSB3N1Y2Nlc3MSNQoFZXJyb3IYAiABKAsyHS5kdm90ZS50eXBlcy52Mi5SZXNwb25zZUVycm9ySABSBWVycm9yQgYKBGJvZHk=');
+@$core.Deprecated('Use responseSuccessDescriptor instead')
+const ResponseSuccess$json = const {
+  '1': 'ResponseSuccess',
   '2': const [
     const {'1': 'body', '3': 1, '4': 1, '5': 12, '10': 'body'},
   ],
 };
 
-/// Descriptor for `SuccessResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List successResponseDescriptor = $convert.base64Decode('Cg9TdWNjZXNzUmVzcG9uc2USEgoEYm9keRgBIAEoDFIEYm9keQ==');
-@$core.Deprecated('Use errorResponseDescriptor instead')
-const ErrorResponse$json = const {
-  '1': 'ErrorResponse',
+/// Descriptor for `ResponseSuccess`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List responseSuccessDescriptor = $convert.base64Decode('Cg9SZXNwb25zZVN1Y2Nlc3MSEgoEYm9keRgBIAEoDFIEYm9keQ==');
+@$core.Deprecated('Use responseErrorDescriptor instead')
+const ResponseError$json = const {
+  '1': 'ResponseError',
   '2': const [
     const {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
     const {'1': 'body', '3': 2, '4': 1, '5': 12, '10': 'body'},
   ],
 };
 
-/// Descriptor for `ErrorResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List errorResponseDescriptor = $convert.base64Decode('Cg1FcnJvclJlc3BvbnNlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2USEgoEYm9keRgCIAEoDFIEYm9keQ==');
+/// Descriptor for `ResponseError`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List responseErrorDescriptor = $convert.base64Decode('Cg1SZXNwb25zZUVycm9yEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2USEgoEYm9keRgCIAEoDFIEYm9keQ==');

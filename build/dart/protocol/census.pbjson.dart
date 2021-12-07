@@ -64,11 +64,13 @@ const CensusErc20$json = const {
   '2': const [
     const {'1': 'tokenAddress', '3': 1, '4': 1, '5': 12, '10': 'tokenAddress'},
     const {'1': 'balanceMapSlot', '3': 2, '4': 1, '5': 5, '10': 'balanceMapSlot'},
+    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc20', '10': 'proof'},
+    const {'1': 'sourceEthereumBlock', '3': 4, '4': 1, '5': 5, '10': 'sourceEthereumBlock'},
   ],
 };
 
 /// Descriptor for `CensusErc20`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusErc20Descriptor = $convert.base64Decode('CgtDZW5zdXNFcmMyMBIiCgx0b2tlbkFkZHJlc3MYASABKAxSDHRva2VuQWRkcmVzcxImCg5iYWxhbmNlTWFwU2xvdBgCIAEoBVIOYmFsYW5jZU1hcFNsb3Q=');
+final $typed_data.Uint8List censusErc20Descriptor = $convert.base64Decode('CgtDZW5zdXNFcmMyMBIiCgx0b2tlbkFkZHJlc3MYASABKAxSDHRva2VuQWRkcmVzcxImCg5iYWxhbmNlTWFwU2xvdBgCIAEoBVIOYmFsYW5jZU1hcFNsb3QSNwoFcHJvb2YYAyABKAsyIS5kdm90ZS50eXBlcy52Mi5TdG9yYWdlUHJvb2ZFcmMyMFIFcHJvb2YSMAoTc291cmNlRXRoZXJldW1CbG9jaxgEIAEoBVITc291cmNlRXRoZXJldW1CbG9jaw==');
 @$core.Deprecated('Use censusErc721Descriptor instead')
 const CensusErc721$json = const {
   '1': 'CensusErc721',
@@ -96,11 +98,13 @@ const CensusErcMiniMe$json = const {
   '2': const [
     const {'1': 'tokenAddress', '3': 1, '4': 1, '5': 12, '10': 'tokenAddress'},
     const {'1': 'balanceMapSlot', '3': 2, '4': 1, '5': 5, '10': 'balanceMapSlot'},
+    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofMiniMe', '10': 'proof'},
+    const {'1': 'sourceEthereumBlock', '3': 4, '4': 1, '5': 5, '10': 'sourceEthereumBlock'},
   ],
 };
 
 /// Descriptor for `CensusErcMiniMe`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusErcMiniMeDescriptor = $convert.base64Decode('Cg9DZW5zdXNFcmNNaW5pTWUSIgoMdG9rZW5BZGRyZXNzGAEgASgMUgx0b2tlbkFkZHJlc3MSJgoOYmFsYW5jZU1hcFNsb3QYAiABKAVSDmJhbGFuY2VNYXBTbG90');
+final $typed_data.Uint8List censusErcMiniMeDescriptor = $convert.base64Decode('Cg9DZW5zdXNFcmNNaW5pTWUSIgoMdG9rZW5BZGRyZXNzGAEgASgMUgx0b2tlbkFkZHJlc3MSJgoOYmFsYW5jZU1hcFNsb3QYAiABKAVSDmJhbGFuY2VNYXBTbG90EjgKBXByb29mGAMgASgLMiIuZHZvdGUudHlwZXMudjIuU3RvcmFnZVByb29mTWluaU1lUgVwcm9vZhIwChNzb3VyY2VFdGhlcmV1bUJsb2NrGAQgASgFUhNzb3VyY2VFdGhlcmV1bUJsb2Nr');
 @$core.Deprecated('Use proofDescriptor instead')
 const Proof$json = const {
   '1': 'Proof',
@@ -108,11 +112,11 @@ const Proof$json = const {
     const {'1': 'none', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.ProofNone', '9': 0, '10': 'none'},
     const {'1': 'arbo', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v2.ProofArbo', '9': 0, '10': 'arbo'},
     const {'1': 'csp', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.ProofCSP', '9': 0, '10': 'csp'},
-    const {'1': 'proofERC20', '3': 21, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofERC20', '9': 0, '10': 'proofERC20'},
-    const {'1': 'proofERC721', '3': 22, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofERC721', '9': 0, '10': 'proofERC721'},
-    const {'1': 'proofERC1155', '3': 23, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofERC1155', '9': 0, '10': 'proofERC1155'},
-    const {'1': 'proofERC777', '3': 24, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofERC777', '9': 0, '10': 'proofERC777'},
-    const {'1': 'proofMiniMe', '3': 30, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofMiniMe', '9': 0, '10': 'proofMiniMe'},
+    const {'1': 'erc20', '3': 21, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc20', '9': 0, '10': 'erc20'},
+    const {'1': 'erc721', '3': 22, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc721', '9': 0, '10': 'erc721'},
+    const {'1': 'erc1155', '3': 23, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc1155', '9': 0, '10': 'erc1155'},
+    const {'1': 'erc777', '3': 24, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc777', '9': 0, '10': 'erc777'},
+    const {'1': 'miniMe', '3': 30, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofMiniMe', '9': 0, '10': 'miniMe'},
     const {'1': 'zkSnark', '3': 100, '4': 1, '5': 11, '6': '.dvote.types.v2.ProofZkSnark', '9': 0, '10': 'zkSnark'},
   ],
   '8': const [
@@ -121,7 +125,7 @@ const Proof$json = const {
 };
 
 /// Descriptor for `Proof`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhIvCgRub25lGAEgASgLMhkuZHZvdGUudHlwZXMudjIuUHJvb2ZOb25lSABSBG5vbmUSLwoEYXJibxgLIAEoCzIZLmR2b3RlLnR5cGVzLnYyLlByb29mQXJib0gAUgRhcmJvEiwKA2NzcBgMIAEoCzIYLmR2b3RlLnR5cGVzLnYyLlByb29mQ1NQSABSA2NzcBJDCgpwcm9vZkVSQzIwGBUgASgLMiEuZHZvdGUudHlwZXMudjIuU3RvcmFnZVByb29mRVJDMjBIAFIKcHJvb2ZFUkMyMBJGCgtwcm9vZkVSQzcyMRgWIAEoCzIiLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZkVSQzcyMUgAUgtwcm9vZkVSQzcyMRJJCgxwcm9vZkVSQzExNTUYFyABKAsyIy5kdm90ZS50eXBlcy52Mi5TdG9yYWdlUHJvb2ZFUkMxMTU1SABSDHByb29mRVJDMTE1NRJGCgtwcm9vZkVSQzc3NxgYIAEoCzIiLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZkVSQzc3N0gAUgtwcm9vZkVSQzc3NxJGCgtwcm9vZk1pbmlNZRgeIAEoCzIiLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZk1pbmlNZUgAUgtwcm9vZk1pbmlNZRI4Cgd6a1NuYXJrGGQgASgLMhwuZHZvdGUudHlwZXMudjIuUHJvb2Zaa1NuYXJrSABSB3prU25hcmtCBgoEYm9keQ==');
+final $typed_data.Uint8List proofDescriptor = $convert.base64Decode('CgVQcm9vZhIvCgRub25lGAEgASgLMhkuZHZvdGUudHlwZXMudjIuUHJvb2ZOb25lSABSBG5vbmUSLwoEYXJibxgLIAEoCzIZLmR2b3RlLnR5cGVzLnYyLlByb29mQXJib0gAUgRhcmJvEiwKA2NzcBgMIAEoCzIYLmR2b3RlLnR5cGVzLnYyLlByb29mQ1NQSABSA2NzcBI5CgVlcmMyMBgVIAEoCzIhLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZkVyYzIwSABSBWVyYzIwEjwKBmVyYzcyMRgWIAEoCzIiLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZkVyYzcyMUgAUgZlcmM3MjESPwoHZXJjMTE1NRgXIAEoCzIjLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZkVyYzExNTVIAFIHZXJjMTE1NRI8CgZlcmM3NzcYGCABKAsyIi5kdm90ZS50eXBlcy52Mi5TdG9yYWdlUHJvb2ZFcmM3NzdIAFIGZXJjNzc3EjwKBm1pbmlNZRgeIAEoCzIiLmR2b3RlLnR5cGVzLnYyLlN0b3JhZ2VQcm9vZk1pbmlNZUgAUgZtaW5pTWUSOAoHemtTbmFyaxhkIAEoCzIcLmR2b3RlLnR5cGVzLnYyLlByb29mWmtTbmFya0gAUgd6a1NuYXJrQgYKBGJvZHk=');
 @$core.Deprecated('Use proofNoneDescriptor instead')
 const ProofNone$json = const {
   '1': 'ProofNone',
@@ -150,9 +154,9 @@ const ProofCSP$json = const {
 
 /// Descriptor for `ProofCSP`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List proofCSPDescriptor = $convert.base64Decode('CghQcm9vZkNTUBIYCgdwYXlsb2FkGAEgASgMUgdwYXlsb2FkEhwKCXNpZ25hdHVyZRgCIAEoDFIJc2lnbmF0dXJl');
-@$core.Deprecated('Use storageProofERC20Descriptor instead')
-const StorageProofERC20$json = const {
-  '1': 'StorageProofERC20',
+@$core.Deprecated('Use storageProofErc20Descriptor instead')
+const StorageProofErc20$json = const {
+  '1': 'StorageProofErc20',
   '2': const [
     const {'1': 'key', '3': 1, '4': 1, '5': 12, '10': 'key'},
     const {'1': 'value', '3': 2, '4': 1, '5': 12, '10': 'value'},
@@ -160,29 +164,29 @@ const StorageProofERC20$json = const {
   ],
 };
 
-/// Descriptor for `StorageProofERC20`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storageProofERC20Descriptor = $convert.base64Decode('ChFTdG9yYWdlUHJvb2ZFUkMyMBIQCgNrZXkYASABKAxSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWUSFAoFcHJvb2YYAyADKAxSBXByb29m');
-@$core.Deprecated('Use storageProofERC721Descriptor instead')
-const StorageProofERC721$json = const {
-  '1': 'StorageProofERC721',
+/// Descriptor for `StorageProofErc20`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List storageProofErc20Descriptor = $convert.base64Decode('ChFTdG9yYWdlUHJvb2ZFcmMyMBIQCgNrZXkYASABKAxSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWUSFAoFcHJvb2YYAyADKAxSBXByb29m');
+@$core.Deprecated('Use storageProofErc721Descriptor instead')
+const StorageProofErc721$json = const {
+  '1': 'StorageProofErc721',
 };
 
-/// Descriptor for `StorageProofERC721`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storageProofERC721Descriptor = $convert.base64Decode('ChJTdG9yYWdlUHJvb2ZFUkM3MjE=');
-@$core.Deprecated('Use storageProofERC1155Descriptor instead')
-const StorageProofERC1155$json = const {
-  '1': 'StorageProofERC1155',
+/// Descriptor for `StorageProofErc721`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List storageProofErc721Descriptor = $convert.base64Decode('ChJTdG9yYWdlUHJvb2ZFcmM3MjE=');
+@$core.Deprecated('Use storageProofErc1155Descriptor instead')
+const StorageProofErc1155$json = const {
+  '1': 'StorageProofErc1155',
 };
 
-/// Descriptor for `StorageProofERC1155`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storageProofERC1155Descriptor = $convert.base64Decode('ChNTdG9yYWdlUHJvb2ZFUkMxMTU1');
-@$core.Deprecated('Use storageProofERC777Descriptor instead')
-const StorageProofERC777$json = const {
-  '1': 'StorageProofERC777',
+/// Descriptor for `StorageProofErc1155`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List storageProofErc1155Descriptor = $convert.base64Decode('ChNTdG9yYWdlUHJvb2ZFcmMxMTU1');
+@$core.Deprecated('Use storageProofErc777Descriptor instead')
+const StorageProofErc777$json = const {
+  '1': 'StorageProofErc777',
 };
 
-/// Descriptor for `StorageProofERC777`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storageProofERC777Descriptor = $convert.base64Decode('ChJTdG9yYWdlUHJvb2ZFUkM3Nzc=');
+/// Descriptor for `StorageProofErc777`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List storageProofErc777Descriptor = $convert.base64Decode('ChJTdG9yYWdlUHJvb2ZFcmM3Nzc=');
 @$core.Deprecated('Use storageProofMiniMeDescriptor instead')
 const StorageProofMiniMe$json = const {
   '1': 'StorageProofMiniMe',

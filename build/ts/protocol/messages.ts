@@ -40,34 +40,33 @@ import {
 
 export const protobufPackage = "dvote.types.v2";
 
-/** / Remote calls between components are a message, optionally signed */
+/** Remote calls between components are a message, optionally signed */
 export interface Message {
-  /** / The bytes of the {Body} model being signed */
+  /** The bytes of the {Body} model being signed */
   body: Uint8Array;
   /**
-   * / Optionally signed. Not expected when:
-   * / - Submitting a vote
-   * / - Performing a read-only operation
-   * /
+   * Optionally signed. Not expected when:
+   * - Submitting a vote
+   * - Performing a read-only operation
    */
   signature?: Uint8Array | undefined;
   signatureType: Message_Signatures;
 }
 
 export enum Message_Signatures {
-  None = 0,
-  Secp256k1 = 1,
+  NONE = 0,
+  SECP256K1 = 1,
   UNRECOGNIZED = -1,
 }
 
 export function message_SignaturesFromJSON(object: any): Message_Signatures {
   switch (object) {
     case 0:
-    case "None":
-      return Message_Signatures.None;
+    case "NONE":
+      return Message_Signatures.NONE;
     case 1:
-    case "Secp256k1":
-      return Message_Signatures.Secp256k1;
+    case "SECP256K1":
+      return Message_Signatures.SECP256K1;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -77,19 +76,19 @@ export function message_SignaturesFromJSON(object: any): Message_Signatures {
 
 export function message_SignaturesToJSON(object: Message_Signatures): string {
   switch (object) {
-    case Message_Signatures.None:
-      return "None";
-    case Message_Signatures.Secp256k1:
-      return "Secp256k1";
+    case Message_Signatures.NONE:
+      return "NONE";
+    case Message_Signatures.SECP256K1:
+      return "SECP256K1";
     default:
       return "UNKNOWN";
   }
 }
 
-/** / The body contains the serialized bytes from a `Body`, which can host three types of interactions. */
+/** The body contains the serialized bytes from a `Body`, which can host three types of interactions. */
 export interface Body {
   id: Uint8Array;
-  /** / UNIX timestamp */
+  /** UNIX timestamp */
   timestamp: number;
   body?:
     | { $case: "transaction"; transaction: Transaction }
@@ -98,7 +97,7 @@ export interface Body {
     | { $case: "response"; response: Response };
 }
 
-/** / Vochain or VocOne transactions, all wrapped within a `Message > Body`. */
+/** Vochain or VocOne transactions, all wrapped within a `Message > Body`. */
 export interface Transaction {
   body?:
     | { $case: "setOrganization"; setOrganization: SetOrganization }
@@ -112,7 +111,7 @@ export interface Transaction {
     | { $case: "setProposalStatus"; setProposalStatus: SetProposalStatus };
 }
 
-/** / The response given to the transaction submitter: */
+/** The response given to the transaction submitter: */
 export interface TransactionReceipt {
   body?:
     | { $case: "success"; success: TransactionSuccess }
@@ -128,55 +127,55 @@ export interface TransactionError {
   code: number;
 }
 
-/** / Census Service, File gateways, and similar nodes expect `Request` models, and return `Response` models, all wrapped within a `Message > Body`. */
+/** Census Service, File gateways, and similar nodes expect `Request` models, and return `Response` models, all wrapped within a `Message > Body`. */
 export interface Request {
   body?:
-    | { $case: "GetElection"; GetElection: GetElection }
-    | { $case: "GetElectionList"; GetElectionList: GetElectionList }
-    | { $case: "GetOrganization"; GetOrganization: GetOrganization }
-    | { $case: "GetBallot"; GetBallot: GetBallot }
-    | { $case: "GetElectionBallots"; GetElectionBallots: GetElectionBallots }
-    | { $case: "GetElectionKeys"; GetElectionKeys: GetElectionKeys }
+    | { $case: "getElection"; getElection: GetElection }
+    | { $case: "getElectionList"; getElectionList: GetElectionList }
+    | { $case: "getOrganization"; getOrganization: GetOrganization }
+    | { $case: "getBallot"; getBallot: GetBallot }
+    | { $case: "getElectionBallots"; getElectionBallots: GetElectionBallots }
+    | { $case: "getElectionKeys"; getElectionKeys: GetElectionKeys }
     | {
-        $case: "GetElectionCircuitInfo";
-        GetElectionCircuitInfo: GetElectionCircuitInfo;
+        $case: "getElectionCircuitInfo";
+        getElectionCircuitInfo: GetElectionCircuitInfo;
       }
-    | { $case: "GetElectionResults"; GetElectionResults: GetElectionResults }
-    | { $case: "GetElectionWeight"; GetElectionWeight: GetElectionWeight }
-    | { $case: "NewCensus"; NewCensus: NewCensus }
-    | { $case: "AddCensusKeys"; AddCensusKeys: AddCensusKeys }
-    | { $case: "GetCensusRoot"; GetCensusRoot: GetCensusRoot }
-    | { $case: "GetCensusSize"; GetCensusSize: GetCensusSize }
-    | { $case: "PublishCensus"; PublishCensus: PublishCensus }
-    | { $case: "GetCensusProof"; GetCensusProof: GetCensusProof }
-    | { $case: "DumpCensus"; DumpCensus: DumpCensus }
-    | { $case: "PinFile"; PinFile: PinFile }
-    | { $case: "FetchFile"; FetchFile: FetchFile }
-    | { $case: "GetBlockStatus"; GetBlockStatus: GetBlockStatus }
-    | { $case: "GetBlockCount"; GetBlockCount: GetBlockCount }
+    | { $case: "getElectionResults"; getElectionResults: GetElectionResults }
+    | { $case: "getElectionWeight"; getElectionWeight: GetElectionWeight }
+    | { $case: "newCensus"; newCensus: NewCensus }
+    | { $case: "addCensusKeys"; addCensusKeys: AddCensusKeys }
+    | { $case: "getCensusRoot"; getCensusRoot: GetCensusRoot }
+    | { $case: "getCensusSize"; getCensusSize: GetCensusSize }
+    | { $case: "publishCensus"; publishCensus: PublishCensus }
+    | { $case: "getCensusProof"; getCensusProof: GetCensusProof }
+    | { $case: "dumpCensus"; dumpCensus: DumpCensus }
+    | { $case: "pinFile"; pinFile: PinFile }
+    | { $case: "fetchFile"; fetchFile: FetchFile }
+    | { $case: "getBlockStatus"; getBlockStatus: GetBlockStatus }
+    | { $case: "getBlockCount"; getBlockCount: GetBlockCount }
     | {
-        $case: "EstimateElectionPrice";
-        EstimateElectionPrice: EstimateElectionPrice;
+        $case: "estimateElectionPrice";
+        estimateElectionPrice: EstimateElectionPrice;
       }
-    | { $case: "GetTransaction"; GetTransaction: GetTransaction }
-    | { $case: "WaitTransaction"; WaitTransaction: WaitTransaction };
+    | { $case: "getTransaction"; getTransaction: GetTransaction }
+    | { $case: "waitTransaction"; waitTransaction: WaitTransaction };
 }
 
-/** / Responses can either be successful or fail. The `Response` body depends on the type of request made originally, and the caller is responsible for deserializing the bytes into the according model, if any. */
+/** Responses can either be successful or fail. The `Response` body depends on the type of request made originally, and the caller is responsible for deserializing the bytes into the according model, if any. */
 export interface Response {
   body?:
-    | { $case: "successResponse"; successResponse: SuccessResponse }
-    | { $case: "errorResponse"; errorResponse: ErrorResponse };
+    | { $case: "success"; success: ResponseSuccess }
+    | { $case: "error"; error: ResponseError };
 }
 
-export interface SuccessResponse {
-  /** / Serialized response according to the request model */
+export interface ResponseSuccess {
+  /** Serialized response, related to the request model */
   body: Uint8Array;
 }
 
-export interface ErrorResponse {
+export interface ResponseError {
   message: string;
-  /** / Serialized response that corresponds to the request model */
+  /** Serialized response, related to the request model */
   body: Uint8Array;
 }
 
@@ -1028,138 +1027,138 @@ const baseRequest: object = {};
 
 export const Request = {
   encode(message: Request, writer: Writer = Writer.create()): Writer {
-    if (message.body?.$case === "GetElection") {
+    if (message.body?.$case === "getElection") {
       GetElection.encode(
-        message.body.GetElection,
+        message.body.getElection,
         writer.uint32(10).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetElectionList") {
+    if (message.body?.$case === "getElectionList") {
       GetElectionList.encode(
-        message.body.GetElectionList,
+        message.body.getElectionList,
         writer.uint32(18).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetOrganization") {
+    if (message.body?.$case === "getOrganization") {
       GetOrganization.encode(
-        message.body.GetOrganization,
+        message.body.getOrganization,
         writer.uint32(26).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetBallot") {
+    if (message.body?.$case === "getBallot") {
       GetBallot.encode(
-        message.body.GetBallot,
+        message.body.getBallot,
         writer.uint32(34).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetElectionBallots") {
+    if (message.body?.$case === "getElectionBallots") {
       GetElectionBallots.encode(
-        message.body.GetElectionBallots,
+        message.body.getElectionBallots,
         writer.uint32(42).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetElectionKeys") {
+    if (message.body?.$case === "getElectionKeys") {
       GetElectionKeys.encode(
-        message.body.GetElectionKeys,
+        message.body.getElectionKeys,
         writer.uint32(50).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetElectionCircuitInfo") {
+    if (message.body?.$case === "getElectionCircuitInfo") {
       GetElectionCircuitInfo.encode(
-        message.body.GetElectionCircuitInfo,
+        message.body.getElectionCircuitInfo,
         writer.uint32(58).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetElectionResults") {
+    if (message.body?.$case === "getElectionResults") {
       GetElectionResults.encode(
-        message.body.GetElectionResults,
+        message.body.getElectionResults,
         writer.uint32(66).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetElectionWeight") {
+    if (message.body?.$case === "getElectionWeight") {
       GetElectionWeight.encode(
-        message.body.GetElectionWeight,
+        message.body.getElectionWeight,
         writer.uint32(74).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "NewCensus") {
+    if (message.body?.$case === "newCensus") {
       NewCensus.encode(
-        message.body.NewCensus,
+        message.body.newCensus,
         writer.uint32(250).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "AddCensusKeys") {
+    if (message.body?.$case === "addCensusKeys") {
       AddCensusKeys.encode(
-        message.body.AddCensusKeys,
+        message.body.addCensusKeys,
         writer.uint32(258).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetCensusRoot") {
+    if (message.body?.$case === "getCensusRoot") {
       GetCensusRoot.encode(
-        message.body.GetCensusRoot,
+        message.body.getCensusRoot,
         writer.uint32(266).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetCensusSize") {
+    if (message.body?.$case === "getCensusSize") {
       GetCensusSize.encode(
-        message.body.GetCensusSize,
+        message.body.getCensusSize,
         writer.uint32(274).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "PublishCensus") {
+    if (message.body?.$case === "publishCensus") {
       PublishCensus.encode(
-        message.body.PublishCensus,
+        message.body.publishCensus,
         writer.uint32(282).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetCensusProof") {
+    if (message.body?.$case === "getCensusProof") {
       GetCensusProof.encode(
-        message.body.GetCensusProof,
+        message.body.getCensusProof,
         writer.uint32(290).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "DumpCensus") {
+    if (message.body?.$case === "dumpCensus") {
       DumpCensus.encode(
-        message.body.DumpCensus,
+        message.body.dumpCensus,
         writer.uint32(298).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "PinFile") {
-      PinFile.encode(message.body.PinFile, writer.uint32(410).fork()).ldelim();
+    if (message.body?.$case === "pinFile") {
+      PinFile.encode(message.body.pinFile, writer.uint32(410).fork()).ldelim();
     }
-    if (message.body?.$case === "FetchFile") {
+    if (message.body?.$case === "fetchFile") {
       FetchFile.encode(
-        message.body.FetchFile,
+        message.body.fetchFile,
         writer.uint32(418).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetBlockStatus") {
+    if (message.body?.$case === "getBlockStatus") {
       GetBlockStatus.encode(
-        message.body.GetBlockStatus,
+        message.body.getBlockStatus,
         writer.uint32(490).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetBlockCount") {
+    if (message.body?.$case === "getBlockCount") {
       GetBlockCount.encode(
-        message.body.GetBlockCount,
+        message.body.getBlockCount,
         writer.uint32(498).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "EstimateElectionPrice") {
+    if (message.body?.$case === "estimateElectionPrice") {
       EstimateElectionPrice.encode(
-        message.body.EstimateElectionPrice,
+        message.body.estimateElectionPrice,
         writer.uint32(506).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "GetTransaction") {
+    if (message.body?.$case === "getTransaction") {
       GetTransaction.encode(
-        message.body.GetTransaction,
+        message.body.getTransaction,
         writer.uint32(650).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "WaitTransaction") {
+    if (message.body?.$case === "waitTransaction") {
       WaitTransaction.encode(
-        message.body.WaitTransaction,
+        message.body.waitTransaction,
         writer.uint32(658).fork()
       ).ldelim();
     }
@@ -1175,32 +1174,32 @@ export const Request = {
       switch (tag >>> 3) {
         case 1:
           message.body = {
-            $case: "GetElection",
-            GetElection: GetElection.decode(reader, reader.uint32()),
+            $case: "getElection",
+            getElection: GetElection.decode(reader, reader.uint32()),
           };
           break;
         case 2:
           message.body = {
-            $case: "GetElectionList",
-            GetElectionList: GetElectionList.decode(reader, reader.uint32()),
+            $case: "getElectionList",
+            getElectionList: GetElectionList.decode(reader, reader.uint32()),
           };
           break;
         case 3:
           message.body = {
-            $case: "GetOrganization",
-            GetOrganization: GetOrganization.decode(reader, reader.uint32()),
+            $case: "getOrganization",
+            getOrganization: GetOrganization.decode(reader, reader.uint32()),
           };
           break;
         case 4:
           message.body = {
-            $case: "GetBallot",
-            GetBallot: GetBallot.decode(reader, reader.uint32()),
+            $case: "getBallot",
+            getBallot: GetBallot.decode(reader, reader.uint32()),
           };
           break;
         case 5:
           message.body = {
-            $case: "GetElectionBallots",
-            GetElectionBallots: GetElectionBallots.decode(
+            $case: "getElectionBallots",
+            getElectionBallots: GetElectionBallots.decode(
               reader,
               reader.uint32()
             ),
@@ -1208,14 +1207,14 @@ export const Request = {
           break;
         case 6:
           message.body = {
-            $case: "GetElectionKeys",
-            GetElectionKeys: GetElectionKeys.decode(reader, reader.uint32()),
+            $case: "getElectionKeys",
+            getElectionKeys: GetElectionKeys.decode(reader, reader.uint32()),
           };
           break;
         case 7:
           message.body = {
-            $case: "GetElectionCircuitInfo",
-            GetElectionCircuitInfo: GetElectionCircuitInfo.decode(
+            $case: "getElectionCircuitInfo",
+            getElectionCircuitInfo: GetElectionCircuitInfo.decode(
               reader,
               reader.uint32()
             ),
@@ -1223,8 +1222,8 @@ export const Request = {
           break;
         case 8:
           message.body = {
-            $case: "GetElectionResults",
-            GetElectionResults: GetElectionResults.decode(
+            $case: "getElectionResults",
+            getElectionResults: GetElectionResults.decode(
               reader,
               reader.uint32()
             ),
@@ -1232,8 +1231,8 @@ export const Request = {
           break;
         case 9:
           message.body = {
-            $case: "GetElectionWeight",
-            GetElectionWeight: GetElectionWeight.decode(
+            $case: "getElectionWeight",
+            getElectionWeight: GetElectionWeight.decode(
               reader,
               reader.uint32()
             ),
@@ -1241,74 +1240,74 @@ export const Request = {
           break;
         case 31:
           message.body = {
-            $case: "NewCensus",
-            NewCensus: NewCensus.decode(reader, reader.uint32()),
+            $case: "newCensus",
+            newCensus: NewCensus.decode(reader, reader.uint32()),
           };
           break;
         case 32:
           message.body = {
-            $case: "AddCensusKeys",
-            AddCensusKeys: AddCensusKeys.decode(reader, reader.uint32()),
+            $case: "addCensusKeys",
+            addCensusKeys: AddCensusKeys.decode(reader, reader.uint32()),
           };
           break;
         case 33:
           message.body = {
-            $case: "GetCensusRoot",
-            GetCensusRoot: GetCensusRoot.decode(reader, reader.uint32()),
+            $case: "getCensusRoot",
+            getCensusRoot: GetCensusRoot.decode(reader, reader.uint32()),
           };
           break;
         case 34:
           message.body = {
-            $case: "GetCensusSize",
-            GetCensusSize: GetCensusSize.decode(reader, reader.uint32()),
+            $case: "getCensusSize",
+            getCensusSize: GetCensusSize.decode(reader, reader.uint32()),
           };
           break;
         case 35:
           message.body = {
-            $case: "PublishCensus",
-            PublishCensus: PublishCensus.decode(reader, reader.uint32()),
+            $case: "publishCensus",
+            publishCensus: PublishCensus.decode(reader, reader.uint32()),
           };
           break;
         case 36:
           message.body = {
-            $case: "GetCensusProof",
-            GetCensusProof: GetCensusProof.decode(reader, reader.uint32()),
+            $case: "getCensusProof",
+            getCensusProof: GetCensusProof.decode(reader, reader.uint32()),
           };
           break;
         case 37:
           message.body = {
-            $case: "DumpCensus",
-            DumpCensus: DumpCensus.decode(reader, reader.uint32()),
+            $case: "dumpCensus",
+            dumpCensus: DumpCensus.decode(reader, reader.uint32()),
           };
           break;
         case 51:
           message.body = {
-            $case: "PinFile",
-            PinFile: PinFile.decode(reader, reader.uint32()),
+            $case: "pinFile",
+            pinFile: PinFile.decode(reader, reader.uint32()),
           };
           break;
         case 52:
           message.body = {
-            $case: "FetchFile",
-            FetchFile: FetchFile.decode(reader, reader.uint32()),
+            $case: "fetchFile",
+            fetchFile: FetchFile.decode(reader, reader.uint32()),
           };
           break;
         case 61:
           message.body = {
-            $case: "GetBlockStatus",
-            GetBlockStatus: GetBlockStatus.decode(reader, reader.uint32()),
+            $case: "getBlockStatus",
+            getBlockStatus: GetBlockStatus.decode(reader, reader.uint32()),
           };
           break;
         case 62:
           message.body = {
-            $case: "GetBlockCount",
-            GetBlockCount: GetBlockCount.decode(reader, reader.uint32()),
+            $case: "getBlockCount",
+            getBlockCount: GetBlockCount.decode(reader, reader.uint32()),
           };
           break;
         case 63:
           message.body = {
-            $case: "EstimateElectionPrice",
-            EstimateElectionPrice: EstimateElectionPrice.decode(
+            $case: "estimateElectionPrice",
+            estimateElectionPrice: EstimateElectionPrice.decode(
               reader,
               reader.uint32()
             ),
@@ -1316,14 +1315,14 @@ export const Request = {
           break;
         case 81:
           message.body = {
-            $case: "GetTransaction",
-            GetTransaction: GetTransaction.decode(reader, reader.uint32()),
+            $case: "getTransaction",
+            getTransaction: GetTransaction.decode(reader, reader.uint32()),
           };
           break;
         case 82:
           message.body = {
-            $case: "WaitTransaction",
-            WaitTransaction: WaitTransaction.decode(reader, reader.uint32()),
+            $case: "waitTransaction",
+            waitTransaction: WaitTransaction.decode(reader, reader.uint32()),
           };
           break;
         default:
@@ -1336,177 +1335,177 @@ export const Request = {
 
   fromJSON(object: any): Request {
     const message = { ...baseRequest } as Request;
-    if (object.GetElection !== undefined && object.GetElection !== null) {
+    if (object.getElection !== undefined && object.getElection !== null) {
       message.body = {
-        $case: "GetElection",
-        GetElection: GetElection.fromJSON(object.GetElection),
+        $case: "getElection",
+        getElection: GetElection.fromJSON(object.getElection),
       };
     }
     if (
-      object.GetElectionList !== undefined &&
-      object.GetElectionList !== null
+      object.getElectionList !== undefined &&
+      object.getElectionList !== null
     ) {
       message.body = {
-        $case: "GetElectionList",
-        GetElectionList: GetElectionList.fromJSON(object.GetElectionList),
+        $case: "getElectionList",
+        getElectionList: GetElectionList.fromJSON(object.getElectionList),
       };
     }
     if (
-      object.GetOrganization !== undefined &&
-      object.GetOrganization !== null
+      object.getOrganization !== undefined &&
+      object.getOrganization !== null
     ) {
       message.body = {
-        $case: "GetOrganization",
-        GetOrganization: GetOrganization.fromJSON(object.GetOrganization),
+        $case: "getOrganization",
+        getOrganization: GetOrganization.fromJSON(object.getOrganization),
       };
     }
-    if (object.GetBallot !== undefined && object.GetBallot !== null) {
+    if (object.getBallot !== undefined && object.getBallot !== null) {
       message.body = {
-        $case: "GetBallot",
-        GetBallot: GetBallot.fromJSON(object.GetBallot),
+        $case: "getBallot",
+        getBallot: GetBallot.fromJSON(object.getBallot),
       };
     }
     if (
-      object.GetElectionBallots !== undefined &&
-      object.GetElectionBallots !== null
+      object.getElectionBallots !== undefined &&
+      object.getElectionBallots !== null
     ) {
       message.body = {
-        $case: "GetElectionBallots",
-        GetElectionBallots: GetElectionBallots.fromJSON(
-          object.GetElectionBallots
+        $case: "getElectionBallots",
+        getElectionBallots: GetElectionBallots.fromJSON(
+          object.getElectionBallots
         ),
       };
     }
     if (
-      object.GetElectionKeys !== undefined &&
-      object.GetElectionKeys !== null
+      object.getElectionKeys !== undefined &&
+      object.getElectionKeys !== null
     ) {
       message.body = {
-        $case: "GetElectionKeys",
-        GetElectionKeys: GetElectionKeys.fromJSON(object.GetElectionKeys),
+        $case: "getElectionKeys",
+        getElectionKeys: GetElectionKeys.fromJSON(object.getElectionKeys),
       };
     }
     if (
-      object.GetElectionCircuitInfo !== undefined &&
-      object.GetElectionCircuitInfo !== null
+      object.getElectionCircuitInfo !== undefined &&
+      object.getElectionCircuitInfo !== null
     ) {
       message.body = {
-        $case: "GetElectionCircuitInfo",
-        GetElectionCircuitInfo: GetElectionCircuitInfo.fromJSON(
-          object.GetElectionCircuitInfo
+        $case: "getElectionCircuitInfo",
+        getElectionCircuitInfo: GetElectionCircuitInfo.fromJSON(
+          object.getElectionCircuitInfo
         ),
       };
     }
     if (
-      object.GetElectionResults !== undefined &&
-      object.GetElectionResults !== null
+      object.getElectionResults !== undefined &&
+      object.getElectionResults !== null
     ) {
       message.body = {
-        $case: "GetElectionResults",
-        GetElectionResults: GetElectionResults.fromJSON(
-          object.GetElectionResults
+        $case: "getElectionResults",
+        getElectionResults: GetElectionResults.fromJSON(
+          object.getElectionResults
         ),
       };
     }
     if (
-      object.GetElectionWeight !== undefined &&
-      object.GetElectionWeight !== null
+      object.getElectionWeight !== undefined &&
+      object.getElectionWeight !== null
     ) {
       message.body = {
-        $case: "GetElectionWeight",
-        GetElectionWeight: GetElectionWeight.fromJSON(object.GetElectionWeight),
+        $case: "getElectionWeight",
+        getElectionWeight: GetElectionWeight.fromJSON(object.getElectionWeight),
       };
     }
-    if (object.NewCensus !== undefined && object.NewCensus !== null) {
+    if (object.newCensus !== undefined && object.newCensus !== null) {
       message.body = {
-        $case: "NewCensus",
-        NewCensus: NewCensus.fromJSON(object.NewCensus),
+        $case: "newCensus",
+        newCensus: NewCensus.fromJSON(object.newCensus),
       };
     }
-    if (object.AddCensusKeys !== undefined && object.AddCensusKeys !== null) {
+    if (object.addCensusKeys !== undefined && object.addCensusKeys !== null) {
       message.body = {
-        $case: "AddCensusKeys",
-        AddCensusKeys: AddCensusKeys.fromJSON(object.AddCensusKeys),
+        $case: "addCensusKeys",
+        addCensusKeys: AddCensusKeys.fromJSON(object.addCensusKeys),
       };
     }
-    if (object.GetCensusRoot !== undefined && object.GetCensusRoot !== null) {
+    if (object.getCensusRoot !== undefined && object.getCensusRoot !== null) {
       message.body = {
-        $case: "GetCensusRoot",
-        GetCensusRoot: GetCensusRoot.fromJSON(object.GetCensusRoot),
+        $case: "getCensusRoot",
+        getCensusRoot: GetCensusRoot.fromJSON(object.getCensusRoot),
       };
     }
-    if (object.GetCensusSize !== undefined && object.GetCensusSize !== null) {
+    if (object.getCensusSize !== undefined && object.getCensusSize !== null) {
       message.body = {
-        $case: "GetCensusSize",
-        GetCensusSize: GetCensusSize.fromJSON(object.GetCensusSize),
+        $case: "getCensusSize",
+        getCensusSize: GetCensusSize.fromJSON(object.getCensusSize),
       };
     }
-    if (object.PublishCensus !== undefined && object.PublishCensus !== null) {
+    if (object.publishCensus !== undefined && object.publishCensus !== null) {
       message.body = {
-        $case: "PublishCensus",
-        PublishCensus: PublishCensus.fromJSON(object.PublishCensus),
+        $case: "publishCensus",
+        publishCensus: PublishCensus.fromJSON(object.publishCensus),
       };
     }
-    if (object.GetCensusProof !== undefined && object.GetCensusProof !== null) {
+    if (object.getCensusProof !== undefined && object.getCensusProof !== null) {
       message.body = {
-        $case: "GetCensusProof",
-        GetCensusProof: GetCensusProof.fromJSON(object.GetCensusProof),
+        $case: "getCensusProof",
+        getCensusProof: GetCensusProof.fromJSON(object.getCensusProof),
       };
     }
-    if (object.DumpCensus !== undefined && object.DumpCensus !== null) {
+    if (object.dumpCensus !== undefined && object.dumpCensus !== null) {
       message.body = {
-        $case: "DumpCensus",
-        DumpCensus: DumpCensus.fromJSON(object.DumpCensus),
+        $case: "dumpCensus",
+        dumpCensus: DumpCensus.fromJSON(object.dumpCensus),
       };
     }
-    if (object.PinFile !== undefined && object.PinFile !== null) {
+    if (object.pinFile !== undefined && object.pinFile !== null) {
       message.body = {
-        $case: "PinFile",
-        PinFile: PinFile.fromJSON(object.PinFile),
+        $case: "pinFile",
+        pinFile: PinFile.fromJSON(object.pinFile),
       };
     }
-    if (object.FetchFile !== undefined && object.FetchFile !== null) {
+    if (object.fetchFile !== undefined && object.fetchFile !== null) {
       message.body = {
-        $case: "FetchFile",
-        FetchFile: FetchFile.fromJSON(object.FetchFile),
+        $case: "fetchFile",
+        fetchFile: FetchFile.fromJSON(object.fetchFile),
       };
     }
-    if (object.GetBlockStatus !== undefined && object.GetBlockStatus !== null) {
+    if (object.getBlockStatus !== undefined && object.getBlockStatus !== null) {
       message.body = {
-        $case: "GetBlockStatus",
-        GetBlockStatus: GetBlockStatus.fromJSON(object.GetBlockStatus),
+        $case: "getBlockStatus",
+        getBlockStatus: GetBlockStatus.fromJSON(object.getBlockStatus),
       };
     }
-    if (object.GetBlockCount !== undefined && object.GetBlockCount !== null) {
+    if (object.getBlockCount !== undefined && object.getBlockCount !== null) {
       message.body = {
-        $case: "GetBlockCount",
-        GetBlockCount: GetBlockCount.fromJSON(object.GetBlockCount),
+        $case: "getBlockCount",
+        getBlockCount: GetBlockCount.fromJSON(object.getBlockCount),
       };
     }
     if (
-      object.EstimateElectionPrice !== undefined &&
-      object.EstimateElectionPrice !== null
+      object.estimateElectionPrice !== undefined &&
+      object.estimateElectionPrice !== null
     ) {
       message.body = {
-        $case: "EstimateElectionPrice",
-        EstimateElectionPrice: EstimateElectionPrice.fromJSON(
-          object.EstimateElectionPrice
+        $case: "estimateElectionPrice",
+        estimateElectionPrice: EstimateElectionPrice.fromJSON(
+          object.estimateElectionPrice
         ),
       };
     }
-    if (object.GetTransaction !== undefined && object.GetTransaction !== null) {
+    if (object.getTransaction !== undefined && object.getTransaction !== null) {
       message.body = {
-        $case: "GetTransaction",
-        GetTransaction: GetTransaction.fromJSON(object.GetTransaction),
+        $case: "getTransaction",
+        getTransaction: GetTransaction.fromJSON(object.getTransaction),
       };
     }
     if (
-      object.WaitTransaction !== undefined &&
-      object.WaitTransaction !== null
+      object.waitTransaction !== undefined &&
+      object.waitTransaction !== null
     ) {
       message.body = {
-        $case: "WaitTransaction",
-        WaitTransaction: WaitTransaction.fromJSON(object.WaitTransaction),
+        $case: "waitTransaction",
+        waitTransaction: WaitTransaction.fromJSON(object.waitTransaction),
       };
     }
     return message;
@@ -1514,97 +1513,97 @@ export const Request = {
 
   toJSON(message: Request): unknown {
     const obj: any = {};
-    message.body?.$case === "GetElection" &&
-      (obj.GetElection = message.body?.GetElection
-        ? GetElection.toJSON(message.body?.GetElection)
+    message.body?.$case === "getElection" &&
+      (obj.getElection = message.body?.getElection
+        ? GetElection.toJSON(message.body?.getElection)
         : undefined);
-    message.body?.$case === "GetElectionList" &&
-      (obj.GetElectionList = message.body?.GetElectionList
-        ? GetElectionList.toJSON(message.body?.GetElectionList)
+    message.body?.$case === "getElectionList" &&
+      (obj.getElectionList = message.body?.getElectionList
+        ? GetElectionList.toJSON(message.body?.getElectionList)
         : undefined);
-    message.body?.$case === "GetOrganization" &&
-      (obj.GetOrganization = message.body?.GetOrganization
-        ? GetOrganization.toJSON(message.body?.GetOrganization)
+    message.body?.$case === "getOrganization" &&
+      (obj.getOrganization = message.body?.getOrganization
+        ? GetOrganization.toJSON(message.body?.getOrganization)
         : undefined);
-    message.body?.$case === "GetBallot" &&
-      (obj.GetBallot = message.body?.GetBallot
-        ? GetBallot.toJSON(message.body?.GetBallot)
+    message.body?.$case === "getBallot" &&
+      (obj.getBallot = message.body?.getBallot
+        ? GetBallot.toJSON(message.body?.getBallot)
         : undefined);
-    message.body?.$case === "GetElectionBallots" &&
-      (obj.GetElectionBallots = message.body?.GetElectionBallots
-        ? GetElectionBallots.toJSON(message.body?.GetElectionBallots)
+    message.body?.$case === "getElectionBallots" &&
+      (obj.getElectionBallots = message.body?.getElectionBallots
+        ? GetElectionBallots.toJSON(message.body?.getElectionBallots)
         : undefined);
-    message.body?.$case === "GetElectionKeys" &&
-      (obj.GetElectionKeys = message.body?.GetElectionKeys
-        ? GetElectionKeys.toJSON(message.body?.GetElectionKeys)
+    message.body?.$case === "getElectionKeys" &&
+      (obj.getElectionKeys = message.body?.getElectionKeys
+        ? GetElectionKeys.toJSON(message.body?.getElectionKeys)
         : undefined);
-    message.body?.$case === "GetElectionCircuitInfo" &&
-      (obj.GetElectionCircuitInfo = message.body?.GetElectionCircuitInfo
-        ? GetElectionCircuitInfo.toJSON(message.body?.GetElectionCircuitInfo)
+    message.body?.$case === "getElectionCircuitInfo" &&
+      (obj.getElectionCircuitInfo = message.body?.getElectionCircuitInfo
+        ? GetElectionCircuitInfo.toJSON(message.body?.getElectionCircuitInfo)
         : undefined);
-    message.body?.$case === "GetElectionResults" &&
-      (obj.GetElectionResults = message.body?.GetElectionResults
-        ? GetElectionResults.toJSON(message.body?.GetElectionResults)
+    message.body?.$case === "getElectionResults" &&
+      (obj.getElectionResults = message.body?.getElectionResults
+        ? GetElectionResults.toJSON(message.body?.getElectionResults)
         : undefined);
-    message.body?.$case === "GetElectionWeight" &&
-      (obj.GetElectionWeight = message.body?.GetElectionWeight
-        ? GetElectionWeight.toJSON(message.body?.GetElectionWeight)
+    message.body?.$case === "getElectionWeight" &&
+      (obj.getElectionWeight = message.body?.getElectionWeight
+        ? GetElectionWeight.toJSON(message.body?.getElectionWeight)
         : undefined);
-    message.body?.$case === "NewCensus" &&
-      (obj.NewCensus = message.body?.NewCensus
-        ? NewCensus.toJSON(message.body?.NewCensus)
+    message.body?.$case === "newCensus" &&
+      (obj.newCensus = message.body?.newCensus
+        ? NewCensus.toJSON(message.body?.newCensus)
         : undefined);
-    message.body?.$case === "AddCensusKeys" &&
-      (obj.AddCensusKeys = message.body?.AddCensusKeys
-        ? AddCensusKeys.toJSON(message.body?.AddCensusKeys)
+    message.body?.$case === "addCensusKeys" &&
+      (obj.addCensusKeys = message.body?.addCensusKeys
+        ? AddCensusKeys.toJSON(message.body?.addCensusKeys)
         : undefined);
-    message.body?.$case === "GetCensusRoot" &&
-      (obj.GetCensusRoot = message.body?.GetCensusRoot
-        ? GetCensusRoot.toJSON(message.body?.GetCensusRoot)
+    message.body?.$case === "getCensusRoot" &&
+      (obj.getCensusRoot = message.body?.getCensusRoot
+        ? GetCensusRoot.toJSON(message.body?.getCensusRoot)
         : undefined);
-    message.body?.$case === "GetCensusSize" &&
-      (obj.GetCensusSize = message.body?.GetCensusSize
-        ? GetCensusSize.toJSON(message.body?.GetCensusSize)
+    message.body?.$case === "getCensusSize" &&
+      (obj.getCensusSize = message.body?.getCensusSize
+        ? GetCensusSize.toJSON(message.body?.getCensusSize)
         : undefined);
-    message.body?.$case === "PublishCensus" &&
-      (obj.PublishCensus = message.body?.PublishCensus
-        ? PublishCensus.toJSON(message.body?.PublishCensus)
+    message.body?.$case === "publishCensus" &&
+      (obj.publishCensus = message.body?.publishCensus
+        ? PublishCensus.toJSON(message.body?.publishCensus)
         : undefined);
-    message.body?.$case === "GetCensusProof" &&
-      (obj.GetCensusProof = message.body?.GetCensusProof
-        ? GetCensusProof.toJSON(message.body?.GetCensusProof)
+    message.body?.$case === "getCensusProof" &&
+      (obj.getCensusProof = message.body?.getCensusProof
+        ? GetCensusProof.toJSON(message.body?.getCensusProof)
         : undefined);
-    message.body?.$case === "DumpCensus" &&
-      (obj.DumpCensus = message.body?.DumpCensus
-        ? DumpCensus.toJSON(message.body?.DumpCensus)
+    message.body?.$case === "dumpCensus" &&
+      (obj.dumpCensus = message.body?.dumpCensus
+        ? DumpCensus.toJSON(message.body?.dumpCensus)
         : undefined);
-    message.body?.$case === "PinFile" &&
-      (obj.PinFile = message.body?.PinFile
-        ? PinFile.toJSON(message.body?.PinFile)
+    message.body?.$case === "pinFile" &&
+      (obj.pinFile = message.body?.pinFile
+        ? PinFile.toJSON(message.body?.pinFile)
         : undefined);
-    message.body?.$case === "FetchFile" &&
-      (obj.FetchFile = message.body?.FetchFile
-        ? FetchFile.toJSON(message.body?.FetchFile)
+    message.body?.$case === "fetchFile" &&
+      (obj.fetchFile = message.body?.fetchFile
+        ? FetchFile.toJSON(message.body?.fetchFile)
         : undefined);
-    message.body?.$case === "GetBlockStatus" &&
-      (obj.GetBlockStatus = message.body?.GetBlockStatus
-        ? GetBlockStatus.toJSON(message.body?.GetBlockStatus)
+    message.body?.$case === "getBlockStatus" &&
+      (obj.getBlockStatus = message.body?.getBlockStatus
+        ? GetBlockStatus.toJSON(message.body?.getBlockStatus)
         : undefined);
-    message.body?.$case === "GetBlockCount" &&
-      (obj.GetBlockCount = message.body?.GetBlockCount
-        ? GetBlockCount.toJSON(message.body?.GetBlockCount)
+    message.body?.$case === "getBlockCount" &&
+      (obj.getBlockCount = message.body?.getBlockCount
+        ? GetBlockCount.toJSON(message.body?.getBlockCount)
         : undefined);
-    message.body?.$case === "EstimateElectionPrice" &&
-      (obj.EstimateElectionPrice = message.body?.EstimateElectionPrice
-        ? EstimateElectionPrice.toJSON(message.body?.EstimateElectionPrice)
+    message.body?.$case === "estimateElectionPrice" &&
+      (obj.estimateElectionPrice = message.body?.estimateElectionPrice
+        ? EstimateElectionPrice.toJSON(message.body?.estimateElectionPrice)
         : undefined);
-    message.body?.$case === "GetTransaction" &&
-      (obj.GetTransaction = message.body?.GetTransaction
-        ? GetTransaction.toJSON(message.body?.GetTransaction)
+    message.body?.$case === "getTransaction" &&
+      (obj.getTransaction = message.body?.getTransaction
+        ? GetTransaction.toJSON(message.body?.getTransaction)
         : undefined);
-    message.body?.$case === "WaitTransaction" &&
-      (obj.WaitTransaction = message.body?.WaitTransaction
-        ? WaitTransaction.toJSON(message.body?.WaitTransaction)
+    message.body?.$case === "waitTransaction" &&
+      (obj.waitTransaction = message.body?.waitTransaction
+        ? WaitTransaction.toJSON(message.body?.waitTransaction)
         : undefined);
     return obj;
   },
@@ -1612,250 +1611,250 @@ export const Request = {
   fromPartial<I extends Exact<DeepPartial<Request>, I>>(object: I): Request {
     const message = { ...baseRequest } as Request;
     if (
-      object.body?.$case === "GetElection" &&
-      object.body?.GetElection !== undefined &&
-      object.body?.GetElection !== null
+      object.body?.$case === "getElection" &&
+      object.body?.getElection !== undefined &&
+      object.body?.getElection !== null
     ) {
       message.body = {
-        $case: "GetElection",
-        GetElection: GetElection.fromPartial(object.body.GetElection),
+        $case: "getElection",
+        getElection: GetElection.fromPartial(object.body.getElection),
       };
     }
     if (
-      object.body?.$case === "GetElectionList" &&
-      object.body?.GetElectionList !== undefined &&
-      object.body?.GetElectionList !== null
+      object.body?.$case === "getElectionList" &&
+      object.body?.getElectionList !== undefined &&
+      object.body?.getElectionList !== null
     ) {
       message.body = {
-        $case: "GetElectionList",
-        GetElectionList: GetElectionList.fromPartial(
-          object.body.GetElectionList
+        $case: "getElectionList",
+        getElectionList: GetElectionList.fromPartial(
+          object.body.getElectionList
         ),
       };
     }
     if (
-      object.body?.$case === "GetOrganization" &&
-      object.body?.GetOrganization !== undefined &&
-      object.body?.GetOrganization !== null
+      object.body?.$case === "getOrganization" &&
+      object.body?.getOrganization !== undefined &&
+      object.body?.getOrganization !== null
     ) {
       message.body = {
-        $case: "GetOrganization",
-        GetOrganization: GetOrganization.fromPartial(
-          object.body.GetOrganization
+        $case: "getOrganization",
+        getOrganization: GetOrganization.fromPartial(
+          object.body.getOrganization
         ),
       };
     }
     if (
-      object.body?.$case === "GetBallot" &&
-      object.body?.GetBallot !== undefined &&
-      object.body?.GetBallot !== null
+      object.body?.$case === "getBallot" &&
+      object.body?.getBallot !== undefined &&
+      object.body?.getBallot !== null
     ) {
       message.body = {
-        $case: "GetBallot",
-        GetBallot: GetBallot.fromPartial(object.body.GetBallot),
+        $case: "getBallot",
+        getBallot: GetBallot.fromPartial(object.body.getBallot),
       };
     }
     if (
-      object.body?.$case === "GetElectionBallots" &&
-      object.body?.GetElectionBallots !== undefined &&
-      object.body?.GetElectionBallots !== null
+      object.body?.$case === "getElectionBallots" &&
+      object.body?.getElectionBallots !== undefined &&
+      object.body?.getElectionBallots !== null
     ) {
       message.body = {
-        $case: "GetElectionBallots",
-        GetElectionBallots: GetElectionBallots.fromPartial(
-          object.body.GetElectionBallots
+        $case: "getElectionBallots",
+        getElectionBallots: GetElectionBallots.fromPartial(
+          object.body.getElectionBallots
         ),
       };
     }
     if (
-      object.body?.$case === "GetElectionKeys" &&
-      object.body?.GetElectionKeys !== undefined &&
-      object.body?.GetElectionKeys !== null
+      object.body?.$case === "getElectionKeys" &&
+      object.body?.getElectionKeys !== undefined &&
+      object.body?.getElectionKeys !== null
     ) {
       message.body = {
-        $case: "GetElectionKeys",
-        GetElectionKeys: GetElectionKeys.fromPartial(
-          object.body.GetElectionKeys
+        $case: "getElectionKeys",
+        getElectionKeys: GetElectionKeys.fromPartial(
+          object.body.getElectionKeys
         ),
       };
     }
     if (
-      object.body?.$case === "GetElectionCircuitInfo" &&
-      object.body?.GetElectionCircuitInfo !== undefined &&
-      object.body?.GetElectionCircuitInfo !== null
+      object.body?.$case === "getElectionCircuitInfo" &&
+      object.body?.getElectionCircuitInfo !== undefined &&
+      object.body?.getElectionCircuitInfo !== null
     ) {
       message.body = {
-        $case: "GetElectionCircuitInfo",
-        GetElectionCircuitInfo: GetElectionCircuitInfo.fromPartial(
-          object.body.GetElectionCircuitInfo
+        $case: "getElectionCircuitInfo",
+        getElectionCircuitInfo: GetElectionCircuitInfo.fromPartial(
+          object.body.getElectionCircuitInfo
         ),
       };
     }
     if (
-      object.body?.$case === "GetElectionResults" &&
-      object.body?.GetElectionResults !== undefined &&
-      object.body?.GetElectionResults !== null
+      object.body?.$case === "getElectionResults" &&
+      object.body?.getElectionResults !== undefined &&
+      object.body?.getElectionResults !== null
     ) {
       message.body = {
-        $case: "GetElectionResults",
-        GetElectionResults: GetElectionResults.fromPartial(
-          object.body.GetElectionResults
+        $case: "getElectionResults",
+        getElectionResults: GetElectionResults.fromPartial(
+          object.body.getElectionResults
         ),
       };
     }
     if (
-      object.body?.$case === "GetElectionWeight" &&
-      object.body?.GetElectionWeight !== undefined &&
-      object.body?.GetElectionWeight !== null
+      object.body?.$case === "getElectionWeight" &&
+      object.body?.getElectionWeight !== undefined &&
+      object.body?.getElectionWeight !== null
     ) {
       message.body = {
-        $case: "GetElectionWeight",
-        GetElectionWeight: GetElectionWeight.fromPartial(
-          object.body.GetElectionWeight
+        $case: "getElectionWeight",
+        getElectionWeight: GetElectionWeight.fromPartial(
+          object.body.getElectionWeight
         ),
       };
     }
     if (
-      object.body?.$case === "NewCensus" &&
-      object.body?.NewCensus !== undefined &&
-      object.body?.NewCensus !== null
+      object.body?.$case === "newCensus" &&
+      object.body?.newCensus !== undefined &&
+      object.body?.newCensus !== null
     ) {
       message.body = {
-        $case: "NewCensus",
-        NewCensus: NewCensus.fromPartial(object.body.NewCensus),
+        $case: "newCensus",
+        newCensus: NewCensus.fromPartial(object.body.newCensus),
       };
     }
     if (
-      object.body?.$case === "AddCensusKeys" &&
-      object.body?.AddCensusKeys !== undefined &&
-      object.body?.AddCensusKeys !== null
+      object.body?.$case === "addCensusKeys" &&
+      object.body?.addCensusKeys !== undefined &&
+      object.body?.addCensusKeys !== null
     ) {
       message.body = {
-        $case: "AddCensusKeys",
-        AddCensusKeys: AddCensusKeys.fromPartial(object.body.AddCensusKeys),
+        $case: "addCensusKeys",
+        addCensusKeys: AddCensusKeys.fromPartial(object.body.addCensusKeys),
       };
     }
     if (
-      object.body?.$case === "GetCensusRoot" &&
-      object.body?.GetCensusRoot !== undefined &&
-      object.body?.GetCensusRoot !== null
+      object.body?.$case === "getCensusRoot" &&
+      object.body?.getCensusRoot !== undefined &&
+      object.body?.getCensusRoot !== null
     ) {
       message.body = {
-        $case: "GetCensusRoot",
-        GetCensusRoot: GetCensusRoot.fromPartial(object.body.GetCensusRoot),
+        $case: "getCensusRoot",
+        getCensusRoot: GetCensusRoot.fromPartial(object.body.getCensusRoot),
       };
     }
     if (
-      object.body?.$case === "GetCensusSize" &&
-      object.body?.GetCensusSize !== undefined &&
-      object.body?.GetCensusSize !== null
+      object.body?.$case === "getCensusSize" &&
+      object.body?.getCensusSize !== undefined &&
+      object.body?.getCensusSize !== null
     ) {
       message.body = {
-        $case: "GetCensusSize",
-        GetCensusSize: GetCensusSize.fromPartial(object.body.GetCensusSize),
+        $case: "getCensusSize",
+        getCensusSize: GetCensusSize.fromPartial(object.body.getCensusSize),
       };
     }
     if (
-      object.body?.$case === "PublishCensus" &&
-      object.body?.PublishCensus !== undefined &&
-      object.body?.PublishCensus !== null
+      object.body?.$case === "publishCensus" &&
+      object.body?.publishCensus !== undefined &&
+      object.body?.publishCensus !== null
     ) {
       message.body = {
-        $case: "PublishCensus",
-        PublishCensus: PublishCensus.fromPartial(object.body.PublishCensus),
+        $case: "publishCensus",
+        publishCensus: PublishCensus.fromPartial(object.body.publishCensus),
       };
     }
     if (
-      object.body?.$case === "GetCensusProof" &&
-      object.body?.GetCensusProof !== undefined &&
-      object.body?.GetCensusProof !== null
+      object.body?.$case === "getCensusProof" &&
+      object.body?.getCensusProof !== undefined &&
+      object.body?.getCensusProof !== null
     ) {
       message.body = {
-        $case: "GetCensusProof",
-        GetCensusProof: GetCensusProof.fromPartial(object.body.GetCensusProof),
+        $case: "getCensusProof",
+        getCensusProof: GetCensusProof.fromPartial(object.body.getCensusProof),
       };
     }
     if (
-      object.body?.$case === "DumpCensus" &&
-      object.body?.DumpCensus !== undefined &&
-      object.body?.DumpCensus !== null
+      object.body?.$case === "dumpCensus" &&
+      object.body?.dumpCensus !== undefined &&
+      object.body?.dumpCensus !== null
     ) {
       message.body = {
-        $case: "DumpCensus",
-        DumpCensus: DumpCensus.fromPartial(object.body.DumpCensus),
+        $case: "dumpCensus",
+        dumpCensus: DumpCensus.fromPartial(object.body.dumpCensus),
       };
     }
     if (
-      object.body?.$case === "PinFile" &&
-      object.body?.PinFile !== undefined &&
-      object.body?.PinFile !== null
+      object.body?.$case === "pinFile" &&
+      object.body?.pinFile !== undefined &&
+      object.body?.pinFile !== null
     ) {
       message.body = {
-        $case: "PinFile",
-        PinFile: PinFile.fromPartial(object.body.PinFile),
+        $case: "pinFile",
+        pinFile: PinFile.fromPartial(object.body.pinFile),
       };
     }
     if (
-      object.body?.$case === "FetchFile" &&
-      object.body?.FetchFile !== undefined &&
-      object.body?.FetchFile !== null
+      object.body?.$case === "fetchFile" &&
+      object.body?.fetchFile !== undefined &&
+      object.body?.fetchFile !== null
     ) {
       message.body = {
-        $case: "FetchFile",
-        FetchFile: FetchFile.fromPartial(object.body.FetchFile),
+        $case: "fetchFile",
+        fetchFile: FetchFile.fromPartial(object.body.fetchFile),
       };
     }
     if (
-      object.body?.$case === "GetBlockStatus" &&
-      object.body?.GetBlockStatus !== undefined &&
-      object.body?.GetBlockStatus !== null
+      object.body?.$case === "getBlockStatus" &&
+      object.body?.getBlockStatus !== undefined &&
+      object.body?.getBlockStatus !== null
     ) {
       message.body = {
-        $case: "GetBlockStatus",
-        GetBlockStatus: GetBlockStatus.fromPartial(object.body.GetBlockStatus),
+        $case: "getBlockStatus",
+        getBlockStatus: GetBlockStatus.fromPartial(object.body.getBlockStatus),
       };
     }
     if (
-      object.body?.$case === "GetBlockCount" &&
-      object.body?.GetBlockCount !== undefined &&
-      object.body?.GetBlockCount !== null
+      object.body?.$case === "getBlockCount" &&
+      object.body?.getBlockCount !== undefined &&
+      object.body?.getBlockCount !== null
     ) {
       message.body = {
-        $case: "GetBlockCount",
-        GetBlockCount: GetBlockCount.fromPartial(object.body.GetBlockCount),
+        $case: "getBlockCount",
+        getBlockCount: GetBlockCount.fromPartial(object.body.getBlockCount),
       };
     }
     if (
-      object.body?.$case === "EstimateElectionPrice" &&
-      object.body?.EstimateElectionPrice !== undefined &&
-      object.body?.EstimateElectionPrice !== null
+      object.body?.$case === "estimateElectionPrice" &&
+      object.body?.estimateElectionPrice !== undefined &&
+      object.body?.estimateElectionPrice !== null
     ) {
       message.body = {
-        $case: "EstimateElectionPrice",
-        EstimateElectionPrice: EstimateElectionPrice.fromPartial(
-          object.body.EstimateElectionPrice
+        $case: "estimateElectionPrice",
+        estimateElectionPrice: EstimateElectionPrice.fromPartial(
+          object.body.estimateElectionPrice
         ),
       };
     }
     if (
-      object.body?.$case === "GetTransaction" &&
-      object.body?.GetTransaction !== undefined &&
-      object.body?.GetTransaction !== null
+      object.body?.$case === "getTransaction" &&
+      object.body?.getTransaction !== undefined &&
+      object.body?.getTransaction !== null
     ) {
       message.body = {
-        $case: "GetTransaction",
-        GetTransaction: GetTransaction.fromPartial(object.body.GetTransaction),
+        $case: "getTransaction",
+        getTransaction: GetTransaction.fromPartial(object.body.getTransaction),
       };
     }
     if (
-      object.body?.$case === "WaitTransaction" &&
-      object.body?.WaitTransaction !== undefined &&
-      object.body?.WaitTransaction !== null
+      object.body?.$case === "waitTransaction" &&
+      object.body?.waitTransaction !== undefined &&
+      object.body?.waitTransaction !== null
     ) {
       message.body = {
-        $case: "WaitTransaction",
-        WaitTransaction: WaitTransaction.fromPartial(
-          object.body.WaitTransaction
+        $case: "waitTransaction",
+        waitTransaction: WaitTransaction.fromPartial(
+          object.body.waitTransaction
         ),
       };
     }
@@ -1867,15 +1866,15 @@ const baseResponse: object = {};
 
 export const Response = {
   encode(message: Response, writer: Writer = Writer.create()): Writer {
-    if (message.body?.$case === "successResponse") {
-      SuccessResponse.encode(
-        message.body.successResponse,
+    if (message.body?.$case === "success") {
+      ResponseSuccess.encode(
+        message.body.success,
         writer.uint32(10).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "errorResponse") {
-      ErrorResponse.encode(
-        message.body.errorResponse,
+    if (message.body?.$case === "error") {
+      ResponseError.encode(
+        message.body.error,
         writer.uint32(18).fork()
       ).ldelim();
     }
@@ -1891,14 +1890,14 @@ export const Response = {
       switch (tag >>> 3) {
         case 1:
           message.body = {
-            $case: "successResponse",
-            successResponse: SuccessResponse.decode(reader, reader.uint32()),
+            $case: "success",
+            success: ResponseSuccess.decode(reader, reader.uint32()),
           };
           break;
         case 2:
           message.body = {
-            $case: "errorResponse",
-            errorResponse: ErrorResponse.decode(reader, reader.uint32()),
+            $case: "error",
+            error: ResponseError.decode(reader, reader.uint32()),
           };
           break;
         default:
@@ -1911,19 +1910,16 @@ export const Response = {
 
   fromJSON(object: any): Response {
     const message = { ...baseResponse } as Response;
-    if (
-      object.successResponse !== undefined &&
-      object.successResponse !== null
-    ) {
+    if (object.success !== undefined && object.success !== null) {
       message.body = {
-        $case: "successResponse",
-        successResponse: SuccessResponse.fromJSON(object.successResponse),
+        $case: "success",
+        success: ResponseSuccess.fromJSON(object.success),
       };
     }
-    if (object.errorResponse !== undefined && object.errorResponse !== null) {
+    if (object.error !== undefined && object.error !== null) {
       message.body = {
-        $case: "errorResponse",
-        errorResponse: ErrorResponse.fromJSON(object.errorResponse),
+        $case: "error",
+        error: ResponseError.fromJSON(object.error),
       };
     }
     return message;
@@ -1931,13 +1927,13 @@ export const Response = {
 
   toJSON(message: Response): unknown {
     const obj: any = {};
-    message.body?.$case === "successResponse" &&
-      (obj.successResponse = message.body?.successResponse
-        ? SuccessResponse.toJSON(message.body?.successResponse)
+    message.body?.$case === "success" &&
+      (obj.success = message.body?.success
+        ? ResponseSuccess.toJSON(message.body?.success)
         : undefined);
-    message.body?.$case === "errorResponse" &&
-      (obj.errorResponse = message.body?.errorResponse
-        ? ErrorResponse.toJSON(message.body?.errorResponse)
+    message.body?.$case === "error" &&
+      (obj.error = message.body?.error
+        ? ResponseError.toJSON(message.body?.error)
         : undefined);
     return obj;
   },
@@ -1945,45 +1941,43 @@ export const Response = {
   fromPartial<I extends Exact<DeepPartial<Response>, I>>(object: I): Response {
     const message = { ...baseResponse } as Response;
     if (
-      object.body?.$case === "successResponse" &&
-      object.body?.successResponse !== undefined &&
-      object.body?.successResponse !== null
+      object.body?.$case === "success" &&
+      object.body?.success !== undefined &&
+      object.body?.success !== null
     ) {
       message.body = {
-        $case: "successResponse",
-        successResponse: SuccessResponse.fromPartial(
-          object.body.successResponse
-        ),
+        $case: "success",
+        success: ResponseSuccess.fromPartial(object.body.success),
       };
     }
     if (
-      object.body?.$case === "errorResponse" &&
-      object.body?.errorResponse !== undefined &&
-      object.body?.errorResponse !== null
+      object.body?.$case === "error" &&
+      object.body?.error !== undefined &&
+      object.body?.error !== null
     ) {
       message.body = {
-        $case: "errorResponse",
-        errorResponse: ErrorResponse.fromPartial(object.body.errorResponse),
+        $case: "error",
+        error: ResponseError.fromPartial(object.body.error),
       };
     }
     return message;
   },
 };
 
-const baseSuccessResponse: object = {};
+const baseResponseSuccess: object = {};
 
-export const SuccessResponse = {
-  encode(message: SuccessResponse, writer: Writer = Writer.create()): Writer {
+export const ResponseSuccess = {
+  encode(message: ResponseSuccess, writer: Writer = Writer.create()): Writer {
     if (message.body.length !== 0) {
       writer.uint32(10).bytes(message.body);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SuccessResponse {
+  decode(input: Reader | Uint8Array, length?: number): ResponseSuccess {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSuccessResponse } as SuccessResponse;
+    const message = { ...baseResponseSuccess } as ResponseSuccess;
     message.body = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1999,8 +1993,8 @@ export const SuccessResponse = {
     return message;
   },
 
-  fromJSON(object: any): SuccessResponse {
-    const message = { ...baseSuccessResponse } as SuccessResponse;
+  fromJSON(object: any): ResponseSuccess {
+    const message = { ...baseResponseSuccess } as ResponseSuccess;
     message.body =
       object.body !== undefined && object.body !== null
         ? bytesFromBase64(object.body)
@@ -2008,7 +2002,7 @@ export const SuccessResponse = {
     return message;
   },
 
-  toJSON(message: SuccessResponse): unknown {
+  toJSON(message: ResponseSuccess): unknown {
     const obj: any = {};
     message.body !== undefined &&
       (obj.body = base64FromBytes(
@@ -2017,19 +2011,19 @@ export const SuccessResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SuccessResponse>, I>>(
+  fromPartial<I extends Exact<DeepPartial<ResponseSuccess>, I>>(
     object: I
-  ): SuccessResponse {
-    const message = { ...baseSuccessResponse } as SuccessResponse;
+  ): ResponseSuccess {
+    const message = { ...baseResponseSuccess } as ResponseSuccess;
     message.body = object.body ?? new Uint8Array();
     return message;
   },
 };
 
-const baseErrorResponse: object = { message: "" };
+const baseResponseError: object = { message: "" };
 
-export const ErrorResponse = {
-  encode(message: ErrorResponse, writer: Writer = Writer.create()): Writer {
+export const ResponseError = {
+  encode(message: ResponseError, writer: Writer = Writer.create()): Writer {
     if (message.message !== "") {
       writer.uint32(10).string(message.message);
     }
@@ -2039,10 +2033,10 @@ export const ErrorResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ErrorResponse {
+  decode(input: Reader | Uint8Array, length?: number): ResponseError {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseErrorResponse } as ErrorResponse;
+    const message = { ...baseResponseError } as ResponseError;
     message.body = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -2061,8 +2055,8 @@ export const ErrorResponse = {
     return message;
   },
 
-  fromJSON(object: any): ErrorResponse {
-    const message = { ...baseErrorResponse } as ErrorResponse;
+  fromJSON(object: any): ResponseError {
+    const message = { ...baseResponseError } as ResponseError;
     message.message =
       object.message !== undefined && object.message !== null
         ? String(object.message)
@@ -2074,7 +2068,7 @@ export const ErrorResponse = {
     return message;
   },
 
-  toJSON(message: ErrorResponse): unknown {
+  toJSON(message: ResponseError): unknown {
     const obj: any = {};
     message.message !== undefined && (obj.message = message.message);
     message.body !== undefined &&
@@ -2084,10 +2078,10 @@ export const ErrorResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ErrorResponse>, I>>(
+  fromPartial<I extends Exact<DeepPartial<ResponseError>, I>>(
     object: I
-  ): ErrorResponse {
-    const message = { ...baseErrorResponse } as ErrorResponse;
+  ): ResponseError {
+    const message = { ...baseResponseError } as ResponseError;
     message.message = object.message ?? "";
     message.body = object.body ?? new Uint8Array();
     return message;

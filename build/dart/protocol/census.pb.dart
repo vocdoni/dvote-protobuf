@@ -366,6 +366,8 @@ class CensusErc20 extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CensusErc20', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tokenAddress', $pb.PbFieldType.OY, protoName: 'tokenAddress')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'balanceMapSlot', $pb.PbFieldType.O3, protoName: 'balanceMapSlot')
+    ..aOM<StorageProofErc20>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: StorageProofErc20.create)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceEthereumBlock', $pb.PbFieldType.O3, protoName: 'sourceEthereumBlock')
     ..hasRequiredFields = false
   ;
 
@@ -373,6 +375,8 @@ class CensusErc20 extends $pb.GeneratedMessage {
   factory CensusErc20({
     $core.List<$core.int>? tokenAddress,
     $core.int? balanceMapSlot,
+    StorageProofErc20? proof,
+    $core.int? sourceEthereumBlock,
   }) {
     final _result = create();
     if (tokenAddress != null) {
@@ -380,6 +384,12 @@ class CensusErc20 extends $pb.GeneratedMessage {
     }
     if (balanceMapSlot != null) {
       _result.balanceMapSlot = balanceMapSlot;
+    }
+    if (proof != null) {
+      _result.proof = proof;
+    }
+    if (sourceEthereumBlock != null) {
+      _result.sourceEthereumBlock = sourceEthereumBlock;
     }
     return _result;
   }
@@ -421,6 +431,26 @@ class CensusErc20 extends $pb.GeneratedMessage {
   $core.bool hasBalanceMapSlot() => $_has(1);
   @$pb.TagNumber(2)
   void clearBalanceMapSlot() => clearField(2);
+
+  @$pb.TagNumber(3)
+  StorageProofErc20 get proof => $_getN(2);
+  @$pb.TagNumber(3)
+  set proof(StorageProofErc20 v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasProof() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearProof() => clearField(3);
+  @$pb.TagNumber(3)
+  StorageProofErc20 ensureProof() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.int get sourceEthereumBlock => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set sourceEthereumBlock($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSourceEthereumBlock() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSourceEthereumBlock() => clearField(4);
 }
 
 class CensusErc721 extends $pb.GeneratedMessage {
@@ -514,6 +544,8 @@ class CensusErcMiniMe extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CensusErcMiniMe', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tokenAddress', $pb.PbFieldType.OY, protoName: 'tokenAddress')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'balanceMapSlot', $pb.PbFieldType.O3, protoName: 'balanceMapSlot')
+    ..aOM<StorageProofMiniMe>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: StorageProofMiniMe.create)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceEthereumBlock', $pb.PbFieldType.O3, protoName: 'sourceEthereumBlock')
     ..hasRequiredFields = false
   ;
 
@@ -521,6 +553,8 @@ class CensusErcMiniMe extends $pb.GeneratedMessage {
   factory CensusErcMiniMe({
     $core.List<$core.int>? tokenAddress,
     $core.int? balanceMapSlot,
+    StorageProofMiniMe? proof,
+    $core.int? sourceEthereumBlock,
   }) {
     final _result = create();
     if (tokenAddress != null) {
@@ -528,6 +562,12 @@ class CensusErcMiniMe extends $pb.GeneratedMessage {
     }
     if (balanceMapSlot != null) {
       _result.balanceMapSlot = balanceMapSlot;
+    }
+    if (proof != null) {
+      _result.proof = proof;
+    }
+    if (sourceEthereumBlock != null) {
+      _result.sourceEthereumBlock = sourceEthereumBlock;
     }
     return _result;
   }
@@ -569,17 +609,37 @@ class CensusErcMiniMe extends $pb.GeneratedMessage {
   $core.bool hasBalanceMapSlot() => $_has(1);
   @$pb.TagNumber(2)
   void clearBalanceMapSlot() => clearField(2);
+
+  @$pb.TagNumber(3)
+  StorageProofMiniMe get proof => $_getN(2);
+  @$pb.TagNumber(3)
+  set proof(StorageProofMiniMe v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasProof() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearProof() => clearField(3);
+  @$pb.TagNumber(3)
+  StorageProofMiniMe ensureProof() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.int get sourceEthereumBlock => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set sourceEthereumBlock($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSourceEthereumBlock() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSourceEthereumBlock() => clearField(4);
 }
 
 enum Proof_Body {
   none, 
   arbo, 
   csp, 
-  proofERC20, 
-  proofERC721, 
-  proofERC1155, 
-  proofERC777, 
-  proofMiniMe, 
+  erc20, 
+  erc721, 
+  erc1155, 
+  erc777, 
+  miniMe, 
   zkSnark, 
   notSet
 }
@@ -589,11 +649,11 @@ class Proof extends $pb.GeneratedMessage {
     1 : Proof_Body.none,
     11 : Proof_Body.arbo,
     12 : Proof_Body.csp,
-    21 : Proof_Body.proofERC20,
-    22 : Proof_Body.proofERC721,
-    23 : Proof_Body.proofERC1155,
-    24 : Proof_Body.proofERC777,
-    30 : Proof_Body.proofMiniMe,
+    21 : Proof_Body.erc20,
+    22 : Proof_Body.erc721,
+    23 : Proof_Body.erc1155,
+    24 : Proof_Body.erc777,
+    30 : Proof_Body.miniMe,
     100 : Proof_Body.zkSnark,
     0 : Proof_Body.notSet
   };
@@ -602,11 +662,11 @@ class Proof extends $pb.GeneratedMessage {
     ..aOM<ProofNone>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'none', subBuilder: ProofNone.create)
     ..aOM<ProofArbo>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arbo', subBuilder: ProofArbo.create)
     ..aOM<ProofCSP>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'csp', subBuilder: ProofCSP.create)
-    ..aOM<StorageProofERC20>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofERC20', protoName: 'proofERC20', subBuilder: StorageProofERC20.create)
-    ..aOM<StorageProofERC721>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofERC721', protoName: 'proofERC721', subBuilder: StorageProofERC721.create)
-    ..aOM<StorageProofERC1155>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofERC1155', protoName: 'proofERC1155', subBuilder: StorageProofERC1155.create)
-    ..aOM<StorageProofERC777>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofERC777', protoName: 'proofERC777', subBuilder: StorageProofERC777.create)
-    ..aOM<StorageProofMiniMe>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofMiniMe', protoName: 'proofMiniMe', subBuilder: StorageProofMiniMe.create)
+    ..aOM<StorageProofErc20>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc20', subBuilder: StorageProofErc20.create)
+    ..aOM<StorageProofErc721>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc721', subBuilder: StorageProofErc721.create)
+    ..aOM<StorageProofErc1155>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc1155', subBuilder: StorageProofErc1155.create)
+    ..aOM<StorageProofErc777>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc777', subBuilder: StorageProofErc777.create)
+    ..aOM<StorageProofMiniMe>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'miniMe', protoName: 'miniMe', subBuilder: StorageProofMiniMe.create)
     ..aOM<ProofZkSnark>(100, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'zkSnark', protoName: 'zkSnark', subBuilder: ProofZkSnark.create)
     ..hasRequiredFields = false
   ;
@@ -616,11 +676,11 @@ class Proof extends $pb.GeneratedMessage {
     ProofNone? none,
     ProofArbo? arbo,
     ProofCSP? csp,
-    StorageProofERC20? proofERC20,
-    StorageProofERC721? proofERC721,
-    StorageProofERC1155? proofERC1155,
-    StorageProofERC777? proofERC777,
-    StorageProofMiniMe? proofMiniMe,
+    StorageProofErc20? erc20,
+    StorageProofErc721? erc721,
+    StorageProofErc1155? erc1155,
+    StorageProofErc777? erc777,
+    StorageProofMiniMe? miniMe,
     ProofZkSnark? zkSnark,
   }) {
     final _result = create();
@@ -633,20 +693,20 @@ class Proof extends $pb.GeneratedMessage {
     if (csp != null) {
       _result.csp = csp;
     }
-    if (proofERC20 != null) {
-      _result.proofERC20 = proofERC20;
+    if (erc20 != null) {
+      _result.erc20 = erc20;
     }
-    if (proofERC721 != null) {
-      _result.proofERC721 = proofERC721;
+    if (erc721 != null) {
+      _result.erc721 = erc721;
     }
-    if (proofERC1155 != null) {
-      _result.proofERC1155 = proofERC1155;
+    if (erc1155 != null) {
+      _result.erc1155 = erc1155;
     }
-    if (proofERC777 != null) {
-      _result.proofERC777 = proofERC777;
+    if (erc777 != null) {
+      _result.erc777 = erc777;
     }
-    if (proofMiniMe != null) {
-      _result.proofMiniMe = proofMiniMe;
+    if (miniMe != null) {
+      _result.miniMe = miniMe;
     }
     if (zkSnark != null) {
       _result.zkSnark = zkSnark;
@@ -711,59 +771,59 @@ class Proof extends $pb.GeneratedMessage {
   ProofCSP ensureCsp() => $_ensure(2);
 
   @$pb.TagNumber(21)
-  StorageProofERC20 get proofERC20 => $_getN(3);
+  StorageProofErc20 get erc20 => $_getN(3);
   @$pb.TagNumber(21)
-  set proofERC20(StorageProofERC20 v) { setField(21, v); }
+  set erc20(StorageProofErc20 v) { setField(21, v); }
   @$pb.TagNumber(21)
-  $core.bool hasProofERC20() => $_has(3);
+  $core.bool hasErc20() => $_has(3);
   @$pb.TagNumber(21)
-  void clearProofERC20() => clearField(21);
+  void clearErc20() => clearField(21);
   @$pb.TagNumber(21)
-  StorageProofERC20 ensureProofERC20() => $_ensure(3);
+  StorageProofErc20 ensureErc20() => $_ensure(3);
 
   @$pb.TagNumber(22)
-  StorageProofERC721 get proofERC721 => $_getN(4);
+  StorageProofErc721 get erc721 => $_getN(4);
   @$pb.TagNumber(22)
-  set proofERC721(StorageProofERC721 v) { setField(22, v); }
+  set erc721(StorageProofErc721 v) { setField(22, v); }
   @$pb.TagNumber(22)
-  $core.bool hasProofERC721() => $_has(4);
+  $core.bool hasErc721() => $_has(4);
   @$pb.TagNumber(22)
-  void clearProofERC721() => clearField(22);
+  void clearErc721() => clearField(22);
   @$pb.TagNumber(22)
-  StorageProofERC721 ensureProofERC721() => $_ensure(4);
+  StorageProofErc721 ensureErc721() => $_ensure(4);
 
   @$pb.TagNumber(23)
-  StorageProofERC1155 get proofERC1155 => $_getN(5);
+  StorageProofErc1155 get erc1155 => $_getN(5);
   @$pb.TagNumber(23)
-  set proofERC1155(StorageProofERC1155 v) { setField(23, v); }
+  set erc1155(StorageProofErc1155 v) { setField(23, v); }
   @$pb.TagNumber(23)
-  $core.bool hasProofERC1155() => $_has(5);
+  $core.bool hasErc1155() => $_has(5);
   @$pb.TagNumber(23)
-  void clearProofERC1155() => clearField(23);
+  void clearErc1155() => clearField(23);
   @$pb.TagNumber(23)
-  StorageProofERC1155 ensureProofERC1155() => $_ensure(5);
+  StorageProofErc1155 ensureErc1155() => $_ensure(5);
 
   @$pb.TagNumber(24)
-  StorageProofERC777 get proofERC777 => $_getN(6);
+  StorageProofErc777 get erc777 => $_getN(6);
   @$pb.TagNumber(24)
-  set proofERC777(StorageProofERC777 v) { setField(24, v); }
+  set erc777(StorageProofErc777 v) { setField(24, v); }
   @$pb.TagNumber(24)
-  $core.bool hasProofERC777() => $_has(6);
+  $core.bool hasErc777() => $_has(6);
   @$pb.TagNumber(24)
-  void clearProofERC777() => clearField(24);
+  void clearErc777() => clearField(24);
   @$pb.TagNumber(24)
-  StorageProofERC777 ensureProofERC777() => $_ensure(6);
+  StorageProofErc777 ensureErc777() => $_ensure(6);
 
   @$pb.TagNumber(30)
-  StorageProofMiniMe get proofMiniMe => $_getN(7);
+  StorageProofMiniMe get miniMe => $_getN(7);
   @$pb.TagNumber(30)
-  set proofMiniMe(StorageProofMiniMe v) { setField(30, v); }
+  set miniMe(StorageProofMiniMe v) { setField(30, v); }
   @$pb.TagNumber(30)
-  $core.bool hasProofMiniMe() => $_has(7);
+  $core.bool hasMiniMe() => $_has(7);
   @$pb.TagNumber(30)
-  void clearProofMiniMe() => clearField(30);
+  void clearMiniMe() => clearField(30);
   @$pb.TagNumber(30)
-  StorageProofMiniMe ensureProofMiniMe() => $_ensure(7);
+  StorageProofMiniMe ensureMiniMe() => $_ensure(7);
 
   @$pb.TagNumber(100)
   ProofZkSnark get zkSnark => $_getN(8);
@@ -908,16 +968,16 @@ class ProofCSP extends $pb.GeneratedMessage {
   void clearSignature() => clearField(2);
 }
 
-class StorageProofERC20 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofERC20', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class StorageProofErc20 extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofErc20', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
     ..p<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', $pb.PbFieldType.PY)
     ..hasRequiredFields = false
   ;
 
-  StorageProofERC20._() : super();
-  factory StorageProofERC20({
+  StorageProofErc20._() : super();
+  factory StorageProofErc20({
     $core.List<$core.int>? key,
     $core.List<$core.int>? value,
     $core.Iterable<$core.List<$core.int>>? proof,
@@ -934,26 +994,26 @@ class StorageProofERC20 extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory StorageProofERC20.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StorageProofERC20.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory StorageProofErc20.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorageProofErc20.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  StorageProofERC20 clone() => StorageProofERC20()..mergeFromMessage(this);
+  StorageProofErc20 clone() => StorageProofErc20()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StorageProofERC20 copyWith(void Function(StorageProofERC20) updates) => super.copyWith((message) => updates(message as StorageProofERC20)) as StorageProofERC20; // ignore: deprecated_member_use
+  StorageProofErc20 copyWith(void Function(StorageProofErc20) updates) => super.copyWith((message) => updates(message as StorageProofErc20)) as StorageProofErc20; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC20 create() => StorageProofERC20._();
-  StorageProofERC20 createEmptyInstance() => create();
-  static $pb.PbList<StorageProofERC20> createRepeated() => $pb.PbList<StorageProofERC20>();
+  static StorageProofErc20 create() => StorageProofErc20._();
+  StorageProofErc20 createEmptyInstance() => create();
+  static $pb.PbList<StorageProofErc20> createRepeated() => $pb.PbList<StorageProofErc20>();
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC20 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofERC20>(create);
-  static StorageProofERC20? _defaultInstance;
+  static StorageProofErc20 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofErc20>(create);
+  static StorageProofErc20? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get key => $_getN(0);
@@ -977,91 +1037,91 @@ class StorageProofERC20 extends $pb.GeneratedMessage {
   $core.List<$core.List<$core.int>> get proof => $_getList(2);
 }
 
-class StorageProofERC721 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofERC721', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class StorageProofErc721 extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofErc721', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  StorageProofERC721._() : super();
-  factory StorageProofERC721() => create();
-  factory StorageProofERC721.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StorageProofERC721.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  StorageProofErc721._() : super();
+  factory StorageProofErc721() => create();
+  factory StorageProofErc721.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorageProofErc721.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  StorageProofERC721 clone() => StorageProofERC721()..mergeFromMessage(this);
+  StorageProofErc721 clone() => StorageProofErc721()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StorageProofERC721 copyWith(void Function(StorageProofERC721) updates) => super.copyWith((message) => updates(message as StorageProofERC721)) as StorageProofERC721; // ignore: deprecated_member_use
+  StorageProofErc721 copyWith(void Function(StorageProofErc721) updates) => super.copyWith((message) => updates(message as StorageProofErc721)) as StorageProofErc721; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC721 create() => StorageProofERC721._();
-  StorageProofERC721 createEmptyInstance() => create();
-  static $pb.PbList<StorageProofERC721> createRepeated() => $pb.PbList<StorageProofERC721>();
+  static StorageProofErc721 create() => StorageProofErc721._();
+  StorageProofErc721 createEmptyInstance() => create();
+  static $pb.PbList<StorageProofErc721> createRepeated() => $pb.PbList<StorageProofErc721>();
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC721 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofERC721>(create);
-  static StorageProofERC721? _defaultInstance;
+  static StorageProofErc721 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofErc721>(create);
+  static StorageProofErc721? _defaultInstance;
 }
 
-class StorageProofERC1155 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofERC1155', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class StorageProofErc1155 extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofErc1155', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  StorageProofERC1155._() : super();
-  factory StorageProofERC1155() => create();
-  factory StorageProofERC1155.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StorageProofERC1155.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  StorageProofErc1155._() : super();
+  factory StorageProofErc1155() => create();
+  factory StorageProofErc1155.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorageProofErc1155.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  StorageProofERC1155 clone() => StorageProofERC1155()..mergeFromMessage(this);
+  StorageProofErc1155 clone() => StorageProofErc1155()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StorageProofERC1155 copyWith(void Function(StorageProofERC1155) updates) => super.copyWith((message) => updates(message as StorageProofERC1155)) as StorageProofERC1155; // ignore: deprecated_member_use
+  StorageProofErc1155 copyWith(void Function(StorageProofErc1155) updates) => super.copyWith((message) => updates(message as StorageProofErc1155)) as StorageProofErc1155; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC1155 create() => StorageProofERC1155._();
-  StorageProofERC1155 createEmptyInstance() => create();
-  static $pb.PbList<StorageProofERC1155> createRepeated() => $pb.PbList<StorageProofERC1155>();
+  static StorageProofErc1155 create() => StorageProofErc1155._();
+  StorageProofErc1155 createEmptyInstance() => create();
+  static $pb.PbList<StorageProofErc1155> createRepeated() => $pb.PbList<StorageProofErc1155>();
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC1155 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofERC1155>(create);
-  static StorageProofERC1155? _defaultInstance;
+  static StorageProofErc1155 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofErc1155>(create);
+  static StorageProofErc1155? _defaultInstance;
 }
 
-class StorageProofERC777 extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofERC777', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class StorageProofErc777 extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorageProofErc777', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  StorageProofERC777._() : super();
-  factory StorageProofERC777() => create();
-  factory StorageProofERC777.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StorageProofERC777.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  StorageProofErc777._() : super();
+  factory StorageProofErc777() => create();
+  factory StorageProofErc777.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorageProofErc777.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  StorageProofERC777 clone() => StorageProofERC777()..mergeFromMessage(this);
+  StorageProofErc777 clone() => StorageProofErc777()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StorageProofERC777 copyWith(void Function(StorageProofERC777) updates) => super.copyWith((message) => updates(message as StorageProofERC777)) as StorageProofERC777; // ignore: deprecated_member_use
+  StorageProofErc777 copyWith(void Function(StorageProofErc777) updates) => super.copyWith((message) => updates(message as StorageProofErc777)) as StorageProofErc777; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC777 create() => StorageProofERC777._();
-  StorageProofERC777 createEmptyInstance() => create();
-  static $pb.PbList<StorageProofERC777> createRepeated() => $pb.PbList<StorageProofERC777>();
+  static StorageProofErc777 create() => StorageProofErc777._();
+  StorageProofErc777 createEmptyInstance() => create();
+  static $pb.PbList<StorageProofErc777> createRepeated() => $pb.PbList<StorageProofErc777>();
   @$core.pragma('dart2js:noInline')
-  static StorageProofERC777 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofERC777>(create);
-  static StorageProofERC777? _defaultInstance;
+  static StorageProofErc777 getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorageProofErc777>(create);
+  static StorageProofErc777? _defaultInstance;
 }
 
 class StorageProofMiniMe extends $pb.GeneratedMessage {

@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: protocol/main-wrappers.proto
+//  source: protocol/messages.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -12,15 +12,15 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'transactions.pb.dart' as $0;
 import 'service.pb.dart' as $1;
 
-import 'main-wrappers.pbenum.dart';
+import 'messages.pbenum.dart';
 
-export 'main-wrappers.pbenum.dart';
+export 'messages.pbenum.dart';
 
 class Message extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Message', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'body', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
-    ..e<Message_Signatures>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureType', $pb.PbFieldType.OE, protoName: 'signatureType', defaultOrMaker: Message_Signatures.None, valueOf: Message_Signatures.valueOf, enumValues: Message_Signatures.values)
+    ..e<Message_Signatures>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureType', $pb.PbFieldType.OE, protoName: 'signatureType', defaultOrMaker: Message_Signatures.NONE, valueOf: Message_Signatures.valueOf, enumValues: Message_Signatures.values)
     ..hasRequiredFields = false
   ;
 
@@ -685,29 +685,29 @@ class Request extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Request', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 31, 32, 33, 34, 35, 36, 37, 51, 52, 61, 62, 63, 81, 82])
-    ..aOM<$1.GetElection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElection', protoName: 'GetElection', subBuilder: $1.GetElection.create)
-    ..aOM<$1.GetElectionList>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElectionList', protoName: 'GetElectionList', subBuilder: $1.GetElectionList.create)
-    ..aOM<$1.GetOrganization>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetOrganization', protoName: 'GetOrganization', subBuilder: $1.GetOrganization.create)
-    ..aOM<$1.GetBallot>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetBallot', protoName: 'GetBallot', subBuilder: $1.GetBallot.create)
-    ..aOM<$1.GetElectionBallots>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElectionBallots', protoName: 'GetElectionBallots', subBuilder: $1.GetElectionBallots.create)
-    ..aOM<$1.GetElectionKeys>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElectionKeys', protoName: 'GetElectionKeys', subBuilder: $1.GetElectionKeys.create)
-    ..aOM<$1.GetElectionCircuitInfo>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElectionCircuitInfo', protoName: 'GetElectionCircuitInfo', subBuilder: $1.GetElectionCircuitInfo.create)
-    ..aOM<$1.GetElectionResults>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElectionResults', protoName: 'GetElectionResults', subBuilder: $1.GetElectionResults.create)
-    ..aOM<$1.GetElectionWeight>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetElectionWeight', protoName: 'GetElectionWeight', subBuilder: $1.GetElectionWeight.create)
-    ..aOM<$1.NewCensus>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'NewCensus', protoName: 'NewCensus', subBuilder: $1.NewCensus.create)
-    ..aOM<$1.AddCensusKeys>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'AddCensusKeys', protoName: 'AddCensusKeys', subBuilder: $1.AddCensusKeys.create)
-    ..aOM<$1.GetCensusRoot>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetCensusRoot', protoName: 'GetCensusRoot', subBuilder: $1.GetCensusRoot.create)
-    ..aOM<$1.GetCensusSize>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetCensusSize', protoName: 'GetCensusSize', subBuilder: $1.GetCensusSize.create)
-    ..aOM<$1.PublishCensus>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'PublishCensus', protoName: 'PublishCensus', subBuilder: $1.PublishCensus.create)
-    ..aOM<$1.GetCensusProof>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetCensusProof', protoName: 'GetCensusProof', subBuilder: $1.GetCensusProof.create)
-    ..aOM<$1.DumpCensus>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'DumpCensus', protoName: 'DumpCensus', subBuilder: $1.DumpCensus.create)
-    ..aOM<$1.PinFile>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'PinFile', protoName: 'PinFile', subBuilder: $1.PinFile.create)
-    ..aOM<$1.FetchFile>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'FetchFile', protoName: 'FetchFile', subBuilder: $1.FetchFile.create)
-    ..aOM<$1.GetBlockStatus>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetBlockStatus', protoName: 'GetBlockStatus', subBuilder: $1.GetBlockStatus.create)
-    ..aOM<$1.GetBlockCount>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetBlockCount', protoName: 'GetBlockCount', subBuilder: $1.GetBlockCount.create)
-    ..aOM<$1.EstimateElectionPrice>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'EstimateElectionPrice', protoName: 'EstimateElectionPrice', subBuilder: $1.EstimateElectionPrice.create)
-    ..aOM<$1.GetTransaction>(81, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'GetTransaction', protoName: 'GetTransaction', subBuilder: $1.GetTransaction.create)
-    ..aOM<$1.WaitTransaction>(82, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'WaitTransaction', protoName: 'WaitTransaction', subBuilder: $1.WaitTransaction.create)
+    ..aOM<$1.GetElection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElection', protoName: 'getElection', subBuilder: $1.GetElection.create)
+    ..aOM<$1.GetElectionList>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionList', protoName: 'getElectionList', subBuilder: $1.GetElectionList.create)
+    ..aOM<$1.GetOrganization>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getOrganization', protoName: 'getOrganization', subBuilder: $1.GetOrganization.create)
+    ..aOM<$1.GetBallot>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBallot', protoName: 'getBallot', subBuilder: $1.GetBallot.create)
+    ..aOM<$1.GetElectionBallots>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionBallots', protoName: 'getElectionBallots', subBuilder: $1.GetElectionBallots.create)
+    ..aOM<$1.GetElectionKeys>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionKeys', protoName: 'getElectionKeys', subBuilder: $1.GetElectionKeys.create)
+    ..aOM<$1.GetElectionCircuitInfo>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionCircuitInfo', protoName: 'getElectionCircuitInfo', subBuilder: $1.GetElectionCircuitInfo.create)
+    ..aOM<$1.GetElectionResults>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionResults', protoName: 'getElectionResults', subBuilder: $1.GetElectionResults.create)
+    ..aOM<$1.GetElectionWeight>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionWeight', protoName: 'getElectionWeight', subBuilder: $1.GetElectionWeight.create)
+    ..aOM<$1.NewCensus>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCensus', protoName: 'newCensus', subBuilder: $1.NewCensus.create)
+    ..aOM<$1.AddCensusKeys>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'addCensusKeys', protoName: 'addCensusKeys', subBuilder: $1.AddCensusKeys.create)
+    ..aOM<$1.GetCensusRoot>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusRoot', protoName: 'getCensusRoot', subBuilder: $1.GetCensusRoot.create)
+    ..aOM<$1.GetCensusSize>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusSize', protoName: 'getCensusSize', subBuilder: $1.GetCensusSize.create)
+    ..aOM<$1.PublishCensus>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'publishCensus', protoName: 'publishCensus', subBuilder: $1.PublishCensus.create)
+    ..aOM<$1.GetCensusProof>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusProof', protoName: 'getCensusProof', subBuilder: $1.GetCensusProof.create)
+    ..aOM<$1.DumpCensus>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dumpCensus', protoName: 'dumpCensus', subBuilder: $1.DumpCensus.create)
+    ..aOM<$1.PinFile>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pinFile', protoName: 'pinFile', subBuilder: $1.PinFile.create)
+    ..aOM<$1.FetchFile>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fetchFile', protoName: 'fetchFile', subBuilder: $1.FetchFile.create)
+    ..aOM<$1.GetBlockStatus>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBlockStatus', protoName: 'getBlockStatus', subBuilder: $1.GetBlockStatus.create)
+    ..aOM<$1.GetBlockCount>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBlockCount', protoName: 'getBlockCount', subBuilder: $1.GetBlockCount.create)
+    ..aOM<$1.EstimateElectionPrice>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'estimateElectionPrice', protoName: 'estimateElectionPrice', subBuilder: $1.EstimateElectionPrice.create)
+    ..aOM<$1.GetTransaction>(81, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getTransaction', protoName: 'getTransaction', subBuilder: $1.GetTransaction.create)
+    ..aOM<$1.WaitTransaction>(82, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'waitTransaction', protoName: 'waitTransaction', subBuilder: $1.WaitTransaction.create)
     ..hasRequiredFields = false
   ;
 
@@ -1088,35 +1088,35 @@ class Request extends $pb.GeneratedMessage {
 }
 
 enum Response_Body {
-  successResponse, 
-  errorResponse, 
+  success, 
+  error, 
   notSet
 }
 
 class Response extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Response_Body> _Response_BodyByTag = {
-    1 : Response_Body.successResponse,
-    2 : Response_Body.errorResponse,
+    1 : Response_Body.success,
+    2 : Response_Body.error,
     0 : Response_Body.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Response', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOM<SuccessResponse>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'successResponse', protoName: 'successResponse', subBuilder: SuccessResponse.create)
-    ..aOM<ErrorResponse>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'errorResponse', protoName: 'errorResponse', subBuilder: ErrorResponse.create)
+    ..aOM<ResponseSuccess>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'success', subBuilder: ResponseSuccess.create)
+    ..aOM<ResponseError>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error', subBuilder: ResponseError.create)
     ..hasRequiredFields = false
   ;
 
   Response._() : super();
   factory Response({
-    SuccessResponse? successResponse,
-    ErrorResponse? errorResponse,
+    ResponseSuccess? success,
+    ResponseError? error,
   }) {
     final _result = create();
-    if (successResponse != null) {
-      _result.successResponse = successResponse;
+    if (success != null) {
+      _result.success = success;
     }
-    if (errorResponse != null) {
-      _result.errorResponse = errorResponse;
+    if (error != null) {
+      _result.error = error;
     }
     return _result;
   }
@@ -1145,36 +1145,36 @@ class Response extends $pb.GeneratedMessage {
   void clearBody() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  SuccessResponse get successResponse => $_getN(0);
+  ResponseSuccess get success => $_getN(0);
   @$pb.TagNumber(1)
-  set successResponse(SuccessResponse v) { setField(1, v); }
+  set success(ResponseSuccess v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasSuccessResponse() => $_has(0);
+  $core.bool hasSuccess() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSuccessResponse() => clearField(1);
+  void clearSuccess() => clearField(1);
   @$pb.TagNumber(1)
-  SuccessResponse ensureSuccessResponse() => $_ensure(0);
+  ResponseSuccess ensureSuccess() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  ErrorResponse get errorResponse => $_getN(1);
+  ResponseError get error => $_getN(1);
   @$pb.TagNumber(2)
-  set errorResponse(ErrorResponse v) { setField(2, v); }
+  set error(ResponseError v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasErrorResponse() => $_has(1);
+  $core.bool hasError() => $_has(1);
   @$pb.TagNumber(2)
-  void clearErrorResponse() => clearField(2);
+  void clearError() => clearField(2);
   @$pb.TagNumber(2)
-  ErrorResponse ensureErrorResponse() => $_ensure(1);
+  ResponseError ensureError() => $_ensure(1);
 }
 
-class SuccessResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuccessResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class ResponseSuccess extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResponseSuccess', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'body', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
-  SuccessResponse._() : super();
-  factory SuccessResponse({
+  ResponseSuccess._() : super();
+  factory ResponseSuccess({
     $core.List<$core.int>? body,
   }) {
     final _result = create();
@@ -1183,26 +1183,26 @@ class SuccessResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory SuccessResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SuccessResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ResponseSuccess.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResponseSuccess.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SuccessResponse clone() => SuccessResponse()..mergeFromMessage(this);
+  ResponseSuccess clone() => ResponseSuccess()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SuccessResponse copyWith(void Function(SuccessResponse) updates) => super.copyWith((message) => updates(message as SuccessResponse)) as SuccessResponse; // ignore: deprecated_member_use
+  ResponseSuccess copyWith(void Function(ResponseSuccess) updates) => super.copyWith((message) => updates(message as ResponseSuccess)) as ResponseSuccess; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static SuccessResponse create() => SuccessResponse._();
-  SuccessResponse createEmptyInstance() => create();
-  static $pb.PbList<SuccessResponse> createRepeated() => $pb.PbList<SuccessResponse>();
+  static ResponseSuccess create() => ResponseSuccess._();
+  ResponseSuccess createEmptyInstance() => create();
+  static $pb.PbList<ResponseSuccess> createRepeated() => $pb.PbList<ResponseSuccess>();
   @$core.pragma('dart2js:noInline')
-  static SuccessResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SuccessResponse>(create);
-  static SuccessResponse? _defaultInstance;
+  static ResponseSuccess getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResponseSuccess>(create);
+  static ResponseSuccess? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get body => $_getN(0);
@@ -1214,15 +1214,15 @@ class SuccessResponse extends $pb.GeneratedMessage {
   void clearBody() => clearField(1);
 }
 
-class ErrorResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ErrorResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class ResponseError extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResponseError', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'body', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
-  ErrorResponse._() : super();
-  factory ErrorResponse({
+  ResponseError._() : super();
+  factory ResponseError({
     $core.String? message,
     $core.List<$core.int>? body,
   }) {
@@ -1235,26 +1235,26 @@ class ErrorResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ErrorResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ErrorResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ResponseError.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResponseError.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ErrorResponse clone() => ErrorResponse()..mergeFromMessage(this);
+  ResponseError clone() => ResponseError()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ErrorResponse copyWith(void Function(ErrorResponse) updates) => super.copyWith((message) => updates(message as ErrorResponse)) as ErrorResponse; // ignore: deprecated_member_use
+  ResponseError copyWith(void Function(ResponseError) updates) => super.copyWith((message) => updates(message as ResponseError)) as ResponseError; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ErrorResponse create() => ErrorResponse._();
-  ErrorResponse createEmptyInstance() => create();
-  static $pb.PbList<ErrorResponse> createRepeated() => $pb.PbList<ErrorResponse>();
+  static ResponseError create() => ResponseError._();
+  ResponseError createEmptyInstance() => create();
+  static $pb.PbList<ResponseError> createRepeated() => $pb.PbList<ResponseError>();
   @$core.pragma('dart2js:noInline')
-  static ErrorResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ErrorResponse>(create);
-  static ErrorResponse? _defaultInstance;
+  static ResponseError getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResponseError>(create);
+  static ResponseError? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);

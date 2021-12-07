@@ -17,22 +17,20 @@ export 'election.pbenum.dart';
 
 class Election extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Election', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..aOM<$0.Census>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'primaryCensus', protoName: 'primaryCensus', subBuilder: $0.Census.create)
+    ..aOM<$0.Census>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainCensus', protoName: 'mainCensus', subBuilder: $0.Census.create)
     ..aOM<$0.Census>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'secondaryCensus', protoName: 'secondaryCensus', subBuilder: $0.Census.create)
     ..aOM<$0.Census>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tertiaryCensus', protoName: 'tertiaryCensus', subBuilder: $0.Census.create)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusSize', $pb.PbFieldType.O3, protoName: 'censusSize')
-    ..pc<Proposal>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposals', $pb.PbFieldType.PM, subBuilder: Proposal.create)
-    ..aOM<Privacy>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'privacy', subBuilder: Privacy.create)
-    ..e<Lifecycle>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lifecycle', $pb.PbFieldType.OE, defaultOrMaker: Lifecycle.PAUSED_MUTABLE, valueOf: Lifecycle.valueOf, enumValues: Lifecycle.values)
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadataUri', protoName: 'metadataUri')
-    ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startBlock', $pb.PbFieldType.O3, protoName: 'startBlock')
-    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endBlock', $pb.PbFieldType.O3, protoName: 'endBlock')
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusSize', $pb.PbFieldType.O3, protoName: 'censusSize')
+    ..pc<Proposal>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposals', $pb.PbFieldType.PM, subBuilder: Proposal.create)
+    ..aOM<Privacy>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'privacy', subBuilder: Privacy.create)
+    ..aOM<Lifecycle>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lifecycle', subBuilder: Lifecycle.create)
+    ..aOS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadataUri', protoName: 'metadataUri')
     ..hasRequiredFields = false
   ;
 
   Election._() : super();
   factory Election({
-    $0.Census? primaryCensus,
+    $0.Census? mainCensus,
     $0.Census? secondaryCensus,
     $0.Census? tertiaryCensus,
     $core.int? censusSize,
@@ -40,12 +38,10 @@ class Election extends $pb.GeneratedMessage {
     Privacy? privacy,
     Lifecycle? lifecycle,
     $core.String? metadataUri,
-    $core.int? startBlock,
-    $core.int? endBlock,
   }) {
     final _result = create();
-    if (primaryCensus != null) {
-      _result.primaryCensus = primaryCensus;
+    if (mainCensus != null) {
+      _result.mainCensus = mainCensus;
     }
     if (secondaryCensus != null) {
       _result.secondaryCensus = secondaryCensus;
@@ -67,12 +63,6 @@ class Election extends $pb.GeneratedMessage {
     }
     if (metadataUri != null) {
       _result.metadataUri = metadataUri;
-    }
-    if (startBlock != null) {
-      _result.startBlock = startBlock;
-    }
-    if (endBlock != null) {
-      _result.endBlock = endBlock;
     }
     return _result;
   }
@@ -98,15 +88,15 @@ class Election extends $pb.GeneratedMessage {
   static Election? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $0.Census get primaryCensus => $_getN(0);
+  $0.Census get mainCensus => $_getN(0);
   @$pb.TagNumber(1)
-  set primaryCensus($0.Census v) { setField(1, v); }
+  set mainCensus($0.Census v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasPrimaryCensus() => $_has(0);
+  $core.bool hasMainCensus() => $_has(0);
   @$pb.TagNumber(1)
-  void clearPrimaryCensus() => clearField(1);
+  void clearMainCensus() => clearField(1);
   @$pb.TagNumber(1)
-  $0.Census ensurePrimaryCensus() => $_ensure(0);
+  $0.Census ensureMainCensus() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $0.Census get secondaryCensus => $_getN(1);
@@ -130,84 +120,68 @@ class Election extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $0.Census ensureTertiaryCensus() => $_ensure(2);
 
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(11)
   $core.int get censusSize => $_getIZ(3);
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(11)
   set censusSize($core.int v) { $_setSignedInt32(3, v); }
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(11)
   $core.bool hasCensusSize() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearCensusSize() => clearField(4);
+  @$pb.TagNumber(11)
+  void clearCensusSize() => clearField(11);
 
-  @$pb.TagNumber(5)
+  @$pb.TagNumber(12)
   $core.List<Proposal> get proposals => $_getList(4);
 
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(13)
   Privacy get privacy => $_getN(5);
-  @$pb.TagNumber(6)
-  set privacy(Privacy v) { setField(6, v); }
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(13)
+  set privacy(Privacy v) { setField(13, v); }
+  @$pb.TagNumber(13)
   $core.bool hasPrivacy() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearPrivacy() => clearField(6);
-  @$pb.TagNumber(6)
+  @$pb.TagNumber(13)
+  void clearPrivacy() => clearField(13);
+  @$pb.TagNumber(13)
   Privacy ensurePrivacy() => $_ensure(5);
 
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(14)
   Lifecycle get lifecycle => $_getN(6);
-  @$pb.TagNumber(7)
-  set lifecycle(Lifecycle v) { setField(7, v); }
-  @$pb.TagNumber(7)
+  @$pb.TagNumber(14)
+  set lifecycle(Lifecycle v) { setField(14, v); }
+  @$pb.TagNumber(14)
   $core.bool hasLifecycle() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearLifecycle() => clearField(7);
+  @$pb.TagNumber(14)
+  void clearLifecycle() => clearField(14);
+  @$pb.TagNumber(14)
+  Lifecycle ensureLifecycle() => $_ensure(6);
 
-  @$pb.TagNumber(8)
+  @$pb.TagNumber(15)
   $core.String get metadataUri => $_getSZ(7);
-  @$pb.TagNumber(8)
+  @$pb.TagNumber(15)
   set metadataUri($core.String v) { $_setString(7, v); }
-  @$pb.TagNumber(8)
+  @$pb.TagNumber(15)
   $core.bool hasMetadataUri() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearMetadataUri() => clearField(8);
-
-  @$pb.TagNumber(9)
-  $core.int get startBlock => $_getIZ(8);
-  @$pb.TagNumber(9)
-  set startBlock($core.int v) { $_setSignedInt32(8, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasStartBlock() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearStartBlock() => clearField(9);
-
-  @$pb.TagNumber(10)
-  $core.int get endBlock => $_getIZ(9);
-  @$pb.TagNumber(10)
-  set endBlock($core.int v) { $_setSignedInt32(9, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasEndBlock() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearEndBlock() => clearField(10);
+  @$pb.TagNumber(15)
+  void clearMetadataUri() => clearField(15);
 }
 
 class Privacy extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Privacy', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'realTimeResults', protoName: 'realTimeResults')
-    ..e<Privacy_VoteAnonimity>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'voteAnonymity', $pb.PbFieldType.OE, protoName: 'voteAnonymity', defaultOrMaker: Privacy_VoteAnonimity.NONE, valueOf: Privacy_VoteAnonimity.valueOf, enumValues: Privacy_VoteAnonimity.values)
+    ..e<Privacy_CensusProofs>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusProof', $pb.PbFieldType.OE, protoName: 'censusProof', defaultOrMaker: Privacy_CensusProofs.PLAIN, valueOf: Privacy_CensusProofs.valueOf, enumValues: Privacy_CensusProofs.values)
     ..hasRequiredFields = false
   ;
 
   Privacy._() : super();
   factory Privacy({
     $core.bool? realTimeResults,
-    Privacy_VoteAnonimity? voteAnonymity,
+    Privacy_CensusProofs? censusProof,
   }) {
     final _result = create();
     if (realTimeResults != null) {
       _result.realTimeResults = realTimeResults;
     }
-    if (voteAnonymity != null) {
-      _result.voteAnonymity = voteAnonymity;
+    if (censusProof != null) {
+      _result.censusProof = censusProof;
     }
     return _result;
   }
@@ -242,66 +216,141 @@ class Privacy extends $pb.GeneratedMessage {
   void clearRealTimeResults() => clearField(1);
 
   @$pb.TagNumber(2)
-  Privacy_VoteAnonimity get voteAnonymity => $_getN(1);
+  Privacy_CensusProofs get censusProof => $_getN(1);
   @$pb.TagNumber(2)
-  set voteAnonymity(Privacy_VoteAnonimity v) { setField(2, v); }
+  set censusProof(Privacy_CensusProofs v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasVoteAnonymity() => $_has(1);
+  $core.bool hasCensusProof() => $_has(1);
   @$pb.TagNumber(2)
-  void clearVoteAnonymity() => clearField(2);
+  void clearCensusProof() => clearField(2);
+}
+
+class Lifecycle extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Lifecycle', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..e<Lifecycle_Types>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Lifecycle_Types.PAUSED_MUTABLE, valueOf: Lifecycle_Types.valueOf, enumValues: Lifecycle_Types.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startBlock', $pb.PbFieldType.O3, protoName: 'startBlock')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endBlock', $pb.PbFieldType.O3, protoName: 'endBlock')
+    ..hasRequiredFields = false
+  ;
+
+  Lifecycle._() : super();
+  factory Lifecycle({
+    Lifecycle_Types? type,
+    $core.int? startBlock,
+    $core.int? endBlock,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (startBlock != null) {
+      _result.startBlock = startBlock;
+    }
+    if (endBlock != null) {
+      _result.endBlock = endBlock;
+    }
+    return _result;
+  }
+  factory Lifecycle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Lifecycle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Lifecycle clone() => Lifecycle()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Lifecycle copyWith(void Function(Lifecycle) updates) => super.copyWith((message) => updates(message as Lifecycle)) as Lifecycle; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Lifecycle create() => Lifecycle._();
+  Lifecycle createEmptyInstance() => create();
+  static $pb.PbList<Lifecycle> createRepeated() => $pb.PbList<Lifecycle>();
+  @$core.pragma('dart2js:noInline')
+  static Lifecycle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Lifecycle>(create);
+  static Lifecycle? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Lifecycle_Types get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(Lifecycle_Types v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get startBlock => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set startBlock($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStartBlock() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStartBlock() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get endBlock => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set endBlock($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEndBlock() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEndBlock() => clearField(3);
 }
 
 enum Proposal_Proposal {
-  approvalProposal, 
-  singleChoiceProposal, 
-  quadraticProposal, 
-  rankedProposal, 
-  spreadProposal, 
+  approval, 
+  singleChoice, 
+  quadratic, 
+  ranked, 
+  spread, 
   notSet
 }
 
 class Proposal extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Proposal_Proposal> _Proposal_ProposalByTag = {
-    1 : Proposal_Proposal.approvalProposal,
-    2 : Proposal_Proposal.singleChoiceProposal,
-    3 : Proposal_Proposal.quadraticProposal,
-    4 : Proposal_Proposal.rankedProposal,
-    5 : Proposal_Proposal.spreadProposal,
+    1 : Proposal_Proposal.approval,
+    2 : Proposal_Proposal.singleChoice,
+    3 : Proposal_Proposal.quadratic,
+    4 : Proposal_Proposal.ranked,
+    5 : Proposal_Proposal.spread,
     0 : Proposal_Proposal.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Proposal', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5])
-    ..aOM<ApprovalProposal>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'approvalProposal', protoName: 'approvalProposal', subBuilder: ApprovalProposal.create)
-    ..aOM<SingleChoiceProposal>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleChoiceProposal', protoName: 'singleChoiceProposal', subBuilder: SingleChoiceProposal.create)
-    ..aOM<QuadraticProposal>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadraticProposal', protoName: 'quadraticProposal', subBuilder: QuadraticProposal.create)
-    ..aOM<RankedProposal>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rankedProposal', protoName: 'rankedProposal', subBuilder: RankedProposal.create)
-    ..aOM<SpreadProposal>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spreadProposal', protoName: 'spreadProposal', subBuilder: SpreadProposal.create)
+    ..aOM<ApprovalProposal>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'approval', subBuilder: ApprovalProposal.create)
+    ..aOM<SingleChoiceProposal>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleChoice', protoName: 'singleChoice', subBuilder: SingleChoiceProposal.create)
+    ..aOM<QuadraticProposal>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadratic', subBuilder: QuadraticProposal.create)
+    ..aOM<RankedProposal>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ranked', subBuilder: RankedProposal.create)
+    ..aOM<SpreadProposal>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spread', subBuilder: SpreadProposal.create)
     ..hasRequiredFields = false
   ;
 
   Proposal._() : super();
   factory Proposal({
-    ApprovalProposal? approvalProposal,
-    SingleChoiceProposal? singleChoiceProposal,
-    QuadraticProposal? quadraticProposal,
-    RankedProposal? rankedProposal,
-    SpreadProposal? spreadProposal,
+    ApprovalProposal? approval,
+    SingleChoiceProposal? singleChoice,
+    QuadraticProposal? quadratic,
+    RankedProposal? ranked,
+    SpreadProposal? spread,
   }) {
     final _result = create();
-    if (approvalProposal != null) {
-      _result.approvalProposal = approvalProposal;
+    if (approval != null) {
+      _result.approval = approval;
     }
-    if (singleChoiceProposal != null) {
-      _result.singleChoiceProposal = singleChoiceProposal;
+    if (singleChoice != null) {
+      _result.singleChoice = singleChoice;
     }
-    if (quadraticProposal != null) {
-      _result.quadraticProposal = quadraticProposal;
+    if (quadratic != null) {
+      _result.quadratic = quadratic;
     }
-    if (rankedProposal != null) {
-      _result.rankedProposal = rankedProposal;
+    if (ranked != null) {
+      _result.ranked = ranked;
     }
-    if (spreadProposal != null) {
-      _result.spreadProposal = spreadProposal;
+    if (spread != null) {
+      _result.spread = spread;
     }
     return _result;
   }
@@ -330,59 +379,59 @@ class Proposal extends $pb.GeneratedMessage {
   void clearProposal() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  ApprovalProposal get approvalProposal => $_getN(0);
+  ApprovalProposal get approval => $_getN(0);
   @$pb.TagNumber(1)
-  set approvalProposal(ApprovalProposal v) { setField(1, v); }
+  set approval(ApprovalProposal v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasApprovalProposal() => $_has(0);
+  $core.bool hasApproval() => $_has(0);
   @$pb.TagNumber(1)
-  void clearApprovalProposal() => clearField(1);
+  void clearApproval() => clearField(1);
   @$pb.TagNumber(1)
-  ApprovalProposal ensureApprovalProposal() => $_ensure(0);
+  ApprovalProposal ensureApproval() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  SingleChoiceProposal get singleChoiceProposal => $_getN(1);
+  SingleChoiceProposal get singleChoice => $_getN(1);
   @$pb.TagNumber(2)
-  set singleChoiceProposal(SingleChoiceProposal v) { setField(2, v); }
+  set singleChoice(SingleChoiceProposal v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSingleChoiceProposal() => $_has(1);
+  $core.bool hasSingleChoice() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSingleChoiceProposal() => clearField(2);
+  void clearSingleChoice() => clearField(2);
   @$pb.TagNumber(2)
-  SingleChoiceProposal ensureSingleChoiceProposal() => $_ensure(1);
+  SingleChoiceProposal ensureSingleChoice() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  QuadraticProposal get quadraticProposal => $_getN(2);
+  QuadraticProposal get quadratic => $_getN(2);
   @$pb.TagNumber(3)
-  set quadraticProposal(QuadraticProposal v) { setField(3, v); }
+  set quadratic(QuadraticProposal v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasQuadraticProposal() => $_has(2);
+  $core.bool hasQuadratic() => $_has(2);
   @$pb.TagNumber(3)
-  void clearQuadraticProposal() => clearField(3);
+  void clearQuadratic() => clearField(3);
   @$pb.TagNumber(3)
-  QuadraticProposal ensureQuadraticProposal() => $_ensure(2);
+  QuadraticProposal ensureQuadratic() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  RankedProposal get rankedProposal => $_getN(3);
+  RankedProposal get ranked => $_getN(3);
   @$pb.TagNumber(4)
-  set rankedProposal(RankedProposal v) { setField(4, v); }
+  set ranked(RankedProposal v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasRankedProposal() => $_has(3);
+  $core.bool hasRanked() => $_has(3);
   @$pb.TagNumber(4)
-  void clearRankedProposal() => clearField(4);
+  void clearRanked() => clearField(4);
   @$pb.TagNumber(4)
-  RankedProposal ensureRankedProposal() => $_ensure(3);
+  RankedProposal ensureRanked() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  SpreadProposal get spreadProposal => $_getN(4);
+  SpreadProposal get spread => $_getN(4);
   @$pb.TagNumber(5)
-  set spreadProposal(SpreadProposal v) { setField(5, v); }
+  set spread(SpreadProposal v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasSpreadProposal() => $_has(4);
+  $core.bool hasSpread() => $_has(4);
   @$pb.TagNumber(5)
-  void clearSpreadProposal() => clearField(5);
+  void clearSpread() => clearField(5);
   @$pb.TagNumber(5)
-  SpreadProposal ensureSpreadProposal() => $_ensure(4);
+  SpreadProposal ensureSpread() => $_ensure(4);
 }
 
 class ApprovalProposal extends $pb.GeneratedMessage {
