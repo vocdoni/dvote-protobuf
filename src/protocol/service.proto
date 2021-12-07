@@ -191,7 +191,7 @@ message GetElectionWeightResponse {
 message NewCensus {
     bytes censusSalt = 1;
     repeated bytes managerPublicKeys = 2;
-    CensusOffchainType censusType = 3;
+    CensusType censusType = 3;
 }
 // Response
 message NewCensusResponse {
@@ -213,6 +213,8 @@ message AddCensusKeys {
 // Response
 message AddCensusKeysResponse {
     bytes censusRoot = 1;
+    int32 keysAdded = 2;
+    int32 keysSkipped = 3;
 }
 
 // Request

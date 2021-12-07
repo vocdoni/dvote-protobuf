@@ -22,7 +22,7 @@ enum ProposalStatus {
 // Census
 ///////////////////////////////////////////////////////////////////////////////
 
-enum CensusOffchainType {
-	UNKNOWN_OFFCHAIN_CENSUS_TYPE = 0;
+enum CensusType {
+	UNKNOWN_CENSUS_TYPE = 0;
 	ARBO_BLAKE2B = 1;
 }

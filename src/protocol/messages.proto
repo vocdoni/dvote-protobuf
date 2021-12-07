@@ -94,54 +94,55 @@ message TransactionError {
 message Request {
 	oneof body {
 		// ELECTION
-		GetElection GetElection = 1;
-		GetElectionList GetElectionList = 2;
-		GetOrganization GetOrganization = 3;
-		GetBallot GetBallot = 4;
-		GetElectionBallots GetElectionBallots = 5;
-		GetElectionKeys GetElectionKeys = 6;
-		GetElectionCircuitInfo GetElectionCircuitInfo = 7;
-		GetElectionResults GetElectionResults = 8;
-		GetElectionWeight GetElectionWeight = 9;
+		GetElection getElection = 1;
+		GetElectionList getElectionList = 2;
+		GetOrganization getOrganization = 3;
+		GetBallot getBallot = 4;
+		GetElectionBallots getElectionBallots = 5;
+		GetElectionKeys getElectionKeys = 6;
+		GetElectionCircuitInfo getElectionCircuitInfo = 7;
+		GetElectionResults getElectionResults = 8;
+		GetElectionWeight getElectionWeight = 9;
 
 		// CENSUS
-		NewCensus NewCensus = 31;
-		AddCensusKeys AddCensusKeys = 32;
-		GetCensusRoot GetCensusRoot = 33;
-		GetCensusSize GetCensusSize = 34;
-		PublishCensus PublishCensus = 35;
-		GetCensusProof GetCensusProof = 36;
-		DumpCensus DumpCensus = 37;
+		NewCensus newCensus = 31;
+		AddCensusKeys addCensusKeys = 32;
+		GetCensusRoot getCensusRoot = 33;
+		GetCensusSize getCensusSize = 34;
+		PublishCensus publishCensus = 35;
+		GetCensusProof getCensusProof = 36;
+		DumpCensus dumpCensus = 37;
 
 		// FILE STORAGE
-		PinFile PinFile = 51;
-		FetchFile FetchFile = 52;
+		PinFile pinFile = 51;
+		FetchFile fetchFile = 52;
 
 		// NETWORK
-		GetBlockStatus GetBlockStatus = 61;
-		GetBlockCount GetBlockCount = 62;
-		EstimateElectionPrice EstimateElectionPrice = 63;
+		GetBlockStatus getBlockStatus = 61;
+		GetBlockCount getBlockCount = 62;
+		EstimateElectionPrice estimateElectionPrice = 63;
 
 		// TRANSACTIONS
-		GetTransaction GetTransaction = 81;
-		WaitTransaction WaitTransaction = 82;
+		GetTransaction getTransaction = 81;
+		WaitTransaction waitTransaction = 82;
 	}
 }
 
 /// Responses can either be successful or fail. The `Response` body depends on the type of request made originally, and the caller is responsible for deserializing the bytes into the according model, if any.
 message Response {
 	oneof body {
-		SuccessResponse successResponse = 1;
-		ErrorResponse errorResponse = 2;
+		ResponseSuccess success = 1;
+		ResponseError error = 2;
 	}
 }
 
-message SuccessResponse {
-	/// Serialized response according to the request model
+message ResponseSuccess {
+	/// Serialized response, related to the request model
 	bytes body = 1;
 }
-message ErrorResponse {
+message ResponseError {
 	string message = 1;
-	/// Serialized response that corresponds to the request model
+
+	/// Serialized response, related to the request model
 	bytes body = 2;
 }
