@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "example": "ts-node ./example/index.ts"
+  },
   "devDependencies": {
     "protobufjs": "^6.10.2",
     "ts-node": "^9.1.1",

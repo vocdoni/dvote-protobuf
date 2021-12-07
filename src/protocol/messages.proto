@@ -24,8 +24,8 @@ message Message {
 	optional bytes signature = 2;
 
 	enum Signatures {
-		None = 0;
-		Secp256k1 = 1;
+		NONE = 0;
+		SECP256K1 = 1;
 	}
 	Signatures signatureType = 3;
 }
