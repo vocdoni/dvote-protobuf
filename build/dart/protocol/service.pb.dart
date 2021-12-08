@@ -717,7 +717,7 @@ class GetElectionResponse extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'organizationId', $pb.PbFieldType.OY, protoName: 'organizationId')
     ..aOM<$0.Election>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parameters', subBuilder: $0.Election.create)
     ..pc<$5.ProposalStatus>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'statuses', $pb.PbFieldType.PE, valueOf: $5.ProposalStatus.valueOf, enumValues: $5.ProposalStatus.values)
-    ..p<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ballots', $pb.PbFieldType.P3)
+    ..p<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ballotCounts', $pb.PbFieldType.P3, protoName: 'ballotCounts')
     ..hasRequiredFields = false
   ;
 
@@ -726,7 +726,7 @@ class GetElectionResponse extends $pb.GeneratedMessage {
     $core.List<$core.int>? organizationId,
     $0.Election? parameters,
     $core.Iterable<$5.ProposalStatus>? statuses,
-    $core.Iterable<$core.int>? ballots,
+    $core.Iterable<$core.int>? ballotCounts,
   }) {
     final _result = create();
     if (organizationId != null) {
@@ -738,8 +738,8 @@ class GetElectionResponse extends $pb.GeneratedMessage {
     if (statuses != null) {
       _result.statuses.addAll(statuses);
     }
-    if (ballots != null) {
-      _result.ballots.addAll(ballots);
+    if (ballotCounts != null) {
+      _result.ballotCounts.addAll(ballotCounts);
     }
     return _result;
   }
@@ -788,7 +788,7 @@ class GetElectionResponse extends $pb.GeneratedMessage {
   $core.List<$5.ProposalStatus> get statuses => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.List<$core.int> get ballots => $_getList(3);
+  $core.List<$core.int> get ballotCounts => $_getList(3);
 }
 
 class GetElectionList extends $pb.GeneratedMessage {

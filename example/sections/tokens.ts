@@ -5,7 +5,7 @@
 
 import { Mint, Transfer, ClaimTokens } from "../../build/ts/protocol/transactions"
 import { Transaction } from "../../build/ts/protocol/messages"
-import { decodeTransaction, decodeTransactionReceipt, encodeTransaction, encodeTransactionSuccess } from "../common/messages"
+import { decodeTransaction, decodeTransactionReceipt, encodeTransaction, encodeTransactionError, encodeTransactionSuccess } from "../common/messages"
 
 const dummySigningKey = new Uint8Array()
 
@@ -28,7 +28,7 @@ export function mintTokens() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -55,7 +55,7 @@ export function transferTokens() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -83,7 +83,7 @@ export function claimTokens() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -98,7 +98,7 @@ export function claimTokens() {
 ///////////////////////////////////////////////////////////////////////////////
 
 const pad = "  "
-function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
+function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
     const { transaction, publicKey, requestId } = decodeTransaction(reqBytes)
 
     console.log(pad + "Received TX", transaction.body.$case)
@@ -107,15 +107,19 @@ function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
             const { amount } = transaction.body.mint
             console.log(pad + "Mint", amount, "tokens to", publicKey)
             break
+
         case "transfer":
             const { to, value } = transaction.body.transfer
             console.log(pad + "Transfer", value, "tokens to", to)
             break
+
         case "claimTokens":
             const { nonce, sender } = transaction.body.claimTokens
             console.log(pad + "Claim from", sender, "and nonce", nonce)
             break
-        default: throw new Error("Unexpected transaction")
+
+        default:
+            return encodeTransactionError("Unexpected transaction: " + transaction.body.$case, 0, requestId, dummySigningKey)
     }
     console.log(pad + "(Handle TX => check + add to mempool)")
 

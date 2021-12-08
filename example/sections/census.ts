@@ -6,7 +6,7 @@
 import { NewCensus, NewCensusResponse, AddCensusKeys, AddCensusKeysResponse, AddCensusKeys_CensusEntry, GetCensusRoot, GetCensusRootResponse, GetCensusSize, GetCensusSizeResponse, PublishCensus, PublishCensusResponse, GetCensusProof, GetCensusProofResponse } from "../../build/ts/protocol/service"
 import { Census, Proof } from "../../build/ts/protocol/census"
 import { Request, Transaction } from "../../build/ts/protocol/messages"
-import { encodeRequest, decodeRequest, encodeResponseSuccess, decodeResponse, encodeResponseError, decodeTransaction, encodeTransactionSuccess, encodeTransaction, decodeTransactionReceipt } from "../common/messages"
+import { encodeRequest, decodeRequest, encodeResponseSuccess, decodeResponse, encodeResponseError, decodeTransaction, encodeTransactionSuccess, encodeTransaction, decodeTransactionReceipt, encodeTransactionError } from "../common/messages"
 import { CensusType } from "../../build/ts/protocol/enums"
 import { Reader } from "protobufjs"
 import { RegisterElectionKey } from "../../build/ts/protocol/transactions"
@@ -474,7 +474,8 @@ function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
             console.log("Register election", electionId, "key", newKey, "with weight", weight, "and proofs", proofs)
             break
 
-        default: throw new Error("Unexpected transaction: " + transaction.body.$case)
+        default:
+            return encodeTransactionError("Unexpected transaction: " + transaction.body.$case, 0, requestId, dummySigningKey)
     }
     console.log(pad + "(Handle TX => check + add to mempool)")
 

@@ -109,12 +109,12 @@ const GetElectionResponse$json = const {
     const {'1': 'organizationId', '3': 1, '4': 1, '5': 12, '10': 'organizationId'},
     const {'1': 'parameters', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.Election', '10': 'parameters'},
     const {'1': 'statuses', '3': 3, '4': 3, '5': 14, '6': '.dvote.types.v2.ProposalStatus', '10': 'statuses'},
-    const {'1': 'ballots', '3': 4, '4': 3, '5': 5, '10': 'ballots'},
+    const {'1': 'ballotCounts', '3': 4, '4': 3, '5': 5, '10': 'ballotCounts'},
   ],
 };
 
 /// Descriptor for `GetElectionResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getElectionResponseDescriptor = $convert.base64Decode('ChNHZXRFbGVjdGlvblJlc3BvbnNlEiYKDm9yZ2FuaXphdGlvbklkGAEgASgMUg5vcmdhbml6YXRpb25JZBI4CgpwYXJhbWV0ZXJzGAIgASgLMhguZHZvdGUudHlwZXMudjIuRWxlY3Rpb25SCnBhcmFtZXRlcnMSOgoIc3RhdHVzZXMYAyADKA4yHi5kdm90ZS50eXBlcy52Mi5Qcm9wb3NhbFN0YXR1c1IIc3RhdHVzZXMSGAoHYmFsbG90cxgEIAMoBVIHYmFsbG90cw==');
+final $typed_data.Uint8List getElectionResponseDescriptor = $convert.base64Decode('ChNHZXRFbGVjdGlvblJlc3BvbnNlEiYKDm9yZ2FuaXphdGlvbklkGAEgASgMUg5vcmdhbml6YXRpb25JZBI4CgpwYXJhbWV0ZXJzGAIgASgLMhguZHZvdGUudHlwZXMudjIuRWxlY3Rpb25SCnBhcmFtZXRlcnMSOgoIc3RhdHVzZXMYAyADKA4yHi5kdm90ZS50eXBlcy52Mi5Qcm9wb3NhbFN0YXR1c1IIc3RhdHVzZXMSIgoMYmFsbG90Q291bnRzGAQgAygFUgxiYWxsb3RDb3VudHM=');
 @$core.Deprecated('Use getElectionListDescriptor instead')
 const GetElectionList$json = const {
   '1': 'GetElectionList',

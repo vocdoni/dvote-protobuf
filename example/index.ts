@@ -3,10 +3,10 @@
 // The only purpose is to exemplify the usage of the protocol models.
 // No real functionality is being executed here.
 
-import { createOrganization } from "./sections/organization"
+import { createOrganization, getOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
 import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus, registerVoterKey } from "./sections/census"
-import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, setElectionStatus, setProposalStatus } from "./sections/election"
+import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, getElection, getElectionKeys, setElectionStatus, setProposalStatus } from "./sections/election"
 
 function main() {
     // Transacations
@@ -40,9 +40,9 @@ function main() {
     registerVoterKey()
 
     // Requests
-    // getOrganization()
-    // getElection()
-    // getElectionKeys()
+    getOrganization()
+    getElection()
+    getElectionKeys()
     getArboProof()
     getErc20Proof()
 

@@ -80,7 +80,7 @@ export interface GetElectionResponse {
   /** The status of each individual proposal */
   statuses: ProposalStatus[];
   /** How many ballots each proposal has */
-  ballots: number[];
+  ballotCounts: number[];
 }
 
 /** Request */
@@ -1421,7 +1421,7 @@ export const GetElection = {
   },
 };
 
-const baseGetElectionResponse: object = { statuses: 0, ballots: 0 };
+const baseGetElectionResponse: object = { statuses: 0, ballotCounts: 0 };
 
 export const GetElectionResponse = {
   encode(
@@ -1440,7 +1440,7 @@ export const GetElectionResponse = {
     }
     writer.ldelim();
     writer.uint32(34).fork();
-    for (const v of message.ballots) {
+    for (const v of message.ballotCounts) {
       writer.int32(v);
     }
     writer.ldelim();
@@ -1452,7 +1452,7 @@ export const GetElectionResponse = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGetElectionResponse } as GetElectionResponse;
     message.statuses = [];
-    message.ballots = [];
+    message.ballotCounts = [];
     message.organizationId = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1477,10 +1477,10 @@ export const GetElectionResponse = {
           if ((tag & 7) === 2) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
-              message.ballots.push(reader.int32());
+              message.ballotCounts.push(reader.int32());
             }
           } else {
-            message.ballots.push(reader.int32());
+            message.ballotCounts.push(reader.int32());
           }
           break;
         default:
@@ -1504,7 +1504,9 @@ export const GetElectionResponse = {
     message.statuses = (object.statuses ?? []).map((e: any) =>
       proposalStatusFromJSON(e)
     );
-    message.ballots = (object.ballots ?? []).map((e: any) => Number(e));
+    message.ballotCounts = (object.ballotCounts ?? []).map((e: any) =>
+      Number(e)
+    );
     return message;
   },
 
@@ -1525,10 +1527,10 @@ export const GetElectionResponse = {
     } else {
       obj.statuses = [];
     }
-    if (message.ballots) {
-      obj.ballots = message.ballots.map((e) => e);
+    if (message.ballotCounts) {
+      obj.ballotCounts = message.ballotCounts.map((e) => e);
     } else {
-      obj.ballots = [];
+      obj.ballotCounts = [];
     }
     return obj;
   },
@@ -1543,7 +1545,7 @@ export const GetElectionResponse = {
         ? Election.fromPartial(object.parameters)
         : undefined;
     message.statuses = object.statuses?.map((e) => e) || [];
-    message.ballots = object.ballots?.map((e) => e) || [];
+    message.ballotCounts = object.ballotCounts?.map((e) => e) || [];
     return message;
   },
 };

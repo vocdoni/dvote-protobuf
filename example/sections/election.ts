@@ -4,11 +4,13 @@
 // No real functionality is being executed here.
 
 import { NewElection, SetElectionStatus, SetProposalStatus } from "../../build/ts/protocol/transactions"
-import { Transaction } from "../../build/ts/protocol/messages"
-import { decodeTransaction, decodeTransactionReceipt, encodeTransaction, encodeTransactionSuccess } from "../common/messages"
+import { Transaction, Request } from "../../build/ts/protocol/messages"
+import { decodeRequest, decodeResponse, decodeTransaction, decodeTransactionReceipt, encodeRequest, encodeResponseError, encodeResponseSuccess, encodeTransaction, encodeTransactionError, encodeTransactionSuccess } from "../common/messages"
 import { ApprovalProposal, Election, Lifecycle_Types, Privacy_CensusProofs, Proposal, QuadraticProposal, RankedProposal, SingleChoiceProposal, SpreadProposal } from "../../build/ts/protocol/election"
 import { CensusArbo, CensusCsp, CensusErc20, CensusNone, StorageProofErc20 } from "../../build/ts/protocol/census"
 import { ProposalStatus } from "../../build/ts/protocol/enums"
+import { GetElection, GetElectionKeys, GetElectionKeysResponse, GetElectionResponse } from "../../build/ts/protocol/service"
+import { Reader } from "protobufjs"
 
 const dummySigningKey = new Uint8Array()
 
@@ -81,7 +83,7 @@ export function createSimpleElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -99,7 +101,7 @@ export function createCspElection() {
     const cspCensus: CensusCsp = {
         cspPublicKey: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
         cspUri: "https://prefix.server.net/v1/",
-        blind: true    // false will expect a plain signature from the CSP
+        blind: false    // false will expect a plain signature from the CSP
     }
     // Election params
     const election: Election = {
@@ -142,7 +144,7 @@ export function createCspElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -203,7 +205,7 @@ export function createCspBlindElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -271,7 +273,7 @@ export function createErc20Election() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -339,7 +341,7 @@ export function createMiniMeElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -412,7 +414,7 @@ export function createDualCensusElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -473,7 +475,7 @@ export function createAnonymousElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -537,7 +539,7 @@ export function createAnonymousPreregisterElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -598,7 +600,7 @@ export function createNonRealTimeResultsElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -659,7 +661,7 @@ export function createStepByStepElection() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -689,7 +691,7 @@ export function setElectionStatus() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -722,7 +724,7 @@ export function setProposalStatus() {
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
     console.log("Sending the payload to a Gateway")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyVochainRequest(reqBytes)
 
     const { receipt } = decodeTransactionReceipt(responseBytes)
 
@@ -732,12 +734,74 @@ export function setProposalStatus() {
     console.log("Handling the response for transaction", txHash)
 }
 
+export function getElection() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElection request")
+
+    const requestData: GetElection = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    }
+    const request: Request = {
+        body: {
+            $case: "getElection",
+            getElection: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElection` call, we expect now to receive a `GetElectionResponse`
+    const responseData = GetElectionResponse.decode(Reader.create(response.body))
+    const { organizationId, parameters, statuses, ballotCounts } = responseData
+
+    console.log("Election parameters:", organizationId, parameters, statuses, ballotCounts)
+}
+
+export function getElectionKeys() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElectionKeys request")
+
+    const requestData: GetElectionKeys = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    }
+    const request: Request = {
+        body: {
+            $case: "getElectionKeys",
+            getElectionKeys: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElectionKeys` call, we expect now to receive a `GetElectionKeysResponse`
+    const responseData = GetElectionKeysResponse.decode(Reader.create(response.body))
+    const { encryptionPrivateKeys, encryptionPublicKeys } = responseData
+
+    console.log("Election keys:", encryptionPrivateKeys, encryptionPublicKeys)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
-// Simulated gateway responses
+// Simulated Vochain responses
 ///////////////////////////////////////////////////////////////////////////////
 
 const pad = "  "
-function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
+function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
     const { transaction, publicKey, requestId } = decodeTransaction(reqBytes)
 
     console.log(pad + "Received TX", transaction.body.$case)
@@ -761,7 +825,8 @@ function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
             console.log("Set election", eId2, "proposal statuses to", entries)
             break
 
-        default: throw new Error("Unexpected transaction: " + transaction.body.$case)
+        default:
+            return encodeTransactionError("Unexpected transaction: " + transaction.body.$case, 0, requestId, dummySigningKey)
     }
     console.log(pad + "(Handle TX => check + add to mempool)")
 
@@ -775,4 +840,95 @@ function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
 
 function dummyRandomHash() {
     return new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Simulated Gateway responses
+///////////////////////////////////////////////////////////////////////////////
+
+function dummyGatewayRequest(reqBytes: Uint8Array): Uint8Array {
+    const { request, publicKey, requestId } = decodeRequest(reqBytes)
+    let msgBytes: Uint8Array
+
+    console.log(pad + "Received Request", request.body.$case)
+    switch (request.body.$case) {
+        case "getElection":
+            const { electionId: electionId1 } = request.body.getElection
+            console.log(pad + "Get election", electionId1)
+
+            const cspCensus: CensusCsp = {
+                cspPublicKey: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
+                cspUri: "https://prefix.server.net/v1/",
+                blind: true
+            }
+            const getElectionResponseBytes = GetElectionResponse.encode({
+                organizationId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+                parameters: {
+                    mainCensus: { body: { $case: "csp", csp: cspCensus } },
+                    secondaryCensus: censusNone,
+                    tertiaryCensus: censusNone,
+                    censusSize: 500,    // affects how many votes are expected at most
+                    proposals: [
+                        proposal1,   // approval
+                        proposal2,   // singleChoice
+                        proposal3,   // quadratic
+                        proposal4,   // ranked
+                        proposal5,   // spread
+                    ],
+                    lifecycle: {
+                        type: Lifecycle_Types.PAUSED_MUTABLE,
+                        startBlock: 0,
+                        endBlock: 2000,
+                    },
+                    privacy: {
+                        realTimeResults: true,
+                        censusProof: Privacy_CensusProofs.PLAIN
+                    },
+                    metadataUri: "ipfs://1234...",
+                },
+                ballotCounts: [
+                    50,  // Proposal 1 got 50 votes
+                    40,  // Proposal 2 got 40 votes
+                    22,  // Proposal 3 has 22 votes
+                    0,   // Proposal 4 has no votes yet
+                    0    // Proposal 5 has no votes yet
+                ],
+                statuses: [
+                    ProposalStatus.RESULTS,
+                    ProposalStatus.ENDED,
+                    ProposalStatus.READY,
+                    ProposalStatus.PAUSED,
+                    ProposalStatus.PAUSED,
+                ]
+            }).finish()
+
+            msgBytes = encodeResponseSuccess(getElectionResponseBytes, requestId, dummySigningKey)
+            break
+
+        case "getElectionKeys":
+            const { electionId: electionId2 } = request.body.getElectionKeys
+            console.log(pad + "Get election keys", electionId2)
+
+            const getElectionKeysResponseBytes = GetElectionKeysResponse.encode({
+                encryptionPublicKeys: [
+                    { index: 0, key: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]) },
+                    { index: 1, key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]) },
+                ],
+                encryptionPrivateKeys: [
+                    { index: 0, key: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]) },
+                    { index: 1, key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]) },
+                ]
+            }).finish()
+
+            msgBytes = encodeResponseSuccess(getElectionKeysResponseBytes, requestId, dummySigningKey)
+            break
+
+        default:
+            msgBytes = encodeResponseError("Unsupported request: " + request.body.$case, null, requestId, dummySigningKey)
+            break
+    }
+
+    console.log(pad + "Encoding response")
+
+    return msgBytes
 }

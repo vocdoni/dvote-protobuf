@@ -82,7 +82,7 @@ message GetElectionResponse {
 	// The status of each individual proposal
     repeated ProposalStatus statuses = 3;
     // How many ballots each proposal has
-	repeated int32 ballots = 4;
+	repeated int32 ballotCounts = 4;
 }
 
 // Request
