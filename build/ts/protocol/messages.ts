@@ -26,7 +26,7 @@ import {
   GetElectionKeys,
   GetElectionCircuitInfo,
   GetElectionResults,
-  GetElectionWeight,
+  GetElectionResultsWeight,
   NewCensus,
   AddCensusKeys,
   GetCensusRoot,
@@ -40,6 +40,7 @@ import {
   GetBlockCount,
   EstimateElectionPrice,
   GetTransaction,
+  GetRawTransactionMessage,
   WaitTransaction,
 } from "../protocol/service";
 
@@ -114,7 +115,10 @@ export interface Request {
         getElectionCircuitInfo: GetElectionCircuitInfo;
       }
     | { $case: "getElectionResults"; getElectionResults: GetElectionResults }
-    | { $case: "getElectionWeight"; getElectionWeight: GetElectionWeight }
+    | {
+        $case: "getElectionResultsWeight";
+        getElectionResultsWeight: GetElectionResultsWeight;
+      }
     | { $case: "newCensus"; newCensus: NewCensus }
     | { $case: "addCensusKeys"; addCensusKeys: AddCensusKeys }
     | { $case: "getCensusRoot"; getCensusRoot: GetCensusRoot }
@@ -131,6 +135,10 @@ export interface Request {
         estimateElectionPrice: EstimateElectionPrice;
       }
     | { $case: "getTransaction"; getTransaction: GetTransaction }
+    | {
+        $case: "getRawTransactionMessage";
+        getRawTransactionMessage: GetRawTransactionMessage;
+      }
     | { $case: "waitTransaction"; waitTransaction: WaitTransaction };
 }
 
@@ -1058,9 +1066,9 @@ export const Request = {
         writer.uint32(66).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "getElectionWeight") {
-      GetElectionWeight.encode(
-        message.body.getElectionWeight,
+    if (message.body?.$case === "getElectionResultsWeight") {
+      GetElectionResultsWeight.encode(
+        message.body.getElectionResultsWeight,
         writer.uint32(74).fork()
       ).ldelim();
     }
@@ -1139,10 +1147,16 @@ export const Request = {
         writer.uint32(650).fork()
       ).ldelim();
     }
+    if (message.body?.$case === "getRawTransactionMessage") {
+      GetRawTransactionMessage.encode(
+        message.body.getRawTransactionMessage,
+        writer.uint32(658).fork()
+      ).ldelim();
+    }
     if (message.body?.$case === "waitTransaction") {
       WaitTransaction.encode(
         message.body.waitTransaction,
-        writer.uint32(658).fork()
+        writer.uint32(666).fork()
       ).ldelim();
     }
     return writer;
@@ -1214,8 +1228,8 @@ export const Request = {
           break;
         case 9:
           message.body = {
-            $case: "getElectionWeight",
-            getElectionWeight: GetElectionWeight.decode(
+            $case: "getElectionResultsWeight",
+            getElectionResultsWeight: GetElectionResultsWeight.decode(
               reader,
               reader.uint32()
             ),
@@ -1304,6 +1318,15 @@ export const Request = {
           break;
         case 82:
           message.body = {
+            $case: "getRawTransactionMessage",
+            getRawTransactionMessage: GetRawTransactionMessage.decode(
+              reader,
+              reader.uint32()
+            ),
+          };
+          break;
+        case 83:
+          message.body = {
             $case: "waitTransaction",
             waitTransaction: WaitTransaction.decode(reader, reader.uint32()),
           };
@@ -1391,12 +1414,14 @@ export const Request = {
       };
     }
     if (
-      object.getElectionWeight !== undefined &&
-      object.getElectionWeight !== null
+      object.getElectionResultsWeight !== undefined &&
+      object.getElectionResultsWeight !== null
     ) {
       message.body = {
-        $case: "getElectionWeight",
-        getElectionWeight: GetElectionWeight.fromJSON(object.getElectionWeight),
+        $case: "getElectionResultsWeight",
+        getElectionResultsWeight: GetElectionResultsWeight.fromJSON(
+          object.getElectionResultsWeight
+        ),
       };
     }
     if (object.newCensus !== undefined && object.newCensus !== null) {
@@ -1483,6 +1508,17 @@ export const Request = {
       };
     }
     if (
+      object.getRawTransactionMessage !== undefined &&
+      object.getRawTransactionMessage !== null
+    ) {
+      message.body = {
+        $case: "getRawTransactionMessage",
+        getRawTransactionMessage: GetRawTransactionMessage.fromJSON(
+          object.getRawTransactionMessage
+        ),
+      };
+    }
+    if (
       object.waitTransaction !== undefined &&
       object.waitTransaction !== null
     ) {
@@ -1528,9 +1564,11 @@ export const Request = {
       (obj.getElectionResults = message.body?.getElectionResults
         ? GetElectionResults.toJSON(message.body?.getElectionResults)
         : undefined);
-    message.body?.$case === "getElectionWeight" &&
-      (obj.getElectionWeight = message.body?.getElectionWeight
-        ? GetElectionWeight.toJSON(message.body?.getElectionWeight)
+    message.body?.$case === "getElectionResultsWeight" &&
+      (obj.getElectionResultsWeight = message.body?.getElectionResultsWeight
+        ? GetElectionResultsWeight.toJSON(
+            message.body?.getElectionResultsWeight
+          )
         : undefined);
     message.body?.$case === "newCensus" &&
       (obj.newCensus = message.body?.newCensus
@@ -1583,6 +1621,12 @@ export const Request = {
     message.body?.$case === "getTransaction" &&
       (obj.getTransaction = message.body?.getTransaction
         ? GetTransaction.toJSON(message.body?.getTransaction)
+        : undefined);
+    message.body?.$case === "getRawTransactionMessage" &&
+      (obj.getRawTransactionMessage = message.body?.getRawTransactionMessage
+        ? GetRawTransactionMessage.toJSON(
+            message.body?.getRawTransactionMessage
+          )
         : undefined);
     message.body?.$case === "waitTransaction" &&
       (obj.waitTransaction = message.body?.waitTransaction
@@ -1686,14 +1730,14 @@ export const Request = {
       };
     }
     if (
-      object.body?.$case === "getElectionWeight" &&
-      object.body?.getElectionWeight !== undefined &&
-      object.body?.getElectionWeight !== null
+      object.body?.$case === "getElectionResultsWeight" &&
+      object.body?.getElectionResultsWeight !== undefined &&
+      object.body?.getElectionResultsWeight !== null
     ) {
       message.body = {
-        $case: "getElectionWeight",
-        getElectionWeight: GetElectionWeight.fromPartial(
-          object.body.getElectionWeight
+        $case: "getElectionResultsWeight",
+        getElectionResultsWeight: GetElectionResultsWeight.fromPartial(
+          object.body.getElectionResultsWeight
         ),
       };
     }
@@ -1827,6 +1871,18 @@ export const Request = {
       message.body = {
         $case: "getTransaction",
         getTransaction: GetTransaction.fromPartial(object.body.getTransaction),
+      };
+    }
+    if (
+      object.body?.$case === "getRawTransactionMessage" &&
+      object.body?.getRawTransactionMessage !== undefined &&
+      object.body?.getRawTransactionMessage !== null
+    ) {
+      message.body = {
+        $case: "getRawTransactionMessage",
+        getRawTransactionMessage: GetRawTransactionMessage.fromPartial(
+          object.body.getRawTransactionMessage
+        ),
       };
     }
     if (

@@ -636,7 +636,7 @@ enum Request_Body {
   getElectionKeys, 
   getElectionCircuitInfo, 
   getElectionResults, 
-  getElectionWeight, 
+  getElectionResultsWeight, 
   newCensus, 
   addCensusKeys, 
   getCensusRoot, 
@@ -650,6 +650,7 @@ enum Request_Body {
   getBlockCount, 
   estimateElectionPrice, 
   getTransaction, 
+  getRawTransactionMessage, 
   waitTransaction, 
   notSet
 }
@@ -664,7 +665,7 @@ class Request extends $pb.GeneratedMessage {
     6 : Request_Body.getElectionKeys,
     7 : Request_Body.getElectionCircuitInfo,
     8 : Request_Body.getElectionResults,
-    9 : Request_Body.getElectionWeight,
+    9 : Request_Body.getElectionResultsWeight,
     31 : Request_Body.newCensus,
     32 : Request_Body.addCensusKeys,
     33 : Request_Body.getCensusRoot,
@@ -678,11 +679,12 @@ class Request extends $pb.GeneratedMessage {
     62 : Request_Body.getBlockCount,
     63 : Request_Body.estimateElectionPrice,
     81 : Request_Body.getTransaction,
-    82 : Request_Body.waitTransaction,
+    82 : Request_Body.getRawTransactionMessage,
+    83 : Request_Body.waitTransaction,
     0 : Request_Body.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Request', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 31, 32, 33, 34, 35, 36, 37, 51, 52, 61, 62, 63, 81, 82])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 31, 32, 33, 34, 35, 36, 37, 51, 52, 61, 62, 63, 81, 82, 83])
     ..aOM<$1.GetElection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElection', protoName: 'getElection', subBuilder: $1.GetElection.create)
     ..aOM<$1.GetElectionList>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionList', protoName: 'getElectionList', subBuilder: $1.GetElectionList.create)
     ..aOM<$1.GetOrganization>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getOrganization', protoName: 'getOrganization', subBuilder: $1.GetOrganization.create)
@@ -691,7 +693,7 @@ class Request extends $pb.GeneratedMessage {
     ..aOM<$1.GetElectionKeys>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionKeys', protoName: 'getElectionKeys', subBuilder: $1.GetElectionKeys.create)
     ..aOM<$1.GetElectionCircuitInfo>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionCircuitInfo', protoName: 'getElectionCircuitInfo', subBuilder: $1.GetElectionCircuitInfo.create)
     ..aOM<$1.GetElectionResults>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionResults', protoName: 'getElectionResults', subBuilder: $1.GetElectionResults.create)
-    ..aOM<$1.GetElectionWeight>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionWeight', protoName: 'getElectionWeight', subBuilder: $1.GetElectionWeight.create)
+    ..aOM<$1.GetElectionResultsWeight>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionResultsWeight', protoName: 'getElectionResultsWeight', subBuilder: $1.GetElectionResultsWeight.create)
     ..aOM<$1.NewCensus>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCensus', protoName: 'newCensus', subBuilder: $1.NewCensus.create)
     ..aOM<$1.AddCensusKeys>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'addCensusKeys', protoName: 'addCensusKeys', subBuilder: $1.AddCensusKeys.create)
     ..aOM<$1.GetCensusRoot>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusRoot', protoName: 'getCensusRoot', subBuilder: $1.GetCensusRoot.create)
@@ -705,7 +707,8 @@ class Request extends $pb.GeneratedMessage {
     ..aOM<$1.GetBlockCount>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBlockCount', protoName: 'getBlockCount', subBuilder: $1.GetBlockCount.create)
     ..aOM<$1.EstimateElectionPrice>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'estimateElectionPrice', protoName: 'estimateElectionPrice', subBuilder: $1.EstimateElectionPrice.create)
     ..aOM<$1.GetTransaction>(81, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getTransaction', protoName: 'getTransaction', subBuilder: $1.GetTransaction.create)
-    ..aOM<$1.WaitTransaction>(82, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'waitTransaction', protoName: 'waitTransaction', subBuilder: $1.WaitTransaction.create)
+    ..aOM<$1.GetRawTransactionMessage>(82, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getRawTransactionMessage', protoName: 'getRawTransactionMessage', subBuilder: $1.GetRawTransactionMessage.create)
+    ..aOM<$1.WaitTransaction>(83, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'waitTransaction', protoName: 'waitTransaction', subBuilder: $1.WaitTransaction.create)
     ..hasRequiredFields = false
   ;
 
@@ -719,7 +722,7 @@ class Request extends $pb.GeneratedMessage {
     $1.GetElectionKeys? getElectionKeys,
     $1.GetElectionCircuitInfo? getElectionCircuitInfo,
     $1.GetElectionResults? getElectionResults,
-    $1.GetElectionWeight? getElectionWeight,
+    $1.GetElectionResultsWeight? getElectionResultsWeight,
     $1.NewCensus? newCensus,
     $1.AddCensusKeys? addCensusKeys,
     $1.GetCensusRoot? getCensusRoot,
@@ -733,6 +736,7 @@ class Request extends $pb.GeneratedMessage {
     $1.GetBlockCount? getBlockCount,
     $1.EstimateElectionPrice? estimateElectionPrice,
     $1.GetTransaction? getTransaction,
+    $1.GetRawTransactionMessage? getRawTransactionMessage,
     $1.WaitTransaction? waitTransaction,
   }) {
     final _result = create();
@@ -760,8 +764,8 @@ class Request extends $pb.GeneratedMessage {
     if (getElectionResults != null) {
       _result.getElectionResults = getElectionResults;
     }
-    if (getElectionWeight != null) {
-      _result.getElectionWeight = getElectionWeight;
+    if (getElectionResultsWeight != null) {
+      _result.getElectionResultsWeight = getElectionResultsWeight;
     }
     if (newCensus != null) {
       _result.newCensus = newCensus;
@@ -801,6 +805,9 @@ class Request extends $pb.GeneratedMessage {
     }
     if (getTransaction != null) {
       _result.getTransaction = getTransaction;
+    }
+    if (getRawTransactionMessage != null) {
+      _result.getRawTransactionMessage = getRawTransactionMessage;
     }
     if (waitTransaction != null) {
       _result.waitTransaction = waitTransaction;
@@ -920,15 +927,15 @@ class Request extends $pb.GeneratedMessage {
   $1.GetElectionResults ensureGetElectionResults() => $_ensure(7);
 
   @$pb.TagNumber(9)
-  $1.GetElectionWeight get getElectionWeight => $_getN(8);
+  $1.GetElectionResultsWeight get getElectionResultsWeight => $_getN(8);
   @$pb.TagNumber(9)
-  set getElectionWeight($1.GetElectionWeight v) { setField(9, v); }
+  set getElectionResultsWeight($1.GetElectionResultsWeight v) { setField(9, v); }
   @$pb.TagNumber(9)
-  $core.bool hasGetElectionWeight() => $_has(8);
+  $core.bool hasGetElectionResultsWeight() => $_has(8);
   @$pb.TagNumber(9)
-  void clearGetElectionWeight() => clearField(9);
+  void clearGetElectionResultsWeight() => clearField(9);
   @$pb.TagNumber(9)
-  $1.GetElectionWeight ensureGetElectionWeight() => $_ensure(8);
+  $1.GetElectionResultsWeight ensureGetElectionResultsWeight() => $_ensure(8);
 
   @$pb.TagNumber(31)
   $1.NewCensus get newCensus => $_getN(9);
@@ -1074,15 +1081,26 @@ class Request extends $pb.GeneratedMessage {
   $1.GetTransaction ensureGetTransaction() => $_ensure(21);
 
   @$pb.TagNumber(82)
-  $1.WaitTransaction get waitTransaction => $_getN(22);
+  $1.GetRawTransactionMessage get getRawTransactionMessage => $_getN(22);
   @$pb.TagNumber(82)
-  set waitTransaction($1.WaitTransaction v) { setField(82, v); }
+  set getRawTransactionMessage($1.GetRawTransactionMessage v) { setField(82, v); }
   @$pb.TagNumber(82)
-  $core.bool hasWaitTransaction() => $_has(22);
+  $core.bool hasGetRawTransactionMessage() => $_has(22);
   @$pb.TagNumber(82)
-  void clearWaitTransaction() => clearField(82);
+  void clearGetRawTransactionMessage() => clearField(82);
   @$pb.TagNumber(82)
-  $1.WaitTransaction ensureWaitTransaction() => $_ensure(22);
+  $1.GetRawTransactionMessage ensureGetRawTransactionMessage() => $_ensure(22);
+
+  @$pb.TagNumber(83)
+  $1.WaitTransaction get waitTransaction => $_getN(23);
+  @$pb.TagNumber(83)
+  set waitTransaction($1.WaitTransaction v) { setField(83, v); }
+  @$pb.TagNumber(83)
+  $core.bool hasWaitTransaction() => $_has(23);
+  @$pb.TagNumber(83)
+  void clearWaitTransaction() => clearField(83);
+  @$pb.TagNumber(83)
+  $1.WaitTransaction ensureWaitTransaction() => $_ensure(23);
 }
 
 enum Response_Body {

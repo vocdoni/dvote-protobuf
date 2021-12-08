@@ -17,654 +17,6 @@ import 'census.pb.dart' as $4;
 
 import 'enums.pbenum.dart' as $5;
 
-enum ElectionRequest_Body {
-  getElection, 
-  getElectionList, 
-  getOrganization, 
-  getBallot, 
-  getElectionBallots, 
-  getElectionKeys, 
-  getElectionCircuitInfo, 
-  getElectionResults, 
-  getElectionWeight, 
-  notSet
-}
-
-class ElectionRequest extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, ElectionRequest_Body> _ElectionRequest_BodyByTag = {
-    2 : ElectionRequest_Body.getElection,
-    3 : ElectionRequest_Body.getElectionList,
-    4 : ElectionRequest_Body.getOrganization,
-    5 : ElectionRequest_Body.getBallot,
-    6 : ElectionRequest_Body.getElectionBallots,
-    7 : ElectionRequest_Body.getElectionKeys,
-    8 : ElectionRequest_Body.getElectionCircuitInfo,
-    9 : ElectionRequest_Body.getElectionResults,
-    10 : ElectionRequest_Body.getElectionWeight,
-    0 : ElectionRequest_Body.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ElectionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6, 7, 8, 9, 10])
-    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'electionId', $pb.PbFieldType.OY, protoName: 'electionId')
-    ..aOM<GetElection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElection', protoName: 'getElection', subBuilder: GetElection.create)
-    ..aOM<GetElectionList>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionList', protoName: 'getElectionList', subBuilder: GetElectionList.create)
-    ..aOM<GetOrganization>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getOrganization', protoName: 'getOrganization', subBuilder: GetOrganization.create)
-    ..aOM<GetBallot>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBallot', protoName: 'getBallot', subBuilder: GetBallot.create)
-    ..aOM<GetElectionBallots>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionBallots', protoName: 'getElectionBallots', subBuilder: GetElectionBallots.create)
-    ..aOM<GetElectionKeys>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionKeys', protoName: 'getElectionKeys', subBuilder: GetElectionKeys.create)
-    ..aOM<GetElectionCircuitInfo>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionCircuitInfo', protoName: 'getElectionCircuitInfo', subBuilder: GetElectionCircuitInfo.create)
-    ..aOM<GetElectionResults>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionResults', protoName: 'getElectionResults', subBuilder: GetElectionResults.create)
-    ..aOM<GetElectionWeight>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getElectionWeight', protoName: 'getElectionWeight', subBuilder: GetElectionWeight.create)
-    ..hasRequiredFields = false
-  ;
-
-  ElectionRequest._() : super();
-  factory ElectionRequest({
-    $core.List<$core.int>? electionId,
-    GetElection? getElection,
-    GetElectionList? getElectionList,
-    GetOrganization? getOrganization,
-    GetBallot? getBallot,
-    GetElectionBallots? getElectionBallots,
-    GetElectionKeys? getElectionKeys,
-    GetElectionCircuitInfo? getElectionCircuitInfo,
-    GetElectionResults? getElectionResults,
-    GetElectionWeight? getElectionWeight,
-  }) {
-    final _result = create();
-    if (electionId != null) {
-      _result.electionId = electionId;
-    }
-    if (getElection != null) {
-      _result.getElection = getElection;
-    }
-    if (getElectionList != null) {
-      _result.getElectionList = getElectionList;
-    }
-    if (getOrganization != null) {
-      _result.getOrganization = getOrganization;
-    }
-    if (getBallot != null) {
-      _result.getBallot = getBallot;
-    }
-    if (getElectionBallots != null) {
-      _result.getElectionBallots = getElectionBallots;
-    }
-    if (getElectionKeys != null) {
-      _result.getElectionKeys = getElectionKeys;
-    }
-    if (getElectionCircuitInfo != null) {
-      _result.getElectionCircuitInfo = getElectionCircuitInfo;
-    }
-    if (getElectionResults != null) {
-      _result.getElectionResults = getElectionResults;
-    }
-    if (getElectionWeight != null) {
-      _result.getElectionWeight = getElectionWeight;
-    }
-    return _result;
-  }
-  factory ElectionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ElectionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ElectionRequest clone() => ElectionRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ElectionRequest copyWith(void Function(ElectionRequest) updates) => super.copyWith((message) => updates(message as ElectionRequest)) as ElectionRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ElectionRequest create() => ElectionRequest._();
-  ElectionRequest createEmptyInstance() => create();
-  static $pb.PbList<ElectionRequest> createRepeated() => $pb.PbList<ElectionRequest>();
-  @$core.pragma('dart2js:noInline')
-  static ElectionRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ElectionRequest>(create);
-  static ElectionRequest? _defaultInstance;
-
-  ElectionRequest_Body whichBody() => _ElectionRequest_BodyByTag[$_whichOneof(0)]!;
-  void clearBody() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(1)
-  $core.List<$core.int> get electionId => $_getN(0);
-  @$pb.TagNumber(1)
-  set electionId($core.List<$core.int> v) { $_setBytes(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasElectionId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearElectionId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  GetElection get getElection => $_getN(1);
-  @$pb.TagNumber(2)
-  set getElection(GetElection v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasGetElection() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearGetElection() => clearField(2);
-  @$pb.TagNumber(2)
-  GetElection ensureGetElection() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  GetElectionList get getElectionList => $_getN(2);
-  @$pb.TagNumber(3)
-  set getElectionList(GetElectionList v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasGetElectionList() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearGetElectionList() => clearField(3);
-  @$pb.TagNumber(3)
-  GetElectionList ensureGetElectionList() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  GetOrganization get getOrganization => $_getN(3);
-  @$pb.TagNumber(4)
-  set getOrganization(GetOrganization v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasGetOrganization() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearGetOrganization() => clearField(4);
-  @$pb.TagNumber(4)
-  GetOrganization ensureGetOrganization() => $_ensure(3);
-
-  @$pb.TagNumber(5)
-  GetBallot get getBallot => $_getN(4);
-  @$pb.TagNumber(5)
-  set getBallot(GetBallot v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasGetBallot() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearGetBallot() => clearField(5);
-  @$pb.TagNumber(5)
-  GetBallot ensureGetBallot() => $_ensure(4);
-
-  @$pb.TagNumber(6)
-  GetElectionBallots get getElectionBallots => $_getN(5);
-  @$pb.TagNumber(6)
-  set getElectionBallots(GetElectionBallots v) { setField(6, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasGetElectionBallots() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearGetElectionBallots() => clearField(6);
-  @$pb.TagNumber(6)
-  GetElectionBallots ensureGetElectionBallots() => $_ensure(5);
-
-  @$pb.TagNumber(7)
-  GetElectionKeys get getElectionKeys => $_getN(6);
-  @$pb.TagNumber(7)
-  set getElectionKeys(GetElectionKeys v) { setField(7, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasGetElectionKeys() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearGetElectionKeys() => clearField(7);
-  @$pb.TagNumber(7)
-  GetElectionKeys ensureGetElectionKeys() => $_ensure(6);
-
-  @$pb.TagNumber(8)
-  GetElectionCircuitInfo get getElectionCircuitInfo => $_getN(7);
-  @$pb.TagNumber(8)
-  set getElectionCircuitInfo(GetElectionCircuitInfo v) { setField(8, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasGetElectionCircuitInfo() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearGetElectionCircuitInfo() => clearField(8);
-  @$pb.TagNumber(8)
-  GetElectionCircuitInfo ensureGetElectionCircuitInfo() => $_ensure(7);
-
-  @$pb.TagNumber(9)
-  GetElectionResults get getElectionResults => $_getN(8);
-  @$pb.TagNumber(9)
-  set getElectionResults(GetElectionResults v) { setField(9, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasGetElectionResults() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearGetElectionResults() => clearField(9);
-  @$pb.TagNumber(9)
-  GetElectionResults ensureGetElectionResults() => $_ensure(8);
-
-  @$pb.TagNumber(10)
-  GetElectionWeight get getElectionWeight => $_getN(9);
-  @$pb.TagNumber(10)
-  set getElectionWeight(GetElectionWeight v) { setField(10, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasGetElectionWeight() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearGetElectionWeight() => clearField(10);
-  @$pb.TagNumber(10)
-  GetElectionWeight ensureGetElectionWeight() => $_ensure(9);
-}
-
-enum CensusRequest_Body {
-  newCensus, 
-  addCensusKeys, 
-  getCensusRoot, 
-  getCensusSize, 
-  publishCensus, 
-  getCensusProof, 
-  dumpCensus, 
-  notSet
-}
-
-class CensusRequest extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, CensusRequest_Body> _CensusRequest_BodyByTag = {
-    1 : CensusRequest_Body.newCensus,
-    2 : CensusRequest_Body.addCensusKeys,
-    3 : CensusRequest_Body.getCensusRoot,
-    4 : CensusRequest_Body.getCensusSize,
-    5 : CensusRequest_Body.publishCensus,
-    6 : CensusRequest_Body.getCensusProof,
-    7 : CensusRequest_Body.dumpCensus,
-    0 : CensusRequest_Body.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CensusRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7])
-    ..aOM<NewCensus>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newCensus', protoName: 'newCensus', subBuilder: NewCensus.create)
-    ..aOM<AddCensusKeys>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'addCensusKeys', protoName: 'addCensusKeys', subBuilder: AddCensusKeys.create)
-    ..aOM<GetCensusRoot>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusRoot', protoName: 'getCensusRoot', subBuilder: GetCensusRoot.create)
-    ..aOM<GetCensusSize>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusSize', protoName: 'getCensusSize', subBuilder: GetCensusSize.create)
-    ..aOM<PublishCensus>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'publishCensus', protoName: 'publishCensus', subBuilder: PublishCensus.create)
-    ..aOM<GetCensusProof>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getCensusProof', protoName: 'getCensusProof', subBuilder: GetCensusProof.create)
-    ..aOM<DumpCensus>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dumpCensus', protoName: 'dumpCensus', subBuilder: DumpCensus.create)
-    ..hasRequiredFields = false
-  ;
-
-  CensusRequest._() : super();
-  factory CensusRequest({
-    NewCensus? newCensus,
-    AddCensusKeys? addCensusKeys,
-    GetCensusRoot? getCensusRoot,
-    GetCensusSize? getCensusSize,
-    PublishCensus? publishCensus,
-    GetCensusProof? getCensusProof,
-    DumpCensus? dumpCensus,
-  }) {
-    final _result = create();
-    if (newCensus != null) {
-      _result.newCensus = newCensus;
-    }
-    if (addCensusKeys != null) {
-      _result.addCensusKeys = addCensusKeys;
-    }
-    if (getCensusRoot != null) {
-      _result.getCensusRoot = getCensusRoot;
-    }
-    if (getCensusSize != null) {
-      _result.getCensusSize = getCensusSize;
-    }
-    if (publishCensus != null) {
-      _result.publishCensus = publishCensus;
-    }
-    if (getCensusProof != null) {
-      _result.getCensusProof = getCensusProof;
-    }
-    if (dumpCensus != null) {
-      _result.dumpCensus = dumpCensus;
-    }
-    return _result;
-  }
-  factory CensusRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CensusRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  CensusRequest clone() => CensusRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  CensusRequest copyWith(void Function(CensusRequest) updates) => super.copyWith((message) => updates(message as CensusRequest)) as CensusRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static CensusRequest create() => CensusRequest._();
-  CensusRequest createEmptyInstance() => create();
-  static $pb.PbList<CensusRequest> createRepeated() => $pb.PbList<CensusRequest>();
-  @$core.pragma('dart2js:noInline')
-  static CensusRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CensusRequest>(create);
-  static CensusRequest? _defaultInstance;
-
-  CensusRequest_Body whichBody() => _CensusRequest_BodyByTag[$_whichOneof(0)]!;
-  void clearBody() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(1)
-  NewCensus get newCensus => $_getN(0);
-  @$pb.TagNumber(1)
-  set newCensus(NewCensus v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasNewCensus() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearNewCensus() => clearField(1);
-  @$pb.TagNumber(1)
-  NewCensus ensureNewCensus() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  AddCensusKeys get addCensusKeys => $_getN(1);
-  @$pb.TagNumber(2)
-  set addCensusKeys(AddCensusKeys v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasAddCensusKeys() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearAddCensusKeys() => clearField(2);
-  @$pb.TagNumber(2)
-  AddCensusKeys ensureAddCensusKeys() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  GetCensusRoot get getCensusRoot => $_getN(2);
-  @$pb.TagNumber(3)
-  set getCensusRoot(GetCensusRoot v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasGetCensusRoot() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearGetCensusRoot() => clearField(3);
-  @$pb.TagNumber(3)
-  GetCensusRoot ensureGetCensusRoot() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  GetCensusSize get getCensusSize => $_getN(3);
-  @$pb.TagNumber(4)
-  set getCensusSize(GetCensusSize v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasGetCensusSize() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearGetCensusSize() => clearField(4);
-  @$pb.TagNumber(4)
-  GetCensusSize ensureGetCensusSize() => $_ensure(3);
-
-  @$pb.TagNumber(5)
-  PublishCensus get publishCensus => $_getN(4);
-  @$pb.TagNumber(5)
-  set publishCensus(PublishCensus v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasPublishCensus() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearPublishCensus() => clearField(5);
-  @$pb.TagNumber(5)
-  PublishCensus ensurePublishCensus() => $_ensure(4);
-
-  @$pb.TagNumber(6)
-  GetCensusProof get getCensusProof => $_getN(5);
-  @$pb.TagNumber(6)
-  set getCensusProof(GetCensusProof v) { setField(6, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasGetCensusProof() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearGetCensusProof() => clearField(6);
-  @$pb.TagNumber(6)
-  GetCensusProof ensureGetCensusProof() => $_ensure(5);
-
-  @$pb.TagNumber(7)
-  DumpCensus get dumpCensus => $_getN(6);
-  @$pb.TagNumber(7)
-  set dumpCensus(DumpCensus v) { setField(7, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasDumpCensus() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearDumpCensus() => clearField(7);
-  @$pb.TagNumber(7)
-  DumpCensus ensureDumpCensus() => $_ensure(6);
-}
-
-enum FileRequest_Body {
-  pinFile, 
-  fetchFile, 
-  notSet
-}
-
-class FileRequest extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, FileRequest_Body> _FileRequest_BodyByTag = {
-    1 : FileRequest_Body.pinFile,
-    2 : FileRequest_Body.fetchFile,
-    0 : FileRequest_Body.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FileRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 2])
-    ..aOM<PinFile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pinFile', protoName: 'pinFile', subBuilder: PinFile.create)
-    ..aOM<FetchFile>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fetchFile', protoName: 'fetchFile', subBuilder: FetchFile.create)
-    ..hasRequiredFields = false
-  ;
-
-  FileRequest._() : super();
-  factory FileRequest({
-    PinFile? pinFile,
-    FetchFile? fetchFile,
-  }) {
-    final _result = create();
-    if (pinFile != null) {
-      _result.pinFile = pinFile;
-    }
-    if (fetchFile != null) {
-      _result.fetchFile = fetchFile;
-    }
-    return _result;
-  }
-  factory FileRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FileRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  FileRequest clone() => FileRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  FileRequest copyWith(void Function(FileRequest) updates) => super.copyWith((message) => updates(message as FileRequest)) as FileRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static FileRequest create() => FileRequest._();
-  FileRequest createEmptyInstance() => create();
-  static $pb.PbList<FileRequest> createRepeated() => $pb.PbList<FileRequest>();
-  @$core.pragma('dart2js:noInline')
-  static FileRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FileRequest>(create);
-  static FileRequest? _defaultInstance;
-
-  FileRequest_Body whichBody() => _FileRequest_BodyByTag[$_whichOneof(0)]!;
-  void clearBody() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(1)
-  PinFile get pinFile => $_getN(0);
-  @$pb.TagNumber(1)
-  set pinFile(PinFile v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPinFile() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPinFile() => clearField(1);
-  @$pb.TagNumber(1)
-  PinFile ensurePinFile() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  FetchFile get fetchFile => $_getN(1);
-  @$pb.TagNumber(2)
-  set fetchFile(FetchFile v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasFetchFile() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearFetchFile() => clearField(2);
-  @$pb.TagNumber(2)
-  FetchFile ensureFetchFile() => $_ensure(1);
-}
-
-enum NetworkRequest_Body {
-  getBlockStatus, 
-  getBlockCount, 
-  estimateElectionPrice, 
-  notSet
-}
-
-class NetworkRequest extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, NetworkRequest_Body> _NetworkRequest_BodyByTag = {
-    1 : NetworkRequest_Body.getBlockStatus,
-    2 : NetworkRequest_Body.getBlockCount,
-    3 : NetworkRequest_Body.estimateElectionPrice,
-    0 : NetworkRequest_Body.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NetworkRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3])
-    ..aOM<GetBlockStatus>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBlockStatus', protoName: 'getBlockStatus', subBuilder: GetBlockStatus.create)
-    ..aOM<GetBlockCount>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getBlockCount', protoName: 'getBlockCount', subBuilder: GetBlockCount.create)
-    ..aOM<EstimateElectionPrice>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'estimateElectionPrice', protoName: 'estimateElectionPrice', subBuilder: EstimateElectionPrice.create)
-    ..hasRequiredFields = false
-  ;
-
-  NetworkRequest._() : super();
-  factory NetworkRequest({
-    GetBlockStatus? getBlockStatus,
-    GetBlockCount? getBlockCount,
-    EstimateElectionPrice? estimateElectionPrice,
-  }) {
-    final _result = create();
-    if (getBlockStatus != null) {
-      _result.getBlockStatus = getBlockStatus;
-    }
-    if (getBlockCount != null) {
-      _result.getBlockCount = getBlockCount;
-    }
-    if (estimateElectionPrice != null) {
-      _result.estimateElectionPrice = estimateElectionPrice;
-    }
-    return _result;
-  }
-  factory NetworkRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory NetworkRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  NetworkRequest clone() => NetworkRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  NetworkRequest copyWith(void Function(NetworkRequest) updates) => super.copyWith((message) => updates(message as NetworkRequest)) as NetworkRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static NetworkRequest create() => NetworkRequest._();
-  NetworkRequest createEmptyInstance() => create();
-  static $pb.PbList<NetworkRequest> createRepeated() => $pb.PbList<NetworkRequest>();
-  @$core.pragma('dart2js:noInline')
-  static NetworkRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NetworkRequest>(create);
-  static NetworkRequest? _defaultInstance;
-
-  NetworkRequest_Body whichBody() => _NetworkRequest_BodyByTag[$_whichOneof(0)]!;
-  void clearBody() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(1)
-  GetBlockStatus get getBlockStatus => $_getN(0);
-  @$pb.TagNumber(1)
-  set getBlockStatus(GetBlockStatus v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasGetBlockStatus() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearGetBlockStatus() => clearField(1);
-  @$pb.TagNumber(1)
-  GetBlockStatus ensureGetBlockStatus() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  GetBlockCount get getBlockCount => $_getN(1);
-  @$pb.TagNumber(2)
-  set getBlockCount(GetBlockCount v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasGetBlockCount() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearGetBlockCount() => clearField(2);
-  @$pb.TagNumber(2)
-  GetBlockCount ensureGetBlockCount() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  EstimateElectionPrice get estimateElectionPrice => $_getN(2);
-  @$pb.TagNumber(3)
-  set estimateElectionPrice(EstimateElectionPrice v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasEstimateElectionPrice() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearEstimateElectionPrice() => clearField(3);
-  @$pb.TagNumber(3)
-  EstimateElectionPrice ensureEstimateElectionPrice() => $_ensure(2);
-}
-
-enum TransactionRequest_Body {
-  getTx, 
-  waitTx, 
-  notSet
-}
-
-class TransactionRequest extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, TransactionRequest_Body> _TransactionRequest_BodyByTag = {
-    1 : TransactionRequest_Body.getTx,
-    2 : TransactionRequest_Body.waitTx,
-    0 : TransactionRequest_Body.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TransactionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 2])
-    ..aOM<GetTransaction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'getTx', protoName: 'getTx', subBuilder: GetTransaction.create)
-    ..aOM<WaitTransaction>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'waitTx', protoName: 'waitTx', subBuilder: WaitTransaction.create)
-    ..hasRequiredFields = false
-  ;
-
-  TransactionRequest._() : super();
-  factory TransactionRequest({
-    GetTransaction? getTx,
-    WaitTransaction? waitTx,
-  }) {
-    final _result = create();
-    if (getTx != null) {
-      _result.getTx = getTx;
-    }
-    if (waitTx != null) {
-      _result.waitTx = waitTx;
-    }
-    return _result;
-  }
-  factory TransactionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory TransactionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  TransactionRequest clone() => TransactionRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  TransactionRequest copyWith(void Function(TransactionRequest) updates) => super.copyWith((message) => updates(message as TransactionRequest)) as TransactionRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static TransactionRequest create() => TransactionRequest._();
-  TransactionRequest createEmptyInstance() => create();
-  static $pb.PbList<TransactionRequest> createRepeated() => $pb.PbList<TransactionRequest>();
-  @$core.pragma('dart2js:noInline')
-  static TransactionRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransactionRequest>(create);
-  static TransactionRequest? _defaultInstance;
-
-  TransactionRequest_Body whichBody() => _TransactionRequest_BodyByTag[$_whichOneof(0)]!;
-  void clearBody() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(1)
-  GetTransaction get getTx => $_getN(0);
-  @$pb.TagNumber(1)
-  set getTx(GetTransaction v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasGetTx() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearGetTx() => clearField(1);
-  @$pb.TagNumber(1)
-  GetTransaction ensureGetTx() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  WaitTransaction get waitTx => $_getN(1);
-  @$pb.TagNumber(2)
-  set waitTx(WaitTransaction v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasWaitTx() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearWaitTx() => clearField(2);
-  @$pb.TagNumber(2)
-  WaitTransaction ensureWaitTx() => $_ensure(1);
-}
-
 class GetElection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'electionId', $pb.PbFieldType.OY, protoName: 'electionId')
@@ -1600,21 +952,16 @@ class GetElectionResults extends $pb.GeneratedMessage {
 class GetElectionResultsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElectionResultsResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..aOM<$3.Results>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', subBuilder: $3.Results.create)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'available')
     ..hasRequiredFields = false
   ;
 
   GetElectionResultsResponse._() : super();
   factory GetElectionResultsResponse({
     $3.Results? results,
-    $core.bool? available,
   }) {
     final _result = create();
     if (results != null) {
       _result.results = results;
-    }
-    if (available != null) {
-      _result.available = available;
     }
     return _result;
   }
@@ -1649,25 +996,16 @@ class GetElectionResultsResponse extends $pb.GeneratedMessage {
   void clearResults() => clearField(1);
   @$pb.TagNumber(1)
   $3.Results ensureResults() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  $core.bool get available => $_getBF(1);
-  @$pb.TagNumber(2)
-  set available($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasAvailable() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearAvailable() => clearField(2);
 }
 
-class GetElectionWeight extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElectionWeight', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class GetElectionResultsWeight extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElectionResultsWeight', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'electionId', $pb.PbFieldType.OY, protoName: 'electionId')
     ..hasRequiredFields = false
   ;
 
-  GetElectionWeight._() : super();
-  factory GetElectionWeight({
+  GetElectionResultsWeight._() : super();
+  factory GetElectionResultsWeight({
     $core.List<$core.int>? electionId,
   }) {
     final _result = create();
@@ -1676,26 +1014,26 @@ class GetElectionWeight extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory GetElectionWeight.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetElectionWeight.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory GetElectionResultsWeight.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetElectionResultsWeight.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GetElectionWeight clone() => GetElectionWeight()..mergeFromMessage(this);
+  GetElectionResultsWeight clone() => GetElectionResultsWeight()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetElectionWeight copyWith(void Function(GetElectionWeight) updates) => super.copyWith((message) => updates(message as GetElectionWeight)) as GetElectionWeight; // ignore: deprecated_member_use
+  GetElectionResultsWeight copyWith(void Function(GetElectionResultsWeight) updates) => super.copyWith((message) => updates(message as GetElectionResultsWeight)) as GetElectionResultsWeight; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static GetElectionWeight create() => GetElectionWeight._();
-  GetElectionWeight createEmptyInstance() => create();
-  static $pb.PbList<GetElectionWeight> createRepeated() => $pb.PbList<GetElectionWeight>();
+  static GetElectionResultsWeight create() => GetElectionResultsWeight._();
+  GetElectionResultsWeight createEmptyInstance() => create();
+  static $pb.PbList<GetElectionResultsWeight> createRepeated() => $pb.PbList<GetElectionResultsWeight>();
   @$core.pragma('dart2js:noInline')
-  static GetElectionWeight getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetElectionWeight>(create);
-  static GetElectionWeight? _defaultInstance;
+  static GetElectionResultsWeight getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetElectionResultsWeight>(create);
+  static GetElectionResultsWeight? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get electionId => $_getN(0);
@@ -1707,51 +1045,45 @@ class GetElectionWeight extends $pb.GeneratedMessage {
   void clearElectionId() => clearField(1);
 }
 
-class GetElectionWeightResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElectionWeightResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight')
+class GetElectionResultsWeightResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElectionResultsWeightResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weights')
     ..hasRequiredFields = false
   ;
 
-  GetElectionWeightResponse._() : super();
-  factory GetElectionWeightResponse({
-    $core.String? weight,
+  GetElectionResultsWeightResponse._() : super();
+  factory GetElectionResultsWeightResponse({
+    $core.Iterable<$core.String>? weights,
   }) {
     final _result = create();
-    if (weight != null) {
-      _result.weight = weight;
+    if (weights != null) {
+      _result.weights.addAll(weights);
     }
     return _result;
   }
-  factory GetElectionWeightResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetElectionWeightResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory GetElectionResultsWeightResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetElectionResultsWeightResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GetElectionWeightResponse clone() => GetElectionWeightResponse()..mergeFromMessage(this);
+  GetElectionResultsWeightResponse clone() => GetElectionResultsWeightResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetElectionWeightResponse copyWith(void Function(GetElectionWeightResponse) updates) => super.copyWith((message) => updates(message as GetElectionWeightResponse)) as GetElectionWeightResponse; // ignore: deprecated_member_use
+  GetElectionResultsWeightResponse copyWith(void Function(GetElectionResultsWeightResponse) updates) => super.copyWith((message) => updates(message as GetElectionResultsWeightResponse)) as GetElectionResultsWeightResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static GetElectionWeightResponse create() => GetElectionWeightResponse._();
-  GetElectionWeightResponse createEmptyInstance() => create();
-  static $pb.PbList<GetElectionWeightResponse> createRepeated() => $pb.PbList<GetElectionWeightResponse>();
+  static GetElectionResultsWeightResponse create() => GetElectionResultsWeightResponse._();
+  GetElectionResultsWeightResponse createEmptyInstance() => create();
+  static $pb.PbList<GetElectionResultsWeightResponse> createRepeated() => $pb.PbList<GetElectionResultsWeightResponse>();
   @$core.pragma('dart2js:noInline')
-  static GetElectionWeightResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetElectionWeightResponse>(create);
-  static GetElectionWeightResponse? _defaultInstance;
+  static GetElectionResultsWeightResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetElectionResultsWeightResponse>(create);
+  static GetElectionResultsWeightResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get weight => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set weight($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasWeight() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearWeight() => clearField(1);
+  $core.List<$core.String> get weights => $_getList(0);
 }
 
 class NewCensus extends $pb.GeneratedMessage {
@@ -3094,6 +2426,100 @@ class GetTransactionResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static GetTransactionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetTransactionResponse>(create);
   static GetTransactionResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get body => $_getN(0);
+  @$pb.TagNumber(1)
+  set body($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasBody() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBody() => clearField(1);
+}
+
+class GetRawTransactionMessage extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetRawTransactionMessage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txHash', $pb.PbFieldType.OY, protoName: 'txHash')
+    ..hasRequiredFields = false
+  ;
+
+  GetRawTransactionMessage._() : super();
+  factory GetRawTransactionMessage({
+    $core.List<$core.int>? txHash,
+  }) {
+    final _result = create();
+    if (txHash != null) {
+      _result.txHash = txHash;
+    }
+    return _result;
+  }
+  factory GetRawTransactionMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetRawTransactionMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetRawTransactionMessage clone() => GetRawTransactionMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetRawTransactionMessage copyWith(void Function(GetRawTransactionMessage) updates) => super.copyWith((message) => updates(message as GetRawTransactionMessage)) as GetRawTransactionMessage; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetRawTransactionMessage create() => GetRawTransactionMessage._();
+  GetRawTransactionMessage createEmptyInstance() => create();
+  static $pb.PbList<GetRawTransactionMessage> createRepeated() => $pb.PbList<GetRawTransactionMessage>();
+  @$core.pragma('dart2js:noInline')
+  static GetRawTransactionMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetRawTransactionMessage>(create);
+  static GetRawTransactionMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get txHash => $_getN(0);
+  @$pb.TagNumber(1)
+  set txHash($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxHash() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxHash() => clearField(1);
+}
+
+class GetRawTransactionMessageResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetRawTransactionMessageResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'body', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  GetRawTransactionMessageResponse._() : super();
+  factory GetRawTransactionMessageResponse({
+    $core.List<$core.int>? body,
+  }) {
+    final _result = create();
+    if (body != null) {
+      _result.body = body;
+    }
+    return _result;
+  }
+  factory GetRawTransactionMessageResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetRawTransactionMessageResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetRawTransactionMessageResponse clone() => GetRawTransactionMessageResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetRawTransactionMessageResponse copyWith(void Function(GetRawTransactionMessageResponse) updates) => super.copyWith((message) => updates(message as GetRawTransactionMessageResponse)) as GetRawTransactionMessageResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetRawTransactionMessageResponse create() => GetRawTransactionMessageResponse._();
+  GetRawTransactionMessageResponse createEmptyInstance() => create();
+  static $pb.PbList<GetRawTransactionMessageResponse> createRepeated() => $pb.PbList<GetRawTransactionMessageResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GetRawTransactionMessageResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetRawTransactionMessageResponse>(create);
+  static GetRawTransactionMessageResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get body => $_getN(0);

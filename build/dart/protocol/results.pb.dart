@@ -12,21 +12,21 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class Results extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Results', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'electionId', $pb.PbFieldType.OY, protoName: 'electionId')
-    ..pc<Result>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', $pb.PbFieldType.PM, subBuilder: Result.create)
+    ..pc<Result>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposalResults', $pb.PbFieldType.PM, protoName: 'proposalResults', subBuilder: Result.create)
     ..hasRequiredFields = false
   ;
 
   Results._() : super();
   factory Results({
     $core.List<$core.int>? electionId,
-    $core.Iterable<Result>? results,
+    $core.Iterable<Result>? proposalResults,
   }) {
     final _result = create();
     if (electionId != null) {
       _result.electionId = electionId;
     }
-    if (results != null) {
-      _result.results.addAll(results);
+    if (proposalResults != null) {
+      _result.proposalResults.addAll(proposalResults);
     }
     return _result;
   }
@@ -61,11 +61,12 @@ class Results extends $pb.GeneratedMessage {
   void clearElectionId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<Result> get results => $_getList(1);
+  $core.List<Result> get proposalResults => $_getList(1);
 }
 
 enum Result_Body {
-  approvalRresult, 
+  pendingResult, 
+  approvalResult, 
   singleChoiceResult, 
   quadraticResult, 
   rankedResult, 
@@ -75,34 +76,40 @@ enum Result_Body {
 
 class Result extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Result_Body> _Result_BodyByTag = {
-    1 : Result_Body.approvalRresult,
-    2 : Result_Body.singleChoiceResult,
-    3 : Result_Body.quadraticResult,
-    4 : Result_Body.rankedResult,
-    5 : Result_Body.spreadResult,
+    1 : Result_Body.pendingResult,
+    2 : Result_Body.approvalResult,
+    3 : Result_Body.singleChoiceResult,
+    4 : Result_Body.quadraticResult,
+    5 : Result_Body.rankedResult,
+    6 : Result_Body.spreadResult,
     0 : Result_Body.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Result', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5])
-    ..aOM<ApprovalResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'approvalRresult', protoName: 'approvalRresult', subBuilder: ApprovalResult.create)
-    ..aOM<SingleChoiceResult>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleChoiceResult', protoName: 'singleChoiceResult', subBuilder: SingleChoiceResult.create)
-    ..aOM<QuadraticResult>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadraticResult', protoName: 'quadraticResult', subBuilder: QuadraticResult.create)
-    ..aOM<RankedResult>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rankedResult', protoName: 'rankedResult', subBuilder: RankedResult.create)
-    ..aOM<SpreadResult>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spreadResult', protoName: 'spreadResult', subBuilder: SpreadResult.create)
+    ..oo(0, [1, 2, 3, 4, 5, 6])
+    ..aOM<PendingResults>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pendingResult', protoName: 'pendingResult', subBuilder: PendingResults.create)
+    ..aOM<ApprovalResult>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'approvalResult', protoName: 'approvalResult', subBuilder: ApprovalResult.create)
+    ..aOM<SingleChoiceResult>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleChoiceResult', protoName: 'singleChoiceResult', subBuilder: SingleChoiceResult.create)
+    ..aOM<QuadraticResult>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadraticResult', protoName: 'quadraticResult', subBuilder: QuadraticResult.create)
+    ..aOM<RankedResult>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rankedResult', protoName: 'rankedResult', subBuilder: RankedResult.create)
+    ..aOM<SpreadResult>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spreadResult', protoName: 'spreadResult', subBuilder: SpreadResult.create)
     ..hasRequiredFields = false
   ;
 
   Result._() : super();
   factory Result({
-    ApprovalResult? approvalRresult,
+    PendingResults? pendingResult,
+    ApprovalResult? approvalResult,
     SingleChoiceResult? singleChoiceResult,
     QuadraticResult? quadraticResult,
     RankedResult? rankedResult,
     SpreadResult? spreadResult,
   }) {
     final _result = create();
-    if (approvalRresult != null) {
-      _result.approvalRresult = approvalRresult;
+    if (pendingResult != null) {
+      _result.pendingResult = pendingResult;
+    }
+    if (approvalResult != null) {
+      _result.approvalResult = approvalResult;
     }
     if (singleChoiceResult != null) {
       _result.singleChoiceResult = singleChoiceResult;
@@ -143,59 +150,99 @@ class Result extends $pb.GeneratedMessage {
   void clearBody() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  ApprovalResult get approvalRresult => $_getN(0);
+  PendingResults get pendingResult => $_getN(0);
   @$pb.TagNumber(1)
-  set approvalRresult(ApprovalResult v) { setField(1, v); }
+  set pendingResult(PendingResults v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasApprovalRresult() => $_has(0);
+  $core.bool hasPendingResult() => $_has(0);
   @$pb.TagNumber(1)
-  void clearApprovalRresult() => clearField(1);
+  void clearPendingResult() => clearField(1);
   @$pb.TagNumber(1)
-  ApprovalResult ensureApprovalRresult() => $_ensure(0);
+  PendingResults ensurePendingResult() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  SingleChoiceResult get singleChoiceResult => $_getN(1);
+  ApprovalResult get approvalResult => $_getN(1);
   @$pb.TagNumber(2)
-  set singleChoiceResult(SingleChoiceResult v) { setField(2, v); }
+  set approvalResult(ApprovalResult v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSingleChoiceResult() => $_has(1);
+  $core.bool hasApprovalResult() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSingleChoiceResult() => clearField(2);
+  void clearApprovalResult() => clearField(2);
   @$pb.TagNumber(2)
-  SingleChoiceResult ensureSingleChoiceResult() => $_ensure(1);
+  ApprovalResult ensureApprovalResult() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  QuadraticResult get quadraticResult => $_getN(2);
+  SingleChoiceResult get singleChoiceResult => $_getN(2);
   @$pb.TagNumber(3)
-  set quadraticResult(QuadraticResult v) { setField(3, v); }
+  set singleChoiceResult(SingleChoiceResult v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasQuadraticResult() => $_has(2);
+  $core.bool hasSingleChoiceResult() => $_has(2);
   @$pb.TagNumber(3)
-  void clearQuadraticResult() => clearField(3);
+  void clearSingleChoiceResult() => clearField(3);
   @$pb.TagNumber(3)
-  QuadraticResult ensureQuadraticResult() => $_ensure(2);
+  SingleChoiceResult ensureSingleChoiceResult() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  RankedResult get rankedResult => $_getN(3);
+  QuadraticResult get quadraticResult => $_getN(3);
   @$pb.TagNumber(4)
-  set rankedResult(RankedResult v) { setField(4, v); }
+  set quadraticResult(QuadraticResult v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasRankedResult() => $_has(3);
+  $core.bool hasQuadraticResult() => $_has(3);
   @$pb.TagNumber(4)
-  void clearRankedResult() => clearField(4);
+  void clearQuadraticResult() => clearField(4);
   @$pb.TagNumber(4)
-  RankedResult ensureRankedResult() => $_ensure(3);
+  QuadraticResult ensureQuadraticResult() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  SpreadResult get spreadResult => $_getN(4);
+  RankedResult get rankedResult => $_getN(4);
   @$pb.TagNumber(5)
-  set spreadResult(SpreadResult v) { setField(5, v); }
+  set rankedResult(RankedResult v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasSpreadResult() => $_has(4);
+  $core.bool hasRankedResult() => $_has(4);
   @$pb.TagNumber(5)
-  void clearSpreadResult() => clearField(5);
+  void clearRankedResult() => clearField(5);
   @$pb.TagNumber(5)
-  SpreadResult ensureSpreadResult() => $_ensure(4);
+  RankedResult ensureRankedResult() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  SpreadResult get spreadResult => $_getN(5);
+  @$pb.TagNumber(6)
+  set spreadResult(SpreadResult v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasSpreadResult() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearSpreadResult() => clearField(6);
+  @$pb.TagNumber(6)
+  SpreadResult ensureSpreadResult() => $_ensure(5);
+}
+
+class PendingResults extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PendingResults', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  PendingResults._() : super();
+  factory PendingResults() => create();
+  factory PendingResults.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PendingResults.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PendingResults clone() => PendingResults()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PendingResults copyWith(void Function(PendingResults) updates) => super.copyWith((message) => updates(message as PendingResults)) as PendingResults; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PendingResults create() => PendingResults._();
+  PendingResults createEmptyInstance() => create();
+  static $pb.PbList<PendingResults> createRepeated() => $pb.PbList<PendingResults>();
+  @$core.pragma('dart2js:noInline')
+  static PendingResults getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PendingResults>(create);
+  static PendingResults? _defaultInstance;
 }
 
 class ApprovalResult extends $pb.GeneratedMessage {
@@ -341,15 +388,15 @@ class QuadraticResult extends $pb.GeneratedMessage {
   $core.List<$core.String> get points => $_getList(0);
 }
 
-class RankedResult_RankedEntryResult_RankedEntryPositionResult extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RankedResult.RankedEntryResult.RankedEntryPositionResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class RankedResult_RankedChoiceResult_RankedChoicePositionResult extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RankedResult.RankedChoiceResult.RankedChoicePositionResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', $pb.PbFieldType.O3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'points')
     ..hasRequiredFields = false
   ;
 
-  RankedResult_RankedEntryResult_RankedEntryPositionResult._() : super();
-  factory RankedResult_RankedEntryResult_RankedEntryPositionResult({
+  RankedResult_RankedChoiceResult_RankedChoicePositionResult._() : super();
+  factory RankedResult_RankedChoiceResult_RankedChoicePositionResult({
     $core.int? position,
     $core.String? points,
   }) {
@@ -362,26 +409,26 @@ class RankedResult_RankedEntryResult_RankedEntryPositionResult extends $pb.Gener
     }
     return _result;
   }
-  factory RankedResult_RankedEntryResult_RankedEntryPositionResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RankedResult_RankedEntryResult_RankedEntryPositionResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  RankedResult_RankedEntryResult_RankedEntryPositionResult clone() => RankedResult_RankedEntryResult_RankedEntryPositionResult()..mergeFromMessage(this);
+  RankedResult_RankedChoiceResult_RankedChoicePositionResult clone() => RankedResult_RankedChoiceResult_RankedChoicePositionResult()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RankedResult_RankedEntryResult_RankedEntryPositionResult copyWith(void Function(RankedResult_RankedEntryResult_RankedEntryPositionResult) updates) => super.copyWith((message) => updates(message as RankedResult_RankedEntryResult_RankedEntryPositionResult)) as RankedResult_RankedEntryResult_RankedEntryPositionResult; // ignore: deprecated_member_use
+  RankedResult_RankedChoiceResult_RankedChoicePositionResult copyWith(void Function(RankedResult_RankedChoiceResult_RankedChoicePositionResult) updates) => super.copyWith((message) => updates(message as RankedResult_RankedChoiceResult_RankedChoicePositionResult)) as RankedResult_RankedChoiceResult_RankedChoicePositionResult; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static RankedResult_RankedEntryResult_RankedEntryPositionResult create() => RankedResult_RankedEntryResult_RankedEntryPositionResult._();
-  RankedResult_RankedEntryResult_RankedEntryPositionResult createEmptyInstance() => create();
-  static $pb.PbList<RankedResult_RankedEntryResult_RankedEntryPositionResult> createRepeated() => $pb.PbList<RankedResult_RankedEntryResult_RankedEntryPositionResult>();
+  static RankedResult_RankedChoiceResult_RankedChoicePositionResult create() => RankedResult_RankedChoiceResult_RankedChoicePositionResult._();
+  RankedResult_RankedChoiceResult_RankedChoicePositionResult createEmptyInstance() => create();
+  static $pb.PbList<RankedResult_RankedChoiceResult_RankedChoicePositionResult> createRepeated() => $pb.PbList<RankedResult_RankedChoiceResult_RankedChoicePositionResult>();
   @$core.pragma('dart2js:noInline')
-  static RankedResult_RankedEntryResult_RankedEntryPositionResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RankedResult_RankedEntryResult_RankedEntryPositionResult>(create);
-  static RankedResult_RankedEntryResult_RankedEntryPositionResult? _defaultInstance;
+  static RankedResult_RankedChoiceResult_RankedChoicePositionResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RankedResult_RankedChoiceResult_RankedChoicePositionResult>(create);
+  static RankedResult_RankedChoiceResult_RankedChoicePositionResult? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get position => $_getIZ(0);
@@ -402,60 +449,60 @@ class RankedResult_RankedEntryResult_RankedEntryPositionResult extends $pb.Gener
   void clearPoints() => clearField(2);
 }
 
-class RankedResult_RankedEntryResult extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RankedResult.RankedEntryResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..pc<RankedResult_RankedEntryResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', $pb.PbFieldType.PM, subBuilder: RankedResult_RankedEntryResult.create)
+class RankedResult_RankedChoiceResult extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RankedResult.RankedChoiceResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..pc<RankedResult_RankedChoiceResult_RankedChoicePositionResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM, subBuilder: RankedResult_RankedChoiceResult_RankedChoicePositionResult.create)
     ..hasRequiredFields = false
   ;
 
-  RankedResult_RankedEntryResult._() : super();
-  factory RankedResult_RankedEntryResult({
-    $core.Iterable<RankedResult_RankedEntryResult>? results,
+  RankedResult_RankedChoiceResult._() : super();
+  factory RankedResult_RankedChoiceResult({
+    $core.Iterable<RankedResult_RankedChoiceResult_RankedChoicePositionResult>? entries,
   }) {
     final _result = create();
-    if (results != null) {
-      _result.results.addAll(results);
+    if (entries != null) {
+      _result.entries.addAll(entries);
     }
     return _result;
   }
-  factory RankedResult_RankedEntryResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RankedResult_RankedEntryResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory RankedResult_RankedChoiceResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RankedResult_RankedChoiceResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  RankedResult_RankedEntryResult clone() => RankedResult_RankedEntryResult()..mergeFromMessage(this);
+  RankedResult_RankedChoiceResult clone() => RankedResult_RankedChoiceResult()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RankedResult_RankedEntryResult copyWith(void Function(RankedResult_RankedEntryResult) updates) => super.copyWith((message) => updates(message as RankedResult_RankedEntryResult)) as RankedResult_RankedEntryResult; // ignore: deprecated_member_use
+  RankedResult_RankedChoiceResult copyWith(void Function(RankedResult_RankedChoiceResult) updates) => super.copyWith((message) => updates(message as RankedResult_RankedChoiceResult)) as RankedResult_RankedChoiceResult; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static RankedResult_RankedEntryResult create() => RankedResult_RankedEntryResult._();
-  RankedResult_RankedEntryResult createEmptyInstance() => create();
-  static $pb.PbList<RankedResult_RankedEntryResult> createRepeated() => $pb.PbList<RankedResult_RankedEntryResult>();
+  static RankedResult_RankedChoiceResult create() => RankedResult_RankedChoiceResult._();
+  RankedResult_RankedChoiceResult createEmptyInstance() => create();
+  static $pb.PbList<RankedResult_RankedChoiceResult> createRepeated() => $pb.PbList<RankedResult_RankedChoiceResult>();
   @$core.pragma('dart2js:noInline')
-  static RankedResult_RankedEntryResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RankedResult_RankedEntryResult>(create);
-  static RankedResult_RankedEntryResult? _defaultInstance;
+  static RankedResult_RankedChoiceResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RankedResult_RankedChoiceResult>(create);
+  static RankedResult_RankedChoiceResult? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<RankedResult_RankedEntryResult> get results => $_getList(0);
+  $core.List<RankedResult_RankedChoiceResult_RankedChoicePositionResult> get entries => $_getList(0);
 }
 
 class RankedResult extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RankedResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..pc<RankedResult_RankedEntryResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM, subBuilder: RankedResult_RankedEntryResult.create)
+    ..pc<RankedResult_RankedChoiceResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'choices', $pb.PbFieldType.PM, subBuilder: RankedResult_RankedChoiceResult.create)
     ..hasRequiredFields = false
   ;
 
   RankedResult._() : super();
   factory RankedResult({
-    $core.Iterable<RankedResult_RankedEntryResult>? entries,
+    $core.Iterable<RankedResult_RankedChoiceResult>? choices,
   }) {
     final _result = create();
-    if (entries != null) {
-      _result.entries.addAll(entries);
+    if (choices != null) {
+      _result.choices.addAll(choices);
     }
     return _result;
   }
@@ -481,7 +528,7 @@ class RankedResult extends $pb.GeneratedMessage {
   static RankedResult? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<RankedResult_RankedEntryResult> get entries => $_getList(0);
+  $core.List<RankedResult_RankedChoiceResult> get choices => $_getList(0);
 }
 
 class SpreadResult extends $pb.GeneratedMessage {

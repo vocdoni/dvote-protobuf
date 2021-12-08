@@ -3,16 +3,18 @@
 // The only purpose is to exemplify the usage of the protocol models.
 // No real functionality is being executed here.
 
-import { NewElection, SetElectionStatus, SetProposalStatus } from "../../build/ts/protocol/transactions"
+import { NewElection, SetElectionStatus, SetProposalStatus, SubmitBallot } from "../../build/ts/protocol/transactions"
 import { Transaction, Request } from "../../build/ts/protocol/messages"
 import { decodeRequest, decodeResponse, decodeTransaction, decodeTransactionReceipt, encodeRequest, encodeResponseError, encodeResponseSuccess, encodeTransaction, encodeTransactionError, encodeTransactionSuccess } from "../common/messages"
 import { ApprovalProposal, Election, Lifecycle_Types, Privacy_CensusProofs, Proposal, QuadraticProposal, RankedProposal, SingleChoiceProposal, SpreadProposal } from "../../build/ts/protocol/election"
 import { CensusArbo, CensusCsp, CensusErc20, CensusNone, StorageProofErc20 } from "../../build/ts/protocol/census"
-import { ProposalStatus } from "../../build/ts/protocol/enums"
-import { GetElection, GetElectionKeys, GetElectionKeysResponse, GetElectionResponse } from "../../build/ts/protocol/service"
+import { ProposalStatus, SignatureType } from "../../build/ts/protocol/enums"
+import { GetElection, GetElectionKeys, GetElectionKeysResponse, GetElectionResponse, GetElectionResults, GetElectionResultsResponse, GetElectionResultsWeight, GetElectionResultsWeightResponse } from "../../build/ts/protocol/service"
 import { Reader } from "protobufjs"
+import { Ballot, BallotBody } from "../../build/ts/protocol/ballot"
 
-const dummySigningKey = new Uint8Array()
+const dummySigningKey = new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+const dummyElectionId = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32])
 
 ///////////////////////////////////////////////////////////////////////////////
 // Frontend request
@@ -796,6 +798,97 @@ export function getElectionKeys() {
     console.log("Election keys:", encryptionPrivateKeys, encryptionPublicKeys)
 }
 
+export function submitBallot() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping SubmimtBallot transaction")
+
+    const ballot = dummyEncodeBallot()  // Generated elsewhere. See ballot.ts
+
+    const txBody: SubmitBallot = {
+        ballot
+    }
+    const tx: Transaction = {
+        body: {
+            $case: "submitBallot",
+            submitBallot: txBody
+        }
+    }
+
+    const reqBytes = encodeTransaction(tx, dummySigningKey)
+
+    console.log("Sending the payload to a Gateway")
+    const responseBytes = dummyVochainRequest(reqBytes)
+
+    const { receipt } = decodeTransactionReceipt(responseBytes)
+
+    const txHash = receipt.hash
+    // Wait for the TX to be mined
+
+    console.log("Handling the response for transaction", txHash)
+}
+
+export function getElectionResults() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElectionResults request")
+
+    const requestData: GetElectionResults = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    }
+    const request: Request = {
+        body: {
+            $case: "getElectionResults",
+            getElectionResults: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElectionResults` call, we expect now to receive a `GetElectionResultsResponse`
+    const responseData = GetElectionResultsResponse.decode(Reader.create(response.body))
+    const { results } = responseData
+
+    console.log("Election results:", results)
+}
+
+export function getElectionResultsWeight() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElectionResultsWeight request")
+
+    const requestData: GetElectionResultsWeight = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    }
+    const request: Request = {
+        body: {
+            $case: "getElectionResultsWeight",
+            getElectionResultsWeight: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElectionResultsWeight` call, we expect now to receive a `GetElectionResultsWeightResponse`
+    const responseData = GetElectionResultsWeightResponse.decode(Reader.create(response.body))
+    const { weights } = responseData
+
+    console.log("Election result weights (per proposal):", weights)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Simulated Vochain responses
 ///////////////////////////////////////////////////////////////////////////////
@@ -823,6 +916,11 @@ function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
         case "setProposalStatus":
             const { electionId: eId2, entries } = transaction.body.setProposalStatus
             console.log("Set election", eId2, "proposal statuses to", entries)
+            break
+
+        case "submitBallot":
+            const { ballot } = transaction.body.submitBallot
+            console.log("Election received ballot", ballot.body)
             break
 
         default:
@@ -853,74 +951,19 @@ function dummyGatewayRequest(reqBytes: Uint8Array): Uint8Array {
     console.log(pad + "Received Request", request.body.$case)
     switch (request.body.$case) {
         case "getElection":
-            const { electionId: electionId1 } = request.body.getElection
-            console.log(pad + "Get election", electionId1)
-
-            const cspCensus: CensusCsp = {
-                cspPublicKey: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
-                cspUri: "https://prefix.server.net/v1/",
-                blind: true
-            }
-            const getElectionResponseBytes = GetElectionResponse.encode({
-                organizationId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
-                parameters: {
-                    mainCensus: { body: { $case: "csp", csp: cspCensus } },
-                    secondaryCensus: censusNone,
-                    tertiaryCensus: censusNone,
-                    censusSize: 500,    // affects how many votes are expected at most
-                    proposals: [
-                        proposal1,   // approval
-                        proposal2,   // singleChoice
-                        proposal3,   // quadratic
-                        proposal4,   // ranked
-                        proposal5,   // spread
-                    ],
-                    lifecycle: {
-                        type: Lifecycle_Types.PAUSED_MUTABLE,
-                        startBlock: 0,
-                        endBlock: 2000,
-                    },
-                    privacy: {
-                        realTimeResults: true,
-                        censusProof: Privacy_CensusProofs.PLAIN
-                    },
-                    metadataUri: "ipfs://1234...",
-                },
-                ballotCounts: [
-                    50,  // Proposal 1 got 50 votes
-                    40,  // Proposal 2 got 40 votes
-                    22,  // Proposal 3 has 22 votes
-                    0,   // Proposal 4 has no votes yet
-                    0    // Proposal 5 has no votes yet
-                ],
-                statuses: [
-                    ProposalStatus.RESULTS,
-                    ProposalStatus.ENDED,
-                    ProposalStatus.READY,
-                    ProposalStatus.PAUSED,
-                    ProposalStatus.PAUSED,
-                ]
-            }).finish()
-
-            msgBytes = encodeResponseSuccess(getElectionResponseBytes, requestId, dummySigningKey)
+            msgBytes = handleGetElection(requestId, request.body.getElection)
             break
 
         case "getElectionKeys":
-            const { electionId: electionId2 } = request.body.getElectionKeys
-            console.log(pad + "Get election keys", electionId2)
+            msgBytes = handleGetElectionKeys(requestId, request.body.getElectionKeys)
+            break
 
-            const getElectionKeysResponseBytes = GetElectionKeysResponse.encode({
-                encryptionPublicKeys: [
-                    { index: 0, key: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]) },
-                    { index: 1, key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]) },
-                ],
-                encryptionPrivateKeys: [
-                    { index: 0, key: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]) },
-                    { index: 1, key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]) },
-                ]
-            }).finish()
+        case "getElectionResults":
+            msgBytes = handleGetElectionResults(requestId, request.body.getElectionResults)
+            break
 
-            msgBytes = encodeResponseSuccess(getElectionKeysResponseBytes, requestId, dummySigningKey)
+        case "getElectionResultsWeight":
+            msgBytes = handleGetElectionResultsWeight(requestId, request.body.getElectionResultsWeight)
             break
 
         default:
@@ -932,3 +975,175 @@ function dummyGatewayRequest(reqBytes: Uint8Array): Uint8Array {
 
     return msgBytes
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Helpers
+///////////////////////////////////////////////////////////////////////////////
+
+function dummyGetNullifier(electionId: Uint8Array, privateKey?: Uint8Array) {
+    return new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+}
+
+function dummySign(body: Uint8Array, signingKey?: Uint8Array) {
+    if (!signingKey) return new Uint8Array()
+    return new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+}
+
+function dummyEncodeBallot(): Ballot {
+    const ballotBodyBytes = BallotBody.encode({
+        electionId: dummyElectionId,
+        nullifier: dummyGetNullifier(dummyElectionId, dummySigningKey),
+        proofs: [
+            { body: { $case: "arbo", arbo: { siblings: [new Uint8Array([0, 1, 2, 3])] } } },
+            { body: { $case: "none", none: {} } },
+            { body: { $case: "none", none: {} } },
+        ],
+        votes: {
+            partial: false,      // all votes included here
+            submittedIndex: 0,   // N/A
+            votes: [
+                { body: { $case: "approval", approval: { approved: false, nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "singleChoice", singleChoice: { choice: 2, nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "quadratic", quadratic: { choicePoints: [1, 2, 0, 0, 0], nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "ranked", ranked: { ranking: [4, 2, 5], nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "spread", spread: { percentages: [10, 35, 0, 45, 10], nonce: new Uint8Array([1, 2, 3]) } } },
+            ]
+        }
+    }).finish()
+
+    const signature = dummySign(ballotBodyBytes, dummySigningKey)
+    const ballot: Ballot = {
+        body: {
+            $case: "signedBallot",
+            signedBallot: {
+                ballot: ballotBodyBytes,
+                signature,
+                signatureType: SignatureType.SECP256K1
+            }
+        }
+    }
+    return ballot
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Dummy Gateway handlers
+///////////////////////////////////////////////////////////////////////////////
+
+function handleGetElection(requestId: Uint8Array, request: GetElection) {
+    const { electionId } = request
+    console.log(pad + "Get election", electionId)
+
+    const cspCensus: CensusCsp = { cspPublicKey: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]), cspUri: "https://prefix.server.net/v1/", blind: true }
+    const getElectionResponseBytes = GetElectionResponse.encode({
+        organizationId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        parameters: {
+            mainCensus: { body: { $case: "csp", csp: cspCensus } },
+            secondaryCensus: censusNone,
+            tertiaryCensus: censusNone,
+            censusSize: 500,    // affects how many votes are expected at most
+            proposals: [
+                proposal1,   // approval
+                proposal2,   // singleChoice
+                proposal3,   // quadratic
+                proposal4,   // ranked
+                proposal5,   // spread
+            ],
+            lifecycle: {
+                type: Lifecycle_Types.PAUSED_MUTABLE,
+                startBlock: 0,
+                endBlock: 2000,
+            },
+            privacy: {
+                realTimeResults: true,
+                censusProof: Privacy_CensusProofs.PLAIN
+            },
+            metadataUri: "ipfs://1234...",
+        },
+        ballotCounts: [
+            50,  // Proposal 1 got 50 votes
+            40,  // Proposal 2 got 40 votes
+            22,  // Proposal 3 has 22 votes
+            0,   // Proposal 4 has no votes yet
+            0    // Proposal 5 has no votes yet
+        ],
+        statuses: [
+            ProposalStatus.RESULTS,
+            ProposalStatus.ENDED,
+            ProposalStatus.READY,
+            ProposalStatus.PAUSED,
+            ProposalStatus.PAUSED,
+        ]
+    }).finish()
+
+    return encodeResponseSuccess(getElectionResponseBytes, requestId, dummySigningKey)
+}
+
+function handleGetElectionKeys(requestId: Uint8Array, request: GetElectionKeys) {
+    const { electionId } = request
+    console.log(pad + "Get election keys", electionId)
+
+    const getElectionKeysResponseBytes = GetElectionKeysResponse.encode({
+        encryptionPublicKeys: [
+            { index: 0, key: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]) },
+            { index: 1, key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]) },
+        ],
+        encryptionPrivateKeys: [
+            { index: 0, key: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]) },
+            { index: 1, key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]) },
+        ]
+    }).finish()
+
+    return encodeResponseSuccess(getElectionKeysResponseBytes, requestId, dummySigningKey)
+}
+
+function handleGetElectionResults(requestId: Uint8Array, request: GetElectionResults) {
+    const { electionId } = request
+    console.log(pad + "Get election keys", electionId)
+
+    const getElectionResultsResponseBytes = GetElectionResultsResponse.encode({
+        results: {
+            electionId,
+            proposalResults: [
+                // For each proposal
+                { body: { $case: "approvalResult", approvalResult: { approved: "20", rejected: "30" } } },
+                { body: { $case: "singleChoiceResult", singleChoiceResult: { votes: ["10", "40", "30", "45", "0"] } } },
+                { body: { $case: "quadraticResult", quadraticResult: { points: ["16", "50", "35", "60", "50"] } } },
+                {
+                    body: {
+                        $case: "rankedResult", rankedResult: {
+                            choices: [
+                                { entries: [{ position: 1, points: "10" }, { position: 2, points: "4" }, { position: 3, points: "5" }, { position: 4, points: "1" }, { position: 5, points: "0" }] },
+                                { entries: [{ position: 1, points: "1" }, { position: 2, points: "8" }, { position: 3, points: "4" }, { position: 4, points: "3" }, { position: 5, points: "1" }] },
+                                { entries: [{ position: 1, points: "2" }, { position: 2, points: "4" }, { position: 3, points: "2" }, { position: 4, points: "8" }, { position: 5, points: "8" }] },
+                                { entries: [{ position: 1, points: "5" }, { position: 2, points: "5" }, { position: 3, points: "4" }, { position: 4, points: "6" }, { position: 5, points: "4" }] },
+                                { entries: [{ position: 1, points: "4" }, { position: 2, points: "2" }, { position: 3, points: "8" }, { position: 4, points: "9" }, { position: 5, points: "10" }] },
+                            ]
+                        }
+                    }
+                },
+                { body: { $case: "spreadResult", spreadResult: { points: ["1234", "2345", "3456", "4567", "5678"] } } },
+                // { body: { $case: "pendingResult", pendingResult: {} } },
+            ]
+        }
+    }).finish()
+
+    return encodeResponseSuccess(getElectionResultsResponseBytes, requestId, dummySigningKey)
+}
+
+function handleGetElectionResultsWeight(requestId: Uint8Array, request: GetElectionResultsWeight) {
+    const { electionId } = request
+    console.log(pad + "Get election keys", electionId)
+
+    const getElectionResultsWeightResponseBytes = GetElectionResultsWeightResponse.encode({
+        weights: [
+            "1234",   // weight used on proposal 1
+            "2345",   // weight used on proposal 2
+            "3456",   // weight used on proposal 3
+            "4567",   // weight used on proposal 4
+            "5678",   // weight used on proposal 5
+        ]
+    }).finish()
+
+    return encodeResponseSuccess(getElectionResultsWeightResponseBytes, requestId, dummySigningKey)
+}
+

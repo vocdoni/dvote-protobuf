@@ -30,16 +30,16 @@ message Message {
 // The body contains the serialized bytes from a `Body`, which can host three types of interactions.
 message Body {
 	bytes id = 1;
-    // UNIX timestamp
+	// UNIX timestamp
 	int32 timestamp = 2;
 
 	oneof body {
-        // Vochain, VocOne, ...
+		// Vochain, VocOne, ...
 		Transaction transaction = 11;
 		TransactionReceipt receipt = 12;
 
 		// To remote services
-        Request request = 13;
+		Request request = 13;
 		Response response = 14;
 	}
 }
@@ -99,7 +99,7 @@ message Request {
 		GetElectionKeys getElectionKeys = 6;
 		GetElectionCircuitInfo getElectionCircuitInfo = 7;
 		GetElectionResults getElectionResults = 8;
-		GetElectionWeight getElectionWeight = 9;
+		GetElectionResultsWeight getElectionResultsWeight = 9;
 
 		// CENSUS
 		NewCensus newCensus = 31;
@@ -121,7 +121,8 @@ message Request {
 
 		// TRANSACTIONS
 		GetTransaction getTransaction = 81;
-		WaitTransaction waitTransaction = 82;
+		GetRawTransactionMessage getRawTransactionMessage = 82;
+		WaitTransaction waitTransaction = 83;
 	}
 }
 

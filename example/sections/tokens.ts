@@ -17,13 +17,13 @@ export function mintTokens() {
     console.log("-----------------------------------------------")
     console.log("Wrapping Mint transaction")
 
-    const txBody = Mint.fromPartial({ amount: "1000" })
-    const tx = Transaction.fromPartial({
+    const txBody: Mint = { amount: "1000" }
+    const tx: Transaction = {
         body: {
             $case: "mint",
             mint: txBody
         }
-    })
+    }
 
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 

@@ -6,8 +6,10 @@
 import { createOrganization, getOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
 import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus, registerVoterKey } from "./sections/census"
-import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, getElection, getElectionKeys, setElectionStatus, setProposalStatus } from "./sections/election"
+import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, getElection, getElectionKeys, getElectionResults, getElectionResultsWeight, setElectionStatus, setProposalStatus, submitBallot } from "./sections/election"
 import { encodeAnonymousBallot, encodeSignedBallot, encodeSignedEncryptedBallot, encodeSignedStepByStepBallot } from "./sections/ballot"
+import { getBlockCount, getBlockStatus, getRawTransactionMessage, getTransaction, waitTransaction } from "./sections/network"
+import { fetchFile, pinFile } from "./sections/file"
 
 function main() {
     // Transacations
@@ -22,6 +24,9 @@ function main() {
     getCensusRoot()
     getCensusSize()
     publishCensus()
+
+    pinFile()
+    fetchFile()
 
     // Transactions
     createSimpleElection()
@@ -55,12 +60,21 @@ function main() {
     encodeAnonymousBallot()
 
     // Transactions
-    // submitVote()
+    submitBallot()
 
     // Requests
-    // getResults()
-    // getResultsWeight()
-    // networkRequests()
+    getElectionResults()
+    getElectionResultsWeight()
+
+    // Network requests
+    getBlockStatus()
+    getBlockCount()
+    // estimateElectionPrice()
+
+    // Transaction requests
+    getTransaction()
+    getRawTransactionMessage()
+    waitTransaction()
 }
 
 main()

@@ -8,90 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use electionRequestDescriptor instead')
-const ElectionRequest$json = const {
-  '1': 'ElectionRequest',
-  '2': const [
-    const {'1': 'electionId', '3': 1, '4': 1, '5': 12, '10': 'electionId'},
-    const {'1': 'getElection', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElection', '9': 0, '10': 'getElection'},
-    const {'1': 'getElectionList', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionList', '9': 0, '10': 'getElectionList'},
-    const {'1': 'getOrganization', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.GetOrganization', '9': 0, '10': 'getOrganization'},
-    const {'1': 'getBallot', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBallot', '9': 0, '10': 'getBallot'},
-    const {'1': 'getElectionBallots', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionBallots', '9': 0, '10': 'getElectionBallots'},
-    const {'1': 'getElectionKeys', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionKeys', '9': 0, '10': 'getElectionKeys'},
-    const {'1': 'getElectionCircuitInfo', '3': 8, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionCircuitInfo', '9': 0, '10': 'getElectionCircuitInfo'},
-    const {'1': 'getElectionResults', '3': 9, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionResults', '9': 0, '10': 'getElectionResults'},
-    const {'1': 'getElectionWeight', '3': 10, '4': 1, '5': 11, '6': '.dvote.types.v2.GetElectionWeight', '9': 0, '10': 'getElectionWeight'},
-  ],
-  '8': const [
-    const {'1': 'body'},
-  ],
-};
-
-/// Descriptor for `ElectionRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List electionRequestDescriptor = $convert.base64Decode('Cg9FbGVjdGlvblJlcXVlc3QSHgoKZWxlY3Rpb25JZBgBIAEoDFIKZWxlY3Rpb25JZBI/CgtnZXRFbGVjdGlvbhgCIAEoCzIbLmR2b3RlLnR5cGVzLnYyLkdldEVsZWN0aW9uSABSC2dldEVsZWN0aW9uEksKD2dldEVsZWN0aW9uTGlzdBgDIAEoCzIfLmR2b3RlLnR5cGVzLnYyLkdldEVsZWN0aW9uTGlzdEgAUg9nZXRFbGVjdGlvbkxpc3QSSwoPZ2V0T3JnYW5pemF0aW9uGAQgASgLMh8uZHZvdGUudHlwZXMudjIuR2V0T3JnYW5pemF0aW9uSABSD2dldE9yZ2FuaXphdGlvbhI5CglnZXRCYWxsb3QYBSABKAsyGS5kdm90ZS50eXBlcy52Mi5HZXRCYWxsb3RIAFIJZ2V0QmFsbG90ElQKEmdldEVsZWN0aW9uQmFsbG90cxgGIAEoCzIiLmR2b3RlLnR5cGVzLnYyLkdldEVsZWN0aW9uQmFsbG90c0gAUhJnZXRFbGVjdGlvbkJhbGxvdHMSSwoPZ2V0RWxlY3Rpb25LZXlzGAcgASgLMh8uZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25LZXlzSABSD2dldEVsZWN0aW9uS2V5cxJgChZnZXRFbGVjdGlvbkNpcmN1aXRJbmZvGAggASgLMiYuZHZvdGUudHlwZXMudjIuR2V0RWxlY3Rpb25DaXJjdWl0SW5mb0gAUhZnZXRFbGVjdGlvbkNpcmN1aXRJbmZvElQKEmdldEVsZWN0aW9uUmVzdWx0cxgJIAEoCzIiLmR2b3RlLnR5cGVzLnYyLkdldEVsZWN0aW9uUmVzdWx0c0gAUhJnZXRFbGVjdGlvblJlc3VsdHMSUQoRZ2V0RWxlY3Rpb25XZWlnaHQYCiABKAsyIS5kdm90ZS50eXBlcy52Mi5HZXRFbGVjdGlvbldlaWdodEgAUhFnZXRFbGVjdGlvbldlaWdodEIGCgRib2R5');
-@$core.Deprecated('Use censusRequestDescriptor instead')
-const CensusRequest$json = const {
-  '1': 'CensusRequest',
-  '2': const [
-    const {'1': 'newCensus', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.NewCensus', '9': 0, '10': 'newCensus'},
-    const {'1': 'addCensusKeys', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.AddCensusKeys', '9': 0, '10': 'addCensusKeys'},
-    const {'1': 'getCensusRoot', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusRoot', '9': 0, '10': 'getCensusRoot'},
-    const {'1': 'getCensusSize', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusSize', '9': 0, '10': 'getCensusSize'},
-    const {'1': 'publishCensus', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v2.PublishCensus', '9': 0, '10': 'publishCensus'},
-    const {'1': 'getCensusProof', '3': 6, '4': 1, '5': 11, '6': '.dvote.types.v2.GetCensusProof', '9': 0, '10': 'getCensusProof'},
-    const {'1': 'dumpCensus', '3': 7, '4': 1, '5': 11, '6': '.dvote.types.v2.DumpCensus', '9': 0, '10': 'dumpCensus'},
-  ],
-  '8': const [
-    const {'1': 'body'},
-  ],
-};
-
-/// Descriptor for `CensusRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusRequestDescriptor = $convert.base64Decode('Cg1DZW5zdXNSZXF1ZXN0EjkKCW5ld0NlbnN1cxgBIAEoCzIZLmR2b3RlLnR5cGVzLnYyLk5ld0NlbnN1c0gAUgluZXdDZW5zdXMSRQoNYWRkQ2Vuc3VzS2V5cxgCIAEoCzIdLmR2b3RlLnR5cGVzLnYyLkFkZENlbnN1c0tleXNIAFINYWRkQ2Vuc3VzS2V5cxJFCg1nZXRDZW5zdXNSb290GAMgASgLMh0uZHZvdGUudHlwZXMudjIuR2V0Q2Vuc3VzUm9vdEgAUg1nZXRDZW5zdXNSb290EkUKDWdldENlbnN1c1NpemUYBCABKAsyHS5kdm90ZS50eXBlcy52Mi5HZXRDZW5zdXNTaXplSABSDWdldENlbnN1c1NpemUSRQoNcHVibGlzaENlbnN1cxgFIAEoCzIdLmR2b3RlLnR5cGVzLnYyLlB1Ymxpc2hDZW5zdXNIAFINcHVibGlzaENlbnN1cxJICg5nZXRDZW5zdXNQcm9vZhgGIAEoCzIeLmR2b3RlLnR5cGVzLnYyLkdldENlbnN1c1Byb29mSABSDmdldENlbnN1c1Byb29mEjwKCmR1bXBDZW5zdXMYByABKAsyGi5kdm90ZS50eXBlcy52Mi5EdW1wQ2Vuc3VzSABSCmR1bXBDZW5zdXNCBgoEYm9keQ==');
-@$core.Deprecated('Use fileRequestDescriptor instead')
-const FileRequest$json = const {
-  '1': 'FileRequest',
-  '2': const [
-    const {'1': 'pinFile', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.PinFile', '9': 0, '10': 'pinFile'},
-    const {'1': 'fetchFile', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.FetchFile', '9': 0, '10': 'fetchFile'},
-  ],
-  '8': const [
-    const {'1': 'body'},
-  ],
-};
-
-/// Descriptor for `FileRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fileRequestDescriptor = $convert.base64Decode('CgtGaWxlUmVxdWVzdBIzCgdwaW5GaWxlGAEgASgLMhcuZHZvdGUudHlwZXMudjIuUGluRmlsZUgAUgdwaW5GaWxlEjkKCWZldGNoRmlsZRgCIAEoCzIZLmR2b3RlLnR5cGVzLnYyLkZldGNoRmlsZUgAUglmZXRjaEZpbGVCBgoEYm9keQ==');
-@$core.Deprecated('Use networkRequestDescriptor instead')
-const NetworkRequest$json = const {
-  '1': 'NetworkRequest',
-  '2': const [
-    const {'1': 'getBlockStatus', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBlockStatus', '9': 0, '10': 'getBlockStatus'},
-    const {'1': 'getBlockCount', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.GetBlockCount', '9': 0, '10': 'getBlockCount'},
-    const {'1': 'estimateElectionPrice', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.EstimateElectionPrice', '9': 0, '10': 'estimateElectionPrice'},
-  ],
-  '8': const [
-    const {'1': 'body'},
-  ],
-};
-
-/// Descriptor for `NetworkRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List networkRequestDescriptor = $convert.base64Decode('Cg5OZXR3b3JrUmVxdWVzdBJICg5nZXRCbG9ja1N0YXR1cxgBIAEoCzIeLmR2b3RlLnR5cGVzLnYyLkdldEJsb2NrU3RhdHVzSABSDmdldEJsb2NrU3RhdHVzEkUKDWdldEJsb2NrQ291bnQYAiABKAsyHS5kdm90ZS50eXBlcy52Mi5HZXRCbG9ja0NvdW50SABSDWdldEJsb2NrQ291bnQSXQoVZXN0aW1hdGVFbGVjdGlvblByaWNlGAMgASgLMiUuZHZvdGUudHlwZXMudjIuRXN0aW1hdGVFbGVjdGlvblByaWNlSABSFWVzdGltYXRlRWxlY3Rpb25QcmljZUIGCgRib2R5');
-@$core.Deprecated('Use transactionRequestDescriptor instead')
-const TransactionRequest$json = const {
-  '1': 'TransactionRequest',
-  '2': const [
-    const {'1': 'getTx', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.GetTransaction', '9': 0, '10': 'getTx'},
-    const {'1': 'waitTx', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.WaitTransaction', '9': 0, '10': 'waitTx'},
-  ],
-  '8': const [
-    const {'1': 'body'},
-  ],
-};
-
-/// Descriptor for `TransactionRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List transactionRequestDescriptor = $convert.base64Decode('ChJUcmFuc2FjdGlvblJlcXVlc3QSNgoFZ2V0VHgYASABKAsyHi5kdm90ZS50eXBlcy52Mi5HZXRUcmFuc2FjdGlvbkgAUgVnZXRUeBI5CgZ3YWl0VHgYAiABKAsyHy5kdm90ZS50eXBlcy52Mi5XYWl0VHJhbnNhY3Rpb25IAFIGd2FpdFR4QgYKBGJvZHk=');
 @$core.Deprecated('Use getElectionDescriptor instead')
 const GetElection$json = const {
   '1': 'GetElection',
@@ -276,32 +192,31 @@ const GetElectionResultsResponse$json = const {
   '1': 'GetElectionResultsResponse',
   '2': const [
     const {'1': 'results', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.Results', '10': 'results'},
-    const {'1': 'available', '3': 2, '4': 1, '5': 8, '10': 'available'},
   ],
 };
 
 /// Descriptor for `GetElectionResultsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getElectionResultsResponseDescriptor = $convert.base64Decode('ChpHZXRFbGVjdGlvblJlc3VsdHNSZXNwb25zZRIxCgdyZXN1bHRzGAEgASgLMhcuZHZvdGUudHlwZXMudjIuUmVzdWx0c1IHcmVzdWx0cxIcCglhdmFpbGFibGUYAiABKAhSCWF2YWlsYWJsZQ==');
-@$core.Deprecated('Use getElectionWeightDescriptor instead')
-const GetElectionWeight$json = const {
-  '1': 'GetElectionWeight',
+final $typed_data.Uint8List getElectionResultsResponseDescriptor = $convert.base64Decode('ChpHZXRFbGVjdGlvblJlc3VsdHNSZXNwb25zZRIxCgdyZXN1bHRzGAEgASgLMhcuZHZvdGUudHlwZXMudjIuUmVzdWx0c1IHcmVzdWx0cw==');
+@$core.Deprecated('Use getElectionResultsWeightDescriptor instead')
+const GetElectionResultsWeight$json = const {
+  '1': 'GetElectionResultsWeight',
   '2': const [
     const {'1': 'electionId', '3': 1, '4': 1, '5': 12, '10': 'electionId'},
   ],
 };
 
-/// Descriptor for `GetElectionWeight`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getElectionWeightDescriptor = $convert.base64Decode('ChFHZXRFbGVjdGlvbldlaWdodBIeCgplbGVjdGlvbklkGAEgASgMUgplbGVjdGlvbklk');
-@$core.Deprecated('Use getElectionWeightResponseDescriptor instead')
-const GetElectionWeightResponse$json = const {
-  '1': 'GetElectionWeightResponse',
+/// Descriptor for `GetElectionResultsWeight`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getElectionResultsWeightDescriptor = $convert.base64Decode('ChhHZXRFbGVjdGlvblJlc3VsdHNXZWlnaHQSHgoKZWxlY3Rpb25JZBgBIAEoDFIKZWxlY3Rpb25JZA==');
+@$core.Deprecated('Use getElectionResultsWeightResponseDescriptor instead')
+const GetElectionResultsWeightResponse$json = const {
+  '1': 'GetElectionResultsWeightResponse',
   '2': const [
-    const {'1': 'weight', '3': 1, '4': 1, '5': 9, '10': 'weight'},
+    const {'1': 'weights', '3': 1, '4': 3, '5': 9, '10': 'weights'},
   ],
 };
 
-/// Descriptor for `GetElectionWeightResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getElectionWeightResponseDescriptor = $convert.base64Decode('ChlHZXRFbGVjdGlvbldlaWdodFJlc3BvbnNlEhYKBndlaWdodBgBIAEoCVIGd2VpZ2h0');
+/// Descriptor for `GetElectionResultsWeightResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getElectionResultsWeightResponseDescriptor = $convert.base64Decode('CiBHZXRFbGVjdGlvblJlc3VsdHNXZWlnaHRSZXNwb25zZRIYCgd3ZWlnaHRzGAEgAygJUgd3ZWlnaHRz');
 @$core.Deprecated('Use newCensusDescriptor instead')
 const NewCensus$json = const {
   '1': 'NewCensus',
@@ -571,6 +486,26 @@ const GetTransactionResponse$json = const {
 
 /// Descriptor for `GetTransactionResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getTransactionResponseDescriptor = $convert.base64Decode('ChZHZXRUcmFuc2FjdGlvblJlc3BvbnNlEhIKBGJvZHkYASABKAxSBGJvZHk=');
+@$core.Deprecated('Use getRawTransactionMessageDescriptor instead')
+const GetRawTransactionMessage$json = const {
+  '1': 'GetRawTransactionMessage',
+  '2': const [
+    const {'1': 'txHash', '3': 1, '4': 1, '5': 12, '10': 'txHash'},
+  ],
+};
+
+/// Descriptor for `GetRawTransactionMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getRawTransactionMessageDescriptor = $convert.base64Decode('ChhHZXRSYXdUcmFuc2FjdGlvbk1lc3NhZ2USFgoGdHhIYXNoGAEgASgMUgZ0eEhhc2g=');
+@$core.Deprecated('Use getRawTransactionMessageResponseDescriptor instead')
+const GetRawTransactionMessageResponse$json = const {
+  '1': 'GetRawTransactionMessageResponse',
+  '2': const [
+    const {'1': 'body', '3': 1, '4': 1, '5': 12, '10': 'body'},
+  ],
+};
+
+/// Descriptor for `GetRawTransactionMessageResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getRawTransactionMessageResponseDescriptor = $convert.base64Decode('CiBHZXRSYXdUcmFuc2FjdGlvbk1lc3NhZ2VSZXNwb25zZRISCgRib2R5GAEgASgMUgRib2R5');
 @$core.Deprecated('Use waitTransactionDescriptor instead')
 const WaitTransaction$json = const {
   '1': 'WaitTransaction',

@@ -127,14 +127,14 @@ function dummyGatewayRequest(reqBytes: Uint8Array): Uint8Array {
             const { organizationId } = request.body.getOrganization
             console.log(pad + "Get organization", organizationId)
 
-            const newCensusResponseBytes = GetOrganizationResponse.encode({
+            const getOrganizationResponseBytes = GetOrganizationResponse.encode({
                 organization: {
                     metadataUri: "ipfs://1234...",
                     managers: []
                 }
             }).finish()
 
-            msgBytes = encodeResponseSuccess(newCensusResponseBytes, requestId, dummySigningKey)
+            msgBytes = encodeResponseSuccess(getOrganizationResponseBytes, requestId, dummySigningKey)
             break
 
         default:

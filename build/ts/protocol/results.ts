@@ -7,18 +7,21 @@ export const protobufPackage = "dvote.types.v2";
 export interface Results {
   electionId: Uint8Array;
   /** One result object for each Proposal within the Election */
-  results: Result[];
+  proposalResults: Result[];
 }
 
 /** The outcome of a proposal */
 export interface Result {
   body?:
-    | { $case: "approvalRresult"; approvalRresult: ApprovalResult }
+    | { $case: "pendingResult"; pendingResult: PendingResults }
+    | { $case: "approvalResult"; approvalResult: ApprovalResult }
     | { $case: "singleChoiceResult"; singleChoiceResult: SingleChoiceResult }
     | { $case: "quadraticResult"; quadraticResult: QuadraticResult }
     | { $case: "rankedResult"; rankedResult: RankedResult }
     | { $case: "spreadResult"; spreadResult: SpreadResult };
 }
+
+export interface PendingResults {}
 
 export interface ApprovalResult {
   /** How many (weighted) rejections */
@@ -39,15 +42,15 @@ export interface QuadraticResult {
 
 export interface RankedResult {
   /** The results of each choice */
-  entries: RankedResult_RankedEntryResult[];
+  choices: RankedResult_RankedChoiceResult[];
 }
 
-export interface RankedResult_RankedEntryResult {
+export interface RankedResult_RankedChoiceResult {
   /** The results of the choice at every valid rank position */
-  results: RankedResult_RankedEntryResult[];
+  entries: RankedResult_RankedChoiceResult_RankedChoicePositionResult[];
 }
 
-export interface RankedResult_RankedEntryResult_RankedEntryPositionResult {
+export interface RankedResult_RankedChoiceResult_RankedChoicePositionResult {
   /** The rank position of the choice, for which the points below have been achieved */
   position: number;
   /** How many (weighted) points the choice got at the current rank position */
@@ -66,7 +69,7 @@ export const Results = {
     if (message.electionId.length !== 0) {
       writer.uint32(10).bytes(message.electionId);
     }
-    for (const v of message.results) {
+    for (const v of message.proposalResults) {
       Result.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
@@ -76,7 +79,7 @@ export const Results = {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseResults } as Results;
-    message.results = [];
+    message.proposalResults = [];
     message.electionId = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -85,7 +88,7 @@ export const Results = {
           message.electionId = reader.bytes();
           break;
         case 2:
-          message.results.push(Result.decode(reader, reader.uint32()));
+          message.proposalResults.push(Result.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -101,7 +104,7 @@ export const Results = {
       object.electionId !== undefined && object.electionId !== null
         ? bytesFromBase64(object.electionId)
         : new Uint8Array();
-    message.results = (object.results ?? []).map((e: any) =>
+    message.proposalResults = (object.proposalResults ?? []).map((e: any) =>
       Result.fromJSON(e)
     );
     return message;
@@ -113,12 +116,12 @@ export const Results = {
       (obj.electionId = base64FromBytes(
         message.electionId !== undefined ? message.electionId : new Uint8Array()
       ));
-    if (message.results) {
-      obj.results = message.results.map((e) =>
+    if (message.proposalResults) {
+      obj.proposalResults = message.proposalResults.map((e) =>
         e ? Result.toJSON(e) : undefined
       );
     } else {
-      obj.results = [];
+      obj.proposalResults = [];
     }
     return obj;
   },
@@ -126,7 +129,8 @@ export const Results = {
   fromPartial<I extends Exact<DeepPartial<Results>, I>>(object: I): Results {
     const message = { ...baseResults } as Results;
     message.electionId = object.electionId ?? new Uint8Array();
-    message.results = object.results?.map((e) => Result.fromPartial(e)) || [];
+    message.proposalResults =
+      object.proposalResults?.map((e) => Result.fromPartial(e)) || [];
     return message;
   },
 };
@@ -135,34 +139,40 @@ const baseResult: object = {};
 
 export const Result = {
   encode(message: Result, writer: Writer = Writer.create()): Writer {
-    if (message.body?.$case === "approvalRresult") {
-      ApprovalResult.encode(
-        message.body.approvalRresult,
+    if (message.body?.$case === "pendingResult") {
+      PendingResults.encode(
+        message.body.pendingResult,
         writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.body?.$case === "approvalResult") {
+      ApprovalResult.encode(
+        message.body.approvalResult,
+        writer.uint32(18).fork()
       ).ldelim();
     }
     if (message.body?.$case === "singleChoiceResult") {
       SingleChoiceResult.encode(
         message.body.singleChoiceResult,
-        writer.uint32(18).fork()
+        writer.uint32(26).fork()
       ).ldelim();
     }
     if (message.body?.$case === "quadraticResult") {
       QuadraticResult.encode(
         message.body.quadraticResult,
-        writer.uint32(26).fork()
+        writer.uint32(34).fork()
       ).ldelim();
     }
     if (message.body?.$case === "rankedResult") {
       RankedResult.encode(
         message.body.rankedResult,
-        writer.uint32(34).fork()
+        writer.uint32(42).fork()
       ).ldelim();
     }
     if (message.body?.$case === "spreadResult") {
       SpreadResult.encode(
         message.body.spreadResult,
-        writer.uint32(42).fork()
+        writer.uint32(50).fork()
       ).ldelim();
     }
     return writer;
@@ -177,11 +187,17 @@ export const Result = {
       switch (tag >>> 3) {
         case 1:
           message.body = {
-            $case: "approvalRresult",
-            approvalRresult: ApprovalResult.decode(reader, reader.uint32()),
+            $case: "pendingResult",
+            pendingResult: PendingResults.decode(reader, reader.uint32()),
           };
           break;
         case 2:
+          message.body = {
+            $case: "approvalResult",
+            approvalResult: ApprovalResult.decode(reader, reader.uint32()),
+          };
+          break;
+        case 3:
           message.body = {
             $case: "singleChoiceResult",
             singleChoiceResult: SingleChoiceResult.decode(
@@ -190,19 +206,19 @@ export const Result = {
             ),
           };
           break;
-        case 3:
+        case 4:
           message.body = {
             $case: "quadraticResult",
             quadraticResult: QuadraticResult.decode(reader, reader.uint32()),
           };
           break;
-        case 4:
+        case 5:
           message.body = {
             $case: "rankedResult",
             rankedResult: RankedResult.decode(reader, reader.uint32()),
           };
           break;
-        case 5:
+        case 6:
           message.body = {
             $case: "spreadResult",
             spreadResult: SpreadResult.decode(reader, reader.uint32()),
@@ -218,13 +234,16 @@ export const Result = {
 
   fromJSON(object: any): Result {
     const message = { ...baseResult } as Result;
-    if (
-      object.approvalRresult !== undefined &&
-      object.approvalRresult !== null
-    ) {
+    if (object.pendingResult !== undefined && object.pendingResult !== null) {
       message.body = {
-        $case: "approvalRresult",
-        approvalRresult: ApprovalResult.fromJSON(object.approvalRresult),
+        $case: "pendingResult",
+        pendingResult: PendingResults.fromJSON(object.pendingResult),
+      };
+    }
+    if (object.approvalResult !== undefined && object.approvalResult !== null) {
+      message.body = {
+        $case: "approvalResult",
+        approvalResult: ApprovalResult.fromJSON(object.approvalResult),
       };
     }
     if (
@@ -264,9 +283,13 @@ export const Result = {
 
   toJSON(message: Result): unknown {
     const obj: any = {};
-    message.body?.$case === "approvalRresult" &&
-      (obj.approvalRresult = message.body?.approvalRresult
-        ? ApprovalResult.toJSON(message.body?.approvalRresult)
+    message.body?.$case === "pendingResult" &&
+      (obj.pendingResult = message.body?.pendingResult
+        ? PendingResults.toJSON(message.body?.pendingResult)
+        : undefined);
+    message.body?.$case === "approvalResult" &&
+      (obj.approvalResult = message.body?.approvalResult
+        ? ApprovalResult.toJSON(message.body?.approvalResult)
         : undefined);
     message.body?.$case === "singleChoiceResult" &&
       (obj.singleChoiceResult = message.body?.singleChoiceResult
@@ -290,15 +313,23 @@ export const Result = {
   fromPartial<I extends Exact<DeepPartial<Result>, I>>(object: I): Result {
     const message = { ...baseResult } as Result;
     if (
-      object.body?.$case === "approvalRresult" &&
-      object.body?.approvalRresult !== undefined &&
-      object.body?.approvalRresult !== null
+      object.body?.$case === "pendingResult" &&
+      object.body?.pendingResult !== undefined &&
+      object.body?.pendingResult !== null
     ) {
       message.body = {
-        $case: "approvalRresult",
-        approvalRresult: ApprovalResult.fromPartial(
-          object.body.approvalRresult
-        ),
+        $case: "pendingResult",
+        pendingResult: PendingResults.fromPartial(object.body.pendingResult),
+      };
+    }
+    if (
+      object.body?.$case === "approvalResult" &&
+      object.body?.approvalResult !== undefined &&
+      object.body?.approvalResult !== null
+    ) {
+      message.body = {
+        $case: "approvalResult",
+        approvalResult: ApprovalResult.fromPartial(object.body.approvalResult),
       };
     }
     if (
@@ -345,6 +376,46 @@ export const Result = {
         spreadResult: SpreadResult.fromPartial(object.body.spreadResult),
       };
     }
+    return message;
+  },
+};
+
+const basePendingResults: object = {};
+
+export const PendingResults = {
+  encode(_: PendingResults, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): PendingResults {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...basePendingResults } as PendingResults;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): PendingResults {
+    const message = { ...basePendingResults } as PendingResults;
+    return message;
+  },
+
+  toJSON(_: PendingResults): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<PendingResults>, I>>(
+    _: I
+  ): PendingResults {
+    const message = { ...basePendingResults } as PendingResults;
     return message;
   },
 };
@@ -528,8 +599,8 @@ const baseRankedResult: object = {};
 
 export const RankedResult = {
   encode(message: RankedResult, writer: Writer = Writer.create()): Writer {
-    for (const v of message.entries) {
-      RankedResult_RankedEntryResult.encode(
+    for (const v of message.choices) {
+      RankedResult_RankedChoiceResult.encode(
         v!,
         writer.uint32(10).fork()
       ).ldelim();
@@ -541,13 +612,13 @@ export const RankedResult = {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRankedResult } as RankedResult;
-    message.entries = [];
+    message.choices = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.entries.push(
-            RankedResult_RankedEntryResult.decode(reader, reader.uint32())
+          message.choices.push(
+            RankedResult_RankedChoiceResult.decode(reader, reader.uint32())
           );
           break;
         default:
@@ -560,20 +631,20 @@ export const RankedResult = {
 
   fromJSON(object: any): RankedResult {
     const message = { ...baseRankedResult } as RankedResult;
-    message.entries = (object.entries ?? []).map((e: any) =>
-      RankedResult_RankedEntryResult.fromJSON(e)
+    message.choices = (object.choices ?? []).map((e: any) =>
+      RankedResult_RankedChoiceResult.fromJSON(e)
     );
     return message;
   },
 
   toJSON(message: RankedResult): unknown {
     const obj: any = {};
-    if (message.entries) {
-      obj.entries = message.entries.map((e) =>
-        e ? RankedResult_RankedEntryResult.toJSON(e) : undefined
+    if (message.choices) {
+      obj.choices = message.choices.map((e) =>
+        e ? RankedResult_RankedChoiceResult.toJSON(e) : undefined
       );
     } else {
-      obj.entries = [];
+      obj.choices = [];
     }
     return obj;
   },
@@ -582,23 +653,23 @@ export const RankedResult = {
     object: I
   ): RankedResult {
     const message = { ...baseRankedResult } as RankedResult;
-    message.entries =
-      object.entries?.map((e) =>
-        RankedResult_RankedEntryResult.fromPartial(e)
+    message.choices =
+      object.choices?.map((e) =>
+        RankedResult_RankedChoiceResult.fromPartial(e)
       ) || [];
     return message;
   },
 };
 
-const baseRankedResult_RankedEntryResult: object = {};
+const baseRankedResult_RankedChoiceResult: object = {};
 
-export const RankedResult_RankedEntryResult = {
+export const RankedResult_RankedChoiceResult = {
   encode(
-    message: RankedResult_RankedEntryResult,
+    message: RankedResult_RankedChoiceResult,
     writer: Writer = Writer.create()
   ): Writer {
-    for (const v of message.results) {
-      RankedResult_RankedEntryResult.encode(
+    for (const v of message.entries) {
+      RankedResult_RankedChoiceResult_RankedChoicePositionResult.encode(
         v!,
         writer.uint32(10).fork()
       ).ldelim();
@@ -609,19 +680,22 @@ export const RankedResult_RankedEntryResult = {
   decode(
     input: Reader | Uint8Array,
     length?: number
-  ): RankedResult_RankedEntryResult {
+  ): RankedResult_RankedChoiceResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
-      ...baseRankedResult_RankedEntryResult,
-    } as RankedResult_RankedEntryResult;
-    message.results = [];
+      ...baseRankedResult_RankedChoiceResult,
+    } as RankedResult_RankedChoiceResult;
+    message.entries = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.results.push(
-            RankedResult_RankedEntryResult.decode(reader, reader.uint32())
+          message.entries.push(
+            RankedResult_RankedChoiceResult_RankedChoicePositionResult.decode(
+              reader,
+              reader.uint32()
+            )
           );
           break;
         default:
@@ -632,50 +706,54 @@ export const RankedResult_RankedEntryResult = {
     return message;
   },
 
-  fromJSON(object: any): RankedResult_RankedEntryResult {
+  fromJSON(object: any): RankedResult_RankedChoiceResult {
     const message = {
-      ...baseRankedResult_RankedEntryResult,
-    } as RankedResult_RankedEntryResult;
-    message.results = (object.results ?? []).map((e: any) =>
-      RankedResult_RankedEntryResult.fromJSON(e)
+      ...baseRankedResult_RankedChoiceResult,
+    } as RankedResult_RankedChoiceResult;
+    message.entries = (object.entries ?? []).map((e: any) =>
+      RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromJSON(e)
     );
     return message;
   },
 
-  toJSON(message: RankedResult_RankedEntryResult): unknown {
+  toJSON(message: RankedResult_RankedChoiceResult): unknown {
     const obj: any = {};
-    if (message.results) {
-      obj.results = message.results.map((e) =>
-        e ? RankedResult_RankedEntryResult.toJSON(e) : undefined
+    if (message.entries) {
+      obj.entries = message.entries.map((e) =>
+        e
+          ? RankedResult_RankedChoiceResult_RankedChoicePositionResult.toJSON(e)
+          : undefined
       );
     } else {
-      obj.results = [];
+      obj.entries = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<RankedResult_RankedEntryResult>, I>>(
+  fromPartial<I extends Exact<DeepPartial<RankedResult_RankedChoiceResult>, I>>(
     object: I
-  ): RankedResult_RankedEntryResult {
+  ): RankedResult_RankedChoiceResult {
     const message = {
-      ...baseRankedResult_RankedEntryResult,
-    } as RankedResult_RankedEntryResult;
-    message.results =
-      object.results?.map((e) =>
-        RankedResult_RankedEntryResult.fromPartial(e)
+      ...baseRankedResult_RankedChoiceResult,
+    } as RankedResult_RankedChoiceResult;
+    message.entries =
+      object.entries?.map((e) =>
+        RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromPartial(
+          e
+        )
       ) || [];
     return message;
   },
 };
 
-const baseRankedResult_RankedEntryResult_RankedEntryPositionResult: object = {
+const baseRankedResult_RankedChoiceResult_RankedChoicePositionResult: object = {
   position: 0,
   points: "",
 };
 
-export const RankedResult_RankedEntryResult_RankedEntryPositionResult = {
+export const RankedResult_RankedChoiceResult_RankedChoicePositionResult = {
   encode(
-    message: RankedResult_RankedEntryResult_RankedEntryPositionResult,
+    message: RankedResult_RankedChoiceResult_RankedChoicePositionResult,
     writer: Writer = Writer.create()
   ): Writer {
     if (message.position !== 0) {
@@ -690,12 +768,12 @@ export const RankedResult_RankedEntryResult_RankedEntryPositionResult = {
   decode(
     input: Reader | Uint8Array,
     length?: number
-  ): RankedResult_RankedEntryResult_RankedEntryPositionResult {
+  ): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
-      ...baseRankedResult_RankedEntryResult_RankedEntryPositionResult,
-    } as RankedResult_RankedEntryResult_RankedEntryPositionResult;
+      ...baseRankedResult_RankedChoiceResult_RankedChoicePositionResult,
+    } as RankedResult_RankedChoiceResult_RankedChoicePositionResult;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -715,10 +793,10 @@ export const RankedResult_RankedEntryResult_RankedEntryPositionResult = {
 
   fromJSON(
     object: any
-  ): RankedResult_RankedEntryResult_RankedEntryPositionResult {
+  ): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
     const message = {
-      ...baseRankedResult_RankedEntryResult_RankedEntryPositionResult,
-    } as RankedResult_RankedEntryResult_RankedEntryPositionResult;
+      ...baseRankedResult_RankedChoiceResult_RankedChoicePositionResult,
+    } as RankedResult_RankedChoiceResult_RankedChoicePositionResult;
     message.position =
       object.position !== undefined && object.position !== null
         ? Number(object.position)
@@ -731,7 +809,7 @@ export const RankedResult_RankedEntryResult_RankedEntryPositionResult = {
   },
 
   toJSON(
-    message: RankedResult_RankedEntryResult_RankedEntryPositionResult
+    message: RankedResult_RankedChoiceResult_RankedChoicePositionResult
   ): unknown {
     const obj: any = {};
     message.position !== undefined && (obj.position = message.position);
@@ -741,13 +819,13 @@ export const RankedResult_RankedEntryResult_RankedEntryPositionResult = {
 
   fromPartial<
     I extends Exact<
-      DeepPartial<RankedResult_RankedEntryResult_RankedEntryPositionResult>,
+      DeepPartial<RankedResult_RankedChoiceResult_RankedChoicePositionResult>,
       I
     >
-  >(object: I): RankedResult_RankedEntryResult_RankedEntryPositionResult {
+  >(object: I): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
     const message = {
-      ...baseRankedResult_RankedEntryResult_RankedEntryPositionResult,
-    } as RankedResult_RankedEntryResult_RankedEntryPositionResult;
+      ...baseRankedResult_RankedChoiceResult_RankedChoicePositionResult,
+    } as RankedResult_RankedChoiceResult_RankedChoicePositionResult;
     message.position = object.position ?? 0;
     message.points = object.points ?? "";
     return message;

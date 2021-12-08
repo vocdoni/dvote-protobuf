@@ -13,60 +13,6 @@ import "protocol/ballot.proto";
 import "protocol/results.proto";
 
 ///////////////////////////////////////////////////////////////////////////////
-// Requests
-///////////////////////////////////////////////////////////////////////////////
-
-message ElectionRequest {
-	bytes electionId = 1;
-	
-	oneof body {
-        GetElection getElection = 2;  // getElection(id)
-        GetElectionList getElectionList = 3;  // listElection({ filters })
-        GetOrganization getOrganization = 4;
-        GetBallot getBallot = 5;
-        GetElectionBallots getElectionBallots = 6;
-        GetElectionKeys getElectionKeys = 7;
-        GetElectionCircuitInfo getElectionCircuitInfo = 8;
-        GetElectionResults getElectionResults = 9;
-        GetElectionWeight getElectionWeight = 10;
-	}
-}
-
-message CensusRequest {
-	oneof body {
-        NewCensus newCensus = 1;
-        AddCensusKeys addCensusKeys = 2;
-        GetCensusRoot getCensusRoot = 3;
-        GetCensusSize getCensusSize = 4;
-        PublishCensus publishCensus = 5;
-        GetCensusProof getCensusProof = 6;
-        DumpCensus dumpCensus = 7;
-	}
-}
-
-message FileRequest {
-	oneof body {
-		PinFile pinFile = 1;
-        FetchFile fetchFile = 2;
-	}
-}
-
-message NetworkRequest {
-	oneof body {
-		GetBlockStatus getBlockStatus = 1;
-		GetBlockCount getBlockCount = 2;
-		EstimateElectionPrice estimateElectionPrice = 3;
-	}
-}
-
-message TransactionRequest {
-	oneof body {
-        GetTransaction getTx = 1;
-        WaitTransaction waitTx = 2;
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // Election Requests
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -168,19 +114,16 @@ message GetElectionResults {
 // Response
 message GetElectionResultsResponse {
     Results results = 1;
-
-    // Whether the results are available and final
-    bool available = 2;
 }
 
 // Request
-message GetElectionWeight {
+message GetElectionResultsWeight {
 	bytes electionId = 1;
 }
 // Response
-message GetElectionWeightResponse {
-    // The total amount of vote weight that has been used
-    string weight = 1; // bigint as a string
+message GetElectionResultsWeightResponse {
+    // The total amount of vote weight that has been used on each proposal
+    repeated string weights = 1; // bigint as a string
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -304,9 +247,9 @@ message GetBlockStatus {}
 message GetBlockStatusResponse {
     // The current block height
     int32 number = 1; 
-    // The timestamp at which the block was mined
+    // The UNIX timestamp at which the block was mined
     int32 blockTimestamp = 2;
-    // The average block times during the last minute, 10m, 1h, 6h and 24h
+    // The average block times (in milliseconds) during the last minute, 10m, 1h, 6h and 24h
     repeated int32 blockTimes = 3;
 }
 
@@ -336,7 +279,17 @@ message GetTransaction {
 }
 // Response
 message GetTransactionResponse {
-    // The bytes of the body encode a {Transaction} model
+    // The bytes of the {Transaction} model
+    bytes body = 1;
+}
+
+// Request: Get the bytes of the {Mesage} model, originally containing the signed {Transaction}
+message GetRawTransactionMessage {
+    bytes txHash = 1;
+}
+// Response
+message GetRawTransactionMessageResponse {
+    // The bytes of the {Mesage} model originally containing the transaction
     bytes body = 1;
 }
 
@@ -346,6 +299,6 @@ message WaitTransaction {
 }
 // Response
 message WaitTransactionResponse {
-    // Returns after waiting for 15 seconds
+    // Returns after waiting for 15 seconds, or as soon as the transaction is mined
     bool mined = 1;
 }
