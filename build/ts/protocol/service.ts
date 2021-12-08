@@ -77,7 +77,7 @@ export interface GetElectionBallots {
 
 /** Response */
 export interface GetElectionBallotsResponse {
-  ballot: Ballot[];
+  ballots: Ballot[];
 }
 
 /** Request */
@@ -979,7 +979,7 @@ export const GetElectionBallotsResponse = {
     message: GetElectionBallotsResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    for (const v of message.ballot) {
+    for (const v of message.ballots) {
       Ballot.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
@@ -994,12 +994,12 @@ export const GetElectionBallotsResponse = {
     const message = {
       ...baseGetElectionBallotsResponse,
     } as GetElectionBallotsResponse;
-    message.ballot = [];
+    message.ballots = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.ballot.push(Ballot.decode(reader, reader.uint32()));
+          message.ballots.push(Ballot.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -1013,18 +1013,20 @@ export const GetElectionBallotsResponse = {
     const message = {
       ...baseGetElectionBallotsResponse,
     } as GetElectionBallotsResponse;
-    message.ballot = (object.ballot ?? []).map((e: any) => Ballot.fromJSON(e));
+    message.ballots = (object.ballots ?? []).map((e: any) =>
+      Ballot.fromJSON(e)
+    );
     return message;
   },
 
   toJSON(message: GetElectionBallotsResponse): unknown {
     const obj: any = {};
-    if (message.ballot) {
-      obj.ballot = message.ballot.map((e) =>
+    if (message.ballots) {
+      obj.ballots = message.ballots.map((e) =>
         e ? Ballot.toJSON(e) : undefined
       );
     } else {
-      obj.ballot = [];
+      obj.ballots = [];
     }
     return obj;
   },
@@ -1035,7 +1037,7 @@ export const GetElectionBallotsResponse = {
     const message = {
       ...baseGetElectionBallotsResponse,
     } as GetElectionBallotsResponse;
-    message.ballot = object.ballot?.map((e) => Ballot.fromPartial(e)) || [];
+    message.ballots = object.ballots?.map((e) => Ballot.fromPartial(e)) || [];
     return message;
   },
 };

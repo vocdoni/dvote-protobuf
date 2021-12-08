@@ -3,7 +3,7 @@
 // The only purpose is to exemplify the usage of the protocol models.
 // No real functionality is being executed here.
 
-import { NewCensus, NewCensusResponse, AddCensusKeys, AddCensusKeysResponse, AddCensusKeys_CensusEntry, GetCensusRoot, GetCensusRootResponse, GetCensusSize, GetCensusSizeResponse, PublishCensus, PublishCensusResponse, GetCensusProof, GetCensusProofResponse } from "../../build/ts/protocol/service"
+import { NewCensus, NewCensusResponse, AddCensusKeys, AddCensusKeysResponse, AddCensusKeys_CensusEntry, GetCensusRoot, GetCensusRootResponse, GetCensusSize, GetCensusSizeResponse, PublishCensus, PublishCensusResponse, GetCensusProof, GetCensusProofResponse, DumpCensus, DumpCensusResponse } from "../../build/ts/protocol/service"
 import { Census, Proof } from "../../build/ts/protocol/census"
 import { Request, Transaction } from "../../build/ts/protocol/messages"
 import { encodeRequest, decodeRequest, encodeResponseSuccess, decodeResponse, encodeResponseError, decodeTransaction, encodeTransactionSuccess, encodeTransaction, decodeTransactionReceipt, encodeTransactionError } from "../common/messages"
@@ -47,12 +47,12 @@ export function newCensus() {
         censusType: CensusType.ARBO_BLAKE2B,
         managerPublicKeys: [dummyPublicKey]
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "newCensus",
             newCensus: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -85,12 +85,12 @@ export function addCensusKeys() {
         digested: false,
         entries: newEntries
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "addCensusKeys",
             addCensusKeys: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -116,12 +116,12 @@ export function getCensusRoot() {
     const requestData = GetCensusRoot.fromPartial({
         censusId: "0x1234"
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "getCensusRoot",
             getCensusRoot: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -147,12 +147,12 @@ export function getCensusSize() {
     const requestData = GetCensusSize.fromPartial({
         censusId: "0x1234"
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "getCensusSize",
             getCensusSize: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -178,12 +178,12 @@ export function publishCensus() {
     const requestData = PublishCensus.fromPartial({
         censusId: "0x1234"
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "publishCensus",
             publishCensus: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -220,12 +220,12 @@ export function getArboProof() {
         census: targetCensus,
         key: dummyPublicKey
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "getCensusProof",
             getCensusProof: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -262,12 +262,12 @@ export function getErc20Proof() {
         census: targetCensus,
         key: dummyPublicKey
     })
-    const request = Request.fromPartial({
+    const request: Request = {
         body: {
             $case: "getCensusProof",
             getCensusProof: requestData
         }
-    })
+    }
 
     const reqBytes = encodeRequest(request, dummySigningKey)
 
@@ -322,6 +322,37 @@ export function registerVoterKey() {
     console.log("Handling the response for transaction", txHash)
 }
 
+export function dumpCensus() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping DumpCensus request")
+
+    const requestData: DumpCensus = {
+        censusId: "0x1234"
+    }
+    const request: Request = {
+        body: {
+            $case: "dumpCensus",
+            dumpCensus: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `DumpCensus` call, we expect now to receive a `DumpCensusResponse`
+    const responseData = DumpCensusResponse.decode(Reader.create(response.body))
+    const { body } = responseData
+
+    console.log("Census body:", body)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Simulated Census Service responses
 ///////////////////////////////////////////////////////////////////////////////
@@ -360,6 +391,10 @@ function dummyCensusServiceRequest(reqBytes: Uint8Array): Uint8Array {
             catch (err) {
                 msgBytes = encodeResponseError(err.message, null, requestId, dummySigningKey)
             }
+            break
+
+        case "dumpCensus":
+            msgBytes = simulateDumpCensus(request.body.dumpCensus, requestId)
             break
 
         default:
@@ -458,6 +493,17 @@ function simulateGetCensusProof(request: GetCensusProof, requestId: Uint8Array) 
     }
 
     return encodeResponseSuccess(getCensusProofResponseBytes, requestId, dummySigningKey)
+}
+
+function simulateDumpCensus(request: DumpCensus, requestId: Uint8Array) {
+    const { censusId } = request
+    console.log(pad + "Dump census", censusId)
+
+    const responseBytes = DumpCensusResponse.encode({
+        body: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7])
+    }).finish()
+
+    return encodeResponseSuccess(responseBytes, requestId, dummySigningKey)
 }
 
 ///////////////////////////////////////////////////////////////////////////////

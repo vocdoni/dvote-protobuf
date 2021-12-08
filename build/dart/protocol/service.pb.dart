@@ -528,17 +528,17 @@ class GetElectionBallots extends $pb.GeneratedMessage {
 
 class GetElectionBallotsResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetElectionBallotsResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..pc<$2.Ballot>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ballot', $pb.PbFieldType.PM, subBuilder: $2.Ballot.create)
+    ..pc<$2.Ballot>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ballots', $pb.PbFieldType.PM, subBuilder: $2.Ballot.create)
     ..hasRequiredFields = false
   ;
 
   GetElectionBallotsResponse._() : super();
   factory GetElectionBallotsResponse({
-    $core.Iterable<$2.Ballot>? ballot,
+    $core.Iterable<$2.Ballot>? ballots,
   }) {
     final _result = create();
-    if (ballot != null) {
-      _result.ballot.addAll(ballot);
+    if (ballots != null) {
+      _result.ballots.addAll(ballots);
     }
     return _result;
   }
@@ -564,7 +564,7 @@ class GetElectionBallotsResponse extends $pb.GeneratedMessage {
   static GetElectionBallotsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$2.Ballot> get ballot => $_getList(0);
+  $core.List<$2.Ballot> get ballots => $_getList(0);
 }
 
 class GetElectionKeys extends $pb.GeneratedMessage {

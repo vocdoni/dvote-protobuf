@@ -114,12 +114,12 @@ final $typed_data.Uint8List getElectionBallotsDescriptor = $convert.base64Decode
 const GetElectionBallotsResponse$json = const {
   '1': 'GetElectionBallotsResponse',
   '2': const [
-    const {'1': 'ballot', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v2.Ballot', '10': 'ballot'},
+    const {'1': 'ballots', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v2.Ballot', '10': 'ballots'},
   ],
 };
 
 /// Descriptor for `GetElectionBallotsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getElectionBallotsResponseDescriptor = $convert.base64Decode('ChpHZXRFbGVjdGlvbkJhbGxvdHNSZXNwb25zZRIuCgZiYWxsb3QYASADKAsyFi5kdm90ZS50eXBlcy52Mi5CYWxsb3RSBmJhbGxvdA==');
+final $typed_data.Uint8List getElectionBallotsResponseDescriptor = $convert.base64Decode('ChpHZXRFbGVjdGlvbkJhbGxvdHNSZXNwb25zZRIwCgdiYWxsb3RzGAEgAygLMhYuZHZvdGUudHlwZXMudjIuQmFsbG90UgdiYWxsb3Rz');
 @$core.Deprecated('Use getElectionKeysDescriptor instead')
 const GetElectionKeys$json = const {
   '1': 'GetElectionKeys',

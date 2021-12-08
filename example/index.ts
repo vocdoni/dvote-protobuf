@@ -5,8 +5,8 @@
 
 import { createOrganization, getOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
-import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus, registerVoterKey } from "./sections/census"
-import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, getElection, getElectionKeys, getElectionResults, getElectionResultsWeight, setElectionStatus, setProposalStatus, submitBallot } from "./sections/election"
+import { addCensusKeys, dumpCensus, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus, registerVoterKey } from "./sections/census"
+import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, getBallot, getElection, getElectionBallots, getElectionCircuitInfo, getElectionKeys, getElectionList, getElectionResults, getElectionResultsWeight, setElectionStatus, setProposalStatus, submitBallot } from "./sections/election"
 import { encodeAnonymousBallot, encodeSignedBallot, encodeSignedEncryptedBallot, encodeSignedStepByStepBallot } from "./sections/ballot"
 import { getBlockCount, getBlockStatus, getRawTransactionMessage, getTransaction, waitTransaction } from "./sections/network"
 import { fetchFile, pinFile } from "./sections/file"
@@ -24,6 +24,7 @@ function main() {
     getCensusRoot()
     getCensusSize()
     publishCensus()
+    dumpCensus()
 
     pinFile()
     fetchFile()
@@ -48,8 +49,10 @@ function main() {
     // Requests
     getOrganization()
     getElection()
+    getElectionList()
 
     getElectionKeys()
+    getElectionCircuitInfo()
     getArboProof()
     getErc20Proof()
 
@@ -63,6 +66,8 @@ function main() {
     submitBallot()
 
     // Requests
+    getBallot()
+    getElectionBallots()
     getElectionResults()
     getElectionResultsWeight()
 

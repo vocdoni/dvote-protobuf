@@ -9,7 +9,7 @@ import { decodeRequest, decodeResponse, decodeTransaction, decodeTransactionRece
 import { ApprovalProposal, Election, Lifecycle_Types, Privacy_CensusProofs, Proposal, QuadraticProposal, RankedProposal, SingleChoiceProposal, SpreadProposal } from "../../build/ts/protocol/election"
 import { CensusArbo, CensusCsp, CensusErc20, CensusNone, StorageProofErc20 } from "../../build/ts/protocol/census"
 import { ProposalStatus, SignatureType } from "../../build/ts/protocol/enums"
-import { GetElection, GetElectionKeys, GetElectionKeysResponse, GetElectionResponse, GetElectionResults, GetElectionResultsResponse, GetElectionResultsWeight, GetElectionResultsWeightResponse } from "../../build/ts/protocol/service"
+import { GetBallot, GetBallotResponse, GetElection, GetElectionBallots, GetElectionBallotsResponse, GetElectionCircuitInfo, GetElectionCircuitInfoResponse, GetElectionKeys, GetElectionKeysResponse, GetElectionList, GetElectionListResponse, GetElectionResponse, GetElectionResults, GetElectionResultsResponse, GetElectionResultsWeight, GetElectionResultsWeightResponse } from "../../build/ts/protocol/service"
 import { Reader } from "protobufjs"
 import { Ballot, BallotBody } from "../../build/ts/protocol/ballot"
 
@@ -798,6 +798,37 @@ export function getElectionKeys() {
     console.log("Election keys:", encryptionPrivateKeys, encryptionPublicKeys)
 }
 
+export function getElectionCircuitInfo() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElectionCircuitInfo request")
+
+    const requestData: GetElectionCircuitInfo = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    }
+    const request: Request = {
+        body: {
+            $case: "getElectionCircuitInfo",
+            getElectionCircuitInfo: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElectionCircuitInfo` call, we expect now to receive a `GetElectionCircuitInfoResponse`
+    const responseData = GetElectionCircuitInfoResponse.decode(Reader.create(response.body))
+    const { index, baseUri, maxSize, circuitPath, witnessHash, zKeyHash, vKeyHash } = responseData
+
+    console.log("Election circuit info:", index, baseUri, maxSize)
+}
+
 export function submitBallot() {
     console.log("-----------------------------------------------")
     console.log("Wrapping SubmimtBallot transaction")
@@ -889,6 +920,103 @@ export function getElectionResultsWeight() {
     console.log("Election result weights (per proposal):", weights)
 }
 
+export function getElectionList() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElectionList request")
+
+    const requestData: GetElectionList = {
+        organizationId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        fromIndex: 0,
+        // status: ProposalStatus.READY,
+        // tokenAddress
+    }
+    const request: Request = {
+        body: {
+            $case: "getElectionList",
+            getElectionList: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElectionList` call, we expect now to receive a `GetElectionListResponse`
+    const responseData = GetElectionListResponse.decode(Reader.create(response.body))
+    const { electionIds } = responseData
+
+    console.log("Election list (page 0):", electionIds)
+}
+
+export function getBallot() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetBallot request")
+
+    const requestData: GetBallot = {
+        nullifier: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    }
+    const request: Request = {
+        body: {
+            $case: "getBallot",
+            getBallot: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetBallot` call, we expect now to receive a `GetBallotResponse`
+    const responseData = GetBallotResponse.decode(Reader.create(response.body))
+    const { ballot } = responseData
+
+    console.log("Ballot:", ballot)
+}
+
+export function getElectionBallots() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping GetElectionBallots request")
+
+    const requestData: GetElectionBallots = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        fromIndex: 0
+    }
+    const request: Request = {
+        body: {
+            $case: "getElectionBallots",
+            getElectionBallots: requestData
+        }
+    }
+
+    const reqBytes = encodeRequest(request, dummySigningKey)
+
+    // Send
+    console.log("Sending the payload to a Census Service")
+    const responseBytes = dummyGatewayRequest(reqBytes)
+
+    const { response } = decodeResponse(responseBytes)
+
+    console.log("Handling the response")
+
+    // Since we issued a `GetElectionBallots` call, we expect now to receive a `GetElectionBallotsResponse`
+    const responseData = GetElectionBallotsResponse.decode(Reader.create(response.body))
+    const { ballots } = responseData
+
+    console.log("Election ballots (page 0):", ballots)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Simulated Vochain responses
 ///////////////////////////////////////////////////////////////////////////////
@@ -951,19 +1079,35 @@ function dummyGatewayRequest(reqBytes: Uint8Array): Uint8Array {
     console.log(pad + "Received Request", request.body.$case)
     switch (request.body.$case) {
         case "getElection":
-            msgBytes = handleGetElection(requestId, request.body.getElection)
+            msgBytes = simulateGetElection(requestId, request.body.getElection)
             break
 
         case "getElectionKeys":
-            msgBytes = handleGetElectionKeys(requestId, request.body.getElectionKeys)
+            msgBytes = simulateGetElectionKeys(requestId, request.body.getElectionKeys)
             break
 
         case "getElectionResults":
-            msgBytes = handleGetElectionResults(requestId, request.body.getElectionResults)
+            msgBytes = simulateGetElectionResults(requestId, request.body.getElectionResults)
             break
 
         case "getElectionResultsWeight":
-            msgBytes = handleGetElectionResultsWeight(requestId, request.body.getElectionResultsWeight)
+            msgBytes = simulateGetElectionResultsWeight(requestId, request.body.getElectionResultsWeight)
+            break
+
+        case "getElectionList":
+            msgBytes = simulateGetElectionList(requestId, request.body.getElectionList)
+            break
+
+        case "getBallot":
+            msgBytes = simulateGetBallot(requestId, request.body.getBallot)
+            break
+
+        case "getElectionBallots":
+            msgBytes = simulateGetElectionBallots(requestId, request.body.getElectionBallots)
+            break
+
+        case "getElectionCircuitInfo":
+            msgBytes = simulateGetElectionCircuitInfo(requestId, request.body.getElectionCircuitInfo)
             break
 
         default:
@@ -1029,7 +1173,7 @@ function dummyEncodeBallot(): Ballot {
 // Dummy Gateway handlers
 ///////////////////////////////////////////////////////////////////////////////
 
-function handleGetElection(requestId: Uint8Array, request: GetElection) {
+function simulateGetElection(requestId: Uint8Array, request: GetElection) {
     const { electionId } = request
     console.log(pad + "Get election", electionId)
 
@@ -1078,7 +1222,7 @@ function handleGetElection(requestId: Uint8Array, request: GetElection) {
     return encodeResponseSuccess(getElectionResponseBytes, requestId, dummySigningKey)
 }
 
-function handleGetElectionKeys(requestId: Uint8Array, request: GetElectionKeys) {
+function simulateGetElectionKeys(requestId: Uint8Array, request: GetElectionKeys) {
     const { electionId } = request
     console.log(pad + "Get election keys", electionId)
 
@@ -1096,9 +1240,9 @@ function handleGetElectionKeys(requestId: Uint8Array, request: GetElectionKeys) 
     return encodeResponseSuccess(getElectionKeysResponseBytes, requestId, dummySigningKey)
 }
 
-function handleGetElectionResults(requestId: Uint8Array, request: GetElectionResults) {
+function simulateGetElectionResults(requestId: Uint8Array, request: GetElectionResults) {
     const { electionId } = request
-    console.log(pad + "Get election keys", electionId)
+    console.log(pad + "Get election results", electionId)
 
     const getElectionResultsResponseBytes = GetElectionResultsResponse.encode({
         results: {
@@ -1130,9 +1274,9 @@ function handleGetElectionResults(requestId: Uint8Array, request: GetElectionRes
     return encodeResponseSuccess(getElectionResultsResponseBytes, requestId, dummySigningKey)
 }
 
-function handleGetElectionResultsWeight(requestId: Uint8Array, request: GetElectionResultsWeight) {
+function simulateGetElectionResultsWeight(requestId: Uint8Array, request: GetElectionResultsWeight) {
     const { electionId } = request
-    console.log(pad + "Get election keys", electionId)
+    console.log(pad + "Get election results weight", electionId)
 
     const getElectionResultsWeightResponseBytes = GetElectionResultsWeightResponse.encode({
         weights: [
@@ -1147,3 +1291,110 @@ function handleGetElectionResultsWeight(requestId: Uint8Array, request: GetElect
     return encodeResponseSuccess(getElectionResultsWeightResponseBytes, requestId, dummySigningKey)
 }
 
+function simulateGetElectionList(requestId: Uint8Array, request: GetElectionList) {
+    const { organizationId, fromIndex, status, tokenAddress } = request
+    console.log(pad + "Get election list", organizationId, fromIndex, status, tokenAddress)
+
+    const responseBytes = GetElectionListResponse.encode({
+        electionIds: [
+            new Uint8Array([1, 2, 3, 4, 5, 6]),
+            new Uint8Array([2, 3, 4, 5, 6, 7]),
+            new Uint8Array([3, 4, 5, 6, 7, 8]),
+        ]
+    }).finish()
+
+    return encodeResponseSuccess(responseBytes, requestId, dummySigningKey)
+}
+
+function simulateGetBallot(requestId: Uint8Array, request: GetBallot) {
+    const { nullifier } = request
+    console.log(pad + "Get ballot", nullifier)
+
+    const proof = { /* zkProof, public signals */ }
+    const ballotBody: BallotBody = {
+        electionId: dummyElectionId,
+        nullifier: dummyGetNullifier(dummyElectionId, dummySigningKey),
+        proofs: [
+            { body: { $case: "zkSnark", zkSnark: { body: { $case: "proof1k", proof1k: proof } } } },
+            { body: { $case: "none", none: {} } },
+            { body: { $case: "none", none: {} } },
+        ],
+        votes: {
+            partial: false,      // all votes included here
+            submittedIndex: 0,   // N/A
+            votes: [
+                { body: { $case: "approval", approval: { approved: false, nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "singleChoice", singleChoice: { choice: 2, nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "quadratic", quadratic: { choicePoints: [1, 2, 0, 0, 0], nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "ranked", ranked: { ranking: [4, 2, 5], nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "spread", spread: { percentages: [10, 35, 0, 45, 10], nonce: new Uint8Array([1, 2, 3]) } } },
+            ]
+        }
+    }
+    const ballot: Ballot = {
+        body: {
+            $case: "anonymousBallot",
+            anonymousBallot: ballotBody
+        }
+    }
+    const responseBytes = GetBallotResponse.encode({
+        ballot
+    }).finish()
+
+    return encodeResponseSuccess(responseBytes, requestId, dummySigningKey)
+}
+
+function simulateGetElectionBallots(requestId: Uint8Array, request: GetElectionBallots) {
+    const { electionId, fromIndex } = request
+    console.log(pad + "Get ballots from election", electionId)
+
+    const proof = { /* zkProof, public signals */ }
+    const ballotBody: BallotBody = {
+        electionId: dummyElectionId,
+        nullifier: dummyGetNullifier(dummyElectionId, dummySigningKey),
+        proofs: [
+            { body: { $case: "zkSnark", zkSnark: { body: { $case: "proof1k", proof1k: proof } } } },
+            { body: { $case: "none", none: {} } },
+            { body: { $case: "none", none: {} } },
+        ],
+        votes: {
+            partial: false,      // all votes included here
+            submittedIndex: 0,   // N/A
+            votes: [
+                { body: { $case: "approval", approval: { approved: false, nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "singleChoice", singleChoice: { choice: 2, nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "quadratic", quadratic: { choicePoints: [1, 2, 0, 0, 0], nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "ranked", ranked: { ranking: [4, 2, 5], nonce: new Uint8Array([1, 2, 3]) } } },
+                { body: { $case: "spread", spread: { percentages: [10, 35, 0, 45, 10], nonce: new Uint8Array([1, 2, 3]) } } },
+            ]
+        }
+    }
+    const ballot: Ballot = {
+        body: {
+            $case: "anonymousBallot",
+            anonymousBallot: ballotBody
+        }
+    }
+    const responseBytes = GetElectionBallotsResponse.encode({
+        ballots: [ballot, ballot, ballot]
+    }).finish()
+
+    return encodeResponseSuccess(responseBytes, requestId, dummySigningKey)
+}
+
+function simulateGetElectionCircuitInfo(requestId: Uint8Array, request: GetElectionCircuitInfo) {
+    const { electionId } = request
+    console.log(pad + "Get election circuit info", electionId)
+
+    const getElectionCircuitInfoResponseBytes = GetElectionCircuitInfoResponse.encode({
+        index: 5,
+        baseUri: "",
+        maxSize: 500,
+        circuitPath: "",
+        witnessHash: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]),
+        zKeyHash: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]),
+        vKeyHash: new Uint8Array([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]),
+    }).finish()
+
+    return encodeResponseSuccess(getElectionCircuitInfoResponseBytes, requestId, dummySigningKey)
+}
