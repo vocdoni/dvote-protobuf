@@ -43,8 +43,8 @@ message NewElection {
 	Election election = 1;
 }
 
-// Register a key
-message RegisterKey {
+// Register a key for an election
+message RegisterElectionKey {
 	bytes electionId = 1;
 	repeated Proof proofs = 2;  // Arbo proof, CSP, ERC20, etc
 	bytes newKey = 3;  // hashed(secretKey) bigint
@@ -64,6 +64,10 @@ message SetElectionStatus {
 // Only one proposal
 message SetProposalStatus {
 	bytes electionId = 1;
-	int32 proposalIndex = 2;
-	ProposalStatus newStatus = 3;
+
+	message Entry {
+		int32 proposalIndex = 2;
+		ProposalStatus newStatus = 3;
+	}
+	repeated Entry entries = 2;
 }

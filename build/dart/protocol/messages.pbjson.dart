@@ -60,7 +60,7 @@ const Transaction$json = const {
     const {'1': 'mint', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.Mint', '9': 0, '10': 'mint'},
     const {'1': 'claimTokens', '3': 4, '4': 1, '5': 11, '6': '.dvote.types.v2.ClaimTokens', '9': 0, '10': 'claimTokens'},
     const {'1': 'newElection', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v2.NewElection', '9': 0, '10': 'newElection'},
-    const {'1': 'registerKey', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.RegisterKey', '9': 0, '10': 'registerKey'},
+    const {'1': 'registerElectionKey', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.RegisterElectionKey', '9': 0, '10': 'registerElectionKey'},
     const {'1': 'submitBallot', '3': 13, '4': 1, '5': 11, '6': '.dvote.types.v2.SubmitBallot', '9': 0, '10': 'submitBallot'},
     const {'1': 'setElectionStatus', '3': 14, '4': 1, '5': 11, '6': '.dvote.types.v2.SetElectionStatus', '9': 0, '10': 'setElectionStatus'},
     const {'1': 'setProposalStatus', '3': 15, '4': 1, '5': 11, '6': '.dvote.types.v2.SetProposalStatus', '9': 0, '10': 'setProposalStatus'},
@@ -71,7 +71,7 @@ const Transaction$json = const {
 };
 
 /// Descriptor for `Transaction`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List transactionDescriptor = $convert.base64Decode('CgtUcmFuc2FjdGlvbhJLCg9zZXRPcmdhbml6YXRpb24YASABKAsyHy5kdm90ZS50eXBlcy52Mi5TZXRPcmdhbml6YXRpb25IAFIPc2V0T3JnYW5pemF0aW9uEjYKCHRyYW5zZmVyGAIgASgLMhguZHZvdGUudHlwZXMudjIuVHJhbnNmZXJIAFIIdHJhbnNmZXISKgoEbWludBgDIAEoCzIULmR2b3RlLnR5cGVzLnYyLk1pbnRIAFIEbWludBI/CgtjbGFpbVRva2VucxgEIAEoCzIbLmR2b3RlLnR5cGVzLnYyLkNsYWltVG9rZW5zSABSC2NsYWltVG9rZW5zEj8KC25ld0VsZWN0aW9uGAsgASgLMhsuZHZvdGUudHlwZXMudjIuTmV3RWxlY3Rpb25IAFILbmV3RWxlY3Rpb24SPwoLcmVnaXN0ZXJLZXkYDCABKAsyGy5kdm90ZS50eXBlcy52Mi5SZWdpc3RlcktleUgAUgtyZWdpc3RlcktleRJCCgxzdWJtaXRCYWxsb3QYDSABKAsyHC5kdm90ZS50eXBlcy52Mi5TdWJtaXRCYWxsb3RIAFIMc3VibWl0QmFsbG90ElEKEXNldEVsZWN0aW9uU3RhdHVzGA4gASgLMiEuZHZvdGUudHlwZXMudjIuU2V0RWxlY3Rpb25TdGF0dXNIAFIRc2V0RWxlY3Rpb25TdGF0dXMSUQoRc2V0UHJvcG9zYWxTdGF0dXMYDyABKAsyIS5kdm90ZS50eXBlcy52Mi5TZXRQcm9wb3NhbFN0YXR1c0gAUhFzZXRQcm9wb3NhbFN0YXR1c0IGCgRib2R5');
+final $typed_data.Uint8List transactionDescriptor = $convert.base64Decode('CgtUcmFuc2FjdGlvbhJLCg9zZXRPcmdhbml6YXRpb24YASABKAsyHy5kdm90ZS50eXBlcy52Mi5TZXRPcmdhbml6YXRpb25IAFIPc2V0T3JnYW5pemF0aW9uEjYKCHRyYW5zZmVyGAIgASgLMhguZHZvdGUudHlwZXMudjIuVHJhbnNmZXJIAFIIdHJhbnNmZXISKgoEbWludBgDIAEoCzIULmR2b3RlLnR5cGVzLnYyLk1pbnRIAFIEbWludBI/CgtjbGFpbVRva2VucxgEIAEoCzIbLmR2b3RlLnR5cGVzLnYyLkNsYWltVG9rZW5zSABSC2NsYWltVG9rZW5zEj8KC25ld0VsZWN0aW9uGAsgASgLMhsuZHZvdGUudHlwZXMudjIuTmV3RWxlY3Rpb25IAFILbmV3RWxlY3Rpb24SVwoTcmVnaXN0ZXJFbGVjdGlvbktleRgMIAEoCzIjLmR2b3RlLnR5cGVzLnYyLlJlZ2lzdGVyRWxlY3Rpb25LZXlIAFITcmVnaXN0ZXJFbGVjdGlvbktleRJCCgxzdWJtaXRCYWxsb3QYDSABKAsyHC5kdm90ZS50eXBlcy52Mi5TdWJtaXRCYWxsb3RIAFIMc3VibWl0QmFsbG90ElEKEXNldEVsZWN0aW9uU3RhdHVzGA4gASgLMiEuZHZvdGUudHlwZXMudjIuU2V0RWxlY3Rpb25TdGF0dXNIAFIRc2V0RWxlY3Rpb25TdGF0dXMSUQoRc2V0UHJvcG9zYWxTdGF0dXMYDyABKAsyIS5kdm90ZS50eXBlcy52Mi5TZXRQcm9wb3NhbFN0YXR1c0gAUhFzZXRQcm9wb3NhbFN0YXR1c0IGCgRib2R5');
 @$core.Deprecated('Use transactionReceiptDescriptor instead')
 const TransactionReceipt$json = const {
   '1': 'TransactionReceipt',

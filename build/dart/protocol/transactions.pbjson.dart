@@ -60,9 +60,9 @@ const NewElection$json = const {
 
 /// Descriptor for `NewElection`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List newElectionDescriptor = $convert.base64Decode('CgtOZXdFbGVjdGlvbhI0CghlbGVjdGlvbhgBIAEoCzIYLmR2b3RlLnR5cGVzLnYyLkVsZWN0aW9uUghlbGVjdGlvbg==');
-@$core.Deprecated('Use registerKeyDescriptor instead')
-const RegisterKey$json = const {
-  '1': 'RegisterKey',
+@$core.Deprecated('Use registerElectionKeyDescriptor instead')
+const RegisterElectionKey$json = const {
+  '1': 'RegisterElectionKey',
   '2': const [
     const {'1': 'electionId', '3': 1, '4': 1, '5': 12, '10': 'electionId'},
     const {'1': 'proofs', '3': 2, '4': 3, '5': 11, '6': '.dvote.types.v2.Proof', '10': 'proofs'},
@@ -71,8 +71,8 @@ const RegisterKey$json = const {
   ],
 };
 
-/// Descriptor for `RegisterKey`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List registerKeyDescriptor = $convert.base64Decode('CgtSZWdpc3RlcktleRIeCgplbGVjdGlvbklkGAEgASgMUgplbGVjdGlvbklkEi0KBnByb29mcxgCIAMoCzIVLmR2b3RlLnR5cGVzLnYyLlByb29mUgZwcm9vZnMSFgoGbmV3S2V5GAMgASgMUgZuZXdLZXkSFgoGd2VpZ2h0GAQgASgJUgZ3ZWlnaHQ=');
+/// Descriptor for `RegisterElectionKey`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List registerElectionKeyDescriptor = $convert.base64Decode('ChNSZWdpc3RlckVsZWN0aW9uS2V5Eh4KCmVsZWN0aW9uSWQYASABKAxSCmVsZWN0aW9uSWQSLQoGcHJvb2ZzGAIgAygLMhUuZHZvdGUudHlwZXMudjIuUHJvb2ZSBnByb29mcxIWCgZuZXdLZXkYAyABKAxSBm5ld0tleRIWCgZ3ZWlnaHQYBCABKAlSBndlaWdodA==');
 @$core.Deprecated('Use submitBallotDescriptor instead')
 const SubmitBallot$json = const {
   '1': 'SubmitBallot',
@@ -99,10 +99,19 @@ const SetProposalStatus$json = const {
   '1': 'SetProposalStatus',
   '2': const [
     const {'1': 'electionId', '3': 1, '4': 1, '5': 12, '10': 'electionId'},
+    const {'1': 'entries', '3': 2, '4': 3, '5': 11, '6': '.dvote.types.v2.SetProposalStatus.Entry', '10': 'entries'},
+  ],
+  '3': const [SetProposalStatus_Entry$json],
+};
+
+@$core.Deprecated('Use setProposalStatusDescriptor instead')
+const SetProposalStatus_Entry$json = const {
+  '1': 'Entry',
+  '2': const [
     const {'1': 'proposalIndex', '3': 2, '4': 1, '5': 5, '10': 'proposalIndex'},
     const {'1': 'newStatus', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.ProposalStatus', '10': 'newStatus'},
   ],
 };
 
 /// Descriptor for `SetProposalStatus`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setProposalStatusDescriptor = $convert.base64Decode('ChFTZXRQcm9wb3NhbFN0YXR1cxIeCgplbGVjdGlvbklkGAEgASgMUgplbGVjdGlvbklkEiQKDXByb3Bvc2FsSW5kZXgYAiABKAVSDXByb3Bvc2FsSW5kZXgSPAoJbmV3U3RhdHVzGAMgASgOMh4uZHZvdGUudHlwZXMudjIuUHJvcG9zYWxTdGF0dXNSCW5ld1N0YXR1cw==');
+final $typed_data.Uint8List setProposalStatusDescriptor = $convert.base64Decode('ChFTZXRQcm9wb3NhbFN0YXR1cxIeCgplbGVjdGlvbklkGAEgASgMUgplbGVjdGlvbklkEkEKB2VudHJpZXMYAiADKAsyJy5kdm90ZS50eXBlcy52Mi5TZXRQcm9wb3NhbFN0YXR1cy5FbnRyeVIHZW50cmllcxprCgVFbnRyeRIkCg1wcm9wb3NhbEluZGV4GAIgASgFUg1wcm9wb3NhbEluZGV4EjwKCW5ld1N0YXR1cxgDIAEoDjIeLmR2b3RlLnR5cGVzLnYyLlByb3Bvc2FsU3RhdHVzUgluZXdTdGF0dXM=');

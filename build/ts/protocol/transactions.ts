@@ -38,8 +38,8 @@ export interface NewElection {
   election: Election | undefined;
 }
 
-/** Register a key */
-export interface RegisterKey {
+/** Register a key for an election */
+export interface RegisterElectionKey {
   electionId: Uint8Array;
   /** Arbo proof, CSP, ERC20, etc */
   proofs: Proof[];
@@ -62,6 +62,10 @@ export interface SetElectionStatus {
 /** Only one proposal */
 export interface SetProposalStatus {
   electionId: Uint8Array;
+  entries: SetProposalStatus_Entry[];
+}
+
+export interface SetProposalStatus_Entry {
   proposalIndex: number;
   newStatus: ProposalStatus;
 }
@@ -373,10 +377,13 @@ export const NewElection = {
   },
 };
 
-const baseRegisterKey: object = { weight: "" };
+const baseRegisterElectionKey: object = { weight: "" };
 
-export const RegisterKey = {
-  encode(message: RegisterKey, writer: Writer = Writer.create()): Writer {
+export const RegisterElectionKey = {
+  encode(
+    message: RegisterElectionKey,
+    writer: Writer = Writer.create()
+  ): Writer {
     if (message.electionId.length !== 0) {
       writer.uint32(10).bytes(message.electionId);
     }
@@ -392,10 +399,10 @@ export const RegisterKey = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): RegisterKey {
+  decode(input: Reader | Uint8Array, length?: number): RegisterElectionKey {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseRegisterKey } as RegisterKey;
+    const message = { ...baseRegisterElectionKey } as RegisterElectionKey;
     message.proofs = [];
     message.electionId = new Uint8Array();
     message.newKey = new Uint8Array();
@@ -422,8 +429,8 @@ export const RegisterKey = {
     return message;
   },
 
-  fromJSON(object: any): RegisterKey {
-    const message = { ...baseRegisterKey } as RegisterKey;
+  fromJSON(object: any): RegisterElectionKey {
+    const message = { ...baseRegisterElectionKey } as RegisterElectionKey;
     message.electionId =
       object.electionId !== undefined && object.electionId !== null
         ? bytesFromBase64(object.electionId)
@@ -440,7 +447,7 @@ export const RegisterKey = {
     return message;
   },
 
-  toJSON(message: RegisterKey): unknown {
+  toJSON(message: RegisterElectionKey): unknown {
     const obj: any = {};
     message.electionId !== undefined &&
       (obj.electionId = base64FromBytes(
@@ -459,10 +466,10 @@ export const RegisterKey = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<RegisterKey>, I>>(
+  fromPartial<I extends Exact<DeepPartial<RegisterElectionKey>, I>>(
     object: I
-  ): RegisterKey {
-    const message = { ...baseRegisterKey } as RegisterKey;
+  ): RegisterElectionKey {
+    const message = { ...baseRegisterElectionKey } as RegisterElectionKey;
     message.electionId = object.electionId ?? new Uint8Array();
     message.proofs = object.proofs?.map((e) => Proof.fromPartial(e)) || [];
     message.newKey = object.newKey ?? new Uint8Array();
@@ -596,18 +603,15 @@ export const SetElectionStatus = {
   },
 };
 
-const baseSetProposalStatus: object = { proposalIndex: 0, newStatus: 0 };
+const baseSetProposalStatus: object = {};
 
 export const SetProposalStatus = {
   encode(message: SetProposalStatus, writer: Writer = Writer.create()): Writer {
     if (message.electionId.length !== 0) {
       writer.uint32(10).bytes(message.electionId);
     }
-    if (message.proposalIndex !== 0) {
-      writer.uint32(16).int32(message.proposalIndex);
-    }
-    if (message.newStatus !== 0) {
-      writer.uint32(24).int32(message.newStatus);
+    for (const v of message.entries) {
+      SetProposalStatus_Entry.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -616,6 +620,7 @@ export const SetProposalStatus = {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSetProposalStatus } as SetProposalStatus;
+    message.entries = [];
     message.electionId = new Uint8Array();
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -624,10 +629,9 @@ export const SetProposalStatus = {
           message.electionId = reader.bytes();
           break;
         case 2:
-          message.proposalIndex = reader.int32();
-          break;
-        case 3:
-          message.newStatus = reader.int32() as any;
+          message.entries.push(
+            SetProposalStatus_Entry.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -643,6 +647,82 @@ export const SetProposalStatus = {
       object.electionId !== undefined && object.electionId !== null
         ? bytesFromBase64(object.electionId)
         : new Uint8Array();
+    message.entries = (object.entries ?? []).map((e: any) =>
+      SetProposalStatus_Entry.fromJSON(e)
+    );
+    return message;
+  },
+
+  toJSON(message: SetProposalStatus): unknown {
+    const obj: any = {};
+    message.electionId !== undefined &&
+      (obj.electionId = base64FromBytes(
+        message.electionId !== undefined ? message.electionId : new Uint8Array()
+      ));
+    if (message.entries) {
+      obj.entries = message.entries.map((e) =>
+        e ? SetProposalStatus_Entry.toJSON(e) : undefined
+      );
+    } else {
+      obj.entries = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetProposalStatus>, I>>(
+    object: I
+  ): SetProposalStatus {
+    const message = { ...baseSetProposalStatus } as SetProposalStatus;
+    message.electionId = object.electionId ?? new Uint8Array();
+    message.entries =
+      object.entries?.map((e) => SetProposalStatus_Entry.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+const baseSetProposalStatus_Entry: object = { proposalIndex: 0, newStatus: 0 };
+
+export const SetProposalStatus_Entry = {
+  encode(
+    message: SetProposalStatus_Entry,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.proposalIndex !== 0) {
+      writer.uint32(16).int32(message.proposalIndex);
+    }
+    if (message.newStatus !== 0) {
+      writer.uint32(24).int32(message.newStatus);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): SetProposalStatus_Entry {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseSetProposalStatus_Entry,
+    } as SetProposalStatus_Entry;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 2:
+          message.proposalIndex = reader.int32();
+          break;
+        case 3:
+          message.newStatus = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetProposalStatus_Entry {
+    const message = {
+      ...baseSetProposalStatus_Entry,
+    } as SetProposalStatus_Entry;
     message.proposalIndex =
       object.proposalIndex !== undefined && object.proposalIndex !== null
         ? Number(object.proposalIndex)
@@ -654,12 +734,8 @@ export const SetProposalStatus = {
     return message;
   },
 
-  toJSON(message: SetProposalStatus): unknown {
+  toJSON(message: SetProposalStatus_Entry): unknown {
     const obj: any = {};
-    message.electionId !== undefined &&
-      (obj.electionId = base64FromBytes(
-        message.electionId !== undefined ? message.electionId : new Uint8Array()
-      ));
     message.proposalIndex !== undefined &&
       (obj.proposalIndex = message.proposalIndex);
     message.newStatus !== undefined &&
@@ -667,11 +743,12 @@ export const SetProposalStatus = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetProposalStatus>, I>>(
+  fromPartial<I extends Exact<DeepPartial<SetProposalStatus_Entry>, I>>(
     object: I
-  ): SetProposalStatus {
-    const message = { ...baseSetProposalStatus } as SetProposalStatus;
-    message.electionId = object.electionId ?? new Uint8Array();
+  ): SetProposalStatus_Entry {
+    const message = {
+      ...baseSetProposalStatus_Entry,
+    } as SetProposalStatus_Entry;
     message.proposalIndex = object.proposalIndex ?? 0;
     message.newStatus = object.newStatus ?? 0;
     return message;

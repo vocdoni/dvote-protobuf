@@ -62,7 +62,7 @@ message Transaction {
 
 		// ELECTIONS
 		NewElection newElection = 11;
-		RegisterKey registerKey = 12;
+		RegisterElectionKey registerElectionKey = 12;
 		SubmitBallot submitBallot = 13;
 		SetElectionStatus setElectionStatus = 14;
 		SetProposalStatus setProposalStatus = 15;

@@ -241,7 +241,7 @@ enum Transaction_Body {
   mint, 
   claimTokens, 
   newElection, 
-  registerKey, 
+  registerElectionKey, 
   submitBallot, 
   setElectionStatus, 
   setProposalStatus, 
@@ -255,7 +255,7 @@ class Transaction extends $pb.GeneratedMessage {
     3 : Transaction_Body.mint,
     4 : Transaction_Body.claimTokens,
     11 : Transaction_Body.newElection,
-    12 : Transaction_Body.registerKey,
+    12 : Transaction_Body.registerElectionKey,
     13 : Transaction_Body.submitBallot,
     14 : Transaction_Body.setElectionStatus,
     15 : Transaction_Body.setProposalStatus,
@@ -268,7 +268,7 @@ class Transaction extends $pb.GeneratedMessage {
     ..aOM<$0.Mint>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mint', subBuilder: $0.Mint.create)
     ..aOM<$0.ClaimTokens>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'claimTokens', protoName: 'claimTokens', subBuilder: $0.ClaimTokens.create)
     ..aOM<$0.NewElection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newElection', protoName: 'newElection', subBuilder: $0.NewElection.create)
-    ..aOM<$0.RegisterKey>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'registerKey', protoName: 'registerKey', subBuilder: $0.RegisterKey.create)
+    ..aOM<$0.RegisterElectionKey>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'registerElectionKey', protoName: 'registerElectionKey', subBuilder: $0.RegisterElectionKey.create)
     ..aOM<$0.SubmitBallot>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'submitBallot', protoName: 'submitBallot', subBuilder: $0.SubmitBallot.create)
     ..aOM<$0.SetElectionStatus>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setElectionStatus', protoName: 'setElectionStatus', subBuilder: $0.SetElectionStatus.create)
     ..aOM<$0.SetProposalStatus>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setProposalStatus', protoName: 'setProposalStatus', subBuilder: $0.SetProposalStatus.create)
@@ -282,7 +282,7 @@ class Transaction extends $pb.GeneratedMessage {
     $0.Mint? mint,
     $0.ClaimTokens? claimTokens,
     $0.NewElection? newElection,
-    $0.RegisterKey? registerKey,
+    $0.RegisterElectionKey? registerElectionKey,
     $0.SubmitBallot? submitBallot,
     $0.SetElectionStatus? setElectionStatus,
     $0.SetProposalStatus? setProposalStatus,
@@ -303,8 +303,8 @@ class Transaction extends $pb.GeneratedMessage {
     if (newElection != null) {
       _result.newElection = newElection;
     }
-    if (registerKey != null) {
-      _result.registerKey = registerKey;
+    if (registerElectionKey != null) {
+      _result.registerElectionKey = registerElectionKey;
     }
     if (submitBallot != null) {
       _result.submitBallot = submitBallot;
@@ -397,15 +397,15 @@ class Transaction extends $pb.GeneratedMessage {
   $0.NewElection ensureNewElection() => $_ensure(4);
 
   @$pb.TagNumber(12)
-  $0.RegisterKey get registerKey => $_getN(5);
+  $0.RegisterElectionKey get registerElectionKey => $_getN(5);
   @$pb.TagNumber(12)
-  set registerKey($0.RegisterKey v) { setField(12, v); }
+  set registerElectionKey($0.RegisterElectionKey v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasRegisterKey() => $_has(5);
+  $core.bool hasRegisterElectionKey() => $_has(5);
   @$pb.TagNumber(12)
-  void clearRegisterKey() => clearField(12);
+  void clearRegisterElectionKey() => clearField(12);
   @$pb.TagNumber(12)
-  $0.RegisterKey ensureRegisterKey() => $_ensure(5);
+  $0.RegisterElectionKey ensureRegisterElectionKey() => $_ensure(5);
 
   @$pb.TagNumber(13)
   $0.SubmitBallot get submitBallot => $_getN(6);

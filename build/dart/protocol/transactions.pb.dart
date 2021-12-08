@@ -283,8 +283,8 @@ class NewElection extends $pb.GeneratedMessage {
   $1.Election ensureElection() => $_ensure(0);
 }
 
-class RegisterKey extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RegisterKey', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+class RegisterElectionKey extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RegisterElectionKey', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'electionId', $pb.PbFieldType.OY, protoName: 'electionId')
     ..pc<$2.Proof>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proofs', $pb.PbFieldType.PM, subBuilder: $2.Proof.create)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newKey', $pb.PbFieldType.OY, protoName: 'newKey')
@@ -292,8 +292,8 @@ class RegisterKey extends $pb.GeneratedMessage {
     ..hasRequiredFields = false
   ;
 
-  RegisterKey._() : super();
-  factory RegisterKey({
+  RegisterElectionKey._() : super();
+  factory RegisterElectionKey({
     $core.List<$core.int>? electionId,
     $core.Iterable<$2.Proof>? proofs,
     $core.List<$core.int>? newKey,
@@ -314,26 +314,26 @@ class RegisterKey extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory RegisterKey.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RegisterKey.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory RegisterElectionKey.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RegisterElectionKey.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  RegisterKey clone() => RegisterKey()..mergeFromMessage(this);
+  RegisterElectionKey clone() => RegisterElectionKey()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RegisterKey copyWith(void Function(RegisterKey) updates) => super.copyWith((message) => updates(message as RegisterKey)) as RegisterKey; // ignore: deprecated_member_use
+  RegisterElectionKey copyWith(void Function(RegisterElectionKey) updates) => super.copyWith((message) => updates(message as RegisterElectionKey)) as RegisterElectionKey; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static RegisterKey create() => RegisterKey._();
-  RegisterKey createEmptyInstance() => create();
-  static $pb.PbList<RegisterKey> createRepeated() => $pb.PbList<RegisterKey>();
+  static RegisterElectionKey create() => RegisterElectionKey._();
+  RegisterElectionKey createEmptyInstance() => create();
+  static $pb.PbList<RegisterElectionKey> createRepeated() => $pb.PbList<RegisterElectionKey>();
   @$core.pragma('dart2js:noInline')
-  static RegisterKey getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RegisterKey>(create);
-  static RegisterKey? _defaultInstance;
+  static RegisterElectionKey getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RegisterElectionKey>(create);
+  static RegisterElectionKey? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get electionId => $_getN(0);
@@ -476,29 +476,85 @@ class SetElectionStatus extends $pb.GeneratedMessage {
   void clearNewStatus() => clearField(2);
 }
 
+class SetProposalStatus_Entry extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetProposalStatus.Entry', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposalIndex', $pb.PbFieldType.O3, protoName: 'proposalIndex')
+    ..e<$4.ProposalStatus>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newStatus', $pb.PbFieldType.OE, protoName: 'newStatus', defaultOrMaker: $4.ProposalStatus.UNKNOWN_PROPOSAL_STATUS, valueOf: $4.ProposalStatus.valueOf, enumValues: $4.ProposalStatus.values)
+    ..hasRequiredFields = false
+  ;
+
+  SetProposalStatus_Entry._() : super();
+  factory SetProposalStatus_Entry({
+    $core.int? proposalIndex,
+    $4.ProposalStatus? newStatus,
+  }) {
+    final _result = create();
+    if (proposalIndex != null) {
+      _result.proposalIndex = proposalIndex;
+    }
+    if (newStatus != null) {
+      _result.newStatus = newStatus;
+    }
+    return _result;
+  }
+  factory SetProposalStatus_Entry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetProposalStatus_Entry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetProposalStatus_Entry clone() => SetProposalStatus_Entry()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetProposalStatus_Entry copyWith(void Function(SetProposalStatus_Entry) updates) => super.copyWith((message) => updates(message as SetProposalStatus_Entry)) as SetProposalStatus_Entry; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SetProposalStatus_Entry create() => SetProposalStatus_Entry._();
+  SetProposalStatus_Entry createEmptyInstance() => create();
+  static $pb.PbList<SetProposalStatus_Entry> createRepeated() => $pb.PbList<SetProposalStatus_Entry>();
+  @$core.pragma('dart2js:noInline')
+  static SetProposalStatus_Entry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetProposalStatus_Entry>(create);
+  static SetProposalStatus_Entry? _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $core.int get proposalIndex => $_getIZ(0);
+  @$pb.TagNumber(2)
+  set proposalIndex($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProposalIndex() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearProposalIndex() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $4.ProposalStatus get newStatus => $_getN(1);
+  @$pb.TagNumber(3)
+  set newStatus($4.ProposalStatus v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasNewStatus() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearNewStatus() => clearField(3);
+}
+
 class SetProposalStatus extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetProposalStatus', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'electionId', $pb.PbFieldType.OY, protoName: 'electionId')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposalIndex', $pb.PbFieldType.O3, protoName: 'proposalIndex')
-    ..e<$4.ProposalStatus>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newStatus', $pb.PbFieldType.OE, protoName: 'newStatus', defaultOrMaker: $4.ProposalStatus.UNKNOWN_PROPOSAL_STATUS, valueOf: $4.ProposalStatus.valueOf, enumValues: $4.ProposalStatus.values)
+    ..pc<SetProposalStatus_Entry>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entries', $pb.PbFieldType.PM, subBuilder: SetProposalStatus_Entry.create)
     ..hasRequiredFields = false
   ;
 
   SetProposalStatus._() : super();
   factory SetProposalStatus({
     $core.List<$core.int>? electionId,
-    $core.int? proposalIndex,
-    $4.ProposalStatus? newStatus,
+    $core.Iterable<SetProposalStatus_Entry>? entries,
   }) {
     final _result = create();
     if (electionId != null) {
       _result.electionId = electionId;
     }
-    if (proposalIndex != null) {
-      _result.proposalIndex = proposalIndex;
-    }
-    if (newStatus != null) {
-      _result.newStatus = newStatus;
+    if (entries != null) {
+      _result.entries.addAll(entries);
     }
     return _result;
   }
@@ -533,21 +589,6 @@ class SetProposalStatus extends $pb.GeneratedMessage {
   void clearElectionId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get proposalIndex => $_getIZ(1);
-  @$pb.TagNumber(2)
-  set proposalIndex($core.int v) { $_setSignedInt32(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasProposalIndex() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearProposalIndex() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $4.ProposalStatus get newStatus => $_getN(2);
-  @$pb.TagNumber(3)
-  set newStatus($4.ProposalStatus v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasNewStatus() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearNewStatus() => clearField(3);
+  $core.List<SetProposalStatus_Entry> get entries => $_getList(1);
 }
 

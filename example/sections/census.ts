@@ -5,13 +5,32 @@
 
 import { NewCensus, NewCensusResponse, AddCensusKeys, AddCensusKeysResponse, AddCensusKeys_CensusEntry, GetCensusRoot, GetCensusRootResponse, GetCensusSize, GetCensusSizeResponse, PublishCensus, PublishCensusResponse, GetCensusProof, GetCensusProofResponse } from "../../build/ts/protocol/service"
 import { Census, Proof } from "../../build/ts/protocol/census"
-import { Request } from "../../build/ts/protocol/messages"
-import { encodeRequest, decodeRequest, encodeResponseSuccess, decodeResponse, encodeResponseError } from "../common/messages"
+import { Request, Transaction } from "../../build/ts/protocol/messages"
+import { encodeRequest, decodeRequest, encodeResponseSuccess, decodeResponse, encodeResponseError, decodeTransaction, encodeTransactionSuccess, encodeTransaction, decodeTransactionReceipt } from "../common/messages"
 import { CensusType } from "../../build/ts/protocol/enums"
 import { Reader } from "protobufjs"
+import { RegisterElectionKey } from "../../build/ts/protocol/transactions"
 
 const dummySigningKey = new Uint8Array()
 const dummyPublicKey = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33])
+const arboProof: Proof = {
+    body: {
+        $case: "arbo",
+        arbo: {
+            siblings: [new Uint8Array([1, 2, 3]), new Uint8Array([4, 5, 6]), new Uint8Array([7, 8, 9])]
+        }
+    }
+}
+const erc20Proof: Proof = {
+    body: {
+        $case: "erc20",
+        erc20: {
+            key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]),
+            value: new Uint8Array([1, 0, 0, 0, 0]),
+            proof: [new Uint8Array([10, 20, 30]), new Uint8Array([40, 50, 60]), new Uint8Array([70, 80, 90])]
+        }
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Frontend request
@@ -39,7 +58,7 @@ export function newCensus() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -77,7 +96,7 @@ export function addCensusKeys() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -108,7 +127,7 @@ export function getCensusRoot() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -139,7 +158,7 @@ export function getCensusSize() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -170,7 +189,7 @@ export function publishCensus() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -212,7 +231,7 @@ export function getArboProof() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -254,7 +273,7 @@ export function getErc20Proof() {
 
     // Send
     console.log("Sending the payload to a Census Service")
-    const responseBytes = dummyRemoteRequest(reqBytes)
+    const responseBytes = dummyCensusServiceRequest(reqBytes)
 
     const { response } = decodeResponse(responseBytes)
 
@@ -267,12 +286,48 @@ export function getErc20Proof() {
     console.log("Census proof:", proof)
 }
 
+export function registerVoterKey() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping RegisterElectionKey transaction")
+
+    // Election lifecycle type must be mutable
+
+    const txBody: RegisterElectionKey = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        newKey: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        proofs: [
+            arboProof,  // Proofs corresponding to the settings defined on the election
+            erc20Proof
+        ],
+        weight: "1234"   // bigint
+    }
+
+    const tx: Transaction = {
+        body: {
+            $case: "registerElectionKey",
+            registerElectionKey: txBody
+        }
+    }
+
+    const reqBytes = encodeTransaction(tx, dummySigningKey)
+
+    console.log("Sending the payload to a Gateway")
+    const responseBytes = dummyVochainRequest(reqBytes)
+
+    const { receipt } = decodeTransactionReceipt(responseBytes)
+
+    const txHash = receipt.hash
+    // Wait for the TX to be mined
+
+    console.log("Handling the response for transaction", txHash)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Simulated Census Service responses
 ///////////////////////////////////////////////////////////////////////////////
 
 const pad = "  "
-function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
+function dummyCensusServiceRequest(reqBytes: Uint8Array): Uint8Array {
     const { request, publicKey, requestId } = decodeRequest(reqBytes)
     let msgBytes: Uint8Array
 
@@ -383,14 +438,6 @@ function simulateGetCensusProof(request: GetCensusProof, requestId: Uint8Array) 
 
     switch (census.body.$case) {
         case "arbo":
-            const arboProof = Proof.fromPartial({
-                body: {
-                    $case: "arbo",
-                    arbo: {
-                        siblings: [new Uint8Array([1, 2, 3]), new Uint8Array([4, 5, 6]), new Uint8Array([7, 8, 9])]
-                    }
-                }
-            })
             getCensusProofResponseBytes = GetCensusProofResponse.encode({ proof: arboProof }).finish()
             break
         case "erc20":
@@ -413,4 +460,33 @@ function simulateGetCensusProof(request: GetCensusProof, requestId: Uint8Array) 
     return encodeResponseSuccess(getCensusProofResponseBytes, requestId, dummySigningKey)
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Simulated Transaction responses
+///////////////////////////////////////////////////////////////////////////////
+
+function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
+    const { transaction, publicKey, requestId } = decodeTransaction(reqBytes)
+
+    console.log(pad + "Received TX", transaction.body.$case)
+    switch (transaction.body.$case) {
+        case "registerElectionKey":
+            const { electionId, newKey, proofs, weight } = transaction.body.registerElectionKey
+            console.log("Register election", electionId, "key", newKey, "with weight", weight, "and proofs", proofs)
+            break
+
+        default: throw new Error("Unexpected transaction: " + transaction.body.$case)
+    }
+    console.log(pad + "(Handle TX => check + add to mempool)")
+
+    console.log(pad + "Encoding response")
+
+    const hash = dummyRandomHash()
+    const msgBytes = encodeTransactionSuccess(hash, requestId, dummySigningKey)
+
+    return msgBytes
+}
+
+function dummyRandomHash() {
+    return new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+}
 

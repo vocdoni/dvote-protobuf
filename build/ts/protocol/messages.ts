@@ -7,7 +7,7 @@ import {
   Mint,
   ClaimTokens,
   NewElection,
-  RegisterKey,
+  RegisterElectionKey,
   SubmitBallot,
   SetElectionStatus,
   SetProposalStatus,
@@ -105,7 +105,7 @@ export interface Transaction {
     | { $case: "mint"; mint: Mint }
     | { $case: "claimTokens"; claimTokens: ClaimTokens }
     | { $case: "newElection"; newElection: NewElection }
-    | { $case: "registerKey"; registerKey: RegisterKey }
+    | { $case: "registerElectionKey"; registerElectionKey: RegisterElectionKey }
     | { $case: "submitBallot"; submitBallot: SubmitBallot }
     | { $case: "setElectionStatus"; setElectionStatus: SetElectionStatus }
     | { $case: "setProposalStatus"; setProposalStatus: SetProposalStatus };
@@ -481,9 +481,9 @@ export const Transaction = {
         writer.uint32(90).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "registerKey") {
-      RegisterKey.encode(
-        message.body.registerKey,
+    if (message.body?.$case === "registerElectionKey") {
+      RegisterElectionKey.encode(
+        message.body.registerElectionKey,
         writer.uint32(98).fork()
       ).ldelim();
     }
@@ -547,8 +547,11 @@ export const Transaction = {
           break;
         case 12:
           message.body = {
-            $case: "registerKey",
-            registerKey: RegisterKey.decode(reader, reader.uint32()),
+            $case: "registerElectionKey",
+            registerElectionKey: RegisterElectionKey.decode(
+              reader,
+              reader.uint32()
+            ),
           };
           break;
         case 13:
@@ -615,10 +618,15 @@ export const Transaction = {
         newElection: NewElection.fromJSON(object.newElection),
       };
     }
-    if (object.registerKey !== undefined && object.registerKey !== null) {
+    if (
+      object.registerElectionKey !== undefined &&
+      object.registerElectionKey !== null
+    ) {
       message.body = {
-        $case: "registerKey",
-        registerKey: RegisterKey.fromJSON(object.registerKey),
+        $case: "registerElectionKey",
+        registerElectionKey: RegisterElectionKey.fromJSON(
+          object.registerElectionKey
+        ),
       };
     }
     if (object.submitBallot !== undefined && object.submitBallot !== null) {
@@ -670,9 +678,9 @@ export const Transaction = {
       (obj.newElection = message.body?.newElection
         ? NewElection.toJSON(message.body?.newElection)
         : undefined);
-    message.body?.$case === "registerKey" &&
-      (obj.registerKey = message.body?.registerKey
-        ? RegisterKey.toJSON(message.body?.registerKey)
+    message.body?.$case === "registerElectionKey" &&
+      (obj.registerElectionKey = message.body?.registerElectionKey
+        ? RegisterElectionKey.toJSON(message.body?.registerElectionKey)
         : undefined);
     message.body?.$case === "submitBallot" &&
       (obj.submitBallot = message.body?.submitBallot
@@ -746,13 +754,15 @@ export const Transaction = {
       };
     }
     if (
-      object.body?.$case === "registerKey" &&
-      object.body?.registerKey !== undefined &&
-      object.body?.registerKey !== null
+      object.body?.$case === "registerElectionKey" &&
+      object.body?.registerElectionKey !== undefined &&
+      object.body?.registerElectionKey !== null
     ) {
       message.body = {
-        $case: "registerKey",
-        registerKey: RegisterKey.fromPartial(object.body.registerKey),
+        $case: "registerElectionKey",
+        registerElectionKey: RegisterElectionKey.fromPartial(
+          object.body.registerElectionKey
+        ),
       };
     }
     if (

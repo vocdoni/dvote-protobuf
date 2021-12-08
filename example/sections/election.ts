@@ -3,11 +3,12 @@
 // The only purpose is to exemplify the usage of the protocol models.
 // No real functionality is being executed here.
 
-import { NewElection } from "../../build/ts/protocol/transactions"
+import { NewElection, SetElectionStatus, SetProposalStatus } from "../../build/ts/protocol/transactions"
 import { Transaction } from "../../build/ts/protocol/messages"
 import { decodeTransaction, decodeTransactionReceipt, encodeTransaction, encodeTransactionSuccess } from "../common/messages"
 import { ApprovalProposal, Election, Lifecycle_Types, Privacy_CensusProofs, Proposal, QuadraticProposal, RankedProposal, SingleChoiceProposal, SpreadProposal } from "../../build/ts/protocol/election"
 import { CensusArbo, CensusCsp, CensusErc20, CensusNone, StorageProofErc20 } from "../../build/ts/protocol/census"
+import { ProposalStatus } from "../../build/ts/protocol/enums"
 
 const dummySigningKey = new Uint8Array()
 
@@ -117,8 +118,8 @@ export function createCspElection() {
         ],
         // lifecycle
         lifecycle: {
-            type: Lifecycle_Types.STARTED_IMMUTABLE,
-            startBlock: 0,  // N/A
+            type: Lifecycle_Types.AUTOSTART_MUTABLE,
+            startBlock: 1500,   // only if lifecycle is AUTOSTART_*
             endBlock: 2000,
         },
         // vote privacy
@@ -178,8 +179,8 @@ export function createCspBlindElection() {
         ],
         // lifecycle
         lifecycle: {
-            type: Lifecycle_Types.STARTED_MUTABLE,
-            startBlock: 0,  // N/A
+            type: Lifecycle_Types.AUTOSTART_MUTABLE,
+            startBlock: 1500,   // only if lifecycle is AUTOSTART_*
             endBlock: 2000,
         },
         // vote privacy
@@ -246,8 +247,8 @@ export function createErc20Election() {
         ],
         // lifecycle
         lifecycle: {
-            type: Lifecycle_Types.STARTED_MUTABLE,
-            startBlock: 0,  // N/A
+            type: Lifecycle_Types.AUTOSTART_MUTABLE,
+            startBlock: 1500,   // only if lifecycle is AUTOSTART_*
             endBlock: 2000,
         },
         // vote privacy
@@ -314,8 +315,8 @@ export function createMiniMeElection() {
         ],
         // lifecycle
         lifecycle: {
-            type: Lifecycle_Types.STARTED_MUTABLE,
-            startBlock: 0,  // N/A
+            type: Lifecycle_Types.AUTOSTART_MUTABLE,
+            startBlock: 1500,   // only if lifecycle is AUTOSTART_*
             endBlock: 2000,
         },
         // vote privacy
@@ -484,7 +485,7 @@ export function createAnonymousElection() {
 
 export function createAnonymousPreregisterElection() {
     console.log("-----------------------------------------------")
-    console.log("Wrapping NewElection (anonymous) transaction")
+    console.log("Wrapping NewElection (anonymous preregister) transaction")
 
     // Census layers
     const arboCensus: CensusArbo = {
@@ -548,7 +549,7 @@ export function createAnonymousPreregisterElection() {
 
 export function createNonRealTimeResultsElection() {
     console.log("-----------------------------------------------")
-    console.log("Wrapping NewElection (simple) transaction")
+    console.log("Wrapping NewElection (non real time) transaction")
 
     // Census layers
     const arboCensus: CensusArbo = {
@@ -607,6 +608,130 @@ export function createNonRealTimeResultsElection() {
     console.log("Handling the response for transaction", txHash)
 }
 
+export function createStepByStepElection() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping NewElection (step by step) transaction")
+
+    // Census layers
+    const arboCensus: CensusArbo = {
+        censusRoot: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
+        censusUri: "ipfs://1234..."
+    }
+
+    // Election params
+    const election: Election = {
+        // who can vote
+        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
+        secondaryCensus: censusNone,
+        tertiaryCensus: censusNone,
+        censusSize: 500,    // affects how many votes are expected at most
+        // per-proposal settings
+        proposals: [
+            proposal1,   // approval
+            proposal2,   // singleChoice
+            proposal3,   // quadratic
+            proposal4,   // ranked
+            proposal5,   // spread
+        ],
+        // lifecycle
+        lifecycle: {
+            type: Lifecycle_Types.PAUSED_MUTABLE,
+            startBlock: 0, // N/A
+            endBlock: 5000,
+        },
+        // vote privacy
+        privacy: {
+            realTimeResults: false,
+            censusProof: Privacy_CensusProofs.PLAIN
+        },
+        // human readable metadata (protobuf)
+        metadataUri: "ipfs://1234...",
+    }
+
+    const txBody: NewElection = { election }
+    const tx: Transaction = {
+        body: {
+            $case: "newElection",
+            newElection: txBody
+        }
+    }
+
+    const reqBytes = encodeTransaction(tx, dummySigningKey)
+
+    console.log("Sending the payload to a Gateway")
+    const responseBytes = dummyRemoteRequest(reqBytes)
+
+    const { receipt } = decodeTransactionReceipt(responseBytes)
+
+    const txHash = receipt.hash
+    // Wait for the TX to be mined
+
+    console.log("Handling the response for transaction", txHash)
+}
+
+export function setElectionStatus() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping SetElectionStatus transaction")
+
+    // Election lifecycle type must be mutable
+
+    const txBody: SetElectionStatus = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        newStatus: ProposalStatus.PAUSED
+    }
+    const tx: Transaction = {
+        body: {
+            $case: "setElectionStatus",
+            setElectionStatus: txBody
+        }
+    }
+
+    const reqBytes = encodeTransaction(tx, dummySigningKey)
+
+    console.log("Sending the payload to a Gateway")
+    const responseBytes = dummyRemoteRequest(reqBytes)
+
+    const { receipt } = decodeTransactionReceipt(responseBytes)
+
+    const txHash = receipt.hash
+    // Wait for the TX to be mined
+
+    console.log("Handling the response for transaction", txHash)
+}
+
+export function setProposalStatus() {
+    console.log("-----------------------------------------------")
+    console.log("Wrapping SetProposalStatus transaction")
+
+    // Election lifecycle type must be mutable
+
+    const txBody: SetProposalStatus = {
+        electionId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
+        entries: [
+            { proposalIndex: 2, newStatus: ProposalStatus.ENDED },
+            { proposalIndex: 3, newStatus: ProposalStatus.READY },
+        ]
+    }
+    const tx: Transaction = {
+        body: {
+            $case: "setProposalStatus",
+            setProposalStatus: txBody
+        }
+    }
+
+    const reqBytes = encodeTransaction(tx, dummySigningKey)
+
+    console.log("Sending the payload to a Gateway")
+    const responseBytes = dummyRemoteRequest(reqBytes)
+
+    const { receipt } = decodeTransactionReceipt(responseBytes)
+
+    const txHash = receipt.hash
+    // Wait for the TX to be mined
+
+    console.log("Handling the response for transaction", txHash)
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Simulated gateway responses
 ///////////////////////////////////////////////////////////////////////////////
@@ -626,7 +751,17 @@ function dummyRemoteRequest(reqBytes: Uint8Array): Uint8Array {
             console.log(pad + pad + "- Privacy:", election.privacy)
             break
 
-        default: throw new Error("Unexpected transaction")
+        case "setElectionStatus":
+            const { electionId: eId1, newStatus } = transaction.body.setElectionStatus
+            console.log("Set election", eId1, "status to", newStatus)
+            break
+
+        case "setProposalStatus":
+            const { electionId: eId2, entries } = transaction.body.setProposalStatus
+            console.log("Set election", eId2, "proposal statuses to", entries)
+            break
+
+        default: throw new Error("Unexpected transaction: " + transaction.body.$case)
     }
     console.log(pad + "(Handle TX => check + add to mempool)")
 

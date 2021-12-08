@@ -5,8 +5,8 @@
 
 import { createOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
-import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus } from "./sections/census"
-import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection } from "./sections/election"
+import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus, registerVoterKey } from "./sections/census"
+import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, setElectionStatus, setProposalStatus } from "./sections/election"
 
 function main() {
     // Transacations
@@ -33,11 +33,11 @@ function main() {
     createAnonymousPreregisterElection()
     createNonRealTimeResultsElection()
 
-    // createStepByStepElection()
-    // setElectionState()
-    // setProposalsState()
+    createStepByStepElection()
+    setElectionStatus()
+    setProposalStatus()
 
-    // registerVoterKey()
+    registerVoterKey()
 
     // Requests
     // getOrganization()
