@@ -11,40 +11,38 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'census.pb.dart' as $0;
 
-import 'ballot.pbenum.dart';
-
-export 'ballot.pbenum.dart';
+import 'enums.pbenum.dart' as $1;
 
 enum Ballot_Body {
   signedBallot, 
-  ballot, 
+  anonymousBallot, 
   notSet
 }
 
 class Ballot extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Ballot_Body> _Ballot_BodyByTag = {
     1 : Ballot_Body.signedBallot,
-    2 : Ballot_Body.ballot,
+    2 : Ballot_Body.anonymousBallot,
     0 : Ballot_Body.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Ballot', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<SignedBallot>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signedBallot', protoName: 'signedBallot', subBuilder: SignedBallot.create)
-    ..aOM<BallotBody>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ballot', subBuilder: BallotBody.create)
+    ..aOM<BallotBody>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'anonymousBallot', protoName: 'anonymousBallot', subBuilder: BallotBody.create)
     ..hasRequiredFields = false
   ;
 
   Ballot._() : super();
   factory Ballot({
     SignedBallot? signedBallot,
-    BallotBody? ballot,
+    BallotBody? anonymousBallot,
   }) {
     final _result = create();
     if (signedBallot != null) {
       _result.signedBallot = signedBallot;
     }
-    if (ballot != null) {
-      _result.ballot = ballot;
+    if (anonymousBallot != null) {
+      _result.anonymousBallot = anonymousBallot;
     }
     return _result;
   }
@@ -84,15 +82,15 @@ class Ballot extends $pb.GeneratedMessage {
   SignedBallot ensureSignedBallot() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  BallotBody get ballot => $_getN(1);
+  BallotBody get anonymousBallot => $_getN(1);
   @$pb.TagNumber(2)
-  set ballot(BallotBody v) { setField(2, v); }
+  set anonymousBallot(BallotBody v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasBallot() => $_has(1);
+  $core.bool hasAnonymousBallot() => $_has(1);
   @$pb.TagNumber(2)
-  void clearBallot() => clearField(2);
+  void clearAnonymousBallot() => clearField(2);
   @$pb.TagNumber(2)
-  BallotBody ensureBallot() => $_ensure(1);
+  BallotBody ensureAnonymousBallot() => $_ensure(1);
 }
 
 class BallotBody_VoteList extends $pb.GeneratedMessage {
@@ -253,7 +251,7 @@ class SignedBallot extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SignedBallot', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ballot', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
-    ..e<SignedBallot_Signatures>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureType', $pb.PbFieldType.OE, protoName: 'signatureType', defaultOrMaker: SignedBallot_Signatures.None, valueOf: SignedBallot_Signatures.valueOf, enumValues: SignedBallot_Signatures.values)
+    ..e<$1.SignatureType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureType', $pb.PbFieldType.OE, protoName: 'signatureType', defaultOrMaker: $1.SignatureType.NONE, valueOf: $1.SignatureType.valueOf, enumValues: $1.SignatureType.values)
     ..hasRequiredFields = false
   ;
 
@@ -261,7 +259,7 @@ class SignedBallot extends $pb.GeneratedMessage {
   factory SignedBallot({
     $core.List<$core.int>? ballot,
     $core.List<$core.int>? signature,
-    SignedBallot_Signatures? signatureType,
+    $1.SignatureType? signatureType,
   }) {
     final _result = create();
     if (ballot != null) {
@@ -315,9 +313,9 @@ class SignedBallot extends $pb.GeneratedMessage {
   void clearSignature() => clearField(2);
 
   @$pb.TagNumber(3)
-  SignedBallot_Signatures get signatureType => $_getN(2);
+  $1.SignatureType get signatureType => $_getN(2);
   @$pb.TagNumber(3)
-  set signatureType(SignedBallot_Signatures v) { setField(3, v); }
+  set signatureType($1.SignatureType v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasSignatureType() => $_has(2);
   @$pb.TagNumber(3)
@@ -327,7 +325,7 @@ class SignedBallot extends $pb.GeneratedMessage {
 enum Vote_Body {
   encrypted, 
   approval, 
-  sihgleChoice, 
+  singleChoice, 
   quadratic, 
   ranked, 
   spread, 
@@ -338,7 +336,7 @@ class Vote extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Vote_Body> _Vote_BodyByTag = {
     1 : Vote_Body.encrypted,
     11 : Vote_Body.approval,
-    12 : Vote_Body.sihgleChoice,
+    12 : Vote_Body.singleChoice,
     13 : Vote_Body.quadratic,
     14 : Vote_Body.ranked,
     15 : Vote_Body.spread,
@@ -348,7 +346,7 @@ class Vote extends $pb.GeneratedMessage {
     ..oo(0, [1, 11, 12, 13, 14, 15])
     ..aOM<EncryptedVote>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encrypted', subBuilder: EncryptedVote.create)
     ..aOM<ApprovalVote>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'approval', subBuilder: ApprovalVote.create)
-    ..aOM<SingleChoiceVote>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sihgleChoice', protoName: 'sihgleChoice', subBuilder: SingleChoiceVote.create)
+    ..aOM<SingleChoiceVote>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleChoice', protoName: 'singleChoice', subBuilder: SingleChoiceVote.create)
     ..aOM<QuadraticVote>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadratic', subBuilder: QuadraticVote.create)
     ..aOM<RankedVote>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ranked', subBuilder: RankedVote.create)
     ..aOM<SpreadVote>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spread', subBuilder: SpreadVote.create)
@@ -359,7 +357,7 @@ class Vote extends $pb.GeneratedMessage {
   factory Vote({
     EncryptedVote? encrypted,
     ApprovalVote? approval,
-    SingleChoiceVote? sihgleChoice,
+    SingleChoiceVote? singleChoice,
     QuadraticVote? quadratic,
     RankedVote? ranked,
     SpreadVote? spread,
@@ -371,8 +369,8 @@ class Vote extends $pb.GeneratedMessage {
     if (approval != null) {
       _result.approval = approval;
     }
-    if (sihgleChoice != null) {
-      _result.sihgleChoice = sihgleChoice;
+    if (singleChoice != null) {
+      _result.singleChoice = singleChoice;
     }
     if (quadratic != null) {
       _result.quadratic = quadratic;
@@ -432,15 +430,15 @@ class Vote extends $pb.GeneratedMessage {
   ApprovalVote ensureApproval() => $_ensure(1);
 
   @$pb.TagNumber(12)
-  SingleChoiceVote get sihgleChoice => $_getN(2);
+  SingleChoiceVote get singleChoice => $_getN(2);
   @$pb.TagNumber(12)
-  set sihgleChoice(SingleChoiceVote v) { setField(12, v); }
+  set singleChoice(SingleChoiceVote v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasSihgleChoice() => $_has(2);
+  $core.bool hasSingleChoice() => $_has(2);
   @$pb.TagNumber(12)
-  void clearSihgleChoice() => clearField(12);
+  void clearSingleChoice() => clearField(12);
   @$pb.TagNumber(12)
-  SingleChoiceVote ensureSihgleChoice() => $_ensure(2);
+  SingleChoiceVote ensureSingleChoice() => $_ensure(2);
 
   @$pb.TagNumber(13)
   QuadraticVote get quadratic => $_getN(3);

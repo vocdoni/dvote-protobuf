@@ -47,3 +47,18 @@ class CensusType extends $pb.ProtobufEnum {
   const CensusType._($core.int v, $core.String n) : super(v, n);
 }
 
+class SignatureType extends $pb.ProtobufEnum {
+  static const SignatureType NONE = SignatureType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
+  static const SignatureType SECP256K1 = SignatureType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SECP256K1');
+
+  static const $core.List<SignatureType> values = <SignatureType> [
+    NONE,
+    SECP256K1,
+  ];
+
+  static final $core.Map<$core.int, SignatureType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static SignatureType? valueOf($core.int value) => _byValue[value];
+
+  const SignatureType._($core.int v, $core.String n) : super(v, n);
+}
+

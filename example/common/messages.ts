@@ -4,7 +4,8 @@
 // No real functionality is being executed here.
 
 import { Reader } from "protobufjs"
-import { Body, Message, Message_Signatures, Transaction, TransactionError, TransactionReceipt, TransactionSuccess, Request, Response, ResponseSuccess, ResponseError } from "../../build/ts/protocol/messages"
+import { SignatureType } from "../../build/ts/protocol/enums"
+import { Body, Message, Transaction, TransactionError, TransactionReceipt, TransactionSuccess, Request, Response, ResponseSuccess, ResponseError } from "../../build/ts/protocol/messages"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Encoding
@@ -29,7 +30,7 @@ export function encodeTransaction(tx: Transaction, signingKey: Uint8Array) {
     const msg = Message.encode({
         body: bodyBytes,
         signature,
-        signatureType: Message_Signatures.SECP256K1
+        signatureType: SignatureType.SECP256K1
     })
 
     return msg.finish()
@@ -63,7 +64,7 @@ export function encodeTransactionSuccess(txHash: Uint8Array, requestId: Uint8Arr
     const msg = Message.encode({
         body: bodyBytes,
         signature,
-        signatureType: Message_Signatures.SECP256K1
+        signatureType: SignatureType.SECP256K1
     })
 
     return msg.finish()
@@ -97,7 +98,7 @@ export function encodeTransactionError(message: string, code: number, requestId:
     const msg = Message.encode({
         body: bodyBytes,
         signature,
-        signatureType: Message_Signatures.SECP256K1
+        signatureType: SignatureType.SECP256K1
     })
 
     return msg.finish()
@@ -124,7 +125,7 @@ export function encodeRequest(request: Request, signingKey?: Uint8Array) {
     const msg = Message.encode({
         body: bodyBytes,
         signature,
-        signatureType: Message_Signatures.SECP256K1
+        signatureType: SignatureType.SECP256K1
     })
 
     return msg.finish()
@@ -151,7 +152,7 @@ export function encodeResponseSuccess(responseBody: Uint8Array, requestId: Uint8
     const msg = Message.encode({
         body: bodyBytes,
         signature,
-        signatureType: Message_Signatures.SECP256K1
+        signatureType: SignatureType.SECP256K1
     })
 
     return msg.finish()
@@ -178,7 +179,7 @@ export function encodeResponseError(message: string, responseBody: Uint8Array, r
     const msg = Message.encode({
         body: bodyBytes,
         signature,
-        signatureType: Message_Signatures.SECP256K1
+        signatureType: SignatureType.SECP256K1
     })
 
     return msg.finish()
@@ -282,7 +283,7 @@ function dummySign(body: Uint8Array, signingKey?: Uint8Array) {
     return new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
 }
 
-function dummyExtractPublicKey(body: Uint8Array, signature: Uint8Array, signatureType: Message_Signatures) {
+function dummyExtractPublicKey(body: Uint8Array, signature: Uint8Array, signatureType: SignatureType) {
     return new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33])
 }
 

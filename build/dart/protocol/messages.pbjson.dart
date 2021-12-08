@@ -14,25 +14,15 @@ const Message$json = const {
   '2': const [
     const {'1': 'body', '3': 1, '4': 1, '5': 12, '10': 'body'},
     const {'1': 'signature', '3': 2, '4': 1, '5': 12, '9': 0, '10': 'signature', '17': true},
-    const {'1': 'signatureType', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.Message.Signatures', '10': 'signatureType'},
+    const {'1': 'signatureType', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.SignatureType', '10': 'signatureType'},
   ],
-  '4': const [Message_Signatures$json],
   '8': const [
     const {'1': '_signature'},
   ],
 };
 
-@$core.Deprecated('Use messageDescriptor instead')
-const Message_Signatures$json = const {
-  '1': 'Signatures',
-  '2': const [
-    const {'1': 'NONE', '2': 0},
-    const {'1': 'SECP256K1', '2': 1},
-  ],
-};
-
 /// Descriptor for `Message`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List messageDescriptor = $convert.base64Decode('CgdNZXNzYWdlEhIKBGJvZHkYASABKAxSBGJvZHkSIQoJc2lnbmF0dXJlGAIgASgMSABSCXNpZ25hdHVyZYgBARJICg1zaWduYXR1cmVUeXBlGAMgASgOMiIuZHZvdGUudHlwZXMudjIuTWVzc2FnZS5TaWduYXR1cmVzUg1zaWduYXR1cmVUeXBlIiUKClNpZ25hdHVyZXMSCAoETk9ORRAAEg0KCVNFQ1AyNTZLMRABQgwKCl9zaWduYXR1cmU=');
+final $typed_data.Uint8List messageDescriptor = $convert.base64Decode('CgdNZXNzYWdlEhIKBGJvZHkYASABKAxSBGJvZHkSIQoJc2lnbmF0dXJlGAIgASgMSABSCXNpZ25hdHVyZYgBARJDCg1zaWduYXR1cmVUeXBlGAMgASgOMh0uZHZvdGUudHlwZXMudjIuU2lnbmF0dXJlVHlwZVINc2lnbmF0dXJlVHlwZUIMCgpfc2lnbmF0dXJl');
 @$core.Deprecated('Use bodyDescriptor instead')
 const Body$json = const {
   '1': 'Body',

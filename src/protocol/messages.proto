@@ -5,6 +5,7 @@ package dvote.types.v2;
 
 option go_package = "go.vocdoni.io/proto/build/go/models/v2";
 
+import "protocol/enums.proto";
 import "protocol/transactions.proto";
 import "protocol/service.proto";
 
@@ -23,11 +24,7 @@ message Message {
 	// 
 	optional bytes signature = 2;
 
-	enum Signatures {
-		NONE = 0;
-		SECP256K1 = 1;
-	}
-	Signatures signatureType = 3;
+	SignatureType signatureType = 3;
 }
 
 // The body contains the serialized bytes from a `Body`, which can host three types of interactions.

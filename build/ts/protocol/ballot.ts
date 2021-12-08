@@ -1,6 +1,11 @@
 /* eslint-disable */
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import * as Long from "long";
+import {
+  SignatureType,
+  signatureTypeFromJSON,
+  signatureTypeToJSON,
+} from "../protocol/enums";
 import { Proof } from "../protocol/census";
 
 export const protobufPackage = "dvote.types.v2";
@@ -8,7 +13,7 @@ export const protobufPackage = "dvote.types.v2";
 export interface Ballot {
   body?:
     | { $case: "signedBallot"; signedBallot: SignedBallot }
-    | { $case: "ballot"; ballot: BallotBody };
+    | { $case: "anonymousBallot"; anonymousBallot: BallotBody };
 }
 
 export interface BallotBody {
@@ -42,50 +47,14 @@ export interface SignedBallot {
   ballot: Uint8Array;
   /** sign(bytes(BallotBody)) */
   signature: Uint8Array;
-  signatureType: SignedBallot_Signatures;
-}
-
-export enum SignedBallot_Signatures {
-  None = 0,
-  Secp256k1 = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function signedBallot_SignaturesFromJSON(
-  object: any
-): SignedBallot_Signatures {
-  switch (object) {
-    case 0:
-    case "None":
-      return SignedBallot_Signatures.None;
-    case 1:
-    case "Secp256k1":
-      return SignedBallot_Signatures.Secp256k1;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return SignedBallot_Signatures.UNRECOGNIZED;
-  }
-}
-
-export function signedBallot_SignaturesToJSON(
-  object: SignedBallot_Signatures
-): string {
-  switch (object) {
-    case SignedBallot_Signatures.None:
-      return "None";
-    case SignedBallot_Signatures.Secp256k1:
-      return "Secp256k1";
-    default:
-      return "UNKNOWN";
-  }
+  signatureType: SignatureType;
 }
 
 export interface Vote {
   body?:
     | { $case: "encrypted"; encrypted: EncryptedVote }
     | { $case: "approval"; approval: ApprovalVote }
-    | { $case: "sihgleChoice"; sihgleChoice: SingleChoiceVote }
+    | { $case: "singleChoice"; singleChoice: SingleChoiceVote }
     | { $case: "quadratic"; quadratic: QuadraticVote }
     | { $case: "ranked"; ranked: RankedVote }
     | { $case: "spread"; spread: SpreadVote };
@@ -142,8 +111,11 @@ export const Ballot = {
         writer.uint32(10).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "ballot") {
-      BallotBody.encode(message.body.ballot, writer.uint32(18).fork()).ldelim();
+    if (message.body?.$case === "anonymousBallot") {
+      BallotBody.encode(
+        message.body.anonymousBallot,
+        writer.uint32(18).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -163,8 +135,8 @@ export const Ballot = {
           break;
         case 2:
           message.body = {
-            $case: "ballot",
-            ballot: BallotBody.decode(reader, reader.uint32()),
+            $case: "anonymousBallot",
+            anonymousBallot: BallotBody.decode(reader, reader.uint32()),
           };
           break;
         default:
@@ -183,10 +155,13 @@ export const Ballot = {
         signedBallot: SignedBallot.fromJSON(object.signedBallot),
       };
     }
-    if (object.ballot !== undefined && object.ballot !== null) {
+    if (
+      object.anonymousBallot !== undefined &&
+      object.anonymousBallot !== null
+    ) {
       message.body = {
-        $case: "ballot",
-        ballot: BallotBody.fromJSON(object.ballot),
+        $case: "anonymousBallot",
+        anonymousBallot: BallotBody.fromJSON(object.anonymousBallot),
       };
     }
     return message;
@@ -198,9 +173,9 @@ export const Ballot = {
       (obj.signedBallot = message.body?.signedBallot
         ? SignedBallot.toJSON(message.body?.signedBallot)
         : undefined);
-    message.body?.$case === "ballot" &&
-      (obj.ballot = message.body?.ballot
-        ? BallotBody.toJSON(message.body?.ballot)
+    message.body?.$case === "anonymousBallot" &&
+      (obj.anonymousBallot = message.body?.anonymousBallot
+        ? BallotBody.toJSON(message.body?.anonymousBallot)
         : undefined);
     return obj;
   },
@@ -218,13 +193,13 @@ export const Ballot = {
       };
     }
     if (
-      object.body?.$case === "ballot" &&
-      object.body?.ballot !== undefined &&
-      object.body?.ballot !== null
+      object.body?.$case === "anonymousBallot" &&
+      object.body?.anonymousBallot !== undefined &&
+      object.body?.anonymousBallot !== null
     ) {
       message.body = {
-        $case: "ballot",
-        ballot: BallotBody.fromPartial(object.body.ballot),
+        $case: "anonymousBallot",
+        anonymousBallot: BallotBody.fromPartial(object.body.anonymousBallot),
       };
     }
     return message;
@@ -474,7 +449,7 @@ export const SignedBallot = {
         : new Uint8Array();
     message.signatureType =
       object.signatureType !== undefined && object.signatureType !== null
-        ? signedBallot_SignaturesFromJSON(object.signatureType)
+        ? signatureTypeFromJSON(object.signatureType)
         : 0;
     return message;
   },
@@ -490,9 +465,7 @@ export const SignedBallot = {
         message.signature !== undefined ? message.signature : new Uint8Array()
       ));
     message.signatureType !== undefined &&
-      (obj.signatureType = signedBallot_SignaturesToJSON(
-        message.signatureType
-      ));
+      (obj.signatureType = signatureTypeToJSON(message.signatureType));
     return obj;
   },
 
@@ -523,9 +496,9 @@ export const Vote = {
         writer.uint32(90).fork()
       ).ldelim();
     }
-    if (message.body?.$case === "sihgleChoice") {
+    if (message.body?.$case === "singleChoice") {
       SingleChoiceVote.encode(
-        message.body.sihgleChoice,
+        message.body.singleChoice,
         writer.uint32(98).fork()
       ).ldelim();
     }
@@ -571,8 +544,8 @@ export const Vote = {
           break;
         case 12:
           message.body = {
-            $case: "sihgleChoice",
-            sihgleChoice: SingleChoiceVote.decode(reader, reader.uint32()),
+            $case: "singleChoice",
+            singleChoice: SingleChoiceVote.decode(reader, reader.uint32()),
           };
           break;
         case 13:
@@ -615,10 +588,10 @@ export const Vote = {
         approval: ApprovalVote.fromJSON(object.approval),
       };
     }
-    if (object.sihgleChoice !== undefined && object.sihgleChoice !== null) {
+    if (object.singleChoice !== undefined && object.singleChoice !== null) {
       message.body = {
-        $case: "sihgleChoice",
-        sihgleChoice: SingleChoiceVote.fromJSON(object.sihgleChoice),
+        $case: "singleChoice",
+        singleChoice: SingleChoiceVote.fromJSON(object.singleChoice),
       };
     }
     if (object.quadratic !== undefined && object.quadratic !== null) {
@@ -652,9 +625,9 @@ export const Vote = {
       (obj.approval = message.body?.approval
         ? ApprovalVote.toJSON(message.body?.approval)
         : undefined);
-    message.body?.$case === "sihgleChoice" &&
-      (obj.sihgleChoice = message.body?.sihgleChoice
-        ? SingleChoiceVote.toJSON(message.body?.sihgleChoice)
+    message.body?.$case === "singleChoice" &&
+      (obj.singleChoice = message.body?.singleChoice
+        ? SingleChoiceVote.toJSON(message.body?.singleChoice)
         : undefined);
     message.body?.$case === "quadratic" &&
       (obj.quadratic = message.body?.quadratic
@@ -694,13 +667,13 @@ export const Vote = {
       };
     }
     if (
-      object.body?.$case === "sihgleChoice" &&
-      object.body?.sihgleChoice !== undefined &&
-      object.body?.sihgleChoice !== null
+      object.body?.$case === "singleChoice" &&
+      object.body?.singleChoice !== undefined &&
+      object.body?.singleChoice !== null
     ) {
       message.body = {
-        $case: "sihgleChoice",
-        sihgleChoice: SingleChoiceVote.fromPartial(object.body.sihgleChoice),
+        $case: "singleChoice",
+        singleChoice: SingleChoiceVote.fromPartial(object.body.singleChoice),
       };
     }
     if (

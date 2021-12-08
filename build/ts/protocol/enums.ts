@@ -92,6 +92,38 @@ export function censusTypeToJSON(object: CensusType): string {
   }
 }
 
+export enum SignatureType {
+  NONE = 0,
+  SECP256K1 = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function signatureTypeFromJSON(object: any): SignatureType {
+  switch (object) {
+    case 0:
+    case "NONE":
+      return SignatureType.NONE;
+    case 1:
+    case "SECP256K1":
+      return SignatureType.SECP256K1;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SignatureType.UNRECOGNIZED;
+  }
+}
+
+export function signatureTypeToJSON(object: SignatureType): string {
+  switch (object) {
+    case SignatureType.NONE:
+      return "NONE";
+    case SignatureType.SECP256K1:
+      return "SECP256K1";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (util.Long !== Long) {

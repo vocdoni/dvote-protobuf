@@ -12,15 +12,13 @@ import 'package:protobuf/protobuf.dart' as $pb;
 import 'transactions.pb.dart' as $0;
 import 'service.pb.dart' as $1;
 
-import 'messages.pbenum.dart';
-
-export 'messages.pbenum.dart';
+import 'enums.pbenum.dart' as $2;
 
 class Message extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Message', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'body', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
-    ..e<Message_Signatures>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureType', $pb.PbFieldType.OE, protoName: 'signatureType', defaultOrMaker: Message_Signatures.NONE, valueOf: Message_Signatures.valueOf, enumValues: Message_Signatures.values)
+    ..e<$2.SignatureType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureType', $pb.PbFieldType.OE, protoName: 'signatureType', defaultOrMaker: $2.SignatureType.NONE, valueOf: $2.SignatureType.valueOf, enumValues: $2.SignatureType.values)
     ..hasRequiredFields = false
   ;
 
@@ -28,7 +26,7 @@ class Message extends $pb.GeneratedMessage {
   factory Message({
     $core.List<$core.int>? body,
     $core.List<$core.int>? signature,
-    Message_Signatures? signatureType,
+    $2.SignatureType? signatureType,
   }) {
     final _result = create();
     if (body != null) {
@@ -82,9 +80,9 @@ class Message extends $pb.GeneratedMessage {
   void clearSignature() => clearField(2);
 
   @$pb.TagNumber(3)
-  Message_Signatures get signatureType => $_getN(2);
+  $2.SignatureType get signatureType => $_getN(2);
   @$pb.TagNumber(3)
-  set signatureType(Message_Signatures v) { setField(3, v); }
+  set signatureType($2.SignatureType v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasSignatureType() => $_has(2);
   @$pb.TagNumber(3)

@@ -5,6 +5,7 @@ package dvote.types.v2;
 
 option go_package = "go.vocdoni.io/proto/build/go/models/v2";
 
+import "protocol/enums.proto";
 import "protocol/census.proto";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,48 +18,44 @@ import "protocol/census.proto";
 // - In non-anonymous elections, a `SignedBallot` must wrap the inner `BallotBody`, with the census proofs defined on the election settings.
 
 message Ballot {
-	oneof body {
-		// When Election.privacy == None
-		SignedBallot signedBallot = 1;
+    oneof body {
+        // When Election.privacy == None
+        SignedBallot signedBallot = 1;
 
-		// When Election.privacy != None
-		BallotBody ballot = 2;
-	}
+        // When Election.privacy != None
+        BallotBody anonymousBallot = 2;
+    }
 }
 
 message BallotBody {
-	bytes electionId = 1;
-	bytes nullifier = 2;
+    bytes electionId = 1;
+    bytes nullifier = 2;
     
     // The proof(s), according to the Election census types defined
     // Or [ProofZkSnark] if anonymous
-	repeated Proof proofs = 3;
-	
-	message VoteList {
-		// Submitting only only one vote?
+    repeated Proof proofs = 3;
+    
+    message VoteList {
+        // Submitting only only one vote?
         bool partial = 1;
         
         // [v1, v2, v3...] when partial == false
         // [v3] when partial == true
-		repeated Vote votes = 2;
+        repeated Vote votes = 2;
 
         // Index of the proposal being submitted.
         // Set to 0 when `partial = false` (ignored)
-		int32 submittedIndex = 3;
-	}
-	VoteList votes = 4;
+        int32 submittedIndex = 3;
+    }
+    VoteList votes = 4;
 }
 
 
 message SignedBallot {
-	bytes ballot = 1; // Serialized {BallotBody} bytes
-	bytes signature = 2; // sign(bytes(BallotBody))
+    bytes ballot = 1; // Serialized {BallotBody} bytes
+    bytes signature = 2; // sign(bytes(BallotBody))
 
-	enum Signatures {
-		None = 0;
-		Secp256k1 = 1;
-	}
-	Signatures signatureType = 3;
+    SignatureType signatureType = 3;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -66,51 +63,51 @@ message SignedBallot {
 ///////////////////////////////////////////////////////////////////////////////
 
 message Vote {
-	oneof body {
+    oneof body {
         // Wrapper
-		EncryptedVote encrypted = 1;
+        EncryptedVote encrypted = 1;
 
         // Values
-		ApprovalVote approval = 11;
-		SingleChoiceVote sihgleChoice = 12;
-		QuadraticVote quadratic = 13;
-		RankedVote ranked = 14;
-		SpreadVote spread = 15;
-	}
+        ApprovalVote approval = 11;
+        SingleChoiceVote singleChoice = 12;
+        QuadraticVote quadratic = 13;
+        RankedVote ranked = 14;
+        SpreadVote spread = 15;
+    }
 }
 
 message EncryptedVote {
-	// Encrypted bytes of {Vote}  (recursive)
+    // Encrypted bytes of {Vote}  (recursive)
     bytes payload = 1;
-	// Keys (in order) used to encrypt the payload
+    // Keys (in order) used to encrypt the payload
     repeated int32 encryptionKeyIndexes = 2;
 }
 message ApprovalVote {
-	bool approved = 1;
-	// 16 random bytes
+    bool approved = 1;
+    // 16 random bytes
     bytes nonce = 2;
 }
 message SingleChoiceVote {
-	// Index of the chosen option
+    // Index of the chosen option
     int32 choice = 1;
-	// 16 random bytes
+    // 16 random bytes
     bytes nonce = 2;
 }
 message QuadraticVote {
-	// Points assigned to each choice index
+    // Points assigned to each choice index
     repeated int32 choicePoints = 1;
-	// 16 random bytes
+    // 16 random bytes
     bytes nonce = 2;
 }
 message RankedVote {
-	// Ranking of the chosen indexes, by preference
+    // Ranking of the chosen indexes, by preference
     repeated int32 ranking = 1;
-	// 16 random bytes
+    // 16 random bytes
     bytes nonce = 2;
 }
 message SpreadVote {
-	// Percent of weight assigned to each choice (from 0 to 100_00)
+    // Percent of weight assigned to each choice (from 0 to 100_00)
     repeated int32 percentages = 1;
-	// 16 random bytes
+    // 16 random bytes
     bytes nonce = 2;
 }

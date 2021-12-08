@@ -2,6 +2,11 @@
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import * as Long from "long";
 import {
+  SignatureType,
+  signatureTypeFromJSON,
+  signatureTypeToJSON,
+} from "../protocol/enums";
+import {
   SetOrganization,
   Transfer,
   Mint,
@@ -50,39 +55,7 @@ export interface Message {
    * - Performing a read-only operation
    */
   signature?: Uint8Array | undefined;
-  signatureType: Message_Signatures;
-}
-
-export enum Message_Signatures {
-  NONE = 0,
-  SECP256K1 = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function message_SignaturesFromJSON(object: any): Message_Signatures {
-  switch (object) {
-    case 0:
-    case "NONE":
-      return Message_Signatures.NONE;
-    case 1:
-    case "SECP256K1":
-      return Message_Signatures.SECP256K1;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Message_Signatures.UNRECOGNIZED;
-  }
-}
-
-export function message_SignaturesToJSON(object: Message_Signatures): string {
-  switch (object) {
-    case Message_Signatures.NONE:
-      return "NONE";
-    case Message_Signatures.SECP256K1:
-      return "SECP256K1";
-    default:
-      return "UNKNOWN";
-  }
+  signatureType: SignatureType;
 }
 
 /** The body contains the serialized bytes from a `Body`, which can host three types of interactions. */
@@ -232,7 +205,7 @@ export const Message = {
         : undefined;
     message.signatureType =
       object.signatureType !== undefined && object.signatureType !== null
-        ? message_SignaturesFromJSON(object.signatureType)
+        ? signatureTypeFromJSON(object.signatureType)
         : 0;
     return message;
   },
@@ -249,7 +222,7 @@ export const Message = {
           ? base64FromBytes(message.signature)
           : undefined);
     message.signatureType !== undefined &&
-      (obj.signatureType = message_SignaturesToJSON(message.signatureType));
+      (obj.signatureType = signatureTypeToJSON(message.signatureType));
     return obj;
   },
 

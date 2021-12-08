@@ -13,7 +13,7 @@ const Ballot$json = const {
   '1': 'Ballot',
   '2': const [
     const {'1': 'signedBallot', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.SignedBallot', '9': 0, '10': 'signedBallot'},
-    const {'1': 'ballot', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.BallotBody', '9': 0, '10': 'ballot'},
+    const {'1': 'anonymousBallot', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.BallotBody', '9': 0, '10': 'anonymousBallot'},
   ],
   '8': const [
     const {'1': 'body'},
@@ -21,7 +21,7 @@ const Ballot$json = const {
 };
 
 /// Descriptor for `Ballot`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List ballotDescriptor = $convert.base64Decode('CgZCYWxsb3QSQgoMc2lnbmVkQmFsbG90GAEgASgLMhwuZHZvdGUudHlwZXMudjIuU2lnbmVkQmFsbG90SABSDHNpZ25lZEJhbGxvdBI0CgZiYWxsb3QYAiABKAsyGi5kdm90ZS50eXBlcy52Mi5CYWxsb3RCb2R5SABSBmJhbGxvdEIGCgRib2R5');
+final $typed_data.Uint8List ballotDescriptor = $convert.base64Decode('CgZCYWxsb3QSQgoMc2lnbmVkQmFsbG90GAEgASgLMhwuZHZvdGUudHlwZXMudjIuU2lnbmVkQmFsbG90SABSDHNpZ25lZEJhbGxvdBJGCg9hbm9ueW1vdXNCYWxsb3QYAiABKAsyGi5kdm90ZS50eXBlcy52Mi5CYWxsb3RCb2R5SABSD2Fub255bW91c0JhbGxvdEIGCgRib2R5');
 @$core.Deprecated('Use ballotBodyDescriptor instead')
 const BallotBody$json = const {
   '1': 'BallotBody',
@@ -52,29 +52,19 @@ const SignedBallot$json = const {
   '2': const [
     const {'1': 'ballot', '3': 1, '4': 1, '5': 12, '10': 'ballot'},
     const {'1': 'signature', '3': 2, '4': 1, '5': 12, '10': 'signature'},
-    const {'1': 'signatureType', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.SignedBallot.Signatures', '10': 'signatureType'},
-  ],
-  '4': const [SignedBallot_Signatures$json],
-};
-
-@$core.Deprecated('Use signedBallotDescriptor instead')
-const SignedBallot_Signatures$json = const {
-  '1': 'Signatures',
-  '2': const [
-    const {'1': 'None', '2': 0},
-    const {'1': 'Secp256k1', '2': 1},
+    const {'1': 'signatureType', '3': 3, '4': 1, '5': 14, '6': '.dvote.types.v2.SignatureType', '10': 'signatureType'},
   ],
 };
 
 /// Descriptor for `SignedBallot`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List signedBallotDescriptor = $convert.base64Decode('CgxTaWduZWRCYWxsb3QSFgoGYmFsbG90GAEgASgMUgZiYWxsb3QSHAoJc2lnbmF0dXJlGAIgASgMUglzaWduYXR1cmUSTQoNc2lnbmF0dXJlVHlwZRgDIAEoDjInLmR2b3RlLnR5cGVzLnYyLlNpZ25lZEJhbGxvdC5TaWduYXR1cmVzUg1zaWduYXR1cmVUeXBlIiUKClNpZ25hdHVyZXMSCAoETm9uZRAAEg0KCVNlY3AyNTZrMRAB');
+final $typed_data.Uint8List signedBallotDescriptor = $convert.base64Decode('CgxTaWduZWRCYWxsb3QSFgoGYmFsbG90GAEgASgMUgZiYWxsb3QSHAoJc2lnbmF0dXJlGAIgASgMUglzaWduYXR1cmUSQwoNc2lnbmF0dXJlVHlwZRgDIAEoDjIdLmR2b3RlLnR5cGVzLnYyLlNpZ25hdHVyZVR5cGVSDXNpZ25hdHVyZVR5cGU=');
 @$core.Deprecated('Use voteDescriptor instead')
 const Vote$json = const {
   '1': 'Vote',
   '2': const [
     const {'1': 'encrypted', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.EncryptedVote', '9': 0, '10': 'encrypted'},
     const {'1': 'approval', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v2.ApprovalVote', '9': 0, '10': 'approval'},
-    const {'1': 'sihgleChoice', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.SingleChoiceVote', '9': 0, '10': 'sihgleChoice'},
+    const {'1': 'singleChoice', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.SingleChoiceVote', '9': 0, '10': 'singleChoice'},
     const {'1': 'quadratic', '3': 13, '4': 1, '5': 11, '6': '.dvote.types.v2.QuadraticVote', '9': 0, '10': 'quadratic'},
     const {'1': 'ranked', '3': 14, '4': 1, '5': 11, '6': '.dvote.types.v2.RankedVote', '9': 0, '10': 'ranked'},
     const {'1': 'spread', '3': 15, '4': 1, '5': 11, '6': '.dvote.types.v2.SpreadVote', '9': 0, '10': 'spread'},
@@ -85,7 +75,7 @@ const Vote$json = const {
 };
 
 /// Descriptor for `Vote`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List voteDescriptor = $convert.base64Decode('CgRWb3RlEj0KCWVuY3J5cHRlZBgBIAEoCzIdLmR2b3RlLnR5cGVzLnYyLkVuY3J5cHRlZFZvdGVIAFIJZW5jcnlwdGVkEjoKCGFwcHJvdmFsGAsgASgLMhwuZHZvdGUudHlwZXMudjIuQXBwcm92YWxWb3RlSABSCGFwcHJvdmFsEkYKDHNpaGdsZUNob2ljZRgMIAEoCzIgLmR2b3RlLnR5cGVzLnYyLlNpbmdsZUNob2ljZVZvdGVIAFIMc2loZ2xlQ2hvaWNlEj0KCXF1YWRyYXRpYxgNIAEoCzIdLmR2b3RlLnR5cGVzLnYyLlF1YWRyYXRpY1ZvdGVIAFIJcXVhZHJhdGljEjQKBnJhbmtlZBgOIAEoCzIaLmR2b3RlLnR5cGVzLnYyLlJhbmtlZFZvdGVIAFIGcmFua2VkEjQKBnNwcmVhZBgPIAEoCzIaLmR2b3RlLnR5cGVzLnYyLlNwcmVhZFZvdGVIAFIGc3ByZWFkQgYKBGJvZHk=');
+final $typed_data.Uint8List voteDescriptor = $convert.base64Decode('CgRWb3RlEj0KCWVuY3J5cHRlZBgBIAEoCzIdLmR2b3RlLnR5cGVzLnYyLkVuY3J5cHRlZFZvdGVIAFIJZW5jcnlwdGVkEjoKCGFwcHJvdmFsGAsgASgLMhwuZHZvdGUudHlwZXMudjIuQXBwcm92YWxWb3RlSABSCGFwcHJvdmFsEkYKDHNpbmdsZUNob2ljZRgMIAEoCzIgLmR2b3RlLnR5cGVzLnYyLlNpbmdsZUNob2ljZVZvdGVIAFIMc2luZ2xlQ2hvaWNlEj0KCXF1YWRyYXRpYxgNIAEoCzIdLmR2b3RlLnR5cGVzLnYyLlF1YWRyYXRpY1ZvdGVIAFIJcXVhZHJhdGljEjQKBnJhbmtlZBgOIAEoCzIaLmR2b3RlLnR5cGVzLnYyLlJhbmtlZFZvdGVIAFIGcmFua2VkEjQKBnNwcmVhZBgPIAEoCzIaLmR2b3RlLnR5cGVzLnYyLlNwcmVhZFZvdGVIAFIGc3ByZWFkQgYKBGJvZHk=');
 @$core.Deprecated('Use encryptedVoteDescriptor instead')
 const EncryptedVote$json = const {
   '1': 'EncryptedVote',

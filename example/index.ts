@@ -7,6 +7,7 @@ import { createOrganization, getOrganization } from "./sections/organization"
 import { claimTokens, mintTokens, transferTokens } from "./sections/tokens"
 import { addCensusKeys, getArboProof, getCensusRoot, getCensusSize, getErc20Proof, newCensus, publishCensus, registerVoterKey } from "./sections/census"
 import { createAnonymousElection, createAnonymousPreregisterElection, createCspBlindElection, createCspElection, createDualCensusElection, createErc20Election, createMiniMeElection, createNonRealTimeResultsElection, createSimpleElection, createStepByStepElection, getElection, getElectionKeys, setElectionStatus, setProposalStatus } from "./sections/election"
+import { encodeAnonymousBallot, encodeSignedBallot, encodeSignedEncryptedBallot, encodeSignedStepByStepBallot } from "./sections/ballot"
 
 function main() {
     // Transacations
@@ -42,12 +43,16 @@ function main() {
     // Requests
     getOrganization()
     getElection()
+
     getElectionKeys()
     getArboProof()
     getErc20Proof()
 
     // Computations
-    // encodeBallot()
+    encodeSignedBallot()
+    encodeSignedEncryptedBallot()
+    encodeSignedStepByStepBallot()
+    encodeAnonymousBallot()
 
     // Transactions
     // submitVote()
