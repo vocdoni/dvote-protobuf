@@ -42,35 +42,35 @@ message CensusCsp {
 message CensusErc20 {
 	bytes tokenAddress = 1;
 	int32 balanceMapSlot = 2;
-	StorageProofErc20 proof = 3;
+	optional StorageProofErc20 proof = 3;
 	// Ethereum block at which the state root is taken
 	int32 sourceEthereumBlock = 4;
 }
 message CensusErc721 {
 	// bytes tokenAddress = 1;
 	// int32 balanceMapSlot = 2;
-	// StorageProofErc721 proof = 3;
+	// optional StorageProofErc721 proof = 3;
 	// Ethereum block at which the state root is taken
 	// int32 sourceEthereumBlock = 4;
 }
 message CensusErc1155 {
 	// bytes tokenAddress = 1;
 	// int32 balanceMapSlot = 2;
-	// StorageProofErc1155 proof = 3;
+	// optional StorageProofErc1155 proof = 3;
 	// Ethereum block at which the state root is taken
 	// int32 sourceEthereumBlock = 4;
 }
 message CensusErc777 {
 	// bytes tokenAddress = 1;
 	// int32 balanceMapSlot = 2;
-	// StorageProofErc777 proof = 3;
+	// optional StorageProofErc777 proof = 3;
 	// Ethereum block at which the state root is taken
 	// int32 sourceEthereumBlock = 4;
 }
 message CensusErcMiniMe {
 	bytes tokenAddress = 1;
 	int32 balanceMapSlot = 2;
-	StorageProofMiniMe proof = 3;
+	optional StorageProofMiniMe proof = 3;
 	// Ethereum block at which the state root is taken
 	int32 sourceEthereumBlock = 4;
 }

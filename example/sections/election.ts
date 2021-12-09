@@ -7,7 +7,7 @@ import { NewElection, SetElectionStatus, SetProposalStatus, SubmitBallot } from 
 import { Transaction, Request } from "../../build/ts/protocol/messages"
 import { decodeRequest, decodeResponse, decodeTransaction, decodeTransactionReceipt, encodeRequest, encodeResponseError, encodeResponseSuccess, encodeTransaction, encodeTransactionError, encodeTransactionSuccess } from "../common/messages"
 import { ApprovalProposal, Election, Lifecycle_Types, Privacy_CensusProofs, Proposal, QuadraticProposal, RankedProposal, SingleChoiceProposal, SpreadProposal } from "../../build/ts/protocol/election"
-import { CensusArbo, CensusCsp, CensusErc20, CensusNone, StorageProofErc20 } from "../../build/ts/protocol/census"
+import { CensusArbo, CensusCsp, CensusErc20, CensusErcMiniMe, CensusNone, StorageProofErc20, StorageProofMiniMe } from "../../build/ts/protocol/census"
 import { ProposalStatus, SignatureType } from "../../build/ts/protocol/enums"
 import { GetBallot, GetBallotResponse, GetElection, GetElectionBallots, GetElectionBallotsResponse, GetElectionCircuitInfo, GetElectionCircuitInfoResponse, GetElectionKeys, GetElectionKeysResponse, GetElectionList, GetElectionListResponse, GetElectionResponse, GetElectionResults, GetElectionResultsResponse, GetElectionResultsWeight, GetElectionResultsWeightResponse } from "../../build/ts/protocol/service"
 import { Reader } from "protobufjs"
@@ -226,11 +226,11 @@ export function createErc20Election() {
         balanceMapSlot: 2,
         tokenAddress: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
         // Obtanied from the census service
-        proof: StorageProofErc20.fromPartial({
+        proof: {
             key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]),
             proof: [new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])],
             value: new Uint8Array([1, 0, 0, 0, 0, 0])
-        }),
+        },
         sourceEthereumBlock: 12345678
     }
 
@@ -290,22 +290,22 @@ export function createMiniMeElection() {
     console.log("Wrapping NewElection (MiniMe) transaction")
 
     // Census layers
-    const erc20Census: CensusErc20 = {
+    const ercMiniMeCensus: CensusErcMiniMe = {
         balanceMapSlot: 2,
         tokenAddress: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
         // Obtanied from the census service
-        proof: StorageProofErc20.fromPartial({
+        proof: {
             key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]),
             proof: [new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])],
-            value: new Uint8Array([1, 0, 0, 0, 0, 0])
-        }),
+            value: new Uint8Array([1, 0, 0, 0, 0, 0]),
+        },
         sourceEthereumBlock: 12345678
     }
 
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "erc20", erc20: erc20Census } },
+        mainCensus: { body: { $case: "ercMiniMe", ercMiniMe: ercMiniMeCensus } },
         secondaryCensus: censusNone,
         tertiaryCensus: censusNone,
         censusSize: 500,    // affects how many votes are expected at most
@@ -367,11 +367,11 @@ export function createDualCensusElection() {
         balanceMapSlot: 2,
         tokenAddress: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
         // Obtanied from the census service
-        proof: StorageProofErc20.fromPartial({
+        proof: {
             key: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]),
             proof: [new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])],
             value: new Uint8Array([1, 0, 0, 0, 0, 0])
-        }),
+        },
         sourceEthereumBlock: 12345678
     }
 

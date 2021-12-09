@@ -64,13 +64,16 @@ const CensusErc20$json = const {
   '2': const [
     const {'1': 'tokenAddress', '3': 1, '4': 1, '5': 12, '10': 'tokenAddress'},
     const {'1': 'balanceMapSlot', '3': 2, '4': 1, '5': 5, '10': 'balanceMapSlot'},
-    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc20', '10': 'proof'},
+    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofErc20', '9': 0, '10': 'proof', '17': true},
     const {'1': 'sourceEthereumBlock', '3': 4, '4': 1, '5': 5, '10': 'sourceEthereumBlock'},
+  ],
+  '8': const [
+    const {'1': '_proof'},
   ],
 };
 
 /// Descriptor for `CensusErc20`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusErc20Descriptor = $convert.base64Decode('CgtDZW5zdXNFcmMyMBIiCgx0b2tlbkFkZHJlc3MYASABKAxSDHRva2VuQWRkcmVzcxImCg5iYWxhbmNlTWFwU2xvdBgCIAEoBVIOYmFsYW5jZU1hcFNsb3QSNwoFcHJvb2YYAyABKAsyIS5kdm90ZS50eXBlcy52Mi5TdG9yYWdlUHJvb2ZFcmMyMFIFcHJvb2YSMAoTc291cmNlRXRoZXJldW1CbG9jaxgEIAEoBVITc291cmNlRXRoZXJldW1CbG9jaw==');
+final $typed_data.Uint8List censusErc20Descriptor = $convert.base64Decode('CgtDZW5zdXNFcmMyMBIiCgx0b2tlbkFkZHJlc3MYASABKAxSDHRva2VuQWRkcmVzcxImCg5iYWxhbmNlTWFwU2xvdBgCIAEoBVIOYmFsYW5jZU1hcFNsb3QSPAoFcHJvb2YYAyABKAsyIS5kdm90ZS50eXBlcy52Mi5TdG9yYWdlUHJvb2ZFcmMyMEgAUgVwcm9vZogBARIwChNzb3VyY2VFdGhlcmV1bUJsb2NrGAQgASgFUhNzb3VyY2VFdGhlcmV1bUJsb2NrQggKBl9wcm9vZg==');
 @$core.Deprecated('Use censusErc721Descriptor instead')
 const CensusErc721$json = const {
   '1': 'CensusErc721',
@@ -98,13 +101,16 @@ const CensusErcMiniMe$json = const {
   '2': const [
     const {'1': 'tokenAddress', '3': 1, '4': 1, '5': 12, '10': 'tokenAddress'},
     const {'1': 'balanceMapSlot', '3': 2, '4': 1, '5': 5, '10': 'balanceMapSlot'},
-    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofMiniMe', '10': 'proof'},
+    const {'1': 'proof', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.StorageProofMiniMe', '9': 0, '10': 'proof', '17': true},
     const {'1': 'sourceEthereumBlock', '3': 4, '4': 1, '5': 5, '10': 'sourceEthereumBlock'},
+  ],
+  '8': const [
+    const {'1': '_proof'},
   ],
 };
 
 /// Descriptor for `CensusErcMiniMe`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusErcMiniMeDescriptor = $convert.base64Decode('Cg9DZW5zdXNFcmNNaW5pTWUSIgoMdG9rZW5BZGRyZXNzGAEgASgMUgx0b2tlbkFkZHJlc3MSJgoOYmFsYW5jZU1hcFNsb3QYAiABKAVSDmJhbGFuY2VNYXBTbG90EjgKBXByb29mGAMgASgLMiIuZHZvdGUudHlwZXMudjIuU3RvcmFnZVByb29mTWluaU1lUgVwcm9vZhIwChNzb3VyY2VFdGhlcmV1bUJsb2NrGAQgASgFUhNzb3VyY2VFdGhlcmV1bUJsb2Nr');
+final $typed_data.Uint8List censusErcMiniMeDescriptor = $convert.base64Decode('Cg9DZW5zdXNFcmNNaW5pTWUSIgoMdG9rZW5BZGRyZXNzGAEgASgMUgx0b2tlbkFkZHJlc3MSJgoOYmFsYW5jZU1hcFNsb3QYAiABKAVSDmJhbGFuY2VNYXBTbG90Ej0KBXByb29mGAMgASgLMiIuZHZvdGUudHlwZXMudjIuU3RvcmFnZVByb29mTWluaU1lSABSBXByb29miAEBEjAKE3NvdXJjZUV0aGVyZXVtQmxvY2sYBCABKAVSE3NvdXJjZUV0aGVyZXVtQmxvY2tCCAoGX3Byb29m');
 @$core.Deprecated('Use proofDescriptor instead')
 const Proof$json = const {
   '1': 'Proof',

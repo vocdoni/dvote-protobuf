@@ -42,11 +42,11 @@ export function newCensus() {
 
     const censusSalt = new Uint8Array([10, 20, 30, 40, 50, 60, 70, 80])
 
-    const requestData = NewCensus.fromPartial({
+    const requestData: NewCensus = {
         censusSalt,
         censusType: CensusType.ARBO_BLAKE2B,
         managerPublicKeys: [dummyPublicKey]
-    })
+    }
     const request: Request = {
         body: {
             $case: "newCensus",
@@ -80,11 +80,11 @@ export function addCensusKeys() {
         { key: dummyPublicKey.reverse(), value: new Uint8Array([125]) },
         // ...
     ]
-    const requestData = AddCensusKeys.fromPartial({
+    const requestData: AddCensusKeys = {
         censusId: "0x1234",
         digested: false,
         entries: newEntries
-    })
+    }
     const request: Request = {
         body: {
             $case: "addCensusKeys",
@@ -113,9 +113,9 @@ export function getCensusRoot() {
     console.log("-----------------------------------------------")
     console.log("Wrapping GetCensusRoot request")
 
-    const requestData = GetCensusRoot.fromPartial({
+    const requestData: GetCensusRoot = {
         censusId: "0x1234"
-    })
+    }
     const request: Request = {
         body: {
             $case: "getCensusRoot",
@@ -144,9 +144,9 @@ export function getCensusSize() {
     console.log("-----------------------------------------------")
     console.log("Wrapping GetCensusSize request")
 
-    const requestData = GetCensusSize.fromPartial({
+    const requestData: GetCensusSize = {
         censusId: "0x1234"
-    })
+    }
     const request: Request = {
         body: {
             $case: "getCensusSize",
@@ -175,9 +175,9 @@ export function publishCensus() {
     console.log("-----------------------------------------------")
     console.log("Wrapping PublishCensus request")
 
-    const requestData = PublishCensus.fromPartial({
+    const requestData: PublishCensus = {
         censusId: "0x1234"
-    })
+    }
     const request: Request = {
         body: {
             $case: "publishCensus",
@@ -207,7 +207,7 @@ export function getArboProof() {
     console.log("Wrapping GetCensusProof (Arbo) request")
 
     // By indicating CensusArbo, we are telling the CS that we want a proof for this census
-    const targetCensus = Census.fromPartial({
+    const targetCensus: Census = {
         body: {
             $case: "arbo",
             arbo: {
@@ -215,11 +215,11 @@ export function getArboProof() {
                 censusUri: "ipfs://1234..."
             }
         }
-    })
-    const requestData = GetCensusProof.fromPartial({
+    }
+    const requestData: GetCensusProof = {
         census: targetCensus,
         key: dummyPublicKey
-    })
+    }
     const request: Request = {
         body: {
             $case: "getCensusProof",
@@ -249,19 +249,20 @@ export function getErc20Proof() {
     console.log("Wrapping GetCensusProof (ERC20) request")
 
     // By indicating CensusErc20, we are telling the CS that we want a proof for this census
-    const targetCensus = Census.fromPartial({
+    const targetCensus: Census = {
         body: {
             $case: "erc20",
             erc20: {
                 balanceMapSlot: 2,
-                tokenAddress: new Uint8Array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200])
+                tokenAddress: new Uint8Array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]),
+                sourceEthereumBlock: 1234567
             }
         }
-    })
-    const requestData = GetCensusProof.fromPartial({
+    }
+    const requestData: GetCensusProof = {
         census: targetCensus,
         key: dummyPublicKey
-    })
+    }
     const request: Request = {
         body: {
             $case: "getCensusProof",
@@ -476,7 +477,7 @@ function simulateGetCensusProof(request: GetCensusProof, requestId: Uint8Array) 
             getCensusProofResponseBytes = GetCensusProofResponse.encode({ proof: arboProof }).finish()
             break
         case "erc20":
-            const erc20Proof = Proof.fromPartial({
+            const erc20Proof: Proof = {
                 body: {
                     $case: "erc20",
                     erc20: {
@@ -485,7 +486,7 @@ function simulateGetCensusProof(request: GetCensusProof, requestId: Uint8Array) 
                         proof: [new Uint8Array([10, 20, 30]), new Uint8Array([40, 50, 60]), new Uint8Array([70, 80, 90])]
                     }
                 }
-            })
+            }
             getCensusProofResponseBytes = GetCensusProofResponse.encode({ proof: erc20Proof }).finish()
             break
         default:

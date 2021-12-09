@@ -39,13 +39,13 @@ export function encodeTransaction(tx: Transaction, signingKey: Uint8Array) {
 export function encodeTransactionSuccess(txHash: Uint8Array, requestId: Uint8Array, signingKey: Uint8Array): Uint8Array {
     console.log("Encoding the success receipt")
 
-    const successReceipt = TransactionSuccess.fromPartial({ hash: txHash })
-    const txReceipt = TransactionReceipt.fromPartial({
+    const successReceipt: TransactionSuccess = { hash: txHash }
+    const txReceipt: TransactionReceipt = {
         body: {
             $case: "success",
             success: successReceipt
         }
-    })
+    }
 
     console.log("Wrapping in a Body (oneof)")
 
@@ -73,13 +73,13 @@ export function encodeTransactionSuccess(txHash: Uint8Array, requestId: Uint8Arr
 export function encodeTransactionError(message: string, code: number, requestId: Uint8Array, signingKey: Uint8Array): Uint8Array {
     console.log("Encoding the error receipt")
 
-    const errorReceipt = TransactionError.fromPartial({ message, code })
-    const txReceipt = TransactionReceipt.fromPartial({
+    const errorReceipt: TransactionError = { message, code }
+    const txReceipt: TransactionReceipt = {
         body: {
             $case: "error",
             error: errorReceipt
         }
-    })
+    }
 
     console.log("Wrapping in a Body (oneof)")
 
@@ -134,8 +134,8 @@ export function encodeRequest(request: Request, signingKey?: Uint8Array) {
 export function encodeResponseSuccess(responseBody: Uint8Array, requestId: Uint8Array, signingKey: Uint8Array) {
     console.log("Wrapping response in a Body")
 
-    const responseSuccess = ResponseSuccess.fromPartial({ body: responseBody })
-    const response = Response.fromPartial({ body: { $case: "success", success: responseSuccess } })
+    const responseSuccess: ResponseSuccess = { body: responseBody }
+    const response: Response = { body: { $case: "success", success: responseSuccess } }
 
     const timestamp = Math.floor(Date.now() / 1000)
 
@@ -161,8 +161,8 @@ export function encodeResponseSuccess(responseBody: Uint8Array, requestId: Uint8
 export function encodeResponseError(message: string, responseBody: Uint8Array, requestId: Uint8Array, signingKey: Uint8Array) {
     console.log("Wrapping response in a Body")
 
-    const responseError = ResponseError.fromPartial({ message, body: responseBody ?? new Uint8Array() })
-    const response = Response.fromPartial({ body: { $case: "error", error: responseError } })
+    const responseError: ResponseError = { message, body: responseBody ?? new Uint8Array() }
+    const response: Response = { body: { $case: "error", error: responseError } }
 
     const timestamp = Math.floor(Date.now() / 1000)
 

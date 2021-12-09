@@ -18,12 +18,12 @@ const dummySigningKey = new Uint8Array()
 
 export function createOrganization() {
     console.log("-----------------------------------------------")
-    console.log("Encoding organizations parameters")
+    console.log("Encoding organization parameters")
 
-    const org = Organization.fromPartial({
+    const org: Organization = {
         metadataUri: "ipfs://1234...",
         managers: []
-    })
+    }
 
     console.log("Wrapping in a transaction (oneof)")
 

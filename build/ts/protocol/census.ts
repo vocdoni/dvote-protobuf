@@ -34,7 +34,7 @@ export interface CensusCsp {
 export interface CensusErc20 {
   tokenAddress: Uint8Array;
   balanceMapSlot: number;
-  proof: StorageProofErc20 | undefined;
+  proof?: StorageProofErc20 | undefined;
   /** Ethereum block at which the state root is taken */
   sourceEthereumBlock: number;
 }
@@ -42,7 +42,7 @@ export interface CensusErc20 {
 /**
  * bytes tokenAddress = 1;
  * int32 balanceMapSlot = 2;
- * StorageProofErc721 proof = 3;
+ * optional StorageProofErc721 proof = 3;
  * Ethereum block at which the state root is taken
  * int32 sourceEthereumBlock = 4;
  */
@@ -51,7 +51,7 @@ export interface CensusErc721 {}
 /**
  * bytes tokenAddress = 1;
  * int32 balanceMapSlot = 2;
- * StorageProofErc1155 proof = 3;
+ * optional StorageProofErc1155 proof = 3;
  * Ethereum block at which the state root is taken
  * int32 sourceEthereumBlock = 4;
  */
@@ -60,7 +60,7 @@ export interface CensusErc1155 {}
 /**
  * bytes tokenAddress = 1;
  * int32 balanceMapSlot = 2;
- * StorageProofErc777 proof = 3;
+ * optional StorageProofErc777 proof = 3;
  * Ethereum block at which the state root is taken
  * int32 sourceEthereumBlock = 4;
  */
@@ -69,7 +69,7 @@ export interface CensusErc777 {}
 export interface CensusErcMiniMe {
   tokenAddress: Uint8Array;
   balanceMapSlot: number;
-  proof: StorageProofMiniMe | undefined;
+  proof?: StorageProofMiniMe | undefined;
   /** Ethereum block at which the state root is taken */
   sourceEthereumBlock: number;
 }

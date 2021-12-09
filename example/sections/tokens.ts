@@ -44,13 +44,13 @@ export function transferTokens() {
 
     const recipientAddr = new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
 
-    const txBody = Transfer.fromPartial({ to: recipientAddr, value: "1234" })
-    const tx = Transaction.fromPartial({
+    const txBody: Transfer = { to: recipientAddr, value: "1234" }
+    const tx: Transaction = {
         body: {
             $case: "transfer",
             transfer: txBody
         }
-    })
+    }
 
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
@@ -72,13 +72,13 @@ export function claimTokens() {
     const nonce = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
     const senderAddr = new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
 
-    const txBody = ClaimTokens.fromPartial({ nonce, sender: senderAddr })
-    const tx = Transaction.fromPartial({
+    const txBody: ClaimTokens = { nonce, sender: senderAddr }
+    const tx: Transaction = {
         body: {
             $case: "claimTokens",
             claimTokens: txBody
         }
-    })
+    }
 
     const reqBytes = encodeTransaction(tx, dummySigningKey)
 
