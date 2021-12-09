@@ -135,6 +135,11 @@ message Account {
 	repeated bytes delegateAddrs = 4;
 }
 
+message Treasurer {
+	bytes address = 1;
+	uint32 nonce = 2;
+}
+
 enum TxType {
 	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
@@ -248,6 +253,7 @@ message SetAccountInfoTx {
 	TxType txtype = 1;
 	uint32 nonce = 2;
 	string infoURI = 3;
+	bytes account = 4;
 }
 
 message SetAccountDelegateTx {
