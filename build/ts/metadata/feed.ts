@@ -1,0 +1,654 @@
+/* eslint-disable */
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import * as Long from "long";
+
+export const protobufPackage = "dvote.types.v1";
+
+/** Helper to serialize and store all cached posts from all entities */
+export interface FeedStore {
+  items: Feed[];
+}
+
+/** A JSON Feed, containing a collection of posts */
+export interface Feed {
+  /** OWN FIELDS */
+  version: string;
+  title: string;
+  homePageUrl: string;
+  description: string;
+  feedUrl: string;
+  icon: string;
+  favicon: string;
+  expired: boolean;
+  items: FeedPost[];
+  /**
+   * EXTERNAL FIELDS
+   * Allow to use arbitrary key/values so that
+   * feeds can be organized by entity, language, etc.
+   */
+  meta: { [key: string]: string };
+}
+
+export interface Feed_MetaEntry {
+  key: string;
+  value: string;
+}
+
+export interface FeedPost {
+  /** or guid */
+  id: string;
+  title: string;
+  summary: string;
+  contentText: string;
+  contentHtml: string;
+  url: string;
+  image: string;
+  tags: string[];
+  datePublished: string;
+  dateModified: string;
+  author: FeedPost_Author | undefined;
+}
+
+export interface FeedPost_Author {
+  name: string;
+  url: string;
+}
+
+const baseFeedStore: object = {};
+
+export const FeedStore = {
+  encode(message: FeedStore, writer: Writer = Writer.create()): Writer {
+    for (const v of message.items) {
+      Feed.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): FeedStore {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseFeedStore } as FeedStore;
+    message.items = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.items.push(Feed.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): FeedStore {
+    const message = { ...baseFeedStore } as FeedStore;
+    message.items = (object.items ?? []).map((e: any) => Feed.fromJSON(e));
+    return message;
+  },
+
+  toJSON(message: FeedStore): unknown {
+    const obj: any = {};
+    if (message.items) {
+      obj.items = message.items.map((e) => (e ? Feed.toJSON(e) : undefined));
+    } else {
+      obj.items = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<FeedStore>, I>>(
+    object: I
+  ): FeedStore {
+    const message = { ...baseFeedStore } as FeedStore;
+    message.items = object.items?.map((e) => Feed.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+const baseFeed: object = {
+  version: "",
+  title: "",
+  homePageUrl: "",
+  description: "",
+  feedUrl: "",
+  icon: "",
+  favicon: "",
+  expired: false,
+};
+
+export const Feed = {
+  encode(message: Feed, writer: Writer = Writer.create()): Writer {
+    if (message.version !== "") {
+      writer.uint32(10).string(message.version);
+    }
+    if (message.title !== "") {
+      writer.uint32(18).string(message.title);
+    }
+    if (message.homePageUrl !== "") {
+      writer.uint32(26).string(message.homePageUrl);
+    }
+    if (message.description !== "") {
+      writer.uint32(34).string(message.description);
+    }
+    if (message.feedUrl !== "") {
+      writer.uint32(42).string(message.feedUrl);
+    }
+    if (message.icon !== "") {
+      writer.uint32(50).string(message.icon);
+    }
+    if (message.favicon !== "") {
+      writer.uint32(58).string(message.favicon);
+    }
+    if (message.expired === true) {
+      writer.uint32(64).bool(message.expired);
+    }
+    for (const v of message.items) {
+      FeedPost.encode(v!, writer.uint32(74).fork()).ldelim();
+    }
+    Object.entries(message.meta).forEach(([key, value]) => {
+      Feed_MetaEntry.encode(
+        { key: key as any, value },
+        writer.uint32(802).fork()
+      ).ldelim();
+    });
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): Feed {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseFeed } as Feed;
+    message.items = [];
+    message.meta = {};
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.version = reader.string();
+          break;
+        case 2:
+          message.title = reader.string();
+          break;
+        case 3:
+          message.homePageUrl = reader.string();
+          break;
+        case 4:
+          message.description = reader.string();
+          break;
+        case 5:
+          message.feedUrl = reader.string();
+          break;
+        case 6:
+          message.icon = reader.string();
+          break;
+        case 7:
+          message.favicon = reader.string();
+          break;
+        case 8:
+          message.expired = reader.bool();
+          break;
+        case 9:
+          message.items.push(FeedPost.decode(reader, reader.uint32()));
+          break;
+        case 100:
+          const entry100 = Feed_MetaEntry.decode(reader, reader.uint32());
+          if (entry100.value !== undefined) {
+            message.meta[entry100.key] = entry100.value;
+          }
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Feed {
+    const message = { ...baseFeed } as Feed;
+    message.version =
+      object.version !== undefined && object.version !== null
+        ? String(object.version)
+        : "";
+    message.title =
+      object.title !== undefined && object.title !== null
+        ? String(object.title)
+        : "";
+    message.homePageUrl =
+      object.homePageUrl !== undefined && object.homePageUrl !== null
+        ? String(object.homePageUrl)
+        : "";
+    message.description =
+      object.description !== undefined && object.description !== null
+        ? String(object.description)
+        : "";
+    message.feedUrl =
+      object.feedUrl !== undefined && object.feedUrl !== null
+        ? String(object.feedUrl)
+        : "";
+    message.icon =
+      object.icon !== undefined && object.icon !== null
+        ? String(object.icon)
+        : "";
+    message.favicon =
+      object.favicon !== undefined && object.favicon !== null
+        ? String(object.favicon)
+        : "";
+    message.expired =
+      object.expired !== undefined && object.expired !== null
+        ? Boolean(object.expired)
+        : false;
+    message.items = (object.items ?? []).map((e: any) => FeedPost.fromJSON(e));
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      acc[key] = String(value);
+      return acc;
+    }, {});
+    return message;
+  },
+
+  toJSON(message: Feed): unknown {
+    const obj: any = {};
+    message.version !== undefined && (obj.version = message.version);
+    message.title !== undefined && (obj.title = message.title);
+    message.homePageUrl !== undefined &&
+      (obj.homePageUrl = message.homePageUrl);
+    message.description !== undefined &&
+      (obj.description = message.description);
+    message.feedUrl !== undefined && (obj.feedUrl = message.feedUrl);
+    message.icon !== undefined && (obj.icon = message.icon);
+    message.favicon !== undefined && (obj.favicon = message.favicon);
+    message.expired !== undefined && (obj.expired = message.expired);
+    if (message.items) {
+      obj.items = message.items.map((e) =>
+        e ? FeedPost.toJSON(e) : undefined
+      );
+    } else {
+      obj.items = [];
+    }
+    obj.meta = {};
+    if (message.meta) {
+      Object.entries(message.meta).forEach(([k, v]) => {
+        obj.meta[k] = v;
+      });
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Feed>, I>>(object: I): Feed {
+    const message = { ...baseFeed } as Feed;
+    message.version = object.version ?? "";
+    message.title = object.title ?? "";
+    message.homePageUrl = object.homePageUrl ?? "";
+    message.description = object.description ?? "";
+    message.feedUrl = object.feedUrl ?? "";
+    message.icon = object.icon ?? "";
+    message.favicon = object.favicon ?? "";
+    message.expired = object.expired ?? false;
+    message.items = object.items?.map((e) => FeedPost.fromPartial(e)) || [];
+    message.meta = Object.entries(object.meta ?? {}).reduce<{
+      [key: string]: string;
+    }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    return message;
+  },
+};
+
+const baseFeed_MetaEntry: object = { key: "", value: "" };
+
+export const Feed_MetaEntry = {
+  encode(message: Feed_MetaEntry, writer: Writer = Writer.create()): Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): Feed_MetaEntry {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.string();
+          break;
+        case 2:
+          message.value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Feed_MetaEntry {
+    const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
+    message.key =
+      object.key !== undefined && object.key !== null ? String(object.key) : "";
+    message.value =
+      object.value !== undefined && object.value !== null
+        ? String(object.value)
+        : "";
+    return message;
+  },
+
+  toJSON(message: Feed_MetaEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Feed_MetaEntry>, I>>(
+    object: I
+  ): Feed_MetaEntry {
+    const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
+    return message;
+  },
+};
+
+const baseFeedPost: object = {
+  id: "",
+  title: "",
+  summary: "",
+  contentText: "",
+  contentHtml: "",
+  url: "",
+  image: "",
+  tags: "",
+  datePublished: "",
+  dateModified: "",
+};
+
+export const FeedPost = {
+  encode(message: FeedPost, writer: Writer = Writer.create()): Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.title !== "") {
+      writer.uint32(18).string(message.title);
+    }
+    if (message.summary !== "") {
+      writer.uint32(26).string(message.summary);
+    }
+    if (message.contentText !== "") {
+      writer.uint32(34).string(message.contentText);
+    }
+    if (message.contentHtml !== "") {
+      writer.uint32(42).string(message.contentHtml);
+    }
+    if (message.url !== "") {
+      writer.uint32(50).string(message.url);
+    }
+    if (message.image !== "") {
+      writer.uint32(58).string(message.image);
+    }
+    for (const v of message.tags) {
+      writer.uint32(66).string(v!);
+    }
+    if (message.datePublished !== "") {
+      writer.uint32(74).string(message.datePublished);
+    }
+    if (message.dateModified !== "") {
+      writer.uint32(82).string(message.dateModified);
+    }
+    if (message.author !== undefined) {
+      FeedPost_Author.encode(message.author, writer.uint32(90).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): FeedPost {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseFeedPost } as FeedPost;
+    message.tags = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string();
+          break;
+        case 2:
+          message.title = reader.string();
+          break;
+        case 3:
+          message.summary = reader.string();
+          break;
+        case 4:
+          message.contentText = reader.string();
+          break;
+        case 5:
+          message.contentHtml = reader.string();
+          break;
+        case 6:
+          message.url = reader.string();
+          break;
+        case 7:
+          message.image = reader.string();
+          break;
+        case 8:
+          message.tags.push(reader.string());
+          break;
+        case 9:
+          message.datePublished = reader.string();
+          break;
+        case 10:
+          message.dateModified = reader.string();
+          break;
+        case 11:
+          message.author = FeedPost_Author.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): FeedPost {
+    const message = { ...baseFeedPost } as FeedPost;
+    message.id =
+      object.id !== undefined && object.id !== null ? String(object.id) : "";
+    message.title =
+      object.title !== undefined && object.title !== null
+        ? String(object.title)
+        : "";
+    message.summary =
+      object.summary !== undefined && object.summary !== null
+        ? String(object.summary)
+        : "";
+    message.contentText =
+      object.contentText !== undefined && object.contentText !== null
+        ? String(object.contentText)
+        : "";
+    message.contentHtml =
+      object.contentHtml !== undefined && object.contentHtml !== null
+        ? String(object.contentHtml)
+        : "";
+    message.url =
+      object.url !== undefined && object.url !== null ? String(object.url) : "";
+    message.image =
+      object.image !== undefined && object.image !== null
+        ? String(object.image)
+        : "";
+    message.tags = (object.tags ?? []).map((e: any) => String(e));
+    message.datePublished =
+      object.datePublished !== undefined && object.datePublished !== null
+        ? String(object.datePublished)
+        : "";
+    message.dateModified =
+      object.dateModified !== undefined && object.dateModified !== null
+        ? String(object.dateModified)
+        : "";
+    message.author =
+      object.author !== undefined && object.author !== null
+        ? FeedPost_Author.fromJSON(object.author)
+        : undefined;
+    return message;
+  },
+
+  toJSON(message: FeedPost): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.title !== undefined && (obj.title = message.title);
+    message.summary !== undefined && (obj.summary = message.summary);
+    message.contentText !== undefined &&
+      (obj.contentText = message.contentText);
+    message.contentHtml !== undefined &&
+      (obj.contentHtml = message.contentHtml);
+    message.url !== undefined && (obj.url = message.url);
+    message.image !== undefined && (obj.image = message.image);
+    if (message.tags) {
+      obj.tags = message.tags.map((e) => e);
+    } else {
+      obj.tags = [];
+    }
+    message.datePublished !== undefined &&
+      (obj.datePublished = message.datePublished);
+    message.dateModified !== undefined &&
+      (obj.dateModified = message.dateModified);
+    message.author !== undefined &&
+      (obj.author = message.author
+        ? FeedPost_Author.toJSON(message.author)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<FeedPost>, I>>(object: I): FeedPost {
+    const message = { ...baseFeedPost } as FeedPost;
+    message.id = object.id ?? "";
+    message.title = object.title ?? "";
+    message.summary = object.summary ?? "";
+    message.contentText = object.contentText ?? "";
+    message.contentHtml = object.contentHtml ?? "";
+    message.url = object.url ?? "";
+    message.image = object.image ?? "";
+    message.tags = object.tags?.map((e) => e) || [];
+    message.datePublished = object.datePublished ?? "";
+    message.dateModified = object.dateModified ?? "";
+    message.author =
+      object.author !== undefined && object.author !== null
+        ? FeedPost_Author.fromPartial(object.author)
+        : undefined;
+    return message;
+  },
+};
+
+const baseFeedPost_Author: object = { name: "", url: "" };
+
+export const FeedPost_Author = {
+  encode(message: FeedPost_Author, writer: Writer = Writer.create()): Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.url !== "") {
+      writer.uint32(18).string(message.url);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): FeedPost_Author {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseFeedPost_Author } as FeedPost_Author;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.url = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): FeedPost_Author {
+    const message = { ...baseFeedPost_Author } as FeedPost_Author;
+    message.name =
+      object.name !== undefined && object.name !== null
+        ? String(object.name)
+        : "";
+    message.url =
+      object.url !== undefined && object.url !== null ? String(object.url) : "";
+    return message;
+  },
+
+  toJSON(message: FeedPost_Author): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.url !== undefined && (obj.url = message.url);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<FeedPost_Author>, I>>(
+    object: I
+  ): FeedPost_Author {
+    const message = { ...baseFeedPost_Author } as FeedPost_Author;
+    message.name = object.name ?? "";
+    message.url = object.url ?? "";
+    return message;
+  },
+};
+
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | boolean
+  | undefined;
+
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string }
+  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
+      $case: T["$case"];
+    }
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
+        Exclude<keyof I, KeysOfUnion<P>>,
+        never
+      >;
+
+// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
+// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}
