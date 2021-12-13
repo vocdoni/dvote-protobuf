@@ -217,6 +217,8 @@ export enum SourceNetworkId {
   BSC = 7,
   ETH_MAINNET_SIGNALING = 8,
   ETH_RINKEBY_SIGNALING = 9,
+  AVAX_FUJI = 10,
+  AVAX = 11,
   UNRECOGNIZED = -1,
 }
 
@@ -252,6 +254,12 @@ export function sourceNetworkIdFromJSON(object: any): SourceNetworkId {
     case 9:
     case "ETH_RINKEBY_SIGNALING":
       return SourceNetworkId.ETH_RINKEBY_SIGNALING;
+    case 10:
+    case "AVAX_FUJI":
+      return SourceNetworkId.AVAX_FUJI;
+    case 11:
+    case "AVAX":
+      return SourceNetworkId.AVAX;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -281,6 +289,10 @@ export function sourceNetworkIdToJSON(object: SourceNetworkId): string {
       return "ETH_MAINNET_SIGNALING";
     case SourceNetworkId.ETH_RINKEBY_SIGNALING:
       return "ETH_RINKEBY_SIGNALING";
+    case SourceNetworkId.AVAX_FUJI:
+      return "AVAX_FUJI";
+    case SourceNetworkId.AVAX:
+      return "AVAX";
     default:
       return "UNKNOWN";
   }

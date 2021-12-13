@@ -67,11 +67,13 @@ const SourceNetworkId$json = const {
     const {'1': 'BSC', '2': 7},
     const {'1': 'ETH_MAINNET_SIGNALING', '2': 8},
     const {'1': 'ETH_RINKEBY_SIGNALING', '2': 9},
+    const {'1': 'AVAX_FUJI', '2': 10},
+    const {'1': 'AVAX', '2': 11},
   ],
 };
 
 /// Descriptor for `SourceNetworkId`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List sourceNetworkIdDescriptor = $convert.base64Decode('Cg9Tb3VyY2VOZXR3b3JrSWQSCwoHVU5LTk9XThAAEg8KC0VUSF9NQUlOTkVUEAESDwoLRVRIX1JJTktFQlkQAhIOCgpFVEhfR09FUkxJEAMSDAoIUE9BX1hEQUkQBBINCglQT0FfU09LT0wQBRILCgdQT0xZR09OEAYSBwoDQlNDEAcSGQoVRVRIX01BSU5ORVRfU0lHTkFMSU5HEAgSGQoVRVRIX1JJTktFQllfU0lHTkFMSU5HEAk=');
+final $typed_data.Uint8List sourceNetworkIdDescriptor = $convert.base64Decode('Cg9Tb3VyY2VOZXR3b3JrSWQSCwoHVU5LTk9XThAAEg8KC0VUSF9NQUlOTkVUEAESDwoLRVRIX1JJTktFQlkQAhIOCgpFVEhfR09FUkxJEAMSDAoIUE9BX1hEQUkQBBINCglQT0FfU09LT0wQBRILCgdQT0xZR09OEAYSBwoDQlNDEAcSGQoVRVRIX01BSU5ORVRfU0lHTkFMSU5HEAgSGQoVRVRIX1JJTktFQllfU0lHTkFMSU5HEAkSDQoJQVZBWF9GVUpJEAoSCAoEQVZBWBAL');
 @$core.Deprecated('Use censusOriginDescriptor instead')
 const CensusOrigin$json = const {
   '1': 'CensusOrigin',
