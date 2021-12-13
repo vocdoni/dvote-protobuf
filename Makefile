@@ -125,7 +125,6 @@ protoc-dart-plugin:
 # TS
 $(PROTOC_TS_PLUGIN):
 	@npm install ts-proto --no-package-lock
-	@rm package-lock.json
 
 # GO
 .PHONY: protoc-go-plugin
