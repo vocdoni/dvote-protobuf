@@ -19,10 +19,10 @@ import "protocol/census.proto";
 
 message Ballot {
     oneof body {
-        // When Election.privacy == None
+        // When Election.privacy.censusProof == PLAIN
         SignedBallot signedBallot = 1;
 
-        // When Election.privacy != None
+        // When Election.privacy.censusProof != PLAIN
         BallotBody anonymousBallot = 2;
     }
 }
