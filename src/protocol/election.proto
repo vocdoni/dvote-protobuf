@@ -13,23 +13,25 @@ import "protocol/census.proto";
 
 // The following model defines the declaration of an election. These are just the settings, not the human readable information.
 message Election {
-	// See census.proto
-	Census mainCensus = 1;
-	Census secondaryCensus = 2;
-	Census tertiaryCensus = 3;
+  // See census.proto
+	// The primary census(es) define the combined voting weight of the voter (if applicable)
+  repeated Census mainCensus = 1;
+	// Secondary censuses (optional) define additional constraints like holding an NFT, being a person, etc.
+  repeated Census secondaryCensus = 2;
 
-	// Used to select the zk circuit, determine the cost, etc
-	int32 censusSize = 11;
+  // Used to select the zk circuit, determine the cost, etc
+	// Only applicable to non-anonymous elections∫
+  int32 censusSize = 11;
 
-	// Settings of the questions that people can vote
-	repeated Proposal proposals = 12;
+  // Settings of the questions that people can vote
+  repeated Proposal proposals = 12;
 
-	// How data and voters should be protected
-	Privacy privacy = 13;
-	// When to start and end
-	Lifecycle lifecycle = 14;
+  // How data and voters should be protected
+  Privacy privacy = 13;
+  // When to start and end
+  Lifecycle lifecycle = 14;
 
-	string metadataUri = 15;
+  string metadataUri = 15;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,34 +40,34 @@ message Election {
 
 // The models below affect the whole election definition.
 message Privacy {
-	bool realTimeResults = 1;
+  bool realTimeResults = 1;
 
-	enum CensusProofs {
-		// Signed vote. Standard proof(s) are expected.
-        PLAIN = 0;
-		// Anonymous votes, submitted right away.
+  enum CensusProofs {
+    // Signed vote. Standard proof(s) are expected.
+    PLAIN = 0;
+    // Anonymous votes, submitted right away.
         // The standard proof is part of the ZK circuit inputs. The ZK proof is expected.
-        ZK_SNARKS = 1;
-		// Anonymous votes, with voter registration prior to the election.
-        // The standard proof is part of the ZK circuit inputs. The ZK proof is expected.
-        ZK_SNARKS_PREREGISTER = 2;
-	}
-	CensusProofs censusProof = 2;
+    ZK_SNARKS = 1;
+    // Anonymous votes, with voter registration prior to the election.
+    // The standard proof is part of the ZK circuit inputs. The ZK proof is expected.
+    ZK_SNARKS_PREREGISTER = 2;
+  }
+  CensusProofs censusProof = 2;
 }
 
 message Lifecycle {
-	enum Types {
-		PAUSED_MUTABLE = 0;
-		PAUSED_MUTABLE_ONCE = 1;
-		STARTED_IMMUTABLE = 2;
-		STARTED_MUTABLE = 3;
-		AUTOSTART_IMMUTABLE = 4;
-		AUTOSTART_MUTABLE = 5;
-	}
+  enum Types {
+    PAUSED_MUTABLE = 0;
+    PAUSED_MUTABLE_ONCE = 1;
+    STARTED_IMMUTABLE = 2;
+    STARTED_MUTABLE = 3;
+    AUTOSTART_IMMUTABLE = 4;
+    AUTOSTART_MUTABLE = 5;
+  }
 
-	Types type = 1;
-	optional int32 startBlock = 2;
-	int32 endBlock = 3;
+  Types type = 1;
+  optional int32 startBlock = 2;
+  int32 endBlock = 3;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,18 +75,18 @@ message Lifecycle {
 ///////////////////////////////////////////////////////////////////////////////
 
 message Proposal {
-	oneof proposal {
-        // Binary
-		ApprovalProposal approval = 1;
-		// choose one of [0, ... N-1]
-        SingleChoiceProposal singleChoice = 2;
-		// allocate quadratic points below a max sum
-        QuadraticProposal quadratic = 3;
-		// 1w1v: Voting the ordered indexes
-        RankedProposal ranked = 4;
-		// assign % to each option
-        SpreadProposal spread = 5;
-	}
+  oneof proposal {
+    // Binary
+    ApprovalProposal approval = 1;
+    // choose one of [0, ... N-1]
+    SingleChoiceProposal singleChoice = 2;
+    // allocate quadratic points below a max sum
+    QuadraticProposal quadratic = 3;
+    // 1w1v: Voting the ordered indexes
+    RankedProposal ranked = 4;
+    // assign % to each option
+    SpreadProposal spread = 5;
+  }
 }
 
 // Submodels
@@ -93,18 +95,18 @@ message SingleChoiceProposal {
     int32 optionCount = 1;
 }
 message QuadraticProposal {
-    int32 optionCount = 1;
-	float costExponent = 2;
-	// Assigning points from 0 to maxValue
-    int32 maxValue = 3;
-    // The exponentiated sum of values must not exceed maxSum
-	int32 maxSum = 4;
+  int32 optionCount = 1;
+  float costExponent = 2;
+  // Assigning points from 0 to maxValue
+  int32 maxValue = 3;
+  // The exponentiated sum of values must not exceed maxSum
+  int32 maxSum = 4;
 }
 message RankedProposal {
-    int32 optionCount = 1;
-	// Up to how many indexes can be ranked
-    int32 maxItems = 2;
+  int32 optionCount = 1;
+  // Up to how many indexes can be ranked
+  int32 maxItems = 2;
 }
 message SpreadProposal {
-    int32 optionCount = 1;
+  int32 optionCount = 1;
 }

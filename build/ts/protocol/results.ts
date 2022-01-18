@@ -62,7 +62,9 @@ export interface SpreadResult {
   points: string[];
 }
 
-const baseResults: object = {};
+function createBaseResults(): Results {
+  return { electionId: new Uint8Array(), proposalResults: [] };
+}
 
 export const Results = {
   encode(message: Results, writer: Writer = Writer.create()): Writer {
@@ -78,9 +80,7 @@ export const Results = {
   decode(input: Reader | Uint8Array, length?: number): Results {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseResults } as Results;
-    message.proposalResults = [];
-    message.electionId = new Uint8Array();
+    const message = createBaseResults();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -99,15 +99,14 @@ export const Results = {
   },
 
   fromJSON(object: any): Results {
-    const message = { ...baseResults } as Results;
-    message.electionId =
-      object.electionId !== undefined && object.electionId !== null
+    return {
+      electionId: isSet(object.electionId)
         ? bytesFromBase64(object.electionId)
-        : new Uint8Array();
-    message.proposalResults = (object.proposalResults ?? []).map((e: any) =>
-      Result.fromJSON(e)
-    );
-    return message;
+        : new Uint8Array(),
+      proposalResults: Array.isArray(object?.proposalResults)
+        ? object.proposalResults.map((e: any) => Result.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: Results): unknown {
@@ -127,7 +126,7 @@ export const Results = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Results>, I>>(object: I): Results {
-    const message = { ...baseResults } as Results;
+    const message = createBaseResults();
     message.electionId = object.electionId ?? new Uint8Array();
     message.proposalResults =
       object.proposalResults?.map((e) => Result.fromPartial(e)) || [];
@@ -135,7 +134,9 @@ export const Results = {
   },
 };
 
-const baseResult: object = {};
+function createBaseResult(): Result {
+  return { body: undefined };
+}
 
 export const Result = {
   encode(message: Result, writer: Writer = Writer.create()): Writer {
@@ -181,7 +182,7 @@ export const Result = {
   decode(input: Reader | Uint8Array, length?: number): Result {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseResult } as Result;
+    const message = createBaseResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -233,52 +234,41 @@ export const Result = {
   },
 
   fromJSON(object: any): Result {
-    const message = { ...baseResult } as Result;
-    if (object.pendingResult !== undefined && object.pendingResult !== null) {
-      message.body = {
-        $case: "pendingResult",
-        pendingResult: PendingResults.fromJSON(object.pendingResult),
-      };
-    }
-    if (object.approvalResult !== undefined && object.approvalResult !== null) {
-      message.body = {
-        $case: "approvalResult",
-        approvalResult: ApprovalResult.fromJSON(object.approvalResult),
-      };
-    }
-    if (
-      object.singleChoiceResult !== undefined &&
-      object.singleChoiceResult !== null
-    ) {
-      message.body = {
-        $case: "singleChoiceResult",
-        singleChoiceResult: SingleChoiceResult.fromJSON(
-          object.singleChoiceResult
-        ),
-      };
-    }
-    if (
-      object.quadraticResult !== undefined &&
-      object.quadraticResult !== null
-    ) {
-      message.body = {
-        $case: "quadraticResult",
-        quadraticResult: QuadraticResult.fromJSON(object.quadraticResult),
-      };
-    }
-    if (object.rankedResult !== undefined && object.rankedResult !== null) {
-      message.body = {
-        $case: "rankedResult",
-        rankedResult: RankedResult.fromJSON(object.rankedResult),
-      };
-    }
-    if (object.spreadResult !== undefined && object.spreadResult !== null) {
-      message.body = {
-        $case: "spreadResult",
-        spreadResult: SpreadResult.fromJSON(object.spreadResult),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.pendingResult)
+        ? {
+            $case: "pendingResult",
+            pendingResult: PendingResults.fromJSON(object.pendingResult),
+          }
+        : isSet(object.approvalResult)
+        ? {
+            $case: "approvalResult",
+            approvalResult: ApprovalResult.fromJSON(object.approvalResult),
+          }
+        : isSet(object.singleChoiceResult)
+        ? {
+            $case: "singleChoiceResult",
+            singleChoiceResult: SingleChoiceResult.fromJSON(
+              object.singleChoiceResult
+            ),
+          }
+        : isSet(object.quadraticResult)
+        ? {
+            $case: "quadraticResult",
+            quadraticResult: QuadraticResult.fromJSON(object.quadraticResult),
+          }
+        : isSet(object.rankedResult)
+        ? {
+            $case: "rankedResult",
+            rankedResult: RankedResult.fromJSON(object.rankedResult),
+          }
+        : isSet(object.spreadResult)
+        ? {
+            $case: "spreadResult",
+            spreadResult: SpreadResult.fromJSON(object.spreadResult),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: Result): unknown {
@@ -311,7 +301,7 @@ export const Result = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Result>, I>>(object: I): Result {
-    const message = { ...baseResult } as Result;
+    const message = createBaseResult();
     if (
       object.body?.$case === "pendingResult" &&
       object.body?.pendingResult !== undefined &&
@@ -380,7 +370,9 @@ export const Result = {
   },
 };
 
-const basePendingResults: object = {};
+function createBasePendingResults(): PendingResults {
+  return {};
+}
 
 export const PendingResults = {
   encode(_: PendingResults, writer: Writer = Writer.create()): Writer {
@@ -390,7 +382,7 @@ export const PendingResults = {
   decode(input: Reader | Uint8Array, length?: number): PendingResults {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...basePendingResults } as PendingResults;
+    const message = createBasePendingResults();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -403,8 +395,7 @@ export const PendingResults = {
   },
 
   fromJSON(_: any): PendingResults {
-    const message = { ...basePendingResults } as PendingResults;
-    return message;
+    return {};
   },
 
   toJSON(_: PendingResults): unknown {
@@ -415,12 +406,14 @@ export const PendingResults = {
   fromPartial<I extends Exact<DeepPartial<PendingResults>, I>>(
     _: I
   ): PendingResults {
-    const message = { ...basePendingResults } as PendingResults;
+    const message = createBasePendingResults();
     return message;
   },
 };
 
-const baseApprovalResult: object = { rejected: "", approved: "" };
+function createBaseApprovalResult(): ApprovalResult {
+  return { rejected: "", approved: "" };
+}
 
 export const ApprovalResult = {
   encode(message: ApprovalResult, writer: Writer = Writer.create()): Writer {
@@ -436,7 +429,7 @@ export const ApprovalResult = {
   decode(input: Reader | Uint8Array, length?: number): ApprovalResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseApprovalResult } as ApprovalResult;
+    const message = createBaseApprovalResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -455,16 +448,10 @@ export const ApprovalResult = {
   },
 
   fromJSON(object: any): ApprovalResult {
-    const message = { ...baseApprovalResult } as ApprovalResult;
-    message.rejected =
-      object.rejected !== undefined && object.rejected !== null
-        ? String(object.rejected)
-        : "";
-    message.approved =
-      object.approved !== undefined && object.approved !== null
-        ? String(object.approved)
-        : "";
-    return message;
+    return {
+      rejected: isSet(object.rejected) ? String(object.rejected) : "",
+      approved: isSet(object.approved) ? String(object.approved) : "",
+    };
   },
 
   toJSON(message: ApprovalResult): unknown {
@@ -477,14 +464,16 @@ export const ApprovalResult = {
   fromPartial<I extends Exact<DeepPartial<ApprovalResult>, I>>(
     object: I
   ): ApprovalResult {
-    const message = { ...baseApprovalResult } as ApprovalResult;
+    const message = createBaseApprovalResult();
     message.rejected = object.rejected ?? "";
     message.approved = object.approved ?? "";
     return message;
   },
 };
 
-const baseSingleChoiceResult: object = { votes: "" };
+function createBaseSingleChoiceResult(): SingleChoiceResult {
+  return { votes: [] };
+}
 
 export const SingleChoiceResult = {
   encode(
@@ -500,8 +489,7 @@ export const SingleChoiceResult = {
   decode(input: Reader | Uint8Array, length?: number): SingleChoiceResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSingleChoiceResult } as SingleChoiceResult;
-    message.votes = [];
+    const message = createBaseSingleChoiceResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -517,9 +505,11 @@ export const SingleChoiceResult = {
   },
 
   fromJSON(object: any): SingleChoiceResult {
-    const message = { ...baseSingleChoiceResult } as SingleChoiceResult;
-    message.votes = (object.votes ?? []).map((e: any) => String(e));
-    return message;
+    return {
+      votes: Array.isArray(object?.votes)
+        ? object.votes.map((e: any) => String(e))
+        : [],
+    };
   },
 
   toJSON(message: SingleChoiceResult): unknown {
@@ -535,13 +525,15 @@ export const SingleChoiceResult = {
   fromPartial<I extends Exact<DeepPartial<SingleChoiceResult>, I>>(
     object: I
   ): SingleChoiceResult {
-    const message = { ...baseSingleChoiceResult } as SingleChoiceResult;
+    const message = createBaseSingleChoiceResult();
     message.votes = object.votes?.map((e) => e) || [];
     return message;
   },
 };
 
-const baseQuadraticResult: object = { points: "" };
+function createBaseQuadraticResult(): QuadraticResult {
+  return { points: [] };
+}
 
 export const QuadraticResult = {
   encode(message: QuadraticResult, writer: Writer = Writer.create()): Writer {
@@ -554,8 +546,7 @@ export const QuadraticResult = {
   decode(input: Reader | Uint8Array, length?: number): QuadraticResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQuadraticResult } as QuadraticResult;
-    message.points = [];
+    const message = createBaseQuadraticResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -571,9 +562,11 @@ export const QuadraticResult = {
   },
 
   fromJSON(object: any): QuadraticResult {
-    const message = { ...baseQuadraticResult } as QuadraticResult;
-    message.points = (object.points ?? []).map((e: any) => String(e));
-    return message;
+    return {
+      points: Array.isArray(object?.points)
+        ? object.points.map((e: any) => String(e))
+        : [],
+    };
   },
 
   toJSON(message: QuadraticResult): unknown {
@@ -589,13 +582,15 @@ export const QuadraticResult = {
   fromPartial<I extends Exact<DeepPartial<QuadraticResult>, I>>(
     object: I
   ): QuadraticResult {
-    const message = { ...baseQuadraticResult } as QuadraticResult;
+    const message = createBaseQuadraticResult();
     message.points = object.points?.map((e) => e) || [];
     return message;
   },
 };
 
-const baseRankedResult: object = {};
+function createBaseRankedResult(): RankedResult {
+  return { choices: [] };
+}
 
 export const RankedResult = {
   encode(message: RankedResult, writer: Writer = Writer.create()): Writer {
@@ -611,8 +606,7 @@ export const RankedResult = {
   decode(input: Reader | Uint8Array, length?: number): RankedResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseRankedResult } as RankedResult;
-    message.choices = [];
+    const message = createBaseRankedResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -630,11 +624,13 @@ export const RankedResult = {
   },
 
   fromJSON(object: any): RankedResult {
-    const message = { ...baseRankedResult } as RankedResult;
-    message.choices = (object.choices ?? []).map((e: any) =>
-      RankedResult_RankedChoiceResult.fromJSON(e)
-    );
-    return message;
+    return {
+      choices: Array.isArray(object?.choices)
+        ? object.choices.map((e: any) =>
+            RankedResult_RankedChoiceResult.fromJSON(e)
+          )
+        : [],
+    };
   },
 
   toJSON(message: RankedResult): unknown {
@@ -652,7 +648,7 @@ export const RankedResult = {
   fromPartial<I extends Exact<DeepPartial<RankedResult>, I>>(
     object: I
   ): RankedResult {
-    const message = { ...baseRankedResult } as RankedResult;
+    const message = createBaseRankedResult();
     message.choices =
       object.choices?.map((e) =>
         RankedResult_RankedChoiceResult.fromPartial(e)
@@ -661,7 +657,9 @@ export const RankedResult = {
   },
 };
 
-const baseRankedResult_RankedChoiceResult: object = {};
+function createBaseRankedResult_RankedChoiceResult(): RankedResult_RankedChoiceResult {
+  return { entries: [] };
+}
 
 export const RankedResult_RankedChoiceResult = {
   encode(
@@ -683,10 +681,7 @@ export const RankedResult_RankedChoiceResult = {
   ): RankedResult_RankedChoiceResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseRankedResult_RankedChoiceResult,
-    } as RankedResult_RankedChoiceResult;
-    message.entries = [];
+    const message = createBaseRankedResult_RankedChoiceResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -707,13 +702,15 @@ export const RankedResult_RankedChoiceResult = {
   },
 
   fromJSON(object: any): RankedResult_RankedChoiceResult {
-    const message = {
-      ...baseRankedResult_RankedChoiceResult,
-    } as RankedResult_RankedChoiceResult;
-    message.entries = (object.entries ?? []).map((e: any) =>
-      RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromJSON(e)
-    );
-    return message;
+    return {
+      entries: Array.isArray(object?.entries)
+        ? object.entries.map((e: any) =>
+            RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromJSON(
+              e
+            )
+          )
+        : [],
+    };
   },
 
   toJSON(message: RankedResult_RankedChoiceResult): unknown {
@@ -733,9 +730,7 @@ export const RankedResult_RankedChoiceResult = {
   fromPartial<I extends Exact<DeepPartial<RankedResult_RankedChoiceResult>, I>>(
     object: I
   ): RankedResult_RankedChoiceResult {
-    const message = {
-      ...baseRankedResult_RankedChoiceResult,
-    } as RankedResult_RankedChoiceResult;
+    const message = createBaseRankedResult_RankedChoiceResult();
     message.entries =
       object.entries?.map((e) =>
         RankedResult_RankedChoiceResult_RankedChoicePositionResult.fromPartial(
@@ -746,10 +741,9 @@ export const RankedResult_RankedChoiceResult = {
   },
 };
 
-const baseRankedResult_RankedChoiceResult_RankedChoicePositionResult: object = {
-  position: 0,
-  points: "",
-};
+function createBaseRankedResult_RankedChoiceResult_RankedChoicePositionResult(): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
+  return { position: 0, points: "" };
+}
 
 export const RankedResult_RankedChoiceResult_RankedChoicePositionResult = {
   encode(
@@ -771,9 +765,8 @@ export const RankedResult_RankedChoiceResult_RankedChoicePositionResult = {
   ): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseRankedResult_RankedChoiceResult_RankedChoicePositionResult,
-    } as RankedResult_RankedChoiceResult_RankedChoicePositionResult;
+    const message =
+      createBaseRankedResult_RankedChoiceResult_RankedChoicePositionResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -794,25 +787,18 @@ export const RankedResult_RankedChoiceResult_RankedChoicePositionResult = {
   fromJSON(
     object: any
   ): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
-    const message = {
-      ...baseRankedResult_RankedChoiceResult_RankedChoicePositionResult,
-    } as RankedResult_RankedChoiceResult_RankedChoicePositionResult;
-    message.position =
-      object.position !== undefined && object.position !== null
-        ? Number(object.position)
-        : 0;
-    message.points =
-      object.points !== undefined && object.points !== null
-        ? String(object.points)
-        : "";
-    return message;
+    return {
+      position: isSet(object.position) ? Number(object.position) : 0,
+      points: isSet(object.points) ? String(object.points) : "",
+    };
   },
 
   toJSON(
     message: RankedResult_RankedChoiceResult_RankedChoicePositionResult
   ): unknown {
     const obj: any = {};
-    message.position !== undefined && (obj.position = message.position);
+    message.position !== undefined &&
+      (obj.position = Math.round(message.position));
     message.points !== undefined && (obj.points = message.points);
     return obj;
   },
@@ -823,16 +809,17 @@ export const RankedResult_RankedChoiceResult_RankedChoicePositionResult = {
       I
     >
   >(object: I): RankedResult_RankedChoiceResult_RankedChoicePositionResult {
-    const message = {
-      ...baseRankedResult_RankedChoiceResult_RankedChoicePositionResult,
-    } as RankedResult_RankedChoiceResult_RankedChoicePositionResult;
+    const message =
+      createBaseRankedResult_RankedChoiceResult_RankedChoicePositionResult();
     message.position = object.position ?? 0;
     message.points = object.points ?? "";
     return message;
   },
 };
 
-const baseSpreadResult: object = { points: "" };
+function createBaseSpreadResult(): SpreadResult {
+  return { points: [] };
+}
 
 export const SpreadResult = {
   encode(message: SpreadResult, writer: Writer = Writer.create()): Writer {
@@ -845,8 +832,7 @@ export const SpreadResult = {
   decode(input: Reader | Uint8Array, length?: number): SpreadResult {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSpreadResult } as SpreadResult;
-    message.points = [];
+    const message = createBaseSpreadResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -862,9 +848,11 @@ export const SpreadResult = {
   },
 
   fromJSON(object: any): SpreadResult {
-    const message = { ...baseSpreadResult } as SpreadResult;
-    message.points = (object.points ?? []).map((e: any) => String(e));
-    return message;
+    return {
+      points: Array.isArray(object?.points)
+        ? object.points.map((e: any) => String(e))
+        : [],
+    };
   },
 
   toJSON(message: SpreadResult): unknown {
@@ -880,7 +868,7 @@ export const SpreadResult = {
   fromPartial<I extends Exact<DeepPartial<SpreadResult>, I>>(
     object: I
   ): SpreadResult {
-    const message = { ...baseSpreadResult } as SpreadResult;
+    const message = createBaseSpreadResult();
     message.points = object.points?.map((e) => e) || [];
     return message;
   },
@@ -956,4 +944,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

@@ -48,7 +48,14 @@ export function wallet_AuthMethodToJSON(object: Wallet_AuthMethod): string {
   }
 }
 
-const baseWallet: object = { hdPath: "", locale: "", authMethod: 0 };
+function createBaseWallet(): Wallet {
+  return {
+    encryptedMnemonic: new Uint8Array(),
+    hdPath: "",
+    locale: "",
+    authMethod: 0,
+  };
+}
 
 export const Wallet = {
   encode(message: Wallet, writer: Writer = Writer.create()): Writer {
@@ -70,8 +77,7 @@ export const Wallet = {
   decode(input: Reader | Uint8Array, length?: number): Wallet {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseWallet } as Wallet;
-    message.encryptedMnemonic = new Uint8Array();
+    const message = createBaseWallet();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -96,25 +102,16 @@ export const Wallet = {
   },
 
   fromJSON(object: any): Wallet {
-    const message = { ...baseWallet } as Wallet;
-    message.encryptedMnemonic =
-      object.encryptedMnemonic !== undefined &&
-      object.encryptedMnemonic !== null
+    return {
+      encryptedMnemonic: isSet(object.encryptedMnemonic)
         ? bytesFromBase64(object.encryptedMnemonic)
-        : new Uint8Array();
-    message.hdPath =
-      object.hdPath !== undefined && object.hdPath !== null
-        ? String(object.hdPath)
-        : "";
-    message.locale =
-      object.locale !== undefined && object.locale !== null
-        ? String(object.locale)
-        : "";
-    message.authMethod =
-      object.authMethod !== undefined && object.authMethod !== null
+        : new Uint8Array(),
+      hdPath: isSet(object.hdPath) ? String(object.hdPath) : "",
+      locale: isSet(object.locale) ? String(object.locale) : "",
+      authMethod: isSet(object.authMethod)
         ? wallet_AuthMethodFromJSON(object.authMethod)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: Wallet): unknown {
@@ -133,7 +130,7 @@ export const Wallet = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Wallet>, I>>(object: I): Wallet {
-    const message = { ...baseWallet } as Wallet;
+    const message = createBaseWallet();
     message.encryptedMnemonic = object.encryptedMnemonic ?? new Uint8Array();
     message.hdPath = object.hdPath ?? "";
     message.locale = object.locale ?? "";
@@ -212,4 +209,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

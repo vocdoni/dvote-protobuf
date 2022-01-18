@@ -10,7 +10,6 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 enum Census_Body {
-  none, 
   arbo, 
   csp, 
   erc20, 
@@ -23,32 +22,29 @@ enum Census_Body {
 
 class Census extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Census_Body> _Census_BodyByTag = {
-    1 : Census_Body.none,
-    11 : Census_Body.arbo,
-    12 : Census_Body.csp,
-    21 : Census_Body.erc20,
-    22 : Census_Body.erc721,
-    23 : Census_Body.erc1155,
-    24 : Census_Body.erc777,
-    30 : Census_Body.ercMiniMe,
+    1 : Census_Body.arbo,
+    2 : Census_Body.csp,
+    11 : Census_Body.erc20,
+    12 : Census_Body.erc721,
+    13 : Census_Body.erc1155,
+    14 : Census_Body.erc777,
+    20 : Census_Body.ercMiniMe,
     0 : Census_Body.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Census', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..oo(0, [1, 11, 12, 21, 22, 23, 24, 30])
-    ..aOM<CensusNone>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'none', subBuilder: CensusNone.create)
-    ..aOM<CensusArbo>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arbo', subBuilder: CensusArbo.create)
-    ..aOM<CensusCsp>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'csp', subBuilder: CensusCsp.create)
-    ..aOM<CensusErc20>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc20', subBuilder: CensusErc20.create)
-    ..aOM<CensusErc721>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc721', subBuilder: CensusErc721.create)
-    ..aOM<CensusErc1155>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc1155', subBuilder: CensusErc1155.create)
-    ..aOM<CensusErc721>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc777', subBuilder: CensusErc721.create)
-    ..aOM<CensusErcMiniMe>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ercMiniMe', protoName: 'ercMiniMe', subBuilder: CensusErcMiniMe.create)
+    ..oo(0, [1, 2, 11, 12, 13, 14, 20])
+    ..aOM<CensusArbo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arbo', subBuilder: CensusArbo.create)
+    ..aOM<CensusCsp>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'csp', subBuilder: CensusCsp.create)
+    ..aOM<CensusErc20>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc20', subBuilder: CensusErc20.create)
+    ..aOM<CensusErc721>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc721', subBuilder: CensusErc721.create)
+    ..aOM<CensusErc1155>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc1155', subBuilder: CensusErc1155.create)
+    ..aOM<CensusErc721>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'erc777', subBuilder: CensusErc721.create)
+    ..aOM<CensusErcMiniMe>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ercMiniMe', protoName: 'ercMiniMe', subBuilder: CensusErcMiniMe.create)
     ..hasRequiredFields = false
   ;
 
   Census._() : super();
   factory Census({
-    CensusNone? none,
     CensusArbo? arbo,
     CensusCsp? csp,
     CensusErc20? erc20,
@@ -58,9 +54,6 @@ class Census extends $pb.GeneratedMessage {
     CensusErcMiniMe? ercMiniMe,
   }) {
     final _result = create();
-    if (none != null) {
-      _result.none = none;
-    }
     if (arbo != null) {
       _result.arbo = arbo;
     }
@@ -109,121 +102,81 @@ class Census extends $pb.GeneratedMessage {
   void clearBody() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  CensusNone get none => $_getN(0);
+  CensusArbo get arbo => $_getN(0);
   @$pb.TagNumber(1)
-  set none(CensusNone v) { setField(1, v); }
+  set arbo(CensusArbo v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasNone() => $_has(0);
+  $core.bool hasArbo() => $_has(0);
   @$pb.TagNumber(1)
-  void clearNone() => clearField(1);
+  void clearArbo() => clearField(1);
   @$pb.TagNumber(1)
-  CensusNone ensureNone() => $_ensure(0);
+  CensusArbo ensureArbo() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  CensusCsp get csp => $_getN(1);
+  @$pb.TagNumber(2)
+  set csp(CensusCsp v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCsp() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCsp() => clearField(2);
+  @$pb.TagNumber(2)
+  CensusCsp ensureCsp() => $_ensure(1);
 
   @$pb.TagNumber(11)
-  CensusArbo get arbo => $_getN(1);
+  CensusErc20 get erc20 => $_getN(2);
   @$pb.TagNumber(11)
-  set arbo(CensusArbo v) { setField(11, v); }
+  set erc20(CensusErc20 v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasArbo() => $_has(1);
+  $core.bool hasErc20() => $_has(2);
   @$pb.TagNumber(11)
-  void clearArbo() => clearField(11);
+  void clearErc20() => clearField(11);
   @$pb.TagNumber(11)
-  CensusArbo ensureArbo() => $_ensure(1);
+  CensusErc20 ensureErc20() => $_ensure(2);
 
   @$pb.TagNumber(12)
-  CensusCsp get csp => $_getN(2);
+  CensusErc721 get erc721 => $_getN(3);
   @$pb.TagNumber(12)
-  set csp(CensusCsp v) { setField(12, v); }
+  set erc721(CensusErc721 v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasCsp() => $_has(2);
+  $core.bool hasErc721() => $_has(3);
   @$pb.TagNumber(12)
-  void clearCsp() => clearField(12);
+  void clearErc721() => clearField(12);
   @$pb.TagNumber(12)
-  CensusCsp ensureCsp() => $_ensure(2);
+  CensusErc721 ensureErc721() => $_ensure(3);
 
-  @$pb.TagNumber(21)
-  CensusErc20 get erc20 => $_getN(3);
-  @$pb.TagNumber(21)
-  set erc20(CensusErc20 v) { setField(21, v); }
-  @$pb.TagNumber(21)
-  $core.bool hasErc20() => $_has(3);
-  @$pb.TagNumber(21)
-  void clearErc20() => clearField(21);
-  @$pb.TagNumber(21)
-  CensusErc20 ensureErc20() => $_ensure(3);
+  @$pb.TagNumber(13)
+  CensusErc1155 get erc1155 => $_getN(4);
+  @$pb.TagNumber(13)
+  set erc1155(CensusErc1155 v) { setField(13, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasErc1155() => $_has(4);
+  @$pb.TagNumber(13)
+  void clearErc1155() => clearField(13);
+  @$pb.TagNumber(13)
+  CensusErc1155 ensureErc1155() => $_ensure(4);
 
-  @$pb.TagNumber(22)
-  CensusErc721 get erc721 => $_getN(4);
-  @$pb.TagNumber(22)
-  set erc721(CensusErc721 v) { setField(22, v); }
-  @$pb.TagNumber(22)
-  $core.bool hasErc721() => $_has(4);
-  @$pb.TagNumber(22)
-  void clearErc721() => clearField(22);
-  @$pb.TagNumber(22)
-  CensusErc721 ensureErc721() => $_ensure(4);
+  @$pb.TagNumber(14)
+  CensusErc721 get erc777 => $_getN(5);
+  @$pb.TagNumber(14)
+  set erc777(CensusErc721 v) { setField(14, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasErc777() => $_has(5);
+  @$pb.TagNumber(14)
+  void clearErc777() => clearField(14);
+  @$pb.TagNumber(14)
+  CensusErc721 ensureErc777() => $_ensure(5);
 
-  @$pb.TagNumber(23)
-  CensusErc1155 get erc1155 => $_getN(5);
-  @$pb.TagNumber(23)
-  set erc1155(CensusErc1155 v) { setField(23, v); }
-  @$pb.TagNumber(23)
-  $core.bool hasErc1155() => $_has(5);
-  @$pb.TagNumber(23)
-  void clearErc1155() => clearField(23);
-  @$pb.TagNumber(23)
-  CensusErc1155 ensureErc1155() => $_ensure(5);
-
-  @$pb.TagNumber(24)
-  CensusErc721 get erc777 => $_getN(6);
-  @$pb.TagNumber(24)
-  set erc777(CensusErc721 v) { setField(24, v); }
-  @$pb.TagNumber(24)
-  $core.bool hasErc777() => $_has(6);
-  @$pb.TagNumber(24)
-  void clearErc777() => clearField(24);
-  @$pb.TagNumber(24)
-  CensusErc721 ensureErc777() => $_ensure(6);
-
-  @$pb.TagNumber(30)
-  CensusErcMiniMe get ercMiniMe => $_getN(7);
-  @$pb.TagNumber(30)
-  set ercMiniMe(CensusErcMiniMe v) { setField(30, v); }
-  @$pb.TagNumber(30)
-  $core.bool hasErcMiniMe() => $_has(7);
-  @$pb.TagNumber(30)
-  void clearErcMiniMe() => clearField(30);
-  @$pb.TagNumber(30)
-  CensusErcMiniMe ensureErcMiniMe() => $_ensure(7);
-}
-
-class CensusNone extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CensusNone', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  CensusNone._() : super();
-  factory CensusNone() => create();
-  factory CensusNone.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CensusNone.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  CensusNone clone() => CensusNone()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  CensusNone copyWith(void Function(CensusNone) updates) => super.copyWith((message) => updates(message as CensusNone)) as CensusNone; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static CensusNone create() => CensusNone._();
-  CensusNone createEmptyInstance() => create();
-  static $pb.PbList<CensusNone> createRepeated() => $pb.PbList<CensusNone>();
-  @$core.pragma('dart2js:noInline')
-  static CensusNone getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CensusNone>(create);
-  static CensusNone? _defaultInstance;
+  @$pb.TagNumber(20)
+  CensusErcMiniMe get ercMiniMe => $_getN(6);
+  @$pb.TagNumber(20)
+  set ercMiniMe(CensusErcMiniMe v) { setField(20, v); }
+  @$pb.TagNumber(20)
+  $core.bool hasErcMiniMe() => $_has(6);
+  @$pb.TagNumber(20)
+  void clearErcMiniMe() => clearField(20);
+  @$pb.TagNumber(20)
+  CensusErcMiniMe ensureErcMiniMe() => $_ensure(6);
 }
 
 class CensusArbo extends $pb.GeneratedMessage {

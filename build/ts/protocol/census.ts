@@ -7,7 +7,6 @@ export const protobufPackage = "dvote.types.v2";
 /** The models below affect the whole election definition. */
 export interface Census {
   body?:
-    | { $case: "none"; none: CensusNone }
     | { $case: "arbo"; arbo: CensusArbo }
     | { $case: "csp"; csp: CensusCsp }
     | { $case: "erc20"; erc20: CensusErc20 }
@@ -16,8 +15,6 @@ export interface Census {
     | { $case: "erc777"; erc777: CensusErc721 }
     | { $case: "ercMiniMe"; ercMiniMe: CensusErcMiniMe };
 }
-
-export interface CensusNone {}
 
 export interface CensusArbo {
   censusRoot: Uint8Array;
@@ -130,47 +127,43 @@ export interface ProofZkSnark_Poseidon50kCensus {}
 /** ... */
 export interface ProofZkSnark_Poseidon250kCensus {}
 
-const baseCensus: object = {};
+function createBaseCensus(): Census {
+  return { body: undefined };
+}
 
 export const Census = {
   encode(message: Census, writer: Writer = Writer.create()): Writer {
-    if (message.body?.$case === "none") {
-      CensusNone.encode(message.body.none, writer.uint32(10).fork()).ldelim();
-    }
     if (message.body?.$case === "arbo") {
-      CensusArbo.encode(message.body.arbo, writer.uint32(90).fork()).ldelim();
+      CensusArbo.encode(message.body.arbo, writer.uint32(10).fork()).ldelim();
     }
     if (message.body?.$case === "csp") {
-      CensusCsp.encode(message.body.csp, writer.uint32(98).fork()).ldelim();
+      CensusCsp.encode(message.body.csp, writer.uint32(18).fork()).ldelim();
     }
     if (message.body?.$case === "erc20") {
-      CensusErc20.encode(
-        message.body.erc20,
-        writer.uint32(170).fork()
-      ).ldelim();
+      CensusErc20.encode(message.body.erc20, writer.uint32(90).fork()).ldelim();
     }
     if (message.body?.$case === "erc721") {
       CensusErc721.encode(
         message.body.erc721,
-        writer.uint32(178).fork()
+        writer.uint32(98).fork()
       ).ldelim();
     }
     if (message.body?.$case === "erc1155") {
       CensusErc1155.encode(
         message.body.erc1155,
-        writer.uint32(186).fork()
+        writer.uint32(106).fork()
       ).ldelim();
     }
     if (message.body?.$case === "erc777") {
       CensusErc721.encode(
         message.body.erc777,
-        writer.uint32(194).fork()
+        writer.uint32(114).fork()
       ).ldelim();
     }
     if (message.body?.$case === "ercMiniMe") {
       CensusErcMiniMe.encode(
         message.body.ercMiniMe,
-        writer.uint32(242).fork()
+        writer.uint32(162).fork()
       ).ldelim();
     }
     return writer;
@@ -179,53 +172,47 @@ export const Census = {
   decode(input: Reader | Uint8Array, length?: number): Census {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensus } as Census;
+    const message = createBaseCensus();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
           message.body = {
-            $case: "none",
-            none: CensusNone.decode(reader, reader.uint32()),
-          };
-          break;
-        case 11:
-          message.body = {
             $case: "arbo",
             arbo: CensusArbo.decode(reader, reader.uint32()),
           };
           break;
-        case 12:
+        case 2:
           message.body = {
             $case: "csp",
             csp: CensusCsp.decode(reader, reader.uint32()),
           };
           break;
-        case 21:
+        case 11:
           message.body = {
             $case: "erc20",
             erc20: CensusErc20.decode(reader, reader.uint32()),
           };
           break;
-        case 22:
+        case 12:
           message.body = {
             $case: "erc721",
             erc721: CensusErc721.decode(reader, reader.uint32()),
           };
           break;
-        case 23:
+        case 13:
           message.body = {
             $case: "erc1155",
             erc1155: CensusErc1155.decode(reader, reader.uint32()),
           };
           break;
-        case 24:
+        case 14:
           message.body = {
             $case: "erc777",
             erc777: CensusErc721.decode(reader, reader.uint32()),
           };
           break;
-        case 30:
+        case 20:
           message.body = {
             $case: "ercMiniMe",
             ercMiniMe: CensusErcMiniMe.decode(reader, reader.uint32()),
@@ -240,55 +227,30 @@ export const Census = {
   },
 
   fromJSON(object: any): Census {
-    const message = { ...baseCensus } as Census;
-    if (object.none !== undefined && object.none !== null) {
-      message.body = { $case: "none", none: CensusNone.fromJSON(object.none) };
-    }
-    if (object.arbo !== undefined && object.arbo !== null) {
-      message.body = { $case: "arbo", arbo: CensusArbo.fromJSON(object.arbo) };
-    }
-    if (object.csp !== undefined && object.csp !== null) {
-      message.body = { $case: "csp", csp: CensusCsp.fromJSON(object.csp) };
-    }
-    if (object.erc20 !== undefined && object.erc20 !== null) {
-      message.body = {
-        $case: "erc20",
-        erc20: CensusErc20.fromJSON(object.erc20),
-      };
-    }
-    if (object.erc721 !== undefined && object.erc721 !== null) {
-      message.body = {
-        $case: "erc721",
-        erc721: CensusErc721.fromJSON(object.erc721),
-      };
-    }
-    if (object.erc1155 !== undefined && object.erc1155 !== null) {
-      message.body = {
-        $case: "erc1155",
-        erc1155: CensusErc1155.fromJSON(object.erc1155),
-      };
-    }
-    if (object.erc777 !== undefined && object.erc777 !== null) {
-      message.body = {
-        $case: "erc777",
-        erc777: CensusErc721.fromJSON(object.erc777),
-      };
-    }
-    if (object.ercMiniMe !== undefined && object.ercMiniMe !== null) {
-      message.body = {
-        $case: "ercMiniMe",
-        ercMiniMe: CensusErcMiniMe.fromJSON(object.ercMiniMe),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.arbo)
+        ? { $case: "arbo", arbo: CensusArbo.fromJSON(object.arbo) }
+        : isSet(object.csp)
+        ? { $case: "csp", csp: CensusCsp.fromJSON(object.csp) }
+        : isSet(object.erc20)
+        ? { $case: "erc20", erc20: CensusErc20.fromJSON(object.erc20) }
+        : isSet(object.erc721)
+        ? { $case: "erc721", erc721: CensusErc721.fromJSON(object.erc721) }
+        : isSet(object.erc1155)
+        ? { $case: "erc1155", erc1155: CensusErc1155.fromJSON(object.erc1155) }
+        : isSet(object.erc777)
+        ? { $case: "erc777", erc777: CensusErc721.fromJSON(object.erc777) }
+        : isSet(object.ercMiniMe)
+        ? {
+            $case: "ercMiniMe",
+            ercMiniMe: CensusErcMiniMe.fromJSON(object.ercMiniMe),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: Census): unknown {
     const obj: any = {};
-    message.body?.$case === "none" &&
-      (obj.none = message.body?.none
-        ? CensusNone.toJSON(message.body?.none)
-        : undefined);
     message.body?.$case === "arbo" &&
       (obj.arbo = message.body?.arbo
         ? CensusArbo.toJSON(message.body?.arbo)
@@ -321,17 +283,7 @@ export const Census = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Census>, I>>(object: I): Census {
-    const message = { ...baseCensus } as Census;
-    if (
-      object.body?.$case === "none" &&
-      object.body?.none !== undefined &&
-      object.body?.none !== null
-    ) {
-      message.body = {
-        $case: "none",
-        none: CensusNone.fromPartial(object.body.none),
-      };
-    }
+    const message = createBaseCensus();
     if (
       object.body?.$case === "arbo" &&
       object.body?.arbo !== undefined &&
@@ -406,45 +358,9 @@ export const Census = {
   },
 };
 
-const baseCensusNone: object = {};
-
-export const CensusNone = {
-  encode(_: CensusNone, writer: Writer = Writer.create()): Writer {
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): CensusNone {
-    const reader = input instanceof Reader ? input : new Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusNone } as CensusNone;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): CensusNone {
-    const message = { ...baseCensusNone } as CensusNone;
-    return message;
-  },
-
-  toJSON(_: CensusNone): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<CensusNone>, I>>(_: I): CensusNone {
-    const message = { ...baseCensusNone } as CensusNone;
-    return message;
-  },
-};
-
-const baseCensusArbo: object = { censusUri: "" };
+function createBaseCensusArbo(): CensusArbo {
+  return { censusRoot: new Uint8Array(), censusUri: "" };
+}
 
 export const CensusArbo = {
   encode(message: CensusArbo, writer: Writer = Writer.create()): Writer {
@@ -460,8 +376,7 @@ export const CensusArbo = {
   decode(input: Reader | Uint8Array, length?: number): CensusArbo {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusArbo } as CensusArbo;
-    message.censusRoot = new Uint8Array();
+    const message = createBaseCensusArbo();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -480,16 +395,12 @@ export const CensusArbo = {
   },
 
   fromJSON(object: any): CensusArbo {
-    const message = { ...baseCensusArbo } as CensusArbo;
-    message.censusRoot =
-      object.censusRoot !== undefined && object.censusRoot !== null
+    return {
+      censusRoot: isSet(object.censusRoot)
         ? bytesFromBase64(object.censusRoot)
-        : new Uint8Array();
-    message.censusUri =
-      object.censusUri !== undefined && object.censusUri !== null
-        ? String(object.censusUri)
-        : "";
-    return message;
+        : new Uint8Array(),
+      censusUri: isSet(object.censusUri) ? String(object.censusUri) : "",
+    };
   },
 
   toJSON(message: CensusArbo): unknown {
@@ -505,14 +416,16 @@ export const CensusArbo = {
   fromPartial<I extends Exact<DeepPartial<CensusArbo>, I>>(
     object: I
   ): CensusArbo {
-    const message = { ...baseCensusArbo } as CensusArbo;
+    const message = createBaseCensusArbo();
     message.censusRoot = object.censusRoot ?? new Uint8Array();
     message.censusUri = object.censusUri ?? "";
     return message;
   },
 };
 
-const baseCensusCsp: object = { cspUri: "", blind: false };
+function createBaseCensusCsp(): CensusCsp {
+  return { cspUri: "", cspPublicKey: new Uint8Array(), blind: false };
+}
 
 export const CensusCsp = {
   encode(message: CensusCsp, writer: Writer = Writer.create()): Writer {
@@ -531,8 +444,7 @@ export const CensusCsp = {
   decode(input: Reader | Uint8Array, length?: number): CensusCsp {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusCsp } as CensusCsp;
-    message.cspPublicKey = new Uint8Array();
+    const message = createBaseCensusCsp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -554,20 +466,13 @@ export const CensusCsp = {
   },
 
   fromJSON(object: any): CensusCsp {
-    const message = { ...baseCensusCsp } as CensusCsp;
-    message.cspUri =
-      object.cspUri !== undefined && object.cspUri !== null
-        ? String(object.cspUri)
-        : "";
-    message.cspPublicKey =
-      object.cspPublicKey !== undefined && object.cspPublicKey !== null
+    return {
+      cspUri: isSet(object.cspUri) ? String(object.cspUri) : "",
+      cspPublicKey: isSet(object.cspPublicKey)
         ? bytesFromBase64(object.cspPublicKey)
-        : new Uint8Array();
-    message.blind =
-      object.blind !== undefined && object.blind !== null
-        ? Boolean(object.blind)
-        : false;
-    return message;
+        : new Uint8Array(),
+      blind: isSet(object.blind) ? Boolean(object.blind) : false,
+    };
   },
 
   toJSON(message: CensusCsp): unknown {
@@ -586,7 +491,7 @@ export const CensusCsp = {
   fromPartial<I extends Exact<DeepPartial<CensusCsp>, I>>(
     object: I
   ): CensusCsp {
-    const message = { ...baseCensusCsp } as CensusCsp;
+    const message = createBaseCensusCsp();
     message.cspUri = object.cspUri ?? "";
     message.cspPublicKey = object.cspPublicKey ?? new Uint8Array();
     message.blind = object.blind ?? false;
@@ -594,7 +499,14 @@ export const CensusCsp = {
   },
 };
 
-const baseCensusErc20: object = { balanceMapSlot: 0, sourceEthereumBlock: 0 };
+function createBaseCensusErc20(): CensusErc20 {
+  return {
+    tokenAddress: new Uint8Array(),
+    balanceMapSlot: 0,
+    proof: undefined,
+    sourceEthereumBlock: 0,
+  };
+}
 
 export const CensusErc20 = {
   encode(message: CensusErc20, writer: Writer = Writer.create()): Writer {
@@ -619,8 +531,7 @@ export const CensusErc20 = {
   decode(input: Reader | Uint8Array, length?: number): CensusErc20 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusErc20 } as CensusErc20;
-    message.tokenAddress = new Uint8Array();
+    const message = createBaseCensusErc20();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -645,25 +556,20 @@ export const CensusErc20 = {
   },
 
   fromJSON(object: any): CensusErc20 {
-    const message = { ...baseCensusErc20 } as CensusErc20;
-    message.tokenAddress =
-      object.tokenAddress !== undefined && object.tokenAddress !== null
+    return {
+      tokenAddress: isSet(object.tokenAddress)
         ? bytesFromBase64(object.tokenAddress)
-        : new Uint8Array();
-    message.balanceMapSlot =
-      object.balanceMapSlot !== undefined && object.balanceMapSlot !== null
+        : new Uint8Array(),
+      balanceMapSlot: isSet(object.balanceMapSlot)
         ? Number(object.balanceMapSlot)
-        : 0;
-    message.proof =
-      object.proof !== undefined && object.proof !== null
+        : 0,
+      proof: isSet(object.proof)
         ? StorageProofErc20.fromJSON(object.proof)
-        : undefined;
-    message.sourceEthereumBlock =
-      object.sourceEthereumBlock !== undefined &&
-      object.sourceEthereumBlock !== null
+        : undefined,
+      sourceEthereumBlock: isSet(object.sourceEthereumBlock)
         ? Number(object.sourceEthereumBlock)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: CensusErc20): unknown {
@@ -675,20 +581,20 @@ export const CensusErc20 = {
           : new Uint8Array()
       ));
     message.balanceMapSlot !== undefined &&
-      (obj.balanceMapSlot = message.balanceMapSlot);
+      (obj.balanceMapSlot = Math.round(message.balanceMapSlot));
     message.proof !== undefined &&
       (obj.proof = message.proof
         ? StorageProofErc20.toJSON(message.proof)
         : undefined);
     message.sourceEthereumBlock !== undefined &&
-      (obj.sourceEthereumBlock = message.sourceEthereumBlock);
+      (obj.sourceEthereumBlock = Math.round(message.sourceEthereumBlock));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<CensusErc20>, I>>(
     object: I
   ): CensusErc20 {
-    const message = { ...baseCensusErc20 } as CensusErc20;
+    const message = createBaseCensusErc20();
     message.tokenAddress = object.tokenAddress ?? new Uint8Array();
     message.balanceMapSlot = object.balanceMapSlot ?? 0;
     message.proof =
@@ -700,7 +606,9 @@ export const CensusErc20 = {
   },
 };
 
-const baseCensusErc721: object = {};
+function createBaseCensusErc721(): CensusErc721 {
+  return {};
+}
 
 export const CensusErc721 = {
   encode(_: CensusErc721, writer: Writer = Writer.create()): Writer {
@@ -710,7 +618,7 @@ export const CensusErc721 = {
   decode(input: Reader | Uint8Array, length?: number): CensusErc721 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusErc721 } as CensusErc721;
+    const message = createBaseCensusErc721();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -723,8 +631,7 @@ export const CensusErc721 = {
   },
 
   fromJSON(_: any): CensusErc721 {
-    const message = { ...baseCensusErc721 } as CensusErc721;
-    return message;
+    return {};
   },
 
   toJSON(_: CensusErc721): unknown {
@@ -735,12 +642,14 @@ export const CensusErc721 = {
   fromPartial<I extends Exact<DeepPartial<CensusErc721>, I>>(
     _: I
   ): CensusErc721 {
-    const message = { ...baseCensusErc721 } as CensusErc721;
+    const message = createBaseCensusErc721();
     return message;
   },
 };
 
-const baseCensusErc1155: object = {};
+function createBaseCensusErc1155(): CensusErc1155 {
+  return {};
+}
 
 export const CensusErc1155 = {
   encode(_: CensusErc1155, writer: Writer = Writer.create()): Writer {
@@ -750,7 +659,7 @@ export const CensusErc1155 = {
   decode(input: Reader | Uint8Array, length?: number): CensusErc1155 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusErc1155 } as CensusErc1155;
+    const message = createBaseCensusErc1155();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -763,8 +672,7 @@ export const CensusErc1155 = {
   },
 
   fromJSON(_: any): CensusErc1155 {
-    const message = { ...baseCensusErc1155 } as CensusErc1155;
-    return message;
+    return {};
   },
 
   toJSON(_: CensusErc1155): unknown {
@@ -775,12 +683,14 @@ export const CensusErc1155 = {
   fromPartial<I extends Exact<DeepPartial<CensusErc1155>, I>>(
     _: I
   ): CensusErc1155 {
-    const message = { ...baseCensusErc1155 } as CensusErc1155;
+    const message = createBaseCensusErc1155();
     return message;
   },
 };
 
-const baseCensusErc777: object = {};
+function createBaseCensusErc777(): CensusErc777 {
+  return {};
+}
 
 export const CensusErc777 = {
   encode(_: CensusErc777, writer: Writer = Writer.create()): Writer {
@@ -790,7 +700,7 @@ export const CensusErc777 = {
   decode(input: Reader | Uint8Array, length?: number): CensusErc777 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusErc777 } as CensusErc777;
+    const message = createBaseCensusErc777();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -803,8 +713,7 @@ export const CensusErc777 = {
   },
 
   fromJSON(_: any): CensusErc777 {
-    const message = { ...baseCensusErc777 } as CensusErc777;
-    return message;
+    return {};
   },
 
   toJSON(_: CensusErc777): unknown {
@@ -815,15 +724,19 @@ export const CensusErc777 = {
   fromPartial<I extends Exact<DeepPartial<CensusErc777>, I>>(
     _: I
   ): CensusErc777 {
-    const message = { ...baseCensusErc777 } as CensusErc777;
+    const message = createBaseCensusErc777();
     return message;
   },
 };
 
-const baseCensusErcMiniMe: object = {
-  balanceMapSlot: 0,
-  sourceEthereumBlock: 0,
-};
+function createBaseCensusErcMiniMe(): CensusErcMiniMe {
+  return {
+    tokenAddress: new Uint8Array(),
+    balanceMapSlot: 0,
+    proof: undefined,
+    sourceEthereumBlock: 0,
+  };
+}
 
 export const CensusErcMiniMe = {
   encode(message: CensusErcMiniMe, writer: Writer = Writer.create()): Writer {
@@ -848,8 +761,7 @@ export const CensusErcMiniMe = {
   decode(input: Reader | Uint8Array, length?: number): CensusErcMiniMe {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCensusErcMiniMe } as CensusErcMiniMe;
-    message.tokenAddress = new Uint8Array();
+    const message = createBaseCensusErcMiniMe();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -874,25 +786,20 @@ export const CensusErcMiniMe = {
   },
 
   fromJSON(object: any): CensusErcMiniMe {
-    const message = { ...baseCensusErcMiniMe } as CensusErcMiniMe;
-    message.tokenAddress =
-      object.tokenAddress !== undefined && object.tokenAddress !== null
+    return {
+      tokenAddress: isSet(object.tokenAddress)
         ? bytesFromBase64(object.tokenAddress)
-        : new Uint8Array();
-    message.balanceMapSlot =
-      object.balanceMapSlot !== undefined && object.balanceMapSlot !== null
+        : new Uint8Array(),
+      balanceMapSlot: isSet(object.balanceMapSlot)
         ? Number(object.balanceMapSlot)
-        : 0;
-    message.proof =
-      object.proof !== undefined && object.proof !== null
+        : 0,
+      proof: isSet(object.proof)
         ? StorageProofMiniMe.fromJSON(object.proof)
-        : undefined;
-    message.sourceEthereumBlock =
-      object.sourceEthereumBlock !== undefined &&
-      object.sourceEthereumBlock !== null
+        : undefined,
+      sourceEthereumBlock: isSet(object.sourceEthereumBlock)
         ? Number(object.sourceEthereumBlock)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: CensusErcMiniMe): unknown {
@@ -904,20 +811,20 @@ export const CensusErcMiniMe = {
           : new Uint8Array()
       ));
     message.balanceMapSlot !== undefined &&
-      (obj.balanceMapSlot = message.balanceMapSlot);
+      (obj.balanceMapSlot = Math.round(message.balanceMapSlot));
     message.proof !== undefined &&
       (obj.proof = message.proof
         ? StorageProofMiniMe.toJSON(message.proof)
         : undefined);
     message.sourceEthereumBlock !== undefined &&
-      (obj.sourceEthereumBlock = message.sourceEthereumBlock);
+      (obj.sourceEthereumBlock = Math.round(message.sourceEthereumBlock));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<CensusErcMiniMe>, I>>(
     object: I
   ): CensusErcMiniMe {
-    const message = { ...baseCensusErcMiniMe } as CensusErcMiniMe;
+    const message = createBaseCensusErcMiniMe();
     message.tokenAddress = object.tokenAddress ?? new Uint8Array();
     message.balanceMapSlot = object.balanceMapSlot ?? 0;
     message.proof =
@@ -929,7 +836,9 @@ export const CensusErcMiniMe = {
   },
 };
 
-const baseProof: object = {};
+function createBaseProof(): Proof {
+  return { body: undefined };
+}
 
 export const Proof = {
   encode(message: Proof, writer: Writer = Writer.create()): Writer {
@@ -984,7 +893,7 @@ export const Proof = {
   decode(input: Reader | Uint8Array, length?: number): Proof {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProof } as Proof;
+    const message = createBaseProof();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1051,53 +960,39 @@ export const Proof = {
   },
 
   fromJSON(object: any): Proof {
-    const message = { ...baseProof } as Proof;
-    if (object.none !== undefined && object.none !== null) {
-      message.body = { $case: "none", none: ProofNone.fromJSON(object.none) };
-    }
-    if (object.arbo !== undefined && object.arbo !== null) {
-      message.body = { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) };
-    }
-    if (object.csp !== undefined && object.csp !== null) {
-      message.body = { $case: "csp", csp: ProofCSP.fromJSON(object.csp) };
-    }
-    if (object.erc20 !== undefined && object.erc20 !== null) {
-      message.body = {
-        $case: "erc20",
-        erc20: StorageProofErc20.fromJSON(object.erc20),
-      };
-    }
-    if (object.erc721 !== undefined && object.erc721 !== null) {
-      message.body = {
-        $case: "erc721",
-        erc721: StorageProofErc721.fromJSON(object.erc721),
-      };
-    }
-    if (object.erc1155 !== undefined && object.erc1155 !== null) {
-      message.body = {
-        $case: "erc1155",
-        erc1155: StorageProofErc1155.fromJSON(object.erc1155),
-      };
-    }
-    if (object.erc777 !== undefined && object.erc777 !== null) {
-      message.body = {
-        $case: "erc777",
-        erc777: StorageProofErc777.fromJSON(object.erc777),
-      };
-    }
-    if (object.miniMe !== undefined && object.miniMe !== null) {
-      message.body = {
-        $case: "miniMe",
-        miniMe: StorageProofMiniMe.fromJSON(object.miniMe),
-      };
-    }
-    if (object.zkSnark !== undefined && object.zkSnark !== null) {
-      message.body = {
-        $case: "zkSnark",
-        zkSnark: ProofZkSnark.fromJSON(object.zkSnark),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.none)
+        ? { $case: "none", none: ProofNone.fromJSON(object.none) }
+        : isSet(object.arbo)
+        ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) }
+        : isSet(object.csp)
+        ? { $case: "csp", csp: ProofCSP.fromJSON(object.csp) }
+        : isSet(object.erc20)
+        ? { $case: "erc20", erc20: StorageProofErc20.fromJSON(object.erc20) }
+        : isSet(object.erc721)
+        ? {
+            $case: "erc721",
+            erc721: StorageProofErc721.fromJSON(object.erc721),
+          }
+        : isSet(object.erc1155)
+        ? {
+            $case: "erc1155",
+            erc1155: StorageProofErc1155.fromJSON(object.erc1155),
+          }
+        : isSet(object.erc777)
+        ? {
+            $case: "erc777",
+            erc777: StorageProofErc777.fromJSON(object.erc777),
+          }
+        : isSet(object.miniMe)
+        ? {
+            $case: "miniMe",
+            miniMe: StorageProofMiniMe.fromJSON(object.miniMe),
+          }
+        : isSet(object.zkSnark)
+        ? { $case: "zkSnark", zkSnark: ProofZkSnark.fromJSON(object.zkSnark) }
+        : undefined,
+    };
   },
 
   toJSON(message: Proof): unknown {
@@ -1142,7 +1037,7 @@ export const Proof = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Proof>, I>>(object: I): Proof {
-    const message = { ...baseProof } as Proof;
+    const message = createBaseProof();
     if (
       object.body?.$case === "none" &&
       object.body?.none !== undefined &&
@@ -1237,7 +1132,9 @@ export const Proof = {
   },
 };
 
-const baseProofNone: object = {};
+function createBaseProofNone(): ProofNone {
+  return {};
+}
 
 export const ProofNone = {
   encode(_: ProofNone, writer: Writer = Writer.create()): Writer {
@@ -1247,7 +1144,7 @@ export const ProofNone = {
   decode(input: Reader | Uint8Array, length?: number): ProofNone {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofNone } as ProofNone;
+    const message = createBaseProofNone();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1260,8 +1157,7 @@ export const ProofNone = {
   },
 
   fromJSON(_: any): ProofNone {
-    const message = { ...baseProofNone } as ProofNone;
-    return message;
+    return {};
   },
 
   toJSON(_: ProofNone): unknown {
@@ -1270,12 +1166,14 @@ export const ProofNone = {
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofNone>, I>>(_: I): ProofNone {
-    const message = { ...baseProofNone } as ProofNone;
+    const message = createBaseProofNone();
     return message;
   },
 };
 
-const baseProofArbo: object = {};
+function createBaseProofArbo(): ProofArbo {
+  return { siblings: [] };
+}
 
 export const ProofArbo = {
   encode(message: ProofArbo, writer: Writer = Writer.create()): Writer {
@@ -1288,8 +1186,7 @@ export const ProofArbo = {
   decode(input: Reader | Uint8Array, length?: number): ProofArbo {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofArbo } as ProofArbo;
-    message.siblings = [];
+    const message = createBaseProofArbo();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1305,11 +1202,11 @@ export const ProofArbo = {
   },
 
   fromJSON(object: any): ProofArbo {
-    const message = { ...baseProofArbo } as ProofArbo;
-    message.siblings = (object.siblings ?? []).map((e: any) =>
-      bytesFromBase64(e)
-    );
-    return message;
+    return {
+      siblings: Array.isArray(object?.siblings)
+        ? object.siblings.map((e: any) => bytesFromBase64(e))
+        : [],
+    };
   },
 
   toJSON(message: ProofArbo): unknown {
@@ -1327,13 +1224,15 @@ export const ProofArbo = {
   fromPartial<I extends Exact<DeepPartial<ProofArbo>, I>>(
     object: I
   ): ProofArbo {
-    const message = { ...baseProofArbo } as ProofArbo;
+    const message = createBaseProofArbo();
     message.siblings = object.siblings?.map((e) => e) || [];
     return message;
   },
 };
 
-const baseProofCSP: object = {};
+function createBaseProofCSP(): ProofCSP {
+  return { payload: new Uint8Array(), signature: new Uint8Array() };
+}
 
 export const ProofCSP = {
   encode(message: ProofCSP, writer: Writer = Writer.create()): Writer {
@@ -1349,9 +1248,7 @@ export const ProofCSP = {
   decode(input: Reader | Uint8Array, length?: number): ProofCSP {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofCSP } as ProofCSP;
-    message.payload = new Uint8Array();
-    message.signature = new Uint8Array();
+    const message = createBaseProofCSP();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1370,16 +1267,14 @@ export const ProofCSP = {
   },
 
   fromJSON(object: any): ProofCSP {
-    const message = { ...baseProofCSP } as ProofCSP;
-    message.payload =
-      object.payload !== undefined && object.payload !== null
+    return {
+      payload: isSet(object.payload)
         ? bytesFromBase64(object.payload)
-        : new Uint8Array();
-    message.signature =
-      object.signature !== undefined && object.signature !== null
+        : new Uint8Array(),
+      signature: isSet(object.signature)
         ? bytesFromBase64(object.signature)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: ProofCSP): unknown {
@@ -1396,14 +1291,16 @@ export const ProofCSP = {
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofCSP>, I>>(object: I): ProofCSP {
-    const message = { ...baseProofCSP } as ProofCSP;
+    const message = createBaseProofCSP();
     message.payload = object.payload ?? new Uint8Array();
     message.signature = object.signature ?? new Uint8Array();
     return message;
   },
 };
 
-const baseStorageProofErc20: object = {};
+function createBaseStorageProofErc20(): StorageProofErc20 {
+  return { key: new Uint8Array(), value: new Uint8Array(), proof: [] };
+}
 
 export const StorageProofErc20 = {
   encode(message: StorageProofErc20, writer: Writer = Writer.create()): Writer {
@@ -1422,10 +1319,7 @@ export const StorageProofErc20 = {
   decode(input: Reader | Uint8Array, length?: number): StorageProofErc20 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofErc20 } as StorageProofErc20;
-    message.proof = [];
-    message.key = new Uint8Array();
-    message.value = new Uint8Array();
+    const message = createBaseStorageProofErc20();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1447,17 +1341,15 @@ export const StorageProofErc20 = {
   },
 
   fromJSON(object: any): StorageProofErc20 {
-    const message = { ...baseStorageProofErc20 } as StorageProofErc20;
-    message.key =
-      object.key !== undefined && object.key !== null
-        ? bytesFromBase64(object.key)
-        : new Uint8Array();
-    message.value =
-      object.value !== undefined && object.value !== null
+    return {
+      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
+      value: isSet(object.value)
         ? bytesFromBase64(object.value)
-        : new Uint8Array();
-    message.proof = (object.proof ?? []).map((e: any) => bytesFromBase64(e));
-    return message;
+        : new Uint8Array(),
+      proof: Array.isArray(object?.proof)
+        ? object.proof.map((e: any) => bytesFromBase64(e))
+        : [],
+    };
   },
 
   toJSON(message: StorageProofErc20): unknown {
@@ -1483,7 +1375,7 @@ export const StorageProofErc20 = {
   fromPartial<I extends Exact<DeepPartial<StorageProofErc20>, I>>(
     object: I
   ): StorageProofErc20 {
-    const message = { ...baseStorageProofErc20 } as StorageProofErc20;
+    const message = createBaseStorageProofErc20();
     message.key = object.key ?? new Uint8Array();
     message.value = object.value ?? new Uint8Array();
     message.proof = object.proof?.map((e) => e) || [];
@@ -1491,7 +1383,9 @@ export const StorageProofErc20 = {
   },
 };
 
-const baseStorageProofErc721: object = {};
+function createBaseStorageProofErc721(): StorageProofErc721 {
+  return {};
+}
 
 export const StorageProofErc721 = {
   encode(_: StorageProofErc721, writer: Writer = Writer.create()): Writer {
@@ -1501,7 +1395,7 @@ export const StorageProofErc721 = {
   decode(input: Reader | Uint8Array, length?: number): StorageProofErc721 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofErc721 } as StorageProofErc721;
+    const message = createBaseStorageProofErc721();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1514,8 +1408,7 @@ export const StorageProofErc721 = {
   },
 
   fromJSON(_: any): StorageProofErc721 {
-    const message = { ...baseStorageProofErc721 } as StorageProofErc721;
-    return message;
+    return {};
   },
 
   toJSON(_: StorageProofErc721): unknown {
@@ -1526,12 +1419,14 @@ export const StorageProofErc721 = {
   fromPartial<I extends Exact<DeepPartial<StorageProofErc721>, I>>(
     _: I
   ): StorageProofErc721 {
-    const message = { ...baseStorageProofErc721 } as StorageProofErc721;
+    const message = createBaseStorageProofErc721();
     return message;
   },
 };
 
-const baseStorageProofErc1155: object = {};
+function createBaseStorageProofErc1155(): StorageProofErc1155 {
+  return {};
+}
 
 export const StorageProofErc1155 = {
   encode(_: StorageProofErc1155, writer: Writer = Writer.create()): Writer {
@@ -1541,7 +1436,7 @@ export const StorageProofErc1155 = {
   decode(input: Reader | Uint8Array, length?: number): StorageProofErc1155 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofErc1155 } as StorageProofErc1155;
+    const message = createBaseStorageProofErc1155();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1554,8 +1449,7 @@ export const StorageProofErc1155 = {
   },
 
   fromJSON(_: any): StorageProofErc1155 {
-    const message = { ...baseStorageProofErc1155 } as StorageProofErc1155;
-    return message;
+    return {};
   },
 
   toJSON(_: StorageProofErc1155): unknown {
@@ -1566,12 +1460,14 @@ export const StorageProofErc1155 = {
   fromPartial<I extends Exact<DeepPartial<StorageProofErc1155>, I>>(
     _: I
   ): StorageProofErc1155 {
-    const message = { ...baseStorageProofErc1155 } as StorageProofErc1155;
+    const message = createBaseStorageProofErc1155();
     return message;
   },
 };
 
-const baseStorageProofErc777: object = {};
+function createBaseStorageProofErc777(): StorageProofErc777 {
+  return {};
+}
 
 export const StorageProofErc777 = {
   encode(_: StorageProofErc777, writer: Writer = Writer.create()): Writer {
@@ -1581,7 +1477,7 @@ export const StorageProofErc777 = {
   decode(input: Reader | Uint8Array, length?: number): StorageProofErc777 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofErc777 } as StorageProofErc777;
+    const message = createBaseStorageProofErc777();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1594,8 +1490,7 @@ export const StorageProofErc777 = {
   },
 
   fromJSON(_: any): StorageProofErc777 {
-    const message = { ...baseStorageProofErc777 } as StorageProofErc777;
-    return message;
+    return {};
   },
 
   toJSON(_: StorageProofErc777): unknown {
@@ -1606,12 +1501,14 @@ export const StorageProofErc777 = {
   fromPartial<I extends Exact<DeepPartial<StorageProofErc777>, I>>(
     _: I
   ): StorageProofErc777 {
-    const message = { ...baseStorageProofErc777 } as StorageProofErc777;
+    const message = createBaseStorageProofErc777();
     return message;
   },
 };
 
-const baseStorageProofMiniMe: object = {};
+function createBaseStorageProofMiniMe(): StorageProofMiniMe {
+  return {};
+}
 
 export const StorageProofMiniMe = {
   encode(_: StorageProofMiniMe, writer: Writer = Writer.create()): Writer {
@@ -1621,7 +1518,7 @@ export const StorageProofMiniMe = {
   decode(input: Reader | Uint8Array, length?: number): StorageProofMiniMe {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseStorageProofMiniMe } as StorageProofMiniMe;
+    const message = createBaseStorageProofMiniMe();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1634,8 +1531,7 @@ export const StorageProofMiniMe = {
   },
 
   fromJSON(_: any): StorageProofMiniMe {
-    const message = { ...baseStorageProofMiniMe } as StorageProofMiniMe;
-    return message;
+    return {};
   },
 
   toJSON(_: StorageProofMiniMe): unknown {
@@ -1646,12 +1542,14 @@ export const StorageProofMiniMe = {
   fromPartial<I extends Exact<DeepPartial<StorageProofMiniMe>, I>>(
     _: I
   ): StorageProofMiniMe {
-    const message = { ...baseStorageProofMiniMe } as StorageProofMiniMe;
+    const message = createBaseStorageProofMiniMe();
     return message;
   },
 };
 
-const baseProofZkSnark: object = {};
+function createBaseProofZkSnark(): ProofZkSnark {
+  return { body: undefined };
+}
 
 export const ProofZkSnark = {
   encode(message: ProofZkSnark, writer: Writer = Writer.create()): Writer {
@@ -1679,7 +1577,7 @@ export const ProofZkSnark = {
   decode(input: Reader | Uint8Array, length?: number): ProofZkSnark {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProofZkSnark } as ProofZkSnark;
+    const message = createBaseProofZkSnark();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1719,26 +1617,26 @@ export const ProofZkSnark = {
   },
 
   fromJSON(object: any): ProofZkSnark {
-    const message = { ...baseProofZkSnark } as ProofZkSnark;
-    if (object.proof1k !== undefined && object.proof1k !== null) {
-      message.body = {
-        $case: "proof1k",
-        proof1k: ProofZkSnark_Poseidon1kCensus.fromJSON(object.proof1k),
-      };
-    }
-    if (object.proof50k !== undefined && object.proof50k !== null) {
-      message.body = {
-        $case: "proof50k",
-        proof50k: ProofZkSnark_Poseidon50kCensus.fromJSON(object.proof50k),
-      };
-    }
-    if (object.proof250k !== undefined && object.proof250k !== null) {
-      message.body = {
-        $case: "proof250k",
-        proof250k: ProofZkSnark_Poseidon250kCensus.fromJSON(object.proof250k),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.proof1k)
+        ? {
+            $case: "proof1k",
+            proof1k: ProofZkSnark_Poseidon1kCensus.fromJSON(object.proof1k),
+          }
+        : isSet(object.proof50k)
+        ? {
+            $case: "proof50k",
+            proof50k: ProofZkSnark_Poseidon50kCensus.fromJSON(object.proof50k),
+          }
+        : isSet(object.proof250k)
+        ? {
+            $case: "proof250k",
+            proof250k: ProofZkSnark_Poseidon250kCensus.fromJSON(
+              object.proof250k
+            ),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: ProofZkSnark): unknown {
@@ -1761,7 +1659,7 @@ export const ProofZkSnark = {
   fromPartial<I extends Exact<DeepPartial<ProofZkSnark>, I>>(
     object: I
   ): ProofZkSnark {
-    const message = { ...baseProofZkSnark } as ProofZkSnark;
+    const message = createBaseProofZkSnark();
     if (
       object.body?.$case === "proof1k" &&
       object.body?.proof1k !== undefined &&
@@ -1800,7 +1698,9 @@ export const ProofZkSnark = {
   },
 };
 
-const baseProofZkSnark_Poseidon1kCensus: object = {};
+function createBaseProofZkSnark_Poseidon1kCensus(): ProofZkSnark_Poseidon1kCensus {
+  return {};
+}
 
 export const ProofZkSnark_Poseidon1kCensus = {
   encode(
@@ -1816,9 +1716,7 @@ export const ProofZkSnark_Poseidon1kCensus = {
   ): ProofZkSnark_Poseidon1kCensus {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProofZkSnark_Poseidon1kCensus,
-    } as ProofZkSnark_Poseidon1kCensus;
+    const message = createBaseProofZkSnark_Poseidon1kCensus();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1831,10 +1729,7 @@ export const ProofZkSnark_Poseidon1kCensus = {
   },
 
   fromJSON(_: any): ProofZkSnark_Poseidon1kCensus {
-    const message = {
-      ...baseProofZkSnark_Poseidon1kCensus,
-    } as ProofZkSnark_Poseidon1kCensus;
-    return message;
+    return {};
   },
 
   toJSON(_: ProofZkSnark_Poseidon1kCensus): unknown {
@@ -1845,14 +1740,14 @@ export const ProofZkSnark_Poseidon1kCensus = {
   fromPartial<I extends Exact<DeepPartial<ProofZkSnark_Poseidon1kCensus>, I>>(
     _: I
   ): ProofZkSnark_Poseidon1kCensus {
-    const message = {
-      ...baseProofZkSnark_Poseidon1kCensus,
-    } as ProofZkSnark_Poseidon1kCensus;
+    const message = createBaseProofZkSnark_Poseidon1kCensus();
     return message;
   },
 };
 
-const baseProofZkSnark_Poseidon50kCensus: object = {};
+function createBaseProofZkSnark_Poseidon50kCensus(): ProofZkSnark_Poseidon50kCensus {
+  return {};
+}
 
 export const ProofZkSnark_Poseidon50kCensus = {
   encode(
@@ -1868,9 +1763,7 @@ export const ProofZkSnark_Poseidon50kCensus = {
   ): ProofZkSnark_Poseidon50kCensus {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProofZkSnark_Poseidon50kCensus,
-    } as ProofZkSnark_Poseidon50kCensus;
+    const message = createBaseProofZkSnark_Poseidon50kCensus();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1883,10 +1776,7 @@ export const ProofZkSnark_Poseidon50kCensus = {
   },
 
   fromJSON(_: any): ProofZkSnark_Poseidon50kCensus {
-    const message = {
-      ...baseProofZkSnark_Poseidon50kCensus,
-    } as ProofZkSnark_Poseidon50kCensus;
-    return message;
+    return {};
   },
 
   toJSON(_: ProofZkSnark_Poseidon50kCensus): unknown {
@@ -1897,14 +1787,14 @@ export const ProofZkSnark_Poseidon50kCensus = {
   fromPartial<I extends Exact<DeepPartial<ProofZkSnark_Poseidon50kCensus>, I>>(
     _: I
   ): ProofZkSnark_Poseidon50kCensus {
-    const message = {
-      ...baseProofZkSnark_Poseidon50kCensus,
-    } as ProofZkSnark_Poseidon50kCensus;
+    const message = createBaseProofZkSnark_Poseidon50kCensus();
     return message;
   },
 };
 
-const baseProofZkSnark_Poseidon250kCensus: object = {};
+function createBaseProofZkSnark_Poseidon250kCensus(): ProofZkSnark_Poseidon250kCensus {
+  return {};
+}
 
 export const ProofZkSnark_Poseidon250kCensus = {
   encode(
@@ -1920,9 +1810,7 @@ export const ProofZkSnark_Poseidon250kCensus = {
   ): ProofZkSnark_Poseidon250kCensus {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProofZkSnark_Poseidon250kCensus,
-    } as ProofZkSnark_Poseidon250kCensus;
+    const message = createBaseProofZkSnark_Poseidon250kCensus();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1935,10 +1823,7 @@ export const ProofZkSnark_Poseidon250kCensus = {
   },
 
   fromJSON(_: any): ProofZkSnark_Poseidon250kCensus {
-    const message = {
-      ...baseProofZkSnark_Poseidon250kCensus,
-    } as ProofZkSnark_Poseidon250kCensus;
-    return message;
+    return {};
   },
 
   toJSON(_: ProofZkSnark_Poseidon250kCensus): unknown {
@@ -1949,9 +1834,7 @@ export const ProofZkSnark_Poseidon250kCensus = {
   fromPartial<I extends Exact<DeepPartial<ProofZkSnark_Poseidon250kCensus>, I>>(
     _: I
   ): ProofZkSnark_Poseidon250kCensus {
-    const message = {
-      ...baseProofZkSnark_Poseidon250kCensus,
-    } as ProofZkSnark_Poseidon250kCensus;
+    const message = createBaseProofZkSnark_Poseidon250kCensus();
     return message;
   },
 };
@@ -2026,4 +1909,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

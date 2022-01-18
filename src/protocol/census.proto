@@ -12,23 +12,20 @@ option go_package = "go.vocdoni.io/proto/build/go/models/v2";
 // The models below affect the whole election definition.
 message Census {
 	oneof body {
-		CensusNone none = 1;
-        
-        // Always weighted
-		CensusArbo arbo = 11;
-		CensusCsp csp = 12;
+		// Always weighted
+		CensusArbo arbo = 1;
+		CensusCsp csp = 2;
 
-		CensusErc20 erc20 = 21;
-		CensusErc721 erc721 = 22;
-		CensusErc1155 erc1155 = 23;
-		CensusErc721 erc777 = 24;
-		CensusErcMiniMe ercMiniMe = 30;
+		CensusErc20 erc20 = 11;
+		CensusErc721 erc721 = 12;
+		CensusErc1155 erc1155 = 13;
+		CensusErc721 erc777 = 14;
+		CensusErcMiniMe ercMiniMe = 20;
 	}
 }
 
 // Census submodels
 
-message CensusNone {}
 message CensusArbo {
 	bytes censusRoot = 1;
 	string censusUri = 2;

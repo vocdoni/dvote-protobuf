@@ -70,7 +70,9 @@ export interface SetProposalStatus_Entry {
   newStatus: ProposalStatus;
 }
 
-const baseSetOrganization: object = {};
+function createBaseSetOrganization(): SetOrganization {
+  return { organization: undefined };
+}
 
 export const SetOrganization = {
   encode(message: SetOrganization, writer: Writer = Writer.create()): Writer {
@@ -86,7 +88,7 @@ export const SetOrganization = {
   decode(input: Reader | Uint8Array, length?: number): SetOrganization {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSetOrganization } as SetOrganization;
+    const message = createBaseSetOrganization();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -102,12 +104,11 @@ export const SetOrganization = {
   },
 
   fromJSON(object: any): SetOrganization {
-    const message = { ...baseSetOrganization } as SetOrganization;
-    message.organization =
-      object.organization !== undefined && object.organization !== null
+    return {
+      organization: isSet(object.organization)
         ? Organization.fromJSON(object.organization)
-        : undefined;
-    return message;
+        : undefined,
+    };
   },
 
   toJSON(message: SetOrganization): unknown {
@@ -122,7 +123,7 @@ export const SetOrganization = {
   fromPartial<I extends Exact<DeepPartial<SetOrganization>, I>>(
     object: I
   ): SetOrganization {
-    const message = { ...baseSetOrganization } as SetOrganization;
+    const message = createBaseSetOrganization();
     message.organization =
       object.organization !== undefined && object.organization !== null
         ? Organization.fromPartial(object.organization)
@@ -131,7 +132,9 @@ export const SetOrganization = {
   },
 };
 
-const baseTransfer: object = { value: "" };
+function createBaseTransfer(): Transfer {
+  return { to: new Uint8Array(), value: "" };
+}
 
 export const Transfer = {
   encode(message: Transfer, writer: Writer = Writer.create()): Writer {
@@ -147,8 +150,7 @@ export const Transfer = {
   decode(input: Reader | Uint8Array, length?: number): Transfer {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTransfer } as Transfer;
-    message.to = new Uint8Array();
+    const message = createBaseTransfer();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -167,16 +169,10 @@ export const Transfer = {
   },
 
   fromJSON(object: any): Transfer {
-    const message = { ...baseTransfer } as Transfer;
-    message.to =
-      object.to !== undefined && object.to !== null
-        ? bytesFromBase64(object.to)
-        : new Uint8Array();
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      to: isSet(object.to) ? bytesFromBase64(object.to) : new Uint8Array(),
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: Transfer): unknown {
@@ -190,14 +186,16 @@ export const Transfer = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Transfer>, I>>(object: I): Transfer {
-    const message = { ...baseTransfer } as Transfer;
+    const message = createBaseTransfer();
     message.to = object.to ?? new Uint8Array();
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseMint: object = { amount: "" };
+function createBaseMint(): Mint {
+  return { amount: "" };
+}
 
 export const Mint = {
   encode(message: Mint, writer: Writer = Writer.create()): Writer {
@@ -210,7 +208,7 @@ export const Mint = {
   decode(input: Reader | Uint8Array, length?: number): Mint {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMint } as Mint;
+    const message = createBaseMint();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -226,12 +224,9 @@ export const Mint = {
   },
 
   fromJSON(object: any): Mint {
-    const message = { ...baseMint } as Mint;
-    message.amount =
-      object.amount !== undefined && object.amount !== null
-        ? String(object.amount)
-        : "";
-    return message;
+    return {
+      amount: isSet(object.amount) ? String(object.amount) : "",
+    };
   },
 
   toJSON(message: Mint): unknown {
@@ -241,13 +236,15 @@ export const Mint = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Mint>, I>>(object: I): Mint {
-    const message = { ...baseMint } as Mint;
+    const message = createBaseMint();
     message.amount = object.amount ?? "";
     return message;
   },
 };
 
-const baseClaimTokens: object = {};
+function createBaseClaimTokens(): ClaimTokens {
+  return { nonce: new Uint8Array(), sender: new Uint8Array() };
+}
 
 export const ClaimTokens = {
   encode(message: ClaimTokens, writer: Writer = Writer.create()): Writer {
@@ -263,9 +260,7 @@ export const ClaimTokens = {
   decode(input: Reader | Uint8Array, length?: number): ClaimTokens {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseClaimTokens } as ClaimTokens;
-    message.nonce = new Uint8Array();
-    message.sender = new Uint8Array();
+    const message = createBaseClaimTokens();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -284,16 +279,14 @@ export const ClaimTokens = {
   },
 
   fromJSON(object: any): ClaimTokens {
-    const message = { ...baseClaimTokens } as ClaimTokens;
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null
+    return {
+      nonce: isSet(object.nonce)
         ? bytesFromBase64(object.nonce)
-        : new Uint8Array();
-    message.sender =
-      object.sender !== undefined && object.sender !== null
+        : new Uint8Array(),
+      sender: isSet(object.sender)
         ? bytesFromBase64(object.sender)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: ClaimTokens): unknown {
@@ -312,14 +305,16 @@ export const ClaimTokens = {
   fromPartial<I extends Exact<DeepPartial<ClaimTokens>, I>>(
     object: I
   ): ClaimTokens {
-    const message = { ...baseClaimTokens } as ClaimTokens;
+    const message = createBaseClaimTokens();
     message.nonce = object.nonce ?? new Uint8Array();
     message.sender = object.sender ?? new Uint8Array();
     return message;
   },
 };
 
-const baseNewElection: object = {};
+function createBaseNewElection(): NewElection {
+  return { election: undefined };
+}
 
 export const NewElection = {
   encode(message: NewElection, writer: Writer = Writer.create()): Writer {
@@ -332,7 +327,7 @@ export const NewElection = {
   decode(input: Reader | Uint8Array, length?: number): NewElection {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseNewElection } as NewElection;
+    const message = createBaseNewElection();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -348,12 +343,11 @@ export const NewElection = {
   },
 
   fromJSON(object: any): NewElection {
-    const message = { ...baseNewElection } as NewElection;
-    message.election =
-      object.election !== undefined && object.election !== null
+    return {
+      election: isSet(object.election)
         ? Election.fromJSON(object.election)
-        : undefined;
-    return message;
+        : undefined,
+    };
   },
 
   toJSON(message: NewElection): unknown {
@@ -368,7 +362,7 @@ export const NewElection = {
   fromPartial<I extends Exact<DeepPartial<NewElection>, I>>(
     object: I
   ): NewElection {
-    const message = { ...baseNewElection } as NewElection;
+    const message = createBaseNewElection();
     message.election =
       object.election !== undefined && object.election !== null
         ? Election.fromPartial(object.election)
@@ -377,7 +371,14 @@ export const NewElection = {
   },
 };
 
-const baseRegisterElectionKey: object = { weight: "" };
+function createBaseRegisterElectionKey(): RegisterElectionKey {
+  return {
+    electionId: new Uint8Array(),
+    proofs: [],
+    newKey: new Uint8Array(),
+    weight: "",
+  };
+}
 
 export const RegisterElectionKey = {
   encode(
@@ -402,10 +403,7 @@ export const RegisterElectionKey = {
   decode(input: Reader | Uint8Array, length?: number): RegisterElectionKey {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseRegisterElectionKey } as RegisterElectionKey;
-    message.proofs = [];
-    message.electionId = new Uint8Array();
-    message.newKey = new Uint8Array();
+    const message = createBaseRegisterElectionKey();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -430,21 +428,18 @@ export const RegisterElectionKey = {
   },
 
   fromJSON(object: any): RegisterElectionKey {
-    const message = { ...baseRegisterElectionKey } as RegisterElectionKey;
-    message.electionId =
-      object.electionId !== undefined && object.electionId !== null
+    return {
+      electionId: isSet(object.electionId)
         ? bytesFromBase64(object.electionId)
-        : new Uint8Array();
-    message.proofs = (object.proofs ?? []).map((e: any) => Proof.fromJSON(e));
-    message.newKey =
-      object.newKey !== undefined && object.newKey !== null
+        : new Uint8Array(),
+      proofs: Array.isArray(object?.proofs)
+        ? object.proofs.map((e: any) => Proof.fromJSON(e))
+        : [],
+      newKey: isSet(object.newKey)
         ? bytesFromBase64(object.newKey)
-        : new Uint8Array();
-    message.weight =
-      object.weight !== undefined && object.weight !== null
-        ? String(object.weight)
-        : "";
-    return message;
+        : new Uint8Array(),
+      weight: isSet(object.weight) ? String(object.weight) : "",
+    };
   },
 
   toJSON(message: RegisterElectionKey): unknown {
@@ -469,7 +464,7 @@ export const RegisterElectionKey = {
   fromPartial<I extends Exact<DeepPartial<RegisterElectionKey>, I>>(
     object: I
   ): RegisterElectionKey {
-    const message = { ...baseRegisterElectionKey } as RegisterElectionKey;
+    const message = createBaseRegisterElectionKey();
     message.electionId = object.electionId ?? new Uint8Array();
     message.proofs = object.proofs?.map((e) => Proof.fromPartial(e)) || [];
     message.newKey = object.newKey ?? new Uint8Array();
@@ -478,7 +473,9 @@ export const RegisterElectionKey = {
   },
 };
 
-const baseSubmitBallot: object = {};
+function createBaseSubmitBallot(): SubmitBallot {
+  return { ballot: undefined };
+}
 
 export const SubmitBallot = {
   encode(message: SubmitBallot, writer: Writer = Writer.create()): Writer {
@@ -491,7 +488,7 @@ export const SubmitBallot = {
   decode(input: Reader | Uint8Array, length?: number): SubmitBallot {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSubmitBallot } as SubmitBallot;
+    const message = createBaseSubmitBallot();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -507,12 +504,9 @@ export const SubmitBallot = {
   },
 
   fromJSON(object: any): SubmitBallot {
-    const message = { ...baseSubmitBallot } as SubmitBallot;
-    message.ballot =
-      object.ballot !== undefined && object.ballot !== null
-        ? Ballot.fromJSON(object.ballot)
-        : undefined;
-    return message;
+    return {
+      ballot: isSet(object.ballot) ? Ballot.fromJSON(object.ballot) : undefined,
+    };
   },
 
   toJSON(message: SubmitBallot): unknown {
@@ -525,7 +519,7 @@ export const SubmitBallot = {
   fromPartial<I extends Exact<DeepPartial<SubmitBallot>, I>>(
     object: I
   ): SubmitBallot {
-    const message = { ...baseSubmitBallot } as SubmitBallot;
+    const message = createBaseSubmitBallot();
     message.ballot =
       object.ballot !== undefined && object.ballot !== null
         ? Ballot.fromPartial(object.ballot)
@@ -534,7 +528,9 @@ export const SubmitBallot = {
   },
 };
 
-const baseSetElectionStatus: object = { newStatus: 0 };
+function createBaseSetElectionStatus(): SetElectionStatus {
+  return { electionId: new Uint8Array(), newStatus: 0 };
+}
 
 export const SetElectionStatus = {
   encode(message: SetElectionStatus, writer: Writer = Writer.create()): Writer {
@@ -550,8 +546,7 @@ export const SetElectionStatus = {
   decode(input: Reader | Uint8Array, length?: number): SetElectionStatus {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSetElectionStatus } as SetElectionStatus;
-    message.electionId = new Uint8Array();
+    const message = createBaseSetElectionStatus();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -570,16 +565,14 @@ export const SetElectionStatus = {
   },
 
   fromJSON(object: any): SetElectionStatus {
-    const message = { ...baseSetElectionStatus } as SetElectionStatus;
-    message.electionId =
-      object.electionId !== undefined && object.electionId !== null
+    return {
+      electionId: isSet(object.electionId)
         ? bytesFromBase64(object.electionId)
-        : new Uint8Array();
-    message.newStatus =
-      object.newStatus !== undefined && object.newStatus !== null
+        : new Uint8Array(),
+      newStatus: isSet(object.newStatus)
         ? proposalStatusFromJSON(object.newStatus)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: SetElectionStatus): unknown {
@@ -596,14 +589,16 @@ export const SetElectionStatus = {
   fromPartial<I extends Exact<DeepPartial<SetElectionStatus>, I>>(
     object: I
   ): SetElectionStatus {
-    const message = { ...baseSetElectionStatus } as SetElectionStatus;
+    const message = createBaseSetElectionStatus();
     message.electionId = object.electionId ?? new Uint8Array();
     message.newStatus = object.newStatus ?? 0;
     return message;
   },
 };
 
-const baseSetProposalStatus: object = {};
+function createBaseSetProposalStatus(): SetProposalStatus {
+  return { electionId: new Uint8Array(), entries: [] };
+}
 
 export const SetProposalStatus = {
   encode(message: SetProposalStatus, writer: Writer = Writer.create()): Writer {
@@ -619,9 +614,7 @@ export const SetProposalStatus = {
   decode(input: Reader | Uint8Array, length?: number): SetProposalStatus {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSetProposalStatus } as SetProposalStatus;
-    message.entries = [];
-    message.electionId = new Uint8Array();
+    const message = createBaseSetProposalStatus();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -642,15 +635,14 @@ export const SetProposalStatus = {
   },
 
   fromJSON(object: any): SetProposalStatus {
-    const message = { ...baseSetProposalStatus } as SetProposalStatus;
-    message.electionId =
-      object.electionId !== undefined && object.electionId !== null
+    return {
+      electionId: isSet(object.electionId)
         ? bytesFromBase64(object.electionId)
-        : new Uint8Array();
-    message.entries = (object.entries ?? []).map((e: any) =>
-      SetProposalStatus_Entry.fromJSON(e)
-    );
-    return message;
+        : new Uint8Array(),
+      entries: Array.isArray(object?.entries)
+        ? object.entries.map((e: any) => SetProposalStatus_Entry.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: SetProposalStatus): unknown {
@@ -672,7 +664,7 @@ export const SetProposalStatus = {
   fromPartial<I extends Exact<DeepPartial<SetProposalStatus>, I>>(
     object: I
   ): SetProposalStatus {
-    const message = { ...baseSetProposalStatus } as SetProposalStatus;
+    const message = createBaseSetProposalStatus();
     message.electionId = object.electionId ?? new Uint8Array();
     message.entries =
       object.entries?.map((e) => SetProposalStatus_Entry.fromPartial(e)) || [];
@@ -680,7 +672,9 @@ export const SetProposalStatus = {
   },
 };
 
-const baseSetProposalStatus_Entry: object = { proposalIndex: 0, newStatus: 0 };
+function createBaseSetProposalStatus_Entry(): SetProposalStatus_Entry {
+  return { proposalIndex: 0, newStatus: 0 };
+}
 
 export const SetProposalStatus_Entry = {
   encode(
@@ -699,9 +693,7 @@ export const SetProposalStatus_Entry = {
   decode(input: Reader | Uint8Array, length?: number): SetProposalStatus_Entry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseSetProposalStatus_Entry,
-    } as SetProposalStatus_Entry;
+    const message = createBaseSetProposalStatus_Entry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -720,24 +712,20 @@ export const SetProposalStatus_Entry = {
   },
 
   fromJSON(object: any): SetProposalStatus_Entry {
-    const message = {
-      ...baseSetProposalStatus_Entry,
-    } as SetProposalStatus_Entry;
-    message.proposalIndex =
-      object.proposalIndex !== undefined && object.proposalIndex !== null
+    return {
+      proposalIndex: isSet(object.proposalIndex)
         ? Number(object.proposalIndex)
-        : 0;
-    message.newStatus =
-      object.newStatus !== undefined && object.newStatus !== null
+        : 0,
+      newStatus: isSet(object.newStatus)
         ? proposalStatusFromJSON(object.newStatus)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: SetProposalStatus_Entry): unknown {
     const obj: any = {};
     message.proposalIndex !== undefined &&
-      (obj.proposalIndex = message.proposalIndex);
+      (obj.proposalIndex = Math.round(message.proposalIndex));
     message.newStatus !== undefined &&
       (obj.newStatus = proposalStatusToJSON(message.newStatus));
     return obj;
@@ -746,9 +734,7 @@ export const SetProposalStatus_Entry = {
   fromPartial<I extends Exact<DeepPartial<SetProposalStatus_Entry>, I>>(
     object: I
   ): SetProposalStatus_Entry {
-    const message = {
-      ...baseSetProposalStatus_Entry,
-    } as SetProposalStatus_Entry;
+    const message = createBaseSetProposalStatus_Entry();
     message.proposalIndex = object.proposalIndex ?? 0;
     message.newStatus = object.newStatus ?? 0;
     return message;
@@ -825,4 +811,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

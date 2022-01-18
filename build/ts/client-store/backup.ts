@@ -182,7 +182,14 @@ export function walletBackup_Recovery_QuestionEnumToJSON(
   }
 }
 
-const baseWalletBackup: object = { name: "", timestamp: 0 };
+function createBaseWalletBackup(): WalletBackup {
+  return {
+    name: "",
+    timestamp: 0,
+    wallet: undefined,
+    passphraseRecovery: undefined,
+  };
+}
 
 export const WalletBackup = {
   encode(message: WalletBackup, writer: Writer = Writer.create()): Writer {
@@ -207,7 +214,7 @@ export const WalletBackup = {
   decode(input: Reader | Uint8Array, length?: number): WalletBackup {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseWalletBackup } as WalletBackup;
+    const message = createBaseWalletBackup();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -235,31 +242,21 @@ export const WalletBackup = {
   },
 
   fromJSON(object: any): WalletBackup {
-    const message = { ...baseWalletBackup } as WalletBackup;
-    message.name =
-      object.name !== undefined && object.name !== null
-        ? String(object.name)
-        : "";
-    message.timestamp =
-      object.timestamp !== undefined && object.timestamp !== null
-        ? Number(object.timestamp)
-        : 0;
-    message.wallet =
-      object.wallet !== undefined && object.wallet !== null
-        ? Wallet.fromJSON(object.wallet)
-        : undefined;
-    message.passphraseRecovery =
-      object.passphraseRecovery !== undefined &&
-      object.passphraseRecovery !== null
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      timestamp: isSet(object.timestamp) ? Number(object.timestamp) : 0,
+      wallet: isSet(object.wallet) ? Wallet.fromJSON(object.wallet) : undefined,
+      passphraseRecovery: isSet(object.passphraseRecovery)
         ? WalletBackup_Recovery.fromJSON(object.passphraseRecovery)
-        : undefined;
-    return message;
+        : undefined,
+    };
   },
 
   toJSON(message: WalletBackup): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
+    message.timestamp !== undefined &&
+      (obj.timestamp = Math.round(message.timestamp));
     message.wallet !== undefined &&
       (obj.wallet = message.wallet ? Wallet.toJSON(message.wallet) : undefined);
     message.passphraseRecovery !== undefined &&
@@ -272,7 +269,7 @@ export const WalletBackup = {
   fromPartial<I extends Exact<DeepPartial<WalletBackup>, I>>(
     object: I
   ): WalletBackup {
-    const message = { ...baseWalletBackup } as WalletBackup;
+    const message = createBaseWalletBackup();
     message.name = object.name ?? "";
     message.timestamp = object.timestamp ?? 0;
     message.wallet =
@@ -288,7 +285,9 @@ export const WalletBackup = {
   },
 };
 
-const baseWalletBackup_Recovery: object = { questionIds: 0 };
+function createBaseWalletBackup_Recovery(): WalletBackup_Recovery {
+  return { questionIds: [], encryptedPassphrase: new Uint8Array() };
+}
 
 export const WalletBackup_Recovery = {
   encode(
@@ -309,9 +308,7 @@ export const WalletBackup_Recovery = {
   decode(input: Reader | Uint8Array, length?: number): WalletBackup_Recovery {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
-    message.questionIds = [];
-    message.encryptedPassphrase = new Uint8Array();
+    const message = createBaseWalletBackup_Recovery();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -337,16 +334,16 @@ export const WalletBackup_Recovery = {
   },
 
   fromJSON(object: any): WalletBackup_Recovery {
-    const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
-    message.questionIds = (object.questionIds ?? []).map((e: any) =>
-      walletBackup_Recovery_QuestionEnumFromJSON(e)
-    );
-    message.encryptedPassphrase =
-      object.encryptedPassphrase !== undefined &&
-      object.encryptedPassphrase !== null
+    return {
+      questionIds: Array.isArray(object?.questionIds)
+        ? object.questionIds.map((e: any) =>
+            walletBackup_Recovery_QuestionEnumFromJSON(e)
+          )
+        : [],
+      encryptedPassphrase: isSet(object.encryptedPassphrase)
         ? bytesFromBase64(object.encryptedPassphrase)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: WalletBackup_Recovery): unknown {
@@ -370,7 +367,7 @@ export const WalletBackup_Recovery = {
   fromPartial<I extends Exact<DeepPartial<WalletBackup_Recovery>, I>>(
     object: I
   ): WalletBackup_Recovery {
-    const message = { ...baseWalletBackup_Recovery } as WalletBackup_Recovery;
+    const message = createBaseWalletBackup_Recovery();
     message.questionIds = object.questionIds?.map((e) => e) || [];
     message.encryptedPassphrase =
       object.encryptedPassphrase ?? new Uint8Array();
@@ -455,4 +452,8 @@ function longToNumber(long: Long): number {
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

@@ -31,8 +31,9 @@ message BallotBody {
     bytes electionId = 1;
     bytes nullifier = 2;
     
-    // The proof(s), according to the Election census types defined
-    // Or [ProofZkSnark] if anonymous
+    // Contains the census proof(s), according to the census types defined in the Election
+    // Non-anonymous: [ mainProof1, mainProof2, ..., secondaryProof1, secondaryProof2, ... ]
+    // Anonymous:     [ ProofZkSnark ] if anonymous
     repeated Proof proofs = 3;
     
     message VoteList {

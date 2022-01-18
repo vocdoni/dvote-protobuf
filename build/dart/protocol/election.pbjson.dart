@@ -12,9 +12,8 @@ import 'dart:typed_data' as $typed_data;
 const Election$json = const {
   '1': 'Election',
   '2': const [
-    const {'1': 'mainCensus', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'mainCensus'},
-    const {'1': 'secondaryCensus', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'secondaryCensus'},
-    const {'1': 'tertiaryCensus', '3': 3, '4': 1, '5': 11, '6': '.dvote.types.v2.Census', '10': 'tertiaryCensus'},
+    const {'1': 'mainCensus', '3': 1, '4': 3, '5': 11, '6': '.dvote.types.v2.Census', '10': 'mainCensus'},
+    const {'1': 'secondaryCensus', '3': 2, '4': 3, '5': 11, '6': '.dvote.types.v2.Census', '10': 'secondaryCensus'},
     const {'1': 'censusSize', '3': 11, '4': 1, '5': 5, '10': 'censusSize'},
     const {'1': 'proposals', '3': 12, '4': 3, '5': 11, '6': '.dvote.types.v2.Proposal', '10': 'proposals'},
     const {'1': 'privacy', '3': 13, '4': 1, '5': 11, '6': '.dvote.types.v2.Privacy', '10': 'privacy'},
@@ -24,7 +23,7 @@ const Election$json = const {
 };
 
 /// Descriptor for `Election`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List electionDescriptor = $convert.base64Decode('CghFbGVjdGlvbhI2CgptYWluQ2Vuc3VzGAEgASgLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUgptYWluQ2Vuc3VzEkAKD3NlY29uZGFyeUNlbnN1cxgCIAEoCzIWLmR2b3RlLnR5cGVzLnYyLkNlbnN1c1IPc2Vjb25kYXJ5Q2Vuc3VzEj4KDnRlcnRpYXJ5Q2Vuc3VzGAMgASgLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUg50ZXJ0aWFyeUNlbnN1cxIeCgpjZW5zdXNTaXplGAsgASgFUgpjZW5zdXNTaXplEjYKCXByb3Bvc2FscxgMIAMoCzIYLmR2b3RlLnR5cGVzLnYyLlByb3Bvc2FsUglwcm9wb3NhbHMSMQoHcHJpdmFjeRgNIAEoCzIXLmR2b3RlLnR5cGVzLnYyLlByaXZhY3lSB3ByaXZhY3kSNwoJbGlmZWN5Y2xlGA4gASgLMhkuZHZvdGUudHlwZXMudjIuTGlmZWN5Y2xlUglsaWZlY3ljbGUSIAoLbWV0YWRhdGFVcmkYDyABKAlSC21ldGFkYXRhVXJp');
+final $typed_data.Uint8List electionDescriptor = $convert.base64Decode('CghFbGVjdGlvbhI2CgptYWluQ2Vuc3VzGAEgAygLMhYuZHZvdGUudHlwZXMudjIuQ2Vuc3VzUgptYWluQ2Vuc3VzEkAKD3NlY29uZGFyeUNlbnN1cxgCIAMoCzIWLmR2b3RlLnR5cGVzLnYyLkNlbnN1c1IPc2Vjb25kYXJ5Q2Vuc3VzEh4KCmNlbnN1c1NpemUYCyABKAVSCmNlbnN1c1NpemUSNgoJcHJvcG9zYWxzGAwgAygLMhguZHZvdGUudHlwZXMudjIuUHJvcG9zYWxSCXByb3Bvc2FscxIxCgdwcml2YWN5GA0gASgLMhcuZHZvdGUudHlwZXMudjIuUHJpdmFjeVIHcHJpdmFjeRI3CglsaWZlY3ljbGUYDiABKAsyGS5kdm90ZS50eXBlcy52Mi5MaWZlY3ljbGVSCWxpZmVjeWNsZRIgCgttZXRhZGF0YVVyaRgPIAEoCVILbWV0YWRhdGFVcmk=');
 @$core.Deprecated('Use privacyDescriptor instead')
 const Privacy$json = const {
   '1': 'Privacy',

@@ -160,7 +160,9 @@ export interface ResponseError {
   body: Uint8Array;
 }
 
-const baseMessage: object = { signatureType: 0 };
+function createBaseMessage(): Message {
+  return { body: new Uint8Array(), signature: undefined, signatureType: 0 };
+}
 
 export const Message = {
   encode(message: Message, writer: Writer = Writer.create()): Writer {
@@ -179,8 +181,7 @@ export const Message = {
   decode(input: Reader | Uint8Array, length?: number): Message {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMessage } as Message;
-    message.body = new Uint8Array();
+    const message = createBaseMessage();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -202,20 +203,17 @@ export const Message = {
   },
 
   fromJSON(object: any): Message {
-    const message = { ...baseMessage } as Message;
-    message.body =
-      object.body !== undefined && object.body !== null
+    return {
+      body: isSet(object.body)
         ? bytesFromBase64(object.body)
-        : new Uint8Array();
-    message.signature =
-      object.signature !== undefined && object.signature !== null
+        : new Uint8Array(),
+      signature: isSet(object.signature)
         ? bytesFromBase64(object.signature)
-        : undefined;
-    message.signatureType =
-      object.signatureType !== undefined && object.signatureType !== null
+        : undefined,
+      signatureType: isSet(object.signatureType)
         ? signatureTypeFromJSON(object.signatureType)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: Message): unknown {
@@ -235,7 +233,7 @@ export const Message = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Message>, I>>(object: I): Message {
-    const message = { ...baseMessage } as Message;
+    const message = createBaseMessage();
     message.body = object.body ?? new Uint8Array();
     message.signature = object.signature ?? undefined;
     message.signatureType = object.signatureType ?? 0;
@@ -243,7 +241,9 @@ export const Message = {
   },
 };
 
-const baseBody: object = { timestamp: 0 };
+function createBaseBody(): Body {
+  return { id: new Uint8Array(), timestamp: 0, body: undefined };
+}
 
 export const Body = {
   encode(message: Body, writer: Writer = Writer.create()): Writer {
@@ -280,8 +280,7 @@ export const Body = {
   decode(input: Reader | Uint8Array, length?: number): Body {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBody } as Body;
-    message.id = new Uint8Array();
+    const message = createBaseBody();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -324,40 +323,25 @@ export const Body = {
   },
 
   fromJSON(object: any): Body {
-    const message = { ...baseBody } as Body;
-    message.id =
-      object.id !== undefined && object.id !== null
-        ? bytesFromBase64(object.id)
-        : new Uint8Array();
-    message.timestamp =
-      object.timestamp !== undefined && object.timestamp !== null
-        ? Number(object.timestamp)
-        : 0;
-    if (object.transaction !== undefined && object.transaction !== null) {
-      message.body = {
-        $case: "transaction",
-        transaction: Transaction.fromJSON(object.transaction),
-      };
-    }
-    if (object.receipt !== undefined && object.receipt !== null) {
-      message.body = {
-        $case: "receipt",
-        receipt: TransactionReceipt.fromJSON(object.receipt),
-      };
-    }
-    if (object.request !== undefined && object.request !== null) {
-      message.body = {
-        $case: "request",
-        request: Request.fromJSON(object.request),
-      };
-    }
-    if (object.response !== undefined && object.response !== null) {
-      message.body = {
-        $case: "response",
-        response: Response.fromJSON(object.response),
-      };
-    }
-    return message;
+    return {
+      id: isSet(object.id) ? bytesFromBase64(object.id) : new Uint8Array(),
+      timestamp: isSet(object.timestamp) ? Number(object.timestamp) : 0,
+      body: isSet(object.transaction)
+        ? {
+            $case: "transaction",
+            transaction: Transaction.fromJSON(object.transaction),
+          }
+        : isSet(object.receipt)
+        ? {
+            $case: "receipt",
+            receipt: TransactionReceipt.fromJSON(object.receipt),
+          }
+        : isSet(object.request)
+        ? { $case: "request", request: Request.fromJSON(object.request) }
+        : isSet(object.response)
+        ? { $case: "response", response: Response.fromJSON(object.response) }
+        : undefined,
+    };
   },
 
   toJSON(message: Body): unknown {
@@ -366,7 +350,8 @@ export const Body = {
       (obj.id = base64FromBytes(
         message.id !== undefined ? message.id : new Uint8Array()
       ));
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
+    message.timestamp !== undefined &&
+      (obj.timestamp = Math.round(message.timestamp));
     message.body?.$case === "transaction" &&
       (obj.transaction = message.body?.transaction
         ? Transaction.toJSON(message.body?.transaction)
@@ -387,7 +372,7 @@ export const Body = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Body>, I>>(object: I): Body {
-    const message = { ...baseBody } as Body;
+    const message = createBaseBody();
     message.id = object.id ?? new Uint8Array();
     message.timestamp = object.timestamp ?? 0;
     if (
@@ -434,7 +419,9 @@ export const Body = {
   },
 };
 
-const baseTransaction: object = {};
+function createBaseTransaction(): Transaction {
+  return { body: undefined };
+}
 
 export const Transaction = {
   encode(message: Transaction, writer: Writer = Writer.create()): Writer {
@@ -492,7 +479,7 @@ export const Transaction = {
   decode(input: Reader | Uint8Array, length?: number): Transaction {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTransaction } as Transaction;
+    const message = createBaseTransaction();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -568,73 +555,54 @@ export const Transaction = {
   },
 
   fromJSON(object: any): Transaction {
-    const message = { ...baseTransaction } as Transaction;
-    if (
-      object.setOrganization !== undefined &&
-      object.setOrganization !== null
-    ) {
-      message.body = {
-        $case: "setOrganization",
-        setOrganization: SetOrganization.fromJSON(object.setOrganization),
-      };
-    }
-    if (object.transfer !== undefined && object.transfer !== null) {
-      message.body = {
-        $case: "transfer",
-        transfer: Transfer.fromJSON(object.transfer),
-      };
-    }
-    if (object.mint !== undefined && object.mint !== null) {
-      message.body = { $case: "mint", mint: Mint.fromJSON(object.mint) };
-    }
-    if (object.claimTokens !== undefined && object.claimTokens !== null) {
-      message.body = {
-        $case: "claimTokens",
-        claimTokens: ClaimTokens.fromJSON(object.claimTokens),
-      };
-    }
-    if (object.newElection !== undefined && object.newElection !== null) {
-      message.body = {
-        $case: "newElection",
-        newElection: NewElection.fromJSON(object.newElection),
-      };
-    }
-    if (
-      object.registerElectionKey !== undefined &&
-      object.registerElectionKey !== null
-    ) {
-      message.body = {
-        $case: "registerElectionKey",
-        registerElectionKey: RegisterElectionKey.fromJSON(
-          object.registerElectionKey
-        ),
-      };
-    }
-    if (object.submitBallot !== undefined && object.submitBallot !== null) {
-      message.body = {
-        $case: "submitBallot",
-        submitBallot: SubmitBallot.fromJSON(object.submitBallot),
-      };
-    }
-    if (
-      object.setElectionStatus !== undefined &&
-      object.setElectionStatus !== null
-    ) {
-      message.body = {
-        $case: "setElectionStatus",
-        setElectionStatus: SetElectionStatus.fromJSON(object.setElectionStatus),
-      };
-    }
-    if (
-      object.setProposalStatus !== undefined &&
-      object.setProposalStatus !== null
-    ) {
-      message.body = {
-        $case: "setProposalStatus",
-        setProposalStatus: SetProposalStatus.fromJSON(object.setProposalStatus),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.setOrganization)
+        ? {
+            $case: "setOrganization",
+            setOrganization: SetOrganization.fromJSON(object.setOrganization),
+          }
+        : isSet(object.transfer)
+        ? { $case: "transfer", transfer: Transfer.fromJSON(object.transfer) }
+        : isSet(object.mint)
+        ? { $case: "mint", mint: Mint.fromJSON(object.mint) }
+        : isSet(object.claimTokens)
+        ? {
+            $case: "claimTokens",
+            claimTokens: ClaimTokens.fromJSON(object.claimTokens),
+          }
+        : isSet(object.newElection)
+        ? {
+            $case: "newElection",
+            newElection: NewElection.fromJSON(object.newElection),
+          }
+        : isSet(object.registerElectionKey)
+        ? {
+            $case: "registerElectionKey",
+            registerElectionKey: RegisterElectionKey.fromJSON(
+              object.registerElectionKey
+            ),
+          }
+        : isSet(object.submitBallot)
+        ? {
+            $case: "submitBallot",
+            submitBallot: SubmitBallot.fromJSON(object.submitBallot),
+          }
+        : isSet(object.setElectionStatus)
+        ? {
+            $case: "setElectionStatus",
+            setElectionStatus: SetElectionStatus.fromJSON(
+              object.setElectionStatus
+            ),
+          }
+        : isSet(object.setProposalStatus)
+        ? {
+            $case: "setProposalStatus",
+            setProposalStatus: SetProposalStatus.fromJSON(
+              object.setProposalStatus
+            ),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: Transaction): unknown {
@@ -681,7 +649,7 @@ export const Transaction = {
   fromPartial<I extends Exact<DeepPartial<Transaction>, I>>(
     object: I
   ): Transaction {
-    const message = { ...baseTransaction } as Transaction;
+    const message = createBaseTransaction();
     if (
       object.body?.$case === "setOrganization" &&
       object.body?.setOrganization !== undefined &&
@@ -784,7 +752,9 @@ export const Transaction = {
   },
 };
 
-const baseTransactionReceipt: object = {};
+function createBaseTransactionReceipt(): TransactionReceipt {
+  return { body: undefined };
+}
 
 export const TransactionReceipt = {
   encode(
@@ -809,7 +779,7 @@ export const TransactionReceipt = {
   decode(input: Reader | Uint8Array, length?: number): TransactionReceipt {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTransactionReceipt } as TransactionReceipt;
+    const message = createBaseTransactionReceipt();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -834,20 +804,16 @@ export const TransactionReceipt = {
   },
 
   fromJSON(object: any): TransactionReceipt {
-    const message = { ...baseTransactionReceipt } as TransactionReceipt;
-    if (object.success !== undefined && object.success !== null) {
-      message.body = {
-        $case: "success",
-        success: TransactionSuccess.fromJSON(object.success),
-      };
-    }
-    if (object.error !== undefined && object.error !== null) {
-      message.body = {
-        $case: "error",
-        error: TransactionError.fromJSON(object.error),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.success)
+        ? {
+            $case: "success",
+            success: TransactionSuccess.fromJSON(object.success),
+          }
+        : isSet(object.error)
+        ? { $case: "error", error: TransactionError.fromJSON(object.error) }
+        : undefined,
+    };
   },
 
   toJSON(message: TransactionReceipt): unknown {
@@ -866,7 +832,7 @@ export const TransactionReceipt = {
   fromPartial<I extends Exact<DeepPartial<TransactionReceipt>, I>>(
     object: I
   ): TransactionReceipt {
-    const message = { ...baseTransactionReceipt } as TransactionReceipt;
+    const message = createBaseTransactionReceipt();
     if (
       object.body?.$case === "success" &&
       object.body?.success !== undefined &&
@@ -891,7 +857,9 @@ export const TransactionReceipt = {
   },
 };
 
-const baseTransactionSuccess: object = {};
+function createBaseTransactionSuccess(): TransactionSuccess {
+  return { hash: new Uint8Array() };
+}
 
 export const TransactionSuccess = {
   encode(
@@ -907,8 +875,7 @@ export const TransactionSuccess = {
   decode(input: Reader | Uint8Array, length?: number): TransactionSuccess {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTransactionSuccess } as TransactionSuccess;
-    message.hash = new Uint8Array();
+    const message = createBaseTransactionSuccess();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -924,12 +891,11 @@ export const TransactionSuccess = {
   },
 
   fromJSON(object: any): TransactionSuccess {
-    const message = { ...baseTransactionSuccess } as TransactionSuccess;
-    message.hash =
-      object.hash !== undefined && object.hash !== null
+    return {
+      hash: isSet(object.hash)
         ? bytesFromBase64(object.hash)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: TransactionSuccess): unknown {
@@ -944,13 +910,15 @@ export const TransactionSuccess = {
   fromPartial<I extends Exact<DeepPartial<TransactionSuccess>, I>>(
     object: I
   ): TransactionSuccess {
-    const message = { ...baseTransactionSuccess } as TransactionSuccess;
+    const message = createBaseTransactionSuccess();
     message.hash = object.hash ?? new Uint8Array();
     return message;
   },
 };
 
-const baseTransactionError: object = { message: "", code: 0 };
+function createBaseTransactionError(): TransactionError {
+  return { message: "", code: 0 };
+}
 
 export const TransactionError = {
   encode(message: TransactionError, writer: Writer = Writer.create()): Writer {
@@ -966,7 +934,7 @@ export const TransactionError = {
   decode(input: Reader | Uint8Array, length?: number): TransactionError {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseTransactionError } as TransactionError;
+    const message = createBaseTransactionError();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -985,36 +953,32 @@ export const TransactionError = {
   },
 
   fromJSON(object: any): TransactionError {
-    const message = { ...baseTransactionError } as TransactionError;
-    message.message =
-      object.message !== undefined && object.message !== null
-        ? String(object.message)
-        : "";
-    message.code =
-      object.code !== undefined && object.code !== null
-        ? Number(object.code)
-        : 0;
-    return message;
+    return {
+      message: isSet(object.message) ? String(object.message) : "",
+      code: isSet(object.code) ? Number(object.code) : 0,
+    };
   },
 
   toJSON(message: TransactionError): unknown {
     const obj: any = {};
     message.message !== undefined && (obj.message = message.message);
-    message.code !== undefined && (obj.code = message.code);
+    message.code !== undefined && (obj.code = Math.round(message.code));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<TransactionError>, I>>(
     object: I
   ): TransactionError {
-    const message = { ...baseTransactionError } as TransactionError;
+    const message = createBaseTransactionError();
     message.message = object.message ?? "";
     message.code = object.code ?? 0;
     return message;
   },
 };
 
-const baseRequest: object = {};
+function createBaseRequest(): Request {
+  return { body: undefined };
+}
 
 export const Request = {
   encode(message: Request, writer: Writer = Writer.create()): Writer {
@@ -1165,7 +1129,7 @@ export const Request = {
   decode(input: Reader | Uint8Array, length?: number): Request {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseRequest } as Request;
+    const message = createBaseRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1340,194 +1304,138 @@ export const Request = {
   },
 
   fromJSON(object: any): Request {
-    const message = { ...baseRequest } as Request;
-    if (object.getElection !== undefined && object.getElection !== null) {
-      message.body = {
-        $case: "getElection",
-        getElection: GetElection.fromJSON(object.getElection),
-      };
-    }
-    if (
-      object.getElectionList !== undefined &&
-      object.getElectionList !== null
-    ) {
-      message.body = {
-        $case: "getElectionList",
-        getElectionList: GetElectionList.fromJSON(object.getElectionList),
-      };
-    }
-    if (
-      object.getOrganization !== undefined &&
-      object.getOrganization !== null
-    ) {
-      message.body = {
-        $case: "getOrganization",
-        getOrganization: GetOrganization.fromJSON(object.getOrganization),
-      };
-    }
-    if (object.getBallot !== undefined && object.getBallot !== null) {
-      message.body = {
-        $case: "getBallot",
-        getBallot: GetBallot.fromJSON(object.getBallot),
-      };
-    }
-    if (
-      object.getElectionBallots !== undefined &&
-      object.getElectionBallots !== null
-    ) {
-      message.body = {
-        $case: "getElectionBallots",
-        getElectionBallots: GetElectionBallots.fromJSON(
-          object.getElectionBallots
-        ),
-      };
-    }
-    if (
-      object.getElectionKeys !== undefined &&
-      object.getElectionKeys !== null
-    ) {
-      message.body = {
-        $case: "getElectionKeys",
-        getElectionKeys: GetElectionKeys.fromJSON(object.getElectionKeys),
-      };
-    }
-    if (
-      object.getElectionCircuitInfo !== undefined &&
-      object.getElectionCircuitInfo !== null
-    ) {
-      message.body = {
-        $case: "getElectionCircuitInfo",
-        getElectionCircuitInfo: GetElectionCircuitInfo.fromJSON(
-          object.getElectionCircuitInfo
-        ),
-      };
-    }
-    if (
-      object.getElectionResults !== undefined &&
-      object.getElectionResults !== null
-    ) {
-      message.body = {
-        $case: "getElectionResults",
-        getElectionResults: GetElectionResults.fromJSON(
-          object.getElectionResults
-        ),
-      };
-    }
-    if (
-      object.getElectionResultsWeight !== undefined &&
-      object.getElectionResultsWeight !== null
-    ) {
-      message.body = {
-        $case: "getElectionResultsWeight",
-        getElectionResultsWeight: GetElectionResultsWeight.fromJSON(
-          object.getElectionResultsWeight
-        ),
-      };
-    }
-    if (object.newCensus !== undefined && object.newCensus !== null) {
-      message.body = {
-        $case: "newCensus",
-        newCensus: NewCensus.fromJSON(object.newCensus),
-      };
-    }
-    if (object.addCensusKeys !== undefined && object.addCensusKeys !== null) {
-      message.body = {
-        $case: "addCensusKeys",
-        addCensusKeys: AddCensusKeys.fromJSON(object.addCensusKeys),
-      };
-    }
-    if (object.getCensusRoot !== undefined && object.getCensusRoot !== null) {
-      message.body = {
-        $case: "getCensusRoot",
-        getCensusRoot: GetCensusRoot.fromJSON(object.getCensusRoot),
-      };
-    }
-    if (object.getCensusSize !== undefined && object.getCensusSize !== null) {
-      message.body = {
-        $case: "getCensusSize",
-        getCensusSize: GetCensusSize.fromJSON(object.getCensusSize),
-      };
-    }
-    if (object.publishCensus !== undefined && object.publishCensus !== null) {
-      message.body = {
-        $case: "publishCensus",
-        publishCensus: PublishCensus.fromJSON(object.publishCensus),
-      };
-    }
-    if (object.getCensusProof !== undefined && object.getCensusProof !== null) {
-      message.body = {
-        $case: "getCensusProof",
-        getCensusProof: GetCensusProof.fromJSON(object.getCensusProof),
-      };
-    }
-    if (object.dumpCensus !== undefined && object.dumpCensus !== null) {
-      message.body = {
-        $case: "dumpCensus",
-        dumpCensus: DumpCensus.fromJSON(object.dumpCensus),
-      };
-    }
-    if (object.pinFile !== undefined && object.pinFile !== null) {
-      message.body = {
-        $case: "pinFile",
-        pinFile: PinFile.fromJSON(object.pinFile),
-      };
-    }
-    if (object.fetchFile !== undefined && object.fetchFile !== null) {
-      message.body = {
-        $case: "fetchFile",
-        fetchFile: FetchFile.fromJSON(object.fetchFile),
-      };
-    }
-    if (object.getBlockStatus !== undefined && object.getBlockStatus !== null) {
-      message.body = {
-        $case: "getBlockStatus",
-        getBlockStatus: GetBlockStatus.fromJSON(object.getBlockStatus),
-      };
-    }
-    if (object.getBlockCount !== undefined && object.getBlockCount !== null) {
-      message.body = {
-        $case: "getBlockCount",
-        getBlockCount: GetBlockCount.fromJSON(object.getBlockCount),
-      };
-    }
-    if (
-      object.estimateElectionPrice !== undefined &&
-      object.estimateElectionPrice !== null
-    ) {
-      message.body = {
-        $case: "estimateElectionPrice",
-        estimateElectionPrice: EstimateElectionPrice.fromJSON(
-          object.estimateElectionPrice
-        ),
-      };
-    }
-    if (object.getTransaction !== undefined && object.getTransaction !== null) {
-      message.body = {
-        $case: "getTransaction",
-        getTransaction: GetTransaction.fromJSON(object.getTransaction),
-      };
-    }
-    if (
-      object.getRawTransactionMessage !== undefined &&
-      object.getRawTransactionMessage !== null
-    ) {
-      message.body = {
-        $case: "getRawTransactionMessage",
-        getRawTransactionMessage: GetRawTransactionMessage.fromJSON(
-          object.getRawTransactionMessage
-        ),
-      };
-    }
-    if (
-      object.waitTransaction !== undefined &&
-      object.waitTransaction !== null
-    ) {
-      message.body = {
-        $case: "waitTransaction",
-        waitTransaction: WaitTransaction.fromJSON(object.waitTransaction),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.getElection)
+        ? {
+            $case: "getElection",
+            getElection: GetElection.fromJSON(object.getElection),
+          }
+        : isSet(object.getElectionList)
+        ? {
+            $case: "getElectionList",
+            getElectionList: GetElectionList.fromJSON(object.getElectionList),
+          }
+        : isSet(object.getOrganization)
+        ? {
+            $case: "getOrganization",
+            getOrganization: GetOrganization.fromJSON(object.getOrganization),
+          }
+        : isSet(object.getBallot)
+        ? {
+            $case: "getBallot",
+            getBallot: GetBallot.fromJSON(object.getBallot),
+          }
+        : isSet(object.getElectionBallots)
+        ? {
+            $case: "getElectionBallots",
+            getElectionBallots: GetElectionBallots.fromJSON(
+              object.getElectionBallots
+            ),
+          }
+        : isSet(object.getElectionKeys)
+        ? {
+            $case: "getElectionKeys",
+            getElectionKeys: GetElectionKeys.fromJSON(object.getElectionKeys),
+          }
+        : isSet(object.getElectionCircuitInfo)
+        ? {
+            $case: "getElectionCircuitInfo",
+            getElectionCircuitInfo: GetElectionCircuitInfo.fromJSON(
+              object.getElectionCircuitInfo
+            ),
+          }
+        : isSet(object.getElectionResults)
+        ? {
+            $case: "getElectionResults",
+            getElectionResults: GetElectionResults.fromJSON(
+              object.getElectionResults
+            ),
+          }
+        : isSet(object.getElectionResultsWeight)
+        ? {
+            $case: "getElectionResultsWeight",
+            getElectionResultsWeight: GetElectionResultsWeight.fromJSON(
+              object.getElectionResultsWeight
+            ),
+          }
+        : isSet(object.newCensus)
+        ? {
+            $case: "newCensus",
+            newCensus: NewCensus.fromJSON(object.newCensus),
+          }
+        : isSet(object.addCensusKeys)
+        ? {
+            $case: "addCensusKeys",
+            addCensusKeys: AddCensusKeys.fromJSON(object.addCensusKeys),
+          }
+        : isSet(object.getCensusRoot)
+        ? {
+            $case: "getCensusRoot",
+            getCensusRoot: GetCensusRoot.fromJSON(object.getCensusRoot),
+          }
+        : isSet(object.getCensusSize)
+        ? {
+            $case: "getCensusSize",
+            getCensusSize: GetCensusSize.fromJSON(object.getCensusSize),
+          }
+        : isSet(object.publishCensus)
+        ? {
+            $case: "publishCensus",
+            publishCensus: PublishCensus.fromJSON(object.publishCensus),
+          }
+        : isSet(object.getCensusProof)
+        ? {
+            $case: "getCensusProof",
+            getCensusProof: GetCensusProof.fromJSON(object.getCensusProof),
+          }
+        : isSet(object.dumpCensus)
+        ? {
+            $case: "dumpCensus",
+            dumpCensus: DumpCensus.fromJSON(object.dumpCensus),
+          }
+        : isSet(object.pinFile)
+        ? { $case: "pinFile", pinFile: PinFile.fromJSON(object.pinFile) }
+        : isSet(object.fetchFile)
+        ? {
+            $case: "fetchFile",
+            fetchFile: FetchFile.fromJSON(object.fetchFile),
+          }
+        : isSet(object.getBlockStatus)
+        ? {
+            $case: "getBlockStatus",
+            getBlockStatus: GetBlockStatus.fromJSON(object.getBlockStatus),
+          }
+        : isSet(object.getBlockCount)
+        ? {
+            $case: "getBlockCount",
+            getBlockCount: GetBlockCount.fromJSON(object.getBlockCount),
+          }
+        : isSet(object.estimateElectionPrice)
+        ? {
+            $case: "estimateElectionPrice",
+            estimateElectionPrice: EstimateElectionPrice.fromJSON(
+              object.estimateElectionPrice
+            ),
+          }
+        : isSet(object.getTransaction)
+        ? {
+            $case: "getTransaction",
+            getTransaction: GetTransaction.fromJSON(object.getTransaction),
+          }
+        : isSet(object.getRawTransactionMessage)
+        ? {
+            $case: "getRawTransactionMessage",
+            getRawTransactionMessage: GetRawTransactionMessage.fromJSON(
+              object.getRawTransactionMessage
+            ),
+          }
+        : isSet(object.waitTransaction)
+        ? {
+            $case: "waitTransaction",
+            waitTransaction: WaitTransaction.fromJSON(object.waitTransaction),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: Request): unknown {
@@ -1636,7 +1544,7 @@ export const Request = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Request>, I>>(object: I): Request {
-    const message = { ...baseRequest } as Request;
+    const message = createBaseRequest();
     if (
       object.body?.$case === "getElection" &&
       object.body?.getElection !== undefined &&
@@ -1901,7 +1809,9 @@ export const Request = {
   },
 };
 
-const baseResponse: object = {};
+function createBaseResponse(): Response {
+  return { body: undefined };
+}
 
 export const Response = {
   encode(message: Response, writer: Writer = Writer.create()): Writer {
@@ -1923,7 +1833,7 @@ export const Response = {
   decode(input: Reader | Uint8Array, length?: number): Response {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseResponse } as Response;
+    const message = createBaseResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1948,20 +1858,16 @@ export const Response = {
   },
 
   fromJSON(object: any): Response {
-    const message = { ...baseResponse } as Response;
-    if (object.success !== undefined && object.success !== null) {
-      message.body = {
-        $case: "success",
-        success: ResponseSuccess.fromJSON(object.success),
-      };
-    }
-    if (object.error !== undefined && object.error !== null) {
-      message.body = {
-        $case: "error",
-        error: ResponseError.fromJSON(object.error),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.success)
+        ? {
+            $case: "success",
+            success: ResponseSuccess.fromJSON(object.success),
+          }
+        : isSet(object.error)
+        ? { $case: "error", error: ResponseError.fromJSON(object.error) }
+        : undefined,
+    };
   },
 
   toJSON(message: Response): unknown {
@@ -1978,7 +1884,7 @@ export const Response = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Response>, I>>(object: I): Response {
-    const message = { ...baseResponse } as Response;
+    const message = createBaseResponse();
     if (
       object.body?.$case === "success" &&
       object.body?.success !== undefined &&
@@ -2003,7 +1909,9 @@ export const Response = {
   },
 };
 
-const baseResponseSuccess: object = {};
+function createBaseResponseSuccess(): ResponseSuccess {
+  return { body: new Uint8Array() };
+}
 
 export const ResponseSuccess = {
   encode(message: ResponseSuccess, writer: Writer = Writer.create()): Writer {
@@ -2016,8 +1924,7 @@ export const ResponseSuccess = {
   decode(input: Reader | Uint8Array, length?: number): ResponseSuccess {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseResponseSuccess } as ResponseSuccess;
-    message.body = new Uint8Array();
+    const message = createBaseResponseSuccess();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2033,12 +1940,11 @@ export const ResponseSuccess = {
   },
 
   fromJSON(object: any): ResponseSuccess {
-    const message = { ...baseResponseSuccess } as ResponseSuccess;
-    message.body =
-      object.body !== undefined && object.body !== null
+    return {
+      body: isSet(object.body)
         ? bytesFromBase64(object.body)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: ResponseSuccess): unknown {
@@ -2053,13 +1959,15 @@ export const ResponseSuccess = {
   fromPartial<I extends Exact<DeepPartial<ResponseSuccess>, I>>(
     object: I
   ): ResponseSuccess {
-    const message = { ...baseResponseSuccess } as ResponseSuccess;
+    const message = createBaseResponseSuccess();
     message.body = object.body ?? new Uint8Array();
     return message;
   },
 };
 
-const baseResponseError: object = { message: "" };
+function createBaseResponseError(): ResponseError {
+  return { message: "", body: new Uint8Array() };
+}
 
 export const ResponseError = {
   encode(message: ResponseError, writer: Writer = Writer.create()): Writer {
@@ -2075,8 +1983,7 @@ export const ResponseError = {
   decode(input: Reader | Uint8Array, length?: number): ResponseError {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseResponseError } as ResponseError;
-    message.body = new Uint8Array();
+    const message = createBaseResponseError();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2095,16 +2002,12 @@ export const ResponseError = {
   },
 
   fromJSON(object: any): ResponseError {
-    const message = { ...baseResponseError } as ResponseError;
-    message.message =
-      object.message !== undefined && object.message !== null
-        ? String(object.message)
-        : "";
-    message.body =
-      object.body !== undefined && object.body !== null
+    return {
+      message: isSet(object.message) ? String(object.message) : "",
+      body: isSet(object.body)
         ? bytesFromBase64(object.body)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: ResponseError): unknown {
@@ -2120,7 +2023,7 @@ export const ResponseError = {
   fromPartial<I extends Exact<DeepPartial<ResponseError>, I>>(
     object: I
   ): ResponseError {
-    const message = { ...baseResponseError } as ResponseError;
+    const message = createBaseResponseError();
     message.message = object.message ?? "";
     message.body = object.body ?? new Uint8Array();
     return message;
@@ -2197,4 +2100,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

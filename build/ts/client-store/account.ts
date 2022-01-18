@@ -50,7 +50,9 @@ export interface Account_MetaEntry {
   value: string;
 }
 
-const baseAccountsStore: object = {};
+function createBaseAccountsStore(): AccountsStore {
+  return { items: [] };
+}
 
 export const AccountsStore = {
   encode(message: AccountsStore, writer: Writer = Writer.create()): Writer {
@@ -63,8 +65,7 @@ export const AccountsStore = {
   decode(input: Reader | Uint8Array, length?: number): AccountsStore {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccountsStore } as AccountsStore;
-    message.items = [];
+    const message = createBaseAccountsStore();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -80,9 +81,11 @@ export const AccountsStore = {
   },
 
   fromJSON(object: any): AccountsStore {
-    const message = { ...baseAccountsStore } as AccountsStore;
-    message.items = (object.items ?? []).map((e: any) => Account.fromJSON(e));
-    return message;
+    return {
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => Account.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: AccountsStore): unknown {
@@ -98,13 +101,22 @@ export const AccountsStore = {
   fromPartial<I extends Exact<DeepPartial<AccountsStore>, I>>(
     object: I
   ): AccountsStore {
-    const message = { ...baseAccountsStore } as AccountsStore;
+    const message = createBaseAccountsStore();
     message.items = object.items?.map((e) => Account.fromPartial(e)) || [];
     return message;
   },
 };
 
-const baseAccount: object = { name: "", address: "", hasBackup: false };
+function createBaseAccount(): Account {
+  return {
+    name: "",
+    wallet: undefined,
+    address: "",
+    hasBackup: false,
+    extra: undefined,
+    meta: {},
+  };
+}
 
 export const Account = {
   encode(message: Account, writer: Writer = Writer.create()): Writer {
@@ -135,8 +147,7 @@ export const Account = {
   decode(input: Reader | Uint8Array, length?: number): Account {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccount } as Account;
-    message.meta = {};
+    const message = createBaseAccount();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -170,34 +181,24 @@ export const Account = {
   },
 
   fromJSON(object: any): Account {
-    const message = { ...baseAccount } as Account;
-    message.name =
-      object.name !== undefined && object.name !== null
-        ? String(object.name)
-        : "";
-    message.wallet =
-      object.wallet !== undefined && object.wallet !== null
-        ? Wallet.fromJSON(object.wallet)
-        : undefined;
-    message.address =
-      object.address !== undefined && object.address !== null
-        ? String(object.address)
-        : "";
-    message.hasBackup =
-      object.hasBackup !== undefined && object.hasBackup !== null
-        ? Boolean(object.hasBackup)
-        : false;
-    message.extra =
-      object.extra !== undefined && object.extra !== null
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      wallet: isSet(object.wallet) ? Wallet.fromJSON(object.wallet) : undefined,
+      address: isSet(object.address) ? String(object.address) : "",
+      hasBackup: isSet(object.hasBackup) ? Boolean(object.hasBackup) : false,
+      extra: isSet(object.extra)
         ? Account_Extra.fromJSON(object.extra)
-        : undefined;
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    return message;
+        : undefined,
+      meta: isObject(object.meta)
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+    };
   },
 
   toJSON(message: Account): unknown {
@@ -221,7 +222,7 @@ export const Account = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Account>, I>>(object: I): Account {
-    const message = { ...baseAccount } as Account;
+    const message = createBaseAccount();
     message.name = object.name ?? "";
     message.wallet =
       object.wallet !== undefined && object.wallet !== null
@@ -245,7 +246,9 @@ export const Account = {
   },
 };
 
-const baseAccount_AppVoter: object = { appAnalyticsID: "" };
+function createBaseAccount_AppVoter(): Account_AppVoter {
+  return { appAnalyticsID: "" };
+}
 
 export const Account_AppVoter = {
   encode(message: Account_AppVoter, writer: Writer = Writer.create()): Writer {
@@ -258,7 +261,7 @@ export const Account_AppVoter = {
   decode(input: Reader | Uint8Array, length?: number): Account_AppVoter {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccount_AppVoter } as Account_AppVoter;
+    const message = createBaseAccount_AppVoter();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -274,12 +277,11 @@ export const Account_AppVoter = {
   },
 
   fromJSON(object: any): Account_AppVoter {
-    const message = { ...baseAccount_AppVoter } as Account_AppVoter;
-    message.appAnalyticsID =
-      object.appAnalyticsID !== undefined && object.appAnalyticsID !== null
+    return {
+      appAnalyticsID: isSet(object.appAnalyticsID)
         ? String(object.appAnalyticsID)
-        : "";
-    return message;
+        : "",
+    };
   },
 
   toJSON(message: Account_AppVoter): unknown {
@@ -292,13 +294,15 @@ export const Account_AppVoter = {
   fromPartial<I extends Exact<DeepPartial<Account_AppVoter>, I>>(
     object: I
   ): Account_AppVoter {
-    const message = { ...baseAccount_AppVoter } as Account_AppVoter;
+    const message = createBaseAccount_AppVoter();
     message.appAnalyticsID = object.appAnalyticsID ?? "";
     return message;
   },
 };
 
-const baseAccount_WebEntity: object = { webAnalyticsID: "" };
+function createBaseAccount_WebEntity(): Account_WebEntity {
+  return { webAnalyticsID: "" };
+}
 
 export const Account_WebEntity = {
   encode(message: Account_WebEntity, writer: Writer = Writer.create()): Writer {
@@ -311,7 +315,7 @@ export const Account_WebEntity = {
   decode(input: Reader | Uint8Array, length?: number): Account_WebEntity {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccount_WebEntity } as Account_WebEntity;
+    const message = createBaseAccount_WebEntity();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -327,12 +331,11 @@ export const Account_WebEntity = {
   },
 
   fromJSON(object: any): Account_WebEntity {
-    const message = { ...baseAccount_WebEntity } as Account_WebEntity;
-    message.webAnalyticsID =
-      object.webAnalyticsID !== undefined && object.webAnalyticsID !== null
+    return {
+      webAnalyticsID: isSet(object.webAnalyticsID)
         ? String(object.webAnalyticsID)
-        : "";
-    return message;
+        : "",
+    };
   },
 
   toJSON(message: Account_WebEntity): unknown {
@@ -345,13 +348,15 @@ export const Account_WebEntity = {
   fromPartial<I extends Exact<DeepPartial<Account_WebEntity>, I>>(
     object: I
   ): Account_WebEntity {
-    const message = { ...baseAccount_WebEntity } as Account_WebEntity;
+    const message = createBaseAccount_WebEntity();
     message.webAnalyticsID = object.webAnalyticsID ?? "";
     return message;
   },
 };
 
-const baseAccount_Extra: object = {};
+function createBaseAccount_Extra(): Account_Extra {
+  return { content: undefined };
+}
 
 export const Account_Extra = {
   encode(message: Account_Extra, writer: Writer = Writer.create()): Writer {
@@ -373,7 +378,7 @@ export const Account_Extra = {
   decode(input: Reader | Uint8Array, length?: number): Account_Extra {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccount_Extra } as Account_Extra;
+    const message = createBaseAccount_Extra();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -398,20 +403,19 @@ export const Account_Extra = {
   },
 
   fromJSON(object: any): Account_Extra {
-    const message = { ...baseAccount_Extra } as Account_Extra;
-    if (object.appVoter !== undefined && object.appVoter !== null) {
-      message.content = {
-        $case: "appVoter",
-        appVoter: Account_AppVoter.fromJSON(object.appVoter),
-      };
-    }
-    if (object.webEntity !== undefined && object.webEntity !== null) {
-      message.content = {
-        $case: "webEntity",
-        webEntity: Account_WebEntity.fromJSON(object.webEntity),
-      };
-    }
-    return message;
+    return {
+      content: isSet(object.appVoter)
+        ? {
+            $case: "appVoter",
+            appVoter: Account_AppVoter.fromJSON(object.appVoter),
+          }
+        : isSet(object.webEntity)
+        ? {
+            $case: "webEntity",
+            webEntity: Account_WebEntity.fromJSON(object.webEntity),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: Account_Extra): unknown {
@@ -430,7 +434,7 @@ export const Account_Extra = {
   fromPartial<I extends Exact<DeepPartial<Account_Extra>, I>>(
     object: I
   ): Account_Extra {
-    const message = { ...baseAccount_Extra } as Account_Extra;
+    const message = createBaseAccount_Extra();
     if (
       object.content?.$case === "appVoter" &&
       object.content?.appVoter !== undefined &&
@@ -455,7 +459,9 @@ export const Account_Extra = {
   },
 };
 
-const baseAccount_MetaEntry: object = { key: "", value: "" };
+function createBaseAccount_MetaEntry(): Account_MetaEntry {
+  return { key: "", value: "" };
+}
 
 export const Account_MetaEntry = {
   encode(message: Account_MetaEntry, writer: Writer = Writer.create()): Writer {
@@ -471,7 +477,7 @@ export const Account_MetaEntry = {
   decode(input: Reader | Uint8Array, length?: number): Account_MetaEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
+    const message = createBaseAccount_MetaEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -490,14 +496,10 @@ export const Account_MetaEntry = {
   },
 
   fromJSON(object: any): Account_MetaEntry {
-    const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: Account_MetaEntry): unknown {
@@ -510,7 +512,7 @@ export const Account_MetaEntry = {
   fromPartial<I extends Exact<DeepPartial<Account_MetaEntry>, I>>(
     object: I
   ): Account_MetaEntry {
-    const message = { ...baseAccount_MetaEntry } as Account_MetaEntry;
+    const message = createBaseAccount_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
@@ -553,4 +555,12 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

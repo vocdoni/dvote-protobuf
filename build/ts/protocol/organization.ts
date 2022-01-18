@@ -10,7 +10,9 @@ export interface Organization {
   managers: Uint8Array[];
 }
 
-const baseOrganization: object = { metadataUri: "" };
+function createBaseOrganization(): Organization {
+  return { metadataUri: "", managers: [] };
+}
 
 export const Organization = {
   encode(message: Organization, writer: Writer = Writer.create()): Writer {
@@ -26,8 +28,7 @@ export const Organization = {
   decode(input: Reader | Uint8Array, length?: number): Organization {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseOrganization } as Organization;
-    message.managers = [];
+    const message = createBaseOrganization();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -46,15 +47,12 @@ export const Organization = {
   },
 
   fromJSON(object: any): Organization {
-    const message = { ...baseOrganization } as Organization;
-    message.metadataUri =
-      object.metadataUri !== undefined && object.metadataUri !== null
-        ? String(object.metadataUri)
-        : "";
-    message.managers = (object.managers ?? []).map((e: any) =>
-      bytesFromBase64(e)
-    );
-    return message;
+    return {
+      metadataUri: isSet(object.metadataUri) ? String(object.metadataUri) : "",
+      managers: Array.isArray(object?.managers)
+        ? object.managers.map((e: any) => bytesFromBase64(e))
+        : [],
+    };
   },
 
   toJSON(message: Organization): unknown {
@@ -74,7 +72,7 @@ export const Organization = {
   fromPartial<I extends Exact<DeepPartial<Organization>, I>>(
     object: I
   ): Organization {
-    const message = { ...baseOrganization } as Organization;
+    const message = createBaseOrganization();
     message.metadataUri = object.metadataUri ?? "";
     message.managers = object.managers?.map((e) => e) || [];
     return message;
@@ -151,4 +149,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

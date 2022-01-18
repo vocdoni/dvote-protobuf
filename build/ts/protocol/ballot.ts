@@ -20,8 +20,9 @@ export interface BallotBody {
   electionId: Uint8Array;
   nullifier: Uint8Array;
   /**
-   * The proof(s), according to the Election census types defined
-   * Or [ProofZkSnark] if anonymous
+   * Contains the census proof(s), according to the census types defined in the Election
+   * Non-anonymous: [ mainProof1, mainProof2, ..., secondaryProof1, secondaryProof2, ... ]
+   * Anonymous:     [ ProofZkSnark ] if anonymous
    */
   proofs: Proof[];
   votes: BallotBody_VoteList | undefined;
@@ -101,7 +102,9 @@ export interface SpreadVote {
   nonce: Uint8Array;
 }
 
-const baseBallot: object = {};
+function createBaseBallot(): Ballot {
+  return { body: undefined };
+}
 
 export const Ballot = {
   encode(message: Ballot, writer: Writer = Writer.create()): Writer {
@@ -123,7 +126,7 @@ export const Ballot = {
   decode(input: Reader | Uint8Array, length?: number): Ballot {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBallot } as Ballot;
+    const message = createBaseBallot();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -148,23 +151,19 @@ export const Ballot = {
   },
 
   fromJSON(object: any): Ballot {
-    const message = { ...baseBallot } as Ballot;
-    if (object.signedBallot !== undefined && object.signedBallot !== null) {
-      message.body = {
-        $case: "signedBallot",
-        signedBallot: SignedBallot.fromJSON(object.signedBallot),
-      };
-    }
-    if (
-      object.anonymousBallot !== undefined &&
-      object.anonymousBallot !== null
-    ) {
-      message.body = {
-        $case: "anonymousBallot",
-        anonymousBallot: BallotBody.fromJSON(object.anonymousBallot),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.signedBallot)
+        ? {
+            $case: "signedBallot",
+            signedBallot: SignedBallot.fromJSON(object.signedBallot),
+          }
+        : isSet(object.anonymousBallot)
+        ? {
+            $case: "anonymousBallot",
+            anonymousBallot: BallotBody.fromJSON(object.anonymousBallot),
+          }
+        : undefined,
+    };
   },
 
   toJSON(message: Ballot): unknown {
@@ -181,7 +180,7 @@ export const Ballot = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Ballot>, I>>(object: I): Ballot {
-    const message = { ...baseBallot } as Ballot;
+    const message = createBaseBallot();
     if (
       object.body?.$case === "signedBallot" &&
       object.body?.signedBallot !== undefined &&
@@ -206,7 +205,14 @@ export const Ballot = {
   },
 };
 
-const baseBallotBody: object = {};
+function createBaseBallotBody(): BallotBody {
+  return {
+    electionId: new Uint8Array(),
+    nullifier: new Uint8Array(),
+    proofs: [],
+    votes: undefined,
+  };
+}
 
 export const BallotBody = {
   encode(message: BallotBody, writer: Writer = Writer.create()): Writer {
@@ -231,10 +237,7 @@ export const BallotBody = {
   decode(input: Reader | Uint8Array, length?: number): BallotBody {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBallotBody } as BallotBody;
-    message.proofs = [];
-    message.electionId = new Uint8Array();
-    message.nullifier = new Uint8Array();
+    const message = createBaseBallotBody();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -259,21 +262,20 @@ export const BallotBody = {
   },
 
   fromJSON(object: any): BallotBody {
-    const message = { ...baseBallotBody } as BallotBody;
-    message.electionId =
-      object.electionId !== undefined && object.electionId !== null
+    return {
+      electionId: isSet(object.electionId)
         ? bytesFromBase64(object.electionId)
-        : new Uint8Array();
-    message.nullifier =
-      object.nullifier !== undefined && object.nullifier !== null
+        : new Uint8Array(),
+      nullifier: isSet(object.nullifier)
         ? bytesFromBase64(object.nullifier)
-        : new Uint8Array();
-    message.proofs = (object.proofs ?? []).map((e: any) => Proof.fromJSON(e));
-    message.votes =
-      object.votes !== undefined && object.votes !== null
+        : new Uint8Array(),
+      proofs: Array.isArray(object?.proofs)
+        ? object.proofs.map((e: any) => Proof.fromJSON(e))
+        : [],
+      votes: isSet(object.votes)
         ? BallotBody_VoteList.fromJSON(object.votes)
-        : undefined;
-    return message;
+        : undefined,
+    };
   },
 
   toJSON(message: BallotBody): unknown {
@@ -301,7 +303,7 @@ export const BallotBody = {
   fromPartial<I extends Exact<DeepPartial<BallotBody>, I>>(
     object: I
   ): BallotBody {
-    const message = { ...baseBallotBody } as BallotBody;
+    const message = createBaseBallotBody();
     message.electionId = object.electionId ?? new Uint8Array();
     message.nullifier = object.nullifier ?? new Uint8Array();
     message.proofs = object.proofs?.map((e) => Proof.fromPartial(e)) || [];
@@ -313,7 +315,9 @@ export const BallotBody = {
   },
 };
 
-const baseBallotBody_VoteList: object = { partial: false, submittedIndex: 0 };
+function createBaseBallotBody_VoteList(): BallotBody_VoteList {
+  return { partial: false, votes: [], submittedIndex: 0 };
+}
 
 export const BallotBody_VoteList = {
   encode(
@@ -335,8 +339,7 @@ export const BallotBody_VoteList = {
   decode(input: Reader | Uint8Array, length?: number): BallotBody_VoteList {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBallotBody_VoteList } as BallotBody_VoteList;
-    message.votes = [];
+    const message = createBaseBallotBody_VoteList();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -358,17 +361,15 @@ export const BallotBody_VoteList = {
   },
 
   fromJSON(object: any): BallotBody_VoteList {
-    const message = { ...baseBallotBody_VoteList } as BallotBody_VoteList;
-    message.partial =
-      object.partial !== undefined && object.partial !== null
-        ? Boolean(object.partial)
-        : false;
-    message.votes = (object.votes ?? []).map((e: any) => Vote.fromJSON(e));
-    message.submittedIndex =
-      object.submittedIndex !== undefined && object.submittedIndex !== null
+    return {
+      partial: isSet(object.partial) ? Boolean(object.partial) : false,
+      votes: Array.isArray(object?.votes)
+        ? object.votes.map((e: any) => Vote.fromJSON(e))
+        : [],
+      submittedIndex: isSet(object.submittedIndex)
         ? Number(object.submittedIndex)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: BallotBody_VoteList): unknown {
@@ -380,14 +381,14 @@ export const BallotBody_VoteList = {
       obj.votes = [];
     }
     message.submittedIndex !== undefined &&
-      (obj.submittedIndex = message.submittedIndex);
+      (obj.submittedIndex = Math.round(message.submittedIndex));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<BallotBody_VoteList>, I>>(
     object: I
   ): BallotBody_VoteList {
-    const message = { ...baseBallotBody_VoteList } as BallotBody_VoteList;
+    const message = createBaseBallotBody_VoteList();
     message.partial = object.partial ?? false;
     message.votes = object.votes?.map((e) => Vote.fromPartial(e)) || [];
     message.submittedIndex = object.submittedIndex ?? 0;
@@ -395,7 +396,13 @@ export const BallotBody_VoteList = {
   },
 };
 
-const baseSignedBallot: object = { signatureType: 0 };
+function createBaseSignedBallot(): SignedBallot {
+  return {
+    ballot: new Uint8Array(),
+    signature: new Uint8Array(),
+    signatureType: 0,
+  };
+}
 
 export const SignedBallot = {
   encode(message: SignedBallot, writer: Writer = Writer.create()): Writer {
@@ -414,9 +421,7 @@ export const SignedBallot = {
   decode(input: Reader | Uint8Array, length?: number): SignedBallot {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSignedBallot } as SignedBallot;
-    message.ballot = new Uint8Array();
-    message.signature = new Uint8Array();
+    const message = createBaseSignedBallot();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -438,20 +443,17 @@ export const SignedBallot = {
   },
 
   fromJSON(object: any): SignedBallot {
-    const message = { ...baseSignedBallot } as SignedBallot;
-    message.ballot =
-      object.ballot !== undefined && object.ballot !== null
+    return {
+      ballot: isSet(object.ballot)
         ? bytesFromBase64(object.ballot)
-        : new Uint8Array();
-    message.signature =
-      object.signature !== undefined && object.signature !== null
+        : new Uint8Array(),
+      signature: isSet(object.signature)
         ? bytesFromBase64(object.signature)
-        : new Uint8Array();
-    message.signatureType =
-      object.signatureType !== undefined && object.signatureType !== null
+        : new Uint8Array(),
+      signatureType: isSet(object.signatureType)
         ? signatureTypeFromJSON(object.signatureType)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: SignedBallot): unknown {
@@ -472,7 +474,7 @@ export const SignedBallot = {
   fromPartial<I extends Exact<DeepPartial<SignedBallot>, I>>(
     object: I
   ): SignedBallot {
-    const message = { ...baseSignedBallot } as SignedBallot;
+    const message = createBaseSignedBallot();
     message.ballot = object.ballot ?? new Uint8Array();
     message.signature = object.signature ?? new Uint8Array();
     message.signatureType = object.signatureType ?? 0;
@@ -480,7 +482,9 @@ export const SignedBallot = {
   },
 };
 
-const baseVote: object = {};
+function createBaseVote(): Vote {
+  return { body: undefined };
+}
 
 export const Vote = {
   encode(message: Vote, writer: Writer = Writer.create()): Writer {
@@ -526,7 +530,7 @@ export const Vote = {
   decode(input: Reader | Uint8Array, length?: number): Vote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseVote } as Vote;
+    const message = createBaseVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -575,44 +579,33 @@ export const Vote = {
   },
 
   fromJSON(object: any): Vote {
-    const message = { ...baseVote } as Vote;
-    if (object.encrypted !== undefined && object.encrypted !== null) {
-      message.body = {
-        $case: "encrypted",
-        encrypted: EncryptedVote.fromJSON(object.encrypted),
-      };
-    }
-    if (object.approval !== undefined && object.approval !== null) {
-      message.body = {
-        $case: "approval",
-        approval: ApprovalVote.fromJSON(object.approval),
-      };
-    }
-    if (object.singleChoice !== undefined && object.singleChoice !== null) {
-      message.body = {
-        $case: "singleChoice",
-        singleChoice: SingleChoiceVote.fromJSON(object.singleChoice),
-      };
-    }
-    if (object.quadratic !== undefined && object.quadratic !== null) {
-      message.body = {
-        $case: "quadratic",
-        quadratic: QuadraticVote.fromJSON(object.quadratic),
-      };
-    }
-    if (object.ranked !== undefined && object.ranked !== null) {
-      message.body = {
-        $case: "ranked",
-        ranked: RankedVote.fromJSON(object.ranked),
-      };
-    }
-    if (object.spread !== undefined && object.spread !== null) {
-      message.body = {
-        $case: "spread",
-        spread: SpreadVote.fromJSON(object.spread),
-      };
-    }
-    return message;
+    return {
+      body: isSet(object.encrypted)
+        ? {
+            $case: "encrypted",
+            encrypted: EncryptedVote.fromJSON(object.encrypted),
+          }
+        : isSet(object.approval)
+        ? {
+            $case: "approval",
+            approval: ApprovalVote.fromJSON(object.approval),
+          }
+        : isSet(object.singleChoice)
+        ? {
+            $case: "singleChoice",
+            singleChoice: SingleChoiceVote.fromJSON(object.singleChoice),
+          }
+        : isSet(object.quadratic)
+        ? {
+            $case: "quadratic",
+            quadratic: QuadraticVote.fromJSON(object.quadratic),
+          }
+        : isSet(object.ranked)
+        ? { $case: "ranked", ranked: RankedVote.fromJSON(object.ranked) }
+        : isSet(object.spread)
+        ? { $case: "spread", spread: SpreadVote.fromJSON(object.spread) }
+        : undefined,
+    };
   },
 
   toJSON(message: Vote): unknown {
@@ -645,7 +638,7 @@ export const Vote = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Vote>, I>>(object: I): Vote {
-    const message = { ...baseVote } as Vote;
+    const message = createBaseVote();
     if (
       object.body?.$case === "encrypted" &&
       object.body?.encrypted !== undefined &&
@@ -710,7 +703,9 @@ export const Vote = {
   },
 };
 
-const baseEncryptedVote: object = { encryptionKeyIndexes: 0 };
+function createBaseEncryptedVote(): EncryptedVote {
+  return { payload: new Uint8Array(), encryptionKeyIndexes: [] };
+}
 
 export const EncryptedVote = {
   encode(message: EncryptedVote, writer: Writer = Writer.create()): Writer {
@@ -728,9 +723,7 @@ export const EncryptedVote = {
   decode(input: Reader | Uint8Array, length?: number): EncryptedVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseEncryptedVote } as EncryptedVote;
-    message.encryptionKeyIndexes = [];
-    message.payload = new Uint8Array();
+    const message = createBaseEncryptedVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -756,15 +749,14 @@ export const EncryptedVote = {
   },
 
   fromJSON(object: any): EncryptedVote {
-    const message = { ...baseEncryptedVote } as EncryptedVote;
-    message.payload =
-      object.payload !== undefined && object.payload !== null
+    return {
+      payload: isSet(object.payload)
         ? bytesFromBase64(object.payload)
-        : new Uint8Array();
-    message.encryptionKeyIndexes = (object.encryptionKeyIndexes ?? []).map(
-      (e: any) => Number(e)
-    );
-    return message;
+        : new Uint8Array(),
+      encryptionKeyIndexes: Array.isArray(object?.encryptionKeyIndexes)
+        ? object.encryptionKeyIndexes.map((e: any) => Number(e))
+        : [],
+    };
   },
 
   toJSON(message: EncryptedVote): unknown {
@@ -774,7 +766,9 @@ export const EncryptedVote = {
         message.payload !== undefined ? message.payload : new Uint8Array()
       ));
     if (message.encryptionKeyIndexes) {
-      obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) => e);
+      obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) =>
+        Math.round(e)
+      );
     } else {
       obj.encryptionKeyIndexes = [];
     }
@@ -784,7 +778,7 @@ export const EncryptedVote = {
   fromPartial<I extends Exact<DeepPartial<EncryptedVote>, I>>(
     object: I
   ): EncryptedVote {
-    const message = { ...baseEncryptedVote } as EncryptedVote;
+    const message = createBaseEncryptedVote();
     message.payload = object.payload ?? new Uint8Array();
     message.encryptionKeyIndexes =
       object.encryptionKeyIndexes?.map((e) => e) || [];
@@ -792,7 +786,9 @@ export const EncryptedVote = {
   },
 };
 
-const baseApprovalVote: object = { approved: false };
+function createBaseApprovalVote(): ApprovalVote {
+  return { approved: false, nonce: new Uint8Array() };
+}
 
 export const ApprovalVote = {
   encode(message: ApprovalVote, writer: Writer = Writer.create()): Writer {
@@ -808,8 +804,7 @@ export const ApprovalVote = {
   decode(input: Reader | Uint8Array, length?: number): ApprovalVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseApprovalVote } as ApprovalVote;
-    message.nonce = new Uint8Array();
+    const message = createBaseApprovalVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -828,16 +823,12 @@ export const ApprovalVote = {
   },
 
   fromJSON(object: any): ApprovalVote {
-    const message = { ...baseApprovalVote } as ApprovalVote;
-    message.approved =
-      object.approved !== undefined && object.approved !== null
-        ? Boolean(object.approved)
-        : false;
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null
+    return {
+      approved: isSet(object.approved) ? Boolean(object.approved) : false,
+      nonce: isSet(object.nonce)
         ? bytesFromBase64(object.nonce)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: ApprovalVote): unknown {
@@ -853,14 +844,16 @@ export const ApprovalVote = {
   fromPartial<I extends Exact<DeepPartial<ApprovalVote>, I>>(
     object: I
   ): ApprovalVote {
-    const message = { ...baseApprovalVote } as ApprovalVote;
+    const message = createBaseApprovalVote();
     message.approved = object.approved ?? false;
     message.nonce = object.nonce ?? new Uint8Array();
     return message;
   },
 };
 
-const baseSingleChoiceVote: object = { choice: 0 };
+function createBaseSingleChoiceVote(): SingleChoiceVote {
+  return { choice: 0, nonce: new Uint8Array() };
+}
 
 export const SingleChoiceVote = {
   encode(message: SingleChoiceVote, writer: Writer = Writer.create()): Writer {
@@ -876,8 +869,7 @@ export const SingleChoiceVote = {
   decode(input: Reader | Uint8Array, length?: number): SingleChoiceVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSingleChoiceVote } as SingleChoiceVote;
-    message.nonce = new Uint8Array();
+    const message = createBaseSingleChoiceVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -896,21 +888,17 @@ export const SingleChoiceVote = {
   },
 
   fromJSON(object: any): SingleChoiceVote {
-    const message = { ...baseSingleChoiceVote } as SingleChoiceVote;
-    message.choice =
-      object.choice !== undefined && object.choice !== null
-        ? Number(object.choice)
-        : 0;
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null
+    return {
+      choice: isSet(object.choice) ? Number(object.choice) : 0,
+      nonce: isSet(object.nonce)
         ? bytesFromBase64(object.nonce)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: SingleChoiceVote): unknown {
     const obj: any = {};
-    message.choice !== undefined && (obj.choice = message.choice);
+    message.choice !== undefined && (obj.choice = Math.round(message.choice));
     message.nonce !== undefined &&
       (obj.nonce = base64FromBytes(
         message.nonce !== undefined ? message.nonce : new Uint8Array()
@@ -921,14 +909,16 @@ export const SingleChoiceVote = {
   fromPartial<I extends Exact<DeepPartial<SingleChoiceVote>, I>>(
     object: I
   ): SingleChoiceVote {
-    const message = { ...baseSingleChoiceVote } as SingleChoiceVote;
+    const message = createBaseSingleChoiceVote();
     message.choice = object.choice ?? 0;
     message.nonce = object.nonce ?? new Uint8Array();
     return message;
   },
 };
 
-const baseQuadraticVote: object = { choicePoints: 0 };
+function createBaseQuadraticVote(): QuadraticVote {
+  return { choicePoints: [], nonce: new Uint8Array() };
+}
 
 export const QuadraticVote = {
   encode(message: QuadraticVote, writer: Writer = Writer.create()): Writer {
@@ -946,9 +936,7 @@ export const QuadraticVote = {
   decode(input: Reader | Uint8Array, length?: number): QuadraticVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQuadraticVote } as QuadraticVote;
-    message.choicePoints = [];
-    message.nonce = new Uint8Array();
+    const message = createBaseQuadraticVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -974,21 +962,20 @@ export const QuadraticVote = {
   },
 
   fromJSON(object: any): QuadraticVote {
-    const message = { ...baseQuadraticVote } as QuadraticVote;
-    message.choicePoints = (object.choicePoints ?? []).map((e: any) =>
-      Number(e)
-    );
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null
+    return {
+      choicePoints: Array.isArray(object?.choicePoints)
+        ? object.choicePoints.map((e: any) => Number(e))
+        : [],
+      nonce: isSet(object.nonce)
         ? bytesFromBase64(object.nonce)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: QuadraticVote): unknown {
     const obj: any = {};
     if (message.choicePoints) {
-      obj.choicePoints = message.choicePoints.map((e) => e);
+      obj.choicePoints = message.choicePoints.map((e) => Math.round(e));
     } else {
       obj.choicePoints = [];
     }
@@ -1002,14 +989,16 @@ export const QuadraticVote = {
   fromPartial<I extends Exact<DeepPartial<QuadraticVote>, I>>(
     object: I
   ): QuadraticVote {
-    const message = { ...baseQuadraticVote } as QuadraticVote;
+    const message = createBaseQuadraticVote();
     message.choicePoints = object.choicePoints?.map((e) => e) || [];
     message.nonce = object.nonce ?? new Uint8Array();
     return message;
   },
 };
 
-const baseRankedVote: object = { ranking: 0 };
+function createBaseRankedVote(): RankedVote {
+  return { ranking: [], nonce: new Uint8Array() };
+}
 
 export const RankedVote = {
   encode(message: RankedVote, writer: Writer = Writer.create()): Writer {
@@ -1027,9 +1016,7 @@ export const RankedVote = {
   decode(input: Reader | Uint8Array, length?: number): RankedVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseRankedVote } as RankedVote;
-    message.ranking = [];
-    message.nonce = new Uint8Array();
+    const message = createBaseRankedVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1055,19 +1042,20 @@ export const RankedVote = {
   },
 
   fromJSON(object: any): RankedVote {
-    const message = { ...baseRankedVote } as RankedVote;
-    message.ranking = (object.ranking ?? []).map((e: any) => Number(e));
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null
+    return {
+      ranking: Array.isArray(object?.ranking)
+        ? object.ranking.map((e: any) => Number(e))
+        : [],
+      nonce: isSet(object.nonce)
         ? bytesFromBase64(object.nonce)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: RankedVote): unknown {
     const obj: any = {};
     if (message.ranking) {
-      obj.ranking = message.ranking.map((e) => e);
+      obj.ranking = message.ranking.map((e) => Math.round(e));
     } else {
       obj.ranking = [];
     }
@@ -1081,14 +1069,16 @@ export const RankedVote = {
   fromPartial<I extends Exact<DeepPartial<RankedVote>, I>>(
     object: I
   ): RankedVote {
-    const message = { ...baseRankedVote } as RankedVote;
+    const message = createBaseRankedVote();
     message.ranking = object.ranking?.map((e) => e) || [];
     message.nonce = object.nonce ?? new Uint8Array();
     return message;
   },
 };
 
-const baseSpreadVote: object = { percentages: 0 };
+function createBaseSpreadVote(): SpreadVote {
+  return { percentages: [], nonce: new Uint8Array() };
+}
 
 export const SpreadVote = {
   encode(message: SpreadVote, writer: Writer = Writer.create()): Writer {
@@ -1106,9 +1096,7 @@ export const SpreadVote = {
   decode(input: Reader | Uint8Array, length?: number): SpreadVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSpreadVote } as SpreadVote;
-    message.percentages = [];
-    message.nonce = new Uint8Array();
+    const message = createBaseSpreadVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1134,19 +1122,20 @@ export const SpreadVote = {
   },
 
   fromJSON(object: any): SpreadVote {
-    const message = { ...baseSpreadVote } as SpreadVote;
-    message.percentages = (object.percentages ?? []).map((e: any) => Number(e));
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null
+    return {
+      percentages: Array.isArray(object?.percentages)
+        ? object.percentages.map((e: any) => Number(e))
+        : [],
+      nonce: isSet(object.nonce)
         ? bytesFromBase64(object.nonce)
-        : new Uint8Array();
-    return message;
+        : new Uint8Array(),
+    };
   },
 
   toJSON(message: SpreadVote): unknown {
     const obj: any = {};
     if (message.percentages) {
-      obj.percentages = message.percentages.map((e) => e);
+      obj.percentages = message.percentages.map((e) => Math.round(e));
     } else {
       obj.percentages = [];
     }
@@ -1160,7 +1149,7 @@ export const SpreadVote = {
   fromPartial<I extends Exact<DeepPartial<SpreadVote>, I>>(
     object: I
   ): SpreadVote {
-    const message = { ...baseSpreadVote } as SpreadVote;
+    const message = createBaseSpreadVote();
     message.percentages = object.percentages?.map((e) => e) || [];
     message.nonce = object.nonce ?? new Uint8Array();
     return message;
@@ -1237,4 +1226,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

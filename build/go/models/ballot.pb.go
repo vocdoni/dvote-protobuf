@@ -91,12 +91,12 @@ type isBallot_Body interface {
 }
 
 type Ballot_SignedBallot struct {
-	// When Election.privacy == None
+	// When Election.privacy.censusProof == PLAIN
 	SignedBallot *SignedBallot `protobuf:"bytes,1,opt,name=signedBallot,proto3,oneof"`
 }
 
 type Ballot_AnonymousBallot struct {
-	// When Election.privacy != None
+	// When Election.privacy.censusProof != PLAIN
 	AnonymousBallot *BallotBody `protobuf:"bytes,2,opt,name=anonymousBallot,proto3,oneof"`
 }
 
@@ -111,8 +111,9 @@ type BallotBody struct {
 
 	ElectionId []byte `protobuf:"bytes,1,opt,name=electionId,proto3" json:"electionId,omitempty"`
 	Nullifier  []byte `protobuf:"bytes,2,opt,name=nullifier,proto3" json:"nullifier,omitempty"`
-	// The proof(s), according to the Election census types defined
-	// Or [ProofZkSnark] if anonymous
+	// Contains the census proof(s), according to the census types defined in the Election
+	// Non-anonymous: [ mainProof1, mainProof2, ..., secondaryProof1, secondaryProof2, ... ]
+	// Anonymous:     [ ProofZkSnark ] if anonymous
 	Proofs []*Proof             `protobuf:"bytes,3,rep,name=proofs,proto3" json:"proofs,omitempty"`
 	Votes  *BallotBody_VoteList `protobuf:"bytes,4,opt,name=votes,proto3" json:"votes,omitempty"`
 }

@@ -7,11 +7,17 @@ export const protobufPackage = "dvote.types.v2";
 
 /** The following model defines the declaration of an election. These are just the settings, not the human readable information. */
 export interface Election {
-  /** See census.proto */
-  mainCensus: Census | undefined;
-  secondaryCensus: Census | undefined;
-  tertiaryCensus: Census | undefined;
-  /** Used to select the zk circuit, determine the cost, etc */
+  /**
+   * See census.proto
+   * The primary census(es) define the combined voting weight of the voter (if applicable)
+   */
+  mainCensus: Census[];
+  /** Secondary censuses (optional) define additional constraints like holding an NFT, being a person, etc. */
+  secondaryCensus: Census[];
+  /**
+   * Used to select the zk circuit, determine the cost, etc
+   * Only applicable to non-anonymous elections∫
+   */
   censusSize: number;
   /** Settings of the questions that people can vote */
   proposals: Proposal[];
@@ -176,18 +182,25 @@ export interface SpreadProposal {
   optionCount: number;
 }
 
-const baseElection: object = { censusSize: 0, metadataUri: "" };
+function createBaseElection(): Election {
+  return {
+    mainCensus: [],
+    secondaryCensus: [],
+    censusSize: 0,
+    proposals: [],
+    privacy: undefined,
+    lifecycle: undefined,
+    metadataUri: "",
+  };
+}
 
 export const Election = {
   encode(message: Election, writer: Writer = Writer.create()): Writer {
-    if (message.mainCensus !== undefined) {
-      Census.encode(message.mainCensus, writer.uint32(10).fork()).ldelim();
+    for (const v of message.mainCensus) {
+      Census.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    if (message.secondaryCensus !== undefined) {
-      Census.encode(message.secondaryCensus, writer.uint32(18).fork()).ldelim();
-    }
-    if (message.tertiaryCensus !== undefined) {
-      Census.encode(message.tertiaryCensus, writer.uint32(26).fork()).ldelim();
+    for (const v of message.secondaryCensus) {
+      Census.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     if (message.censusSize !== 0) {
       writer.uint32(88).int32(message.censusSize);
@@ -210,19 +223,15 @@ export const Election = {
   decode(input: Reader | Uint8Array, length?: number): Election {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseElection } as Election;
-    message.proposals = [];
+    const message = createBaseElection();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.mainCensus = Census.decode(reader, reader.uint32());
+          message.mainCensus.push(Census.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.secondaryCensus = Census.decode(reader, reader.uint32());
-          break;
-        case 3:
-          message.tertiaryCensus = Census.decode(reader, reader.uint32());
+          message.secondaryCensus.push(Census.decode(reader, reader.uint32()));
           break;
         case 11:
           message.censusSize = reader.int32();
@@ -248,56 +257,45 @@ export const Election = {
   },
 
   fromJSON(object: any): Election {
-    const message = { ...baseElection } as Election;
-    message.mainCensus =
-      object.mainCensus !== undefined && object.mainCensus !== null
-        ? Census.fromJSON(object.mainCensus)
-        : undefined;
-    message.secondaryCensus =
-      object.secondaryCensus !== undefined && object.secondaryCensus !== null
-        ? Census.fromJSON(object.secondaryCensus)
-        : undefined;
-    message.tertiaryCensus =
-      object.tertiaryCensus !== undefined && object.tertiaryCensus !== null
-        ? Census.fromJSON(object.tertiaryCensus)
-        : undefined;
-    message.censusSize =
-      object.censusSize !== undefined && object.censusSize !== null
-        ? Number(object.censusSize)
-        : 0;
-    message.proposals = (object.proposals ?? []).map((e: any) =>
-      Proposal.fromJSON(e)
-    );
-    message.privacy =
-      object.privacy !== undefined && object.privacy !== null
+    return {
+      mainCensus: Array.isArray(object?.mainCensus)
+        ? object.mainCensus.map((e: any) => Census.fromJSON(e))
+        : [],
+      secondaryCensus: Array.isArray(object?.secondaryCensus)
+        ? object.secondaryCensus.map((e: any) => Census.fromJSON(e))
+        : [],
+      censusSize: isSet(object.censusSize) ? Number(object.censusSize) : 0,
+      proposals: Array.isArray(object?.proposals)
+        ? object.proposals.map((e: any) => Proposal.fromJSON(e))
+        : [],
+      privacy: isSet(object.privacy)
         ? Privacy.fromJSON(object.privacy)
-        : undefined;
-    message.lifecycle =
-      object.lifecycle !== undefined && object.lifecycle !== null
+        : undefined,
+      lifecycle: isSet(object.lifecycle)
         ? Lifecycle.fromJSON(object.lifecycle)
-        : undefined;
-    message.metadataUri =
-      object.metadataUri !== undefined && object.metadataUri !== null
-        ? String(object.metadataUri)
-        : "";
-    return message;
+        : undefined,
+      metadataUri: isSet(object.metadataUri) ? String(object.metadataUri) : "",
+    };
   },
 
   toJSON(message: Election): unknown {
     const obj: any = {};
-    message.mainCensus !== undefined &&
-      (obj.mainCensus = message.mainCensus
-        ? Census.toJSON(message.mainCensus)
-        : undefined);
-    message.secondaryCensus !== undefined &&
-      (obj.secondaryCensus = message.secondaryCensus
-        ? Census.toJSON(message.secondaryCensus)
-        : undefined);
-    message.tertiaryCensus !== undefined &&
-      (obj.tertiaryCensus = message.tertiaryCensus
-        ? Census.toJSON(message.tertiaryCensus)
-        : undefined);
-    message.censusSize !== undefined && (obj.censusSize = message.censusSize);
+    if (message.mainCensus) {
+      obj.mainCensus = message.mainCensus.map((e) =>
+        e ? Census.toJSON(e) : undefined
+      );
+    } else {
+      obj.mainCensus = [];
+    }
+    if (message.secondaryCensus) {
+      obj.secondaryCensus = message.secondaryCensus.map((e) =>
+        e ? Census.toJSON(e) : undefined
+      );
+    } else {
+      obj.secondaryCensus = [];
+    }
+    message.censusSize !== undefined &&
+      (obj.censusSize = Math.round(message.censusSize));
     if (message.proposals) {
       obj.proposals = message.proposals.map((e) =>
         e ? Proposal.toJSON(e) : undefined
@@ -319,19 +317,11 @@ export const Election = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Election>, I>>(object: I): Election {
-    const message = { ...baseElection } as Election;
+    const message = createBaseElection();
     message.mainCensus =
-      object.mainCensus !== undefined && object.mainCensus !== null
-        ? Census.fromPartial(object.mainCensus)
-        : undefined;
+      object.mainCensus?.map((e) => Census.fromPartial(e)) || [];
     message.secondaryCensus =
-      object.secondaryCensus !== undefined && object.secondaryCensus !== null
-        ? Census.fromPartial(object.secondaryCensus)
-        : undefined;
-    message.tertiaryCensus =
-      object.tertiaryCensus !== undefined && object.tertiaryCensus !== null
-        ? Census.fromPartial(object.tertiaryCensus)
-        : undefined;
+      object.secondaryCensus?.map((e) => Census.fromPartial(e)) || [];
     message.censusSize = object.censusSize ?? 0;
     message.proposals =
       object.proposals?.map((e) => Proposal.fromPartial(e)) || [];
@@ -348,7 +338,9 @@ export const Election = {
   },
 };
 
-const basePrivacy: object = { realTimeResults: false, censusProof: 0 };
+function createBasePrivacy(): Privacy {
+  return { realTimeResults: false, censusProof: 0 };
+}
 
 export const Privacy = {
   encode(message: Privacy, writer: Writer = Writer.create()): Writer {
@@ -364,7 +356,7 @@ export const Privacy = {
   decode(input: Reader | Uint8Array, length?: number): Privacy {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...basePrivacy } as Privacy;
+    const message = createBasePrivacy();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -383,16 +375,14 @@ export const Privacy = {
   },
 
   fromJSON(object: any): Privacy {
-    const message = { ...basePrivacy } as Privacy;
-    message.realTimeResults =
-      object.realTimeResults !== undefined && object.realTimeResults !== null
+    return {
+      realTimeResults: isSet(object.realTimeResults)
         ? Boolean(object.realTimeResults)
-        : false;
-    message.censusProof =
-      object.censusProof !== undefined && object.censusProof !== null
+        : false,
+      censusProof: isSet(object.censusProof)
         ? privacy_CensusProofsFromJSON(object.censusProof)
-        : 0;
-    return message;
+        : 0,
+    };
   },
 
   toJSON(message: Privacy): unknown {
@@ -405,14 +395,16 @@ export const Privacy = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Privacy>, I>>(object: I): Privacy {
-    const message = { ...basePrivacy } as Privacy;
+    const message = createBasePrivacy();
     message.realTimeResults = object.realTimeResults ?? false;
     message.censusProof = object.censusProof ?? 0;
     return message;
   },
 };
 
-const baseLifecycle: object = { type: 0, endBlock: 0 };
+function createBaseLifecycle(): Lifecycle {
+  return { type: 0, startBlock: undefined, endBlock: 0 };
+}
 
 export const Lifecycle = {
   encode(message: Lifecycle, writer: Writer = Writer.create()): Writer {
@@ -431,7 +423,7 @@ export const Lifecycle = {
   decode(input: Reader | Uint8Array, length?: number): Lifecycle {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseLifecycle } as Lifecycle;
+    const message = createBaseLifecycle();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -453,35 +445,30 @@ export const Lifecycle = {
   },
 
   fromJSON(object: any): Lifecycle {
-    const message = { ...baseLifecycle } as Lifecycle;
-    message.type =
-      object.type !== undefined && object.type !== null
-        ? lifecycle_TypesFromJSON(object.type)
-        : 0;
-    message.startBlock =
-      object.startBlock !== undefined && object.startBlock !== null
+    return {
+      type: isSet(object.type) ? lifecycle_TypesFromJSON(object.type) : 0,
+      startBlock: isSet(object.startBlock)
         ? Number(object.startBlock)
-        : undefined;
-    message.endBlock =
-      object.endBlock !== undefined && object.endBlock !== null
-        ? Number(object.endBlock)
-        : 0;
-    return message;
+        : undefined,
+      endBlock: isSet(object.endBlock) ? Number(object.endBlock) : 0,
+    };
   },
 
   toJSON(message: Lifecycle): unknown {
     const obj: any = {};
     message.type !== undefined &&
       (obj.type = lifecycle_TypesToJSON(message.type));
-    message.startBlock !== undefined && (obj.startBlock = message.startBlock);
-    message.endBlock !== undefined && (obj.endBlock = message.endBlock);
+    message.startBlock !== undefined &&
+      (obj.startBlock = Math.round(message.startBlock));
+    message.endBlock !== undefined &&
+      (obj.endBlock = Math.round(message.endBlock));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<Lifecycle>, I>>(
     object: I
   ): Lifecycle {
-    const message = { ...baseLifecycle } as Lifecycle;
+    const message = createBaseLifecycle();
     message.type = object.type ?? 0;
     message.startBlock = object.startBlock ?? undefined;
     message.endBlock = object.endBlock ?? 0;
@@ -489,7 +476,9 @@ export const Lifecycle = {
   },
 };
 
-const baseProposal: object = {};
+function createBaseProposal(): Proposal {
+  return { proposal: undefined };
+}
 
 export const Proposal = {
   encode(message: Proposal, writer: Writer = Writer.create()): Writer {
@@ -529,7 +518,7 @@ export const Proposal = {
   decode(input: Reader | Uint8Array, length?: number): Proposal {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProposal } as Proposal;
+    const message = createBaseProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -572,38 +561,28 @@ export const Proposal = {
   },
 
   fromJSON(object: any): Proposal {
-    const message = { ...baseProposal } as Proposal;
-    if (object.approval !== undefined && object.approval !== null) {
-      message.proposal = {
-        $case: "approval",
-        approval: ApprovalProposal.fromJSON(object.approval),
-      };
-    }
-    if (object.singleChoice !== undefined && object.singleChoice !== null) {
-      message.proposal = {
-        $case: "singleChoice",
-        singleChoice: SingleChoiceProposal.fromJSON(object.singleChoice),
-      };
-    }
-    if (object.quadratic !== undefined && object.quadratic !== null) {
-      message.proposal = {
-        $case: "quadratic",
-        quadratic: QuadraticProposal.fromJSON(object.quadratic),
-      };
-    }
-    if (object.ranked !== undefined && object.ranked !== null) {
-      message.proposal = {
-        $case: "ranked",
-        ranked: RankedProposal.fromJSON(object.ranked),
-      };
-    }
-    if (object.spread !== undefined && object.spread !== null) {
-      message.proposal = {
-        $case: "spread",
-        spread: SpreadProposal.fromJSON(object.spread),
-      };
-    }
-    return message;
+    return {
+      proposal: isSet(object.approval)
+        ? {
+            $case: "approval",
+            approval: ApprovalProposal.fromJSON(object.approval),
+          }
+        : isSet(object.singleChoice)
+        ? {
+            $case: "singleChoice",
+            singleChoice: SingleChoiceProposal.fromJSON(object.singleChoice),
+          }
+        : isSet(object.quadratic)
+        ? {
+            $case: "quadratic",
+            quadratic: QuadraticProposal.fromJSON(object.quadratic),
+          }
+        : isSet(object.ranked)
+        ? { $case: "ranked", ranked: RankedProposal.fromJSON(object.ranked) }
+        : isSet(object.spread)
+        ? { $case: "spread", spread: SpreadProposal.fromJSON(object.spread) }
+        : undefined,
+    };
   },
 
   toJSON(message: Proposal): unknown {
@@ -632,7 +611,7 @@ export const Proposal = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Proposal>, I>>(object: I): Proposal {
-    const message = { ...baseProposal } as Proposal;
+    const message = createBaseProposal();
     if (
       object.proposal?.$case === "approval" &&
       object.proposal?.approval !== undefined &&
@@ -689,7 +668,9 @@ export const Proposal = {
   },
 };
 
-const baseApprovalProposal: object = {};
+function createBaseApprovalProposal(): ApprovalProposal {
+  return {};
+}
 
 export const ApprovalProposal = {
   encode(_: ApprovalProposal, writer: Writer = Writer.create()): Writer {
@@ -699,7 +680,7 @@ export const ApprovalProposal = {
   decode(input: Reader | Uint8Array, length?: number): ApprovalProposal {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseApprovalProposal } as ApprovalProposal;
+    const message = createBaseApprovalProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -712,8 +693,7 @@ export const ApprovalProposal = {
   },
 
   fromJSON(_: any): ApprovalProposal {
-    const message = { ...baseApprovalProposal } as ApprovalProposal;
-    return message;
+    return {};
   },
 
   toJSON(_: ApprovalProposal): unknown {
@@ -724,12 +704,14 @@ export const ApprovalProposal = {
   fromPartial<I extends Exact<DeepPartial<ApprovalProposal>, I>>(
     _: I
   ): ApprovalProposal {
-    const message = { ...baseApprovalProposal } as ApprovalProposal;
+    const message = createBaseApprovalProposal();
     return message;
   },
 };
 
-const baseSingleChoiceProposal: object = { optionCount: 0 };
+function createBaseSingleChoiceProposal(): SingleChoiceProposal {
+  return { optionCount: 0 };
+}
 
 export const SingleChoiceProposal = {
   encode(
@@ -745,7 +727,7 @@ export const SingleChoiceProposal = {
   decode(input: Reader | Uint8Array, length?: number): SingleChoiceProposal {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSingleChoiceProposal } as SingleChoiceProposal;
+    const message = createBaseSingleChoiceProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -761,36 +743,30 @@ export const SingleChoiceProposal = {
   },
 
   fromJSON(object: any): SingleChoiceProposal {
-    const message = { ...baseSingleChoiceProposal } as SingleChoiceProposal;
-    message.optionCount =
-      object.optionCount !== undefined && object.optionCount !== null
-        ? Number(object.optionCount)
-        : 0;
-    return message;
+    return {
+      optionCount: isSet(object.optionCount) ? Number(object.optionCount) : 0,
+    };
   },
 
   toJSON(message: SingleChoiceProposal): unknown {
     const obj: any = {};
     message.optionCount !== undefined &&
-      (obj.optionCount = message.optionCount);
+      (obj.optionCount = Math.round(message.optionCount));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SingleChoiceProposal>, I>>(
     object: I
   ): SingleChoiceProposal {
-    const message = { ...baseSingleChoiceProposal } as SingleChoiceProposal;
+    const message = createBaseSingleChoiceProposal();
     message.optionCount = object.optionCount ?? 0;
     return message;
   },
 };
 
-const baseQuadraticProposal: object = {
-  optionCount: 0,
-  costExponent: 0,
-  maxValue: 0,
-  maxSum: 0,
-};
+function createBaseQuadraticProposal(): QuadraticProposal {
+  return { optionCount: 0, costExponent: 0, maxValue: 0, maxSum: 0 };
+}
 
 export const QuadraticProposal = {
   encode(message: QuadraticProposal, writer: Writer = Writer.create()): Writer {
@@ -812,7 +788,7 @@ export const QuadraticProposal = {
   decode(input: Reader | Uint8Array, length?: number): QuadraticProposal {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQuadraticProposal } as QuadraticProposal;
+    const message = createBaseQuadraticProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -837,41 +813,32 @@ export const QuadraticProposal = {
   },
 
   fromJSON(object: any): QuadraticProposal {
-    const message = { ...baseQuadraticProposal } as QuadraticProposal;
-    message.optionCount =
-      object.optionCount !== undefined && object.optionCount !== null
-        ? Number(object.optionCount)
-        : 0;
-    message.costExponent =
-      object.costExponent !== undefined && object.costExponent !== null
+    return {
+      optionCount: isSet(object.optionCount) ? Number(object.optionCount) : 0,
+      costExponent: isSet(object.costExponent)
         ? Number(object.costExponent)
-        : 0;
-    message.maxValue =
-      object.maxValue !== undefined && object.maxValue !== null
-        ? Number(object.maxValue)
-        : 0;
-    message.maxSum =
-      object.maxSum !== undefined && object.maxSum !== null
-        ? Number(object.maxSum)
-        : 0;
-    return message;
+        : 0,
+      maxValue: isSet(object.maxValue) ? Number(object.maxValue) : 0,
+      maxSum: isSet(object.maxSum) ? Number(object.maxSum) : 0,
+    };
   },
 
   toJSON(message: QuadraticProposal): unknown {
     const obj: any = {};
     message.optionCount !== undefined &&
-      (obj.optionCount = message.optionCount);
+      (obj.optionCount = Math.round(message.optionCount));
     message.costExponent !== undefined &&
       (obj.costExponent = message.costExponent);
-    message.maxValue !== undefined && (obj.maxValue = message.maxValue);
-    message.maxSum !== undefined && (obj.maxSum = message.maxSum);
+    message.maxValue !== undefined &&
+      (obj.maxValue = Math.round(message.maxValue));
+    message.maxSum !== undefined && (obj.maxSum = Math.round(message.maxSum));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<QuadraticProposal>, I>>(
     object: I
   ): QuadraticProposal {
-    const message = { ...baseQuadraticProposal } as QuadraticProposal;
+    const message = createBaseQuadraticProposal();
     message.optionCount = object.optionCount ?? 0;
     message.costExponent = object.costExponent ?? 0;
     message.maxValue = object.maxValue ?? 0;
@@ -880,7 +847,9 @@ export const QuadraticProposal = {
   },
 };
 
-const baseRankedProposal: object = { optionCount: 0, maxItems: 0 };
+function createBaseRankedProposal(): RankedProposal {
+  return { optionCount: 0, maxItems: 0 };
+}
 
 export const RankedProposal = {
   encode(message: RankedProposal, writer: Writer = Writer.create()): Writer {
@@ -896,7 +865,7 @@ export const RankedProposal = {
   decode(input: Reader | Uint8Array, length?: number): RankedProposal {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseRankedProposal } as RankedProposal;
+    const message = createBaseRankedProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -915,37 +884,34 @@ export const RankedProposal = {
   },
 
   fromJSON(object: any): RankedProposal {
-    const message = { ...baseRankedProposal } as RankedProposal;
-    message.optionCount =
-      object.optionCount !== undefined && object.optionCount !== null
-        ? Number(object.optionCount)
-        : 0;
-    message.maxItems =
-      object.maxItems !== undefined && object.maxItems !== null
-        ? Number(object.maxItems)
-        : 0;
-    return message;
+    return {
+      optionCount: isSet(object.optionCount) ? Number(object.optionCount) : 0,
+      maxItems: isSet(object.maxItems) ? Number(object.maxItems) : 0,
+    };
   },
 
   toJSON(message: RankedProposal): unknown {
     const obj: any = {};
     message.optionCount !== undefined &&
-      (obj.optionCount = message.optionCount);
-    message.maxItems !== undefined && (obj.maxItems = message.maxItems);
+      (obj.optionCount = Math.round(message.optionCount));
+    message.maxItems !== undefined &&
+      (obj.maxItems = Math.round(message.maxItems));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<RankedProposal>, I>>(
     object: I
   ): RankedProposal {
-    const message = { ...baseRankedProposal } as RankedProposal;
+    const message = createBaseRankedProposal();
     message.optionCount = object.optionCount ?? 0;
     message.maxItems = object.maxItems ?? 0;
     return message;
   },
 };
 
-const baseSpreadProposal: object = { optionCount: 0 };
+function createBaseSpreadProposal(): SpreadProposal {
+  return { optionCount: 0 };
+}
 
 export const SpreadProposal = {
   encode(message: SpreadProposal, writer: Writer = Writer.create()): Writer {
@@ -958,7 +924,7 @@ export const SpreadProposal = {
   decode(input: Reader | Uint8Array, length?: number): SpreadProposal {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSpreadProposal } as SpreadProposal;
+    const message = createBaseSpreadProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -974,25 +940,22 @@ export const SpreadProposal = {
   },
 
   fromJSON(object: any): SpreadProposal {
-    const message = { ...baseSpreadProposal } as SpreadProposal;
-    message.optionCount =
-      object.optionCount !== undefined && object.optionCount !== null
-        ? Number(object.optionCount)
-        : 0;
-    return message;
+    return {
+      optionCount: isSet(object.optionCount) ? Number(object.optionCount) : 0,
+    };
   },
 
   toJSON(message: SpreadProposal): unknown {
     const obj: any = {};
     message.optionCount !== undefined &&
-      (obj.optionCount = message.optionCount);
+      (obj.optionCount = Math.round(message.optionCount));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<SpreadProposal>, I>>(
     object: I
   ): SpreadProposal {
-    const message = { ...baseSpreadProposal } as SpreadProposal;
+    const message = createBaseSpreadProposal();
     message.optionCount = object.optionCount ?? 0;
     return message;
   },
@@ -1034,4 +997,8 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

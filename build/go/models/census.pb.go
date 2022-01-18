@@ -29,7 +29,6 @@ type Census struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Body:
-	//	*Census_None
 	//	*Census_Arbo
 	//	*Census_Csp
 	//	*Census_Erc20
@@ -75,13 +74,6 @@ func (*Census) Descriptor() ([]byte, []int) {
 func (m *Census) GetBody() isCensus_Body {
 	if m != nil {
 		return m.Body
-	}
-	return nil
-}
-
-func (x *Census) GetNone() *CensusNone {
-	if x, ok := x.GetBody().(*Census_None); ok {
-		return x.None
 	}
 	return nil
 }
@@ -139,40 +131,34 @@ type isCensus_Body interface {
 	isCensus_Body()
 }
 
-type Census_None struct {
-	None *CensusNone `protobuf:"bytes,1,opt,name=none,proto3,oneof"`
-}
-
 type Census_Arbo struct {
 	// Always weighted
-	Arbo *CensusArbo `protobuf:"bytes,11,opt,name=arbo,proto3,oneof"`
+	Arbo *CensusArbo `protobuf:"bytes,1,opt,name=arbo,proto3,oneof"`
 }
 
 type Census_Csp struct {
-	Csp *CensusCsp `protobuf:"bytes,12,opt,name=csp,proto3,oneof"`
+	Csp *CensusCsp `protobuf:"bytes,2,opt,name=csp,proto3,oneof"`
 }
 
 type Census_Erc20 struct {
-	Erc20 *CensusErc20 `protobuf:"bytes,21,opt,name=erc20,proto3,oneof"`
+	Erc20 *CensusErc20 `protobuf:"bytes,11,opt,name=erc20,proto3,oneof"`
 }
 
 type Census_Erc721 struct {
-	Erc721 *CensusErc721 `protobuf:"bytes,22,opt,name=erc721,proto3,oneof"`
+	Erc721 *CensusErc721 `protobuf:"bytes,12,opt,name=erc721,proto3,oneof"`
 }
 
 type Census_Erc1155 struct {
-	Erc1155 *CensusErc1155 `protobuf:"bytes,23,opt,name=erc1155,proto3,oneof"`
+	Erc1155 *CensusErc1155 `protobuf:"bytes,13,opt,name=erc1155,proto3,oneof"`
 }
 
 type Census_Erc777 struct {
-	Erc777 *CensusErc721 `protobuf:"bytes,24,opt,name=erc777,proto3,oneof"`
+	Erc777 *CensusErc721 `protobuf:"bytes,14,opt,name=erc777,proto3,oneof"`
 }
 
 type Census_ErcMiniMe struct {
-	ErcMiniMe *CensusErcMiniMe `protobuf:"bytes,30,opt,name=ercMiniMe,proto3,oneof"`
+	ErcMiniMe *CensusErcMiniMe `protobuf:"bytes,20,opt,name=ercMiniMe,proto3,oneof"`
 }
-
-func (*Census_None) isCensus_Body() {}
 
 func (*Census_Arbo) isCensus_Body() {}
 
@@ -188,44 +174,6 @@ func (*Census_Erc777) isCensus_Body() {}
 
 func (*Census_ErcMiniMe) isCensus_Body() {}
 
-type CensusNone struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *CensusNone) Reset() {
-	*x = CensusNone{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *CensusNone) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CensusNone) ProtoMessage() {}
-
-func (x *CensusNone) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CensusNone.ProtoReflect.Descriptor instead.
-func (*CensusNone) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{1}
-}
-
 type CensusArbo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -238,7 +186,7 @@ type CensusArbo struct {
 func (x *CensusArbo) Reset() {
 	*x = CensusArbo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[2]
+		mi := &file_protocol_census_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -251,7 +199,7 @@ func (x *CensusArbo) String() string {
 func (*CensusArbo) ProtoMessage() {}
 
 func (x *CensusArbo) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[2]
+	mi := &file_protocol_census_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,7 +212,7 @@ func (x *CensusArbo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusArbo.ProtoReflect.Descriptor instead.
 func (*CensusArbo) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{2}
+	return file_protocol_census_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CensusArbo) GetCensusRoot() []byte {
@@ -295,7 +243,7 @@ type CensusCsp struct {
 func (x *CensusCsp) Reset() {
 	*x = CensusCsp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[3]
+		mi := &file_protocol_census_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -308,7 +256,7 @@ func (x *CensusCsp) String() string {
 func (*CensusCsp) ProtoMessage() {}
 
 func (x *CensusCsp) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[3]
+	mi := &file_protocol_census_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -321,7 +269,7 @@ func (x *CensusCsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusCsp.ProtoReflect.Descriptor instead.
 func (*CensusCsp) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{3}
+	return file_protocol_census_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *CensusCsp) GetCspUri() string {
@@ -360,7 +308,7 @@ type CensusErc20 struct {
 func (x *CensusErc20) Reset() {
 	*x = CensusErc20{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[4]
+		mi := &file_protocol_census_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -373,7 +321,7 @@ func (x *CensusErc20) String() string {
 func (*CensusErc20) ProtoMessage() {}
 
 func (x *CensusErc20) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[4]
+	mi := &file_protocol_census_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -386,7 +334,7 @@ func (x *CensusErc20) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusErc20.ProtoReflect.Descriptor instead.
 func (*CensusErc20) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{4}
+	return file_protocol_census_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CensusErc20) GetTokenAddress() []byte {
@@ -426,7 +374,7 @@ type CensusErc721 struct {
 func (x *CensusErc721) Reset() {
 	*x = CensusErc721{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[5]
+		mi := &file_protocol_census_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -439,7 +387,7 @@ func (x *CensusErc721) String() string {
 func (*CensusErc721) ProtoMessage() {}
 
 func (x *CensusErc721) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[5]
+	mi := &file_protocol_census_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -452,7 +400,7 @@ func (x *CensusErc721) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusErc721.ProtoReflect.Descriptor instead.
 func (*CensusErc721) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{5}
+	return file_protocol_census_proto_rawDescGZIP(), []int{4}
 }
 
 type CensusErc1155 struct {
@@ -464,7 +412,7 @@ type CensusErc1155 struct {
 func (x *CensusErc1155) Reset() {
 	*x = CensusErc1155{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[6]
+		mi := &file_protocol_census_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -477,7 +425,7 @@ func (x *CensusErc1155) String() string {
 func (*CensusErc1155) ProtoMessage() {}
 
 func (x *CensusErc1155) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[6]
+	mi := &file_protocol_census_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -490,7 +438,7 @@ func (x *CensusErc1155) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusErc1155.ProtoReflect.Descriptor instead.
 func (*CensusErc1155) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{6}
+	return file_protocol_census_proto_rawDescGZIP(), []int{5}
 }
 
 type CensusErc777 struct {
@@ -502,7 +450,7 @@ type CensusErc777 struct {
 func (x *CensusErc777) Reset() {
 	*x = CensusErc777{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[7]
+		mi := &file_protocol_census_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -515,7 +463,7 @@ func (x *CensusErc777) String() string {
 func (*CensusErc777) ProtoMessage() {}
 
 func (x *CensusErc777) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[7]
+	mi := &file_protocol_census_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -528,7 +476,7 @@ func (x *CensusErc777) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusErc777.ProtoReflect.Descriptor instead.
 func (*CensusErc777) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{7}
+	return file_protocol_census_proto_rawDescGZIP(), []int{6}
 }
 
 type CensusErcMiniMe struct {
@@ -546,7 +494,7 @@ type CensusErcMiniMe struct {
 func (x *CensusErcMiniMe) Reset() {
 	*x = CensusErcMiniMe{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[8]
+		mi := &file_protocol_census_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -559,7 +507,7 @@ func (x *CensusErcMiniMe) String() string {
 func (*CensusErcMiniMe) ProtoMessage() {}
 
 func (x *CensusErcMiniMe) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[8]
+	mi := &file_protocol_census_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -572,7 +520,7 @@ func (x *CensusErcMiniMe) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CensusErcMiniMe.ProtoReflect.Descriptor instead.
 func (*CensusErcMiniMe) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{8}
+	return file_protocol_census_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *CensusErcMiniMe) GetTokenAddress() []byte {
@@ -624,7 +572,7 @@ type Proof struct {
 func (x *Proof) Reset() {
 	*x = Proof{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[9]
+		mi := &file_protocol_census_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -637,7 +585,7 @@ func (x *Proof) String() string {
 func (*Proof) ProtoMessage() {}
 
 func (x *Proof) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[9]
+	mi := &file_protocol_census_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -650,7 +598,7 @@ func (x *Proof) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Proof.ProtoReflect.Descriptor instead.
 func (*Proof) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{9}
+	return file_protocol_census_proto_rawDescGZIP(), []int{8}
 }
 
 func (m *Proof) GetBody() isProof_Body {
@@ -793,7 +741,7 @@ type ProofNone struct {
 func (x *ProofNone) Reset() {
 	*x = ProofNone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[10]
+		mi := &file_protocol_census_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -806,7 +754,7 @@ func (x *ProofNone) String() string {
 func (*ProofNone) ProtoMessage() {}
 
 func (x *ProofNone) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[10]
+	mi := &file_protocol_census_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -819,7 +767,7 @@ func (x *ProofNone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofNone.ProtoReflect.Descriptor instead.
 func (*ProofNone) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{10}
+	return file_protocol_census_proto_rawDescGZIP(), []int{9}
 }
 
 type ProofArbo struct {
@@ -833,7 +781,7 @@ type ProofArbo struct {
 func (x *ProofArbo) Reset() {
 	*x = ProofArbo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[11]
+		mi := &file_protocol_census_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -846,7 +794,7 @@ func (x *ProofArbo) String() string {
 func (*ProofArbo) ProtoMessage() {}
 
 func (x *ProofArbo) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[11]
+	mi := &file_protocol_census_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -859,7 +807,7 @@ func (x *ProofArbo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofArbo.ProtoReflect.Descriptor instead.
 func (*ProofArbo) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{11}
+	return file_protocol_census_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ProofArbo) GetSiblings() [][]byte {
@@ -881,7 +829,7 @@ type ProofCSP struct {
 func (x *ProofCSP) Reset() {
 	*x = ProofCSP{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[12]
+		mi := &file_protocol_census_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -894,7 +842,7 @@ func (x *ProofCSP) String() string {
 func (*ProofCSP) ProtoMessage() {}
 
 func (x *ProofCSP) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[12]
+	mi := &file_protocol_census_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -907,7 +855,7 @@ func (x *ProofCSP) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofCSP.ProtoReflect.Descriptor instead.
 func (*ProofCSP) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{12}
+	return file_protocol_census_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ProofCSP) GetPayload() []byte {
@@ -937,7 +885,7 @@ type StorageProofErc20 struct {
 func (x *StorageProofErc20) Reset() {
 	*x = StorageProofErc20{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[13]
+		mi := &file_protocol_census_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -950,7 +898,7 @@ func (x *StorageProofErc20) String() string {
 func (*StorageProofErc20) ProtoMessage() {}
 
 func (x *StorageProofErc20) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[13]
+	mi := &file_protocol_census_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -963,7 +911,7 @@ func (x *StorageProofErc20) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StorageProofErc20.ProtoReflect.Descriptor instead.
 func (*StorageProofErc20) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{13}
+	return file_protocol_census_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *StorageProofErc20) GetKey() []byte {
@@ -996,7 +944,7 @@ type StorageProofErc721 struct {
 func (x *StorageProofErc721) Reset() {
 	*x = StorageProofErc721{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[14]
+		mi := &file_protocol_census_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1009,7 +957,7 @@ func (x *StorageProofErc721) String() string {
 func (*StorageProofErc721) ProtoMessage() {}
 
 func (x *StorageProofErc721) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[14]
+	mi := &file_protocol_census_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1022,7 +970,7 @@ func (x *StorageProofErc721) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StorageProofErc721.ProtoReflect.Descriptor instead.
 func (*StorageProofErc721) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{14}
+	return file_protocol_census_proto_rawDescGZIP(), []int{13}
 }
 
 type StorageProofErc1155 struct {
@@ -1034,7 +982,7 @@ type StorageProofErc1155 struct {
 func (x *StorageProofErc1155) Reset() {
 	*x = StorageProofErc1155{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[15]
+		mi := &file_protocol_census_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1047,7 +995,7 @@ func (x *StorageProofErc1155) String() string {
 func (*StorageProofErc1155) ProtoMessage() {}
 
 func (x *StorageProofErc1155) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[15]
+	mi := &file_protocol_census_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1060,7 +1008,7 @@ func (x *StorageProofErc1155) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StorageProofErc1155.ProtoReflect.Descriptor instead.
 func (*StorageProofErc1155) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{15}
+	return file_protocol_census_proto_rawDescGZIP(), []int{14}
 }
 
 type StorageProofErc777 struct {
@@ -1072,7 +1020,7 @@ type StorageProofErc777 struct {
 func (x *StorageProofErc777) Reset() {
 	*x = StorageProofErc777{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[16]
+		mi := &file_protocol_census_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1085,7 +1033,7 @@ func (x *StorageProofErc777) String() string {
 func (*StorageProofErc777) ProtoMessage() {}
 
 func (x *StorageProofErc777) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[16]
+	mi := &file_protocol_census_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1098,7 +1046,7 @@ func (x *StorageProofErc777) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StorageProofErc777.ProtoReflect.Descriptor instead.
 func (*StorageProofErc777) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{16}
+	return file_protocol_census_proto_rawDescGZIP(), []int{15}
 }
 
 type StorageProofMiniMe struct {
@@ -1110,7 +1058,7 @@ type StorageProofMiniMe struct {
 func (x *StorageProofMiniMe) Reset() {
 	*x = StorageProofMiniMe{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[17]
+		mi := &file_protocol_census_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1123,7 +1071,7 @@ func (x *StorageProofMiniMe) String() string {
 func (*StorageProofMiniMe) ProtoMessage() {}
 
 func (x *StorageProofMiniMe) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[17]
+	mi := &file_protocol_census_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1136,7 +1084,7 @@ func (x *StorageProofMiniMe) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StorageProofMiniMe.ProtoReflect.Descriptor instead.
 func (*StorageProofMiniMe) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{17}
+	return file_protocol_census_proto_rawDescGZIP(), []int{16}
 }
 
 // Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
@@ -1155,7 +1103,7 @@ type ProofZkSnark struct {
 func (x *ProofZkSnark) Reset() {
 	*x = ProofZkSnark{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[18]
+		mi := &file_protocol_census_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1168,7 +1116,7 @@ func (x *ProofZkSnark) String() string {
 func (*ProofZkSnark) ProtoMessage() {}
 
 func (x *ProofZkSnark) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[18]
+	mi := &file_protocol_census_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1181,7 +1129,7 @@ func (x *ProofZkSnark) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofZkSnark.ProtoReflect.Descriptor instead.
 func (*ProofZkSnark) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{18}
+	return file_protocol_census_proto_rawDescGZIP(), []int{17}
 }
 
 func (m *ProofZkSnark) GetBody() isProofZkSnark_Body {
@@ -1243,7 +1191,7 @@ type ProofZkSnark_Poseidon1KCensus struct {
 func (x *ProofZkSnark_Poseidon1KCensus) Reset() {
 	*x = ProofZkSnark_Poseidon1KCensus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[19]
+		mi := &file_protocol_census_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1256,7 +1204,7 @@ func (x *ProofZkSnark_Poseidon1KCensus) String() string {
 func (*ProofZkSnark_Poseidon1KCensus) ProtoMessage() {}
 
 func (x *ProofZkSnark_Poseidon1KCensus) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[19]
+	mi := &file_protocol_census_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1269,7 +1217,7 @@ func (x *ProofZkSnark_Poseidon1KCensus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofZkSnark_Poseidon1KCensus.ProtoReflect.Descriptor instead.
 func (*ProofZkSnark_Poseidon1KCensus) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{18, 0}
+	return file_protocol_census_proto_rawDescGZIP(), []int{17, 0}
 }
 
 type ProofZkSnark_Poseidon50KCensus struct {
@@ -1281,7 +1229,7 @@ type ProofZkSnark_Poseidon50KCensus struct {
 func (x *ProofZkSnark_Poseidon50KCensus) Reset() {
 	*x = ProofZkSnark_Poseidon50KCensus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[20]
+		mi := &file_protocol_census_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1294,7 +1242,7 @@ func (x *ProofZkSnark_Poseidon50KCensus) String() string {
 func (*ProofZkSnark_Poseidon50KCensus) ProtoMessage() {}
 
 func (x *ProofZkSnark_Poseidon50KCensus) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[20]
+	mi := &file_protocol_census_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1307,7 +1255,7 @@ func (x *ProofZkSnark_Poseidon50KCensus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofZkSnark_Poseidon50KCensus.ProtoReflect.Descriptor instead.
 func (*ProofZkSnark_Poseidon50KCensus) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{18, 1}
+	return file_protocol_census_proto_rawDescGZIP(), []int{17, 1}
 }
 
 type ProofZkSnark_Poseidon250KCensus struct {
@@ -1319,7 +1267,7 @@ type ProofZkSnark_Poseidon250KCensus struct {
 func (x *ProofZkSnark_Poseidon250KCensus) Reset() {
 	*x = ProofZkSnark_Poseidon250KCensus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_protocol_census_proto_msgTypes[21]
+		mi := &file_protocol_census_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1332,7 +1280,7 @@ func (x *ProofZkSnark_Poseidon250KCensus) String() string {
 func (*ProofZkSnark_Poseidon250KCensus) ProtoMessage() {}
 
 func (x *ProofZkSnark_Poseidon250KCensus) ProtoReflect() protoreflect.Message {
-	mi := &file_protocol_census_proto_msgTypes[21]
+	mi := &file_protocol_census_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1345,7 +1293,7 @@ func (x *ProofZkSnark_Poseidon250KCensus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProofZkSnark_Poseidon250KCensus.ProtoReflect.Descriptor instead.
 func (*ProofZkSnark_Poseidon250KCensus) Descriptor() ([]byte, []int) {
-	return file_protocol_census_proto_rawDescGZIP(), []int{18, 2}
+	return file_protocol_census_proto_rawDescGZIP(), []int{17, 2}
 }
 
 var File_protocol_census_proto protoreflect.FileDescriptor
@@ -1353,36 +1301,32 @@ var File_protocol_census_proto protoreflect.FileDescriptor
 var file_protocol_census_proto_rawDesc = []byte{
 	0x0a, 0x15, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x2f, 0x63, 0x65, 0x6e, 0x73, 0x75,
 	0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74,
-	0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x22, 0xc4, 0x03, 0x0a, 0x06, 0x43, 0x65, 0x6e, 0x73,
-	0x75, 0x73, 0x12, 0x30, 0x0a, 0x04, 0x6e, 0x6f, 0x6e, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x22, 0x92, 0x03, 0x0a, 0x06, 0x43, 0x65, 0x6e, 0x73,
+	0x75, 0x73, 0x12, 0x30, 0x0a, 0x04, 0x61, 0x72, 0x62, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x1a, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76,
-	0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x4e, 0x6f, 0x6e, 0x65, 0x48, 0x00, 0x52, 0x04,
-	0x6e, 0x6f, 0x6e, 0x65, 0x12, 0x30, 0x0a, 0x04, 0x61, 0x72, 0x62, 0x6f, 0x18, 0x0b, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73,
-	0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x41, 0x72, 0x62, 0x6f, 0x48, 0x00,
-	0x52, 0x04, 0x61, 0x72, 0x62, 0x6f, 0x12, 0x2d, 0x0a, 0x03, 0x63, 0x73, 0x70, 0x18, 0x0c, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65,
-	0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x43, 0x73, 0x70, 0x48, 0x00,
-	0x52, 0x03, 0x63, 0x73, 0x70, 0x12, 0x33, 0x0a, 0x05, 0x65, 0x72, 0x63, 0x32, 0x30, 0x18, 0x15,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70,
-	0x65, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x45, 0x72, 0x63, 0x32,
-	0x30, 0x48, 0x00, 0x52, 0x05, 0x65, 0x72, 0x63, 0x32, 0x30, 0x12, 0x36, 0x0a, 0x06, 0x65, 0x72,
-	0x63, 0x37, 0x32, 0x31, 0x18, 0x16, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x64, 0x76, 0x6f,
-	0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73,
-	0x75, 0x73, 0x45, 0x72, 0x63, 0x37, 0x32, 0x31, 0x48, 0x00, 0x52, 0x06, 0x65, 0x72, 0x63, 0x37,
-	0x32, 0x31, 0x12, 0x39, 0x0a, 0x07, 0x65, 0x72, 0x63, 0x31, 0x31, 0x35, 0x35, 0x18, 0x17, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65,
-	0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x45, 0x72, 0x63, 0x31, 0x31,
-	0x35, 0x35, 0x48, 0x00, 0x52, 0x07, 0x65, 0x72, 0x63, 0x31, 0x31, 0x35, 0x35, 0x12, 0x36, 0x0a,
-	0x06, 0x65, 0x72, 0x63, 0x37, 0x37, 0x37, 0x18, 0x18, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e,
-	0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43,
-	0x65, 0x6e, 0x73, 0x75, 0x73, 0x45, 0x72, 0x63, 0x37, 0x32, 0x31, 0x48, 0x00, 0x52, 0x06, 0x65,
-	0x72, 0x63, 0x37, 0x37, 0x37, 0x12, 0x3f, 0x0a, 0x09, 0x65, 0x72, 0x63, 0x4d, 0x69, 0x6e, 0x69,
-	0x4d, 0x65, 0x18, 0x1e, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65,
+	0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x41, 0x72, 0x62, 0x6f, 0x48, 0x00, 0x52, 0x04,
+	0x61, 0x72, 0x62, 0x6f, 0x12, 0x2d, 0x0a, 0x03, 0x63, 0x73, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x19, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e,
+	0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x43, 0x73, 0x70, 0x48, 0x00, 0x52, 0x03,
+	0x63, 0x73, 0x70, 0x12, 0x33, 0x0a, 0x05, 0x65, 0x72, 0x63, 0x32, 0x30, 0x18, 0x0b, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73,
+	0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x45, 0x72, 0x63, 0x32, 0x30, 0x48,
+	0x00, 0x52, 0x05, 0x65, 0x72, 0x63, 0x32, 0x30, 0x12, 0x36, 0x0a, 0x06, 0x65, 0x72, 0x63, 0x37,
+	0x32, 0x31, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65,
 	0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73,
-	0x45, 0x72, 0x63, 0x4d, 0x69, 0x6e, 0x69, 0x4d, 0x65, 0x48, 0x00, 0x52, 0x09, 0x65, 0x72, 0x63,
-	0x4d, 0x69, 0x6e, 0x69, 0x4d, 0x65, 0x42, 0x06, 0x0a, 0x04, 0x62, 0x6f, 0x64, 0x79, 0x22, 0x0c,
-	0x0a, 0x0a, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x4e, 0x6f, 0x6e, 0x65, 0x22, 0x4a, 0x0a, 0x0a,
+	0x45, 0x72, 0x63, 0x37, 0x32, 0x31, 0x48, 0x00, 0x52, 0x06, 0x65, 0x72, 0x63, 0x37, 0x32, 0x31,
+	0x12, 0x39, 0x0a, 0x07, 0x65, 0x72, 0x63, 0x31, 0x31, 0x35, 0x35, 0x18, 0x0d, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1d, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e,
+	0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x45, 0x72, 0x63, 0x31, 0x31, 0x35, 0x35,
+	0x48, 0x00, 0x52, 0x07, 0x65, 0x72, 0x63, 0x31, 0x31, 0x35, 0x35, 0x12, 0x36, 0x0a, 0x06, 0x65,
+	0x72, 0x63, 0x37, 0x37, 0x37, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x64, 0x76,
+	0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e,
+	0x73, 0x75, 0x73, 0x45, 0x72, 0x63, 0x37, 0x32, 0x31, 0x48, 0x00, 0x52, 0x06, 0x65, 0x72, 0x63,
+	0x37, 0x37, 0x37, 0x12, 0x3f, 0x0a, 0x09, 0x65, 0x72, 0x63, 0x4d, 0x69, 0x6e, 0x69, 0x4d, 0x65,
+	0x18, 0x14, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74,
+	0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x45, 0x72,
+	0x63, 0x4d, 0x69, 0x6e, 0x69, 0x4d, 0x65, 0x48, 0x00, 0x52, 0x09, 0x65, 0x72, 0x63, 0x4d, 0x69,
+	0x6e, 0x69, 0x4d, 0x65, 0x42, 0x06, 0x0a, 0x04, 0x62, 0x6f, 0x64, 0x79, 0x22, 0x4a, 0x0a, 0x0a,
 	0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x41, 0x72, 0x62, 0x6f, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x65,
 	0x6e, 0x73, 0x75, 0x73, 0x52, 0x6f, 0x6f, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a,
 	0x63, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x52, 0x6f, 0x6f, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x65,
@@ -1513,59 +1457,57 @@ func file_protocol_census_proto_rawDescGZIP() []byte {
 	return file_protocol_census_proto_rawDescData
 }
 
-var file_protocol_census_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_protocol_census_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_protocol_census_proto_goTypes = []interface{}{
 	(*Census)(nil),                          // 0: dvote.types.v2.Census
-	(*CensusNone)(nil),                      // 1: dvote.types.v2.CensusNone
-	(*CensusArbo)(nil),                      // 2: dvote.types.v2.CensusArbo
-	(*CensusCsp)(nil),                       // 3: dvote.types.v2.CensusCsp
-	(*CensusErc20)(nil),                     // 4: dvote.types.v2.CensusErc20
-	(*CensusErc721)(nil),                    // 5: dvote.types.v2.CensusErc721
-	(*CensusErc1155)(nil),                   // 6: dvote.types.v2.CensusErc1155
-	(*CensusErc777)(nil),                    // 7: dvote.types.v2.CensusErc777
-	(*CensusErcMiniMe)(nil),                 // 8: dvote.types.v2.CensusErcMiniMe
-	(*Proof)(nil),                           // 9: dvote.types.v2.Proof
-	(*ProofNone)(nil),                       // 10: dvote.types.v2.ProofNone
-	(*ProofArbo)(nil),                       // 11: dvote.types.v2.ProofArbo
-	(*ProofCSP)(nil),                        // 12: dvote.types.v2.ProofCSP
-	(*StorageProofErc20)(nil),               // 13: dvote.types.v2.StorageProofErc20
-	(*StorageProofErc721)(nil),              // 14: dvote.types.v2.StorageProofErc721
-	(*StorageProofErc1155)(nil),             // 15: dvote.types.v2.StorageProofErc1155
-	(*StorageProofErc777)(nil),              // 16: dvote.types.v2.StorageProofErc777
-	(*StorageProofMiniMe)(nil),              // 17: dvote.types.v2.StorageProofMiniMe
-	(*ProofZkSnark)(nil),                    // 18: dvote.types.v2.ProofZkSnark
-	(*ProofZkSnark_Poseidon1KCensus)(nil),   // 19: dvote.types.v2.ProofZkSnark.Poseidon1kCensus
-	(*ProofZkSnark_Poseidon50KCensus)(nil),  // 20: dvote.types.v2.ProofZkSnark.Poseidon50kCensus
-	(*ProofZkSnark_Poseidon250KCensus)(nil), // 21: dvote.types.v2.ProofZkSnark.Poseidon250kCensus
+	(*CensusArbo)(nil),                      // 1: dvote.types.v2.CensusArbo
+	(*CensusCsp)(nil),                       // 2: dvote.types.v2.CensusCsp
+	(*CensusErc20)(nil),                     // 3: dvote.types.v2.CensusErc20
+	(*CensusErc721)(nil),                    // 4: dvote.types.v2.CensusErc721
+	(*CensusErc1155)(nil),                   // 5: dvote.types.v2.CensusErc1155
+	(*CensusErc777)(nil),                    // 6: dvote.types.v2.CensusErc777
+	(*CensusErcMiniMe)(nil),                 // 7: dvote.types.v2.CensusErcMiniMe
+	(*Proof)(nil),                           // 8: dvote.types.v2.Proof
+	(*ProofNone)(nil),                       // 9: dvote.types.v2.ProofNone
+	(*ProofArbo)(nil),                       // 10: dvote.types.v2.ProofArbo
+	(*ProofCSP)(nil),                        // 11: dvote.types.v2.ProofCSP
+	(*StorageProofErc20)(nil),               // 12: dvote.types.v2.StorageProofErc20
+	(*StorageProofErc721)(nil),              // 13: dvote.types.v2.StorageProofErc721
+	(*StorageProofErc1155)(nil),             // 14: dvote.types.v2.StorageProofErc1155
+	(*StorageProofErc777)(nil),              // 15: dvote.types.v2.StorageProofErc777
+	(*StorageProofMiniMe)(nil),              // 16: dvote.types.v2.StorageProofMiniMe
+	(*ProofZkSnark)(nil),                    // 17: dvote.types.v2.ProofZkSnark
+	(*ProofZkSnark_Poseidon1KCensus)(nil),   // 18: dvote.types.v2.ProofZkSnark.Poseidon1kCensus
+	(*ProofZkSnark_Poseidon50KCensus)(nil),  // 19: dvote.types.v2.ProofZkSnark.Poseidon50kCensus
+	(*ProofZkSnark_Poseidon250KCensus)(nil), // 20: dvote.types.v2.ProofZkSnark.Poseidon250kCensus
 }
 var file_protocol_census_proto_depIdxs = []int32{
-	1,  // 0: dvote.types.v2.Census.none:type_name -> dvote.types.v2.CensusNone
-	2,  // 1: dvote.types.v2.Census.arbo:type_name -> dvote.types.v2.CensusArbo
-	3,  // 2: dvote.types.v2.Census.csp:type_name -> dvote.types.v2.CensusCsp
-	4,  // 3: dvote.types.v2.Census.erc20:type_name -> dvote.types.v2.CensusErc20
-	5,  // 4: dvote.types.v2.Census.erc721:type_name -> dvote.types.v2.CensusErc721
-	6,  // 5: dvote.types.v2.Census.erc1155:type_name -> dvote.types.v2.CensusErc1155
-	5,  // 6: dvote.types.v2.Census.erc777:type_name -> dvote.types.v2.CensusErc721
-	8,  // 7: dvote.types.v2.Census.ercMiniMe:type_name -> dvote.types.v2.CensusErcMiniMe
-	13, // 8: dvote.types.v2.CensusErc20.proof:type_name -> dvote.types.v2.StorageProofErc20
-	17, // 9: dvote.types.v2.CensusErcMiniMe.proof:type_name -> dvote.types.v2.StorageProofMiniMe
-	10, // 10: dvote.types.v2.Proof.none:type_name -> dvote.types.v2.ProofNone
-	11, // 11: dvote.types.v2.Proof.arbo:type_name -> dvote.types.v2.ProofArbo
-	12, // 12: dvote.types.v2.Proof.csp:type_name -> dvote.types.v2.ProofCSP
-	13, // 13: dvote.types.v2.Proof.erc20:type_name -> dvote.types.v2.StorageProofErc20
-	14, // 14: dvote.types.v2.Proof.erc721:type_name -> dvote.types.v2.StorageProofErc721
-	15, // 15: dvote.types.v2.Proof.erc1155:type_name -> dvote.types.v2.StorageProofErc1155
-	16, // 16: dvote.types.v2.Proof.erc777:type_name -> dvote.types.v2.StorageProofErc777
-	17, // 17: dvote.types.v2.Proof.miniMe:type_name -> dvote.types.v2.StorageProofMiniMe
-	18, // 18: dvote.types.v2.Proof.zkSnark:type_name -> dvote.types.v2.ProofZkSnark
-	19, // 19: dvote.types.v2.ProofZkSnark.proof1k:type_name -> dvote.types.v2.ProofZkSnark.Poseidon1kCensus
-	20, // 20: dvote.types.v2.ProofZkSnark.proof50k:type_name -> dvote.types.v2.ProofZkSnark.Poseidon50kCensus
-	21, // 21: dvote.types.v2.ProofZkSnark.proof250k:type_name -> dvote.types.v2.ProofZkSnark.Poseidon250kCensus
-	22, // [22:22] is the sub-list for method output_type
-	22, // [22:22] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	1,  // 0: dvote.types.v2.Census.arbo:type_name -> dvote.types.v2.CensusArbo
+	2,  // 1: dvote.types.v2.Census.csp:type_name -> dvote.types.v2.CensusCsp
+	3,  // 2: dvote.types.v2.Census.erc20:type_name -> dvote.types.v2.CensusErc20
+	4,  // 3: dvote.types.v2.Census.erc721:type_name -> dvote.types.v2.CensusErc721
+	5,  // 4: dvote.types.v2.Census.erc1155:type_name -> dvote.types.v2.CensusErc1155
+	4,  // 5: dvote.types.v2.Census.erc777:type_name -> dvote.types.v2.CensusErc721
+	7,  // 6: dvote.types.v2.Census.ercMiniMe:type_name -> dvote.types.v2.CensusErcMiniMe
+	12, // 7: dvote.types.v2.CensusErc20.proof:type_name -> dvote.types.v2.StorageProofErc20
+	16, // 8: dvote.types.v2.CensusErcMiniMe.proof:type_name -> dvote.types.v2.StorageProofMiniMe
+	9,  // 9: dvote.types.v2.Proof.none:type_name -> dvote.types.v2.ProofNone
+	10, // 10: dvote.types.v2.Proof.arbo:type_name -> dvote.types.v2.ProofArbo
+	11, // 11: dvote.types.v2.Proof.csp:type_name -> dvote.types.v2.ProofCSP
+	12, // 12: dvote.types.v2.Proof.erc20:type_name -> dvote.types.v2.StorageProofErc20
+	13, // 13: dvote.types.v2.Proof.erc721:type_name -> dvote.types.v2.StorageProofErc721
+	14, // 14: dvote.types.v2.Proof.erc1155:type_name -> dvote.types.v2.StorageProofErc1155
+	15, // 15: dvote.types.v2.Proof.erc777:type_name -> dvote.types.v2.StorageProofErc777
+	16, // 16: dvote.types.v2.Proof.miniMe:type_name -> dvote.types.v2.StorageProofMiniMe
+	17, // 17: dvote.types.v2.Proof.zkSnark:type_name -> dvote.types.v2.ProofZkSnark
+	18, // 18: dvote.types.v2.ProofZkSnark.proof1k:type_name -> dvote.types.v2.ProofZkSnark.Poseidon1kCensus
+	19, // 19: dvote.types.v2.ProofZkSnark.proof50k:type_name -> dvote.types.v2.ProofZkSnark.Poseidon50kCensus
+	20, // 20: dvote.types.v2.ProofZkSnark.proof250k:type_name -> dvote.types.v2.ProofZkSnark.Poseidon250kCensus
+	21, // [21:21] is the sub-list for method output_type
+	21, // [21:21] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_protocol_census_proto_init() }
@@ -1587,18 +1529,6 @@ func file_protocol_census_proto_init() {
 			}
 		}
 		file_protocol_census_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CensusNone); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protocol_census_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusArbo); i {
 			case 0:
 				return &v.state
@@ -1610,7 +1540,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusCsp); i {
 			case 0:
 				return &v.state
@@ -1622,7 +1552,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusErc20); i {
 			case 0:
 				return &v.state
@@ -1634,7 +1564,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusErc721); i {
 			case 0:
 				return &v.state
@@ -1646,7 +1576,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusErc1155); i {
 			case 0:
 				return &v.state
@@ -1658,7 +1588,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusErc777); i {
 			case 0:
 				return &v.state
@@ -1670,7 +1600,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CensusErcMiniMe); i {
 			case 0:
 				return &v.state
@@ -1682,7 +1612,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Proof); i {
 			case 0:
 				return &v.state
@@ -1694,7 +1624,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofNone); i {
 			case 0:
 				return &v.state
@@ -1706,7 +1636,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofArbo); i {
 			case 0:
 				return &v.state
@@ -1718,7 +1648,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofCSP); i {
 			case 0:
 				return &v.state
@@ -1730,7 +1660,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StorageProofErc20); i {
 			case 0:
 				return &v.state
@@ -1742,7 +1672,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StorageProofErc721); i {
 			case 0:
 				return &v.state
@@ -1754,7 +1684,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StorageProofErc1155); i {
 			case 0:
 				return &v.state
@@ -1766,7 +1696,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StorageProofErc777); i {
 			case 0:
 				return &v.state
@@ -1778,7 +1708,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StorageProofMiniMe); i {
 			case 0:
 				return &v.state
@@ -1790,7 +1720,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofZkSnark); i {
 			case 0:
 				return &v.state
@@ -1802,7 +1732,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofZkSnark_Poseidon1KCensus); i {
 			case 0:
 				return &v.state
@@ -1814,7 +1744,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofZkSnark_Poseidon50KCensus); i {
 			case 0:
 				return &v.state
@@ -1826,7 +1756,7 @@ func file_protocol_census_proto_init() {
 				return nil
 			}
 		}
-		file_protocol_census_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+		file_protocol_census_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProofZkSnark_Poseidon250KCensus); i {
 			case 0:
 				return &v.state
@@ -1840,7 +1770,6 @@ func file_protocol_census_proto_init() {
 		}
 	}
 	file_protocol_census_proto_msgTypes[0].OneofWrappers = []interface{}{
-		(*Census_None)(nil),
 		(*Census_Arbo)(nil),
 		(*Census_Csp)(nil),
 		(*Census_Erc20)(nil),
@@ -1849,9 +1778,9 @@ func file_protocol_census_proto_init() {
 		(*Census_Erc777)(nil),
 		(*Census_ErcMiniMe)(nil),
 	}
-	file_protocol_census_proto_msgTypes[4].OneofWrappers = []interface{}{}
-	file_protocol_census_proto_msgTypes[8].OneofWrappers = []interface{}{}
-	file_protocol_census_proto_msgTypes[9].OneofWrappers = []interface{}{
+	file_protocol_census_proto_msgTypes[3].OneofWrappers = []interface{}{}
+	file_protocol_census_proto_msgTypes[7].OneofWrappers = []interface{}{}
+	file_protocol_census_proto_msgTypes[8].OneofWrappers = []interface{}{
 		(*Proof_None)(nil),
 		(*Proof_Arbo)(nil),
 		(*Proof_Csp)(nil),
@@ -1862,7 +1791,7 @@ func file_protocol_census_proto_init() {
 		(*Proof_MiniMe)(nil),
 		(*Proof_ZkSnark)(nil),
 	}
-	file_protocol_census_proto_msgTypes[18].OneofWrappers = []interface{}{
+	file_protocol_census_proto_msgTypes[17].OneofWrappers = []interface{}{
 		(*ProofZkSnark_Proof1K)(nil),
 		(*ProofZkSnark_Proof50K)(nil),
 		(*ProofZkSnark_Proof250K)(nil),
@@ -1873,7 +1802,7 @@ func file_protocol_census_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protocol_census_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

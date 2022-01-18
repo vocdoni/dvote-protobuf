@@ -7,7 +7,7 @@ import { NewElection, SetElectionStatus, SetProposalStatus, SubmitBallot } from 
 import { Transaction, Request } from "../../build/ts/protocol/messages"
 import { decodeRequest, decodeResponse, decodeTransaction, decodeTransactionReceipt, encodeRequest, encodeResponseError, encodeResponseSuccess, encodeTransaction, encodeTransactionError, encodeTransactionSuccess } from "../common/messages"
 import { ApprovalProposal, Election, Lifecycle_Types, Privacy_CensusProofs, Proposal, QuadraticProposal, RankedProposal, SingleChoiceProposal, SpreadProposal } from "../../build/ts/protocol/election"
-import { CensusArbo, CensusCsp, CensusErc20, CensusErcMiniMe, CensusNone, StorageProofErc20, StorageProofMiniMe } from "../../build/ts/protocol/census"
+import { CensusArbo, CensusCsp, CensusErc20, CensusErcMiniMe, StorageProofErc20, StorageProofMiniMe } from "../../build/ts/protocol/census"
 import { ProposalStatus, SignatureType } from "../../build/ts/protocol/enums"
 import { GetBallot, GetBallotResponse, GetElection, GetElectionBallots, GetElectionBallotsResponse, GetElectionCircuitInfo, GetElectionCircuitInfoResponse, GetElectionKeys, GetElectionKeysResponse, GetElectionList, GetElectionListResponse, GetElectionResponse, GetElectionResults, GetElectionResultsResponse, GetElectionResultsWeight, GetElectionResultsWeightResponse } from "../../build/ts/protocol/service"
 import { Reader } from "protobufjs"
@@ -32,8 +32,6 @@ const proposal3: Proposal = { proposal: { $case: "quadratic", quadratic: quadrat
 const proposal4: Proposal = { proposal: { $case: "ranked", ranked: rankedProposal } }
 const proposal5: Proposal = { proposal: { $case: "spread", spread: spreadProposal } }
 
-const censusNone: CensusNone = { body: { $case: "none", none: {} } }
-
 export function createSimpleElection() {
     console.log("-----------------------------------------------")
     console.log("Wrapping NewElection (simple) transaction")
@@ -47,9 +45,8 @@ export function createSimpleElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -108,9 +105,8 @@ export function createCspElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "csp", csp: cspCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "csp", csp: cspCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -169,9 +165,8 @@ export function createCspBlindElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "csp", csp: cspCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "csp", csp: cspCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -237,9 +232,8 @@ export function createErc20Election() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "erc20", erc20: erc20Census } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "erc20", erc20: erc20Census } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -305,9 +299,8 @@ export function createMiniMeElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "ercMiniMe", ercMiniMe: ercMiniMeCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "ercMiniMe", ercMiniMe: ercMiniMeCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -357,13 +350,10 @@ export function createDualCensusElection() {
     console.log("-----------------------------------------------")
     console.log("Wrapping NewElection (dual census) transaction")
 
-    // Census layers: The signing wallet should present a valid Arbo proof, as well as an ERC20 storage proof
-    //                matching the given parameters
-    const arboCensus: CensusArbo = {
-        censusRoot: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
-        censusUri: "ipfs://1234..."
-    }
-    const erc20Census: CensusErc20 = {
+    // Census layers: The signing wallet should present a valid ERC20 storage proof for either of the ERC20 contracts
+    //                and the voting weight will be the combination of the balance in both.
+    //                An additional proof of belonging to the Arbo census is also required.
+    const originalErc20Census: CensusErc20 = {
         balanceMapSlot: 2,
         tokenAddress: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
         // Obtanied from the census service
@@ -374,13 +364,30 @@ export function createDualCensusElection() {
         },
         sourceEthereumBlock: 12345678
     }
+    const stakedErc20Census: CensusErc20 = {
+        balanceMapSlot: 2,
+        tokenAddress: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]),
+        // Obtanied from the census service
+        proof: {
+            key: new Uint8Array([]),   // Not needed for additional main censuses
+            proof: [new Uint8Array([])],
+            value: new Uint8Array([])
+        },
+        sourceEthereumBlock: 12345678
+    }
+    const arboCensus: CensusArbo = {
+        censusRoot: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
+        censusUri: "ipfs://1234..."
+    }
 
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
-        secondaryCensus: { body: { $case: "erc20", erc20: erc20Census } },
-        tertiaryCensus: censusNone,
+        mainCensus: [
+            { body: { $case: "erc20", erc20: originalErc20Census } },
+            { body: { $case: "erc20", erc20: stakedErc20Census } }
+        ],
+        secondaryCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -439,9 +446,8 @@ export function createAnonymousElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -500,9 +506,8 @@ export function createAnonymousPreregisterElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -564,9 +569,8 @@ export function createNonRealTimeResultsElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -625,9 +629,8 @@ export function createStepByStepElection() {
     // Election params
     const election: Election = {
         // who can vote
-        mainCensus: { body: { $case: "arbo", arbo: arboCensus } },
-        secondaryCensus: censusNone,
-        tertiaryCensus: censusNone,
+        mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
+        secondaryCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -1030,9 +1033,8 @@ function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
         case "newElection":
             const { election } = transaction.body.newElection
             console.log(pad + "New election from", publicKey)
-            console.log(pad + pad + "- Census 1:", election.mainCensus.body.$case)
-            console.log(pad + pad + "- Census 2:", election.secondaryCensus.body.$case)
-            console.log(pad + pad + "- Census 3:", election.tertiaryCensus.body.$case)
+            console.log(pad + pad + "- Main census:", election.mainCensus.map(c => c.body.$case))
+            console.log(pad + pad + "- Secondary census:", election.secondaryCensus.map(c => c.body.$case))
             console.log(pad + pad + "- Privacy:", election.privacy)
             break
 
@@ -1181,9 +1183,8 @@ function simulateGetElection(requestId: Uint8Array, request: GetElection) {
     const getElectionResponseBytes = GetElectionResponse.encode({
         organizationId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
         parameters: {
-            mainCensus: { body: { $case: "csp", csp: cspCensus } },
-            secondaryCensus: censusNone,
-            tertiaryCensus: censusNone,
+            mainCensus: [{ body: { $case: "csp", csp: cspCensus } }],
+            secondaryCensus: [],
             censusSize: 500,    // affects how many votes are expected at most
             proposals: [
                 proposal1,   // approval

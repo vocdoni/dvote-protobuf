@@ -17,9 +17,8 @@ export 'election.pbenum.dart';
 
 class Election extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Election', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
-    ..aOM<$0.Census>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainCensus', protoName: 'mainCensus', subBuilder: $0.Census.create)
-    ..aOM<$0.Census>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'secondaryCensus', protoName: 'secondaryCensus', subBuilder: $0.Census.create)
-    ..aOM<$0.Census>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tertiaryCensus', protoName: 'tertiaryCensus', subBuilder: $0.Census.create)
+    ..pc<$0.Census>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainCensus', $pb.PbFieldType.PM, protoName: 'mainCensus', subBuilder: $0.Census.create)
+    ..pc<$0.Census>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'secondaryCensus', $pb.PbFieldType.PM, protoName: 'secondaryCensus', subBuilder: $0.Census.create)
     ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusSize', $pb.PbFieldType.O3, protoName: 'censusSize')
     ..pc<Proposal>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposals', $pb.PbFieldType.PM, subBuilder: Proposal.create)
     ..aOM<Privacy>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'privacy', subBuilder: Privacy.create)
@@ -30,9 +29,8 @@ class Election extends $pb.GeneratedMessage {
 
   Election._() : super();
   factory Election({
-    $0.Census? mainCensus,
-    $0.Census? secondaryCensus,
-    $0.Census? tertiaryCensus,
+    $core.Iterable<$0.Census>? mainCensus,
+    $core.Iterable<$0.Census>? secondaryCensus,
     $core.int? censusSize,
     $core.Iterable<Proposal>? proposals,
     Privacy? privacy,
@@ -41,13 +39,10 @@ class Election extends $pb.GeneratedMessage {
   }) {
     final _result = create();
     if (mainCensus != null) {
-      _result.mainCensus = mainCensus;
+      _result.mainCensus.addAll(mainCensus);
     }
     if (secondaryCensus != null) {
-      _result.secondaryCensus = secondaryCensus;
-    }
-    if (tertiaryCensus != null) {
-      _result.tertiaryCensus = tertiaryCensus;
+      _result.secondaryCensus.addAll(secondaryCensus);
     }
     if (censusSize != null) {
       _result.censusSize = censusSize;
@@ -88,78 +83,51 @@ class Election extends $pb.GeneratedMessage {
   static Election? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $0.Census get mainCensus => $_getN(0);
-  @$pb.TagNumber(1)
-  set mainCensus($0.Census v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMainCensus() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMainCensus() => clearField(1);
-  @$pb.TagNumber(1)
-  $0.Census ensureMainCensus() => $_ensure(0);
+  $core.List<$0.Census> get mainCensus => $_getList(0);
 
   @$pb.TagNumber(2)
-  $0.Census get secondaryCensus => $_getN(1);
-  @$pb.TagNumber(2)
-  set secondaryCensus($0.Census v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSecondaryCensus() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSecondaryCensus() => clearField(2);
-  @$pb.TagNumber(2)
-  $0.Census ensureSecondaryCensus() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  $0.Census get tertiaryCensus => $_getN(2);
-  @$pb.TagNumber(3)
-  set tertiaryCensus($0.Census v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasTertiaryCensus() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearTertiaryCensus() => clearField(3);
-  @$pb.TagNumber(3)
-  $0.Census ensureTertiaryCensus() => $_ensure(2);
+  $core.List<$0.Census> get secondaryCensus => $_getList(1);
 
   @$pb.TagNumber(11)
-  $core.int get censusSize => $_getIZ(3);
+  $core.int get censusSize => $_getIZ(2);
   @$pb.TagNumber(11)
-  set censusSize($core.int v) { $_setSignedInt32(3, v); }
+  set censusSize($core.int v) { $_setSignedInt32(2, v); }
   @$pb.TagNumber(11)
-  $core.bool hasCensusSize() => $_has(3);
+  $core.bool hasCensusSize() => $_has(2);
   @$pb.TagNumber(11)
   void clearCensusSize() => clearField(11);
 
   @$pb.TagNumber(12)
-  $core.List<Proposal> get proposals => $_getList(4);
+  $core.List<Proposal> get proposals => $_getList(3);
 
   @$pb.TagNumber(13)
-  Privacy get privacy => $_getN(5);
+  Privacy get privacy => $_getN(4);
   @$pb.TagNumber(13)
   set privacy(Privacy v) { setField(13, v); }
   @$pb.TagNumber(13)
-  $core.bool hasPrivacy() => $_has(5);
+  $core.bool hasPrivacy() => $_has(4);
   @$pb.TagNumber(13)
   void clearPrivacy() => clearField(13);
   @$pb.TagNumber(13)
-  Privacy ensurePrivacy() => $_ensure(5);
+  Privacy ensurePrivacy() => $_ensure(4);
 
   @$pb.TagNumber(14)
-  Lifecycle get lifecycle => $_getN(6);
+  Lifecycle get lifecycle => $_getN(5);
   @$pb.TagNumber(14)
   set lifecycle(Lifecycle v) { setField(14, v); }
   @$pb.TagNumber(14)
-  $core.bool hasLifecycle() => $_has(6);
+  $core.bool hasLifecycle() => $_has(5);
   @$pb.TagNumber(14)
   void clearLifecycle() => clearField(14);
   @$pb.TagNumber(14)
-  Lifecycle ensureLifecycle() => $_ensure(6);
+  Lifecycle ensureLifecycle() => $_ensure(5);
 
   @$pb.TagNumber(15)
-  $core.String get metadataUri => $_getSZ(7);
+  $core.String get metadataUri => $_getSZ(6);
   @$pb.TagNumber(15)
-  set metadataUri($core.String v) { $_setString(7, v); }
+  set metadataUri($core.String v) { $_setString(6, v); }
   @$pb.TagNumber(15)
-  $core.bool hasMetadataUri() => $_has(7);
+  $core.bool hasMetadataUri() => $_has(6);
   @$pb.TagNumber(15)
   void clearMetadataUri() => clearField(15);
 }

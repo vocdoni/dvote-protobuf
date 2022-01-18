@@ -12,14 +12,13 @@ import 'dart:typed_data' as $typed_data;
 const Census$json = const {
   '1': 'Census',
   '2': const [
-    const {'1': 'none', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusNone', '9': 0, '10': 'none'},
-    const {'1': 'arbo', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusArbo', '9': 0, '10': 'arbo'},
-    const {'1': 'csp', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusCsp', '9': 0, '10': 'csp'},
-    const {'1': 'erc20', '3': 21, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc20', '9': 0, '10': 'erc20'},
-    const {'1': 'erc721', '3': 22, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc721', '9': 0, '10': 'erc721'},
-    const {'1': 'erc1155', '3': 23, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc1155', '9': 0, '10': 'erc1155'},
-    const {'1': 'erc777', '3': 24, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc721', '9': 0, '10': 'erc777'},
-    const {'1': 'ercMiniMe', '3': 30, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErcMiniMe', '9': 0, '10': 'ercMiniMe'},
+    const {'1': 'arbo', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusArbo', '9': 0, '10': 'arbo'},
+    const {'1': 'csp', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusCsp', '9': 0, '10': 'csp'},
+    const {'1': 'erc20', '3': 11, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc20', '9': 0, '10': 'erc20'},
+    const {'1': 'erc721', '3': 12, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc721', '9': 0, '10': 'erc721'},
+    const {'1': 'erc1155', '3': 13, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc1155', '9': 0, '10': 'erc1155'},
+    const {'1': 'erc777', '3': 14, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErc721', '9': 0, '10': 'erc777'},
+    const {'1': 'ercMiniMe', '3': 20, '4': 1, '5': 11, '6': '.dvote.types.v2.CensusErcMiniMe', '9': 0, '10': 'ercMiniMe'},
   ],
   '8': const [
     const {'1': 'body'},
@@ -27,14 +26,7 @@ const Census$json = const {
 };
 
 /// Descriptor for `Census`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusDescriptor = $convert.base64Decode('CgZDZW5zdXMSMAoEbm9uZRgBIAEoCzIaLmR2b3RlLnR5cGVzLnYyLkNlbnN1c05vbmVIAFIEbm9uZRIwCgRhcmJvGAsgASgLMhouZHZvdGUudHlwZXMudjIuQ2Vuc3VzQXJib0gAUgRhcmJvEi0KA2NzcBgMIAEoCzIZLmR2b3RlLnR5cGVzLnYyLkNlbnN1c0NzcEgAUgNjc3ASMwoFZXJjMjAYFSABKAsyGy5kdm90ZS50eXBlcy52Mi5DZW5zdXNFcmMyMEgAUgVlcmMyMBI2CgZlcmM3MjEYFiABKAsyHC5kdm90ZS50eXBlcy52Mi5DZW5zdXNFcmM3MjFIAFIGZXJjNzIxEjkKB2VyYzExNTUYFyABKAsyHS5kdm90ZS50eXBlcy52Mi5DZW5zdXNFcmMxMTU1SABSB2VyYzExNTUSNgoGZXJjNzc3GBggASgLMhwuZHZvdGUudHlwZXMudjIuQ2Vuc3VzRXJjNzIxSABSBmVyYzc3NxI/CgllcmNNaW5pTWUYHiABKAsyHy5kdm90ZS50eXBlcy52Mi5DZW5zdXNFcmNNaW5pTWVIAFIJZXJjTWluaU1lQgYKBGJvZHk=');
-@$core.Deprecated('Use censusNoneDescriptor instead')
-const CensusNone$json = const {
-  '1': 'CensusNone',
-};
-
-/// Descriptor for `CensusNone`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List censusNoneDescriptor = $convert.base64Decode('CgpDZW5zdXNOb25l');
+final $typed_data.Uint8List censusDescriptor = $convert.base64Decode('CgZDZW5zdXMSMAoEYXJibxgBIAEoCzIaLmR2b3RlLnR5cGVzLnYyLkNlbnN1c0FyYm9IAFIEYXJibxItCgNjc3AYAiABKAsyGS5kdm90ZS50eXBlcy52Mi5DZW5zdXNDc3BIAFIDY3NwEjMKBWVyYzIwGAsgASgLMhsuZHZvdGUudHlwZXMudjIuQ2Vuc3VzRXJjMjBIAFIFZXJjMjASNgoGZXJjNzIxGAwgASgLMhwuZHZvdGUudHlwZXMudjIuQ2Vuc3VzRXJjNzIxSABSBmVyYzcyMRI5CgdlcmMxMTU1GA0gASgLMh0uZHZvdGUudHlwZXMudjIuQ2Vuc3VzRXJjMTE1NUgAUgdlcmMxMTU1EjYKBmVyYzc3NxgOIAEoCzIcLmR2b3RlLnR5cGVzLnYyLkNlbnN1c0VyYzcyMUgAUgZlcmM3NzcSPwoJZXJjTWluaU1lGBQgASgLMh8uZHZvdGUudHlwZXMudjIuQ2Vuc3VzRXJjTWluaU1lSABSCWVyY01pbmlNZUIGCgRib2R5');
 @$core.Deprecated('Use censusArboDescriptor instead')
 const CensusArbo$json = const {
   '1': 'CensusArbo',
