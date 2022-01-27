@@ -14,13 +14,14 @@ import "protocol/census.proto";
 // The following model defines the declaration of an election. These are just the settings, not the human readable information.
 message Election {
   // See census.proto
-	// The primary census(es) define the combined voting weight of the voter (if applicable)
+	// The primary census(es) define the combined voting weight of the voter.
+  // A minimum weight of 1 will always be assumed, if a census only contains keys.
   repeated Census mainCensus = 1;
-	// Secondary censuses (optional) define additional constraints like holding an NFT, being a person, etc.
-  repeated Census secondaryCensus = 2;
+	// Validation censuses (optional) define additional constraints like holding an NFT, being a person, etc.
+  repeated Census validationCensus = 2;
 
   // Used to select the zk circuit, determine the cost, etc
-	// Only applicable to non-anonymous elections∫
+	// Only applicable to non-anonymous elections
   int32 censusSize = 11;
 
   // Settings of the questions that people can vote

@@ -18,7 +18,7 @@ export 'election.pbenum.dart';
 class Election extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Election', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v2'), createEmptyInstance: create)
     ..pc<$0.Census>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mainCensus', $pb.PbFieldType.PM, protoName: 'mainCensus', subBuilder: $0.Census.create)
-    ..pc<$0.Census>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'secondaryCensus', $pb.PbFieldType.PM, protoName: 'secondaryCensus', subBuilder: $0.Census.create)
+    ..pc<$0.Census>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'validationCensus', $pb.PbFieldType.PM, protoName: 'validationCensus', subBuilder: $0.Census.create)
     ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusSize', $pb.PbFieldType.O3, protoName: 'censusSize')
     ..pc<Proposal>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proposals', $pb.PbFieldType.PM, subBuilder: Proposal.create)
     ..aOM<Privacy>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'privacy', subBuilder: Privacy.create)
@@ -30,7 +30,7 @@ class Election extends $pb.GeneratedMessage {
   Election._() : super();
   factory Election({
     $core.Iterable<$0.Census>? mainCensus,
-    $core.Iterable<$0.Census>? secondaryCensus,
+    $core.Iterable<$0.Census>? validationCensus,
     $core.int? censusSize,
     $core.Iterable<Proposal>? proposals,
     Privacy? privacy,
@@ -41,8 +41,8 @@ class Election extends $pb.GeneratedMessage {
     if (mainCensus != null) {
       _result.mainCensus.addAll(mainCensus);
     }
-    if (secondaryCensus != null) {
-      _result.secondaryCensus.addAll(secondaryCensus);
+    if (validationCensus != null) {
+      _result.validationCensus.addAll(validationCensus);
     }
     if (censusSize != null) {
       _result.censusSize = censusSize;
@@ -86,7 +86,7 @@ class Election extends $pb.GeneratedMessage {
   $core.List<$0.Census> get mainCensus => $_getList(0);
 
   @$pb.TagNumber(2)
-  $core.List<$0.Census> get secondaryCensus => $_getList(1);
+  $core.List<$0.Census> get validationCensus => $_getList(1);
 
   @$pb.TagNumber(11)
   $core.int get censusSize => $_getIZ(2);

@@ -9,14 +9,15 @@ export const protobufPackage = "dvote.types.v2";
 export interface Election {
   /**
    * See census.proto
-   * The primary census(es) define the combined voting weight of the voter (if applicable)
+   * The primary census(es) define the combined voting weight of the voter.
+   * A minimum weight of 1 will always be assumed, if a census only contains keys.
    */
   mainCensus: Census[];
-  /** Secondary censuses (optional) define additional constraints like holding an NFT, being a person, etc. */
-  secondaryCensus: Census[];
+  /** Validation censuses (optional) define additional constraints like holding an NFT, being a person, etc. */
+  validationCensus: Census[];
   /**
    * Used to select the zk circuit, determine the cost, etc
-   * Only applicable to non-anonymous elections∫
+   * Only applicable to non-anonymous elections
    */
   censusSize: number;
   /** Settings of the questions that people can vote */
@@ -185,7 +186,7 @@ export interface SpreadProposal {
 function createBaseElection(): Election {
   return {
     mainCensus: [],
-    secondaryCensus: [],
+    validationCensus: [],
     censusSize: 0,
     proposals: [],
     privacy: undefined,
@@ -199,7 +200,7 @@ export const Election = {
     for (const v of message.mainCensus) {
       Census.encode(v!, writer.uint32(10).fork()).ldelim();
     }
-    for (const v of message.secondaryCensus) {
+    for (const v of message.validationCensus) {
       Census.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     if (message.censusSize !== 0) {
@@ -231,7 +232,7 @@ export const Election = {
           message.mainCensus.push(Census.decode(reader, reader.uint32()));
           break;
         case 2:
-          message.secondaryCensus.push(Census.decode(reader, reader.uint32()));
+          message.validationCensus.push(Census.decode(reader, reader.uint32()));
           break;
         case 11:
           message.censusSize = reader.int32();
@@ -261,8 +262,8 @@ export const Election = {
       mainCensus: Array.isArray(object?.mainCensus)
         ? object.mainCensus.map((e: any) => Census.fromJSON(e))
         : [],
-      secondaryCensus: Array.isArray(object?.secondaryCensus)
-        ? object.secondaryCensus.map((e: any) => Census.fromJSON(e))
+      validationCensus: Array.isArray(object?.validationCensus)
+        ? object.validationCensus.map((e: any) => Census.fromJSON(e))
         : [],
       censusSize: isSet(object.censusSize) ? Number(object.censusSize) : 0,
       proposals: Array.isArray(object?.proposals)
@@ -287,12 +288,12 @@ export const Election = {
     } else {
       obj.mainCensus = [];
     }
-    if (message.secondaryCensus) {
-      obj.secondaryCensus = message.secondaryCensus.map((e) =>
+    if (message.validationCensus) {
+      obj.validationCensus = message.validationCensus.map((e) =>
         e ? Census.toJSON(e) : undefined
       );
     } else {
-      obj.secondaryCensus = [];
+      obj.validationCensus = [];
     }
     message.censusSize !== undefined &&
       (obj.censusSize = Math.round(message.censusSize));
@@ -320,8 +321,8 @@ export const Election = {
     const message = createBaseElection();
     message.mainCensus =
       object.mainCensus?.map((e) => Census.fromPartial(e)) || [];
-    message.secondaryCensus =
-      object.secondaryCensus?.map((e) => Census.fromPartial(e)) || [];
+    message.validationCensus =
+      object.validationCensus?.map((e) => Census.fromPartial(e)) || [];
     message.censusSize = object.censusSize ?? 0;
     message.proposals =
       object.proposals?.map((e) => Proposal.fromPartial(e)) || [];

@@ -59,7 +59,16 @@ Then, run `make all` to build all the targets
 
 Import the files from:
 - `build/dart/*`
-- `go-vocdonitypes/*`
+- `build/ts/*`
+- `build/go/*`
+
+## Working example
+
+See [example/index.ts](example/index.ts).
+
+```
+make example
+```
 
 ## Usage
 

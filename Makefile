@@ -132,3 +132,12 @@ $(PROTOC_TS_PLUGIN):
 .PHONY: protoc-go-plugin
 protoc-go-plugin:
 	$(call install_protoc_go)
+
+#-----------------------------------------------------------------------
+# EXAMPLE
+#-----------------------------------------------------------------------
+
+## example: Run the example script
+.PHONY: example
+example:
+	./node_modules/.bin/ts-node example/index.ts

@@ -46,7 +46,7 @@ export function createSimpleElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -106,7 +106,7 @@ export function createCspElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "csp", csp: cspCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -166,7 +166,7 @@ export function createCspBlindElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "csp", csp: cspCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -233,7 +233,7 @@ export function createErc20Election() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "erc20", erc20: erc20Census } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -300,7 +300,7 @@ export function createMiniMeElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "ercMiniMe", ercMiniMe: ercMiniMeCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -387,7 +387,7 @@ export function createDualCensusElection() {
             { body: { $case: "erc20", erc20: originalErc20Census } },
             { body: { $case: "erc20", erc20: stakedErc20Census } }
         ],
-        secondaryCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
+        validationCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -447,7 +447,7 @@ export function createAnonymousElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -507,7 +507,7 @@ export function createAnonymousPreregisterElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -570,7 +570,7 @@ export function createNonRealTimeResultsElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -630,7 +630,7 @@ export function createStepByStepElection() {
     const election: Election = {
         // who can vote
         mainCensus: [{ body: { $case: "arbo", arbo: arboCensus } }],
-        secondaryCensus: [],
+        validationCensus: [],
         censusSize: 500,    // affects how many votes are expected at most
         // per-proposal settings
         proposals: [
@@ -1034,7 +1034,7 @@ function dummyVochainRequest(reqBytes: Uint8Array): Uint8Array {
             const { election } = transaction.body.newElection
             console.log(pad + "New election from", publicKey)
             console.log(pad + pad + "- Main census:", election.mainCensus.map(c => c.body.$case))
-            console.log(pad + pad + "- Secondary census:", election.secondaryCensus.map(c => c.body.$case))
+            console.log(pad + pad + "- Secondary census:", election.validationCensus.map(c => c.body.$case))
             console.log(pad + pad + "- Privacy:", election.privacy)
             break
 
@@ -1184,7 +1184,7 @@ function simulateGetElection(requestId: Uint8Array, request: GetElection) {
         organizationId: new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
         parameters: {
             mainCensus: [{ body: { $case: "csp", csp: cspCensus } }],
-            secondaryCensus: [],
+            validationCensus: [],
             censusSize: 500,    // affects how many votes are expected at most
             proposals: [
                 proposal1,   // approval
