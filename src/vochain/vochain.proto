@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package dvote.types.v1;
 
+import "common/census.proto";
+
 option go_package = "go.vocdoni.io/proto/build/go/models";
 
 message VoteEnvelope {
@@ -9,122 +11,23 @@ message VoteEnvelope {
 	bytes nonce = 1;
 	// The process for which the vote is casted
 	bytes processId = 2;
-	// Franchise proof
-	Proof proof = 3;
+
+	// Proof proof = 3; // NO LONGER USED
+
 	// JSON string of the Vote Package (potentially encrypted), encoded as bytes.
 	bytes votePackage = 4;
 	// Hash of the private key + processId
 	bytes nullifier = 5;
 	// On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 	repeated uint32 encryptionKeyIndexes = 6;
-}
+	
+	// Refactored fields:
 
-message Census {
-	enum Type {
-		UNKNOWN = 0;
-		ARBO_BLAKE2B = 1;
-		ARBO_POSEIDON = 2;
-		ETHEREUMSTORAGE = 3;
-		ETHEREUMACCOUNT = 4;
-		CA = 5;
-		GRAVITON = 1001;
-		IDEN3 = 1002;
-	}
-}
-
-message Proof {
-	oneof payload {
-		// Proof used for signed envelopes
-		ProofGraviton graviton = 1;
-		// Proof used for anonymous votes
-		ProofIden3 iden3 = 2;
-		// Proof used on EVM census based processes
-		ProofEthereumStorage ethereumStorage = 3;
-		// Proof used by oracles to update the census of EVM processes
-		ProofEthereumAccount ethereumAccount = 4;
-		// Proof Certification Authority
-		ProofCA ca = 5;
-		// Proof used for census using arbo
-		ProofArbo arbo = 6;
-		// zkSnark proof
-		ProofZkSNARK zkSnark = 7;
-		// Proof used in Minime token based census
-		ProofMinime minimeStorage = 8;
-	}
-}
-
-message ProofGraviton {
-    bytes siblings = 1;
-}
-
-message ProofIden3 {
-	bytes siblings = 1;
-}
-
-message ProofEthereumStorage {
-	bytes key = 1;
-	bytes value = 2;
-	repeated bytes siblings = 3;
-}
-
-message ProofEthereumAccount {
-	bytes nonce = 1;
-	bytes balance = 2;  // Big Int encoded as bytes
-	bytes storageHash = 3;
-	bytes codeHash = 4;
-	repeated bytes siblings = 5;
-}
-
-message ProofMinime {
-	ProofEthereumStorage proofPrevBlock = 1;
-	ProofEthereumStorage proofNextBlock = 2;
-}
-
-message ProofCA {
-	enum Type {
-			UNKNOWN = 0;
-			ECDSA = 1;
-			ECDSA_PIDSALTED = 2;
-			ECDSA_BLIND = 3;
-			ECDSA_BLIND_PIDSALTED = 4;
-	}
-	Type type = 1;
-	CAbundle bundle = 2;
-	bytes signature = 3;
-}
-
-message CAbundle {
-	bytes processId = 1;
-	bytes address = 2;
-}
-
-message ProofArbo {
-	enum Type {
-			BLAKE2B = 0;
-			POSEIDON = 1;
-	}
-	Type type = 1;
-	bytes siblings = 2;
-	bytes value = 3;
-}
-
-// Groth16 zkSNARK proof + public inputs
-message ProofZkSNARK {
-	// circuitParametersIndex defines the index of the parameter set of the
-	// circuit. Each process has defined a set of available parameters for
-	// the same circuit, the 'parametersIndex' defines the index of the set
-	// for which the ProofZkSNARK belongs for the circuit used in that
-	// process.
-	int32 circuitParametersIndex = 1;
-	// a represents a G1 point in Affine coordinates
-	repeated string a = 2;
-	// b represents a G2 point in Affine coordinates, represented by an
-	// array of arrays: []string => [2][2]bigint).
-	// [w, x, y, z] => [[w, x], [y, z]]
-	repeated string b = 3;
-	// c represents a G1 point in Affine coordinates
-	repeated string c = 4;
-	repeated string publicInputs = 5;
+	// Contains the census proof(s), according to the census types defined in the Election
+	// - Non-anonymous: [ mainProof1, mainProof2, ..., validationProof1, validationProof2, ... ]
+	// - Anonymous:     [ ProofZkSnark ] alone
+	// When a certain `mainProof` does not apply, ProofNone{} is expected
+	repeated Proof proofs = 10;
 }
 
 // Account represents an entity with an amount of tokens, usually attached to an address.
@@ -202,10 +105,19 @@ message SetProcessTx {
 	bytes processId = 3;
 	optional ProcessStatus status = 4;
 	optional uint32 questionIndex = 5;
-	optional bytes censusRoot = 6;
-	optional string censusURI = 7;
+	// optional bytes censusRoot = 6; // NO LONGER USED
+	// optional string censusURI = 7; // NO LONGER USED
 	optional Proof proof = 8;
 	optional ProcessResult results = 9;
+
+	// Refactored fields:
+
+	// The primary census(es) define the combined voting weight of the voter.
+	// A minimum weight of 1 will always be assumed, if a census only contains keys.
+	repeated Census mainCensus = 41;
+
+	// Validation censuses (optional) define additional constraints like holding an NFT, being a person, etc.
+	repeated Census validationCensus = 42;
 }
 
 message AdminTx {
@@ -287,10 +199,8 @@ message Process {
 	uint32 startBlock = 3;
 	// BlockCount represents the amount of tendermint blocks that the process will last
 	uint32 blockCount = 4;
-	// CensusRoot merkle root of all the census in the process
-	bytes censusRoot = 5;
-	// CensusURI where to find the census
-	optional string censusURI = 6;
+	// bytes censusRoot = 5; // NO LONGER USED
+	// optional string censusURI = 6; // NO LONGER USED
 	// EncryptionPrivateKeys are the keys required to decrypt the votes
 	repeated string encryptionPrivateKeys = 8;
 	// EncryptionPublicKeys are the keys required to encrypt the votes
@@ -304,12 +214,11 @@ message Process {
 	optional uint32 questionIndex = 17;
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
-	CensusOrigin censusOrigin = 20;
+	// CensusOrigin censusOrigin = 20; // NO LONGER USED
 	ProcessResult results = 21;
 	repeated bytes resultsSignatures = 22;
 	optional uint32 ethIndexSlot = 23;
-	// SourceBlockHeight is the block height of the origin blockchain (if any)
-	optional uint64 sourceBlockHeight = 24;
+	// optional uint64 sourceBlockHeight = 24; // NO LONGER USED
 	// Owner is the creator of a process (if any) otherwise is assumed the creator is the entityId
 	optional bytes owner = 25;
 	// Metadata is the content hashed URI of the JSON meta data (See Data Origins)
@@ -327,6 +236,16 @@ message Process {
 	// NullifiersRoot is the root of the pre-census nullifiers merkle tree.
 	// Used when Mode.PreRegister = true.
 	optional bytes nullifiersRoot = 31;
+
+	// Refactored fields:
+
+	// See common/census.proto
+	// The primary census(es) define the combined voting weight of the voter.
+	// A minimum weight of 1 will always be assumed, if a census only contains keys.
+	repeated Census mainCensus = 41;
+
+	// Validation censuses (optional) define additional constraints like holding an NFT, being a person, etc.
+	repeated Census validationCensus = 42;
 }
 
 enum ProcessStatus {
@@ -351,18 +270,6 @@ enum SourceNetworkId {
 	ETH_RINKEBY_SIGNALING = 9;
 	AVAX_FUJI = 10;
 	AVAX = 11;
-}
-
-enum CensusOrigin {
-	CENSUS_UNKNOWN = 0;
-	OFF_CHAIN_TREE = 1;
-	OFF_CHAIN_TREE_WEIGHTED = 2;
-	OFF_CHAIN_CA = 3;
-	ERC20 = 11;
-	ERC721 = 12;
-	ERC1155 = 13;
-	ERC777 = 14;
-	MINI_ME = 15;
 }
 
 message EnvelopeType {

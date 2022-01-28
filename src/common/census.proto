@@ -1,0 +1,192 @@
+// Type: Protocol layer definitions
+
+syntax = "proto3";
+package dvote.types.v1;
+
+option go_package = "go.vocdoni.io/proto/build/go/models";
+
+///////////////////////////////////////////////////////////////////////////////
+// Census models
+///////////////////////////////////////////////////////////////////////////////
+
+// The models below affect the whole election definition.
+message Census {
+	oneof body {
+		// Always weighted
+		CensusArbo arbo = 1;
+		CensusCsp csp = 2;
+
+		CensusErc20 erc20 = 11;
+		CensusErc721 erc721 = 12;
+		CensusErc1155 erc1155 = 13;
+		CensusErc721 erc777 = 14;
+		CensusErcMiniMe ercMiniMe = 20;
+	}
+}
+
+// Census submodels
+
+message CensusArbo {
+	bytes censusRoot = 1;
+	string censusUri = 2;
+}
+message CensusCsp {
+	string cspUri = 1;
+	bytes cspPublicKey = 2;
+  // Whether a plain or blind signature is expected as a proof
+	bool blind = 3;
+}
+
+message CensusErc20 {
+	bytes contractAddress = 1;
+	int32 balanceMapSlot = 2;
+	optional StorageProofErc20 proof = 3;
+	// Ethereum block at which the state root is taken
+	int32 sourceEthereumBlock = 4;
+}
+message CensusErc721 {
+	// bytes contractAddress = 1;
+	// int32 balanceMapSlot = 2;
+	// optional StorageProofErc721 proof = 3;
+	// Ethereum block at which the state root is taken
+	// int32 sourceEthereumBlock = 4;
+}
+message CensusErc1155 {
+	// bytes contractAddress = 1;
+	// int32 balanceMapSlot = 2;
+	// optional StorageProofErc1155 proof = 3;
+	// Ethereum block at which the state root is taken
+	// int32 sourceEthereumBlock = 4;
+}
+message CensusErc777 {
+	// bytes contractAddress = 1;
+	// int32 balanceMapSlot = 2;
+	// optional StorageProofErc777 proof = 3;
+	// Ethereum block at which the state root is taken
+	// int32 sourceEthereumBlock = 4;
+}
+message CensusErcMiniMe {
+	bytes contractAddress = 1;
+	int32 balanceMapSlot = 2;
+	optional StorageProofMiniMe proof = 3;
+	// Ethereum block at which the state root is taken
+	int32 sourceEthereumBlock = 4;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Census Proof Models
+///////////////////////////////////////////////////////////////////////////////
+
+message Proof {
+	oneof body {
+		// Note: Indexes 1-8 used previously.
+
+    // SIGNED PROOFS
+		ProofNone none = 10;
+
+    // Always weighted
+		ProofArbo arbo = 11;
+		ProofCSP csp = 12;
+
+		StorageProofErc20 erc20 = 21;
+		StorageProofErc721 erc721 = 22;
+		StorageProofErc1155 erc1155 = 23;
+		StorageProofErc777 erc777 = 24;
+		StorageProofMiniMe miniMe = 30;
+
+    // ANONYMOUS PROOFS
+		ProofZkSnark zkSnark = 100;
+	}
+}
+
+// Used to vote on non-anonymous elections, or to register an anonymous key to the Vochain
+
+message ProofNone {}
+
+// Off-chain censuses /////////////////////////////////////////////////////////
+
+message ProofArbo {
+	enum Type {
+			BLAKE2B = 0;
+			POSEIDON = 1;
+	}
+	Type type = 1;
+	bytes siblings = 2;
+	bytes value = 3;
+}
+
+// CSP proofs /////////////////////////////////////////////////////////////////
+
+message ProofCSP {
+	enum Type {
+		UNKNOWN = 0;
+		ECDSA = 1;
+		ECDSA_PIDSALTED = 2;
+		ECDSA_BLIND = 3;
+		ECDSA_BLIND_PIDSALTED = 4;
+	}
+	Type type = 1;
+
+  message Bundle {
+    bytes processId = 1;
+    bytes address = 2;
+		// bytes value = 3;
+  }
+	Bundle bundle = 2;
+	bytes signature = 3;
+}
+
+// Ethereum based proofs //////////////////////////////////////////////////////
+
+message StorageProofErc20 {
+  // Key that identifies the value stored on-chain
+	bytes key = 1;
+  // The value stored on-chain (balance)
+	bytes value = 2;
+  // The RLP encoded siblings
+	repeated bytes siblings = 3;
+}
+message StorageProofErc721 {}
+message StorageProofErc1155 {}
+message StorageProofErc777 {}
+message StorageProofMiniMe {
+	StorageProofErc20 proofPrevBlock = 1;
+	StorageProofErc20 proofNextBlock = 2;
+}
+
+
+// Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
+// Groth16 zkSNARK proof + public inputs
+message ProofZkSnark {
+	// circuitParametersIndex defines the index of the parameter set of the
+	// circuit. Each process has defined a set of available parameters for
+	// the same circuit, the 'parametersIndex' defines the index of the set
+	// for which the ProofZkSNARK belongs for the circuit used in that
+	// process.
+	int32 circuitParametersIndex = 1;
+  
+	// a represents a G1 point in Affine coordinates
+	repeated string a = 2;
+	
+  // b represents a G2 point in Affine coordinates, represented by an
+	// array of arrays: []string => [2][2]bigint).
+	// [w, x, y, z] => [[w, x], [y, z]]
+	repeated string b = 3;
+	
+  // c represents a G1 point in Affine coordinates
+	repeated string c = 4;
+	repeated string publicInputs = 5;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Non-Census Proof Models
+///////////////////////////////////////////////////////////////////////////////
+
+message ProofEthereumAccount {
+	bytes nonce = 1;
+	bytes balance = 2;  // Big Int encoded as bytes
+	bytes storageHash = 3;
+	bytes codeHash = 4;
+	repeated bytes siblings = 5;
+}
