@@ -11,66 +11,36 @@ option go_package = "go.vocdoni.io/proto/build/go/models";
 
 // The models below affect the whole election definition.
 message Census {
-	oneof body {
-		// Always weighted
-		CensusArbo arbo = 1;
-		CensusCsp csp = 2;
 
-		CensusErc20 erc20 = 11;
-		CensusErc721 erc721 = 12;
-		CensusErc1155 erc1155 = 13;
-		CensusErc721 erc777 = 14;
-		CensusErcMiniMe ercMiniMe = 20;
+	message Arbo {
+		bytes censusRoot = 1;
+		string censusUri = 2;
 	}
-}
+	message Csp {
+		string cspUri = 1;
+		bytes cspPublicKey = 2;
+		// Whether a plain or blind signature is expected as a proof
+		bool blind = 3;
+	}
 
-// Census submodels
+	message EthereumStorage {
+		bytes contractAddress = 1;
+		int32 balanceMapSlot = 2;
+		// Ethereum block at which the state root is taken
+		int32 sourceEthereumBlock = 3;
 
-message CensusArbo {
-	bytes censusRoot = 1;
-	string censusUri = 2;
-}
-message CensusCsp {
-	string cspUri = 1;
-	bytes cspPublicKey = 2;
-  // Whether a plain or blind signature is expected as a proof
-	bool blind = 3;
-}
+		// Proof that you are a token holder that can create proposals
+		Proof.EthereumStorage erc20 = 11;
+	}
 
-message CensusErc20 {
-	bytes contractAddress = 1;
-	int32 balanceMapSlot = 2;
-	optional StorageProofErc20 proof = 3;
-	// Ethereum block at which the state root is taken
-	int32 sourceEthereumBlock = 4;
-}
-message CensusErc721 {
-	// bytes contractAddress = 1;
-	// int32 balanceMapSlot = 2;
-	// optional StorageProofErc721 proof = 3;
-	// Ethereum block at which the state root is taken
-	// int32 sourceEthereumBlock = 4;
-}
-message CensusErc1155 {
-	// bytes contractAddress = 1;
-	// int32 balanceMapSlot = 2;
-	// optional StorageProofErc1155 proof = 3;
-	// Ethereum block at which the state root is taken
-	// int32 sourceEthereumBlock = 4;
-}
-message CensusErc777 {
-	// bytes contractAddress = 1;
-	// int32 balanceMapSlot = 2;
-	// optional StorageProofErc777 proof = 3;
-	// Ethereum block at which the state root is taken
-	// int32 sourceEthereumBlock = 4;
-}
-message CensusErcMiniMe {
-	bytes contractAddress = 1;
-	int32 balanceMapSlot = 2;
-	optional StorageProofMiniMe proof = 3;
-	// Ethereum block at which the state root is taken
-	int32 sourceEthereumBlock = 4;
+	oneof body {
+		// Off-chain Merkle Tree
+		Arbo arbo = 11;
+		// Credential service based
+		Csp csp = 21;
+		// Ethereum storage proofs based
+		EthereumStorage ethereumStorage = 31;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,104 +48,124 @@ message CensusErcMiniMe {
 ///////////////////////////////////////////////////////////////////////////////
 
 message Proof {
+	// Used to vote on non-anonymous elections, or to register an anonymous key to the Vochain
+
+	message None {}
+
+	// Off-chain censuses /////////////////////////////////////////////////////////
+
+	message Arbo {
+		enum Type {
+				BLAKE2B = 0;
+				POSEIDON = 1;
+		}
+		Type type = 1;
+		bytes siblings = 2;
+		bytes value = 3;
+	}
+	message ArboDelegated {
+		// TODO
+		int32 endDelegationBlock = 5;
+	}
+
+	// CSP proofs /////////////////////////////////////////////////////////////////
+
+	message CSP {
+		// TODO: Move the type to the Census definition, and not the proof itself
+		enum Type {
+			UNKNOWN = 0;
+			ECDSA = 1;
+			ECDSA_PIDSALTED = 2;
+			ECDSA_BLIND = 3;
+			ECDSA_BLIND_PIDSALTED = 4;
+		}
+		Type type = 1;
+
+		// TODO: Generalize the bundle to allow for signed delegations
+		message Bundle {
+			bytes processId = 1;
+			bytes address = 2;
+			// bytes value = 3;
+		}
+		Bundle bundle = 2;
+		bytes signature = 3;
+	}
+
+	// Ethereum based proofs //////////////////////////////////////////////////////
+
+	message EthereumStorage {
+		message Erc20 {
+			// Key that identifies the value stored on-chain
+			bytes key = 1;
+			// The value stored on-chain (balance)
+			bytes value = 2;
+			// The RLP encoded siblings
+			repeated bytes siblings = 3;
+		}
+		message Erc721 {}
+		message Erc1155 {}
+		message Erc777 {}
+		message ErcMiniMe {
+			// TODO: check
+			Erc20 proofPrevBlock = 1;
+			Erc20 proofNextBlock = 2;
+		}
+
+		oneof body {
+			Erc20 erc20 = 1;
+			Erc721 erc721 = 2;
+			Erc1155 erc1155 = 3;
+			Erc777 erc777 = 4;
+			ErcMiniMe ercMiniMe = 10;
+		}
+	}
+	message EthereumStorageDelegated {
+		// TODO
+		int32 endDelegationBlock = 5;
+	}
+
+	// Anonymous proofs /////////////////////////////////////////////////////////
+
+	// Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
+	// Groth16 zkSNARK proof + public inputs
+	message ZkSnark {
+		// circuitParametersIndex defines the index of the parameter set of the
+		// circuit. Each process has defined a set of available parameters for
+		// the same circuit, the 'parametersIndex' defines the index of the set
+		// for which the ProofZkSNARK belongs for the circuit used in that
+		// process.
+		int32 circuitParametersIndex = 1;
+		
+		// a represents a G1 point in Affine coordinates
+		repeated string a = 2;
+		
+		// b represents a G2 point in Affine coordinates, represented by an
+		// array of arrays: []string => [2][2]bigint).
+		// [w, x, y, z] => [[w, x], [y, z]]
+		repeated string b = 3;
+		
+		// c represents a G1 point in Affine coordinates
+		repeated string c = 4;
+		repeated string publicInputs = 5;
+	}
+
+
 	oneof body {
-		// Note: Indexes 1-8 used previously.
-
     // SIGNED PROOFS
-		ProofNone none = 10;
+		None none = 1;
 
-    // Always weighted
-		ProofArbo arbo = 11;
-		ProofCSP csp = 12;
+		// Off-chain Merkle Tree
+		Arbo arbo = 11;
+		
+		// Credential service based
+		CSP csp = 21;
 
-		StorageProofErc20 erc20 = 21;
-		StorageProofErc721 erc721 = 22;
-		StorageProofErc1155 erc1155 = 23;
-		StorageProofErc777 erc777 = 24;
-		StorageProofMiniMe miniMe = 30;
+		// Ethereum storage proofs based
+		EthereumStorage ethereumStorage = 31;
 
     // ANONYMOUS PROOFS
-		ProofZkSnark zkSnark = 100;
+		ZkSnark zkSnark = 101;
 	}
-}
-
-// Used to vote on non-anonymous elections, or to register an anonymous key to the Vochain
-
-message ProofNone {}
-
-// Off-chain censuses /////////////////////////////////////////////////////////
-
-message ProofArbo {
-	enum Type {
-			BLAKE2B = 0;
-			POSEIDON = 1;
-	}
-	Type type = 1;
-	bytes siblings = 2;
-	bytes value = 3;
-}
-
-// CSP proofs /////////////////////////////////////////////////////////////////
-
-message ProofCSP {
-	enum Type {
-		UNKNOWN = 0;
-		ECDSA = 1;
-		ECDSA_PIDSALTED = 2;
-		ECDSA_BLIND = 3;
-		ECDSA_BLIND_PIDSALTED = 4;
-	}
-	Type type = 1;
-
-  message Bundle {
-    bytes processId = 1;
-    bytes address = 2;
-		// bytes value = 3;
-  }
-	Bundle bundle = 2;
-	bytes signature = 3;
-}
-
-// Ethereum based proofs //////////////////////////////////////////////////////
-
-message StorageProofErc20 {
-  // Key that identifies the value stored on-chain
-	bytes key = 1;
-  // The value stored on-chain (balance)
-	bytes value = 2;
-  // The RLP encoded siblings
-	repeated bytes siblings = 3;
-}
-message StorageProofErc721 {}
-message StorageProofErc1155 {}
-message StorageProofErc777 {}
-message StorageProofMiniMe {
-	StorageProofErc20 proofPrevBlock = 1;
-	StorageProofErc20 proofNextBlock = 2;
-}
-
-
-// Used in elections where the voter anonimity is set to either `ZK_SNARKS` or `ZK_SNARKS_PREREGISTER`
-// Groth16 zkSNARK proof + public inputs
-message ProofZkSnark {
-	// circuitParametersIndex defines the index of the parameter set of the
-	// circuit. Each process has defined a set of available parameters for
-	// the same circuit, the 'parametersIndex' defines the index of the set
-	// for which the ProofZkSNARK belongs for the circuit used in that
-	// process.
-	int32 circuitParametersIndex = 1;
-  
-	// a represents a G1 point in Affine coordinates
-	repeated string a = 2;
-	
-  // b represents a G2 point in Affine coordinates, represented by an
-	// array of arrays: []string => [2][2]bigint).
-	// [w, x, y, z] => [[w, x], [y, z]]
-	repeated string b = 3;
-	
-  // c represents a G1 point in Affine coordinates
-	repeated string c = 4;
-	repeated string publicInputs = 5;
 }
 
 
