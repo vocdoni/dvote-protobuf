@@ -1,9 +1,9 @@
 // Type: Protocol layer definitions
 
 syntax = "proto3";
-package dvote.types.v1;
+package dvote.types.v1.common;
 
-option go_package = "go.vocdoni.io/proto/build/go/models";
+option go_package = "go.vocdoni.io/proto/build/go/models/common";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Census models
@@ -71,10 +71,7 @@ message Proof {
 		bytes siblings = 2;
 		bytes value = 3;
 	}
-	message ArboDelegated {
-		// TODO
-		// int32 endDelegationBlock = 1;
-	}
+	message ArboDelegated { }
 
 	// CSP proofs /////////////////////////////////////////////////////////////////
 
@@ -127,10 +124,7 @@ message Proof {
 			ErcMiniMe ercMiniMe = 10;
 		}
 	}
-	message EthereumStorageDelegated {
-		// TODO
-		// int32 endDelegationBlock = 1;
-	}
+	message EthereumStorageDelegated { }
 
 	// Anonymous proofs /////////////////////////////////////////////////////////
 

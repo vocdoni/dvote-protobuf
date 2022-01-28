@@ -1,7 +1,7 @@
 /// Type: Client side helper model
 
 syntax = "proto3";
-package dvote.types.v1;
+package dvote.types.v1.clientStore;
 
 /// An encrypted wallet with the details to allow its usage, given a passphrase or a pin
 message Wallet {

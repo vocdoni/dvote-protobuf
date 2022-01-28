@@ -1,7 +1,7 @@
 /// Type: Client side helper model
 
 syntax = "proto3";
-package dvote.types.v1;
+package dvote.types.v1.clientStore;
 
 import "client-store/wallet.proto";
 import "metadata/entity.proto";
@@ -32,7 +32,7 @@ message Account {
         string appAnalyticsID = 1;
         
         /// Subscribed entities
-        repeated EntityReference entities = 2;
+        repeated metadata.EntityReference entities = 2;
     }
     message WebEntity {
         string webAnalyticsID = 1; // Random anonymized id for analytics

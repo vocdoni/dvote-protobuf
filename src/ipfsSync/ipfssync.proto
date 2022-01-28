@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package dvote.types.v1;
+package dvote.types.v1.ipfsSync;
 
-option go_package = "go.vocdoni.io/proto/build/go/models";
+option go_package = "go.vocdoni.io/proto/build/go/models/ipfsSync";
 
 message IpfsSync {
     enum Type {

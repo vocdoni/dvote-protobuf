@@ -83,8 +83,6 @@ build/go/models: $(VOCHAIN_SOURCES) $(VOCDONI_NODE_SOURCES) $(IPFSSYNC_SOURCES) 
 	for f in $^ ; do \
 		$(PROTOC) --go_opt=paths=source_relative --experimental_allow_proto3_optional -I=$(PWD)/src --go_out=$@ $(PWD)/$$f ; \
 	done
-	find $@ -iname "*.go" -type f -exec mv {} $@ \;
-	find $@ -type d -empty -delete
 	@touch $@
 
 

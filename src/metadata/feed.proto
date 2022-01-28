@@ -1,7 +1,7 @@
 /// Type: Client side helper model
 
 syntax = "proto3";
-package dvote.types.v1;
+package dvote.types.v1.metadata;
 
 // The following models implement the structure of a JSON Feed
 // https://jsonfeed.org/version/1

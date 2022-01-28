@@ -2,7 +2,7 @@
 /// Info: https://vocdoni.io/docs/#/architecture/components/entity?id=json-schema
 
 syntax = "proto3";
-package dvote.types.v1;
+package dvote.types.v1.metadata;
 
 // Helper to serialize and store all cached data
 message EntityMetadataStore {

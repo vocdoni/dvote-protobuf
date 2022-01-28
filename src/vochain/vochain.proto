@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package dvote.types.v1;
+package dvote.types.v1.vochain;
 
 import "common/census.proto";
 
-option go_package = "go.vocdoni.io/proto/build/go/models";
+option go_package = "go.vocdoni.io/proto/build/go/models/vochain";
 
 message VoteEnvelope {
 	// Unique number per vote attempt, so that replay attacks can't reuse this payload
@@ -27,7 +27,7 @@ message VoteEnvelope {
 	// - Non-anonymous: [ mainProof1, mainProof2, ..., validationProof1, validationProof2, ... ]
 	// - Anonymous:     [ ProofZkSnark ] alone
 	// When a certain `mainProof` does not apply, ProofNone{} is expected
-	repeated Proof proofs = 10;
+	repeated common.Proof proofs = 10;
 }
 
 // Account represents an entity with an amount of tokens, usually attached to an address.
@@ -107,17 +107,17 @@ message SetProcessTx {
 	optional uint32 questionIndex = 5;
 	// optional bytes censusRoot = 6; // NO LONGER USED
 	// optional string censusURI = 7; // NO LONGER USED
-	optional Proof proof = 8;
+	optional common.Proof proof = 8;
 	optional ProcessResult results = 9;
 
 	// Refactored fields:
 
 	// The primary census(es) define the combined voting weight of the voter.
 	// A minimum weight of 1 will always be assumed, if a census only contains keys.
-	repeated Census mainCensus = 41;
+	repeated common.Census mainCensus = 41;
 
 	// Validation censuses (optional) define additional constraints like holding an NFT, being a person, etc.
-	repeated Census validationCensus = 42;
+	repeated common.Census validationCensus = 42;
 }
 
 message AdminTx {
@@ -135,7 +135,7 @@ message AdminTx {
 message RegisterKeyTx {
 	bytes nonce = 1;  	  // Unique number per vote attempt, so that replay attacks can't reuse this payload
 	bytes processId = 2;  // The process for which the vote is casted
-	Proof proof = 3;  	  // Franchise proof
+	common.Proof proof = 3;  	  // Franchise proof
 	bytes newKey = 4;     // New key to register
 	string weight = 5;    // Weight to delegate to newKey
 }
@@ -242,10 +242,10 @@ message Process {
 	// See common/census.proto
 	// The primary census(es) define the combined voting weight of the voter.
 	// A minimum weight of 1 will always be assumed, if a census only contains keys.
-	repeated Census mainCensus = 41;
+	repeated common.Census mainCensus = 41;
 
 	// Validation censuses (optional) define additional constraints like holding an NFT, being a person, etc.
-	repeated Census validationCensus = 42;
+	repeated common.Census validationCensus = 42;
 }
 
 enum ProcessStatus {
