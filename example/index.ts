@@ -5,8 +5,8 @@ import {
 } from "../build/ts/vochain/vochain"
 import {
     Proof,
-    ProofArbo_Type,
-    ProofCSP_Type,
+    Proof_Arbo_Type,
+    Proof_CSP_Type,
 } from "../build/ts/common/census"
 import { Reader } from "protobufjs"
 
@@ -18,7 +18,7 @@ const proof1: Proof = {
     body: {
         $case: "arbo",
         arbo: {
-            type: ProofArbo_Type.BLAKE2B,
+            type: Proof_Arbo_Type.BLAKE2B,
             value: bigIntLeBuffer,
             siblings: dummyArray,
         }
@@ -28,7 +28,7 @@ const proof2: Proof = {
     body: {
         $case: "csp",
         csp: {
-            type: ProofCSP_Type.ECDSA_BLIND_PIDSALTED,
+            type: Proof_CSP_Type.ECDSA_BLIND_PIDSALTED,
             bundle: { address: null, processId: null },
             signature: new Uint8Array(),
         }

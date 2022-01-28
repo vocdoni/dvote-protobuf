@@ -17,10 +17,18 @@ message Census {
 		string censusUri = 2;
 	}
 	message Csp {
-		string cspUri = 1;
-		bytes cspPublicKey = 2;
-		// Whether a plain or blind signature is expected as a proof
-		bool blind = 3;
+		enum Type {
+			UNKNOWN = 0;
+			ECDSA = 1;
+			ECDSA_PIDSALTED = 2;
+			ECDSA_BLIND = 3;
+			ECDSA_BLIND_PIDSALTED = 4;
+		}
+		// The kind of signature expected as a proof
+		Type type = 1;
+
+		string cspUri = 2;
+		bytes cspPublicKey = 3;
 	}
 
 	message EthereumStorage {
@@ -30,7 +38,7 @@ message Census {
 		int32 sourceEthereumBlock = 3;
 
 		// Proof that you are a token holder that can create proposals
-		Proof.EthereumStorage erc20 = 11;
+		optional Proof.EthereumStorage storageProof = 11;
 	}
 
 	oneof body {
@@ -65,7 +73,7 @@ message Proof {
 	}
 	message ArboDelegated {
 		// TODO
-		int32 endDelegationBlock = 5;
+		// int32 endDelegationBlock = 1;
 	}
 
 	// CSP proofs /////////////////////////////////////////////////////////////////
@@ -121,7 +129,7 @@ message Proof {
 	}
 	message EthereumStorageDelegated {
 		// TODO
-		int32 endDelegationBlock = 5;
+		// int32 endDelegationBlock = 1;
 	}
 
 	// Anonymous proofs /////////////////////////////////////////////////////////
