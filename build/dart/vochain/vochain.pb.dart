@@ -2564,7 +2564,7 @@ class Process extends $pb.GeneratedMessage {
     ..a<$core.int>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questionCount', $pb.PbFieldType.OU3, protoName: 'questionCount')
     ..aOM<ProcessVoteOptions>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'voteOptions', protoName: 'voteOptions', subBuilder: ProcessVoteOptions.create)
     ..e<CensusOrigin>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'censusOrigin', $pb.PbFieldType.OE, protoName: 'censusOrigin', defaultOrMaker: CensusOrigin.CENSUS_UNKNOWN, valueOf: CensusOrigin.valueOf, enumValues: CensusOrigin.values)
-    ..aOM<ProcessResult>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', subBuilder: ProcessResult.create)
+    ..pc<ProcessResult>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'results', $pb.PbFieldType.PM, subBuilder: ProcessResult.create)
     ..p<$core.List<$core.int>>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'resultsSignatures', $pb.PbFieldType.PY, protoName: 'resultsSignatures')
     ..a<$core.int>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ethIndexSlot', $pb.PbFieldType.OU3, protoName: 'ethIndexSlot')
     ..a<$fixnum.Int64>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceBlockHeight', $pb.PbFieldType.OU6, protoName: 'sourceBlockHeight', defaultOrMaker: $fixnum.Int64.ZERO)
@@ -2598,7 +2598,7 @@ class Process extends $pb.GeneratedMessage {
     $core.int? questionCount,
     ProcessVoteOptions? voteOptions,
     CensusOrigin? censusOrigin,
-    ProcessResult? results,
+    $core.Iterable<ProcessResult>? results,
     $core.Iterable<$core.List<$core.int>>? resultsSignatures,
     $core.int? ethIndexSlot,
     $fixnum.Int64? sourceBlockHeight,
@@ -2666,7 +2666,7 @@ class Process extends $pb.GeneratedMessage {
       _result.censusOrigin = censusOrigin;
     }
     if (results != null) {
-      _result.results = results;
+      _result.results.addAll(results);
     }
     if (resultsSignatures != null) {
       _result.resultsSignatures.addAll(resultsSignatures);
@@ -2878,15 +2878,7 @@ class Process extends $pb.GeneratedMessage {
   void clearCensusOrigin() => clearField(20);
 
   @$pb.TagNumber(21)
-  ProcessResult get results => $_getN(18);
-  @$pb.TagNumber(21)
-  set results(ProcessResult v) { setField(21, v); }
-  @$pb.TagNumber(21)
-  $core.bool hasResults() => $_has(18);
-  @$pb.TagNumber(21)
-  void clearResults() => clearField(21);
-  @$pb.TagNumber(21)
-  ProcessResult ensureResults() => $_ensure(18);
+  $core.List<ProcessResult> get results => $_getList(18);
 
   @$pb.TagNumber(22)
   $core.List<$core.List<$core.int>> get resultsSignatures => $_getList(19);
@@ -3784,7 +3776,8 @@ class ProcessResult extends $pb.GeneratedMessage {
     ..pc<QuestionResult>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votes', $pb.PbFieldType.PM, subBuilder: QuestionResult.create)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityId', $pb.PbFieldType.OY, protoName: 'entityId')
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oracleAddress', $pb.PbFieldType.OY, protoName: 'oracleAddress')
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -3793,6 +3786,7 @@ class ProcessResult extends $pb.GeneratedMessage {
     $core.Iterable<QuestionResult>? votes,
     $core.List<$core.int>? processId,
     $core.List<$core.int>? entityId,
+    $core.List<$core.int>? oracleAddress,
     $core.List<$core.int>? signature,
   }) {
     final _result = create();
@@ -3804,6 +3798,9 @@ class ProcessResult extends $pb.GeneratedMessage {
     }
     if (entityId != null) {
       _result.entityId = entityId;
+    }
+    if (oracleAddress != null) {
+      _result.oracleAddress = oracleAddress;
     }
     if (signature != null) {
       _result.signature = signature;
@@ -3853,13 +3850,22 @@ class ProcessResult extends $pb.GeneratedMessage {
   void clearEntityId() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<$core.int> get signature => $_getN(3);
+  $core.List<$core.int> get oracleAddress => $_getN(3);
   @$pb.TagNumber(4)
-  set signature($core.List<$core.int> v) { $_setBytes(3, v); }
+  set oracleAddress($core.List<$core.int> v) { $_setBytes(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasSignature() => $_has(3);
+  $core.bool hasOracleAddress() => $_has(3);
   @$pb.TagNumber(4)
-  void clearSignature() => clearField(4);
+  void clearOracleAddress() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<$core.int> get signature => $_getN(4);
+  @$pb.TagNumber(5)
+  set signature($core.List<$core.int> v) { $_setBytes(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasSignature() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSignature() => clearField(5);
 }
 
 class QuestionResult extends $pb.GeneratedMessage {
