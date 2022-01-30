@@ -305,7 +305,7 @@ message Process {
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
 	CensusOrigin censusOrigin = 20;
-	ProcessResult results = 21;
+	repeated ProcessResult results = 21;
 	repeated bytes resultsSignatures = 22;
 	optional uint32 ethIndexSlot = 23;
 	// SourceBlockHeight is the block height of the origin blockchain (if any)
@@ -444,7 +444,8 @@ message ProcessResult {
 	repeated QuestionResult votes = 1;
 	optional bytes processId = 2;
 	optional bytes entityId = 3;
-	optional bytes signature = 4;
+	optional bytes oracleAddress = 4;
+	optional bytes signature = 5;
 }
 
 message QuestionResult {
