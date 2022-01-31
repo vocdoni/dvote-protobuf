@@ -10,7 +10,9 @@ import {
 } from "../build/ts/common/census"
 import { Reader } from "protobufjs"
 
-const dummyArray = new Uint8Array([100, 150, 200, 250])
+const dummyArray1 = new Uint8Array([10, 15, 20, 25])
+const dummyArray2 = new Uint8Array([100, 150, 200, 250])
+const dummyArray3 = new Uint8Array([200, 201, 202, 203, 204, 205, 206, 207, 208, 209])
 const bigIntLeBuffer = new Uint8Array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 // Serialize
@@ -20,7 +22,7 @@ const proof1: Proof = {
         arbo: {
             type: Proof_Arbo_Type.BLAKE2B,
             value: bigIntLeBuffer,
-            siblings: dummyArray,
+            siblings: dummyArray1,
         }
     }
 }
@@ -29,17 +31,17 @@ const proof2: Proof = {
         $case: "csp",
         csp: {
             type: Proof_CSP_Type.ECDSA_BLIND_PIDSALTED,
-            bundle: { address: null, processId: null },
+            bundle: { address: dummyArray2, processId: dummyArray3 },
             signature: new Uint8Array(),
         }
     }
 }
 const envelope: VoteEnvelope = {
     encryptionKeyIndexes: [],
-    nonce: dummyArray,
-    votePackage: dummyArray,
-    nullifier: dummyArray,
-    processId: dummyArray,
+    nonce: dummyArray1,
+    votePackage: dummyArray1,
+    nullifier: dummyArray2,
+    processId: dummyArray3,
     proofs: [proof1, proof2]
 }
 
@@ -56,10 +58,8 @@ const recoveredTx = Tx.decode(Reader.create(recoveredSignedTx.tx))
 console.log(recoveredTx)
 
 let recoveredEnvelope: VoteEnvelope
-switch (recoveredTx.payload.$case) {
+switch (recoveredTx?.payload?.$case) {
     case "vote":
         recoveredEnvelope = recoveredTx.payload.vote
+        console.log(recoveredEnvelope)
 }
-
-console.log(recoveredEnvelope)
-
