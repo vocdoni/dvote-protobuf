@@ -266,7 +266,7 @@ message SetAccountDelegateTx {
 message CollectFaucetTx {
 	TxType txType = 1;
 	FaucetPackage faucetPackage = 2;
-	// nonce not required here as the faucetPayload.identifier does the job
+	uint32 nonce = 3;
 }
 
 message FaucetPayload {
