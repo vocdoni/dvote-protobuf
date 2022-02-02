@@ -76,7 +76,9 @@ export interface ProcessMetadata_MetaEntry {
   value: string;
 }
 
-const baseProcessMetadataStore: object = {};
+function createBaseProcessMetadataStore(): ProcessMetadataStore {
+  return { items: [] };
+}
 
 export const ProcessMetadataStore = {
   encode(
@@ -92,8 +94,7 @@ export const ProcessMetadataStore = {
   decode(input: Reader | Uint8Array, length?: number): ProcessMetadataStore {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProcessMetadataStore } as ProcessMetadataStore;
-    message.items = [];
+    const message = createBaseProcessMetadataStore();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -109,11 +110,11 @@ export const ProcessMetadataStore = {
   },
 
   fromJSON(object: any): ProcessMetadataStore {
-    const message = { ...baseProcessMetadataStore } as ProcessMetadataStore;
-    message.items = (object.items ?? []).map((e: any) =>
-      ProcessMetadata.fromJSON(e)
-    );
-    return message;
+    return {
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => ProcessMetadata.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: ProcessMetadataStore): unknown {
@@ -131,14 +132,24 @@ export const ProcessMetadataStore = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadataStore>, I>>(
     object: I
   ): ProcessMetadataStore {
-    const message = { ...baseProcessMetadataStore } as ProcessMetadataStore;
+    const message = createBaseProcessMetadataStore();
     message.items =
       object.items?.map((e) => ProcessMetadata.fromPartial(e)) || [];
     return message;
   },
 };
 
-const baseProcessMetadata: object = { version: "" };
+function createBaseProcessMetadata(): ProcessMetadata {
+  return {
+    version: "",
+    title: {},
+    description: {},
+    media: {},
+    questions: [],
+    results: undefined,
+    meta: {},
+  };
+}
 
 export const ProcessMetadata = {
   encode(message: ProcessMetadata, writer: Writer = Writer.create()): Writer {
@@ -184,12 +195,7 @@ export const ProcessMetadata = {
   decode(input: Reader | Uint8Array, length?: number): ProcessMetadata {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseProcessMetadata } as ProcessMetadata;
-    message.title = {};
-    message.description = {};
-    message.media = {};
-    message.questions = [];
-    message.meta = {};
+    const message = createBaseProcessMetadata();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -252,43 +258,51 @@ export const ProcessMetadata = {
   },
 
   fromJSON(object: any): ProcessMetadata {
-    const message = { ...baseProcessMetadata } as ProcessMetadata;
-    message.version =
-      object.version !== undefined && object.version !== null
-        ? String(object.version)
-        : "";
-    message.title = Object.entries(object.title ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    message.description = Object.entries(object.description ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    message.media = Object.entries(object.media ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    message.questions = (object.questions ?? []).map((e: any) =>
-      ProcessMetadata_Question.fromJSON(e)
-    );
-    message.results =
-      object.results !== undefined && object.results !== null
+    return {
+      version: isSet(object.version) ? String(object.version) : "",
+      title: isObject(object.title)
+        ? Object.entries(object.title).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+      description: isObject(object.description)
+        ? Object.entries(object.description).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+      media: isObject(object.media)
+        ? Object.entries(object.media).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+      questions: Array.isArray(object?.questions)
+        ? object.questions.map((e: any) => ProcessMetadata_Question.fromJSON(e))
+        : [],
+      results: isSet(object.results)
         ? ProcessMetadata_Results.fromJSON(object.results)
-        : undefined;
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    return message;
+        : undefined,
+      meta: isObject(object.meta)
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+    };
   },
 
   toJSON(message: ProcessMetadata): unknown {
@@ -335,7 +349,7 @@ export const ProcessMetadata = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata>, I>>(
     object: I
   ): ProcessMetadata {
-    const message = { ...baseProcessMetadata } as ProcessMetadata;
+    const message = createBaseProcessMetadata();
     message.version = object.version ?? "";
     message.title = Object.entries(object.title ?? {}).reduce<{
       [key: string]: string;
@@ -380,7 +394,9 @@ export const ProcessMetadata = {
   },
 };
 
-const baseProcessMetadata_TitleEntry: object = { key: "", value: "" };
+function createBaseProcessMetadata_TitleEntry(): ProcessMetadata_TitleEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_TitleEntry = {
   encode(
@@ -402,9 +418,7 @@ export const ProcessMetadata_TitleEntry = {
   ): ProcessMetadata_TitleEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_TitleEntry,
-    } as ProcessMetadata_TitleEntry;
+    const message = createBaseProcessMetadata_TitleEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -423,16 +437,10 @@ export const ProcessMetadata_TitleEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_TitleEntry {
-    const message = {
-      ...baseProcessMetadata_TitleEntry,
-    } as ProcessMetadata_TitleEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_TitleEntry): unknown {
@@ -445,16 +453,16 @@ export const ProcessMetadata_TitleEntry = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_TitleEntry>, I>>(
     object: I
   ): ProcessMetadata_TitleEntry {
-    const message = {
-      ...baseProcessMetadata_TitleEntry,
-    } as ProcessMetadata_TitleEntry;
+    const message = createBaseProcessMetadata_TitleEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_DescriptionEntry: object = { key: "", value: "" };
+function createBaseProcessMetadata_DescriptionEntry(): ProcessMetadata_DescriptionEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_DescriptionEntry = {
   encode(
@@ -476,9 +484,7 @@ export const ProcessMetadata_DescriptionEntry = {
   ): ProcessMetadata_DescriptionEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_DescriptionEntry,
-    } as ProcessMetadata_DescriptionEntry;
+    const message = createBaseProcessMetadata_DescriptionEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -497,16 +503,10 @@ export const ProcessMetadata_DescriptionEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_DescriptionEntry {
-    const message = {
-      ...baseProcessMetadata_DescriptionEntry,
-    } as ProcessMetadata_DescriptionEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_DescriptionEntry): unknown {
@@ -519,16 +519,16 @@ export const ProcessMetadata_DescriptionEntry = {
   fromPartial<
     I extends Exact<DeepPartial<ProcessMetadata_DescriptionEntry>, I>
   >(object: I): ProcessMetadata_DescriptionEntry {
-    const message = {
-      ...baseProcessMetadata_DescriptionEntry,
-    } as ProcessMetadata_DescriptionEntry;
+    const message = createBaseProcessMetadata_DescriptionEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_MediaEntry: object = { key: "", value: "" };
+function createBaseProcessMetadata_MediaEntry(): ProcessMetadata_MediaEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_MediaEntry = {
   encode(
@@ -550,9 +550,7 @@ export const ProcessMetadata_MediaEntry = {
   ): ProcessMetadata_MediaEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_MediaEntry,
-    } as ProcessMetadata_MediaEntry;
+    const message = createBaseProcessMetadata_MediaEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -571,16 +569,10 @@ export const ProcessMetadata_MediaEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_MediaEntry {
-    const message = {
-      ...baseProcessMetadata_MediaEntry,
-    } as ProcessMetadata_MediaEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_MediaEntry): unknown {
@@ -593,16 +585,16 @@ export const ProcessMetadata_MediaEntry = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_MediaEntry>, I>>(
     object: I
   ): ProcessMetadata_MediaEntry {
-    const message = {
-      ...baseProcessMetadata_MediaEntry,
-    } as ProcessMetadata_MediaEntry;
+    const message = createBaseProcessMetadata_MediaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_Question: object = {};
+function createBaseProcessMetadata_Question(): ProcessMetadata_Question {
+  return { title: {}, description: {}, choices: [] };
+}
 
 export const ProcessMetadata_Question = {
   encode(
@@ -636,12 +628,7 @@ export const ProcessMetadata_Question = {
   ): ProcessMetadata_Question {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_Question,
-    } as ProcessMetadata_Question;
-    message.title = {};
-    message.description = {};
-    message.choices = [];
+    const message = createBaseProcessMetadata_Question();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -677,25 +664,31 @@ export const ProcessMetadata_Question = {
   },
 
   fromJSON(object: any): ProcessMetadata_Question {
-    const message = {
-      ...baseProcessMetadata_Question,
-    } as ProcessMetadata_Question;
-    message.title = Object.entries(object.title ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    message.description = Object.entries(object.description ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    message.choices = (object.choices ?? []).map((e: any) =>
-      ProcessMetadata_Question_VoteOption.fromJSON(e)
-    );
-    return message;
+    return {
+      title: isObject(object.title)
+        ? Object.entries(object.title).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+      description: isObject(object.description)
+        ? Object.entries(object.description).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+      choices: Array.isArray(object?.choices)
+        ? object.choices.map((e: any) =>
+            ProcessMetadata_Question_VoteOption.fromJSON(e)
+          )
+        : [],
+    };
   },
 
   toJSON(message: ProcessMetadata_Question): unknown {
@@ -725,9 +718,7 @@ export const ProcessMetadata_Question = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question>, I>>(
     object: I
   ): ProcessMetadata_Question {
-    const message = {
-      ...baseProcessMetadata_Question,
-    } as ProcessMetadata_Question;
+    const message = createBaseProcessMetadata_Question();
     message.title = Object.entries(object.title ?? {}).reduce<{
       [key: string]: string;
     }>((acc, [key, value]) => {
@@ -752,7 +743,9 @@ export const ProcessMetadata_Question = {
   },
 };
 
-const baseProcessMetadata_Question_TitleEntry: object = { key: "", value: "" };
+function createBaseProcessMetadata_Question_TitleEntry(): ProcessMetadata_Question_TitleEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_Question_TitleEntry = {
   encode(
@@ -774,9 +767,7 @@ export const ProcessMetadata_Question_TitleEntry = {
   ): ProcessMetadata_Question_TitleEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_Question_TitleEntry,
-    } as ProcessMetadata_Question_TitleEntry;
+    const message = createBaseProcessMetadata_Question_TitleEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -795,16 +786,10 @@ export const ProcessMetadata_Question_TitleEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_Question_TitleEntry {
-    const message = {
-      ...baseProcessMetadata_Question_TitleEntry,
-    } as ProcessMetadata_Question_TitleEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_Question_TitleEntry): unknown {
@@ -817,19 +802,16 @@ export const ProcessMetadata_Question_TitleEntry = {
   fromPartial<
     I extends Exact<DeepPartial<ProcessMetadata_Question_TitleEntry>, I>
   >(object: I): ProcessMetadata_Question_TitleEntry {
-    const message = {
-      ...baseProcessMetadata_Question_TitleEntry,
-    } as ProcessMetadata_Question_TitleEntry;
+    const message = createBaseProcessMetadata_Question_TitleEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_Question_DescriptionEntry: object = {
-  key: "",
-  value: "",
-};
+function createBaseProcessMetadata_Question_DescriptionEntry(): ProcessMetadata_Question_DescriptionEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_Question_DescriptionEntry = {
   encode(
@@ -851,9 +833,7 @@ export const ProcessMetadata_Question_DescriptionEntry = {
   ): ProcessMetadata_Question_DescriptionEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_Question_DescriptionEntry,
-    } as ProcessMetadata_Question_DescriptionEntry;
+    const message = createBaseProcessMetadata_Question_DescriptionEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -872,16 +852,10 @@ export const ProcessMetadata_Question_DescriptionEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_Question_DescriptionEntry {
-    const message = {
-      ...baseProcessMetadata_Question_DescriptionEntry,
-    } as ProcessMetadata_Question_DescriptionEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_Question_DescriptionEntry): unknown {
@@ -894,16 +868,16 @@ export const ProcessMetadata_Question_DescriptionEntry = {
   fromPartial<
     I extends Exact<DeepPartial<ProcessMetadata_Question_DescriptionEntry>, I>
   >(object: I): ProcessMetadata_Question_DescriptionEntry {
-    const message = {
-      ...baseProcessMetadata_Question_DescriptionEntry,
-    } as ProcessMetadata_Question_DescriptionEntry;
+    const message = createBaseProcessMetadata_Question_DescriptionEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_Question_VoteOption: object = { value: 0 };
+function createBaseProcessMetadata_Question_VoteOption(): ProcessMetadata_Question_VoteOption {
+  return { title: {}, value: 0 };
+}
 
 export const ProcessMetadata_Question_VoteOption = {
   encode(
@@ -928,10 +902,7 @@ export const ProcessMetadata_Question_VoteOption = {
   ): ProcessMetadata_Question_VoteOption {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_Question_VoteOption,
-    } as ProcessMetadata_Question_VoteOption;
-    message.title = {};
+    const message = createBaseProcessMetadata_Question_VoteOption();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -956,20 +927,18 @@ export const ProcessMetadata_Question_VoteOption = {
   },
 
   fromJSON(object: any): ProcessMetadata_Question_VoteOption {
-    const message = {
-      ...baseProcessMetadata_Question_VoteOption,
-    } as ProcessMetadata_Question_VoteOption;
-    message.title = Object.entries(object.title ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? Number(object.value)
-        : 0;
-    return message;
+    return {
+      title: isObject(object.title)
+        ? Object.entries(object.title).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+      value: isSet(object.value) ? Number(object.value) : 0,
+    };
   },
 
   toJSON(message: ProcessMetadata_Question_VoteOption): unknown {
@@ -980,16 +949,14 @@ export const ProcessMetadata_Question_VoteOption = {
         obj.title[k] = v;
       });
     }
-    message.value !== undefined && (obj.value = message.value);
+    message.value !== undefined && (obj.value = Math.round(message.value));
     return obj;
   },
 
   fromPartial<
     I extends Exact<DeepPartial<ProcessMetadata_Question_VoteOption>, I>
   >(object: I): ProcessMetadata_Question_VoteOption {
-    const message = {
-      ...baseProcessMetadata_Question_VoteOption,
-    } as ProcessMetadata_Question_VoteOption;
+    const message = createBaseProcessMetadata_Question_VoteOption();
     message.title = Object.entries(object.title ?? {}).reduce<{
       [key: string]: string;
     }>((acc, [key, value]) => {
@@ -1003,10 +970,9 @@ export const ProcessMetadata_Question_VoteOption = {
   },
 };
 
-const baseProcessMetadata_Question_VoteOption_TitleEntry: object = {
-  key: "",
-  value: "",
-};
+function createBaseProcessMetadata_Question_VoteOption_TitleEntry(): ProcessMetadata_Question_VoteOption_TitleEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_Question_VoteOption_TitleEntry = {
   encode(
@@ -1028,9 +994,7 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
   ): ProcessMetadata_Question_VoteOption_TitleEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_Question_VoteOption_TitleEntry,
-    } as ProcessMetadata_Question_VoteOption_TitleEntry;
+    const message = createBaseProcessMetadata_Question_VoteOption_TitleEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1049,16 +1013,10 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_Question_VoteOption_TitleEntry {
-    const message = {
-      ...baseProcessMetadata_Question_VoteOption_TitleEntry,
-    } as ProcessMetadata_Question_VoteOption_TitleEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_Question_VoteOption_TitleEntry): unknown {
@@ -1074,16 +1032,16 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
       I
     >
   >(object: I): ProcessMetadata_Question_VoteOption_TitleEntry {
-    const message = {
-      ...baseProcessMetadata_Question_VoteOption_TitleEntry,
-    } as ProcessMetadata_Question_VoteOption_TitleEntry;
+    const message = createBaseProcessMetadata_Question_VoteOption_TitleEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_Results: object = { aggregation: "", display: "" };
+function createBaseProcessMetadata_Results(): ProcessMetadata_Results {
+  return { aggregation: "", display: "" };
+}
 
 export const ProcessMetadata_Results = {
   encode(
@@ -1102,9 +1060,7 @@ export const ProcessMetadata_Results = {
   decode(input: Reader | Uint8Array, length?: number): ProcessMetadata_Results {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_Results,
-    } as ProcessMetadata_Results;
+    const message = createBaseProcessMetadata_Results();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1123,18 +1079,10 @@ export const ProcessMetadata_Results = {
   },
 
   fromJSON(object: any): ProcessMetadata_Results {
-    const message = {
-      ...baseProcessMetadata_Results,
-    } as ProcessMetadata_Results;
-    message.aggregation =
-      object.aggregation !== undefined && object.aggregation !== null
-        ? String(object.aggregation)
-        : "";
-    message.display =
-      object.display !== undefined && object.display !== null
-        ? String(object.display)
-        : "";
-    return message;
+    return {
+      aggregation: isSet(object.aggregation) ? String(object.aggregation) : "",
+      display: isSet(object.display) ? String(object.display) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_Results): unknown {
@@ -1148,16 +1096,16 @@ export const ProcessMetadata_Results = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Results>, I>>(
     object: I
   ): ProcessMetadata_Results {
-    const message = {
-      ...baseProcessMetadata_Results,
-    } as ProcessMetadata_Results;
+    const message = createBaseProcessMetadata_Results();
     message.aggregation = object.aggregation ?? "";
     message.display = object.display ?? "";
     return message;
   },
 };
 
-const baseProcessMetadata_MetaEntry: object = { key: "", value: "" };
+function createBaseProcessMetadata_MetaEntry(): ProcessMetadata_MetaEntry {
+  return { key: "", value: "" };
+}
 
 export const ProcessMetadata_MetaEntry = {
   encode(
@@ -1179,9 +1127,7 @@ export const ProcessMetadata_MetaEntry = {
   ): ProcessMetadata_MetaEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseProcessMetadata_MetaEntry,
-    } as ProcessMetadata_MetaEntry;
+    const message = createBaseProcessMetadata_MetaEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1200,16 +1146,10 @@ export const ProcessMetadata_MetaEntry = {
   },
 
   fromJSON(object: any): ProcessMetadata_MetaEntry {
-    const message = {
-      ...baseProcessMetadata_MetaEntry,
-    } as ProcessMetadata_MetaEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: ProcessMetadata_MetaEntry): unknown {
@@ -1222,9 +1162,7 @@ export const ProcessMetadata_MetaEntry = {
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_MetaEntry>, I>>(
     object: I
   ): ProcessMetadata_MetaEntry {
-    const message = {
-      ...baseProcessMetadata_MetaEntry,
-    } as ProcessMetadata_MetaEntry;
+    const message = createBaseProcessMetadata_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
@@ -1267,4 +1205,12 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

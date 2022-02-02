@@ -54,7 +54,9 @@ export interface FeedPost_Author {
   url: string;
 }
 
-const baseFeedStore: object = {};
+function createBaseFeedStore(): FeedStore {
+  return { items: [] };
+}
 
 export const FeedStore = {
   encode(message: FeedStore, writer: Writer = Writer.create()): Writer {
@@ -67,8 +69,7 @@ export const FeedStore = {
   decode(input: Reader | Uint8Array, length?: number): FeedStore {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFeedStore } as FeedStore;
-    message.items = [];
+    const message = createBaseFeedStore();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -84,9 +85,11 @@ export const FeedStore = {
   },
 
   fromJSON(object: any): FeedStore {
-    const message = { ...baseFeedStore } as FeedStore;
-    message.items = (object.items ?? []).map((e: any) => Feed.fromJSON(e));
-    return message;
+    return {
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => Feed.fromJSON(e))
+        : [],
+    };
   },
 
   toJSON(message: FeedStore): unknown {
@@ -102,22 +105,26 @@ export const FeedStore = {
   fromPartial<I extends Exact<DeepPartial<FeedStore>, I>>(
     object: I
   ): FeedStore {
-    const message = { ...baseFeedStore } as FeedStore;
+    const message = createBaseFeedStore();
     message.items = object.items?.map((e) => Feed.fromPartial(e)) || [];
     return message;
   },
 };
 
-const baseFeed: object = {
-  version: "",
-  title: "",
-  homePageUrl: "",
-  description: "",
-  feedUrl: "",
-  icon: "",
-  favicon: "",
-  expired: false,
-};
+function createBaseFeed(): Feed {
+  return {
+    version: "",
+    title: "",
+    homePageUrl: "",
+    description: "",
+    feedUrl: "",
+    icon: "",
+    favicon: "",
+    expired: false,
+    items: [],
+    meta: {},
+  };
+}
 
 export const Feed = {
   encode(message: Feed, writer: Writer = Writer.create()): Writer {
@@ -160,9 +167,7 @@ export const Feed = {
   decode(input: Reader | Uint8Array, length?: number): Feed {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFeed } as Feed;
-    message.items = [];
-    message.meta = {};
+    const message = createBaseFeed();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -208,47 +213,28 @@ export const Feed = {
   },
 
   fromJSON(object: any): Feed {
-    const message = { ...baseFeed } as Feed;
-    message.version =
-      object.version !== undefined && object.version !== null
-        ? String(object.version)
-        : "";
-    message.title =
-      object.title !== undefined && object.title !== null
-        ? String(object.title)
-        : "";
-    message.homePageUrl =
-      object.homePageUrl !== undefined && object.homePageUrl !== null
-        ? String(object.homePageUrl)
-        : "";
-    message.description =
-      object.description !== undefined && object.description !== null
-        ? String(object.description)
-        : "";
-    message.feedUrl =
-      object.feedUrl !== undefined && object.feedUrl !== null
-        ? String(object.feedUrl)
-        : "";
-    message.icon =
-      object.icon !== undefined && object.icon !== null
-        ? String(object.icon)
-        : "";
-    message.favicon =
-      object.favicon !== undefined && object.favicon !== null
-        ? String(object.favicon)
-        : "";
-    message.expired =
-      object.expired !== undefined && object.expired !== null
-        ? Boolean(object.expired)
-        : false;
-    message.items = (object.items ?? []).map((e: any) => FeedPost.fromJSON(e));
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    return message;
+    return {
+      version: isSet(object.version) ? String(object.version) : "",
+      title: isSet(object.title) ? String(object.title) : "",
+      homePageUrl: isSet(object.homePageUrl) ? String(object.homePageUrl) : "",
+      description: isSet(object.description) ? String(object.description) : "",
+      feedUrl: isSet(object.feedUrl) ? String(object.feedUrl) : "",
+      icon: isSet(object.icon) ? String(object.icon) : "",
+      favicon: isSet(object.favicon) ? String(object.favicon) : "",
+      expired: isSet(object.expired) ? Boolean(object.expired) : false,
+      items: Array.isArray(object?.items)
+        ? object.items.map((e: any) => FeedPost.fromJSON(e))
+        : [],
+      meta: isObject(object.meta)
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+    };
   },
 
   toJSON(message: Feed): unknown {
@@ -280,7 +266,7 @@ export const Feed = {
   },
 
   fromPartial<I extends Exact<DeepPartial<Feed>, I>>(object: I): Feed {
-    const message = { ...baseFeed } as Feed;
+    const message = createBaseFeed();
     message.version = object.version ?? "";
     message.title = object.title ?? "";
     message.homePageUrl = object.homePageUrl ?? "";
@@ -302,7 +288,9 @@ export const Feed = {
   },
 };
 
-const baseFeed_MetaEntry: object = { key: "", value: "" };
+function createBaseFeed_MetaEntry(): Feed_MetaEntry {
+  return { key: "", value: "" };
+}
 
 export const Feed_MetaEntry = {
   encode(message: Feed_MetaEntry, writer: Writer = Writer.create()): Writer {
@@ -318,7 +306,7 @@ export const Feed_MetaEntry = {
   decode(input: Reader | Uint8Array, length?: number): Feed_MetaEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
+    const message = createBaseFeed_MetaEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -337,14 +325,10 @@ export const Feed_MetaEntry = {
   },
 
   fromJSON(object: any): Feed_MetaEntry {
-    const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: Feed_MetaEntry): unknown {
@@ -357,25 +341,28 @@ export const Feed_MetaEntry = {
   fromPartial<I extends Exact<DeepPartial<Feed_MetaEntry>, I>>(
     object: I
   ): Feed_MetaEntry {
-    const message = { ...baseFeed_MetaEntry } as Feed_MetaEntry;
+    const message = createBaseFeed_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
   },
 };
 
-const baseFeedPost: object = {
-  id: "",
-  title: "",
-  summary: "",
-  contentText: "",
-  contentHtml: "",
-  url: "",
-  image: "",
-  tags: "",
-  datePublished: "",
-  dateModified: "",
-};
+function createBaseFeedPost(): FeedPost {
+  return {
+    id: "",
+    title: "",
+    summary: "",
+    contentText: "",
+    contentHtml: "",
+    url: "",
+    image: "",
+    tags: [],
+    datePublished: "",
+    dateModified: "",
+    author: undefined,
+  };
+}
 
 export const FeedPost = {
   encode(message: FeedPost, writer: Writer = Writer.create()): Writer {
@@ -418,8 +405,7 @@ export const FeedPost = {
   decode(input: Reader | Uint8Array, length?: number): FeedPost {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFeedPost } as FeedPost;
-    message.tags = [];
+    const message = createBaseFeedPost();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -465,45 +451,27 @@ export const FeedPost = {
   },
 
   fromJSON(object: any): FeedPost {
-    const message = { ...baseFeedPost } as FeedPost;
-    message.id =
-      object.id !== undefined && object.id !== null ? String(object.id) : "";
-    message.title =
-      object.title !== undefined && object.title !== null
-        ? String(object.title)
-        : "";
-    message.summary =
-      object.summary !== undefined && object.summary !== null
-        ? String(object.summary)
-        : "";
-    message.contentText =
-      object.contentText !== undefined && object.contentText !== null
-        ? String(object.contentText)
-        : "";
-    message.contentHtml =
-      object.contentHtml !== undefined && object.contentHtml !== null
-        ? String(object.contentHtml)
-        : "";
-    message.url =
-      object.url !== undefined && object.url !== null ? String(object.url) : "";
-    message.image =
-      object.image !== undefined && object.image !== null
-        ? String(object.image)
-        : "";
-    message.tags = (object.tags ?? []).map((e: any) => String(e));
-    message.datePublished =
-      object.datePublished !== undefined && object.datePublished !== null
+    return {
+      id: isSet(object.id) ? String(object.id) : "",
+      title: isSet(object.title) ? String(object.title) : "",
+      summary: isSet(object.summary) ? String(object.summary) : "",
+      contentText: isSet(object.contentText) ? String(object.contentText) : "",
+      contentHtml: isSet(object.contentHtml) ? String(object.contentHtml) : "",
+      url: isSet(object.url) ? String(object.url) : "",
+      image: isSet(object.image) ? String(object.image) : "",
+      tags: Array.isArray(object?.tags)
+        ? object.tags.map((e: any) => String(e))
+        : [],
+      datePublished: isSet(object.datePublished)
         ? String(object.datePublished)
-        : "";
-    message.dateModified =
-      object.dateModified !== undefined && object.dateModified !== null
+        : "",
+      dateModified: isSet(object.dateModified)
         ? String(object.dateModified)
-        : "";
-    message.author =
-      object.author !== undefined && object.author !== null
+        : "",
+      author: isSet(object.author)
         ? FeedPost_Author.fromJSON(object.author)
-        : undefined;
-    return message;
+        : undefined,
+    };
   },
 
   toJSON(message: FeedPost): unknown {
@@ -534,7 +502,7 @@ export const FeedPost = {
   },
 
   fromPartial<I extends Exact<DeepPartial<FeedPost>, I>>(object: I): FeedPost {
-    const message = { ...baseFeedPost } as FeedPost;
+    const message = createBaseFeedPost();
     message.id = object.id ?? "";
     message.title = object.title ?? "";
     message.summary = object.summary ?? "";
@@ -553,7 +521,9 @@ export const FeedPost = {
   },
 };
 
-const baseFeedPost_Author: object = { name: "", url: "" };
+function createBaseFeedPost_Author(): FeedPost_Author {
+  return { name: "", url: "" };
+}
 
 export const FeedPost_Author = {
   encode(message: FeedPost_Author, writer: Writer = Writer.create()): Writer {
@@ -569,7 +539,7 @@ export const FeedPost_Author = {
   decode(input: Reader | Uint8Array, length?: number): FeedPost_Author {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseFeedPost_Author } as FeedPost_Author;
+    const message = createBaseFeedPost_Author();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -588,14 +558,10 @@ export const FeedPost_Author = {
   },
 
   fromJSON(object: any): FeedPost_Author {
-    const message = { ...baseFeedPost_Author } as FeedPost_Author;
-    message.name =
-      object.name !== undefined && object.name !== null
-        ? String(object.name)
-        : "";
-    message.url =
-      object.url !== undefined && object.url !== null ? String(object.url) : "";
-    return message;
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      url: isSet(object.url) ? String(object.url) : "",
+    };
   },
 
   toJSON(message: FeedPost_Author): unknown {
@@ -608,7 +574,7 @@ export const FeedPost_Author = {
   fromPartial<I extends Exact<DeepPartial<FeedPost_Author>, I>>(
     object: I
   ): FeedPost_Author {
-    const message = { ...baseFeedPost_Author } as FeedPost_Author;
+    const message = createBaseFeedPost_Author();
     message.name = object.name ?? "";
     message.url = object.url ?? "";
     return message;
@@ -651,4 +617,12 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

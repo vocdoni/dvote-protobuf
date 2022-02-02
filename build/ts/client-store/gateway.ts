@@ -40,7 +40,16 @@ export interface BootNodeGateways_MetaEntry {
   value: string;
 }
 
-const baseBootNodeGateways: object = {};
+function createBaseBootNodeGateways(): BootNodeGateways {
+  return {
+    homestead: undefined,
+    goerli: undefined,
+    xdai: undefined,
+    sokol: undefined,
+    rinkeby: undefined,
+    meta: {},
+  };
+}
 
 export const BootNodeGateways = {
   encode(message: BootNodeGateways, writer: Writer = Writer.create()): Writer {
@@ -86,8 +95,7 @@ export const BootNodeGateways = {
   decode(input: Reader | Uint8Array, length?: number): BootNodeGateways {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBootNodeGateways } as BootNodeGateways;
-    message.meta = {};
+    const message = createBaseBootNodeGateways();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -139,34 +147,32 @@ export const BootNodeGateways = {
   },
 
   fromJSON(object: any): BootNodeGateways {
-    const message = { ...baseBootNodeGateways } as BootNodeGateways;
-    message.homestead =
-      object.homestead !== undefined && object.homestead !== null
+    return {
+      homestead: isSet(object.homestead)
         ? BootNodeGateways_NetworkNodes.fromJSON(object.homestead)
-        : undefined;
-    message.goerli =
-      object.goerli !== undefined && object.goerli !== null
+        : undefined,
+      goerli: isSet(object.goerli)
         ? BootNodeGateways_NetworkNodes.fromJSON(object.goerli)
-        : undefined;
-    message.xdai =
-      object.xdai !== undefined && object.xdai !== null
+        : undefined,
+      xdai: isSet(object.xdai)
         ? BootNodeGateways_NetworkNodes.fromJSON(object.xdai)
-        : undefined;
-    message.sokol =
-      object.sokol !== undefined && object.sokol !== null
+        : undefined,
+      sokol: isSet(object.sokol)
         ? BootNodeGateways_NetworkNodes.fromJSON(object.sokol)
-        : undefined;
-    message.rinkeby =
-      object.rinkeby !== undefined && object.rinkeby !== null
+        : undefined,
+      rinkeby: isSet(object.rinkeby)
         ? BootNodeGateways_NetworkNodes.fromJSON(object.rinkeby)
-        : undefined;
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      acc[key] = String(value);
-      return acc;
-    }, {});
-    return message;
+        : undefined,
+      meta: isObject(object.meta)
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
+            (acc, [key, value]) => {
+              acc[key] = String(value);
+              return acc;
+            },
+            {}
+          )
+        : {},
+    };
   },
 
   toJSON(message: BootNodeGateways): unknown {
@@ -203,7 +209,7 @@ export const BootNodeGateways = {
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways>, I>>(
     object: I
   ): BootNodeGateways {
-    const message = { ...baseBootNodeGateways } as BootNodeGateways;
+    const message = createBaseBootNodeGateways();
     message.homestead =
       object.homestead !== undefined && object.homestead !== null
         ? BootNodeGateways_NetworkNodes.fromPartial(object.homestead)
@@ -236,7 +242,9 @@ export const BootNodeGateways = {
   },
 };
 
-const baseBootNodeGateways_NetworkNodes: object = {};
+function createBaseBootNodeGateways_NetworkNodes(): BootNodeGateways_NetworkNodes {
+  return { dvote: [], web3: [] };
+}
 
 export const BootNodeGateways_NetworkNodes = {
   encode(
@@ -264,11 +272,7 @@ export const BootNodeGateways_NetworkNodes = {
   ): BootNodeGateways_NetworkNodes {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes,
-    } as BootNodeGateways_NetworkNodes;
-    message.dvote = [];
-    message.web3 = [];
+    const message = createBaseBootNodeGateways_NetworkNodes();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -291,16 +295,18 @@ export const BootNodeGateways_NetworkNodes = {
   },
 
   fromJSON(object: any): BootNodeGateways_NetworkNodes {
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes,
-    } as BootNodeGateways_NetworkNodes;
-    message.dvote = (object.dvote ?? []).map((e: any) =>
-      BootNodeGateways_NetworkNodes_DVote.fromJSON(e)
-    );
-    message.web3 = (object.web3 ?? []).map((e: any) =>
-      BootNodeGateways_NetworkNodes_Web3.fromJSON(e)
-    );
-    return message;
+    return {
+      dvote: Array.isArray(object?.dvote)
+        ? object.dvote.map((e: any) =>
+            BootNodeGateways_NetworkNodes_DVote.fromJSON(e)
+          )
+        : [],
+      web3: Array.isArray(object?.web3)
+        ? object.web3.map((e: any) =>
+            BootNodeGateways_NetworkNodes_Web3.fromJSON(e)
+          )
+        : [],
+    };
   },
 
   toJSON(message: BootNodeGateways_NetworkNodes): unknown {
@@ -325,9 +331,7 @@ export const BootNodeGateways_NetworkNodes = {
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes>, I>>(
     object: I
   ): BootNodeGateways_NetworkNodes {
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes,
-    } as BootNodeGateways_NetworkNodes;
+    const message = createBaseBootNodeGateways_NetworkNodes();
     message.dvote =
       object.dvote?.map((e) =>
         BootNodeGateways_NetworkNodes_DVote.fromPartial(e)
@@ -340,11 +344,9 @@ export const BootNodeGateways_NetworkNodes = {
   },
 };
 
-const baseBootNodeGateways_NetworkNodes_DVote: object = {
-  uri: "",
-  apis: "",
-  pubKey: "",
-};
+function createBaseBootNodeGateways_NetworkNodes_DVote(): BootNodeGateways_NetworkNodes_DVote {
+  return { uri: "", apis: [], pubKey: "" };
+}
 
 export const BootNodeGateways_NetworkNodes_DVote = {
   encode(
@@ -369,10 +371,7 @@ export const BootNodeGateways_NetworkNodes_DVote = {
   ): BootNodeGateways_NetworkNodes_DVote {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes_DVote,
-    } as BootNodeGateways_NetworkNodes_DVote;
-    message.apis = [];
+    const message = createBaseBootNodeGateways_NetworkNodes_DVote();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -394,17 +393,13 @@ export const BootNodeGateways_NetworkNodes_DVote = {
   },
 
   fromJSON(object: any): BootNodeGateways_NetworkNodes_DVote {
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes_DVote,
-    } as BootNodeGateways_NetworkNodes_DVote;
-    message.uri =
-      object.uri !== undefined && object.uri !== null ? String(object.uri) : "";
-    message.apis = (object.apis ?? []).map((e: any) => String(e));
-    message.pubKey =
-      object.pubKey !== undefined && object.pubKey !== null
-        ? String(object.pubKey)
-        : "";
-    return message;
+    return {
+      uri: isSet(object.uri) ? String(object.uri) : "",
+      apis: Array.isArray(object?.apis)
+        ? object.apis.map((e: any) => String(e))
+        : [],
+      pubKey: isSet(object.pubKey) ? String(object.pubKey) : "",
+    };
   },
 
   toJSON(message: BootNodeGateways_NetworkNodes_DVote): unknown {
@@ -422,9 +417,7 @@ export const BootNodeGateways_NetworkNodes_DVote = {
   fromPartial<
     I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_DVote>, I>
   >(object: I): BootNodeGateways_NetworkNodes_DVote {
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes_DVote,
-    } as BootNodeGateways_NetworkNodes_DVote;
+    const message = createBaseBootNodeGateways_NetworkNodes_DVote();
     message.uri = object.uri ?? "";
     message.apis = object.apis?.map((e) => e) || [];
     message.pubKey = object.pubKey ?? "";
@@ -432,7 +425,9 @@ export const BootNodeGateways_NetworkNodes_DVote = {
   },
 };
 
-const baseBootNodeGateways_NetworkNodes_Web3: object = { uri: "" };
+function createBaseBootNodeGateways_NetworkNodes_Web3(): BootNodeGateways_NetworkNodes_Web3 {
+  return { uri: "" };
+}
 
 export const BootNodeGateways_NetworkNodes_Web3 = {
   encode(
@@ -451,9 +446,7 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
   ): BootNodeGateways_NetworkNodes_Web3 {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes_Web3,
-    } as BootNodeGateways_NetworkNodes_Web3;
+    const message = createBaseBootNodeGateways_NetworkNodes_Web3();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -469,12 +462,9 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
   },
 
   fromJSON(object: any): BootNodeGateways_NetworkNodes_Web3 {
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes_Web3,
-    } as BootNodeGateways_NetworkNodes_Web3;
-    message.uri =
-      object.uri !== undefined && object.uri !== null ? String(object.uri) : "";
-    return message;
+    return {
+      uri: isSet(object.uri) ? String(object.uri) : "",
+    };
   },
 
   toJSON(message: BootNodeGateways_NetworkNodes_Web3): unknown {
@@ -486,15 +476,15 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
   fromPartial<
     I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_Web3>, I>
   >(object: I): BootNodeGateways_NetworkNodes_Web3 {
-    const message = {
-      ...baseBootNodeGateways_NetworkNodes_Web3,
-    } as BootNodeGateways_NetworkNodes_Web3;
+    const message = createBaseBootNodeGateways_NetworkNodes_Web3();
     message.uri = object.uri ?? "";
     return message;
   },
 };
 
-const baseBootNodeGateways_MetaEntry: object = { key: "", value: "" };
+function createBaseBootNodeGateways_MetaEntry(): BootNodeGateways_MetaEntry {
+  return { key: "", value: "" };
+}
 
 export const BootNodeGateways_MetaEntry = {
   encode(
@@ -516,9 +506,7 @@ export const BootNodeGateways_MetaEntry = {
   ): BootNodeGateways_MetaEntry {
     const reader = input instanceof Reader ? input : new Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseBootNodeGateways_MetaEntry,
-    } as BootNodeGateways_MetaEntry;
+    const message = createBaseBootNodeGateways_MetaEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -537,16 +525,10 @@ export const BootNodeGateways_MetaEntry = {
   },
 
   fromJSON(object: any): BootNodeGateways_MetaEntry {
-    const message = {
-      ...baseBootNodeGateways_MetaEntry,
-    } as BootNodeGateways_MetaEntry;
-    message.key =
-      object.key !== undefined && object.key !== null ? String(object.key) : "";
-    message.value =
-      object.value !== undefined && object.value !== null
-        ? String(object.value)
-        : "";
-    return message;
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? String(object.value) : "",
+    };
   },
 
   toJSON(message: BootNodeGateways_MetaEntry): unknown {
@@ -559,9 +541,7 @@ export const BootNodeGateways_MetaEntry = {
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways_MetaEntry>, I>>(
     object: I
   ): BootNodeGateways_MetaEntry {
-    const message = {
-      ...baseBootNodeGateways_MetaEntry,
-    } as BootNodeGateways_MetaEntry;
+    const message = createBaseBootNodeGateways_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
@@ -604,4 +584,12 @@ export type Exact<P, I extends P> = P extends Builtin
 if (util.Long !== Long) {
   util.Long = Long as any;
   configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

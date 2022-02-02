@@ -465,11 +465,12 @@ const SetAccountInfoTx$json = const {
     const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
     const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '10': 'infoURI'},
     const {'1': 'account', '3': 4, '4': 1, '5': 12, '10': 'account'},
+    const {'1': 'faucetPackage', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '10': 'faucetPackage'},
   ],
 };
 
 /// Descriptor for `SetAccountInfoTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setAccountInfoTxDescriptor = $convert.base64Decode('ChBTZXRBY2NvdW50SW5mb1R4Ei4KBnR4dHlwZRgBIAEoDjIWLmR2b3RlLnR5cGVzLnYxLlR4VHlwZVIGdHh0eXBlEhQKBW5vbmNlGAIgASgNUgVub25jZRIYCgdpbmZvVVJJGAMgASgJUgdpbmZvVVJJEhgKB2FjY291bnQYBCABKAxSB2FjY291bnQ=');
+final $typed_data.Uint8List setAccountInfoTxDescriptor = $convert.base64Decode('ChBTZXRBY2NvdW50SW5mb1R4Ei4KBnR4dHlwZRgBIAEoDjIWLmR2b3RlLnR5cGVzLnYxLlR4VHlwZVIGdHh0eXBlEhQKBW5vbmNlGAIgASgNUgVub25jZRIYCgdpbmZvVVJJGAMgASgJUgdpbmZvVVJJEhgKB2FjY291bnQYBCABKAxSB2FjY291bnQSQwoNZmF1Y2V0UGFja2FnZRgFIAEoCzIdLmR2b3RlLnR5cGVzLnYxLkZhdWNldFBhY2thZ2VSDWZhdWNldFBhY2thZ2U=');
 @$core.Deprecated('Use setAccountDelegateTxDescriptor instead')
 const SetAccountDelegateTx$json = const {
   '1': 'SetAccountDelegateTx',
@@ -488,11 +489,12 @@ const CollectFaucetTx$json = const {
   '2': const [
     const {'1': 'txType', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txType'},
     const {'1': 'faucetPackage', '3': 2, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '10': 'faucetPackage'},
+    const {'1': 'nonce', '3': 3, '4': 1, '5': 13, '10': 'nonce'},
   ],
 };
 
 /// Descriptor for `CollectFaucetTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List collectFaucetTxDescriptor = $convert.base64Decode('Cg9Db2xsZWN0RmF1Y2V0VHgSLgoGdHhUeXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eFR5cGUSQwoNZmF1Y2V0UGFja2FnZRgCIAEoCzIdLmR2b3RlLnR5cGVzLnYxLkZhdWNldFBhY2thZ2VSDWZhdWNldFBhY2thZ2U=');
+final $typed_data.Uint8List collectFaucetTxDescriptor = $convert.base64Decode('Cg9Db2xsZWN0RmF1Y2V0VHgSLgoGdHhUeXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eFR5cGUSQwoNZmF1Y2V0UGFja2FnZRgCIAEoCzIdLmR2b3RlLnR5cGVzLnYxLkZhdWNldFBhY2thZ2VSDWZhdWNldFBhY2thZ2USFAoFbm9uY2UYAyABKA1SBW5vbmNl');
 @$core.Deprecated('Use faucetPayloadDescriptor instead')
 const FaucetPayload$json = const {
   '1': 'FaucetPayload',

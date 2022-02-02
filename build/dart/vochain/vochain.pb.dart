@@ -2185,6 +2185,7 @@ class SetAccountInfoTx extends $pb.GeneratedMessage {
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'infoURI', protoName: 'infoURI')
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'account', $pb.PbFieldType.OY)
+    ..aOM<FaucetPackage>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faucetPackage', protoName: 'faucetPackage', subBuilder: FaucetPackage.create)
     ..hasRequiredFields = false
   ;
 
@@ -2194,6 +2195,7 @@ class SetAccountInfoTx extends $pb.GeneratedMessage {
     $core.int? nonce,
     $core.String? infoURI,
     $core.List<$core.int>? account,
+    FaucetPackage? faucetPackage,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -2207,6 +2209,9 @@ class SetAccountInfoTx extends $pb.GeneratedMessage {
     }
     if (account != null) {
       _result.account = account;
+    }
+    if (faucetPackage != null) {
+      _result.faucetPackage = faucetPackage;
     }
     return _result;
   }
@@ -2266,6 +2271,17 @@ class SetAccountInfoTx extends $pb.GeneratedMessage {
   $core.bool hasAccount() => $_has(3);
   @$pb.TagNumber(4)
   void clearAccount() => clearField(4);
+
+  @$pb.TagNumber(5)
+  FaucetPackage get faucetPackage => $_getN(4);
+  @$pb.TagNumber(5)
+  set faucetPackage(FaucetPackage v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasFaucetPackage() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearFaucetPackage() => clearField(5);
+  @$pb.TagNumber(5)
+  FaucetPackage ensureFaucetPackage() => $_ensure(4);
 }
 
 class SetAccountDelegateTx extends $pb.GeneratedMessage {
@@ -2347,6 +2363,7 @@ class CollectFaucetTx extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CollectFaucetTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txType', $pb.PbFieldType.OE, protoName: 'txType', defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
     ..aOM<FaucetPackage>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faucetPackage', protoName: 'faucetPackage', subBuilder: FaucetPackage.create)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -2354,6 +2371,7 @@ class CollectFaucetTx extends $pb.GeneratedMessage {
   factory CollectFaucetTx({
     TxType? txType,
     FaucetPackage? faucetPackage,
+    $core.int? nonce,
   }) {
     final _result = create();
     if (txType != null) {
@@ -2361,6 +2379,9 @@ class CollectFaucetTx extends $pb.GeneratedMessage {
     }
     if (faucetPackage != null) {
       _result.faucetPackage = faucetPackage;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
     }
     return _result;
   }
@@ -2404,6 +2425,15 @@ class CollectFaucetTx extends $pb.GeneratedMessage {
   void clearFaucetPackage() => clearField(2);
   @$pb.TagNumber(2)
   FaucetPackage ensureFaucetPackage() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.int get nonce => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set nonce($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasNonce() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearNonce() => clearField(3);
 }
 
 class FaucetPayload extends $pb.GeneratedMessage {
