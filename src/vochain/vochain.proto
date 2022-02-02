@@ -254,6 +254,7 @@ message SetAccountInfoTx {
 	uint32 nonce = 2;
 	string infoURI = 3;
 	bytes account = 4;
+	FaucetPackage faucetPackage = 5;
 }
 
 message SetAccountDelegateTx {
