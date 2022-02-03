@@ -352,6 +352,7 @@ enum SourceNetworkId {
 	ETH_RINKEBY_SIGNALING = 9;
 	AVAX_FUJI = 10;
 	AVAX = 11;
+	POLYGON_MUMBAI = 12;
 }
 
 enum CensusOrigin {
