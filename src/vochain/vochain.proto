@@ -291,7 +291,7 @@ message SetKeykeeperTx {
 
 message Process {
 	bytes processId = 1;
-	// EntityId identifies unequivocally a process
+	// EntityId identifies unequivocally an entity
 	bytes entityId = 2;
 	// StartBlock represents the tendermint block where the process goes from scheduled to active
 	uint32 startBlock = 3;
