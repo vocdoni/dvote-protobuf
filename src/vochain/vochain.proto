@@ -195,13 +195,13 @@ message SignedTx {
 
 message NewProcessTx {
 	TxType txtype = 1;
-	bytes nonce = 2;
+	uint32 nonce = 2;
 	Process process = 3;
 }
 
 message SetProcessTx {
 	TxType txtype = 1;
-	bytes nonce = 2;
+	uint32 nonce = 2;
 	bytes processId = 3;
 	optional ProcessStatus status = 4;
 	optional uint32 questionIndex = 5;
@@ -220,11 +220,11 @@ message AdminTx {
 	optional uint32 keyIndex = 7;
 	optional uint64 power = 8;
 	optional bytes publicKey = 9;
-	bytes nonce = 11;
+	uint32 nonce = 11;
 }
 
 message RegisterKeyTx {
-	bytes nonce = 1;  	  // Unique number per vote attempt, so that replay attacks can't reuse this payload
+	uint32 nonce = 1;  	  // Unique number per vote attempt, so that replay attacks can't reuse this payload
 	bytes processId = 2;  // The process for which the vote is casted
 	Proof proof = 3;  	  // Franchise proof
 	bytes newKey = 4;     // New key to register
