@@ -362,7 +362,8 @@ enum SourceNetworkId {
 	AVAX_FUJI = 10;
 	AVAX = 11;
 	POLYGON_MUMBAI = 12;
-
+	OPTIMISM = 13;
+	ARBITRUM = 14;
 }
 
 enum CensusOrigin {
