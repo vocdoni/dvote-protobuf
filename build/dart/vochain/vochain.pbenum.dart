@@ -31,6 +31,8 @@ class TxType extends $pb.ProtobufEnum {
   static const TxType ADD_DELEGATE_FOR_ACCOUNT = TxType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_DELEGATE_FOR_ACCOUNT');
   static const TxType DEL_DELEGATE_FOR_ACCOUNT = TxType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DEL_DELEGATE_FOR_ACCOUNT');
   static const TxType COLLECT_FAUCET = TxType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLLECT_FAUCET');
+  static const TxType ADD_KEYKEEPER = TxType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_KEYKEEPER');
+  static const TxType DELETE_KEYKEEPER = TxType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DELETE_KEYKEEPER');
 
   static const $core.List<TxType> values = <TxType> [
     TX_UNKNOWN,
@@ -54,6 +56,8 @@ class TxType extends $pb.ProtobufEnum {
     ADD_DELEGATE_FOR_ACCOUNT,
     DEL_DELEGATE_FOR_ACCOUNT,
     COLLECT_FAUCET,
+    ADD_KEYKEEPER,
+    DELETE_KEYKEEPER,
   ];
 
   static final $core.Map<$core.int, TxType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -99,6 +103,8 @@ class SourceNetworkId extends $pb.ProtobufEnum {
   static const SourceNetworkId AVAX_FUJI = SourceNetworkId._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AVAX_FUJI');
   static const SourceNetworkId AVAX = SourceNetworkId._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AVAX');
   static const SourceNetworkId POLYGON_MUMBAI = SourceNetworkId._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POLYGON_MUMBAI');
+  static const SourceNetworkId OPTIMISM = SourceNetworkId._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OPTIMISM');
+  static const SourceNetworkId ARBITRUM = SourceNetworkId._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ARBITRUM');
 
   static const $core.List<SourceNetworkId> values = <SourceNetworkId> [
     UNKNOWN,
@@ -114,6 +120,8 @@ class SourceNetworkId extends $pb.ProtobufEnum {
     AVAX_FUJI,
     AVAX,
     POLYGON_MUMBAI,
+    OPTIMISM,
+    ARBITRUM,
   ];
 
   static final $core.Map<$core.int, SourceNetworkId> _byValue = $pb.ProtobufEnum.initByValue(values);

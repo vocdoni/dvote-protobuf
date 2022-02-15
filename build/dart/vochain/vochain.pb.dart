@@ -1117,6 +1117,7 @@ enum Tx_Payload {
   setAccountInfo, 
   setAccountDelegateTx, 
   collectFaucet, 
+  setKeykeeper, 
   notSet
 }
 
@@ -1133,10 +1134,11 @@ class Tx extends $pb.GeneratedMessage {
     9 : Tx_Payload.setAccountInfo,
     10 : Tx_Payload.setAccountDelegateTx,
     11 : Tx_Payload.collectFaucet,
+    12 : Tx_Payload.setKeykeeper,
     0 : Tx_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Tx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     ..aOM<VoteEnvelope>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vote', subBuilder: VoteEnvelope.create)
     ..aOM<NewProcessTx>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newProcess', protoName: 'newProcess', subBuilder: NewProcessTx.create)
     ..aOM<AdminTx>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'admin', subBuilder: AdminTx.create)
@@ -1148,6 +1150,7 @@ class Tx extends $pb.GeneratedMessage {
     ..aOM<SetAccountInfoTx>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccountInfo', protoName: 'setAccountInfo', subBuilder: SetAccountInfoTx.create)
     ..aOM<SetAccountDelegateTx>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccountDelegateTx', protoName: 'setAccountDelegateTx', subBuilder: SetAccountDelegateTx.create)
     ..aOM<CollectFaucetTx>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'collectFaucet', protoName: 'collectFaucet', subBuilder: CollectFaucetTx.create)
+    ..aOM<SetKeykeeperTx>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setKeykeeper', protoName: 'setKeykeeper', subBuilder: SetKeykeeperTx.create)
     ..hasRequiredFields = false
   ;
 
@@ -1164,6 +1167,7 @@ class Tx extends $pb.GeneratedMessage {
     SetAccountInfoTx? setAccountInfo,
     SetAccountDelegateTx? setAccountDelegateTx,
     CollectFaucetTx? collectFaucet,
+    SetKeykeeperTx? setKeykeeper,
   }) {
     final _result = create();
     if (vote != null) {
@@ -1198,6 +1202,9 @@ class Tx extends $pb.GeneratedMessage {
     }
     if (collectFaucet != null) {
       _result.collectFaucet = collectFaucet;
+    }
+    if (setKeykeeper != null) {
+      _result.setKeykeeper = setKeykeeper;
     }
     return _result;
   }
@@ -1345,6 +1352,17 @@ class Tx extends $pb.GeneratedMessage {
   void clearCollectFaucet() => clearField(11);
   @$pb.TagNumber(11)
   CollectFaucetTx ensureCollectFaucet() => $_ensure(10);
+
+  @$pb.TagNumber(12)
+  SetKeykeeperTx get setKeykeeper => $_getN(11);
+  @$pb.TagNumber(12)
+  set setKeykeeper(SetKeykeeperTx v) { setField(12, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasSetKeykeeper() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearSetKeykeeper() => clearField(12);
+  @$pb.TagNumber(12)
+  SetKeykeeperTx ensureSetKeykeeper() => $_ensure(11);
 }
 
 class SignedTx extends $pb.GeneratedMessage {
@@ -1411,7 +1429,7 @@ class SignedTx extends $pb.GeneratedMessage {
 class NewProcessTx extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NewProcessTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
-    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..aOM<Process>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'process', subBuilder: Process.create)
     ..hasRequiredFields = false
   ;
@@ -1419,7 +1437,7 @@ class NewProcessTx extends $pb.GeneratedMessage {
   NewProcessTx._() : super();
   factory NewProcessTx({
     TxType? txtype,
-    $core.List<$core.int>? nonce,
+    $core.int? nonce,
     Process? process,
   }) {
     final _result = create();
@@ -1465,9 +1483,9 @@ class NewProcessTx extends $pb.GeneratedMessage {
   void clearTxtype() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<$core.int> get nonce => $_getN(1);
+  $core.int get nonce => $_getIZ(1);
   @$pb.TagNumber(2)
-  set nonce($core.List<$core.int> v) { $_setBytes(1, v); }
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasNonce() => $_has(1);
   @$pb.TagNumber(2)
@@ -1488,7 +1506,7 @@ class NewProcessTx extends $pb.GeneratedMessage {
 class SetProcessTx extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetProcessTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
-    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..e<ProcessStatus>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: ProcessStatus.PROCESS_UNKNOWN, valueOf: ProcessStatus.valueOf, enumValues: ProcessStatus.values)
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questionIndex', $pb.PbFieldType.OU3, protoName: 'questionIndex')
@@ -1502,7 +1520,7 @@ class SetProcessTx extends $pb.GeneratedMessage {
   SetProcessTx._() : super();
   factory SetProcessTx({
     TxType? txtype,
-    $core.List<$core.int>? nonce,
+    $core.int? nonce,
     $core.List<$core.int>? processId,
     ProcessStatus? status,
     $core.int? questionIndex,
@@ -1572,9 +1590,9 @@ class SetProcessTx extends $pb.GeneratedMessage {
   void clearTxtype() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<$core.int> get nonce => $_getN(1);
+  $core.int get nonce => $_getIZ(1);
   @$pb.TagNumber(2)
-  set nonce($core.List<$core.int> v) { $_setBytes(1, v); }
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasNonce() => $_has(1);
   @$pb.TagNumber(2)
@@ -1658,7 +1676,7 @@ class AdminTx extends $pb.GeneratedMessage {
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyIndex', $pb.PbFieldType.OU3, protoName: 'keyIndex')
     ..a<$fixnum.Int64>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'power', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'publicKey', $pb.PbFieldType.OY, protoName: 'publicKey')
-    ..a<$core.List<$core.int>>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -1672,7 +1690,7 @@ class AdminTx extends $pb.GeneratedMessage {
     $core.int? keyIndex,
     $fixnum.Int64? power,
     $core.List<$core.int>? publicKey,
-    $core.List<$core.int>? nonce,
+    $core.int? nonce,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -1798,9 +1816,9 @@ class AdminTx extends $pb.GeneratedMessage {
   void clearPublicKey() => clearField(9);
 
   @$pb.TagNumber(11)
-  $core.List<$core.int> get nonce => $_getN(8);
+  $core.int get nonce => $_getIZ(8);
   @$pb.TagNumber(11)
-  set nonce($core.List<$core.int> v) { $_setBytes(8, v); }
+  set nonce($core.int v) { $_setUnsignedInt32(8, v); }
   @$pb.TagNumber(11)
   $core.bool hasNonce() => $_has(8);
   @$pb.TagNumber(11)
@@ -1809,7 +1827,7 @@ class AdminTx extends $pb.GeneratedMessage {
 
 class RegisterKeyTx extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RegisterKeyTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OY)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..aOM<Proof>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: Proof.create)
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newKey', $pb.PbFieldType.OY, protoName: 'newKey')
@@ -1819,7 +1837,7 @@ class RegisterKeyTx extends $pb.GeneratedMessage {
 
   RegisterKeyTx._() : super();
   factory RegisterKeyTx({
-    $core.List<$core.int>? nonce,
+    $core.int? nonce,
     $core.List<$core.int>? processId,
     Proof? proof,
     $core.List<$core.int>? newKey,
@@ -1865,9 +1883,9 @@ class RegisterKeyTx extends $pb.GeneratedMessage {
   static RegisterKeyTx? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.int> get nonce => $_getN(0);
+  $core.int get nonce => $_getIZ(0);
   @$pb.TagNumber(1)
-  set nonce($core.List<$core.int> v) { $_setBytes(0, v); }
+  set nonce($core.int v) { $_setUnsignedInt32(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasNonce() => $_has(0);
   @$pb.TagNumber(1)
@@ -2572,6 +2590,81 @@ class FaucetPackage extends $pb.GeneratedMessage {
   $core.bool hasSignature() => $_has(1);
   @$pb.TagNumber(2)
   void clearSignature() => clearField(2);
+}
+
+class SetKeykeeperTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetKeykeeperTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keykeeper', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  SetKeykeeperTx._() : super();
+  factory SetKeykeeperTx({
+    TxType? txtype,
+    $core.int? nonce,
+    $core.List<$core.int>? keykeeper,
+  }) {
+    final _result = create();
+    if (txtype != null) {
+      _result.txtype = txtype;
+    }
+    if (nonce != null) {
+      _result.nonce = nonce;
+    }
+    if (keykeeper != null) {
+      _result.keykeeper = keykeeper;
+    }
+    return _result;
+  }
+  factory SetKeykeeperTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetKeykeeperTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetKeykeeperTx clone() => SetKeykeeperTx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetKeykeeperTx copyWith(void Function(SetKeykeeperTx) updates) => super.copyWith((message) => updates(message as SetKeykeeperTx)) as SetKeykeeperTx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SetKeykeeperTx create() => SetKeykeeperTx._();
+  SetKeykeeperTx createEmptyInstance() => create();
+  static $pb.PbList<SetKeykeeperTx> createRepeated() => $pb.PbList<SetKeykeeperTx>();
+  @$core.pragma('dart2js:noInline')
+  static SetKeykeeperTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetKeykeeperTx>(create);
+  static SetKeykeeperTx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  TxType get txtype => $_getN(0);
+  @$pb.TagNumber(1)
+  set txtype(TxType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTxtype() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTxtype() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get nonce => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNonce() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNonce() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get keykeeper => $_getN(2);
+  @$pb.TagNumber(3)
+  set keykeeper($core.List<$core.int> v) { $_setBytes(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasKeykeeper() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearKeykeeper() => clearField(3);
 }
 
 class Process extends $pb.GeneratedMessage {
