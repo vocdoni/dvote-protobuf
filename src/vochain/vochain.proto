@@ -162,6 +162,8 @@ enum TxType {
 	ADD_DELEGATE_FOR_ACCOUNT = 18;
 	DEL_DELEGATE_FOR_ACCOUNT = 19;
 	COLLECT_FAUCET = 20;
+	ADD_KEYKEEPER = 21;
+	DELETE_KEYKEEPER = 22;
 }
 
 message Tx {
@@ -177,6 +179,7 @@ message Tx {
 		SetAccountInfoTx setAccountInfo = 9;
 		SetAccountDelegateTx setAccountDelegateTx = 10;
 		CollectFaucetTx collectFaucet = 11;
+		SetKeykeeperTx setKeykeeper = 12;
 	}
 }
 
@@ -280,6 +283,12 @@ message FaucetPackage {
 	bytes signature = 2;
 }
 
+message SetKeykeeperTx {
+	TxType txtype = 1;
+	uint32 nonce = 2;
+	bytes keykeeper = 3;
+}
+
 message Process {
 	bytes processId = 1;
 	// EntityId identifies unequivocally a process
@@ -353,6 +362,7 @@ enum SourceNetworkId {
 	AVAX_FUJI = 10;
 	AVAX = 11;
 	POLYGON_MUMBAI = 12;
+
 }
 
 enum CensusOrigin {
