@@ -337,6 +337,9 @@ message Process {
 	// NullifiersRoot is the root of the pre-census nullifiers merkle tree.
 	// Used when Mode.PreRegister = true.
 	optional bytes nullifiersRoot = 31;
+	// sourceNetworkContractAddr is used for EVM token based voting and it is
+	// the contract address of the token that is going to define the census
+	optional bytes sourceNetworkContractAddr = 32;
 }
 
 enum ProcessStatus {
