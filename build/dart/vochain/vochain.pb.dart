@@ -2698,6 +2698,7 @@ class Process extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusRoot', $pb.PbFieldType.OY, protoName: 'rollingCensusRoot')
     ..a<$fixnum.Int64>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusSize', $pb.PbFieldType.OU6, protoName: 'rollingCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifiersRoot', $pb.PbFieldType.OY, protoName: 'nullifiersRoot')
+    ..a<$core.List<$core.int>>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNetworkContractAddr', $pb.PbFieldType.OY, protoName: 'sourceNetworkContractAddr')
     ..hasRequiredFields = false
   ;
 
@@ -2732,6 +2733,7 @@ class Process extends $pb.GeneratedMessage {
     $core.List<$core.int>? rollingCensusRoot,
     $fixnum.Int64? rollingCensusSize,
     $core.List<$core.int>? nullifiersRoot,
+    $core.List<$core.int>? sourceNetworkContractAddr,
   }) {
     final _result = create();
     if (processId != null) {
@@ -2820,6 +2822,9 @@ class Process extends $pb.GeneratedMessage {
     }
     if (nullifiersRoot != null) {
       _result.nullifiersRoot = nullifiersRoot;
+    }
+    if (sourceNetworkContractAddr != null) {
+      _result.sourceNetworkContractAddr = sourceNetworkContractAddr;
     }
     return _result;
   }
@@ -3086,6 +3091,15 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasNullifiersRoot() => $_has(28);
   @$pb.TagNumber(31)
   void clearNullifiersRoot() => clearField(31);
+
+  @$pb.TagNumber(32)
+  $core.List<$core.int> get sourceNetworkContractAddr => $_getN(29);
+  @$pb.TagNumber(32)
+  set sourceNetworkContractAddr($core.List<$core.int> v) { $_setBytes(29, v); }
+  @$pb.TagNumber(32)
+  $core.bool hasSourceNetworkContractAddr() => $_has(29);
+  @$pb.TagNumber(32)
+  void clearSourceNetworkContractAddr() => clearField(32);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {
