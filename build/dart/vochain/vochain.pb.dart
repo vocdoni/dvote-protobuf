@@ -967,6 +967,7 @@ class Account extends $pb.GeneratedMessage {
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'infoURI', protoName: 'infoURI')
     ..p<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delegateAddrs', $pb.PbFieldType.PY, protoName: 'delegateAddrs')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processIndex', $pb.PbFieldType.OU3, protoName: 'processIndex')
     ..hasRequiredFields = false
   ;
 
@@ -976,6 +977,7 @@ class Account extends $pb.GeneratedMessage {
     $core.int? nonce,
     $core.String? infoURI,
     $core.Iterable<$core.List<$core.int>>? delegateAddrs,
+    $core.int? processIndex,
   }) {
     final _result = create();
     if (balance != null) {
@@ -989,6 +991,9 @@ class Account extends $pb.GeneratedMessage {
     }
     if (delegateAddrs != null) {
       _result.delegateAddrs.addAll(delegateAddrs);
+    }
+    if (processIndex != null) {
+      _result.processIndex = processIndex;
     }
     return _result;
   }
@@ -1042,6 +1047,15 @@ class Account extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $core.List<$core.List<$core.int>> get delegateAddrs => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.int get processIndex => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set processIndex($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasProcessIndex() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearProcessIndex() => clearField(5);
 }
 
 class Treasurer extends $pb.GeneratedMessage {

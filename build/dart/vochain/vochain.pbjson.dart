@@ -292,11 +292,12 @@ const Account$json = const {
     const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
     const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '10': 'infoURI'},
     const {'1': 'delegateAddrs', '3': 4, '4': 3, '5': 12, '10': 'delegateAddrs'},
+    const {'1': 'processIndex', '3': 5, '4': 1, '5': 13, '10': 'processIndex'},
   ],
 };
 
 /// Descriptor for `Account`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountDescriptor = $convert.base64Decode('CgdBY2NvdW50EhgKB2JhbGFuY2UYASABKARSB2JhbGFuY2USFAoFbm9uY2UYAiABKA1SBW5vbmNlEhgKB2luZm9VUkkYAyABKAlSB2luZm9VUkkSJAoNZGVsZWdhdGVBZGRycxgEIAMoDFINZGVsZWdhdGVBZGRycw==');
+final $typed_data.Uint8List accountDescriptor = $convert.base64Decode('CgdBY2NvdW50EhgKB2JhbGFuY2UYASABKARSB2JhbGFuY2USFAoFbm9uY2UYAiABKA1SBW5vbmNlEhgKB2luZm9VUkkYAyABKAlSB2luZm9VUkkSJAoNZGVsZWdhdGVBZGRycxgEIAMoDFINZGVsZWdhdGVBZGRycxIiCgxwcm9jZXNzSW5kZXgYBSABKA1SDHByb2Nlc3NJbmRleA==');
 @$core.Deprecated('Use treasurerDescriptor instead')
 const Treasurer$json = const {
   '1': 'Treasurer',
