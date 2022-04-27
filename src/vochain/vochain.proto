@@ -133,6 +133,7 @@ message Account {
 	uint32 nonce = 2;
 	string infoURI = 3;
 	repeated bytes delegateAddrs = 4;
+	uint32 processIndex = 5;
 }
 
 message Treasurer {
