@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -43,8 +42,9 @@ export function wallet_AuthMethodToJSON(object: Wallet_AuthMethod): string {
       return "PASS";
     case Wallet_AuthMethod.PIN:
       return "PIN";
+    case Wallet_AuthMethod.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -58,7 +58,10 @@ function createBaseWallet(): Wallet {
 }
 
 export const Wallet = {
-  encode(message: Wallet, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Wallet,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.encryptedMnemonic.length !== 0) {
       writer.uint32(10).bytes(message.encryptedMnemonic);
     }
@@ -74,8 +77,8 @@ export const Wallet = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Wallet {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Wallet {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWallet();
     while (reader.pos < end) {
@@ -167,9 +170,9 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (const byte of arr) {
+  arr.forEach((byte) => {
     bin.push(String.fromCharCode(byte));
-  }
+  });
   return btoa(bin.join(""));
 }
 
@@ -203,13 +206,6 @@ export type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -83,16 +82,19 @@ function createBaseProcessMetadataStore(): ProcessMetadataStore {
 export const ProcessMetadataStore = {
   encode(
     message: ProcessMetadataStore,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.items) {
       ProcessMetadata.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessMetadataStore {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): ProcessMetadataStore {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadataStore();
     while (reader.pos < end) {
@@ -152,7 +154,10 @@ function createBaseProcessMetadata(): ProcessMetadata {
 }
 
 export const ProcessMetadata = {
-  encode(message: ProcessMetadata, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProcessMetadata,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.version !== "") {
       writer.uint32(10).string(message.version);
     }
@@ -192,8 +197,8 @@ export const ProcessMetadata = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessMetadata {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProcessMetadata {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata();
     while (reader.pos < end) {
@@ -401,8 +406,8 @@ function createBaseProcessMetadata_TitleEntry(): ProcessMetadata_TitleEntry {
 export const ProcessMetadata_TitleEntry = {
   encode(
     message: ProcessMetadata_TitleEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -413,10 +418,10 @@ export const ProcessMetadata_TitleEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_TitleEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_TitleEntry();
     while (reader.pos < end) {
@@ -467,8 +472,8 @@ function createBaseProcessMetadata_DescriptionEntry(): ProcessMetadata_Descripti
 export const ProcessMetadata_DescriptionEntry = {
   encode(
     message: ProcessMetadata_DescriptionEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -479,10 +484,10 @@ export const ProcessMetadata_DescriptionEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_DescriptionEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_DescriptionEntry();
     while (reader.pos < end) {
@@ -533,8 +538,8 @@ function createBaseProcessMetadata_MediaEntry(): ProcessMetadata_MediaEntry {
 export const ProcessMetadata_MediaEntry = {
   encode(
     message: ProcessMetadata_MediaEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -545,10 +550,10 @@ export const ProcessMetadata_MediaEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_MediaEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_MediaEntry();
     while (reader.pos < end) {
@@ -599,8 +604,8 @@ function createBaseProcessMetadata_Question(): ProcessMetadata_Question {
 export const ProcessMetadata_Question = {
   encode(
     message: ProcessMetadata_Question,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     Object.entries(message.title).forEach(([key, value]) => {
       ProcessMetadata_Question_TitleEntry.encode(
         { key: key as any, value },
@@ -623,10 +628,10 @@ export const ProcessMetadata_Question = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_Question {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_Question();
     while (reader.pos < end) {
@@ -750,8 +755,8 @@ function createBaseProcessMetadata_Question_TitleEntry(): ProcessMetadata_Questi
 export const ProcessMetadata_Question_TitleEntry = {
   encode(
     message: ProcessMetadata_Question_TitleEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -762,10 +767,10 @@ export const ProcessMetadata_Question_TitleEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_Question_TitleEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_Question_TitleEntry();
     while (reader.pos < end) {
@@ -816,8 +821,8 @@ function createBaseProcessMetadata_Question_DescriptionEntry(): ProcessMetadata_
 export const ProcessMetadata_Question_DescriptionEntry = {
   encode(
     message: ProcessMetadata_Question_DescriptionEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -828,10 +833,10 @@ export const ProcessMetadata_Question_DescriptionEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_Question_DescriptionEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_Question_DescriptionEntry();
     while (reader.pos < end) {
@@ -882,8 +887,8 @@ function createBaseProcessMetadata_Question_VoteOption(): ProcessMetadata_Questi
 export const ProcessMetadata_Question_VoteOption = {
   encode(
     message: ProcessMetadata_Question_VoteOption,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     Object.entries(message.title).forEach(([key, value]) => {
       ProcessMetadata_Question_VoteOption_TitleEntry.encode(
         { key: key as any, value },
@@ -897,10 +902,10 @@ export const ProcessMetadata_Question_VoteOption = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_Question_VoteOption {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_Question_VoteOption();
     while (reader.pos < end) {
@@ -977,8 +982,8 @@ function createBaseProcessMetadata_Question_VoteOption_TitleEntry(): ProcessMeta
 export const ProcessMetadata_Question_VoteOption_TitleEntry = {
   encode(
     message: ProcessMetadata_Question_VoteOption_TitleEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -989,10 +994,10 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_Question_VoteOption_TitleEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_Question_VoteOption_TitleEntry();
     while (reader.pos < end) {
@@ -1046,8 +1051,8 @@ function createBaseProcessMetadata_Results(): ProcessMetadata_Results {
 export const ProcessMetadata_Results = {
   encode(
     message: ProcessMetadata_Results,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.aggregation !== "") {
       writer.uint32(10).string(message.aggregation);
     }
@@ -1057,8 +1062,11 @@ export const ProcessMetadata_Results = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessMetadata_Results {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): ProcessMetadata_Results {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_Results();
     while (reader.pos < end) {
@@ -1110,8 +1118,8 @@ function createBaseProcessMetadata_MetaEntry(): ProcessMetadata_MetaEntry {
 export const ProcessMetadata_MetaEntry = {
   encode(
     message: ProcessMetadata_MetaEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -1122,10 +1130,10 @@ export const ProcessMetadata_MetaEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): ProcessMetadata_MetaEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMetadata_MetaEntry();
     while (reader.pos < end) {
@@ -1199,13 +1207,6 @@ export type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

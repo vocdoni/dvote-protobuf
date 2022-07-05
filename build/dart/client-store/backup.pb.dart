@@ -3,7 +3,7 @@
 //  source: client-store/backup.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -18,7 +18,7 @@ export 'backup.pbenum.dart';
 
 class WalletBackup_Recovery extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WalletBackup.Recovery', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..pc<WalletBackup_Recovery_QuestionEnum>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questionIds', $pb.PbFieldType.PE, protoName: 'questionIds', valueOf: WalletBackup_Recovery_QuestionEnum.valueOf, enumValues: WalletBackup_Recovery_QuestionEnum.values)
+    ..pc<WalletBackup_Recovery_QuestionEnum>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questionIds', $pb.PbFieldType.KE, protoName: 'questionIds', valueOf: WalletBackup_Recovery_QuestionEnum.valueOf, enumValues: WalletBackup_Recovery_QuestionEnum.values, defaultEnumValue: WalletBackup_Recovery_QuestionEnum.FAVORITE_BOOK)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptedPassphrase', $pb.PbFieldType.OY, protoName: 'encryptedPassphrase')
     ..hasRequiredFields = false
   ;

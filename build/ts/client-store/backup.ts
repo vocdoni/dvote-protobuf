@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import * as Long from "long";
-import { Wallet } from "../client-store/wallet";
+import { Wallet } from "./wallet";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -177,8 +177,9 @@ export function walletBackup_Recovery_QuestionEnumToJSON(
       return "PARENTAL_GRANDMOTHER_FULL_NAME";
     case WalletBackup_Recovery_QuestionEnum.NAME_OLDEST_COUSIN:
       return "NAME_OLDEST_COUSIN";
+    case WalletBackup_Recovery_QuestionEnum.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -192,7 +193,10 @@ function createBaseWalletBackup(): WalletBackup {
 }
 
 export const WalletBackup = {
-  encode(message: WalletBackup, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WalletBackup,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -211,8 +215,8 @@ export const WalletBackup = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WalletBackup {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): WalletBackup {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWalletBackup();
     while (reader.pos < end) {
@@ -292,8 +296,8 @@ function createBaseWalletBackup_Recovery(): WalletBackup_Recovery {
 export const WalletBackup_Recovery = {
   encode(
     message: WalletBackup_Recovery,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.questionIds) {
       writer.int32(v);
@@ -305,8 +309,11 @@ export const WalletBackup_Recovery = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WalletBackup_Recovery {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): WalletBackup_Recovery {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWalletBackup_Recovery();
     while (reader.pos < end) {
@@ -403,9 +410,9 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (const byte of arr) {
+  arr.forEach((byte) => {
     bin.push(String.fromCharCode(byte));
-  }
+  });
   return btoa(bin.join(""));
 }
 
@@ -449,9 +456,9 @@ function longToNumber(long: Long): number {
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }
 
 function isSet(value: any): boolean {

@@ -1,8 +1,7 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
-import { Wallet } from "../client-store/wallet";
+import { Wallet } from "./wallet";
 import { EntityReference } from "../metadata/entity";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -58,15 +57,18 @@ function createBaseAccountsStore(): AccountsStore {
 }
 
 export const AccountsStore = {
-  encode(message: AccountsStore, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: AccountsStore,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.items) {
       Account.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): AccountsStore {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): AccountsStore {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccountsStore();
     while (reader.pos < end) {
@@ -122,7 +124,10 @@ function createBaseAccount(): Account {
 }
 
 export const Account = {
-  encode(message: Account, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Account,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -147,8 +152,8 @@ export const Account = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Account {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Account {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccount();
     while (reader.pos < end) {
@@ -254,7 +259,10 @@ function createBaseAccount_AppVoter(): Account_AppVoter {
 }
 
 export const Account_AppVoter = {
-  encode(message: Account_AppVoter, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Account_AppVoter,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.appAnalyticsID !== "") {
       writer.uint32(10).string(message.appAnalyticsID);
     }
@@ -264,8 +272,8 @@ export const Account_AppVoter = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Account_AppVoter {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Account_AppVoter {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccount_AppVoter();
     while (reader.pos < end) {
@@ -328,15 +336,18 @@ function createBaseAccount_WebEntity(): Account_WebEntity {
 }
 
 export const Account_WebEntity = {
-  encode(message: Account_WebEntity, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Account_WebEntity,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.webAnalyticsID !== "") {
       writer.uint32(10).string(message.webAnalyticsID);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Account_WebEntity {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Account_WebEntity {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccount_WebEntity();
     while (reader.pos < end) {
@@ -382,7 +393,10 @@ function createBaseAccount_Extra(): Account_Extra {
 }
 
 export const Account_Extra = {
-  encode(message: Account_Extra, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Account_Extra,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.content?.$case === "appVoter") {
       Account_AppVoter.encode(
         message.content.appVoter,
@@ -398,8 +412,8 @@ export const Account_Extra = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Account_Extra {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Account_Extra {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccount_Extra();
     while (reader.pos < end) {
@@ -487,7 +501,10 @@ function createBaseAccount_MetaEntry(): Account_MetaEntry {
 }
 
 export const Account_MetaEntry = {
-  encode(message: Account_MetaEntry, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Account_MetaEntry,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -497,8 +514,8 @@ export const Account_MetaEntry = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Account_MetaEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Account_MetaEntry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccount_MetaEntry();
     while (reader.pos < end) {
@@ -572,13 +589,6 @@ export type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

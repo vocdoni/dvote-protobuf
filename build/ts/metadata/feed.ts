@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -59,15 +58,18 @@ function createBaseFeedStore(): FeedStore {
 }
 
 export const FeedStore = {
-  encode(message: FeedStore, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: FeedStore,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.items) {
       Feed.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): FeedStore {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): FeedStore {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeedStore();
     while (reader.pos < end) {
@@ -127,7 +129,7 @@ function createBaseFeed(): Feed {
 }
 
 export const Feed = {
-  encode(message: Feed, writer: Writer = Writer.create()): Writer {
+  encode(message: Feed, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.version !== "") {
       writer.uint32(10).string(message.version);
     }
@@ -164,8 +166,8 @@ export const Feed = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Feed {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Feed {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeed();
     while (reader.pos < end) {
@@ -293,7 +295,10 @@ function createBaseFeed_MetaEntry(): Feed_MetaEntry {
 }
 
 export const Feed_MetaEntry = {
-  encode(message: Feed_MetaEntry, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Feed_MetaEntry,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -303,8 +308,8 @@ export const Feed_MetaEntry = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Feed_MetaEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Feed_MetaEntry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeed_MetaEntry();
     while (reader.pos < end) {
@@ -365,7 +370,10 @@ function createBaseFeedPost(): FeedPost {
 }
 
 export const FeedPost = {
-  encode(message: FeedPost, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: FeedPost,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -402,8 +410,8 @@ export const FeedPost = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): FeedPost {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): FeedPost {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeedPost();
     while (reader.pos < end) {
@@ -526,7 +534,10 @@ function createBaseFeedPost_Author(): FeedPost_Author {
 }
 
 export const FeedPost_Author = {
-  encode(message: FeedPost_Author, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: FeedPost_Author,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -536,8 +547,8 @@ export const FeedPost_Author = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): FeedPost_Author {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): FeedPost_Author {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFeedPost_Author();
     while (reader.pos < end) {
@@ -611,13 +622,6 @@ export type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

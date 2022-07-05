@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -52,7 +51,10 @@ function createBaseBootNodeGateways(): BootNodeGateways {
 }
 
 export const BootNodeGateways = {
-  encode(message: BootNodeGateways, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: BootNodeGateways,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.homestead !== undefined) {
       BootNodeGateways_NetworkNodes.encode(
         message.homestead,
@@ -92,8 +94,8 @@ export const BootNodeGateways = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): BootNodeGateways {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): BootNodeGateways {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBootNodeGateways();
     while (reader.pos < end) {
@@ -249,8 +251,8 @@ function createBaseBootNodeGateways_NetworkNodes(): BootNodeGateways_NetworkNode
 export const BootNodeGateways_NetworkNodes = {
   encode(
     message: BootNodeGateways_NetworkNodes,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.dvote) {
       BootNodeGateways_NetworkNodes_DVote.encode(
         v!,
@@ -267,10 +269,10 @@ export const BootNodeGateways_NetworkNodes = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_NetworkNodes {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBootNodeGateways_NetworkNodes();
     while (reader.pos < end) {
@@ -351,8 +353,8 @@ function createBaseBootNodeGateways_NetworkNodes_DVote(): BootNodeGateways_Netwo
 export const BootNodeGateways_NetworkNodes_DVote = {
   encode(
     message: BootNodeGateways_NetworkNodes_DVote,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.uri !== "") {
       writer.uint32(10).string(message.uri);
     }
@@ -366,10 +368,10 @@ export const BootNodeGateways_NetworkNodes_DVote = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_NetworkNodes_DVote {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBootNodeGateways_NetworkNodes_DVote();
     while (reader.pos < end) {
@@ -432,8 +434,8 @@ function createBaseBootNodeGateways_NetworkNodes_Web3(): BootNodeGateways_Networ
 export const BootNodeGateways_NetworkNodes_Web3 = {
   encode(
     message: BootNodeGateways_NetworkNodes_Web3,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.uri !== "") {
       writer.uint32(10).string(message.uri);
     }
@@ -441,10 +443,10 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_NetworkNodes_Web3 {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBootNodeGateways_NetworkNodes_Web3();
     while (reader.pos < end) {
@@ -489,8 +491,8 @@ function createBaseBootNodeGateways_MetaEntry(): BootNodeGateways_MetaEntry {
 export const BootNodeGateways_MetaEntry = {
   encode(
     message: BootNodeGateways_MetaEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -501,10 +503,10 @@ export const BootNodeGateways_MetaEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): BootNodeGateways_MetaEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBootNodeGateways_MetaEntry();
     while (reader.pos < end) {
@@ -578,13 +580,6 @@ export type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

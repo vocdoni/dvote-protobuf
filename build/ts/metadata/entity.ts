@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import * as Long from "long";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -118,16 +117,16 @@ function createBaseEntityMetadataStore(): EntityMetadataStore {
 export const EntityMetadataStore = {
   encode(
     message: EntityMetadataStore,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.items) {
       EntityMetadata.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EntityMetadataStore {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadataStore {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadataStore();
     while (reader.pos < end) {
@@ -193,7 +192,10 @@ function createBaseEntityMetadata(): EntityMetadata {
 }
 
 export const EntityMetadata = {
-  encode(message: EntityMetadata, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: EntityMetadata,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.version !== "") {
       writer.uint32(10).string(message.version);
     }
@@ -254,8 +256,8 @@ export const EntityMetadata = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EntityMetadata {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata();
     while (reader.pos < end) {
@@ -567,8 +569,8 @@ function createBaseEntityMetadata_NameEntry(): EntityMetadata_NameEntry {
 export const EntityMetadata_NameEntry = {
   encode(
     message: EntityMetadata_NameEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -579,10 +581,10 @@ export const EntityMetadata_NameEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_NameEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_NameEntry();
     while (reader.pos < end) {
@@ -633,8 +635,8 @@ function createBaseEntityMetadata_DescriptionEntry(): EntityMetadata_Description
 export const EntityMetadata_DescriptionEntry = {
   encode(
     message: EntityMetadata_DescriptionEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -645,10 +647,10 @@ export const EntityMetadata_DescriptionEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_DescriptionEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_DescriptionEntry();
     while (reader.pos < end) {
@@ -699,8 +701,8 @@ function createBaseEntityMetadata_VotingProcesses(): EntityMetadata_VotingProces
 export const EntityMetadata_VotingProcesses = {
   encode(
     message: EntityMetadata_VotingProcesses,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.active) {
       writer.uint32(10).string(v!);
     }
@@ -711,10 +713,10 @@ export const EntityMetadata_VotingProcesses = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_VotingProcesses {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_VotingProcesses();
     while (reader.pos < end) {
@@ -777,8 +779,8 @@ function createBaseEntityMetadata_NewsFeedEntry(): EntityMetadata_NewsFeedEntry 
 export const EntityMetadata_NewsFeedEntry = {
   encode(
     message: EntityMetadata_NewsFeedEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -789,10 +791,10 @@ export const EntityMetadata_NewsFeedEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_NewsFeedEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_NewsFeedEntry();
     while (reader.pos < end) {
@@ -843,8 +845,8 @@ function createBaseEntityMetadata_Media(): EntityMetadata_Media {
 export const EntityMetadata_Media = {
   encode(
     message: EntityMetadata_Media,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.avatar !== "") {
       writer.uint32(10).string(message.avatar);
     }
@@ -854,8 +856,11 @@ export const EntityMetadata_Media = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EntityMetadata_Media {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): EntityMetadata_Media {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Media();
     while (reader.pos < end) {
@@ -913,8 +918,8 @@ function createBaseEntityMetadata_Action(): EntityMetadata_Action {
 export const EntityMetadata_Action = {
   encode(
     message: EntityMetadata_Action,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -942,8 +947,11 @@ export const EntityMetadata_Action = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EntityMetadata_Action {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): EntityMetadata_Action {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action();
     while (reader.pos < end) {
@@ -1059,8 +1067,8 @@ function createBaseEntityMetadata_Action_NameEntry(): EntityMetadata_Action_Name
 export const EntityMetadata_Action_NameEntry = {
   encode(
     message: EntityMetadata_Action_NameEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -1071,10 +1079,10 @@ export const EntityMetadata_Action_NameEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_Action_NameEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action_NameEntry();
     while (reader.pos < end) {
@@ -1125,8 +1133,8 @@ function createBaseEntityMetadata_Action_ImageSource(): EntityMetadata_Action_Im
 export const EntityMetadata_Action_ImageSource = {
   encode(
     message: EntityMetadata_Action_ImageSource,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -1149,10 +1157,10 @@ export const EntityMetadata_Action_ImageSource = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_Action_ImageSource {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action_ImageSource();
     while (reader.pos < end) {
@@ -1248,8 +1256,8 @@ function createBaseEntityMetadata_Action_ImageSource_CaptionEntry(): EntityMetad
 export const EntityMetadata_Action_ImageSource_CaptionEntry = {
   encode(
     message: EntityMetadata_Action_ImageSource_CaptionEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -1260,10 +1268,10 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_Action_ImageSource_CaptionEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action_ImageSource_CaptionEntry();
     while (reader.pos < end) {
@@ -1317,8 +1325,8 @@ function createBaseEntityMetadata_MetaEntry(): EntityMetadata_MetaEntry {
 export const EntityMetadata_MetaEntry = {
   encode(
     message: EntityMetadata_MetaEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -1329,10 +1337,10 @@ export const EntityMetadata_MetaEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): EntityMetadata_MetaEntry {
-    const reader = input instanceof Reader ? input : new Reader(input);
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_MetaEntry();
     while (reader.pos < end) {
@@ -1381,7 +1389,10 @@ function createBaseEntityReference(): EntityReference {
 }
 
 export const EntityReference = {
-  encode(message: EntityReference, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: EntityReference,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.entityId !== "") {
       writer.uint32(10).string(message.entityId);
     }
@@ -1391,8 +1402,8 @@ export const EntityReference = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EntityReference {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityReference {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityReference();
     while (reader.pos < end) {
@@ -1472,13 +1483,6 @@ export type Exact<P, I extends P> = P extends Builtin
         Exclude<keyof I, KeysOfUnion<P>>,
         never
       >;
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

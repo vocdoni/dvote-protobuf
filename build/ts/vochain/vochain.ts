@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import * as Long from "long";
+import * as _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -26,6 +26,8 @@ export enum TxType {
   ADD_DELEGATE_FOR_ACCOUNT = 18,
   DEL_DELEGATE_FOR_ACCOUNT = 19,
   COLLECT_FAUCET = 20,
+  ADD_KEYKEEPER = 21,
+  DELETE_KEYKEEPER = 22,
   UNRECOGNIZED = -1,
 }
 
@@ -94,6 +96,12 @@ export function txTypeFromJSON(object: any): TxType {
     case 20:
     case "COLLECT_FAUCET":
       return TxType.COLLECT_FAUCET;
+    case 21:
+    case "ADD_KEYKEEPER":
+      return TxType.ADD_KEYKEEPER;
+    case 22:
+    case "DELETE_KEYKEEPER":
+      return TxType.DELETE_KEYKEEPER;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -145,8 +153,13 @@ export function txTypeToJSON(object: TxType): string {
       return "DEL_DELEGATE_FOR_ACCOUNT";
     case TxType.COLLECT_FAUCET:
       return "COLLECT_FAUCET";
+    case TxType.ADD_KEYKEEPER:
+      return "ADD_KEYKEEPER";
+    case TxType.DELETE_KEYKEEPER:
+      return "DELETE_KEYKEEPER";
+    case TxType.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -201,8 +214,9 @@ export function processStatusToJSON(object: ProcessStatus): string {
       return "PAUSED";
     case ProcessStatus.RESULTS:
       return "RESULTS";
+    case ProcessStatus.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -219,6 +233,9 @@ export enum SourceNetworkId {
   ETH_RINKEBY_SIGNALING = 9,
   AVAX_FUJI = 10,
   AVAX = 11,
+  POLYGON_MUMBAI = 12,
+  OPTIMISM = 13,
+  ARBITRUM = 14,
   UNRECOGNIZED = -1,
 }
 
@@ -260,6 +277,15 @@ export function sourceNetworkIdFromJSON(object: any): SourceNetworkId {
     case 11:
     case "AVAX":
       return SourceNetworkId.AVAX;
+    case 12:
+    case "POLYGON_MUMBAI":
+      return SourceNetworkId.POLYGON_MUMBAI;
+    case 13:
+    case "OPTIMISM":
+      return SourceNetworkId.OPTIMISM;
+    case 14:
+    case "ARBITRUM":
+      return SourceNetworkId.ARBITRUM;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -293,8 +319,15 @@ export function sourceNetworkIdToJSON(object: SourceNetworkId): string {
       return "AVAX_FUJI";
     case SourceNetworkId.AVAX:
       return "AVAX";
+    case SourceNetworkId.POLYGON_MUMBAI:
+      return "POLYGON_MUMBAI";
+    case SourceNetworkId.OPTIMISM:
+      return "OPTIMISM";
+    case SourceNetworkId.ARBITRUM:
+      return "ARBITRUM";
+    case SourceNetworkId.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -367,8 +400,9 @@ export function censusOriginToJSON(object: CensusOrigin): string {
       return "ERC777";
     case CensusOrigin.MINI_ME:
       return "MINI_ME";
+    case CensusOrigin.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -452,8 +486,9 @@ export function census_TypeToJSON(object: Census_Type): string {
       return "GRAVITON";
     case Census_Type.IDEN3:
       return "IDEN3";
+    case Census_Type.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -548,8 +583,9 @@ export function proofCA_TypeToJSON(object: ProofCA_Type): string {
       return "ECDSA_BLIND";
     case ProofCA_Type.ECDSA_BLIND_PIDSALTED:
       return "ECDSA_BLIND_PIDSALTED";
+    case ProofCA_Type.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -591,8 +627,9 @@ export function proofArbo_TypeToJSON(object: ProofArbo_Type): string {
       return "BLAKE2B";
     case ProofArbo_Type.POSEIDON:
       return "POSEIDON";
+    case ProofArbo_Type.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -625,6 +662,7 @@ export interface Account {
   nonce: number;
   infoURI: string;
   delegateAddrs: Uint8Array[];
+  processIndex: number;
 }
 
 export interface Treasurer {
@@ -650,7 +688,8 @@ export interface Tx {
         $case: "setAccountDelegateTx";
         setAccountDelegateTx: SetAccountDelegateTx;
       }
-    | { $case: "collectFaucet"; collectFaucet: CollectFaucetTx };
+    | { $case: "collectFaucet"; collectFaucet: CollectFaucetTx }
+    | { $case: "setKeykeeper"; setKeykeeper: SetKeykeeperTx };
 }
 
 export interface SignedTx {
@@ -667,13 +706,13 @@ export interface SignedTx {
 
 export interface NewProcessTx {
   txtype: TxType;
-  nonce: Uint8Array;
+  nonce: number;
   process: Process | undefined;
 }
 
 export interface SetProcessTx {
   txtype: TxType;
-  nonce: Uint8Array;
+  nonce: number;
   processId: Uint8Array;
   status?: ProcessStatus | undefined;
   questionIndex?: number | undefined;
@@ -692,12 +731,12 @@ export interface AdminTx {
   keyIndex?: number | undefined;
   power?: number | undefined;
   publicKey?: Uint8Array | undefined;
-  nonce: Uint8Array;
+  nonce: number;
 }
 
 export interface RegisterKeyTx {
   /** Unique number per vote attempt, so that replay attacks can't reuse this payload */
-  nonce: Uint8Array;
+  nonce: number;
   /** The process for which the vote is casted */
   processId: Uint8Array;
   /** Franchise proof */
@@ -760,9 +799,15 @@ export interface FaucetPackage {
   signature: Uint8Array;
 }
 
+export interface SetKeykeeperTx {
+  txtype: TxType;
+  nonce: number;
+  keykeeper: Uint8Array;
+}
+
 export interface Process {
   processId: Uint8Array;
-  /** EntityId identifies unequivocally a process */
+  /** EntityId identifies unequivocally an entity */
   entityId: Uint8Array;
   /** StartBlock represents the tendermint block where the process goes from scheduled to active */
   startBlock: number;
@@ -814,6 +859,16 @@ export interface Process {
    * Used when Mode.PreRegister = true.
    */
   nullifiersRoot?: Uint8Array | undefined;
+  /**
+   * sourceNetworkContractAddr is used for EVM token based voting and it is
+   * the contract address of the token that is going to define the census
+   */
+  sourceNetworkContractAddr?: Uint8Array | undefined;
+  /**
+   * tokenDecimals represents the number of decimals of the token (i.e ERC20) used for voting.
+   * It is normally used for processes with on-chain census
+   */
+  tokenDecimals?: number | undefined;
 }
 
 export interface EnvelopeType {
@@ -925,7 +980,10 @@ function createBaseVoteEnvelope(): VoteEnvelope {
 }
 
 export const VoteEnvelope = {
-  encode(message: VoteEnvelope, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: VoteEnvelope,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.nonce.length !== 0) {
       writer.uint32(10).bytes(message.nonce);
     }
@@ -949,8 +1007,8 @@ export const VoteEnvelope = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): VoteEnvelope {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): VoteEnvelope {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVoteEnvelope();
     while (reader.pos < end) {
@@ -1065,12 +1123,12 @@ function createBaseCensus(): Census {
 }
 
 export const Census = {
-  encode(_: Census, writer: Writer = Writer.create()): Writer {
+  encode(_: Census, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Census {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Census {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCensus();
     while (reader.pos < end) {
@@ -1104,7 +1162,7 @@ function createBaseProof(): Proof {
 }
 
 export const Proof = {
-  encode(message: Proof, writer: Writer = Writer.create()): Writer {
+  encode(message: Proof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.payload?.$case === "graviton") {
       ProofGraviton.encode(
         message.payload.graviton,
@@ -1150,8 +1208,8 @@ export const Proof = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Proof {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Proof {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProof();
     while (reader.pos < end) {
@@ -1389,15 +1447,18 @@ function createBaseProofGraviton(): ProofGraviton {
 }
 
 export const ProofGraviton = {
-  encode(message: ProofGraviton, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProofGraviton,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.siblings.length !== 0) {
       writer.uint32(10).bytes(message.siblings);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofGraviton {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofGraviton {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofGraviton();
     while (reader.pos < end) {
@@ -1445,15 +1506,18 @@ function createBaseProofIden3(): ProofIden3 {
 }
 
 export const ProofIden3 = {
-  encode(message: ProofIden3, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProofIden3,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.siblings.length !== 0) {
       writer.uint32(10).bytes(message.siblings);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofIden3 {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofIden3 {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofIden3();
     while (reader.pos < end) {
@@ -1503,8 +1567,8 @@ function createBaseProofEthereumStorage(): ProofEthereumStorage {
 export const ProofEthereumStorage = {
   encode(
     message: ProofEthereumStorage,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key.length !== 0) {
       writer.uint32(10).bytes(message.key);
     }
@@ -1517,8 +1581,11 @@ export const ProofEthereumStorage = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofEthereumStorage {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): ProofEthereumStorage {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofEthereumStorage();
     while (reader.pos < end) {
@@ -1597,8 +1664,8 @@ function createBaseProofEthereumAccount(): ProofEthereumAccount {
 export const ProofEthereumAccount = {
   encode(
     message: ProofEthereumAccount,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.nonce.length !== 0) {
       writer.uint32(10).bytes(message.nonce);
     }
@@ -1617,8 +1684,11 @@ export const ProofEthereumAccount = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofEthereumAccount {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): ProofEthereumAccount {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofEthereumAccount();
     while (reader.pos < end) {
@@ -1715,7 +1785,10 @@ function createBaseProofMinime(): ProofMinime {
 }
 
 export const ProofMinime = {
-  encode(message: ProofMinime, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProofMinime,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.proofPrevBlock !== undefined) {
       ProofEthereumStorage.encode(
         message.proofPrevBlock,
@@ -1731,8 +1804,8 @@ export const ProofMinime = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofMinime {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofMinime {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofMinime();
     while (reader.pos < end) {
@@ -1803,7 +1876,10 @@ function createBaseProofCA(): ProofCA {
 }
 
 export const ProofCA = {
-  encode(message: ProofCA, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProofCA,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -1816,8 +1892,8 @@ export const ProofCA = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofCA {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofCA {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofCA();
     while (reader.pos < end) {
@@ -1883,7 +1959,10 @@ function createBaseCAbundle(): CAbundle {
 }
 
 export const CAbundle = {
-  encode(message: CAbundle, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: CAbundle,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.processId.length !== 0) {
       writer.uint32(10).bytes(message.processId);
     }
@@ -1893,8 +1972,8 @@ export const CAbundle = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): CAbundle {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): CAbundle {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCAbundle();
     while (reader.pos < end) {
@@ -1951,7 +2030,10 @@ function createBaseProofArbo(): ProofArbo {
 }
 
 export const ProofArbo = {
-  encode(message: ProofArbo, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProofArbo,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -1964,8 +2046,8 @@ export const ProofArbo = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofArbo {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofArbo {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofArbo();
     while (reader.pos < end) {
@@ -2031,7 +2113,10 @@ function createBaseProofZkSNARK(): ProofZkSNARK {
 }
 
 export const ProofZkSNARK = {
-  encode(message: ProofZkSNARK, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProofZkSNARK,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.circuitParametersIndex !== 0) {
       writer.uint32(8).int32(message.circuitParametersIndex);
     }
@@ -2050,8 +2135,8 @@ export const ProofZkSNARK = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProofZkSNARK {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofZkSNARK {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofZkSNARK();
     while (reader.pos < end) {
@@ -2135,11 +2220,20 @@ export const ProofZkSNARK = {
 };
 
 function createBaseAccount(): Account {
-  return { balance: 0, nonce: 0, infoURI: "", delegateAddrs: [] };
+  return {
+    balance: 0,
+    nonce: 0,
+    infoURI: "",
+    delegateAddrs: [],
+    processIndex: 0,
+  };
 }
 
 export const Account = {
-  encode(message: Account, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Account,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.balance !== 0) {
       writer.uint32(8).uint64(message.balance);
     }
@@ -2152,11 +2246,14 @@ export const Account = {
     for (const v of message.delegateAddrs) {
       writer.uint32(34).bytes(v!);
     }
+    if (message.processIndex !== 0) {
+      writer.uint32(40).uint32(message.processIndex);
+    }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Account {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Account {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAccount();
     while (reader.pos < end) {
@@ -2174,6 +2271,9 @@ export const Account = {
         case 4:
           message.delegateAddrs.push(reader.bytes());
           break;
+        case 5:
+          message.processIndex = reader.uint32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2190,6 +2290,9 @@ export const Account = {
       delegateAddrs: Array.isArray(object?.delegateAddrs)
         ? object.delegateAddrs.map((e: any) => bytesFromBase64(e))
         : [],
+      processIndex: isSet(object.processIndex)
+        ? Number(object.processIndex)
+        : 0,
     };
   },
 
@@ -2206,6 +2309,8 @@ export const Account = {
     } else {
       obj.delegateAddrs = [];
     }
+    message.processIndex !== undefined &&
+      (obj.processIndex = Math.round(message.processIndex));
     return obj;
   },
 
@@ -2215,6 +2320,7 @@ export const Account = {
     message.nonce = object.nonce ?? 0;
     message.infoURI = object.infoURI ?? "";
     message.delegateAddrs = object.delegateAddrs?.map((e) => e) || [];
+    message.processIndex = object.processIndex ?? 0;
     return message;
   },
 };
@@ -2224,7 +2330,10 @@ function createBaseTreasurer(): Treasurer {
 }
 
 export const Treasurer = {
-  encode(message: Treasurer, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Treasurer,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.address.length !== 0) {
       writer.uint32(10).bytes(message.address);
     }
@@ -2234,8 +2343,8 @@ export const Treasurer = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Treasurer {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Treasurer {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTreasurer();
     while (reader.pos < end) {
@@ -2289,7 +2398,7 @@ function createBaseTx(): Tx {
 }
 
 export const Tx = {
-  encode(message: Tx, writer: Writer = Writer.create()): Writer {
+  encode(message: Tx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.payload?.$case === "vote") {
       VoteEnvelope.encode(
         message.payload.vote,
@@ -2353,11 +2462,17 @@ export const Tx = {
         writer.uint32(90).fork()
       ).ldelim();
     }
+    if (message.payload?.$case === "setKeykeeper") {
+      SetKeykeeperTx.encode(
+        message.payload.setKeykeeper,
+        writer.uint32(98).fork()
+      ).ldelim();
+    }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Tx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Tx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTx();
     while (reader.pos < end) {
@@ -2435,6 +2550,12 @@ export const Tx = {
             collectFaucet: CollectFaucetTx.decode(reader, reader.uint32()),
           };
           break;
+        case 12:
+          message.payload = {
+            $case: "setKeykeeper",
+            setKeykeeper: SetKeykeeperTx.decode(reader, reader.uint32()),
+          };
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2498,6 +2619,11 @@ export const Tx = {
             $case: "collectFaucet",
             collectFaucet: CollectFaucetTx.fromJSON(object.collectFaucet),
           }
+        : isSet(object.setKeykeeper)
+        ? {
+            $case: "setKeykeeper",
+            setKeykeeper: SetKeykeeperTx.fromJSON(object.setKeykeeper),
+          }
         : undefined,
     };
   },
@@ -2547,6 +2673,10 @@ export const Tx = {
     message.payload?.$case === "collectFaucet" &&
       (obj.collectFaucet = message.payload?.collectFaucet
         ? CollectFaucetTx.toJSON(message.payload?.collectFaucet)
+        : undefined);
+    message.payload?.$case === "setKeykeeper" &&
+      (obj.setKeykeeper = message.payload?.setKeykeeper
+        ? SetKeykeeperTx.toJSON(message.payload?.setKeykeeper)
         : undefined);
     return obj;
   },
@@ -2671,6 +2801,16 @@ export const Tx = {
         ),
       };
     }
+    if (
+      object.payload?.$case === "setKeykeeper" &&
+      object.payload?.setKeykeeper !== undefined &&
+      object.payload?.setKeykeeper !== null
+    ) {
+      message.payload = {
+        $case: "setKeykeeper",
+        setKeykeeper: SetKeykeeperTx.fromPartial(object.payload.setKeykeeper),
+      };
+    }
     return message;
   },
 };
@@ -2680,7 +2820,10 @@ function createBaseSignedTx(): SignedTx {
 }
 
 export const SignedTx = {
-  encode(message: SignedTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: SignedTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.tx.length !== 0) {
       writer.uint32(10).bytes(message.tx);
     }
@@ -2690,8 +2833,8 @@ export const SignedTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SignedTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): SignedTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignedTx();
     while (reader.pos < end) {
@@ -2743,16 +2886,19 @@ export const SignedTx = {
 };
 
 function createBaseNewProcessTx(): NewProcessTx {
-  return { txtype: 0, nonce: new Uint8Array(), process: undefined };
+  return { txtype: 0, nonce: 0, process: undefined };
 }
 
 export const NewProcessTx = {
-  encode(message: NewProcessTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: NewProcessTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
-    if (message.nonce.length !== 0) {
-      writer.uint32(18).bytes(message.nonce);
+    if (message.nonce !== 0) {
+      writer.uint32(16).uint32(message.nonce);
     }
     if (message.process !== undefined) {
       Process.encode(message.process, writer.uint32(26).fork()).ldelim();
@@ -2760,8 +2906,8 @@ export const NewProcessTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): NewProcessTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): NewProcessTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNewProcessTx();
     while (reader.pos < end) {
@@ -2771,7 +2917,7 @@ export const NewProcessTx = {
           message.txtype = reader.int32() as any;
           break;
         case 2:
-          message.nonce = reader.bytes();
+          message.nonce = reader.uint32();
           break;
         case 3:
           message.process = Process.decode(reader, reader.uint32());
@@ -2787,9 +2933,7 @@ export const NewProcessTx = {
   fromJSON(object: any): NewProcessTx {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet(object.nonce)
-        ? bytesFromBase64(object.nonce)
-        : new Uint8Array(),
+      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
       process: isSet(object.process)
         ? Process.fromJSON(object.process)
         : undefined,
@@ -2799,10 +2943,7 @@ export const NewProcessTx = {
   toJSON(message: NewProcessTx): unknown {
     const obj: any = {};
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
-    message.nonce !== undefined &&
-      (obj.nonce = base64FromBytes(
-        message.nonce !== undefined ? message.nonce : new Uint8Array()
-      ));
+    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.process !== undefined &&
       (obj.process = message.process
         ? Process.toJSON(message.process)
@@ -2815,7 +2956,7 @@ export const NewProcessTx = {
   ): NewProcessTx {
     const message = createBaseNewProcessTx();
     message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? new Uint8Array();
+    message.nonce = object.nonce ?? 0;
     message.process =
       object.process !== undefined && object.process !== null
         ? Process.fromPartial(object.process)
@@ -2827,7 +2968,7 @@ export const NewProcessTx = {
 function createBaseSetProcessTx(): SetProcessTx {
   return {
     txtype: 0,
-    nonce: new Uint8Array(),
+    nonce: 0,
     processId: new Uint8Array(),
     status: undefined,
     questionIndex: undefined,
@@ -2839,12 +2980,15 @@ function createBaseSetProcessTx(): SetProcessTx {
 }
 
 export const SetProcessTx = {
-  encode(message: SetProcessTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: SetProcessTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
-    if (message.nonce.length !== 0) {
-      writer.uint32(18).bytes(message.nonce);
+    if (message.nonce !== 0) {
+      writer.uint32(16).uint32(message.nonce);
     }
     if (message.processId.length !== 0) {
       writer.uint32(26).bytes(message.processId);
@@ -2870,8 +3014,8 @@ export const SetProcessTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SetProcessTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetProcessTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetProcessTx();
     while (reader.pos < end) {
@@ -2881,7 +3025,7 @@ export const SetProcessTx = {
           message.txtype = reader.int32() as any;
           break;
         case 2:
-          message.nonce = reader.bytes();
+          message.nonce = reader.uint32();
           break;
         case 3:
           message.processId = reader.bytes();
@@ -2915,9 +3059,7 @@ export const SetProcessTx = {
   fromJSON(object: any): SetProcessTx {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet(object.nonce)
-        ? bytesFromBase64(object.nonce)
-        : new Uint8Array(),
+      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
       processId: isSet(object.processId)
         ? bytesFromBase64(object.processId)
         : new Uint8Array(),
@@ -2941,10 +3083,7 @@ export const SetProcessTx = {
   toJSON(message: SetProcessTx): unknown {
     const obj: any = {};
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
-    message.nonce !== undefined &&
-      (obj.nonce = base64FromBytes(
-        message.nonce !== undefined ? message.nonce : new Uint8Array()
-      ));
+    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.processId !== undefined &&
       (obj.processId = base64FromBytes(
         message.processId !== undefined ? message.processId : new Uint8Array()
@@ -2976,7 +3115,7 @@ export const SetProcessTx = {
   ): SetProcessTx {
     const message = createBaseSetProcessTx();
     message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? new Uint8Array();
+    message.nonce = object.nonce ?? 0;
     message.processId = object.processId ?? new Uint8Array();
     message.status = object.status ?? undefined;
     message.questionIndex = object.questionIndex ?? undefined;
@@ -3004,12 +3143,15 @@ function createBaseAdminTx(): AdminTx {
     keyIndex: undefined,
     power: undefined,
     publicKey: undefined,
-    nonce: new Uint8Array(),
+    nonce: 0,
   };
 }
 
 export const AdminTx = {
-  encode(message: AdminTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: AdminTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3034,14 +3176,14 @@ export const AdminTx = {
     if (message.publicKey !== undefined) {
       writer.uint32(74).bytes(message.publicKey);
     }
-    if (message.nonce.length !== 0) {
-      writer.uint32(90).bytes(message.nonce);
+    if (message.nonce !== 0) {
+      writer.uint32(88).uint32(message.nonce);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): AdminTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): AdminTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAdminTx();
     while (reader.pos < end) {
@@ -3072,7 +3214,7 @@ export const AdminTx = {
           message.publicKey = reader.bytes();
           break;
         case 11:
-          message.nonce = reader.bytes();
+          message.nonce = reader.uint32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -3102,9 +3244,7 @@ export const AdminTx = {
       publicKey: isSet(object.publicKey)
         ? bytesFromBase64(object.publicKey)
         : undefined,
-      nonce: isSet(object.nonce)
-        ? bytesFromBase64(object.nonce)
-        : new Uint8Array(),
+      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
     };
   },
 
@@ -3138,10 +3278,7 @@ export const AdminTx = {
         message.publicKey !== undefined
           ? base64FromBytes(message.publicKey)
           : undefined);
-    message.nonce !== undefined &&
-      (obj.nonce = base64FromBytes(
-        message.nonce !== undefined ? message.nonce : new Uint8Array()
-      ));
+    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     return obj;
   },
 
@@ -3155,14 +3292,14 @@ export const AdminTx = {
     message.keyIndex = object.keyIndex ?? undefined;
     message.power = object.power ?? undefined;
     message.publicKey = object.publicKey ?? undefined;
-    message.nonce = object.nonce ?? new Uint8Array();
+    message.nonce = object.nonce ?? 0;
     return message;
   },
 };
 
 function createBaseRegisterKeyTx(): RegisterKeyTx {
   return {
-    nonce: new Uint8Array(),
+    nonce: 0,
     processId: new Uint8Array(),
     proof: undefined,
     newKey: new Uint8Array(),
@@ -3171,9 +3308,12 @@ function createBaseRegisterKeyTx(): RegisterKeyTx {
 }
 
 export const RegisterKeyTx = {
-  encode(message: RegisterKeyTx, writer: Writer = Writer.create()): Writer {
-    if (message.nonce.length !== 0) {
-      writer.uint32(10).bytes(message.nonce);
+  encode(
+    message: RegisterKeyTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.nonce !== 0) {
+      writer.uint32(8).uint32(message.nonce);
     }
     if (message.processId.length !== 0) {
       writer.uint32(18).bytes(message.processId);
@@ -3190,15 +3330,15 @@ export const RegisterKeyTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): RegisterKeyTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): RegisterKeyTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisterKeyTx();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.nonce = reader.bytes();
+          message.nonce = reader.uint32();
           break;
         case 2:
           message.processId = reader.bytes();
@@ -3222,9 +3362,7 @@ export const RegisterKeyTx = {
 
   fromJSON(object: any): RegisterKeyTx {
     return {
-      nonce: isSet(object.nonce)
-        ? bytesFromBase64(object.nonce)
-        : new Uint8Array(),
+      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
       processId: isSet(object.processId)
         ? bytesFromBase64(object.processId)
         : new Uint8Array(),
@@ -3238,10 +3376,7 @@ export const RegisterKeyTx = {
 
   toJSON(message: RegisterKeyTx): unknown {
     const obj: any = {};
-    message.nonce !== undefined &&
-      (obj.nonce = base64FromBytes(
-        message.nonce !== undefined ? message.nonce : new Uint8Array()
-      ));
+    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.processId !== undefined &&
       (obj.processId = base64FromBytes(
         message.processId !== undefined ? message.processId : new Uint8Array()
@@ -3260,7 +3395,7 @@ export const RegisterKeyTx = {
     object: I
   ): RegisterKeyTx {
     const message = createBaseRegisterKeyTx();
-    message.nonce = object.nonce ?? new Uint8Array();
+    message.nonce = object.nonce ?? 0;
     message.processId = object.processId ?? new Uint8Array();
     message.proof =
       object.proof !== undefined && object.proof !== null
@@ -3277,7 +3412,10 @@ function createBaseMintTokensTx(): MintTokensTx {
 }
 
 export const MintTokensTx = {
-  encode(message: MintTokensTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: MintTokensTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3293,8 +3431,8 @@ export const MintTokensTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MintTokensTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): MintTokensTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMintTokensTx();
     while (reader.pos < end) {
@@ -3364,7 +3502,10 @@ function createBaseSendTokensTx(): SendTokensTx {
 }
 
 export const SendTokensTx = {
-  encode(message: SendTokensTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: SendTokensTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3383,8 +3524,8 @@ export const SendTokensTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SendTokensTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): SendTokensTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSendTokensTx();
     while (reader.pos < end) {
@@ -3461,8 +3602,8 @@ function createBaseSetTransactionCostsTx(): SetTransactionCostsTx {
 export const SetTransactionCostsTx = {
   encode(
     message: SetTransactionCostsTx,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3475,8 +3616,11 @@ export const SetTransactionCostsTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SetTransactionCostsTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): SetTransactionCostsTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetTransactionCostsTx();
     while (reader.pos < end) {
@@ -3537,7 +3681,10 @@ function createBaseSetAccountInfoTx(): SetAccountInfoTx {
 }
 
 export const SetAccountInfoTx = {
-  encode(message: SetAccountInfoTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: SetAccountInfoTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3559,8 +3706,8 @@ export const SetAccountInfoTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SetAccountInfoTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetAccountInfoTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetAccountInfoTx();
     while (reader.pos < end) {
@@ -3642,8 +3789,8 @@ function createBaseSetAccountDelegateTx(): SetAccountDelegateTx {
 export const SetAccountDelegateTx = {
   encode(
     message: SetAccountDelegateTx,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3656,8 +3803,11 @@ export const SetAccountDelegateTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SetAccountDelegateTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): SetAccountDelegateTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetAccountDelegateTx();
     while (reader.pos < end) {
@@ -3717,7 +3867,10 @@ function createBaseCollectFaucetTx(): CollectFaucetTx {
 }
 
 export const CollectFaucetTx = {
-  encode(message: CollectFaucetTx, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: CollectFaucetTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.txType !== 0) {
       writer.uint32(8).int32(message.txType);
     }
@@ -3733,8 +3886,8 @@ export const CollectFaucetTx = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): CollectFaucetTx {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): CollectFaucetTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseCollectFaucetTx();
     while (reader.pos < end) {
@@ -3797,7 +3950,10 @@ function createBaseFaucetPayload(): FaucetPayload {
 }
 
 export const FaucetPayload = {
-  encode(message: FaucetPayload, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: FaucetPayload,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.identifier !== 0) {
       writer.uint32(8).uint64(message.identifier);
     }
@@ -3810,8 +3966,8 @@ export const FaucetPayload = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): FaucetPayload {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): FaucetPayload {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFaucetPayload();
     while (reader.pos < end) {
@@ -3870,7 +4026,10 @@ function createBaseFaucetPackage(): FaucetPackage {
 }
 
 export const FaucetPackage = {
-  encode(message: FaucetPackage, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: FaucetPackage,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.payload !== undefined) {
       FaucetPayload.encode(message.payload, writer.uint32(10).fork()).ldelim();
     }
@@ -3880,8 +4039,8 @@ export const FaucetPackage = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): FaucetPackage {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): FaucetPackage {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFaucetPackage();
     while (reader.pos < end) {
@@ -3938,6 +4097,83 @@ export const FaucetPackage = {
   },
 };
 
+function createBaseSetKeykeeperTx(): SetKeykeeperTx {
+  return { txtype: 0, nonce: 0, keykeeper: new Uint8Array() };
+}
+
+export const SetKeykeeperTx = {
+  encode(
+    message: SetKeykeeperTx,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.txtype !== 0) {
+      writer.uint32(8).int32(message.txtype);
+    }
+    if (message.nonce !== 0) {
+      writer.uint32(16).uint32(message.nonce);
+    }
+    if (message.keykeeper.length !== 0) {
+      writer.uint32(26).bytes(message.keykeeper);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetKeykeeperTx {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetKeykeeperTx();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.txtype = reader.int32() as any;
+          break;
+        case 2:
+          message.nonce = reader.uint32();
+          break;
+        case 3:
+          message.keykeeper = reader.bytes();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetKeykeeperTx {
+    return {
+      txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
+      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
+      keykeeper: isSet(object.keykeeper)
+        ? bytesFromBase64(object.keykeeper)
+        : new Uint8Array(),
+    };
+  },
+
+  toJSON(message: SetKeykeeperTx): unknown {
+    const obj: any = {};
+    message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
+    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
+    message.keykeeper !== undefined &&
+      (obj.keykeeper = base64FromBytes(
+        message.keykeeper !== undefined ? message.keykeeper : new Uint8Array()
+      ));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<SetKeykeeperTx>, I>>(
+    object: I
+  ): SetKeykeeperTx {
+    const message = createBaseSetKeykeeperTx();
+    message.txtype = object.txtype ?? 0;
+    message.nonce = object.nonce ?? 0;
+    message.keykeeper = object.keykeeper ?? new Uint8Array();
+    return message;
+  },
+};
+
 function createBaseProcess(): Process {
   return {
     processId: new Uint8Array(),
@@ -3969,11 +4205,16 @@ function createBaseProcess(): Process {
     rollingCensusRoot: undefined,
     rollingCensusSize: undefined,
     nullifiersRoot: undefined,
+    sourceNetworkContractAddr: undefined,
+    tokenDecimals: undefined,
   };
 }
 
 export const Process = {
-  encode(message: Process, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Process,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.processId.length !== 0) {
       writer.uint32(10).bytes(message.processId);
     }
@@ -4067,11 +4308,17 @@ export const Process = {
     if (message.nullifiersRoot !== undefined) {
       writer.uint32(250).bytes(message.nullifiersRoot);
     }
+    if (message.sourceNetworkContractAddr !== undefined) {
+      writer.uint32(258).bytes(message.sourceNetworkContractAddr);
+    }
+    if (message.tokenDecimals !== undefined) {
+      writer.uint32(264).uint32(message.tokenDecimals);
+    }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Process {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Process {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcess();
     while (reader.pos < end) {
@@ -4167,6 +4414,12 @@ export const Process = {
         case 31:
           message.nullifiersRoot = reader.bytes();
           break;
+        case 32:
+          message.sourceNetworkContractAddr = reader.bytes();
+          break;
+        case 33:
+          message.tokenDecimals = reader.uint32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -4245,6 +4498,12 @@ export const Process = {
         : undefined,
       nullifiersRoot: isSet(object.nullifiersRoot)
         ? bytesFromBase64(object.nullifiersRoot)
+        : undefined,
+      sourceNetworkContractAddr: isSet(object.sourceNetworkContractAddr)
+        ? bytesFromBase64(object.sourceNetworkContractAddr)
+        : undefined,
+      tokenDecimals: isSet(object.tokenDecimals)
+        ? Number(object.tokenDecimals)
         : undefined,
     };
   },
@@ -4345,6 +4604,13 @@ export const Process = {
         message.nullifiersRoot !== undefined
           ? base64FromBytes(message.nullifiersRoot)
           : undefined);
+    message.sourceNetworkContractAddr !== undefined &&
+      (obj.sourceNetworkContractAddr =
+        message.sourceNetworkContractAddr !== undefined
+          ? base64FromBytes(message.sourceNetworkContractAddr)
+          : undefined);
+    message.tokenDecimals !== undefined &&
+      (obj.tokenDecimals = Math.round(message.tokenDecimals));
     return obj;
   },
 
@@ -4391,6 +4657,9 @@ export const Process = {
     message.rollingCensusRoot = object.rollingCensusRoot ?? undefined;
     message.rollingCensusSize = object.rollingCensusSize ?? undefined;
     message.nullifiersRoot = object.nullifiersRoot ?? undefined;
+    message.sourceNetworkContractAddr =
+      object.sourceNetworkContractAddr ?? undefined;
+    message.tokenDecimals = object.tokenDecimals ?? undefined;
     return message;
   },
 };
@@ -4406,7 +4675,10 @@ function createBaseEnvelopeType(): EnvelopeType {
 }
 
 export const EnvelopeType = {
-  encode(message: EnvelopeType, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: EnvelopeType,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.serial === true) {
       writer.uint32(8).bool(message.serial);
     }
@@ -4425,8 +4697,8 @@ export const EnvelopeType = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): EnvelopeType {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): EnvelopeType {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEnvelopeType();
     while (reader.pos < end) {
@@ -4508,7 +4780,10 @@ function createBaseProcessMode(): ProcessMode {
 }
 
 export const ProcessMode = {
-  encode(message: ProcessMode, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProcessMode,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.autoStart === true) {
       writer.uint32(8).bool(message.autoStart);
     }
@@ -4527,8 +4802,8 @@ export const ProcessMode = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessMode {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProcessMode {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessMode();
     while (reader.pos < end) {
@@ -4615,8 +4890,8 @@ function createBaseProcessVoteOptions(): ProcessVoteOptions {
 export const ProcessVoteOptions = {
   encode(
     message: ProcessVoteOptions,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.maxCount !== 0) {
       writer.uint32(8).uint32(message.maxCount);
     }
@@ -4635,8 +4910,8 @@ export const ProcessVoteOptions = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessVoteOptions {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProcessVoteOptions {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessVoteOptions();
     while (reader.pos < end) {
@@ -4714,15 +4989,18 @@ function createBaseOracleList(): OracleList {
 }
 
 export const OracleList = {
-  encode(message: OracleList, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: OracleList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.oracles) {
       writer.uint32(10).bytes(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): OracleList {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): OracleList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOracleList();
     while (reader.pos < end) {
@@ -4773,15 +5051,18 @@ function createBaseValidatorList(): ValidatorList {
 }
 
 export const ValidatorList = {
-  encode(message: ValidatorList, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ValidatorList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.validators) {
       Validator.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ValidatorList {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ValidatorList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidatorList();
     while (reader.pos < end) {
@@ -4838,7 +5119,10 @@ function createBaseValidator(): Validator {
 }
 
 export const Validator = {
-  encode(message: Validator, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Validator,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.address.length !== 0) {
       writer.uint32(10).bytes(message.address);
     }
@@ -4854,8 +5138,8 @@ export const Validator = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Validator {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Validator {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValidator();
     while (reader.pos < end) {
@@ -4933,7 +5217,7 @@ function createBaseVote(): Vote {
 }
 
 export const Vote = {
-  encode(message: Vote, writer: Writer = Writer.create()): Writer {
+  encode(message: Vote, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.height !== 0) {
       writer.uint32(8).uint32(message.height);
     }
@@ -4957,8 +5241,8 @@ export const Vote = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Vote {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): Vote {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseVote();
     while (reader.pos < end) {
@@ -5081,7 +5365,10 @@ function createBaseTendermintHeader(): TendermintHeader {
 }
 
 export const TendermintHeader = {
-  encode(message: TendermintHeader, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: TendermintHeader,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.chainId !== "") {
       writer.uint32(18).string(message.chainId);
     }
@@ -5124,8 +5411,8 @@ export const TendermintHeader = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TendermintHeader {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): TendermintHeader {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTendermintHeader();
     while (reader.pos < end) {
@@ -5311,7 +5598,10 @@ function createBaseProcessResult(): ProcessResult {
 }
 
 export const ProcessResult = {
-  encode(message: ProcessResult, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProcessResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.votes) {
       QuestionResult.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -5330,8 +5620,8 @@ export const ProcessResult = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessResult {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProcessResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessResult();
     while (reader.pos < end) {
@@ -5431,15 +5721,18 @@ function createBaseQuestionResult(): QuestionResult {
 }
 
 export const QuestionResult = {
-  encode(message: QuestionResult, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: QuestionResult,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.question) {
       writer.uint32(10).bytes(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QuestionResult {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): QuestionResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQuestionResult();
     while (reader.pos < end) {
@@ -5490,15 +5783,18 @@ function createBaseProcessEndingList(): ProcessEndingList {
 }
 
 export const ProcessEndingList = {
-  encode(message: ProcessEndingList, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: ProcessEndingList,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.processList) {
       writer.uint32(10).bytes(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): ProcessEndingList {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProcessEndingList {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProcessEndingList();
     while (reader.pos < end) {
@@ -5549,15 +5845,18 @@ function createBaseStoredKeys(): StoredKeys {
 }
 
 export const StoredKeys = {
-  encode(message: StoredKeys, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: StoredKeys,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.pids) {
       writer.uint32(10).bytes(v!);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): StoredKeys {
-    const reader = input instanceof Reader ? input : new Reader(input);
+  decode(input: _m0.Reader | Uint8Array, length?: number): StoredKeys {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStoredKeys();
     while (reader.pos < end) {
@@ -5631,9 +5930,9 @@ const btoa: (bin: string) => string =
   ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
   const bin: string[] = [];
-  for (const byte of arr) {
+  arr.forEach((byte) => {
     bin.push(String.fromCharCode(byte));
-  }
+  });
   return btoa(bin.join(""));
 }
 
@@ -5677,9 +5976,9 @@ function longToNumber(long: Long): number {
 
 // If you get a compile-error about 'Constructor<Long> and ... have no overlap',
 // add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }
 
 function isSet(value: any): boolean {

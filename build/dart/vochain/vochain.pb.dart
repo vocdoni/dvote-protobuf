@@ -3,7 +3,7 @@
 //  source: vochain/vochain.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -21,7 +21,7 @@ class VoteEnvelope extends $pb.GeneratedMessage {
     ..aOM<Proof>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proof', subBuilder: Proof.create)
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votePackage', $pb.PbFieldType.OY, protoName: 'votePackage')
     ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifier', $pb.PbFieldType.OY)
-    ..p<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.PU3, protoName: 'encryptionKeyIndexes')
+    ..p<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.KU3, protoName: 'encryptionKeyIndexes')
     ..hasRequiredFields = false
   ;
 
@@ -2713,6 +2713,7 @@ class Process extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rollingCensusSize', $pb.PbFieldType.OU6, protoName: 'rollingCensusSize', defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifiersRoot', $pb.PbFieldType.OY, protoName: 'nullifiersRoot')
     ..a<$core.List<$core.int>>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNetworkContractAddr', $pb.PbFieldType.OY, protoName: 'sourceNetworkContractAddr')
+    ..a<$core.int>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tokenDecimals', $pb.PbFieldType.OU3, protoName: 'tokenDecimals')
     ..hasRequiredFields = false
   ;
 
@@ -2748,6 +2749,7 @@ class Process extends $pb.GeneratedMessage {
     $fixnum.Int64? rollingCensusSize,
     $core.List<$core.int>? nullifiersRoot,
     $core.List<$core.int>? sourceNetworkContractAddr,
+    $core.int? tokenDecimals,
   }) {
     final _result = create();
     if (processId != null) {
@@ -2839,6 +2841,9 @@ class Process extends $pb.GeneratedMessage {
     }
     if (sourceNetworkContractAddr != null) {
       _result.sourceNetworkContractAddr = sourceNetworkContractAddr;
+    }
+    if (tokenDecimals != null) {
+      _result.tokenDecimals = tokenDecimals;
     }
     return _result;
   }
@@ -3114,6 +3119,15 @@ class Process extends $pb.GeneratedMessage {
   $core.bool hasSourceNetworkContractAddr() => $_has(29);
   @$pb.TagNumber(32)
   void clearSourceNetworkContractAddr() => clearField(32);
+
+  @$pb.TagNumber(33)
+  $core.int get tokenDecimals => $_getIZ(30);
+  @$pb.TagNumber(33)
+  set tokenDecimals($core.int v) { $_setUnsignedInt32(30, v); }
+  @$pb.TagNumber(33)
+  $core.bool hasTokenDecimals() => $_has(30);
+  @$pb.TagNumber(33)
+  void clearTokenDecimals() => clearField(33);
 }
 
 class EnvelopeType extends $pb.GeneratedMessage {
@@ -3602,7 +3616,7 @@ class Vote extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullifier', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'processId', $pb.PbFieldType.OY, protoName: 'processId')
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votePackage', $pb.PbFieldType.OY, protoName: 'votePackage')
-    ..p<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.PU3, protoName: 'encryptionKeyIndexes')
+    ..p<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.KU3, protoName: 'encryptionKeyIndexes')
     ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
