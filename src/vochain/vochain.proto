@@ -341,6 +341,9 @@ message Process {
 	// sourceNetworkContractAddr is used for EVM token based voting and it is
 	// the contract address of the token that is going to define the census
 	optional bytes sourceNetworkContractAddr = 32;
+	// tokenDecimals represents the number of decimals of the token (i.e ERC20) used for voting.
+	// It is normally used for processes with on-chain census
+	optional uint8 tokenDecimals = 33;
 }
 
 enum ProcessStatus {
