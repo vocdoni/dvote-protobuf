@@ -433,6 +433,10 @@ message Vote {
 	bytes weight = 6;
 }
 
+message VoterID {
+	optional bytes ecdsaPublicKey = 1;
+}
+
 message TendermintHeader {
 	// basic block info
 	string chain_id = 2 ;
