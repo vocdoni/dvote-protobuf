@@ -58,10 +58,7 @@ function createBaseFeedStore(): FeedStore {
 }
 
 export const FeedStore = {
-  encode(
-    message: FeedStore,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FeedStore, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       Feed.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -87,26 +84,20 @@ export const FeedStore = {
   },
 
   fromJSON(object: any): FeedStore {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => Feed.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => Feed.fromJSON(e)) : [] };
   },
 
   toJSON(message: FeedStore): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) => (e ? Feed.toJSON(e) : undefined));
+      obj.items = message.items.map((e) => e ? Feed.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FeedStore>, I>>(
-    object: I
-  ): FeedStore {
+  fromPartial<I extends Exact<DeepPartial<FeedStore>, I>>(object: I): FeedStore {
     const message = createBaseFeedStore();
     message.items = object.items?.map((e) => Feed.fromPartial(e)) || [];
     return message;
@@ -158,10 +149,7 @@ export const Feed = {
       FeedPost.encode(v!, writer.uint32(74).fork()).ldelim();
     }
     Object.entries(message.meta).forEach(([key, value]) => {
-      Feed_MetaEntry.encode(
-        { key: key as any, value },
-        writer.uint32(802).fork()
-      ).ldelim();
+      Feed_MetaEntry.encode({ key: key as any, value }, writer.uint32(802).fork()).ldelim();
     });
     return writer;
   },
@@ -224,17 +212,12 @@ export const Feed = {
       icon: isSet(object.icon) ? String(object.icon) : "",
       favicon: isSet(object.favicon) ? String(object.favicon) : "",
       expired: isSet(object.expired) ? Boolean(object.expired) : false,
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => FeedPost.fromJSON(e))
-        : [],
+      items: Array.isArray(object?.items) ? object.items.map((e: any) => FeedPost.fromJSON(e)) : [],
       meta: isObject(object.meta)
-        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
     };
   },
@@ -243,18 +226,14 @@ export const Feed = {
     const obj: any = {};
     message.version !== undefined && (obj.version = message.version);
     message.title !== undefined && (obj.title = message.title);
-    message.homePageUrl !== undefined &&
-      (obj.homePageUrl = message.homePageUrl);
-    message.description !== undefined &&
-      (obj.description = message.description);
+    message.homePageUrl !== undefined && (obj.homePageUrl = message.homePageUrl);
+    message.description !== undefined && (obj.description = message.description);
     message.feedUrl !== undefined && (obj.feedUrl = message.feedUrl);
     message.icon !== undefined && (obj.icon = message.icon);
     message.favicon !== undefined && (obj.favicon = message.favicon);
     message.expired !== undefined && (obj.expired = message.expired);
     if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? FeedPost.toJSON(e) : undefined
-      );
+      obj.items = message.items.map((e) => e ? FeedPost.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
@@ -278,9 +257,7 @@ export const Feed = {
     message.favicon = object.favicon ?? "";
     message.expired = object.expired ?? false;
     message.items = object.items?.map((e) => FeedPost.fromPartial(e)) || [];
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.meta = Object.entries(object.meta ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
@@ -295,10 +272,7 @@ function createBaseFeed_MetaEntry(): Feed_MetaEntry {
 }
 
 export const Feed_MetaEntry = {
-  encode(
-    message: Feed_MetaEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Feed_MetaEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -330,10 +304,7 @@ export const Feed_MetaEntry = {
   },
 
   fromJSON(object: any): Feed_MetaEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: Feed_MetaEntry): unknown {
@@ -343,9 +314,7 @@ export const Feed_MetaEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Feed_MetaEntry>, I>>(
-    object: I
-  ): Feed_MetaEntry {
+  fromPartial<I extends Exact<DeepPartial<Feed_MetaEntry>, I>>(object: I): Feed_MetaEntry {
     const message = createBaseFeed_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -370,10 +339,7 @@ function createBaseFeedPost(): FeedPost {
 }
 
 export const FeedPost = {
-  encode(
-    message: FeedPost,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FeedPost, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
@@ -467,18 +433,10 @@ export const FeedPost = {
       contentHtml: isSet(object.contentHtml) ? String(object.contentHtml) : "",
       url: isSet(object.url) ? String(object.url) : "",
       image: isSet(object.image) ? String(object.image) : "",
-      tags: Array.isArray(object?.tags)
-        ? object.tags.map((e: any) => String(e))
-        : [],
-      datePublished: isSet(object.datePublished)
-        ? String(object.datePublished)
-        : "",
-      dateModified: isSet(object.dateModified)
-        ? String(object.dateModified)
-        : "",
-      author: isSet(object.author)
-        ? FeedPost_Author.fromJSON(object.author)
-        : undefined,
+      tags: Array.isArray(object?.tags) ? object.tags.map((e: any) => String(e)) : [],
+      datePublished: isSet(object.datePublished) ? String(object.datePublished) : "",
+      dateModified: isSet(object.dateModified) ? String(object.dateModified) : "",
+      author: isSet(object.author) ? FeedPost_Author.fromJSON(object.author) : undefined,
     };
   },
 
@@ -487,10 +445,8 @@ export const FeedPost = {
     message.id !== undefined && (obj.id = message.id);
     message.title !== undefined && (obj.title = message.title);
     message.summary !== undefined && (obj.summary = message.summary);
-    message.contentText !== undefined &&
-      (obj.contentText = message.contentText);
-    message.contentHtml !== undefined &&
-      (obj.contentHtml = message.contentHtml);
+    message.contentText !== undefined && (obj.contentText = message.contentText);
+    message.contentHtml !== undefined && (obj.contentHtml = message.contentHtml);
     message.url !== undefined && (obj.url = message.url);
     message.image !== undefined && (obj.image = message.image);
     if (message.tags) {
@@ -498,14 +454,9 @@ export const FeedPost = {
     } else {
       obj.tags = [];
     }
-    message.datePublished !== undefined &&
-      (obj.datePublished = message.datePublished);
-    message.dateModified !== undefined &&
-      (obj.dateModified = message.dateModified);
-    message.author !== undefined &&
-      (obj.author = message.author
-        ? FeedPost_Author.toJSON(message.author)
-        : undefined);
+    message.datePublished !== undefined && (obj.datePublished = message.datePublished);
+    message.dateModified !== undefined && (obj.dateModified = message.dateModified);
+    message.author !== undefined && (obj.author = message.author ? FeedPost_Author.toJSON(message.author) : undefined);
     return obj;
   },
 
@@ -521,10 +472,9 @@ export const FeedPost = {
     message.tags = object.tags?.map((e) => e) || [];
     message.datePublished = object.datePublished ?? "";
     message.dateModified = object.dateModified ?? "";
-    message.author =
-      object.author !== undefined && object.author !== null
-        ? FeedPost_Author.fromPartial(object.author)
-        : undefined;
+    message.author = (object.author !== undefined && object.author !== null)
+      ? FeedPost_Author.fromPartial(object.author)
+      : undefined;
     return message;
   },
 };
@@ -534,10 +484,7 @@ function createBaseFeedPost_Author(): FeedPost_Author {
 }
 
 export const FeedPost_Author = {
-  encode(
-    message: FeedPost_Author,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FeedPost_Author, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -569,10 +516,7 @@ export const FeedPost_Author = {
   },
 
   fromJSON(object: any): FeedPost_Author {
-    return {
-      name: isSet(object.name) ? String(object.name) : "",
-      url: isSet(object.url) ? String(object.url) : "",
-    };
+    return { name: isSet(object.name) ? String(object.name) : "", url: isSet(object.url) ? String(object.url) : "" };
   },
 
   toJSON(message: FeedPost_Author): unknown {
@@ -582,9 +526,7 @@ export const FeedPost_Author = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FeedPost_Author>, I>>(
-    object: I
-  ): FeedPost_Author {
+  fromPartial<I extends Exact<DeepPartial<FeedPost_Author>, I>>(object: I): FeedPost_Author {
     const message = createBaseFeedPost_Author();
     message.name = object.name ?? "";
     message.url = object.url ?? "";
@@ -592,36 +534,17 @@ export const FeedPost_Author = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

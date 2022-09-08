@@ -412,7 +412,9 @@ export interface VoteEnvelope {
   /** The process for which the vote is casted */
   processId: Uint8Array;
   /** Franchise proof */
-  proof: Proof | undefined;
+  proof:
+    | Proof
+    | undefined;
   /** JSON string of the Vote Package (potentially encrypted), encoded as bytes. */
   votePackage: Uint8Array;
   /** Hash of the private key + processId */
@@ -421,7 +423,8 @@ export interface VoteEnvelope {
   encryptionKeyIndexes: number[];
 }
 
-export interface Census {}
+export interface Census {
+}
 
 export enum Census_Type {
   UNKNOWN = 0,
@@ -679,15 +682,9 @@ export interface Tx {
     | { $case: "registerKey"; registerKey: RegisterKeyTx }
     | { $case: "mintTokens"; mintTokens: MintTokensTx }
     | { $case: "sendTokens"; sendTokens: SendTokensTx }
-    | {
-        $case: "setTransactionCosts";
-        setTransactionCosts: SetTransactionCostsTx;
-      }
+    | { $case: "setTransactionCosts"; setTransactionCosts: SetTransactionCostsTx }
     | { $case: "setAccountInfo"; setAccountInfo: SetAccountInfoTx }
-    | {
-        $case: "setAccountDelegateTx";
-        setAccountDelegateTx: SetAccountDelegateTx;
-      }
+    | { $case: "setAccountDelegateTx"; setAccountDelegateTx: SetAccountDelegateTx }
     | { $case: "collectFaucet"; collectFaucet: CollectFaucetTx }
     | { $case: "setKeykeeper"; setKeykeeper: SetKeykeeperTx };
 }
@@ -740,7 +737,9 @@ export interface RegisterKeyTx {
   /** The process for which the vote is casted */
   processId: Uint8Array;
   /** Franchise proof */
-  proof: Proof | undefined;
+  proof:
+    | Proof
+    | undefined;
   /** New key to register */
   newKey: Uint8Array;
   /** Weight to delegate to newKey */
@@ -816,7 +815,9 @@ export interface Process {
   /** CensusRoot merkle root of all the census in the process */
   censusRoot: Uint8Array;
   /** CensusURI where to find the census */
-  censusURI?: string | undefined;
+  censusURI?:
+    | string
+    | undefined;
   /** EncryptionPrivateKeys are the keys required to decrypt the votes */
   encryptionPrivateKeys: string[];
   /** EncryptionPublicKeys are the keys required to encrypt the votes */
@@ -833,37 +834,55 @@ export interface Process {
   censusOrigin: CensusOrigin;
   results: ProcessResult[];
   resultsSignatures: Uint8Array[];
-  ethIndexSlot?: number | undefined;
+  ethIndexSlot?:
+    | number
+    | undefined;
   /** SourceBlockHeight is the block height of the origin blockchain (if any) */
-  sourceBlockHeight?: number | undefined;
+  sourceBlockHeight?:
+    | number
+    | undefined;
   /** Owner is the creator of a process (if any) otherwise is assumed the creator is the entityId */
-  owner?: Uint8Array | undefined;
+  owner?:
+    | Uint8Array
+    | undefined;
   /** Metadata is the content hashed URI of the JSON meta data (See Data Origins) */
-  metadata?: string | undefined;
+  metadata?:
+    | string
+    | undefined;
   /** SourceNetworkId is the identifier of the network origin (where the process have been created) */
   sourceNetworkId: SourceNetworkId;
   /** MaxCensusSize is set by the Process creator. */
-  maxCensusSize?: number | undefined;
+  maxCensusSize?:
+    | number
+    | undefined;
   /**
    * RollingCensusRoot merkle root of the rolling census.  Set by the
    * vocdoni-node when Mode.Process = true
    */
-  rollingCensusRoot?: Uint8Array | undefined;
+  rollingCensusRoot?:
+    | Uint8Array
+    | undefined;
   /**
    * RollingCensusSize is set by the vocdoni-node when Mode.PreRegister =
    * true and the StartBlock has been reached.
    */
-  rollingCensusSize?: number | undefined;
+  rollingCensusSize?:
+    | number
+    | undefined;
   /**
    * NullifiersRoot is the root of the pre-census nullifiers merkle tree.
    * Used when Mode.PreRegister = true.
    */
-  nullifiersRoot?: Uint8Array | undefined;
+  nullifiersRoot?:
+    | Uint8Array
+    | undefined;
   /**
    * sourceNetworkContractAddr is used for EVM token based voting and it is
    * the contract address of the token that is going to define the census
    */
-  sourceNetworkContractAddr?: Uint8Array | undefined;
+  sourceNetworkContractAddr?:
+    | Uint8Array
+    | undefined;
   /**
    * tokenDecimals represents the number of decimals of the token (i.e ERC20) used for voting.
    * It is normally used for processes with on-chain census
@@ -980,10 +999,7 @@ function createBaseVoteEnvelope(): VoteEnvelope {
 }
 
 export const VoteEnvelope = {
-  encode(
-    message: VoteEnvelope,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: VoteEnvelope, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.nonce.length !== 0) {
       writer.uint32(10).bytes(message.nonce);
     }
@@ -1049,19 +1065,11 @@ export const VoteEnvelope = {
 
   fromJSON(object: any): VoteEnvelope {
     return {
-      nonce: isSet(object.nonce)
-        ? bytesFromBase64(object.nonce)
-        : new Uint8Array(),
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
+      nonce: isSet(object.nonce) ? bytesFromBase64(object.nonce) : new Uint8Array(),
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
       proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined,
-      votePackage: isSet(object.votePackage)
-        ? bytesFromBase64(object.votePackage)
-        : new Uint8Array(),
-      nullifier: isSet(object.nullifier)
-        ? bytesFromBase64(object.nullifier)
-        : new Uint8Array(),
+      votePackage: isSet(object.votePackage) ? bytesFromBase64(object.votePackage) : new Uint8Array(),
+      nullifier: isSet(object.nullifier) ? bytesFromBase64(object.nullifier) : new Uint8Array(),
       encryptionKeyIndexes: Array.isArray(object?.encryptionKeyIndexes)
         ? object.encryptionKeyIndexes.map((e: any) => Number(e))
         : [],
@@ -1071,49 +1079,30 @@ export const VoteEnvelope = {
   toJSON(message: VoteEnvelope): unknown {
     const obj: any = {};
     message.nonce !== undefined &&
-      (obj.nonce = base64FromBytes(
-        message.nonce !== undefined ? message.nonce : new Uint8Array()
-      ));
+      (obj.nonce = base64FromBytes(message.nonce !== undefined ? message.nonce : new Uint8Array()));
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
-    message.proof !== undefined &&
-      (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
+    message.proof !== undefined && (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
     message.votePackage !== undefined &&
-      (obj.votePackage = base64FromBytes(
-        message.votePackage !== undefined
-          ? message.votePackage
-          : new Uint8Array()
-      ));
+      (obj.votePackage = base64FromBytes(message.votePackage !== undefined ? message.votePackage : new Uint8Array()));
     message.nullifier !== undefined &&
-      (obj.nullifier = base64FromBytes(
-        message.nullifier !== undefined ? message.nullifier : new Uint8Array()
-      ));
+      (obj.nullifier = base64FromBytes(message.nullifier !== undefined ? message.nullifier : new Uint8Array()));
     if (message.encryptionKeyIndexes) {
-      obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) =>
-        Math.round(e)
-      );
+      obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) => Math.round(e));
     } else {
       obj.encryptionKeyIndexes = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<VoteEnvelope>, I>>(
-    object: I
-  ): VoteEnvelope {
+  fromPartial<I extends Exact<DeepPartial<VoteEnvelope>, I>>(object: I): VoteEnvelope {
     const message = createBaseVoteEnvelope();
     message.nonce = object.nonce ?? new Uint8Array();
     message.processId = object.processId ?? new Uint8Array();
-    message.proof =
-      object.proof !== undefined && object.proof !== null
-        ? Proof.fromPartial(object.proof)
-        : undefined;
+    message.proof = (object.proof !== undefined && object.proof !== null) ? Proof.fromPartial(object.proof) : undefined;
     message.votePackage = object.votePackage ?? new Uint8Array();
     message.nullifier = object.nullifier ?? new Uint8Array();
-    message.encryptionKeyIndexes =
-      object.encryptionKeyIndexes?.map((e) => e) || [];
+    message.encryptionKeyIndexes = object.encryptionKeyIndexes?.map((e) => e) || [];
     return message;
   },
 };
@@ -1164,28 +1153,16 @@ function createBaseProof(): Proof {
 export const Proof = {
   encode(message: Proof, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.payload?.$case === "graviton") {
-      ProofGraviton.encode(
-        message.payload.graviton,
-        writer.uint32(10).fork()
-      ).ldelim();
+      ProofGraviton.encode(message.payload.graviton, writer.uint32(10).fork()).ldelim();
     }
     if (message.payload?.$case === "iden3") {
-      ProofIden3.encode(
-        message.payload.iden3,
-        writer.uint32(18).fork()
-      ).ldelim();
+      ProofIden3.encode(message.payload.iden3, writer.uint32(18).fork()).ldelim();
     }
     if (message.payload?.$case === "ethereumStorage") {
-      ProofEthereumStorage.encode(
-        message.payload.ethereumStorage,
-        writer.uint32(26).fork()
-      ).ldelim();
+      ProofEthereumStorage.encode(message.payload.ethereumStorage, writer.uint32(26).fork()).ldelim();
     }
     if (message.payload?.$case === "ethereumAccount") {
-      ProofEthereumAccount.encode(
-        message.payload.ethereumAccount,
-        writer.uint32(34).fork()
-      ).ldelim();
+      ProofEthereumAccount.encode(message.payload.ethereumAccount, writer.uint32(34).fork()).ldelim();
     }
     if (message.payload?.$case === "ca") {
       ProofCA.encode(message.payload.ca, writer.uint32(42).fork()).ldelim();
@@ -1194,16 +1171,10 @@ export const Proof = {
       ProofArbo.encode(message.payload.arbo, writer.uint32(50).fork()).ldelim();
     }
     if (message.payload?.$case === "zkSnark") {
-      ProofZkSNARK.encode(
-        message.payload.zkSnark,
-        writer.uint32(58).fork()
-      ).ldelim();
+      ProofZkSNARK.encode(message.payload.zkSnark, writer.uint32(58).fork()).ldelim();
     }
     if (message.payload?.$case === "minimeStorage") {
-      ProofMinime.encode(
-        message.payload.minimeStorage,
-        writer.uint32(66).fork()
-      ).ldelim();
+      ProofMinime.encode(message.payload.minimeStorage, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -1216,58 +1187,34 @@ export const Proof = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.payload = {
-            $case: "graviton",
-            graviton: ProofGraviton.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "graviton", graviton: ProofGraviton.decode(reader, reader.uint32()) };
           break;
         case 2:
-          message.payload = {
-            $case: "iden3",
-            iden3: ProofIden3.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "iden3", iden3: ProofIden3.decode(reader, reader.uint32()) };
           break;
         case 3:
           message.payload = {
             $case: "ethereumStorage",
-            ethereumStorage: ProofEthereumStorage.decode(
-              reader,
-              reader.uint32()
-            ),
+            ethereumStorage: ProofEthereumStorage.decode(reader, reader.uint32()),
           };
           break;
         case 4:
           message.payload = {
             $case: "ethereumAccount",
-            ethereumAccount: ProofEthereumAccount.decode(
-              reader,
-              reader.uint32()
-            ),
+            ethereumAccount: ProofEthereumAccount.decode(reader, reader.uint32()),
           };
           break;
         case 5:
-          message.payload = {
-            $case: "ca",
-            ca: ProofCA.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "ca", ca: ProofCA.decode(reader, reader.uint32()) };
           break;
         case 6:
-          message.payload = {
-            $case: "arbo",
-            arbo: ProofArbo.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "arbo", arbo: ProofArbo.decode(reader, reader.uint32()) };
           break;
         case 7:
-          message.payload = {
-            $case: "zkSnark",
-            zkSnark: ProofZkSNARK.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.decode(reader, reader.uint32()) };
           break;
         case 8:
-          message.payload = {
-            $case: "minimeStorage",
-            minimeStorage: ProofMinime.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "minimeStorage", minimeStorage: ProofMinime.decode(reader, reader.uint32()) };
           break;
         default:
           reader.skipType(tag & 7);
@@ -1280,26 +1227,13 @@ export const Proof = {
   fromJSON(object: any): Proof {
     return {
       payload: isSet(object.graviton)
-        ? {
-            $case: "graviton",
-            graviton: ProofGraviton.fromJSON(object.graviton),
-          }
+        ? { $case: "graviton", graviton: ProofGraviton.fromJSON(object.graviton) }
         : isSet(object.iden3)
         ? { $case: "iden3", iden3: ProofIden3.fromJSON(object.iden3) }
         : isSet(object.ethereumStorage)
-        ? {
-            $case: "ethereumStorage",
-            ethereumStorage: ProofEthereumStorage.fromJSON(
-              object.ethereumStorage
-            ),
-          }
+        ? { $case: "ethereumStorage", ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage) }
         : isSet(object.ethereumAccount)
-        ? {
-            $case: "ethereumAccount",
-            ethereumAccount: ProofEthereumAccount.fromJSON(
-              object.ethereumAccount
-            ),
-          }
+        ? { $case: "ethereumAccount", ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount) }
         : isSet(object.ca)
         ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) }
         : isSet(object.arbo)
@@ -1307,10 +1241,7 @@ export const Proof = {
         : isSet(object.zkSnark)
         ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) }
         : isSet(object.minimeStorage)
-        ? {
-            $case: "minimeStorage",
-            minimeStorage: ProofMinime.fromJSON(object.minimeStorage),
-          }
+        ? { $case: "minimeStorage", minimeStorage: ProofMinime.fromJSON(object.minimeStorage) }
         : undefined,
     };
   },
@@ -1318,37 +1249,23 @@ export const Proof = {
   toJSON(message: Proof): unknown {
     const obj: any = {};
     message.payload?.$case === "graviton" &&
-      (obj.graviton = message.payload?.graviton
-        ? ProofGraviton.toJSON(message.payload?.graviton)
-        : undefined);
+      (obj.graviton = message.payload?.graviton ? ProofGraviton.toJSON(message.payload?.graviton) : undefined);
     message.payload?.$case === "iden3" &&
-      (obj.iden3 = message.payload?.iden3
-        ? ProofIden3.toJSON(message.payload?.iden3)
-        : undefined);
-    message.payload?.$case === "ethereumStorage" &&
-      (obj.ethereumStorage = message.payload?.ethereumStorage
-        ? ProofEthereumStorage.toJSON(message.payload?.ethereumStorage)
-        : undefined);
-    message.payload?.$case === "ethereumAccount" &&
-      (obj.ethereumAccount = message.payload?.ethereumAccount
-        ? ProofEthereumAccount.toJSON(message.payload?.ethereumAccount)
-        : undefined);
-    message.payload?.$case === "ca" &&
-      (obj.ca = message.payload?.ca
-        ? ProofCA.toJSON(message.payload?.ca)
-        : undefined);
+      (obj.iden3 = message.payload?.iden3 ? ProofIden3.toJSON(message.payload?.iden3) : undefined);
+    message.payload?.$case === "ethereumStorage" && (obj.ethereumStorage = message.payload?.ethereumStorage
+      ? ProofEthereumStorage.toJSON(message.payload?.ethereumStorage)
+      : undefined);
+    message.payload?.$case === "ethereumAccount" && (obj.ethereumAccount = message.payload?.ethereumAccount
+      ? ProofEthereumAccount.toJSON(message.payload?.ethereumAccount)
+      : undefined);
+    message.payload?.$case === "ca" && (obj.ca = message.payload?.ca ? ProofCA.toJSON(message.payload?.ca) : undefined);
     message.payload?.$case === "arbo" &&
-      (obj.arbo = message.payload?.arbo
-        ? ProofArbo.toJSON(message.payload?.arbo)
-        : undefined);
+      (obj.arbo = message.payload?.arbo ? ProofArbo.toJSON(message.payload?.arbo) : undefined);
     message.payload?.$case === "zkSnark" &&
-      (obj.zkSnark = message.payload?.zkSnark
-        ? ProofZkSNARK.toJSON(message.payload?.zkSnark)
-        : undefined);
-    message.payload?.$case === "minimeStorage" &&
-      (obj.minimeStorage = message.payload?.minimeStorage
-        ? ProofMinime.toJSON(message.payload?.minimeStorage)
-        : undefined);
+      (obj.zkSnark = message.payload?.zkSnark ? ProofZkSNARK.toJSON(message.payload?.zkSnark) : undefined);
+    message.payload?.$case === "minimeStorage" && (obj.minimeStorage = message.payload?.minimeStorage
+      ? ProofMinime.toJSON(message.payload?.minimeStorage)
+      : undefined);
     return obj;
   },
 
@@ -1359,20 +1276,10 @@ export const Proof = {
       object.payload?.graviton !== undefined &&
       object.payload?.graviton !== null
     ) {
-      message.payload = {
-        $case: "graviton",
-        graviton: ProofGraviton.fromPartial(object.payload.graviton),
-      };
+      message.payload = { $case: "graviton", graviton: ProofGraviton.fromPartial(object.payload.graviton) };
     }
-    if (
-      object.payload?.$case === "iden3" &&
-      object.payload?.iden3 !== undefined &&
-      object.payload?.iden3 !== null
-    ) {
-      message.payload = {
-        $case: "iden3",
-        iden3: ProofIden3.fromPartial(object.payload.iden3),
-      };
+    if (object.payload?.$case === "iden3" && object.payload?.iden3 !== undefined && object.payload?.iden3 !== null) {
+      message.payload = { $case: "iden3", iden3: ProofIden3.fromPartial(object.payload.iden3) };
     }
     if (
       object.payload?.$case === "ethereumStorage" &&
@@ -1381,9 +1288,7 @@ export const Proof = {
     ) {
       message.payload = {
         $case: "ethereumStorage",
-        ethereumStorage: ProofEthereumStorage.fromPartial(
-          object.payload.ethereumStorage
-        ),
+        ethereumStorage: ProofEthereumStorage.fromPartial(object.payload.ethereumStorage),
       };
     }
     if (
@@ -1393,40 +1298,19 @@ export const Proof = {
     ) {
       message.payload = {
         $case: "ethereumAccount",
-        ethereumAccount: ProofEthereumAccount.fromPartial(
-          object.payload.ethereumAccount
-        ),
+        ethereumAccount: ProofEthereumAccount.fromPartial(object.payload.ethereumAccount),
       };
     }
-    if (
-      object.payload?.$case === "ca" &&
-      object.payload?.ca !== undefined &&
-      object.payload?.ca !== null
-    ) {
-      message.payload = {
-        $case: "ca",
-        ca: ProofCA.fromPartial(object.payload.ca),
-      };
+    if (object.payload?.$case === "ca" && object.payload?.ca !== undefined && object.payload?.ca !== null) {
+      message.payload = { $case: "ca", ca: ProofCA.fromPartial(object.payload.ca) };
+    }
+    if (object.payload?.$case === "arbo" && object.payload?.arbo !== undefined && object.payload?.arbo !== null) {
+      message.payload = { $case: "arbo", arbo: ProofArbo.fromPartial(object.payload.arbo) };
     }
     if (
-      object.payload?.$case === "arbo" &&
-      object.payload?.arbo !== undefined &&
-      object.payload?.arbo !== null
+      object.payload?.$case === "zkSnark" && object.payload?.zkSnark !== undefined && object.payload?.zkSnark !== null
     ) {
-      message.payload = {
-        $case: "arbo",
-        arbo: ProofArbo.fromPartial(object.payload.arbo),
-      };
-    }
-    if (
-      object.payload?.$case === "zkSnark" &&
-      object.payload?.zkSnark !== undefined &&
-      object.payload?.zkSnark !== null
-    ) {
-      message.payload = {
-        $case: "zkSnark",
-        zkSnark: ProofZkSNARK.fromPartial(object.payload.zkSnark),
-      };
+      message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.fromPartial(object.payload.zkSnark) };
     }
     if (
       object.payload?.$case === "minimeStorage" &&
@@ -1447,10 +1331,7 @@ function createBaseProofGraviton(): ProofGraviton {
 }
 
 export const ProofGraviton = {
-  encode(
-    message: ProofGraviton,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofGraviton, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.siblings.length !== 0) {
       writer.uint32(10).bytes(message.siblings);
     }
@@ -1476,25 +1357,17 @@ export const ProofGraviton = {
   },
 
   fromJSON(object: any): ProofGraviton {
-    return {
-      siblings: isSet(object.siblings)
-        ? bytesFromBase64(object.siblings)
-        : new Uint8Array(),
-    };
+    return { siblings: isSet(object.siblings) ? bytesFromBase64(object.siblings) : new Uint8Array() };
   },
 
   toJSON(message: ProofGraviton): unknown {
     const obj: any = {};
     message.siblings !== undefined &&
-      (obj.siblings = base64FromBytes(
-        message.siblings !== undefined ? message.siblings : new Uint8Array()
-      ));
+      (obj.siblings = base64FromBytes(message.siblings !== undefined ? message.siblings : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofGraviton>, I>>(
-    object: I
-  ): ProofGraviton {
+  fromPartial<I extends Exact<DeepPartial<ProofGraviton>, I>>(object: I): ProofGraviton {
     const message = createBaseProofGraviton();
     message.siblings = object.siblings ?? new Uint8Array();
     return message;
@@ -1506,10 +1379,7 @@ function createBaseProofIden3(): ProofIden3 {
 }
 
 export const ProofIden3 = {
-  encode(
-    message: ProofIden3,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofIden3, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.siblings.length !== 0) {
       writer.uint32(10).bytes(message.siblings);
     }
@@ -1535,25 +1405,17 @@ export const ProofIden3 = {
   },
 
   fromJSON(object: any): ProofIden3 {
-    return {
-      siblings: isSet(object.siblings)
-        ? bytesFromBase64(object.siblings)
-        : new Uint8Array(),
-    };
+    return { siblings: isSet(object.siblings) ? bytesFromBase64(object.siblings) : new Uint8Array() };
   },
 
   toJSON(message: ProofIden3): unknown {
     const obj: any = {};
     message.siblings !== undefined &&
-      (obj.siblings = base64FromBytes(
-        message.siblings !== undefined ? message.siblings : new Uint8Array()
-      ));
+      (obj.siblings = base64FromBytes(message.siblings !== undefined ? message.siblings : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofIden3>, I>>(
-    object: I
-  ): ProofIden3 {
+  fromPartial<I extends Exact<DeepPartial<ProofIden3>, I>>(object: I): ProofIden3 {
     const message = createBaseProofIden3();
     message.siblings = object.siblings ?? new Uint8Array();
     return message;
@@ -1565,10 +1427,7 @@ function createBaseProofEthereumStorage(): ProofEthereumStorage {
 }
 
 export const ProofEthereumStorage = {
-  encode(
-    message: ProofEthereumStorage,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofEthereumStorage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key.length !== 0) {
       writer.uint32(10).bytes(message.key);
     }
@@ -1581,10 +1440,7 @@ export const ProofEthereumStorage = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): ProofEthereumStorage {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofEthereumStorage {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofEthereumStorage();
@@ -1611,38 +1467,26 @@ export const ProofEthereumStorage = {
   fromJSON(object: any): ProofEthereumStorage {
     return {
       key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
-      value: isSet(object.value)
-        ? bytesFromBase64(object.value)
-        : new Uint8Array(),
-      siblings: Array.isArray(object?.siblings)
-        ? object.siblings.map((e: any) => bytesFromBase64(e))
-        : [],
+      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(),
+      siblings: Array.isArray(object?.siblings) ? object.siblings.map((e: any) => bytesFromBase64(e)) : [],
     };
   },
 
   toJSON(message: ProofEthereumStorage): unknown {
     const obj: any = {};
     message.key !== undefined &&
-      (obj.key = base64FromBytes(
-        message.key !== undefined ? message.key : new Uint8Array()
-      ));
+      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
     message.value !== undefined &&
-      (obj.value = base64FromBytes(
-        message.value !== undefined ? message.value : new Uint8Array()
-      ));
+      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
     if (message.siblings) {
-      obj.siblings = message.siblings.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.siblings = message.siblings.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.siblings = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofEthereumStorage>, I>>(
-    object: I
-  ): ProofEthereumStorage {
+  fromPartial<I extends Exact<DeepPartial<ProofEthereumStorage>, I>>(object: I): ProofEthereumStorage {
     const message = createBaseProofEthereumStorage();
     message.key = object.key ?? new Uint8Array();
     message.value = object.value ?? new Uint8Array();
@@ -1662,10 +1506,7 @@ function createBaseProofEthereumAccount(): ProofEthereumAccount {
 }
 
 export const ProofEthereumAccount = {
-  encode(
-    message: ProofEthereumAccount,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofEthereumAccount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.nonce.length !== 0) {
       writer.uint32(10).bytes(message.nonce);
     }
@@ -1684,10 +1525,7 @@ export const ProofEthereumAccount = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): ProofEthereumAccount {
+  decode(input: _m0.Reader | Uint8Array, length?: number): ProofEthereumAccount {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseProofEthereumAccount();
@@ -1719,57 +1557,33 @@ export const ProofEthereumAccount = {
 
   fromJSON(object: any): ProofEthereumAccount {
     return {
-      nonce: isSet(object.nonce)
-        ? bytesFromBase64(object.nonce)
-        : new Uint8Array(),
-      balance: isSet(object.balance)
-        ? bytesFromBase64(object.balance)
-        : new Uint8Array(),
-      storageHash: isSet(object.storageHash)
-        ? bytesFromBase64(object.storageHash)
-        : new Uint8Array(),
-      codeHash: isSet(object.codeHash)
-        ? bytesFromBase64(object.codeHash)
-        : new Uint8Array(),
-      siblings: Array.isArray(object?.siblings)
-        ? object.siblings.map((e: any) => bytesFromBase64(e))
-        : [],
+      nonce: isSet(object.nonce) ? bytesFromBase64(object.nonce) : new Uint8Array(),
+      balance: isSet(object.balance) ? bytesFromBase64(object.balance) : new Uint8Array(),
+      storageHash: isSet(object.storageHash) ? bytesFromBase64(object.storageHash) : new Uint8Array(),
+      codeHash: isSet(object.codeHash) ? bytesFromBase64(object.codeHash) : new Uint8Array(),
+      siblings: Array.isArray(object?.siblings) ? object.siblings.map((e: any) => bytesFromBase64(e)) : [],
     };
   },
 
   toJSON(message: ProofEthereumAccount): unknown {
     const obj: any = {};
     message.nonce !== undefined &&
-      (obj.nonce = base64FromBytes(
-        message.nonce !== undefined ? message.nonce : new Uint8Array()
-      ));
+      (obj.nonce = base64FromBytes(message.nonce !== undefined ? message.nonce : new Uint8Array()));
     message.balance !== undefined &&
-      (obj.balance = base64FromBytes(
-        message.balance !== undefined ? message.balance : new Uint8Array()
-      ));
+      (obj.balance = base64FromBytes(message.balance !== undefined ? message.balance : new Uint8Array()));
     message.storageHash !== undefined &&
-      (obj.storageHash = base64FromBytes(
-        message.storageHash !== undefined
-          ? message.storageHash
-          : new Uint8Array()
-      ));
+      (obj.storageHash = base64FromBytes(message.storageHash !== undefined ? message.storageHash : new Uint8Array()));
     message.codeHash !== undefined &&
-      (obj.codeHash = base64FromBytes(
-        message.codeHash !== undefined ? message.codeHash : new Uint8Array()
-      ));
+      (obj.codeHash = base64FromBytes(message.codeHash !== undefined ? message.codeHash : new Uint8Array()));
     if (message.siblings) {
-      obj.siblings = message.siblings.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.siblings = message.siblings.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.siblings = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofEthereumAccount>, I>>(
-    object: I
-  ): ProofEthereumAccount {
+  fromPartial<I extends Exact<DeepPartial<ProofEthereumAccount>, I>>(object: I): ProofEthereumAccount {
     const message = createBaseProofEthereumAccount();
     message.nonce = object.nonce ?? new Uint8Array();
     message.balance = object.balance ?? new Uint8Array();
@@ -1785,21 +1599,12 @@ function createBaseProofMinime(): ProofMinime {
 }
 
 export const ProofMinime = {
-  encode(
-    message: ProofMinime,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofMinime, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.proofPrevBlock !== undefined) {
-      ProofEthereumStorage.encode(
-        message.proofPrevBlock,
-        writer.uint32(10).fork()
-      ).ldelim();
+      ProofEthereumStorage.encode(message.proofPrevBlock, writer.uint32(10).fork()).ldelim();
     }
     if (message.proofNextBlock !== undefined) {
-      ProofEthereumStorage.encode(
-        message.proofNextBlock,
-        writer.uint32(18).fork()
-      ).ldelim();
+      ProofEthereumStorage.encode(message.proofNextBlock, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -1812,16 +1617,10 @@ export const ProofMinime = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proofPrevBlock = ProofEthereumStorage.decode(
-            reader,
-            reader.uint32()
-          );
+          message.proofPrevBlock = ProofEthereumStorage.decode(reader, reader.uint32());
           break;
         case 2:
-          message.proofNextBlock = ProofEthereumStorage.decode(
-            reader,
-            reader.uint32()
-          );
+          message.proofNextBlock = ProofEthereumStorage.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -1833,40 +1632,28 @@ export const ProofMinime = {
 
   fromJSON(object: any): ProofMinime {
     return {
-      proofPrevBlock: isSet(object.proofPrevBlock)
-        ? ProofEthereumStorage.fromJSON(object.proofPrevBlock)
-        : undefined,
-      proofNextBlock: isSet(object.proofNextBlock)
-        ? ProofEthereumStorage.fromJSON(object.proofNextBlock)
-        : undefined,
+      proofPrevBlock: isSet(object.proofPrevBlock) ? ProofEthereumStorage.fromJSON(object.proofPrevBlock) : undefined,
+      proofNextBlock: isSet(object.proofNextBlock) ? ProofEthereumStorage.fromJSON(object.proofNextBlock) : undefined,
     };
   },
 
   toJSON(message: ProofMinime): unknown {
     const obj: any = {};
     message.proofPrevBlock !== undefined &&
-      (obj.proofPrevBlock = message.proofPrevBlock
-        ? ProofEthereumStorage.toJSON(message.proofPrevBlock)
-        : undefined);
+      (obj.proofPrevBlock = message.proofPrevBlock ? ProofEthereumStorage.toJSON(message.proofPrevBlock) : undefined);
     message.proofNextBlock !== undefined &&
-      (obj.proofNextBlock = message.proofNextBlock
-        ? ProofEthereumStorage.toJSON(message.proofNextBlock)
-        : undefined);
+      (obj.proofNextBlock = message.proofNextBlock ? ProofEthereumStorage.toJSON(message.proofNextBlock) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofMinime>, I>>(
-    object: I
-  ): ProofMinime {
+  fromPartial<I extends Exact<DeepPartial<ProofMinime>, I>>(object: I): ProofMinime {
     const message = createBaseProofMinime();
-    message.proofPrevBlock =
-      object.proofPrevBlock !== undefined && object.proofPrevBlock !== null
-        ? ProofEthereumStorage.fromPartial(object.proofPrevBlock)
-        : undefined;
-    message.proofNextBlock =
-      object.proofNextBlock !== undefined && object.proofNextBlock !== null
-        ? ProofEthereumStorage.fromPartial(object.proofNextBlock)
-        : undefined;
+    message.proofPrevBlock = (object.proofPrevBlock !== undefined && object.proofPrevBlock !== null)
+      ? ProofEthereumStorage.fromPartial(object.proofPrevBlock)
+      : undefined;
+    message.proofNextBlock = (object.proofNextBlock !== undefined && object.proofNextBlock !== null)
+      ? ProofEthereumStorage.fromPartial(object.proofNextBlock)
+      : undefined;
     return message;
   },
 };
@@ -1876,10 +1663,7 @@ function createBaseProofCA(): ProofCA {
 }
 
 export const ProofCA = {
-  encode(
-    message: ProofCA,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofCA, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -1919,36 +1703,26 @@ export const ProofCA = {
   fromJSON(object: any): ProofCA {
     return {
       type: isSet(object.type) ? proofCA_TypeFromJSON(object.type) : 0,
-      bundle: isSet(object.bundle)
-        ? CAbundle.fromJSON(object.bundle)
-        : undefined,
-      signature: isSet(object.signature)
-        ? bytesFromBase64(object.signature)
-        : new Uint8Array(),
+      bundle: isSet(object.bundle) ? CAbundle.fromJSON(object.bundle) : undefined,
+      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(),
     };
   },
 
   toJSON(message: ProofCA): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = proofCA_TypeToJSON(message.type));
-    message.bundle !== undefined &&
-      (obj.bundle = message.bundle
-        ? CAbundle.toJSON(message.bundle)
-        : undefined);
+    message.bundle !== undefined && (obj.bundle = message.bundle ? CAbundle.toJSON(message.bundle) : undefined);
     message.signature !== undefined &&
-      (obj.signature = base64FromBytes(
-        message.signature !== undefined ? message.signature : new Uint8Array()
-      ));
+      (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofCA>, I>>(object: I): ProofCA {
     const message = createBaseProofCA();
     message.type = object.type ?? 0;
-    message.bundle =
-      object.bundle !== undefined && object.bundle !== null
-        ? CAbundle.fromPartial(object.bundle)
-        : undefined;
+    message.bundle = (object.bundle !== undefined && object.bundle !== null)
+      ? CAbundle.fromPartial(object.bundle)
+      : undefined;
     message.signature = object.signature ?? new Uint8Array();
     return message;
   },
@@ -1959,10 +1733,7 @@ function createBaseCAbundle(): CAbundle {
 }
 
 export const CAbundle = {
-  encode(
-    message: CAbundle,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CAbundle, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.processId.length !== 0) {
       writer.uint32(10).bytes(message.processId);
     }
@@ -1995,25 +1766,17 @@ export const CAbundle = {
 
   fromJSON(object: any): CAbundle {
     return {
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
-      address: isSet(object.address)
-        ? bytesFromBase64(object.address)
-        : new Uint8Array(),
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
+      address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(),
     };
   },
 
   toJSON(message: CAbundle): unknown {
     const obj: any = {};
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
     message.address !== undefined &&
-      (obj.address = base64FromBytes(
-        message.address !== undefined ? message.address : new Uint8Array()
-      ));
+      (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
     return obj;
   },
 
@@ -2030,10 +1793,7 @@ function createBaseProofArbo(): ProofArbo {
 }
 
 export const ProofArbo = {
-  encode(
-    message: ProofArbo,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofArbo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== 0) {
       writer.uint32(8).int32(message.type);
     }
@@ -2073,33 +1833,22 @@ export const ProofArbo = {
   fromJSON(object: any): ProofArbo {
     return {
       type: isSet(object.type) ? proofArbo_TypeFromJSON(object.type) : 0,
-      siblings: isSet(object.siblings)
-        ? bytesFromBase64(object.siblings)
-        : new Uint8Array(),
-      value: isSet(object.value)
-        ? bytesFromBase64(object.value)
-        : new Uint8Array(),
+      siblings: isSet(object.siblings) ? bytesFromBase64(object.siblings) : new Uint8Array(),
+      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(),
     };
   },
 
   toJSON(message: ProofArbo): unknown {
     const obj: any = {};
-    message.type !== undefined &&
-      (obj.type = proofArbo_TypeToJSON(message.type));
+    message.type !== undefined && (obj.type = proofArbo_TypeToJSON(message.type));
     message.siblings !== undefined &&
-      (obj.siblings = base64FromBytes(
-        message.siblings !== undefined ? message.siblings : new Uint8Array()
-      ));
+      (obj.siblings = base64FromBytes(message.siblings !== undefined ? message.siblings : new Uint8Array()));
     message.value !== undefined &&
-      (obj.value = base64FromBytes(
-        message.value !== undefined ? message.value : new Uint8Array()
-      ));
+      (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofArbo>, I>>(
-    object: I
-  ): ProofArbo {
+  fromPartial<I extends Exact<DeepPartial<ProofArbo>, I>>(object: I): ProofArbo {
     const message = createBaseProofArbo();
     message.type = object.type ?? 0;
     message.siblings = object.siblings ?? new Uint8Array();
@@ -2113,10 +1862,7 @@ function createBaseProofZkSNARK(): ProofZkSNARK {
 }
 
 export const ProofZkSNARK = {
-  encode(
-    message: ProofZkSNARK,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProofZkSNARK, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.circuitParametersIndex !== 0) {
       writer.uint32(8).int32(message.circuitParametersIndex);
     }
@@ -2167,15 +1913,11 @@ export const ProofZkSNARK = {
 
   fromJSON(object: any): ProofZkSNARK {
     return {
-      circuitParametersIndex: isSet(object.circuitParametersIndex)
-        ? Number(object.circuitParametersIndex)
-        : 0,
+      circuitParametersIndex: isSet(object.circuitParametersIndex) ? Number(object.circuitParametersIndex) : 0,
       a: Array.isArray(object?.a) ? object.a.map((e: any) => String(e)) : [],
       b: Array.isArray(object?.b) ? object.b.map((e: any) => String(e)) : [],
       c: Array.isArray(object?.c) ? object.c.map((e: any) => String(e)) : [],
-      publicInputs: Array.isArray(object?.publicInputs)
-        ? object.publicInputs.map((e: any) => String(e))
-        : [],
+      publicInputs: Array.isArray(object?.publicInputs) ? object.publicInputs.map((e: any) => String(e)) : [],
     };
   },
 
@@ -2206,9 +1948,7 @@ export const ProofZkSNARK = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProofZkSNARK>, I>>(
-    object: I
-  ): ProofZkSNARK {
+  fromPartial<I extends Exact<DeepPartial<ProofZkSNARK>, I>>(object: I): ProofZkSNARK {
     const message = createBaseProofZkSNARK();
     message.circuitParametersIndex = object.circuitParametersIndex ?? 0;
     message.a = object.a?.map((e) => e) || [];
@@ -2220,20 +1960,11 @@ export const ProofZkSNARK = {
 };
 
 function createBaseAccount(): Account {
-  return {
-    balance: 0,
-    nonce: 0,
-    infoURI: "",
-    delegateAddrs: [],
-    processIndex: 0,
-  };
+  return { balance: 0, nonce: 0, infoURI: "", delegateAddrs: [], processIndex: 0 };
 }
 
 export const Account = {
-  encode(
-    message: Account,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Account, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.balance !== 0) {
       writer.uint32(8).uint64(message.balance);
     }
@@ -2290,27 +2021,21 @@ export const Account = {
       delegateAddrs: Array.isArray(object?.delegateAddrs)
         ? object.delegateAddrs.map((e: any) => bytesFromBase64(e))
         : [],
-      processIndex: isSet(object.processIndex)
-        ? Number(object.processIndex)
-        : 0,
+      processIndex: isSet(object.processIndex) ? Number(object.processIndex) : 0,
     };
   },
 
   toJSON(message: Account): unknown {
     const obj: any = {};
-    message.balance !== undefined &&
-      (obj.balance = Math.round(message.balance));
+    message.balance !== undefined && (obj.balance = Math.round(message.balance));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.infoURI !== undefined && (obj.infoURI = message.infoURI);
     if (message.delegateAddrs) {
-      obj.delegateAddrs = message.delegateAddrs.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.delegateAddrs = message.delegateAddrs.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.delegateAddrs = [];
     }
-    message.processIndex !== undefined &&
-      (obj.processIndex = Math.round(message.processIndex));
+    message.processIndex !== undefined && (obj.processIndex = Math.round(message.processIndex));
     return obj;
   },
 
@@ -2330,10 +2055,7 @@ function createBaseTreasurer(): Treasurer {
 }
 
 export const Treasurer = {
-  encode(
-    message: Treasurer,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Treasurer, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.address.length !== 0) {
       writer.uint32(10).bytes(message.address);
     }
@@ -2366,9 +2088,7 @@ export const Treasurer = {
 
   fromJSON(object: any): Treasurer {
     return {
-      address: isSet(object.address)
-        ? bytesFromBase64(object.address)
-        : new Uint8Array(),
+      address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(),
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
     };
   },
@@ -2376,16 +2096,12 @@ export const Treasurer = {
   toJSON(message: Treasurer): unknown {
     const obj: any = {};
     message.address !== undefined &&
-      (obj.address = base64FromBytes(
-        message.address !== undefined ? message.address : new Uint8Array()
-      ));
+      (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Treasurer>, I>>(
-    object: I
-  ): Treasurer {
+  fromPartial<I extends Exact<DeepPartial<Treasurer>, I>>(object: I): Treasurer {
     const message = createBaseTreasurer();
     message.address = object.address ?? new Uint8Array();
     message.nonce = object.nonce ?? 0;
@@ -2400,73 +2116,40 @@ function createBaseTx(): Tx {
 export const Tx = {
   encode(message: Tx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.payload?.$case === "vote") {
-      VoteEnvelope.encode(
-        message.payload.vote,
-        writer.uint32(10).fork()
-      ).ldelim();
+      VoteEnvelope.encode(message.payload.vote, writer.uint32(10).fork()).ldelim();
     }
     if (message.payload?.$case === "newProcess") {
-      NewProcessTx.encode(
-        message.payload.newProcess,
-        writer.uint32(18).fork()
-      ).ldelim();
+      NewProcessTx.encode(message.payload.newProcess, writer.uint32(18).fork()).ldelim();
     }
     if (message.payload?.$case === "admin") {
       AdminTx.encode(message.payload.admin, writer.uint32(26).fork()).ldelim();
     }
     if (message.payload?.$case === "setProcess") {
-      SetProcessTx.encode(
-        message.payload.setProcess,
-        writer.uint32(34).fork()
-      ).ldelim();
+      SetProcessTx.encode(message.payload.setProcess, writer.uint32(34).fork()).ldelim();
     }
     if (message.payload?.$case === "registerKey") {
-      RegisterKeyTx.encode(
-        message.payload.registerKey,
-        writer.uint32(42).fork()
-      ).ldelim();
+      RegisterKeyTx.encode(message.payload.registerKey, writer.uint32(42).fork()).ldelim();
     }
     if (message.payload?.$case === "mintTokens") {
-      MintTokensTx.encode(
-        message.payload.mintTokens,
-        writer.uint32(50).fork()
-      ).ldelim();
+      MintTokensTx.encode(message.payload.mintTokens, writer.uint32(50).fork()).ldelim();
     }
     if (message.payload?.$case === "sendTokens") {
-      SendTokensTx.encode(
-        message.payload.sendTokens,
-        writer.uint32(58).fork()
-      ).ldelim();
+      SendTokensTx.encode(message.payload.sendTokens, writer.uint32(58).fork()).ldelim();
     }
     if (message.payload?.$case === "setTransactionCosts") {
-      SetTransactionCostsTx.encode(
-        message.payload.setTransactionCosts,
-        writer.uint32(66).fork()
-      ).ldelim();
+      SetTransactionCostsTx.encode(message.payload.setTransactionCosts, writer.uint32(66).fork()).ldelim();
     }
     if (message.payload?.$case === "setAccountInfo") {
-      SetAccountInfoTx.encode(
-        message.payload.setAccountInfo,
-        writer.uint32(74).fork()
-      ).ldelim();
+      SetAccountInfoTx.encode(message.payload.setAccountInfo, writer.uint32(74).fork()).ldelim();
     }
     if (message.payload?.$case === "setAccountDelegateTx") {
-      SetAccountDelegateTx.encode(
-        message.payload.setAccountDelegateTx,
-        writer.uint32(82).fork()
-      ).ldelim();
+      SetAccountDelegateTx.encode(message.payload.setAccountDelegateTx, writer.uint32(82).fork()).ldelim();
     }
     if (message.payload?.$case === "collectFaucet") {
-      CollectFaucetTx.encode(
-        message.payload.collectFaucet,
-        writer.uint32(90).fork()
-      ).ldelim();
+      CollectFaucetTx.encode(message.payload.collectFaucet, writer.uint32(90).fork()).ldelim();
     }
     if (message.payload?.$case === "setKeykeeper") {
-      SetKeykeeperTx.encode(
-        message.payload.setKeykeeper,
-        writer.uint32(98).fork()
-      ).ldelim();
+      SetKeykeeperTx.encode(message.payload.setKeykeeper, writer.uint32(98).fork()).ldelim();
     }
     return writer;
   },
@@ -2479,54 +2162,30 @@ export const Tx = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.payload = {
-            $case: "vote",
-            vote: VoteEnvelope.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "vote", vote: VoteEnvelope.decode(reader, reader.uint32()) };
           break;
         case 2:
-          message.payload = {
-            $case: "newProcess",
-            newProcess: NewProcessTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "newProcess", newProcess: NewProcessTx.decode(reader, reader.uint32()) };
           break;
         case 3:
-          message.payload = {
-            $case: "admin",
-            admin: AdminTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "admin", admin: AdminTx.decode(reader, reader.uint32()) };
           break;
         case 4:
-          message.payload = {
-            $case: "setProcess",
-            setProcess: SetProcessTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "setProcess", setProcess: SetProcessTx.decode(reader, reader.uint32()) };
           break;
         case 5:
-          message.payload = {
-            $case: "registerKey",
-            registerKey: RegisterKeyTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "registerKey", registerKey: RegisterKeyTx.decode(reader, reader.uint32()) };
           break;
         case 6:
-          message.payload = {
-            $case: "mintTokens",
-            mintTokens: MintTokensTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "mintTokens", mintTokens: MintTokensTx.decode(reader, reader.uint32()) };
           break;
         case 7:
-          message.payload = {
-            $case: "sendTokens",
-            sendTokens: SendTokensTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "sendTokens", sendTokens: SendTokensTx.decode(reader, reader.uint32()) };
           break;
         case 8:
           message.payload = {
             $case: "setTransactionCosts",
-            setTransactionCosts: SetTransactionCostsTx.decode(
-              reader,
-              reader.uint32()
-            ),
+            setTransactionCosts: SetTransactionCostsTx.decode(reader, reader.uint32()),
           };
           break;
         case 9:
@@ -2538,23 +2197,14 @@ export const Tx = {
         case 10:
           message.payload = {
             $case: "setAccountDelegateTx",
-            setAccountDelegateTx: SetAccountDelegateTx.decode(
-              reader,
-              reader.uint32()
-            ),
+            setAccountDelegateTx: SetAccountDelegateTx.decode(reader, reader.uint32()),
           };
           break;
         case 11:
-          message.payload = {
-            $case: "collectFaucet",
-            collectFaucet: CollectFaucetTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "collectFaucet", collectFaucet: CollectFaucetTx.decode(reader, reader.uint32()) };
           break;
         case 12:
-          message.payload = {
-            $case: "setKeykeeper",
-            setKeykeeper: SetKeykeeperTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "setKeykeeper", setKeykeeper: SetKeykeeperTx.decode(reader, reader.uint32()) };
           break;
         default:
           reader.skipType(tag & 7);
@@ -2569,61 +2219,33 @@ export const Tx = {
       payload: isSet(object.vote)
         ? { $case: "vote", vote: VoteEnvelope.fromJSON(object.vote) }
         : isSet(object.newProcess)
-        ? {
-            $case: "newProcess",
-            newProcess: NewProcessTx.fromJSON(object.newProcess),
-          }
+        ? { $case: "newProcess", newProcess: NewProcessTx.fromJSON(object.newProcess) }
         : isSet(object.admin)
         ? { $case: "admin", admin: AdminTx.fromJSON(object.admin) }
         : isSet(object.setProcess)
-        ? {
-            $case: "setProcess",
-            setProcess: SetProcessTx.fromJSON(object.setProcess),
-          }
+        ? { $case: "setProcess", setProcess: SetProcessTx.fromJSON(object.setProcess) }
         : isSet(object.registerKey)
-        ? {
-            $case: "registerKey",
-            registerKey: RegisterKeyTx.fromJSON(object.registerKey),
-          }
+        ? { $case: "registerKey", registerKey: RegisterKeyTx.fromJSON(object.registerKey) }
         : isSet(object.mintTokens)
-        ? {
-            $case: "mintTokens",
-            mintTokens: MintTokensTx.fromJSON(object.mintTokens),
-          }
+        ? { $case: "mintTokens", mintTokens: MintTokensTx.fromJSON(object.mintTokens) }
         : isSet(object.sendTokens)
-        ? {
-            $case: "sendTokens",
-            sendTokens: SendTokensTx.fromJSON(object.sendTokens),
-          }
+        ? { $case: "sendTokens", sendTokens: SendTokensTx.fromJSON(object.sendTokens) }
         : isSet(object.setTransactionCosts)
         ? {
-            $case: "setTransactionCosts",
-            setTransactionCosts: SetTransactionCostsTx.fromJSON(
-              object.setTransactionCosts
-            ),
-          }
+          $case: "setTransactionCosts",
+          setTransactionCosts: SetTransactionCostsTx.fromJSON(object.setTransactionCosts),
+        }
         : isSet(object.setAccountInfo)
-        ? {
-            $case: "setAccountInfo",
-            setAccountInfo: SetAccountInfoTx.fromJSON(object.setAccountInfo),
-          }
+        ? { $case: "setAccountInfo", setAccountInfo: SetAccountInfoTx.fromJSON(object.setAccountInfo) }
         : isSet(object.setAccountDelegateTx)
         ? {
-            $case: "setAccountDelegateTx",
-            setAccountDelegateTx: SetAccountDelegateTx.fromJSON(
-              object.setAccountDelegateTx
-            ),
-          }
+          $case: "setAccountDelegateTx",
+          setAccountDelegateTx: SetAccountDelegateTx.fromJSON(object.setAccountDelegateTx),
+        }
         : isSet(object.collectFaucet)
-        ? {
-            $case: "collectFaucet",
-            collectFaucet: CollectFaucetTx.fromJSON(object.collectFaucet),
-          }
+        ? { $case: "collectFaucet", collectFaucet: CollectFaucetTx.fromJSON(object.collectFaucet) }
         : isSet(object.setKeykeeper)
-        ? {
-            $case: "setKeykeeper",
-            setKeykeeper: SetKeykeeperTx.fromJSON(object.setKeykeeper),
-          }
+        ? { $case: "setKeykeeper", setKeykeeper: SetKeykeeperTx.fromJSON(object.setKeykeeper) }
         : undefined,
     };
   },
@@ -2631,127 +2253,80 @@ export const Tx = {
   toJSON(message: Tx): unknown {
     const obj: any = {};
     message.payload?.$case === "vote" &&
-      (obj.vote = message.payload?.vote
-        ? VoteEnvelope.toJSON(message.payload?.vote)
-        : undefined);
+      (obj.vote = message.payload?.vote ? VoteEnvelope.toJSON(message.payload?.vote) : undefined);
     message.payload?.$case === "newProcess" &&
-      (obj.newProcess = message.payload?.newProcess
-        ? NewProcessTx.toJSON(message.payload?.newProcess)
-        : undefined);
+      (obj.newProcess = message.payload?.newProcess ? NewProcessTx.toJSON(message.payload?.newProcess) : undefined);
     message.payload?.$case === "admin" &&
-      (obj.admin = message.payload?.admin
-        ? AdminTx.toJSON(message.payload?.admin)
-        : undefined);
+      (obj.admin = message.payload?.admin ? AdminTx.toJSON(message.payload?.admin) : undefined);
     message.payload?.$case === "setProcess" &&
-      (obj.setProcess = message.payload?.setProcess
-        ? SetProcessTx.toJSON(message.payload?.setProcess)
-        : undefined);
+      (obj.setProcess = message.payload?.setProcess ? SetProcessTx.toJSON(message.payload?.setProcess) : undefined);
     message.payload?.$case === "registerKey" &&
-      (obj.registerKey = message.payload?.registerKey
-        ? RegisterKeyTx.toJSON(message.payload?.registerKey)
-        : undefined);
+      (obj.registerKey = message.payload?.registerKey ? RegisterKeyTx.toJSON(message.payload?.registerKey) : undefined);
     message.payload?.$case === "mintTokens" &&
-      (obj.mintTokens = message.payload?.mintTokens
-        ? MintTokensTx.toJSON(message.payload?.mintTokens)
-        : undefined);
+      (obj.mintTokens = message.payload?.mintTokens ? MintTokensTx.toJSON(message.payload?.mintTokens) : undefined);
     message.payload?.$case === "sendTokens" &&
-      (obj.sendTokens = message.payload?.sendTokens
-        ? SendTokensTx.toJSON(message.payload?.sendTokens)
-        : undefined);
-    message.payload?.$case === "setTransactionCosts" &&
-      (obj.setTransactionCosts = message.payload?.setTransactionCosts
-        ? SetTransactionCostsTx.toJSON(message.payload?.setTransactionCosts)
-        : undefined);
-    message.payload?.$case === "setAccountInfo" &&
-      (obj.setAccountInfo = message.payload?.setAccountInfo
-        ? SetAccountInfoTx.toJSON(message.payload?.setAccountInfo)
-        : undefined);
+      (obj.sendTokens = message.payload?.sendTokens ? SendTokensTx.toJSON(message.payload?.sendTokens) : undefined);
+    message.payload?.$case === "setTransactionCosts" && (obj.setTransactionCosts = message.payload?.setTransactionCosts
+      ? SetTransactionCostsTx.toJSON(message.payload?.setTransactionCosts)
+      : undefined);
+    message.payload?.$case === "setAccountInfo" && (obj.setAccountInfo = message.payload?.setAccountInfo
+      ? SetAccountInfoTx.toJSON(message.payload?.setAccountInfo)
+      : undefined);
     message.payload?.$case === "setAccountDelegateTx" &&
       (obj.setAccountDelegateTx = message.payload?.setAccountDelegateTx
         ? SetAccountDelegateTx.toJSON(message.payload?.setAccountDelegateTx)
         : undefined);
-    message.payload?.$case === "collectFaucet" &&
-      (obj.collectFaucet = message.payload?.collectFaucet
-        ? CollectFaucetTx.toJSON(message.payload?.collectFaucet)
-        : undefined);
-    message.payload?.$case === "setKeykeeper" &&
-      (obj.setKeykeeper = message.payload?.setKeykeeper
-        ? SetKeykeeperTx.toJSON(message.payload?.setKeykeeper)
-        : undefined);
+    message.payload?.$case === "collectFaucet" && (obj.collectFaucet = message.payload?.collectFaucet
+      ? CollectFaucetTx.toJSON(message.payload?.collectFaucet)
+      : undefined);
+    message.payload?.$case === "setKeykeeper" && (obj.setKeykeeper = message.payload?.setKeykeeper
+      ? SetKeykeeperTx.toJSON(message.payload?.setKeykeeper)
+      : undefined);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<Tx>, I>>(object: I): Tx {
     const message = createBaseTx();
-    if (
-      object.payload?.$case === "vote" &&
-      object.payload?.vote !== undefined &&
-      object.payload?.vote !== null
-    ) {
-      message.payload = {
-        $case: "vote",
-        vote: VoteEnvelope.fromPartial(object.payload.vote),
-      };
+    if (object.payload?.$case === "vote" && object.payload?.vote !== undefined && object.payload?.vote !== null) {
+      message.payload = { $case: "vote", vote: VoteEnvelope.fromPartial(object.payload.vote) };
     }
     if (
       object.payload?.$case === "newProcess" &&
       object.payload?.newProcess !== undefined &&
       object.payload?.newProcess !== null
     ) {
-      message.payload = {
-        $case: "newProcess",
-        newProcess: NewProcessTx.fromPartial(object.payload.newProcess),
-      };
+      message.payload = { $case: "newProcess", newProcess: NewProcessTx.fromPartial(object.payload.newProcess) };
     }
-    if (
-      object.payload?.$case === "admin" &&
-      object.payload?.admin !== undefined &&
-      object.payload?.admin !== null
-    ) {
-      message.payload = {
-        $case: "admin",
-        admin: AdminTx.fromPartial(object.payload.admin),
-      };
+    if (object.payload?.$case === "admin" && object.payload?.admin !== undefined && object.payload?.admin !== null) {
+      message.payload = { $case: "admin", admin: AdminTx.fromPartial(object.payload.admin) };
     }
     if (
       object.payload?.$case === "setProcess" &&
       object.payload?.setProcess !== undefined &&
       object.payload?.setProcess !== null
     ) {
-      message.payload = {
-        $case: "setProcess",
-        setProcess: SetProcessTx.fromPartial(object.payload.setProcess),
-      };
+      message.payload = { $case: "setProcess", setProcess: SetProcessTx.fromPartial(object.payload.setProcess) };
     }
     if (
       object.payload?.$case === "registerKey" &&
       object.payload?.registerKey !== undefined &&
       object.payload?.registerKey !== null
     ) {
-      message.payload = {
-        $case: "registerKey",
-        registerKey: RegisterKeyTx.fromPartial(object.payload.registerKey),
-      };
+      message.payload = { $case: "registerKey", registerKey: RegisterKeyTx.fromPartial(object.payload.registerKey) };
     }
     if (
       object.payload?.$case === "mintTokens" &&
       object.payload?.mintTokens !== undefined &&
       object.payload?.mintTokens !== null
     ) {
-      message.payload = {
-        $case: "mintTokens",
-        mintTokens: MintTokensTx.fromPartial(object.payload.mintTokens),
-      };
+      message.payload = { $case: "mintTokens", mintTokens: MintTokensTx.fromPartial(object.payload.mintTokens) };
     }
     if (
       object.payload?.$case === "sendTokens" &&
       object.payload?.sendTokens !== undefined &&
       object.payload?.sendTokens !== null
     ) {
-      message.payload = {
-        $case: "sendTokens",
-        sendTokens: SendTokensTx.fromPartial(object.payload.sendTokens),
-      };
+      message.payload = { $case: "sendTokens", sendTokens: SendTokensTx.fromPartial(object.payload.sendTokens) };
     }
     if (
       object.payload?.$case === "setTransactionCosts" &&
@@ -2760,9 +2335,7 @@ export const Tx = {
     ) {
       message.payload = {
         $case: "setTransactionCosts",
-        setTransactionCosts: SetTransactionCostsTx.fromPartial(
-          object.payload.setTransactionCosts
-        ),
+        setTransactionCosts: SetTransactionCostsTx.fromPartial(object.payload.setTransactionCosts),
       };
     }
     if (
@@ -2772,9 +2345,7 @@ export const Tx = {
     ) {
       message.payload = {
         $case: "setAccountInfo",
-        setAccountInfo: SetAccountInfoTx.fromPartial(
-          object.payload.setAccountInfo
-        ),
+        setAccountInfo: SetAccountInfoTx.fromPartial(object.payload.setAccountInfo),
       };
     }
     if (
@@ -2784,9 +2355,7 @@ export const Tx = {
     ) {
       message.payload = {
         $case: "setAccountDelegateTx",
-        setAccountDelegateTx: SetAccountDelegateTx.fromPartial(
-          object.payload.setAccountDelegateTx
-        ),
+        setAccountDelegateTx: SetAccountDelegateTx.fromPartial(object.payload.setAccountDelegateTx),
       };
     }
     if (
@@ -2796,9 +2365,7 @@ export const Tx = {
     ) {
       message.payload = {
         $case: "collectFaucet",
-        collectFaucet: CollectFaucetTx.fromPartial(
-          object.payload.collectFaucet
-        ),
+        collectFaucet: CollectFaucetTx.fromPartial(object.payload.collectFaucet),
       };
     }
     if (
@@ -2820,10 +2387,7 @@ function createBaseSignedTx(): SignedTx {
 }
 
 export const SignedTx = {
-  encode(
-    message: SignedTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SignedTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.tx.length !== 0) {
       writer.uint32(10).bytes(message.tx);
     }
@@ -2857,23 +2421,15 @@ export const SignedTx = {
   fromJSON(object: any): SignedTx {
     return {
       tx: isSet(object.tx) ? bytesFromBase64(object.tx) : new Uint8Array(),
-      signature: isSet(object.signature)
-        ? bytesFromBase64(object.signature)
-        : undefined,
+      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : undefined,
     };
   },
 
   toJSON(message: SignedTx): unknown {
     const obj: any = {};
-    message.tx !== undefined &&
-      (obj.tx = base64FromBytes(
-        message.tx !== undefined ? message.tx : new Uint8Array()
-      ));
+    message.tx !== undefined && (obj.tx = base64FromBytes(message.tx !== undefined ? message.tx : new Uint8Array()));
     message.signature !== undefined &&
-      (obj.signature =
-        message.signature !== undefined
-          ? base64FromBytes(message.signature)
-          : undefined);
+      (obj.signature = message.signature !== undefined ? base64FromBytes(message.signature) : undefined);
     return obj;
   },
 
@@ -2890,10 +2446,7 @@ function createBaseNewProcessTx(): NewProcessTx {
 }
 
 export const NewProcessTx = {
-  encode(
-    message: NewProcessTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: NewProcessTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -2934,9 +2487,7 @@ export const NewProcessTx = {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      process: isSet(object.process)
-        ? Process.fromJSON(object.process)
-        : undefined,
+      process: isSet(object.process) ? Process.fromJSON(object.process) : undefined,
     };
   },
 
@@ -2944,23 +2495,17 @@ export const NewProcessTx = {
     const obj: any = {};
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
-    message.process !== undefined &&
-      (obj.process = message.process
-        ? Process.toJSON(message.process)
-        : undefined);
+    message.process !== undefined && (obj.process = message.process ? Process.toJSON(message.process) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<NewProcessTx>, I>>(
-    object: I
-  ): NewProcessTx {
+  fromPartial<I extends Exact<DeepPartial<NewProcessTx>, I>>(object: I): NewProcessTx {
     const message = createBaseNewProcessTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
-    message.process =
-      object.process !== undefined && object.process !== null
-        ? Process.fromPartial(object.process)
-        : undefined;
+    message.process = (object.process !== undefined && object.process !== null)
+      ? Process.fromPartial(object.process)
+      : undefined;
     return message;
   },
 };
@@ -2980,10 +2525,7 @@ function createBaseSetProcessTx(): SetProcessTx {
 }
 
 export const SetProcessTx = {
-  encode(
-    message: SetProcessTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SetProcessTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3060,23 +2602,13 @@ export const SetProcessTx = {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
-      status: isSet(object.status)
-        ? processStatusFromJSON(object.status)
-        : undefined,
-      questionIndex: isSet(object.questionIndex)
-        ? Number(object.questionIndex)
-        : undefined,
-      censusRoot: isSet(object.censusRoot)
-        ? bytesFromBase64(object.censusRoot)
-        : undefined,
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
+      status: isSet(object.status) ? processStatusFromJSON(object.status) : undefined,
+      questionIndex: isSet(object.questionIndex) ? Number(object.questionIndex) : undefined,
+      censusRoot: isSet(object.censusRoot) ? bytesFromBase64(object.censusRoot) : undefined,
       censusURI: isSet(object.censusURI) ? String(object.censusURI) : undefined,
       proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined,
-      results: isSet(object.results)
-        ? ProcessResult.fromJSON(object.results)
-        : undefined,
+      results: isSet(object.results) ? ProcessResult.fromJSON(object.results) : undefined,
     };
   },
 
@@ -3085,34 +2617,20 @@ export const SetProcessTx = {
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
     message.status !== undefined &&
-      (obj.status =
-        message.status !== undefined
-          ? processStatusToJSON(message.status)
-          : undefined);
-    message.questionIndex !== undefined &&
-      (obj.questionIndex = Math.round(message.questionIndex));
+      (obj.status = message.status !== undefined ? processStatusToJSON(message.status) : undefined);
+    message.questionIndex !== undefined && (obj.questionIndex = Math.round(message.questionIndex));
     message.censusRoot !== undefined &&
-      (obj.censusRoot =
-        message.censusRoot !== undefined
-          ? base64FromBytes(message.censusRoot)
-          : undefined);
+      (obj.censusRoot = message.censusRoot !== undefined ? base64FromBytes(message.censusRoot) : undefined);
     message.censusURI !== undefined && (obj.censusURI = message.censusURI);
-    message.proof !== undefined &&
-      (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
+    message.proof !== undefined && (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
     message.results !== undefined &&
-      (obj.results = message.results
-        ? ProcessResult.toJSON(message.results)
-        : undefined);
+      (obj.results = message.results ? ProcessResult.toJSON(message.results) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetProcessTx>, I>>(
-    object: I
-  ): SetProcessTx {
+  fromPartial<I extends Exact<DeepPartial<SetProcessTx>, I>>(object: I): SetProcessTx {
     const message = createBaseSetProcessTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
@@ -3121,14 +2639,10 @@ export const SetProcessTx = {
     message.questionIndex = object.questionIndex ?? undefined;
     message.censusRoot = object.censusRoot ?? undefined;
     message.censusURI = object.censusURI ?? undefined;
-    message.proof =
-      object.proof !== undefined && object.proof !== null
-        ? Proof.fromPartial(object.proof)
-        : undefined;
-    message.results =
-      object.results !== undefined && object.results !== null
-        ? ProcessResult.fromPartial(object.results)
-        : undefined;
+    message.proof = (object.proof !== undefined && object.proof !== null) ? Proof.fromPartial(object.proof) : undefined;
+    message.results = (object.results !== undefined && object.results !== null)
+      ? ProcessResult.fromPartial(object.results)
+      : undefined;
     return message;
   },
 };
@@ -3148,10 +2662,7 @@ function createBaseAdminTx(): AdminTx {
 }
 
 export const AdminTx = {
-  encode(
-    message: AdminTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AdminTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3227,23 +2738,15 @@ export const AdminTx = {
   fromJSON(object: any): AdminTx {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
-      address: isSet(object.address)
-        ? bytesFromBase64(object.address)
-        : undefined,
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
+      address: isSet(object.address) ? bytesFromBase64(object.address) : undefined,
       encryptionPrivateKey: isSet(object.encryptionPrivateKey)
         ? bytesFromBase64(object.encryptionPrivateKey)
         : undefined,
-      encryptionPublicKey: isSet(object.encryptionPublicKey)
-        ? bytesFromBase64(object.encryptionPublicKey)
-        : undefined,
+      encryptionPublicKey: isSet(object.encryptionPublicKey) ? bytesFromBase64(object.encryptionPublicKey) : undefined,
       keyIndex: isSet(object.keyIndex) ? Number(object.keyIndex) : undefined,
       power: isSet(object.power) ? Number(object.power) : undefined,
-      publicKey: isSet(object.publicKey)
-        ? bytesFromBase64(object.publicKey)
-        : undefined,
+      publicKey: isSet(object.publicKey) ? bytesFromBase64(object.publicKey) : undefined,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
     };
   },
@@ -3252,32 +2755,19 @@ export const AdminTx = {
     const obj: any = {};
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
     message.address !== undefined &&
-      (obj.address =
-        message.address !== undefined
-          ? base64FromBytes(message.address)
-          : undefined);
-    message.encryptionPrivateKey !== undefined &&
-      (obj.encryptionPrivateKey =
-        message.encryptionPrivateKey !== undefined
-          ? base64FromBytes(message.encryptionPrivateKey)
-          : undefined);
-    message.encryptionPublicKey !== undefined &&
-      (obj.encryptionPublicKey =
-        message.encryptionPublicKey !== undefined
-          ? base64FromBytes(message.encryptionPublicKey)
-          : undefined);
-    message.keyIndex !== undefined &&
-      (obj.keyIndex = Math.round(message.keyIndex));
+      (obj.address = message.address !== undefined ? base64FromBytes(message.address) : undefined);
+    message.encryptionPrivateKey !== undefined && (obj.encryptionPrivateKey = message.encryptionPrivateKey !== undefined
+      ? base64FromBytes(message.encryptionPrivateKey)
+      : undefined);
+    message.encryptionPublicKey !== undefined && (obj.encryptionPublicKey = message.encryptionPublicKey !== undefined
+      ? base64FromBytes(message.encryptionPublicKey)
+      : undefined);
+    message.keyIndex !== undefined && (obj.keyIndex = Math.round(message.keyIndex));
     message.power !== undefined && (obj.power = Math.round(message.power));
     message.publicKey !== undefined &&
-      (obj.publicKey =
-        message.publicKey !== undefined
-          ? base64FromBytes(message.publicKey)
-          : undefined);
+      (obj.publicKey = message.publicKey !== undefined ? base64FromBytes(message.publicKey) : undefined);
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     return obj;
   },
@@ -3298,20 +2788,11 @@ export const AdminTx = {
 };
 
 function createBaseRegisterKeyTx(): RegisterKeyTx {
-  return {
-    nonce: 0,
-    processId: new Uint8Array(),
-    proof: undefined,
-    newKey: new Uint8Array(),
-    weight: "",
-  };
+  return { nonce: 0, processId: new Uint8Array(), proof: undefined, newKey: new Uint8Array(), weight: "" };
 }
 
 export const RegisterKeyTx = {
-  encode(
-    message: RegisterKeyTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: RegisterKeyTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.nonce !== 0) {
       writer.uint32(8).uint32(message.nonce);
     }
@@ -3363,13 +2844,9 @@ export const RegisterKeyTx = {
   fromJSON(object: any): RegisterKeyTx {
     return {
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
       proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : undefined,
-      newKey: isSet(object.newKey)
-        ? bytesFromBase64(object.newKey)
-        : new Uint8Array(),
+      newKey: isSet(object.newKey) ? bytesFromBase64(object.newKey) : new Uint8Array(),
       weight: isSet(object.weight) ? String(object.weight) : "",
     };
   },
@@ -3378,29 +2855,19 @@ export const RegisterKeyTx = {
     const obj: any = {};
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
-    message.proof !== undefined &&
-      (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
+    message.proof !== undefined && (obj.proof = message.proof ? Proof.toJSON(message.proof) : undefined);
     message.newKey !== undefined &&
-      (obj.newKey = base64FromBytes(
-        message.newKey !== undefined ? message.newKey : new Uint8Array()
-      ));
+      (obj.newKey = base64FromBytes(message.newKey !== undefined ? message.newKey : new Uint8Array()));
     message.weight !== undefined && (obj.weight = message.weight);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<RegisterKeyTx>, I>>(
-    object: I
-  ): RegisterKeyTx {
+  fromPartial<I extends Exact<DeepPartial<RegisterKeyTx>, I>>(object: I): RegisterKeyTx {
     const message = createBaseRegisterKeyTx();
     message.nonce = object.nonce ?? 0;
     message.processId = object.processId ?? new Uint8Array();
-    message.proof =
-      object.proof !== undefined && object.proof !== null
-        ? Proof.fromPartial(object.proof)
-        : undefined;
+    message.proof = (object.proof !== undefined && object.proof !== null) ? Proof.fromPartial(object.proof) : undefined;
     message.newKey = object.newKey ?? new Uint8Array();
     message.weight = object.weight ?? "";
     return message;
@@ -3412,10 +2879,7 @@ function createBaseMintTokensTx(): MintTokensTx {
 }
 
 export const MintTokensTx = {
-  encode(
-    message: MintTokensTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: MintTokensTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3471,17 +2935,12 @@ export const MintTokensTx = {
     const obj: any = {};
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
-    message.to !== undefined &&
-      (obj.to = base64FromBytes(
-        message.to !== undefined ? message.to : new Uint8Array()
-      ));
+    message.to !== undefined && (obj.to = base64FromBytes(message.to !== undefined ? message.to : new Uint8Array()));
     message.value !== undefined && (obj.value = Math.round(message.value));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MintTokensTx>, I>>(
-    object: I
-  ): MintTokensTx {
+  fromPartial<I extends Exact<DeepPartial<MintTokensTx>, I>>(object: I): MintTokensTx {
     const message = createBaseMintTokensTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
@@ -3492,20 +2951,11 @@ export const MintTokensTx = {
 };
 
 function createBaseSendTokensTx(): SendTokensTx {
-  return {
-    txtype: 0,
-    nonce: 0,
-    from: new Uint8Array(),
-    to: new Uint8Array(),
-    value: 0,
-  };
+  return { txtype: 0, nonce: 0, from: new Uint8Array(), to: new Uint8Array(), value: 0 };
 }
 
 export const SendTokensTx = {
-  encode(
-    message: SendTokensTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SendTokensTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3558,9 +3008,7 @@ export const SendTokensTx = {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      from: isSet(object.from)
-        ? bytesFromBase64(object.from)
-        : new Uint8Array(),
+      from: isSet(object.from) ? bytesFromBase64(object.from) : new Uint8Array(),
       to: isSet(object.to) ? bytesFromBase64(object.to) : new Uint8Array(),
       value: isSet(object.value) ? Number(object.value) : 0,
     };
@@ -3571,20 +3019,13 @@ export const SendTokensTx = {
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.from !== undefined &&
-      (obj.from = base64FromBytes(
-        message.from !== undefined ? message.from : new Uint8Array()
-      ));
-    message.to !== undefined &&
-      (obj.to = base64FromBytes(
-        message.to !== undefined ? message.to : new Uint8Array()
-      ));
+      (obj.from = base64FromBytes(message.from !== undefined ? message.from : new Uint8Array()));
+    message.to !== undefined && (obj.to = base64FromBytes(message.to !== undefined ? message.to : new Uint8Array()));
     message.value !== undefined && (obj.value = Math.round(message.value));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SendTokensTx>, I>>(
-    object: I
-  ): SendTokensTx {
+  fromPartial<I extends Exact<DeepPartial<SendTokensTx>, I>>(object: I): SendTokensTx {
     const message = createBaseSendTokensTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
@@ -3600,10 +3041,7 @@ function createBaseSetTransactionCostsTx(): SetTransactionCostsTx {
 }
 
 export const SetTransactionCostsTx = {
-  encode(
-    message: SetTransactionCostsTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SetTransactionCostsTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3616,10 +3054,7 @@ export const SetTransactionCostsTx = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): SetTransactionCostsTx {
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetTransactionCostsTx {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetTransactionCostsTx();
@@ -3659,9 +3094,7 @@ export const SetTransactionCostsTx = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetTransactionCostsTx>, I>>(
-    object: I
-  ): SetTransactionCostsTx {
+  fromPartial<I extends Exact<DeepPartial<SetTransactionCostsTx>, I>>(object: I): SetTransactionCostsTx {
     const message = createBaseSetTransactionCostsTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
@@ -3671,20 +3104,11 @@ export const SetTransactionCostsTx = {
 };
 
 function createBaseSetAccountInfoTx(): SetAccountInfoTx {
-  return {
-    txtype: 0,
-    nonce: 0,
-    infoURI: "",
-    account: new Uint8Array(),
-    faucetPackage: undefined,
-  };
+  return { txtype: 0, nonce: 0, infoURI: "", account: new Uint8Array(), faucetPackage: undefined };
 }
 
 export const SetAccountInfoTx = {
-  encode(
-    message: SetAccountInfoTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SetAccountInfoTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3698,10 +3122,7 @@ export const SetAccountInfoTx = {
       writer.uint32(34).bytes(message.account);
     }
     if (message.faucetPackage !== undefined) {
-      FaucetPackage.encode(
-        message.faucetPackage,
-        writer.uint32(42).fork()
-      ).ldelim();
+      FaucetPackage.encode(message.faucetPackage, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -3741,12 +3162,8 @@ export const SetAccountInfoTx = {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
       infoURI: isSet(object.infoURI) ? String(object.infoURI) : "",
-      account: isSet(object.account)
-        ? bytesFromBase64(object.account)
-        : new Uint8Array(),
-      faucetPackage: isSet(object.faucetPackage)
-        ? FaucetPackage.fromJSON(object.faucetPackage)
-        : undefined,
+      account: isSet(object.account) ? bytesFromBase64(object.account) : new Uint8Array(),
+      faucetPackage: isSet(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : undefined,
     };
   },
 
@@ -3756,28 +3173,21 @@ export const SetAccountInfoTx = {
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.infoURI !== undefined && (obj.infoURI = message.infoURI);
     message.account !== undefined &&
-      (obj.account = base64FromBytes(
-        message.account !== undefined ? message.account : new Uint8Array()
-      ));
+      (obj.account = base64FromBytes(message.account !== undefined ? message.account : new Uint8Array()));
     message.faucetPackage !== undefined &&
-      (obj.faucetPackage = message.faucetPackage
-        ? FaucetPackage.toJSON(message.faucetPackage)
-        : undefined);
+      (obj.faucetPackage = message.faucetPackage ? FaucetPackage.toJSON(message.faucetPackage) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetAccountInfoTx>, I>>(
-    object: I
-  ): SetAccountInfoTx {
+  fromPartial<I extends Exact<DeepPartial<SetAccountInfoTx>, I>>(object: I): SetAccountInfoTx {
     const message = createBaseSetAccountInfoTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
     message.infoURI = object.infoURI ?? "";
     message.account = object.account ?? new Uint8Array();
-    message.faucetPackage =
-      object.faucetPackage !== undefined && object.faucetPackage !== null
-        ? FaucetPackage.fromPartial(object.faucetPackage)
-        : undefined;
+    message.faucetPackage = (object.faucetPackage !== undefined && object.faucetPackage !== null)
+      ? FaucetPackage.fromPartial(object.faucetPackage)
+      : undefined;
     return message;
   },
 };
@@ -3787,10 +3197,7 @@ function createBaseSetAccountDelegateTx(): SetAccountDelegateTx {
 }
 
 export const SetAccountDelegateTx = {
-  encode(
-    message: SetAccountDelegateTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SetAccountDelegateTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3803,10 +3210,7 @@ export const SetAccountDelegateTx = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): SetAccountDelegateTx {
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetAccountDelegateTx {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSetAccountDelegateTx();
@@ -3834,9 +3238,7 @@ export const SetAccountDelegateTx = {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      delegate: isSet(object.delegate)
-        ? bytesFromBase64(object.delegate)
-        : new Uint8Array(),
+      delegate: isSet(object.delegate) ? bytesFromBase64(object.delegate) : new Uint8Array(),
     };
   },
 
@@ -3845,15 +3247,11 @@ export const SetAccountDelegateTx = {
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.delegate !== undefined &&
-      (obj.delegate = base64FromBytes(
-        message.delegate !== undefined ? message.delegate : new Uint8Array()
-      ));
+      (obj.delegate = base64FromBytes(message.delegate !== undefined ? message.delegate : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetAccountDelegateTx>, I>>(
-    object: I
-  ): SetAccountDelegateTx {
+  fromPartial<I extends Exact<DeepPartial<SetAccountDelegateTx>, I>>(object: I): SetAccountDelegateTx {
     const message = createBaseSetAccountDelegateTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
@@ -3867,18 +3265,12 @@ function createBaseCollectFaucetTx(): CollectFaucetTx {
 }
 
 export const CollectFaucetTx = {
-  encode(
-    message: CollectFaucetTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: CollectFaucetTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txType !== 0) {
       writer.uint32(8).int32(message.txType);
     }
     if (message.faucetPackage !== undefined) {
-      FaucetPackage.encode(
-        message.faucetPackage,
-        writer.uint32(18).fork()
-      ).ldelim();
+      FaucetPackage.encode(message.faucetPackage, writer.uint32(18).fork()).ldelim();
     }
     if (message.nonce !== 0) {
       writer.uint32(24).uint32(message.nonce);
@@ -3913,9 +3305,7 @@ export const CollectFaucetTx = {
   fromJSON(object: any): CollectFaucetTx {
     return {
       txType: isSet(object.txType) ? txTypeFromJSON(object.txType) : 0,
-      faucetPackage: isSet(object.faucetPackage)
-        ? FaucetPackage.fromJSON(object.faucetPackage)
-        : undefined,
+      faucetPackage: isSet(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : undefined,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
     };
   },
@@ -3924,22 +3314,17 @@ export const CollectFaucetTx = {
     const obj: any = {};
     message.txType !== undefined && (obj.txType = txTypeToJSON(message.txType));
     message.faucetPackage !== undefined &&
-      (obj.faucetPackage = message.faucetPackage
-        ? FaucetPackage.toJSON(message.faucetPackage)
-        : undefined);
+      (obj.faucetPackage = message.faucetPackage ? FaucetPackage.toJSON(message.faucetPackage) : undefined);
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<CollectFaucetTx>, I>>(
-    object: I
-  ): CollectFaucetTx {
+  fromPartial<I extends Exact<DeepPartial<CollectFaucetTx>, I>>(object: I): CollectFaucetTx {
     const message = createBaseCollectFaucetTx();
     message.txType = object.txType ?? 0;
-    message.faucetPackage =
-      object.faucetPackage !== undefined && object.faucetPackage !== null
-        ? FaucetPackage.fromPartial(object.faucetPackage)
-        : undefined;
+    message.faucetPackage = (object.faucetPackage !== undefined && object.faucetPackage !== null)
+      ? FaucetPackage.fromPartial(object.faucetPackage)
+      : undefined;
     message.nonce = object.nonce ?? 0;
     return message;
   },
@@ -3950,10 +3335,7 @@ function createBaseFaucetPayload(): FaucetPayload {
 }
 
 export const FaucetPayload = {
-  encode(
-    message: FaucetPayload,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FaucetPayload, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.identifier !== 0) {
       writer.uint32(8).uint64(message.identifier);
     }
@@ -4000,19 +3382,13 @@ export const FaucetPayload = {
 
   toJSON(message: FaucetPayload): unknown {
     const obj: any = {};
-    message.identifier !== undefined &&
-      (obj.identifier = Math.round(message.identifier));
-    message.to !== undefined &&
-      (obj.to = base64FromBytes(
-        message.to !== undefined ? message.to : new Uint8Array()
-      ));
+    message.identifier !== undefined && (obj.identifier = Math.round(message.identifier));
+    message.to !== undefined && (obj.to = base64FromBytes(message.to !== undefined ? message.to : new Uint8Array()));
     message.amount !== undefined && (obj.amount = Math.round(message.amount));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FaucetPayload>, I>>(
-    object: I
-  ): FaucetPayload {
+  fromPartial<I extends Exact<DeepPartial<FaucetPayload>, I>>(object: I): FaucetPayload {
     const message = createBaseFaucetPayload();
     message.identifier = object.identifier ?? 0;
     message.to = object.to ?? new Uint8Array();
@@ -4026,10 +3402,7 @@ function createBaseFaucetPackage(): FaucetPackage {
 }
 
 export const FaucetPackage = {
-  encode(
-    message: FaucetPackage,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: FaucetPackage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.payload !== undefined) {
       FaucetPayload.encode(message.payload, writer.uint32(10).fork()).ldelim();
     }
@@ -4062,36 +3435,25 @@ export const FaucetPackage = {
 
   fromJSON(object: any): FaucetPackage {
     return {
-      payload: isSet(object.payload)
-        ? FaucetPayload.fromJSON(object.payload)
-        : undefined,
-      signature: isSet(object.signature)
-        ? bytesFromBase64(object.signature)
-        : new Uint8Array(),
+      payload: isSet(object.payload) ? FaucetPayload.fromJSON(object.payload) : undefined,
+      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(),
     };
   },
 
   toJSON(message: FaucetPackage): unknown {
     const obj: any = {};
     message.payload !== undefined &&
-      (obj.payload = message.payload
-        ? FaucetPayload.toJSON(message.payload)
-        : undefined);
+      (obj.payload = message.payload ? FaucetPayload.toJSON(message.payload) : undefined);
     message.signature !== undefined &&
-      (obj.signature = base64FromBytes(
-        message.signature !== undefined ? message.signature : new Uint8Array()
-      ));
+      (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<FaucetPackage>, I>>(
-    object: I
-  ): FaucetPackage {
+  fromPartial<I extends Exact<DeepPartial<FaucetPackage>, I>>(object: I): FaucetPackage {
     const message = createBaseFaucetPackage();
-    message.payload =
-      object.payload !== undefined && object.payload !== null
-        ? FaucetPayload.fromPartial(object.payload)
-        : undefined;
+    message.payload = (object.payload !== undefined && object.payload !== null)
+      ? FaucetPayload.fromPartial(object.payload)
+      : undefined;
     message.signature = object.signature ?? new Uint8Array();
     return message;
   },
@@ -4102,10 +3464,7 @@ function createBaseSetKeykeeperTx(): SetKeykeeperTx {
 }
 
 export const SetKeykeeperTx = {
-  encode(
-    message: SetKeykeeperTx,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: SetKeykeeperTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -4146,9 +3505,7 @@ export const SetKeykeeperTx = {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      keykeeper: isSet(object.keykeeper)
-        ? bytesFromBase64(object.keykeeper)
-        : new Uint8Array(),
+      keykeeper: isSet(object.keykeeper) ? bytesFromBase64(object.keykeeper) : new Uint8Array(),
     };
   },
 
@@ -4157,15 +3514,11 @@ export const SetKeykeeperTx = {
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.keykeeper !== undefined &&
-      (obj.keykeeper = base64FromBytes(
-        message.keykeeper !== undefined ? message.keykeeper : new Uint8Array()
-      ));
+      (obj.keykeeper = base64FromBytes(message.keykeeper !== undefined ? message.keykeeper : new Uint8Array()));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetKeykeeperTx>, I>>(
-    object: I
-  ): SetKeykeeperTx {
+  fromPartial<I extends Exact<DeepPartial<SetKeykeeperTx>, I>>(object: I): SetKeykeeperTx {
     const message = createBaseSetKeykeeperTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
@@ -4211,10 +3564,7 @@ function createBaseProcess(): Process {
 }
 
 export const Process = {
-  encode(
-    message: Process,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Process, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.processId.length !== 0) {
       writer.uint32(10).bytes(message.processId);
     }
@@ -4252,10 +3602,7 @@ export const Process = {
       writer.uint32(112).uint32(message.namespace);
     }
     if (message.envelopeType !== undefined) {
-      EnvelopeType.encode(
-        message.envelopeType,
-        writer.uint32(122).fork()
-      ).ldelim();
+      EnvelopeType.encode(message.envelopeType, writer.uint32(122).fork()).ldelim();
     }
     if (message.mode !== undefined) {
       ProcessMode.encode(message.mode, writer.uint32(130).fork()).ldelim();
@@ -4267,10 +3614,7 @@ export const Process = {
       writer.uint32(144).uint32(message.questionCount);
     }
     if (message.voteOptions !== undefined) {
-      ProcessVoteOptions.encode(
-        message.voteOptions,
-        writer.uint32(154).fork()
-      ).ldelim();
+      ProcessVoteOptions.encode(message.voteOptions, writer.uint32(154).fork()).ldelim();
     }
     if (message.censusOrigin !== 0) {
       writer.uint32(160).int32(message.censusOrigin);
@@ -4373,10 +3717,7 @@ export const Process = {
           message.questionCount = reader.uint32();
           break;
         case 19:
-          message.voteOptions = ProcessVoteOptions.decode(
-            reader,
-            reader.uint32()
-          );
+          message.voteOptions = ProcessVoteOptions.decode(reader, reader.uint32());
           break;
         case 20:
           message.censusOrigin = reader.int32() as any;
@@ -4430,17 +3771,11 @@ export const Process = {
 
   fromJSON(object: any): Process {
     return {
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
-      entityId: isSet(object.entityId)
-        ? bytesFromBase64(object.entityId)
-        : new Uint8Array(),
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
+      entityId: isSet(object.entityId) ? bytesFromBase64(object.entityId) : new Uint8Array(),
       startBlock: isSet(object.startBlock) ? Number(object.startBlock) : 0,
       blockCount: isSet(object.blockCount) ? Number(object.blockCount) : 0,
-      censusRoot: isSet(object.censusRoot)
-        ? bytesFromBase64(object.censusRoot)
-        : new Uint8Array(),
+      censusRoot: isSet(object.censusRoot) ? bytesFromBase64(object.censusRoot) : new Uint8Array(),
       censusURI: isSet(object.censusURI) ? String(object.censusURI) : undefined,
       encryptionPrivateKeys: Array.isArray(object?.encryptionPrivateKeys)
         ? object.encryptionPrivateKeys.map((e: any) => String(e))
@@ -4450,82 +3785,44 @@ export const Process = {
         : [],
       keyIndex: isSet(object.keyIndex) ? Number(object.keyIndex) : undefined,
       status: isSet(object.status) ? processStatusFromJSON(object.status) : 0,
-      paramsSignature: isSet(object.paramsSignature)
-        ? bytesFromBase64(object.paramsSignature)
-        : undefined,
+      paramsSignature: isSet(object.paramsSignature) ? bytesFromBase64(object.paramsSignature) : undefined,
       namespace: isSet(object.namespace) ? Number(object.namespace) : 0,
-      envelopeType: isSet(object.envelopeType)
-        ? EnvelopeType.fromJSON(object.envelopeType)
-        : undefined,
+      envelopeType: isSet(object.envelopeType) ? EnvelopeType.fromJSON(object.envelopeType) : undefined,
       mode: isSet(object.mode) ? ProcessMode.fromJSON(object.mode) : undefined,
-      questionIndex: isSet(object.questionIndex)
-        ? Number(object.questionIndex)
-        : undefined,
-      questionCount: isSet(object.questionCount)
-        ? Number(object.questionCount)
-        : undefined,
-      voteOptions: isSet(object.voteOptions)
-        ? ProcessVoteOptions.fromJSON(object.voteOptions)
-        : undefined,
-      censusOrigin: isSet(object.censusOrigin)
-        ? censusOriginFromJSON(object.censusOrigin)
-        : 0,
-      results: Array.isArray(object?.results)
-        ? object.results.map((e: any) => ProcessResult.fromJSON(e))
-        : [],
+      questionIndex: isSet(object.questionIndex) ? Number(object.questionIndex) : undefined,
+      questionCount: isSet(object.questionCount) ? Number(object.questionCount) : undefined,
+      voteOptions: isSet(object.voteOptions) ? ProcessVoteOptions.fromJSON(object.voteOptions) : undefined,
+      censusOrigin: isSet(object.censusOrigin) ? censusOriginFromJSON(object.censusOrigin) : 0,
+      results: Array.isArray(object?.results) ? object.results.map((e: any) => ProcessResult.fromJSON(e)) : [],
       resultsSignatures: Array.isArray(object?.resultsSignatures)
         ? object.resultsSignatures.map((e: any) => bytesFromBase64(e))
         : [],
-      ethIndexSlot: isSet(object.ethIndexSlot)
-        ? Number(object.ethIndexSlot)
-        : undefined,
-      sourceBlockHeight: isSet(object.sourceBlockHeight)
-        ? Number(object.sourceBlockHeight)
-        : undefined,
+      ethIndexSlot: isSet(object.ethIndexSlot) ? Number(object.ethIndexSlot) : undefined,
+      sourceBlockHeight: isSet(object.sourceBlockHeight) ? Number(object.sourceBlockHeight) : undefined,
       owner: isSet(object.owner) ? bytesFromBase64(object.owner) : undefined,
       metadata: isSet(object.metadata) ? String(object.metadata) : undefined,
-      sourceNetworkId: isSet(object.sourceNetworkId)
-        ? sourceNetworkIdFromJSON(object.sourceNetworkId)
-        : 0,
-      maxCensusSize: isSet(object.maxCensusSize)
-        ? Number(object.maxCensusSize)
-        : undefined,
-      rollingCensusRoot: isSet(object.rollingCensusRoot)
-        ? bytesFromBase64(object.rollingCensusRoot)
-        : undefined,
-      rollingCensusSize: isSet(object.rollingCensusSize)
-        ? Number(object.rollingCensusSize)
-        : undefined,
-      nullifiersRoot: isSet(object.nullifiersRoot)
-        ? bytesFromBase64(object.nullifiersRoot)
-        : undefined,
+      sourceNetworkId: isSet(object.sourceNetworkId) ? sourceNetworkIdFromJSON(object.sourceNetworkId) : 0,
+      maxCensusSize: isSet(object.maxCensusSize) ? Number(object.maxCensusSize) : undefined,
+      rollingCensusRoot: isSet(object.rollingCensusRoot) ? bytesFromBase64(object.rollingCensusRoot) : undefined,
+      rollingCensusSize: isSet(object.rollingCensusSize) ? Number(object.rollingCensusSize) : undefined,
+      nullifiersRoot: isSet(object.nullifiersRoot) ? bytesFromBase64(object.nullifiersRoot) : undefined,
       sourceNetworkContractAddr: isSet(object.sourceNetworkContractAddr)
         ? bytesFromBase64(object.sourceNetworkContractAddr)
         : undefined,
-      tokenDecimals: isSet(object.tokenDecimals)
-        ? Number(object.tokenDecimals)
-        : undefined,
+      tokenDecimals: isSet(object.tokenDecimals) ? Number(object.tokenDecimals) : undefined,
     };
   },
 
   toJSON(message: Process): unknown {
     const obj: any = {};
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
     message.entityId !== undefined &&
-      (obj.entityId = base64FromBytes(
-        message.entityId !== undefined ? message.entityId : new Uint8Array()
-      ));
-    message.startBlock !== undefined &&
-      (obj.startBlock = Math.round(message.startBlock));
-    message.blockCount !== undefined &&
-      (obj.blockCount = Math.round(message.blockCount));
+      (obj.entityId = base64FromBytes(message.entityId !== undefined ? message.entityId : new Uint8Array()));
+    message.startBlock !== undefined && (obj.startBlock = Math.round(message.startBlock));
+    message.blockCount !== undefined && (obj.blockCount = Math.round(message.blockCount));
     message.censusRoot !== undefined &&
-      (obj.censusRoot = base64FromBytes(
-        message.censusRoot !== undefined ? message.censusRoot : new Uint8Array()
-      ));
+      (obj.censusRoot = base64FromBytes(message.censusRoot !== undefined ? message.censusRoot : new Uint8Array()));
     message.censusURI !== undefined && (obj.censusURI = message.censusURI);
     if (message.encryptionPrivateKeys) {
       obj.encryptionPrivateKeys = message.encryptionPrivateKeys.map((e) => e);
@@ -4537,37 +3834,22 @@ export const Process = {
     } else {
       obj.encryptionPublicKeys = [];
     }
-    message.keyIndex !== undefined &&
-      (obj.keyIndex = Math.round(message.keyIndex));
-    message.status !== undefined &&
-      (obj.status = processStatusToJSON(message.status));
-    message.paramsSignature !== undefined &&
-      (obj.paramsSignature =
-        message.paramsSignature !== undefined
-          ? base64FromBytes(message.paramsSignature)
-          : undefined);
-    message.namespace !== undefined &&
-      (obj.namespace = Math.round(message.namespace));
+    message.keyIndex !== undefined && (obj.keyIndex = Math.round(message.keyIndex));
+    message.status !== undefined && (obj.status = processStatusToJSON(message.status));
+    message.paramsSignature !== undefined && (obj.paramsSignature = message.paramsSignature !== undefined
+      ? base64FromBytes(message.paramsSignature)
+      : undefined);
+    message.namespace !== undefined && (obj.namespace = Math.round(message.namespace));
     message.envelopeType !== undefined &&
-      (obj.envelopeType = message.envelopeType
-        ? EnvelopeType.toJSON(message.envelopeType)
-        : undefined);
-    message.mode !== undefined &&
-      (obj.mode = message.mode ? ProcessMode.toJSON(message.mode) : undefined);
-    message.questionIndex !== undefined &&
-      (obj.questionIndex = Math.round(message.questionIndex));
-    message.questionCount !== undefined &&
-      (obj.questionCount = Math.round(message.questionCount));
+      (obj.envelopeType = message.envelopeType ? EnvelopeType.toJSON(message.envelopeType) : undefined);
+    message.mode !== undefined && (obj.mode = message.mode ? ProcessMode.toJSON(message.mode) : undefined);
+    message.questionIndex !== undefined && (obj.questionIndex = Math.round(message.questionIndex));
+    message.questionCount !== undefined && (obj.questionCount = Math.round(message.questionCount));
     message.voteOptions !== undefined &&
-      (obj.voteOptions = message.voteOptions
-        ? ProcessVoteOptions.toJSON(message.voteOptions)
-        : undefined);
-    message.censusOrigin !== undefined &&
-      (obj.censusOrigin = censusOriginToJSON(message.censusOrigin));
+      (obj.voteOptions = message.voteOptions ? ProcessVoteOptions.toJSON(message.voteOptions) : undefined);
+    message.censusOrigin !== undefined && (obj.censusOrigin = censusOriginToJSON(message.censusOrigin));
     if (message.results) {
-      obj.results = message.results.map((e) =>
-        e ? ProcessResult.toJSON(e) : undefined
-      );
+      obj.results = message.results.map((e) => e ? ProcessResult.toJSON(e) : undefined);
     } else {
       obj.results = [];
     }
@@ -4578,39 +3860,24 @@ export const Process = {
     } else {
       obj.resultsSignatures = [];
     }
-    message.ethIndexSlot !== undefined &&
-      (obj.ethIndexSlot = Math.round(message.ethIndexSlot));
-    message.sourceBlockHeight !== undefined &&
-      (obj.sourceBlockHeight = Math.round(message.sourceBlockHeight));
+    message.ethIndexSlot !== undefined && (obj.ethIndexSlot = Math.round(message.ethIndexSlot));
+    message.sourceBlockHeight !== undefined && (obj.sourceBlockHeight = Math.round(message.sourceBlockHeight));
     message.owner !== undefined &&
-      (obj.owner =
-        message.owner !== undefined
-          ? base64FromBytes(message.owner)
-          : undefined);
+      (obj.owner = message.owner !== undefined ? base64FromBytes(message.owner) : undefined);
     message.metadata !== undefined && (obj.metadata = message.metadata);
-    message.sourceNetworkId !== undefined &&
-      (obj.sourceNetworkId = sourceNetworkIdToJSON(message.sourceNetworkId));
-    message.maxCensusSize !== undefined &&
-      (obj.maxCensusSize = Math.round(message.maxCensusSize));
-    message.rollingCensusRoot !== undefined &&
-      (obj.rollingCensusRoot =
-        message.rollingCensusRoot !== undefined
-          ? base64FromBytes(message.rollingCensusRoot)
-          : undefined);
-    message.rollingCensusSize !== undefined &&
-      (obj.rollingCensusSize = Math.round(message.rollingCensusSize));
+    message.sourceNetworkId !== undefined && (obj.sourceNetworkId = sourceNetworkIdToJSON(message.sourceNetworkId));
+    message.maxCensusSize !== undefined && (obj.maxCensusSize = Math.round(message.maxCensusSize));
+    message.rollingCensusRoot !== undefined && (obj.rollingCensusRoot = message.rollingCensusRoot !== undefined
+      ? base64FromBytes(message.rollingCensusRoot)
+      : undefined);
+    message.rollingCensusSize !== undefined && (obj.rollingCensusSize = Math.round(message.rollingCensusSize));
     message.nullifiersRoot !== undefined &&
-      (obj.nullifiersRoot =
-        message.nullifiersRoot !== undefined
-          ? base64FromBytes(message.nullifiersRoot)
-          : undefined);
+      (obj.nullifiersRoot = message.nullifiersRoot !== undefined ? base64FromBytes(message.nullifiersRoot) : undefined);
     message.sourceNetworkContractAddr !== undefined &&
-      (obj.sourceNetworkContractAddr =
-        message.sourceNetworkContractAddr !== undefined
-          ? base64FromBytes(message.sourceNetworkContractAddr)
-          : undefined);
-    message.tokenDecimals !== undefined &&
-      (obj.tokenDecimals = Math.round(message.tokenDecimals));
+      (obj.sourceNetworkContractAddr = message.sourceNetworkContractAddr !== undefined
+        ? base64FromBytes(message.sourceNetworkContractAddr)
+        : undefined);
+    message.tokenDecimals !== undefined && (obj.tokenDecimals = Math.round(message.tokenDecimals));
     return obj;
   },
 
@@ -4622,31 +3889,25 @@ export const Process = {
     message.blockCount = object.blockCount ?? 0;
     message.censusRoot = object.censusRoot ?? new Uint8Array();
     message.censusURI = object.censusURI ?? undefined;
-    message.encryptionPrivateKeys =
-      object.encryptionPrivateKeys?.map((e) => e) || [];
-    message.encryptionPublicKeys =
-      object.encryptionPublicKeys?.map((e) => e) || [];
+    message.encryptionPrivateKeys = object.encryptionPrivateKeys?.map((e) => e) || [];
+    message.encryptionPublicKeys = object.encryptionPublicKeys?.map((e) => e) || [];
     message.keyIndex = object.keyIndex ?? undefined;
     message.status = object.status ?? 0;
     message.paramsSignature = object.paramsSignature ?? undefined;
     message.namespace = object.namespace ?? 0;
-    message.envelopeType =
-      object.envelopeType !== undefined && object.envelopeType !== null
-        ? EnvelopeType.fromPartial(object.envelopeType)
-        : undefined;
-    message.mode =
-      object.mode !== undefined && object.mode !== null
-        ? ProcessMode.fromPartial(object.mode)
-        : undefined;
+    message.envelopeType = (object.envelopeType !== undefined && object.envelopeType !== null)
+      ? EnvelopeType.fromPartial(object.envelopeType)
+      : undefined;
+    message.mode = (object.mode !== undefined && object.mode !== null)
+      ? ProcessMode.fromPartial(object.mode)
+      : undefined;
     message.questionIndex = object.questionIndex ?? undefined;
     message.questionCount = object.questionCount ?? undefined;
-    message.voteOptions =
-      object.voteOptions !== undefined && object.voteOptions !== null
-        ? ProcessVoteOptions.fromPartial(object.voteOptions)
-        : undefined;
+    message.voteOptions = (object.voteOptions !== undefined && object.voteOptions !== null)
+      ? ProcessVoteOptions.fromPartial(object.voteOptions)
+      : undefined;
     message.censusOrigin = object.censusOrigin ?? 0;
-    message.results =
-      object.results?.map((e) => ProcessResult.fromPartial(e)) || [];
+    message.results = object.results?.map((e) => ProcessResult.fromPartial(e)) || [];
     message.resultsSignatures = object.resultsSignatures?.map((e) => e) || [];
     message.ethIndexSlot = object.ethIndexSlot ?? undefined;
     message.sourceBlockHeight = object.sourceBlockHeight ?? undefined;
@@ -4657,28 +3918,18 @@ export const Process = {
     message.rollingCensusRoot = object.rollingCensusRoot ?? undefined;
     message.rollingCensusSize = object.rollingCensusSize ?? undefined;
     message.nullifiersRoot = object.nullifiersRoot ?? undefined;
-    message.sourceNetworkContractAddr =
-      object.sourceNetworkContractAddr ?? undefined;
+    message.sourceNetworkContractAddr = object.sourceNetworkContractAddr ?? undefined;
     message.tokenDecimals = object.tokenDecimals ?? undefined;
     return message;
   },
 };
 
 function createBaseEnvelopeType(): EnvelopeType {
-  return {
-    serial: false,
-    anonymous: false,
-    encryptedVotes: false,
-    uniqueValues: false,
-    costFromWeight: false,
-  };
+  return { serial: false, anonymous: false, encryptedVotes: false, uniqueValues: false, costFromWeight: false };
 }
 
 export const EnvelopeType = {
-  encode(
-    message: EnvelopeType,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EnvelopeType, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.serial === true) {
       writer.uint32(8).bool(message.serial);
     }
@@ -4731,15 +3982,9 @@ export const EnvelopeType = {
     return {
       serial: isSet(object.serial) ? Boolean(object.serial) : false,
       anonymous: isSet(object.anonymous) ? Boolean(object.anonymous) : false,
-      encryptedVotes: isSet(object.encryptedVotes)
-        ? Boolean(object.encryptedVotes)
-        : false,
-      uniqueValues: isSet(object.uniqueValues)
-        ? Boolean(object.uniqueValues)
-        : false,
-      costFromWeight: isSet(object.costFromWeight)
-        ? Boolean(object.costFromWeight)
-        : false,
+      encryptedVotes: isSet(object.encryptedVotes) ? Boolean(object.encryptedVotes) : false,
+      uniqueValues: isSet(object.uniqueValues) ? Boolean(object.uniqueValues) : false,
+      costFromWeight: isSet(object.costFromWeight) ? Boolean(object.costFromWeight) : false,
     };
   },
 
@@ -4747,18 +3992,13 @@ export const EnvelopeType = {
     const obj: any = {};
     message.serial !== undefined && (obj.serial = message.serial);
     message.anonymous !== undefined && (obj.anonymous = message.anonymous);
-    message.encryptedVotes !== undefined &&
-      (obj.encryptedVotes = message.encryptedVotes);
-    message.uniqueValues !== undefined &&
-      (obj.uniqueValues = message.uniqueValues);
-    message.costFromWeight !== undefined &&
-      (obj.costFromWeight = message.costFromWeight);
+    message.encryptedVotes !== undefined && (obj.encryptedVotes = message.encryptedVotes);
+    message.uniqueValues !== undefined && (obj.uniqueValues = message.uniqueValues);
+    message.costFromWeight !== undefined && (obj.costFromWeight = message.costFromWeight);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EnvelopeType>, I>>(
-    object: I
-  ): EnvelopeType {
+  fromPartial<I extends Exact<DeepPartial<EnvelopeType>, I>>(object: I): EnvelopeType {
     const message = createBaseEnvelopeType();
     message.serial = object.serial ?? false;
     message.anonymous = object.anonymous ?? false;
@@ -4770,20 +4010,11 @@ export const EnvelopeType = {
 };
 
 function createBaseProcessMode(): ProcessMode {
-  return {
-    autoStart: false,
-    interruptible: false,
-    dynamicCensus: false,
-    encryptedMetaData: false,
-    preRegister: false,
-  };
+  return { autoStart: false, interruptible: false, dynamicCensus: false, encryptedMetaData: false, preRegister: false };
 }
 
 export const ProcessMode = {
-  encode(
-    message: ProcessMode,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProcessMode, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.autoStart === true) {
       writer.uint32(8).bool(message.autoStart);
     }
@@ -4835,38 +4066,24 @@ export const ProcessMode = {
   fromJSON(object: any): ProcessMode {
     return {
       autoStart: isSet(object.autoStart) ? Boolean(object.autoStart) : false,
-      interruptible: isSet(object.interruptible)
-        ? Boolean(object.interruptible)
-        : false,
-      dynamicCensus: isSet(object.dynamicCensus)
-        ? Boolean(object.dynamicCensus)
-        : false,
-      encryptedMetaData: isSet(object.encryptedMetaData)
-        ? Boolean(object.encryptedMetaData)
-        : false,
-      preRegister: isSet(object.preRegister)
-        ? Boolean(object.preRegister)
-        : false,
+      interruptible: isSet(object.interruptible) ? Boolean(object.interruptible) : false,
+      dynamicCensus: isSet(object.dynamicCensus) ? Boolean(object.dynamicCensus) : false,
+      encryptedMetaData: isSet(object.encryptedMetaData) ? Boolean(object.encryptedMetaData) : false,
+      preRegister: isSet(object.preRegister) ? Boolean(object.preRegister) : false,
     };
   },
 
   toJSON(message: ProcessMode): unknown {
     const obj: any = {};
     message.autoStart !== undefined && (obj.autoStart = message.autoStart);
-    message.interruptible !== undefined &&
-      (obj.interruptible = message.interruptible);
-    message.dynamicCensus !== undefined &&
-      (obj.dynamicCensus = message.dynamicCensus);
-    message.encryptedMetaData !== undefined &&
-      (obj.encryptedMetaData = message.encryptedMetaData);
-    message.preRegister !== undefined &&
-      (obj.preRegister = message.preRegister);
+    message.interruptible !== undefined && (obj.interruptible = message.interruptible);
+    message.dynamicCensus !== undefined && (obj.dynamicCensus = message.dynamicCensus);
+    message.encryptedMetaData !== undefined && (obj.encryptedMetaData = message.encryptedMetaData);
+    message.preRegister !== undefined && (obj.preRegister = message.preRegister);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProcessMode>, I>>(
-    object: I
-  ): ProcessMode {
+  fromPartial<I extends Exact<DeepPartial<ProcessMode>, I>>(object: I): ProcessMode {
     const message = createBaseProcessMode();
     message.autoStart = object.autoStart ?? false;
     message.interruptible = object.interruptible ?? false;
@@ -4878,20 +4095,11 @@ export const ProcessMode = {
 };
 
 function createBaseProcessVoteOptions(): ProcessVoteOptions {
-  return {
-    maxCount: 0,
-    maxValue: 0,
-    maxVoteOverwrites: 0,
-    maxTotalCost: 0,
-    costExponent: 0,
-  };
+  return { maxCount: 0, maxValue: 0, maxVoteOverwrites: 0, maxTotalCost: 0, costExponent: 0 };
 }
 
 export const ProcessVoteOptions = {
-  encode(
-    message: ProcessVoteOptions,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProcessVoteOptions, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.maxCount !== 0) {
       writer.uint32(8).uint32(message.maxCount);
     }
@@ -4944,36 +4152,23 @@ export const ProcessVoteOptions = {
     return {
       maxCount: isSet(object.maxCount) ? Number(object.maxCount) : 0,
       maxValue: isSet(object.maxValue) ? Number(object.maxValue) : 0,
-      maxVoteOverwrites: isSet(object.maxVoteOverwrites)
-        ? Number(object.maxVoteOverwrites)
-        : 0,
-      maxTotalCost: isSet(object.maxTotalCost)
-        ? Number(object.maxTotalCost)
-        : 0,
-      costExponent: isSet(object.costExponent)
-        ? Number(object.costExponent)
-        : 0,
+      maxVoteOverwrites: isSet(object.maxVoteOverwrites) ? Number(object.maxVoteOverwrites) : 0,
+      maxTotalCost: isSet(object.maxTotalCost) ? Number(object.maxTotalCost) : 0,
+      costExponent: isSet(object.costExponent) ? Number(object.costExponent) : 0,
     };
   },
 
   toJSON(message: ProcessVoteOptions): unknown {
     const obj: any = {};
-    message.maxCount !== undefined &&
-      (obj.maxCount = Math.round(message.maxCount));
-    message.maxValue !== undefined &&
-      (obj.maxValue = Math.round(message.maxValue));
-    message.maxVoteOverwrites !== undefined &&
-      (obj.maxVoteOverwrites = Math.round(message.maxVoteOverwrites));
-    message.maxTotalCost !== undefined &&
-      (obj.maxTotalCost = Math.round(message.maxTotalCost));
-    message.costExponent !== undefined &&
-      (obj.costExponent = Math.round(message.costExponent));
+    message.maxCount !== undefined && (obj.maxCount = Math.round(message.maxCount));
+    message.maxValue !== undefined && (obj.maxValue = Math.round(message.maxValue));
+    message.maxVoteOverwrites !== undefined && (obj.maxVoteOverwrites = Math.round(message.maxVoteOverwrites));
+    message.maxTotalCost !== undefined && (obj.maxTotalCost = Math.round(message.maxTotalCost));
+    message.costExponent !== undefined && (obj.costExponent = Math.round(message.costExponent));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProcessVoteOptions>, I>>(
-    object: I
-  ): ProcessVoteOptions {
+  fromPartial<I extends Exact<DeepPartial<ProcessVoteOptions>, I>>(object: I): ProcessVoteOptions {
     const message = createBaseProcessVoteOptions();
     message.maxCount = object.maxCount ?? 0;
     message.maxValue = object.maxValue ?? 0;
@@ -4989,10 +4184,7 @@ function createBaseOracleList(): OracleList {
 }
 
 export const OracleList = {
-  encode(
-    message: OracleList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: OracleList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.oracles) {
       writer.uint32(10).bytes(v!);
     }
@@ -5018,28 +4210,20 @@ export const OracleList = {
   },
 
   fromJSON(object: any): OracleList {
-    return {
-      oracles: Array.isArray(object?.oracles)
-        ? object.oracles.map((e: any) => bytesFromBase64(e))
-        : [],
-    };
+    return { oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => bytesFromBase64(e)) : [] };
   },
 
   toJSON(message: OracleList): unknown {
     const obj: any = {};
     if (message.oracles) {
-      obj.oracles = message.oracles.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.oracles = message.oracles.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.oracles = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<OracleList>, I>>(
-    object: I
-  ): OracleList {
+  fromPartial<I extends Exact<DeepPartial<OracleList>, I>>(object: I): OracleList {
     const message = createBaseOracleList();
     message.oracles = object.oracles?.map((e) => e) || [];
     return message;
@@ -5051,10 +4235,7 @@ function createBaseValidatorList(): ValidatorList {
 }
 
 export const ValidatorList = {
-  encode(
-    message: ValidatorList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ValidatorList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.validators) {
       Validator.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -5081,48 +4262,33 @@ export const ValidatorList = {
 
   fromJSON(object: any): ValidatorList {
     return {
-      validators: Array.isArray(object?.validators)
-        ? object.validators.map((e: any) => Validator.fromJSON(e))
-        : [],
+      validators: Array.isArray(object?.validators) ? object.validators.map((e: any) => Validator.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: ValidatorList): unknown {
     const obj: any = {};
     if (message.validators) {
-      obj.validators = message.validators.map((e) =>
-        e ? Validator.toJSON(e) : undefined
-      );
+      obj.validators = message.validators.map((e) => e ? Validator.toJSON(e) : undefined);
     } else {
       obj.validators = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ValidatorList>, I>>(
-    object: I
-  ): ValidatorList {
+  fromPartial<I extends Exact<DeepPartial<ValidatorList>, I>>(object: I): ValidatorList {
     const message = createBaseValidatorList();
-    message.validators =
-      object.validators?.map((e) => Validator.fromPartial(e)) || [];
+    message.validators = object.validators?.map((e) => Validator.fromPartial(e)) || [];
     return message;
   },
 };
 
 function createBaseValidator(): Validator {
-  return {
-    address: new Uint8Array(),
-    pubKey: new Uint8Array(),
-    power: 0,
-    name: "",
-  };
+  return { address: new Uint8Array(), pubKey: new Uint8Array(), power: 0, name: "" };
 }
 
 export const Validator = {
-  encode(
-    message: Validator,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Validator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.address.length !== 0) {
       writer.uint32(10).bytes(message.address);
     }
@@ -5167,12 +4333,8 @@ export const Validator = {
 
   fromJSON(object: any): Validator {
     return {
-      address: isSet(object.address)
-        ? bytesFromBase64(object.address)
-        : new Uint8Array(),
-      pubKey: isSet(object.pubKey)
-        ? bytesFromBase64(object.pubKey)
-        : new Uint8Array(),
+      address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(),
+      pubKey: isSet(object.pubKey) ? bytesFromBase64(object.pubKey) : new Uint8Array(),
       power: isSet(object.power) ? Number(object.power) : 0,
       name: isSet(object.name) ? String(object.name) : "",
     };
@@ -5181,21 +4343,15 @@ export const Validator = {
   toJSON(message: Validator): unknown {
     const obj: any = {};
     message.address !== undefined &&
-      (obj.address = base64FromBytes(
-        message.address !== undefined ? message.address : new Uint8Array()
-      ));
+      (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
     message.pubKey !== undefined &&
-      (obj.pubKey = base64FromBytes(
-        message.pubKey !== undefined ? message.pubKey : new Uint8Array()
-      ));
+      (obj.pubKey = base64FromBytes(message.pubKey !== undefined ? message.pubKey : new Uint8Array()));
     message.power !== undefined && (obj.power = Math.round(message.power));
     message.name !== undefined && (obj.name = message.name);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Validator>, I>>(
-    object: I
-  ): Validator {
+  fromPartial<I extends Exact<DeepPartial<Validator>, I>>(object: I): Validator {
     const message = createBaseValidator();
     message.address = object.address ?? new Uint8Array();
     message.pubKey = object.pubKey ?? new Uint8Array();
@@ -5284,21 +4440,13 @@ export const Vote = {
   fromJSON(object: any): Vote {
     return {
       height: isSet(object.height) ? Number(object.height) : 0,
-      nullifier: isSet(object.nullifier)
-        ? bytesFromBase64(object.nullifier)
-        : new Uint8Array(),
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : new Uint8Array(),
-      votePackage: isSet(object.votePackage)
-        ? bytesFromBase64(object.votePackage)
-        : new Uint8Array(),
+      nullifier: isSet(object.nullifier) ? bytesFromBase64(object.nullifier) : new Uint8Array(),
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(),
+      votePackage: isSet(object.votePackage) ? bytesFromBase64(object.votePackage) : new Uint8Array(),
       encryptionKeyIndexes: Array.isArray(object?.encryptionKeyIndexes)
         ? object.encryptionKeyIndexes.map((e: any) => Number(e))
         : [],
-      weight: isSet(object.weight)
-        ? bytesFromBase64(object.weight)
-        : new Uint8Array(),
+      weight: isSet(object.weight) ? bytesFromBase64(object.weight) : new Uint8Array(),
     };
   },
 
@@ -5306,30 +4454,18 @@ export const Vote = {
     const obj: any = {};
     message.height !== undefined && (obj.height = Math.round(message.height));
     message.nullifier !== undefined &&
-      (obj.nullifier = base64FromBytes(
-        message.nullifier !== undefined ? message.nullifier : new Uint8Array()
-      ));
+      (obj.nullifier = base64FromBytes(message.nullifier !== undefined ? message.nullifier : new Uint8Array()));
     message.processId !== undefined &&
-      (obj.processId = base64FromBytes(
-        message.processId !== undefined ? message.processId : new Uint8Array()
-      ));
+      (obj.processId = base64FromBytes(message.processId !== undefined ? message.processId : new Uint8Array()));
     message.votePackage !== undefined &&
-      (obj.votePackage = base64FromBytes(
-        message.votePackage !== undefined
-          ? message.votePackage
-          : new Uint8Array()
-      ));
+      (obj.votePackage = base64FromBytes(message.votePackage !== undefined ? message.votePackage : new Uint8Array()));
     if (message.encryptionKeyIndexes) {
-      obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) =>
-        Math.round(e)
-      );
+      obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) => Math.round(e));
     } else {
       obj.encryptionKeyIndexes = [];
     }
     message.weight !== undefined &&
-      (obj.weight = base64FromBytes(
-        message.weight !== undefined ? message.weight : new Uint8Array()
-      ));
+      (obj.weight = base64FromBytes(message.weight !== undefined ? message.weight : new Uint8Array()));
     return obj;
   },
 
@@ -5339,8 +4475,7 @@ export const Vote = {
     message.nullifier = object.nullifier ?? new Uint8Array();
     message.processId = object.processId ?? new Uint8Array();
     message.votePackage = object.votePackage ?? new Uint8Array();
-    message.encryptionKeyIndexes =
-      object.encryptionKeyIndexes?.map((e) => e) || [];
+    message.encryptionKeyIndexes = object.encryptionKeyIndexes?.map((e) => e) || [];
     message.weight = object.weight ?? new Uint8Array();
     return message;
   },
@@ -5365,10 +4500,7 @@ function createBaseTendermintHeader(): TendermintHeader {
 }
 
 export const TendermintHeader = {
-  encode(
-    message: TendermintHeader,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: TendermintHeader, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.chainId !== "") {
       writer.uint32(18).string(message.chainId);
     }
@@ -5470,36 +4602,18 @@ export const TendermintHeader = {
       chainId: isSet(object.chainId) ? String(object.chainId) : "",
       height: isSet(object.height) ? Number(object.height) : 0,
       timestamp: isSet(object.timestamp) ? Number(object.timestamp) : 0,
-      blockID: isSet(object.blockID)
-        ? bytesFromBase64(object.blockID)
-        : new Uint8Array(),
-      lastCommitHash: isSet(object.lastCommitHash)
-        ? bytesFromBase64(object.lastCommitHash)
-        : new Uint8Array(),
-      dataHash: isSet(object.dataHash)
-        ? bytesFromBase64(object.dataHash)
-        : new Uint8Array(),
-      validatorsHash: isSet(object.validatorsHash)
-        ? bytesFromBase64(object.validatorsHash)
-        : new Uint8Array(),
+      blockID: isSet(object.blockID) ? bytesFromBase64(object.blockID) : new Uint8Array(),
+      lastCommitHash: isSet(object.lastCommitHash) ? bytesFromBase64(object.lastCommitHash) : new Uint8Array(),
+      dataHash: isSet(object.dataHash) ? bytesFromBase64(object.dataHash) : new Uint8Array(),
+      validatorsHash: isSet(object.validatorsHash) ? bytesFromBase64(object.validatorsHash) : new Uint8Array(),
       nextValidatorsHash: isSet(object.nextValidatorsHash)
         ? bytesFromBase64(object.nextValidatorsHash)
         : new Uint8Array(),
-      consensusHash: isSet(object.consensusHash)
-        ? bytesFromBase64(object.consensusHash)
-        : new Uint8Array(),
-      appHash: isSet(object.appHash)
-        ? bytesFromBase64(object.appHash)
-        : new Uint8Array(),
-      lastResultsHash: isSet(object.lastResultsHash)
-        ? bytesFromBase64(object.lastResultsHash)
-        : new Uint8Array(),
-      evidenceHash: isSet(object.evidenceHash)
-        ? bytesFromBase64(object.evidenceHash)
-        : new Uint8Array(),
-      proposerAddress: isSet(object.proposerAddress)
-        ? bytesFromBase64(object.proposerAddress)
-        : new Uint8Array(),
+      consensusHash: isSet(object.consensusHash) ? bytesFromBase64(object.consensusHash) : new Uint8Array(),
+      appHash: isSet(object.appHash) ? bytesFromBase64(object.appHash) : new Uint8Array(),
+      lastResultsHash: isSet(object.lastResultsHash) ? bytesFromBase64(object.lastResultsHash) : new Uint8Array(),
+      evidenceHash: isSet(object.evidenceHash) ? bytesFromBase64(object.evidenceHash) : new Uint8Array(),
+      proposerAddress: isSet(object.proposerAddress) ? bytesFromBase64(object.proposerAddress) : new Uint8Array(),
     };
   },
 
@@ -5507,68 +4621,45 @@ export const TendermintHeader = {
     const obj: any = {};
     message.chainId !== undefined && (obj.chainId = message.chainId);
     message.height !== undefined && (obj.height = Math.round(message.height));
-    message.timestamp !== undefined &&
-      (obj.timestamp = Math.round(message.timestamp));
+    message.timestamp !== undefined && (obj.timestamp = Math.round(message.timestamp));
     message.blockID !== undefined &&
-      (obj.blockID = base64FromBytes(
-        message.blockID !== undefined ? message.blockID : new Uint8Array()
-      ));
+      (obj.blockID = base64FromBytes(message.blockID !== undefined ? message.blockID : new Uint8Array()));
     message.lastCommitHash !== undefined &&
       (obj.lastCommitHash = base64FromBytes(
-        message.lastCommitHash !== undefined
-          ? message.lastCommitHash
-          : new Uint8Array()
+        message.lastCommitHash !== undefined ? message.lastCommitHash : new Uint8Array(),
       ));
     message.dataHash !== undefined &&
-      (obj.dataHash = base64FromBytes(
-        message.dataHash !== undefined ? message.dataHash : new Uint8Array()
-      ));
+      (obj.dataHash = base64FromBytes(message.dataHash !== undefined ? message.dataHash : new Uint8Array()));
     message.validatorsHash !== undefined &&
       (obj.validatorsHash = base64FromBytes(
-        message.validatorsHash !== undefined
-          ? message.validatorsHash
-          : new Uint8Array()
+        message.validatorsHash !== undefined ? message.validatorsHash : new Uint8Array(),
       ));
     message.nextValidatorsHash !== undefined &&
       (obj.nextValidatorsHash = base64FromBytes(
-        message.nextValidatorsHash !== undefined
-          ? message.nextValidatorsHash
-          : new Uint8Array()
+        message.nextValidatorsHash !== undefined ? message.nextValidatorsHash : new Uint8Array(),
       ));
     message.consensusHash !== undefined &&
       (obj.consensusHash = base64FromBytes(
-        message.consensusHash !== undefined
-          ? message.consensusHash
-          : new Uint8Array()
+        message.consensusHash !== undefined ? message.consensusHash : new Uint8Array(),
       ));
     message.appHash !== undefined &&
-      (obj.appHash = base64FromBytes(
-        message.appHash !== undefined ? message.appHash : new Uint8Array()
-      ));
+      (obj.appHash = base64FromBytes(message.appHash !== undefined ? message.appHash : new Uint8Array()));
     message.lastResultsHash !== undefined &&
       (obj.lastResultsHash = base64FromBytes(
-        message.lastResultsHash !== undefined
-          ? message.lastResultsHash
-          : new Uint8Array()
+        message.lastResultsHash !== undefined ? message.lastResultsHash : new Uint8Array(),
       ));
     message.evidenceHash !== undefined &&
       (obj.evidenceHash = base64FromBytes(
-        message.evidenceHash !== undefined
-          ? message.evidenceHash
-          : new Uint8Array()
+        message.evidenceHash !== undefined ? message.evidenceHash : new Uint8Array(),
       ));
     message.proposerAddress !== undefined &&
       (obj.proposerAddress = base64FromBytes(
-        message.proposerAddress !== undefined
-          ? message.proposerAddress
-          : new Uint8Array()
+        message.proposerAddress !== undefined ? message.proposerAddress : new Uint8Array(),
       ));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<TendermintHeader>, I>>(
-    object: I
-  ): TendermintHeader {
+  fromPartial<I extends Exact<DeepPartial<TendermintHeader>, I>>(object: I): TendermintHeader {
     const message = createBaseTendermintHeader();
     message.chainId = object.chainId ?? "";
     message.height = object.height ?? 0;
@@ -5588,20 +4679,11 @@ export const TendermintHeader = {
 };
 
 function createBaseProcessResult(): ProcessResult {
-  return {
-    votes: [],
-    processId: undefined,
-    entityId: undefined,
-    oracleAddress: undefined,
-    signature: undefined,
-  };
+  return { votes: [], processId: undefined, entityId: undefined, oracleAddress: undefined, signature: undefined };
 }
 
 export const ProcessResult = {
-  encode(
-    message: ProcessResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProcessResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.votes) {
       QuestionResult.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -5652,62 +4734,35 @@ export const ProcessResult = {
 
   fromJSON(object: any): ProcessResult {
     return {
-      votes: Array.isArray(object?.votes)
-        ? object.votes.map((e: any) => QuestionResult.fromJSON(e))
-        : [],
-      processId: isSet(object.processId)
-        ? bytesFromBase64(object.processId)
-        : undefined,
-      entityId: isSet(object.entityId)
-        ? bytesFromBase64(object.entityId)
-        : undefined,
-      oracleAddress: isSet(object.oracleAddress)
-        ? bytesFromBase64(object.oracleAddress)
-        : undefined,
-      signature: isSet(object.signature)
-        ? bytesFromBase64(object.signature)
-        : undefined,
+      votes: Array.isArray(object?.votes) ? object.votes.map((e: any) => QuestionResult.fromJSON(e)) : [],
+      processId: isSet(object.processId) ? bytesFromBase64(object.processId) : undefined,
+      entityId: isSet(object.entityId) ? bytesFromBase64(object.entityId) : undefined,
+      oracleAddress: isSet(object.oracleAddress) ? bytesFromBase64(object.oracleAddress) : undefined,
+      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : undefined,
     };
   },
 
   toJSON(message: ProcessResult): unknown {
     const obj: any = {};
     if (message.votes) {
-      obj.votes = message.votes.map((e) =>
-        e ? QuestionResult.toJSON(e) : undefined
-      );
+      obj.votes = message.votes.map((e) => e ? QuestionResult.toJSON(e) : undefined);
     } else {
       obj.votes = [];
     }
     message.processId !== undefined &&
-      (obj.processId =
-        message.processId !== undefined
-          ? base64FromBytes(message.processId)
-          : undefined);
+      (obj.processId = message.processId !== undefined ? base64FromBytes(message.processId) : undefined);
     message.entityId !== undefined &&
-      (obj.entityId =
-        message.entityId !== undefined
-          ? base64FromBytes(message.entityId)
-          : undefined);
+      (obj.entityId = message.entityId !== undefined ? base64FromBytes(message.entityId) : undefined);
     message.oracleAddress !== undefined &&
-      (obj.oracleAddress =
-        message.oracleAddress !== undefined
-          ? base64FromBytes(message.oracleAddress)
-          : undefined);
+      (obj.oracleAddress = message.oracleAddress !== undefined ? base64FromBytes(message.oracleAddress) : undefined);
     message.signature !== undefined &&
-      (obj.signature =
-        message.signature !== undefined
-          ? base64FromBytes(message.signature)
-          : undefined);
+      (obj.signature = message.signature !== undefined ? base64FromBytes(message.signature) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProcessResult>, I>>(
-    object: I
-  ): ProcessResult {
+  fromPartial<I extends Exact<DeepPartial<ProcessResult>, I>>(object: I): ProcessResult {
     const message = createBaseProcessResult();
-    message.votes =
-      object.votes?.map((e) => QuestionResult.fromPartial(e)) || [];
+    message.votes = object.votes?.map((e) => QuestionResult.fromPartial(e)) || [];
     message.processId = object.processId ?? undefined;
     message.entityId = object.entityId ?? undefined;
     message.oracleAddress = object.oracleAddress ?? undefined;
@@ -5721,10 +4776,7 @@ function createBaseQuestionResult(): QuestionResult {
 }
 
 export const QuestionResult = {
-  encode(
-    message: QuestionResult,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: QuestionResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.question) {
       writer.uint32(10).bytes(v!);
     }
@@ -5750,28 +4802,20 @@ export const QuestionResult = {
   },
 
   fromJSON(object: any): QuestionResult {
-    return {
-      question: Array.isArray(object?.question)
-        ? object.question.map((e: any) => bytesFromBase64(e))
-        : [],
-    };
+    return { question: Array.isArray(object?.question) ? object.question.map((e: any) => bytesFromBase64(e)) : [] };
   },
 
   toJSON(message: QuestionResult): unknown {
     const obj: any = {};
     if (message.question) {
-      obj.question = message.question.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.question = message.question.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.question = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QuestionResult>, I>>(
-    object: I
-  ): QuestionResult {
+  fromPartial<I extends Exact<DeepPartial<QuestionResult>, I>>(object: I): QuestionResult {
     const message = createBaseQuestionResult();
     message.question = object.question?.map((e) => e) || [];
     return message;
@@ -5783,10 +4827,7 @@ function createBaseProcessEndingList(): ProcessEndingList {
 }
 
 export const ProcessEndingList = {
-  encode(
-    message: ProcessEndingList,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: ProcessEndingList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.processList) {
       writer.uint32(10).bytes(v!);
     }
@@ -5813,27 +4854,21 @@ export const ProcessEndingList = {
 
   fromJSON(object: any): ProcessEndingList {
     return {
-      processList: Array.isArray(object?.processList)
-        ? object.processList.map((e: any) => bytesFromBase64(e))
-        : [],
+      processList: Array.isArray(object?.processList) ? object.processList.map((e: any) => bytesFromBase64(e)) : [],
     };
   },
 
   toJSON(message: ProcessEndingList): unknown {
     const obj: any = {};
     if (message.processList) {
-      obj.processList = message.processList.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.processList = message.processList.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.processList = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ProcessEndingList>, I>>(
-    object: I
-  ): ProcessEndingList {
+  fromPartial<I extends Exact<DeepPartial<ProcessEndingList>, I>>(object: I): ProcessEndingList {
     const message = createBaseProcessEndingList();
     message.processList = object.processList?.map((e) => e) || [];
     return message;
@@ -5845,10 +4880,7 @@ function createBaseStoredKeys(): StoredKeys {
 }
 
 export const StoredKeys = {
-  encode(
-    message: StoredKeys,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: StoredKeys, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.pids) {
       writer.uint32(10).bytes(v!);
     }
@@ -5874,28 +4906,20 @@ export const StoredKeys = {
   },
 
   fromJSON(object: any): StoredKeys {
-    return {
-      pids: Array.isArray(object?.pids)
-        ? object.pids.map((e: any) => bytesFromBase64(e))
-        : [],
-    };
+    return { pids: Array.isArray(object?.pids) ? object.pids.map((e: any) => bytesFromBase64(e)) : [] };
   },
 
   toJSON(message: StoredKeys): unknown {
     const obj: any = {};
     if (message.pids) {
-      obj.pids = message.pids.map((e) =>
-        base64FromBytes(e !== undefined ? e : new Uint8Array())
-      );
+      obj.pids = message.pids.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
     } else {
       obj.pids = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<StoredKeys>, I>>(
-    object: I
-  ): StoredKeys {
+  fromPartial<I extends Exact<DeepPartial<StoredKeys>, I>>(object: I): StoredKeys {
     const message = createBaseStoredKeys();
     message.pids = object.pids?.map((e) => e) || [];
     return message;
@@ -5906,66 +4930,57 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-const atob: (b64: string) => string =
-  globalThis.atob ||
-  ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; ++i) {
-    arr[i] = bin.charCodeAt(i);
-  }
-  return arr;
-}
-
-const btoa: (bin: string) => string =
-  globalThis.btoa ||
-  ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
-function base64FromBytes(arr: Uint8Array): string {
-  const bin: string[] = [];
-  arr.forEach((byte) => {
-    bin.push(String.fromCharCode(byte));
-  });
-  return btoa(bin.join(""));
-}
-
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
-
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
     }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+    return arr;
+  }
+}
+
+function base64FromBytes(arr: Uint8Array): string {
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
+  }
+}
+
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

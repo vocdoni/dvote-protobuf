@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { Wallet } from "./wallet";
-import { EntityReference } from "../metadata/entity";
 import * as _m0 from "protobufjs/minimal";
+import { EntityReference } from "../metadata/entity";
+import { Wallet } from "./wallet";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -15,12 +15,16 @@ export interface Account {
   /** / The name of the entity or an alias to help users identify the account */
   name: string;
   /** / The underlying root wallet, usable with the original passphrase or pin */
-  wallet: Wallet | undefined;
+  wallet:
+    | Wallet
+    | undefined;
   /** / The root address of the wallet, used to detect duplicate accounts */
   address: string;
   /** / Does the user have a back up of the account? */
   hasBackup: boolean;
-  extra: Account_Extra | undefined;
+  extra:
+    | Account_Extra
+    | undefined;
   /**
    * EXTERNAL FIELDS
    * Allow to use arbitrary key/values so that
@@ -42,9 +46,7 @@ export interface Account_WebEntity {
 }
 
 export interface Account_Extra {
-  content?:
-    | { $case: "appVoter"; appVoter: Account_AppVoter }
-    | { $case: "webEntity"; webEntity: Account_WebEntity };
+  content?: { $case: "appVoter"; appVoter: Account_AppVoter } | { $case: "webEntity"; webEntity: Account_WebEntity };
 }
 
 export interface Account_MetaEntry {
@@ -57,10 +59,7 @@ function createBaseAccountsStore(): AccountsStore {
 }
 
 export const AccountsStore = {
-  encode(
-    message: AccountsStore,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: AccountsStore, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       Account.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -86,26 +85,20 @@ export const AccountsStore = {
   },
 
   fromJSON(object: any): AccountsStore {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => Account.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => Account.fromJSON(e)) : [] };
   },
 
   toJSON(message: AccountsStore): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) => (e ? Account.toJSON(e) : undefined));
+      obj.items = message.items.map((e) => e ? Account.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<AccountsStore>, I>>(
-    object: I
-  ): AccountsStore {
+  fromPartial<I extends Exact<DeepPartial<AccountsStore>, I>>(object: I): AccountsStore {
     const message = createBaseAccountsStore();
     message.items = object.items?.map((e) => Account.fromPartial(e)) || [];
     return message;
@@ -113,21 +106,11 @@ export const AccountsStore = {
 };
 
 function createBaseAccount(): Account {
-  return {
-    name: "",
-    wallet: undefined,
-    address: "",
-    hasBackup: false,
-    extra: undefined,
-    meta: {},
-  };
+  return { name: "", wallet: undefined, address: "", hasBackup: false, extra: undefined, meta: {} };
 }
 
 export const Account = {
-  encode(
-    message: Account,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Account, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -144,10 +127,7 @@ export const Account = {
       Account_Extra.encode(message.extra, writer.uint32(42).fork()).ldelim();
     }
     Object.entries(message.meta).forEach(([key, value]) => {
-      Account_MetaEntry.encode(
-        { key: key as any, value },
-        writer.uint32(802).fork()
-      ).ldelim();
+      Account_MetaEntry.encode({ key: key as any, value }, writer.uint32(802).fork()).ldelim();
     });
     return writer;
   },
@@ -194,17 +174,12 @@ export const Account = {
       wallet: isSet(object.wallet) ? Wallet.fromJSON(object.wallet) : undefined,
       address: isSet(object.address) ? String(object.address) : "",
       hasBackup: isSet(object.hasBackup) ? Boolean(object.hasBackup) : false,
-      extra: isSet(object.extra)
-        ? Account_Extra.fromJSON(object.extra)
-        : undefined,
+      extra: isSet(object.extra) ? Account_Extra.fromJSON(object.extra) : undefined,
       meta: isObject(object.meta)
-        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
     };
   },
@@ -212,14 +187,10 @@ export const Account = {
   toJSON(message: Account): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.wallet !== undefined &&
-      (obj.wallet = message.wallet ? Wallet.toJSON(message.wallet) : undefined);
+    message.wallet !== undefined && (obj.wallet = message.wallet ? Wallet.toJSON(message.wallet) : undefined);
     message.address !== undefined && (obj.address = message.address);
     message.hasBackup !== undefined && (obj.hasBackup = message.hasBackup);
-    message.extra !== undefined &&
-      (obj.extra = message.extra
-        ? Account_Extra.toJSON(message.extra)
-        : undefined);
+    message.extra !== undefined && (obj.extra = message.extra ? Account_Extra.toJSON(message.extra) : undefined);
     obj.meta = {};
     if (message.meta) {
       Object.entries(message.meta).forEach(([k, v]) => {
@@ -232,19 +203,15 @@ export const Account = {
   fromPartial<I extends Exact<DeepPartial<Account>, I>>(object: I): Account {
     const message = createBaseAccount();
     message.name = object.name ?? "";
-    message.wallet =
-      object.wallet !== undefined && object.wallet !== null
-        ? Wallet.fromPartial(object.wallet)
-        : undefined;
+    message.wallet = (object.wallet !== undefined && object.wallet !== null)
+      ? Wallet.fromPartial(object.wallet)
+      : undefined;
     message.address = object.address ?? "";
     message.hasBackup = object.hasBackup ?? false;
-    message.extra =
-      object.extra !== undefined && object.extra !== null
-        ? Account_Extra.fromPartial(object.extra)
-        : undefined;
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.extra = (object.extra !== undefined && object.extra !== null)
+      ? Account_Extra.fromPartial(object.extra)
+      : undefined;
+    message.meta = Object.entries(object.meta ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
@@ -259,10 +226,7 @@ function createBaseAccount_AppVoter(): Account_AppVoter {
 }
 
 export const Account_AppVoter = {
-  encode(
-    message: Account_AppVoter,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Account_AppVoter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.appAnalyticsID !== "") {
       writer.uint32(10).string(message.appAnalyticsID);
     }
@@ -283,9 +247,7 @@ export const Account_AppVoter = {
           message.appAnalyticsID = reader.string();
           break;
         case 2:
-          message.entities.push(
-            EntityReference.decode(reader, reader.uint32())
-          );
+          message.entities.push(EntityReference.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -297,36 +259,26 @@ export const Account_AppVoter = {
 
   fromJSON(object: any): Account_AppVoter {
     return {
-      appAnalyticsID: isSet(object.appAnalyticsID)
-        ? String(object.appAnalyticsID)
-        : "",
-      entities: Array.isArray(object?.entities)
-        ? object.entities.map((e: any) => EntityReference.fromJSON(e))
-        : [],
+      appAnalyticsID: isSet(object.appAnalyticsID) ? String(object.appAnalyticsID) : "",
+      entities: Array.isArray(object?.entities) ? object.entities.map((e: any) => EntityReference.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: Account_AppVoter): unknown {
     const obj: any = {};
-    message.appAnalyticsID !== undefined &&
-      (obj.appAnalyticsID = message.appAnalyticsID);
+    message.appAnalyticsID !== undefined && (obj.appAnalyticsID = message.appAnalyticsID);
     if (message.entities) {
-      obj.entities = message.entities.map((e) =>
-        e ? EntityReference.toJSON(e) : undefined
-      );
+      obj.entities = message.entities.map((e) => e ? EntityReference.toJSON(e) : undefined);
     } else {
       obj.entities = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Account_AppVoter>, I>>(
-    object: I
-  ): Account_AppVoter {
+  fromPartial<I extends Exact<DeepPartial<Account_AppVoter>, I>>(object: I): Account_AppVoter {
     const message = createBaseAccount_AppVoter();
     message.appAnalyticsID = object.appAnalyticsID ?? "";
-    message.entities =
-      object.entities?.map((e) => EntityReference.fromPartial(e)) || [];
+    message.entities = object.entities?.map((e) => EntityReference.fromPartial(e)) || [];
     return message;
   },
 };
@@ -336,10 +288,7 @@ function createBaseAccount_WebEntity(): Account_WebEntity {
 }
 
 export const Account_WebEntity = {
-  encode(
-    message: Account_WebEntity,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Account_WebEntity, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.webAnalyticsID !== "") {
       writer.uint32(10).string(message.webAnalyticsID);
     }
@@ -365,23 +314,16 @@ export const Account_WebEntity = {
   },
 
   fromJSON(object: any): Account_WebEntity {
-    return {
-      webAnalyticsID: isSet(object.webAnalyticsID)
-        ? String(object.webAnalyticsID)
-        : "",
-    };
+    return { webAnalyticsID: isSet(object.webAnalyticsID) ? String(object.webAnalyticsID) : "" };
   },
 
   toJSON(message: Account_WebEntity): unknown {
     const obj: any = {};
-    message.webAnalyticsID !== undefined &&
-      (obj.webAnalyticsID = message.webAnalyticsID);
+    message.webAnalyticsID !== undefined && (obj.webAnalyticsID = message.webAnalyticsID);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Account_WebEntity>, I>>(
-    object: I
-  ): Account_WebEntity {
+  fromPartial<I extends Exact<DeepPartial<Account_WebEntity>, I>>(object: I): Account_WebEntity {
     const message = createBaseAccount_WebEntity();
     message.webAnalyticsID = object.webAnalyticsID ?? "";
     return message;
@@ -393,21 +335,12 @@ function createBaseAccount_Extra(): Account_Extra {
 }
 
 export const Account_Extra = {
-  encode(
-    message: Account_Extra,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Account_Extra, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.content?.$case === "appVoter") {
-      Account_AppVoter.encode(
-        message.content.appVoter,
-        writer.uint32(10).fork()
-      ).ldelim();
+      Account_AppVoter.encode(message.content.appVoter, writer.uint32(10).fork()).ldelim();
     }
     if (message.content?.$case === "webEntity") {
-      Account_WebEntity.encode(
-        message.content.webEntity,
-        writer.uint32(18).fork()
-      ).ldelim();
+      Account_WebEntity.encode(message.content.webEntity, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -420,16 +353,10 @@ export const Account_Extra = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.content = {
-            $case: "appVoter",
-            appVoter: Account_AppVoter.decode(reader, reader.uint32()),
-          };
+          message.content = { $case: "appVoter", appVoter: Account_AppVoter.decode(reader, reader.uint32()) };
           break;
         case 2:
-          message.content = {
-            $case: "webEntity",
-            webEntity: Account_WebEntity.decode(reader, reader.uint32()),
-          };
+          message.content = { $case: "webEntity", webEntity: Account_WebEntity.decode(reader, reader.uint32()) };
           break;
         default:
           reader.skipType(tag & 7);
@@ -442,15 +369,9 @@ export const Account_Extra = {
   fromJSON(object: any): Account_Extra {
     return {
       content: isSet(object.appVoter)
-        ? {
-            $case: "appVoter",
-            appVoter: Account_AppVoter.fromJSON(object.appVoter),
-          }
+        ? { $case: "appVoter", appVoter: Account_AppVoter.fromJSON(object.appVoter) }
         : isSet(object.webEntity)
-        ? {
-            $case: "webEntity",
-            webEntity: Account_WebEntity.fromJSON(object.webEntity),
-          }
+        ? { $case: "webEntity", webEntity: Account_WebEntity.fromJSON(object.webEntity) }
         : undefined,
     };
   },
@@ -458,39 +379,27 @@ export const Account_Extra = {
   toJSON(message: Account_Extra): unknown {
     const obj: any = {};
     message.content?.$case === "appVoter" &&
-      (obj.appVoter = message.content?.appVoter
-        ? Account_AppVoter.toJSON(message.content?.appVoter)
-        : undefined);
+      (obj.appVoter = message.content?.appVoter ? Account_AppVoter.toJSON(message.content?.appVoter) : undefined);
     message.content?.$case === "webEntity" &&
-      (obj.webEntity = message.content?.webEntity
-        ? Account_WebEntity.toJSON(message.content?.webEntity)
-        : undefined);
+      (obj.webEntity = message.content?.webEntity ? Account_WebEntity.toJSON(message.content?.webEntity) : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Account_Extra>, I>>(
-    object: I
-  ): Account_Extra {
+  fromPartial<I extends Exact<DeepPartial<Account_Extra>, I>>(object: I): Account_Extra {
     const message = createBaseAccount_Extra();
     if (
       object.content?.$case === "appVoter" &&
       object.content?.appVoter !== undefined &&
       object.content?.appVoter !== null
     ) {
-      message.content = {
-        $case: "appVoter",
-        appVoter: Account_AppVoter.fromPartial(object.content.appVoter),
-      };
+      message.content = { $case: "appVoter", appVoter: Account_AppVoter.fromPartial(object.content.appVoter) };
     }
     if (
       object.content?.$case === "webEntity" &&
       object.content?.webEntity !== undefined &&
       object.content?.webEntity !== null
     ) {
-      message.content = {
-        $case: "webEntity",
-        webEntity: Account_WebEntity.fromPartial(object.content.webEntity),
-      };
+      message.content = { $case: "webEntity", webEntity: Account_WebEntity.fromPartial(object.content.webEntity) };
     }
     return message;
   },
@@ -501,10 +410,7 @@ function createBaseAccount_MetaEntry(): Account_MetaEntry {
 }
 
 export const Account_MetaEntry = {
-  encode(
-    message: Account_MetaEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: Account_MetaEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -536,10 +442,7 @@ export const Account_MetaEntry = {
   },
 
   fromJSON(object: any): Account_MetaEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: Account_MetaEntry): unknown {
@@ -549,9 +452,7 @@ export const Account_MetaEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Account_MetaEntry>, I>>(
-    object: I
-  ): Account_MetaEntry {
+  fromPartial<I extends Exact<DeepPartial<Account_MetaEntry>, I>>(object: I): Account_MetaEntry {
     const message = createBaseAccount_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -559,36 +460,17 @@ export const Account_MetaEntry = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

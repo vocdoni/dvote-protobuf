@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as Long from "long";
-import { Wallet } from "./wallet";
 import * as _m0 from "protobufjs/minimal";
+import { Wallet } from "./wallet";
 
 export const protobufPackage = "dvote.types.v1";
 
@@ -67,9 +67,7 @@ export enum WalletBackup_Recovery_QuestionEnum {
   UNRECOGNIZED = -1,
 }
 
-export function walletBackup_Recovery_QuestionEnumFromJSON(
-  object: any
-): WalletBackup_Recovery_QuestionEnum {
+export function walletBackup_Recovery_QuestionEnumFromJSON(object: any): WalletBackup_Recovery_QuestionEnum {
   switch (object) {
     case 0:
     case "FAVORITE_BOOK":
@@ -135,9 +133,7 @@ export function walletBackup_Recovery_QuestionEnumFromJSON(
   }
 }
 
-export function walletBackup_Recovery_QuestionEnumToJSON(
-  object: WalletBackup_Recovery_QuestionEnum
-): string {
+export function walletBackup_Recovery_QuestionEnumToJSON(object: WalletBackup_Recovery_QuestionEnum): string {
   switch (object) {
     case WalletBackup_Recovery_QuestionEnum.FAVORITE_BOOK:
       return "FAVORITE_BOOK";
@@ -184,19 +180,11 @@ export function walletBackup_Recovery_QuestionEnumToJSON(
 }
 
 function createBaseWalletBackup(): WalletBackup {
-  return {
-    name: "",
-    timestamp: 0,
-    wallet: undefined,
-    passphraseRecovery: undefined,
-  };
+  return { name: "", timestamp: 0, wallet: undefined, passphraseRecovery: undefined };
 }
 
 export const WalletBackup = {
-  encode(
-    message: WalletBackup,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: WalletBackup, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -207,10 +195,7 @@ export const WalletBackup = {
       Wallet.encode(message.wallet, writer.uint32(26).fork()).ldelim();
     }
     if (message.passphraseRecovery !== undefined) {
-      WalletBackup_Recovery.encode(
-        message.passphraseRecovery,
-        writer.uint32(34).fork()
-      ).ldelim();
+      WalletBackup_Recovery.encode(message.passphraseRecovery, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -232,10 +217,7 @@ export const WalletBackup = {
           message.wallet = Wallet.decode(reader, reader.uint32());
           break;
         case 4:
-          message.passphraseRecovery = WalletBackup_Recovery.decode(
-            reader,
-            reader.uint32()
-          );
+          message.passphraseRecovery = WalletBackup_Recovery.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -259,32 +241,24 @@ export const WalletBackup = {
   toJSON(message: WalletBackup): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.timestamp !== undefined &&
-      (obj.timestamp = Math.round(message.timestamp));
-    message.wallet !== undefined &&
-      (obj.wallet = message.wallet ? Wallet.toJSON(message.wallet) : undefined);
-    message.passphraseRecovery !== undefined &&
-      (obj.passphraseRecovery = message.passphraseRecovery
-        ? WalletBackup_Recovery.toJSON(message.passphraseRecovery)
-        : undefined);
+    message.timestamp !== undefined && (obj.timestamp = Math.round(message.timestamp));
+    message.wallet !== undefined && (obj.wallet = message.wallet ? Wallet.toJSON(message.wallet) : undefined);
+    message.passphraseRecovery !== undefined && (obj.passphraseRecovery = message.passphraseRecovery
+      ? WalletBackup_Recovery.toJSON(message.passphraseRecovery)
+      : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<WalletBackup>, I>>(
-    object: I
-  ): WalletBackup {
+  fromPartial<I extends Exact<DeepPartial<WalletBackup>, I>>(object: I): WalletBackup {
     const message = createBaseWalletBackup();
     message.name = object.name ?? "";
     message.timestamp = object.timestamp ?? 0;
-    message.wallet =
-      object.wallet !== undefined && object.wallet !== null
-        ? Wallet.fromPartial(object.wallet)
-        : undefined;
-    message.passphraseRecovery =
-      object.passphraseRecovery !== undefined &&
-      object.passphraseRecovery !== null
-        ? WalletBackup_Recovery.fromPartial(object.passphraseRecovery)
-        : undefined;
+    message.wallet = (object.wallet !== undefined && object.wallet !== null)
+      ? Wallet.fromPartial(object.wallet)
+      : undefined;
+    message.passphraseRecovery = (object.passphraseRecovery !== undefined && object.passphraseRecovery !== null)
+      ? WalletBackup_Recovery.fromPartial(object.passphraseRecovery)
+      : undefined;
     return message;
   },
 };
@@ -294,10 +268,7 @@ function createBaseWalletBackup_Recovery(): WalletBackup_Recovery {
 }
 
 export const WalletBackup_Recovery = {
-  encode(
-    message: WalletBackup_Recovery,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: WalletBackup_Recovery, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     writer.uint32(10).fork();
     for (const v of message.questionIds) {
       writer.int32(v);
@@ -309,10 +280,7 @@ export const WalletBackup_Recovery = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): WalletBackup_Recovery {
+  decode(input: _m0.Reader | Uint8Array, length?: number): WalletBackup_Recovery {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseWalletBackup_Recovery();
@@ -343,9 +311,7 @@ export const WalletBackup_Recovery = {
   fromJSON(object: any): WalletBackup_Recovery {
     return {
       questionIds: Array.isArray(object?.questionIds)
-        ? object.questionIds.map((e: any) =>
-            walletBackup_Recovery_QuestionEnumFromJSON(e)
-          )
+        ? object.questionIds.map((e: any) => walletBackup_Recovery_QuestionEnumFromJSON(e))
         : [],
       encryptedPassphrase: isSet(object.encryptedPassphrase)
         ? bytesFromBase64(object.encryptedPassphrase)
@@ -356,28 +322,21 @@ export const WalletBackup_Recovery = {
   toJSON(message: WalletBackup_Recovery): unknown {
     const obj: any = {};
     if (message.questionIds) {
-      obj.questionIds = message.questionIds.map((e) =>
-        walletBackup_Recovery_QuestionEnumToJSON(e)
-      );
+      obj.questionIds = message.questionIds.map((e) => walletBackup_Recovery_QuestionEnumToJSON(e));
     } else {
       obj.questionIds = [];
     }
     message.encryptedPassphrase !== undefined &&
       (obj.encryptedPassphrase = base64FromBytes(
-        message.encryptedPassphrase !== undefined
-          ? message.encryptedPassphrase
-          : new Uint8Array()
+        message.encryptedPassphrase !== undefined ? message.encryptedPassphrase : new Uint8Array(),
       ));
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<WalletBackup_Recovery>, I>>(
-    object: I
-  ): WalletBackup_Recovery {
+  fromPartial<I extends Exact<DeepPartial<WalletBackup_Recovery>, I>>(object: I): WalletBackup_Recovery {
     const message = createBaseWalletBackup_Recovery();
     message.questionIds = object.questionIds?.map((e) => e) || [];
-    message.encryptedPassphrase =
-      object.encryptedPassphrase ?? new Uint8Array();
+    message.encryptedPassphrase = object.encryptedPassphrase ?? new Uint8Array();
     return message;
   },
 };
@@ -386,66 +345,57 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-const atob: (b64: string) => string =
-  globalThis.atob ||
-  ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; ++i) {
-    arr[i] = bin.charCodeAt(i);
-  }
-  return arr;
-}
-
-const btoa: (bin: string) => string =
-  globalThis.btoa ||
-  ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
-function base64FromBytes(arr: Uint8Array): string {
-  const bin: string[] = [];
-  arr.forEach((byte) => {
-    bin.push(String.fromCharCode(byte));
-  });
-  return btoa(bin.join(""));
-}
-
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
-
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
     }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+    return arr;
+  }
+}
+
+function base64FromBytes(arr: Uint8Array): string {
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
+  }
+}
+
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

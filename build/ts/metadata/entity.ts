@@ -20,7 +20,9 @@ export interface EntityMetadata {
   name: { [key: string]: string };
   /** locale-aware value */
   description: { [key: string]: string };
-  votingProcesses: EntityMetadata_VotingProcesses | undefined;
+  votingProcesses:
+    | EntityMetadata_VotingProcesses
+    | undefined;
   /** locale-aware value */
   newsFeed: { [key: string]: string };
   media: EntityMetadata_Media | undefined;
@@ -115,10 +117,7 @@ function createBaseEntityMetadataStore(): EntityMetadataStore {
 }
 
 export const EntityMetadataStore = {
-  encode(
-    message: EntityMetadataStore,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadataStore, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.items) {
       EntityMetadata.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -144,31 +143,22 @@ export const EntityMetadataStore = {
   },
 
   fromJSON(object: any): EntityMetadataStore {
-    return {
-      items: Array.isArray(object?.items)
-        ? object.items.map((e: any) => EntityMetadata.fromJSON(e))
-        : [],
-    };
+    return { items: Array.isArray(object?.items) ? object.items.map((e: any) => EntityMetadata.fromJSON(e)) : [] };
   },
 
   toJSON(message: EntityMetadataStore): unknown {
     const obj: any = {};
     if (message.items) {
-      obj.items = message.items.map((e) =>
-        e ? EntityMetadata.toJSON(e) : undefined
-      );
+      obj.items = message.items.map((e) => e ? EntityMetadata.toJSON(e) : undefined);
     } else {
       obj.items = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadataStore>, I>>(
-    object: I
-  ): EntityMetadataStore {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadataStore>, I>>(object: I): EntityMetadataStore {
     const message = createBaseEntityMetadataStore();
-    message.items =
-      object.items?.map((e) => EntityMetadata.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => EntityMetadata.fromPartial(e)) || [];
     return message;
   },
 };
@@ -192,10 +182,7 @@ function createBaseEntityMetadata(): EntityMetadata {
 }
 
 export const EntityMetadata = {
-  encode(
-    message: EntityMetadata,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.version !== "") {
       writer.uint32(10).string(message.version);
     }
@@ -203,34 +190,19 @@ export const EntityMetadata = {
       writer.uint32(18).string(v!);
     }
     Object.entries(message.name).forEach(([key, value]) => {
-      EntityMetadata_NameEntry.encode(
-        { key: key as any, value },
-        writer.uint32(26).fork()
-      ).ldelim();
+      EntityMetadata_NameEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
     });
     Object.entries(message.description).forEach(([key, value]) => {
-      EntityMetadata_DescriptionEntry.encode(
-        { key: key as any, value },
-        writer.uint32(34).fork()
-      ).ldelim();
+      EntityMetadata_DescriptionEntry.encode({ key: key as any, value }, writer.uint32(34).fork()).ldelim();
     });
     if (message.votingProcesses !== undefined) {
-      EntityMetadata_VotingProcesses.encode(
-        message.votingProcesses,
-        writer.uint32(42).fork()
-      ).ldelim();
+      EntityMetadata_VotingProcesses.encode(message.votingProcesses, writer.uint32(42).fork()).ldelim();
     }
     Object.entries(message.newsFeed).forEach(([key, value]) => {
-      EntityMetadata_NewsFeedEntry.encode(
-        { key: key as any, value },
-        writer.uint32(50).fork()
-      ).ldelim();
+      EntityMetadata_NewsFeedEntry.encode({ key: key as any, value }, writer.uint32(50).fork()).ldelim();
     });
     if (message.media !== undefined) {
-      EntityMetadata_Media.encode(
-        message.media,
-        writer.uint32(58).fork()
-      ).ldelim();
+      EntityMetadata_Media.encode(message.media, writer.uint32(58).fork()).ldelim();
     }
     for (const v of message.actions) {
       EntityMetadata_Action.encode(v!, writer.uint32(66).fork()).ldelim();
@@ -248,10 +220,7 @@ export const EntityMetadata = {
       EntityReference.encode(v!, writer.uint32(98).fork()).ldelim();
     }
     Object.entries(message.meta).forEach(([key, value]) => {
-      EntityMetadata_MetaEntry.encode(
-        { key: key as any, value },
-        writer.uint32(802).fork()
-      ).ldelim();
+      EntityMetadata_MetaEntry.encode({ key: key as any, value }, writer.uint32(802).fork()).ldelim();
     });
     return writer;
   },
@@ -270,34 +239,22 @@ export const EntityMetadata = {
           message.languages.push(reader.string());
           break;
         case 3:
-          const entry3 = EntityMetadata_NameEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry3 = EntityMetadata_NameEntry.decode(reader, reader.uint32());
           if (entry3.value !== undefined) {
             message.name[entry3.key] = entry3.value;
           }
           break;
         case 4:
-          const entry4 = EntityMetadata_DescriptionEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry4 = EntityMetadata_DescriptionEntry.decode(reader, reader.uint32());
           if (entry4.value !== undefined) {
             message.description[entry4.key] = entry4.value;
           }
           break;
         case 5:
-          message.votingProcesses = EntityMetadata_VotingProcesses.decode(
-            reader,
-            reader.uint32()
-          );
+          message.votingProcesses = EntityMetadata_VotingProcesses.decode(reader, reader.uint32());
           break;
         case 6:
-          const entry6 = EntityMetadata_NewsFeedEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry6 = EntityMetadata_NewsFeedEntry.decode(reader, reader.uint32());
           if (entry6.value !== undefined) {
             message.newsFeed[entry6.key] = entry6.value;
           }
@@ -306,35 +263,22 @@ export const EntityMetadata = {
           message.media = EntityMetadata_Media.decode(reader, reader.uint32());
           break;
         case 8:
-          message.actions.push(
-            EntityMetadata_Action.decode(reader, reader.uint32())
-          );
+          message.actions.push(EntityMetadata_Action.decode(reader, reader.uint32()));
           break;
         case 9:
-          message.bootEntities.push(
-            EntityReference.decode(reader, reader.uint32())
-          );
+          message.bootEntities.push(EntityReference.decode(reader, reader.uint32()));
           break;
         case 10:
-          message.fallbackBootNodeEntities.push(
-            EntityReference.decode(reader, reader.uint32())
-          );
+          message.fallbackBootNodeEntities.push(EntityReference.decode(reader, reader.uint32()));
           break;
         case 11:
-          message.trustedEntities.push(
-            EntityReference.decode(reader, reader.uint32())
-          );
+          message.trustedEntities.push(EntityReference.decode(reader, reader.uint32()));
           break;
         case 12:
-          message.censusServiceManagedEntities.push(
-            EntityReference.decode(reader, reader.uint32())
-          );
+          message.censusServiceManagedEntities.push(EntityReference.decode(reader, reader.uint32()));
           break;
         case 100:
-          const entry100 = EntityMetadata_MetaEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry100 = EntityMetadata_MetaEntry.decode(reader, reader.uint32());
           if (entry100.value !== undefined) {
             message.meta[entry100.key] = entry100.value;
           }
@@ -350,71 +294,47 @@ export const EntityMetadata = {
   fromJSON(object: any): EntityMetadata {
     return {
       version: isSet(object.version) ? String(object.version) : "",
-      languages: Array.isArray(object?.languages)
-        ? object.languages.map((e: any) => String(e))
-        : [],
+      languages: Array.isArray(object?.languages) ? object.languages.map((e: any) => String(e)) : [],
       name: isObject(object.name)
-        ? Object.entries(object.name).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.name).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
       description: isObject(object.description)
-        ? Object.entries(object.description).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.description).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
       votingProcesses: isSet(object.votingProcesses)
         ? EntityMetadata_VotingProcesses.fromJSON(object.votingProcesses)
         : undefined,
       newsFeed: isObject(object.newsFeed)
-        ? Object.entries(object.newsFeed).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.newsFeed).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
-      media: isSet(object.media)
-        ? EntityMetadata_Media.fromJSON(object.media)
-        : undefined,
-      actions: Array.isArray(object?.actions)
-        ? object.actions.map((e: any) => EntityMetadata_Action.fromJSON(e))
-        : [],
+      media: isSet(object.media) ? EntityMetadata_Media.fromJSON(object.media) : undefined,
+      actions: Array.isArray(object?.actions) ? object.actions.map((e: any) => EntityMetadata_Action.fromJSON(e)) : [],
       bootEntities: Array.isArray(object?.bootEntities)
         ? object.bootEntities.map((e: any) => EntityReference.fromJSON(e))
         : [],
       fallbackBootNodeEntities: Array.isArray(object?.fallbackBootNodeEntities)
-        ? object.fallbackBootNodeEntities.map((e: any) =>
-            EntityReference.fromJSON(e)
-          )
+        ? object.fallbackBootNodeEntities.map((e: any) => EntityReference.fromJSON(e))
         : [],
       trustedEntities: Array.isArray(object?.trustedEntities)
         ? object.trustedEntities.map((e: any) => EntityReference.fromJSON(e))
         : [],
-      censusServiceManagedEntities: Array.isArray(
-        object?.censusServiceManagedEntities
-      )
-        ? object.censusServiceManagedEntities.map((e: any) =>
-            EntityReference.fromJSON(e)
-          )
+      censusServiceManagedEntities: Array.isArray(object?.censusServiceManagedEntities)
+        ? object.censusServiceManagedEntities.map((e: any) => EntityReference.fromJSON(e))
         : [],
       meta: isObject(object.meta)
-        ? Object.entries(object.meta).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.meta).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
     };
   },
@@ -439,31 +359,23 @@ export const EntityMetadata = {
         obj.description[k] = v;
       });
     }
-    message.votingProcesses !== undefined &&
-      (obj.votingProcesses = message.votingProcesses
-        ? EntityMetadata_VotingProcesses.toJSON(message.votingProcesses)
-        : undefined);
+    message.votingProcesses !== undefined && (obj.votingProcesses = message.votingProcesses
+      ? EntityMetadata_VotingProcesses.toJSON(message.votingProcesses)
+      : undefined);
     obj.newsFeed = {};
     if (message.newsFeed) {
       Object.entries(message.newsFeed).forEach(([k, v]) => {
         obj.newsFeed[k] = v;
       });
     }
-    message.media !== undefined &&
-      (obj.media = message.media
-        ? EntityMetadata_Media.toJSON(message.media)
-        : undefined);
+    message.media !== undefined && (obj.media = message.media ? EntityMetadata_Media.toJSON(message.media) : undefined);
     if (message.actions) {
-      obj.actions = message.actions.map((e) =>
-        e ? EntityMetadata_Action.toJSON(e) : undefined
-      );
+      obj.actions = message.actions.map((e) => e ? EntityMetadata_Action.toJSON(e) : undefined);
     } else {
       obj.actions = [];
     }
     if (message.bootEntities) {
-      obj.bootEntities = message.bootEntities.map((e) =>
-        e ? EntityReference.toJSON(e) : undefined
-      );
+      obj.bootEntities = message.bootEntities.map((e) => e ? EntityReference.toJSON(e) : undefined);
     } else {
       obj.bootEntities = [];
     }
@@ -475,17 +387,14 @@ export const EntityMetadata = {
       obj.fallbackBootNodeEntities = [];
     }
     if (message.trustedEntities) {
-      obj.trustedEntities = message.trustedEntities.map((e) =>
-        e ? EntityReference.toJSON(e) : undefined
-      );
+      obj.trustedEntities = message.trustedEntities.map((e) => e ? EntityReference.toJSON(e) : undefined);
     } else {
       obj.trustedEntities = [];
     }
     if (message.censusServiceManagedEntities) {
-      obj.censusServiceManagedEntities =
-        message.censusServiceManagedEntities.map((e) =>
-          e ? EntityReference.toJSON(e) : undefined
-        );
+      obj.censusServiceManagedEntities = message.censusServiceManagedEntities.map((e) =>
+        e ? EntityReference.toJSON(e) : undefined
+      );
     } else {
       obj.censusServiceManagedEntities = [];
     }
@@ -498,61 +407,45 @@ export const EntityMetadata = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadata>, I>>(
-    object: I
-  ): EntityMetadata {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata>, I>>(object: I): EntityMetadata {
     const message = createBaseEntityMetadata();
     message.version = object.version ?? "";
     message.languages = object.languages?.map((e) => e) || [];
-    message.name = Object.entries(object.name ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.name = Object.entries(object.name ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
       return acc;
     }, {});
-    message.description = Object.entries(object.description ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.description = Object.entries(object.description ?? {}).reduce<{ [key: string]: string }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = String(value);
+        }
+        return acc;
+      },
+      {},
+    );
+    message.votingProcesses = (object.votingProcesses !== undefined && object.votingProcesses !== null)
+      ? EntityMetadata_VotingProcesses.fromPartial(object.votingProcesses)
+      : undefined;
+    message.newsFeed = Object.entries(object.newsFeed ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
       return acc;
     }, {});
-    message.votingProcesses =
-      object.votingProcesses !== undefined && object.votingProcesses !== null
-        ? EntityMetadata_VotingProcesses.fromPartial(object.votingProcesses)
-        : undefined;
-    message.newsFeed = Object.entries(object.newsFeed ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
-      if (value !== undefined) {
-        acc[key] = String(value);
-      }
-      return acc;
-    }, {});
-    message.media =
-      object.media !== undefined && object.media !== null
-        ? EntityMetadata_Media.fromPartial(object.media)
-        : undefined;
-    message.actions =
-      object.actions?.map((e) => EntityMetadata_Action.fromPartial(e)) || [];
-    message.bootEntities =
-      object.bootEntities?.map((e) => EntityReference.fromPartial(e)) || [];
-    message.fallbackBootNodeEntities =
-      object.fallbackBootNodeEntities?.map((e) =>
-        EntityReference.fromPartial(e)
-      ) || [];
-    message.trustedEntities =
-      object.trustedEntities?.map((e) => EntityReference.fromPartial(e)) || [];
+    message.media = (object.media !== undefined && object.media !== null)
+      ? EntityMetadata_Media.fromPartial(object.media)
+      : undefined;
+    message.actions = object.actions?.map((e) => EntityMetadata_Action.fromPartial(e)) || [];
+    message.bootEntities = object.bootEntities?.map((e) => EntityReference.fromPartial(e)) || [];
+    message.fallbackBootNodeEntities = object.fallbackBootNodeEntities?.map((e) => EntityReference.fromPartial(e)) ||
+      [];
+    message.trustedEntities = object.trustedEntities?.map((e) => EntityReference.fromPartial(e)) || [];
     message.censusServiceManagedEntities =
-      object.censusServiceManagedEntities?.map((e) =>
-        EntityReference.fromPartial(e)
-      ) || [];
-    message.meta = Object.entries(object.meta ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+      object.censusServiceManagedEntities?.map((e) => EntityReference.fromPartial(e)) || [];
+    message.meta = Object.entries(object.meta ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
@@ -567,10 +460,7 @@ function createBaseEntityMetadata_NameEntry(): EntityMetadata_NameEntry {
 }
 
 export const EntityMetadata_NameEntry = {
-  encode(
-    message: EntityMetadata_NameEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_NameEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -580,10 +470,7 @@ export const EntityMetadata_NameEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_NameEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_NameEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_NameEntry();
@@ -605,10 +492,7 @@ export const EntityMetadata_NameEntry = {
   },
 
   fromJSON(object: any): EntityMetadata_NameEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: EntityMetadata_NameEntry): unknown {
@@ -618,9 +502,7 @@ export const EntityMetadata_NameEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadata_NameEntry>, I>>(
-    object: I
-  ): EntityMetadata_NameEntry {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_NameEntry>, I>>(object: I): EntityMetadata_NameEntry {
     const message = createBaseEntityMetadata_NameEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -633,10 +515,7 @@ function createBaseEntityMetadata_DescriptionEntry(): EntityMetadata_Description
 }
 
 export const EntityMetadata_DescriptionEntry = {
-  encode(
-    message: EntityMetadata_DescriptionEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_DescriptionEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -646,10 +525,7 @@ export const EntityMetadata_DescriptionEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_DescriptionEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_DescriptionEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_DescriptionEntry();
@@ -671,10 +547,7 @@ export const EntityMetadata_DescriptionEntry = {
   },
 
   fromJSON(object: any): EntityMetadata_DescriptionEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: EntityMetadata_DescriptionEntry): unknown {
@@ -685,7 +558,7 @@ export const EntityMetadata_DescriptionEntry = {
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_DescriptionEntry>, I>>(
-    object: I
+    object: I,
   ): EntityMetadata_DescriptionEntry {
     const message = createBaseEntityMetadata_DescriptionEntry();
     message.key = object.key ?? "";
@@ -699,10 +572,7 @@ function createBaseEntityMetadata_VotingProcesses(): EntityMetadata_VotingProces
 }
 
 export const EntityMetadata_VotingProcesses = {
-  encode(
-    message: EntityMetadata_VotingProcesses,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_VotingProcesses, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.active) {
       writer.uint32(10).string(v!);
     }
@@ -712,10 +582,7 @@ export const EntityMetadata_VotingProcesses = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_VotingProcesses {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_VotingProcesses {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_VotingProcesses();
@@ -738,12 +605,8 @@ export const EntityMetadata_VotingProcesses = {
 
   fromJSON(object: any): EntityMetadata_VotingProcesses {
     return {
-      active: Array.isArray(object?.active)
-        ? object.active.map((e: any) => String(e))
-        : [],
-      ended: Array.isArray(object?.ended)
-        ? object.ended.map((e: any) => String(e))
-        : [],
+      active: Array.isArray(object?.active) ? object.active.map((e: any) => String(e)) : [],
+      ended: Array.isArray(object?.ended) ? object.ended.map((e: any) => String(e)) : [],
     };
   },
 
@@ -763,7 +626,7 @@ export const EntityMetadata_VotingProcesses = {
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_VotingProcesses>, I>>(
-    object: I
+    object: I,
   ): EntityMetadata_VotingProcesses {
     const message = createBaseEntityMetadata_VotingProcesses();
     message.active = object.active?.map((e) => e) || [];
@@ -777,10 +640,7 @@ function createBaseEntityMetadata_NewsFeedEntry(): EntityMetadata_NewsFeedEntry 
 }
 
 export const EntityMetadata_NewsFeedEntry = {
-  encode(
-    message: EntityMetadata_NewsFeedEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_NewsFeedEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -790,10 +650,7 @@ export const EntityMetadata_NewsFeedEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_NewsFeedEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_NewsFeedEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_NewsFeedEntry();
@@ -815,10 +672,7 @@ export const EntityMetadata_NewsFeedEntry = {
   },
 
   fromJSON(object: any): EntityMetadata_NewsFeedEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: EntityMetadata_NewsFeedEntry): unknown {
@@ -828,9 +682,7 @@ export const EntityMetadata_NewsFeedEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadata_NewsFeedEntry>, I>>(
-    object: I
-  ): EntityMetadata_NewsFeedEntry {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_NewsFeedEntry>, I>>(object: I): EntityMetadata_NewsFeedEntry {
     const message = createBaseEntityMetadata_NewsFeedEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -843,10 +695,7 @@ function createBaseEntityMetadata_Media(): EntityMetadata_Media {
 }
 
 export const EntityMetadata_Media = {
-  encode(
-    message: EntityMetadata_Media,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_Media, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.avatar !== "") {
       writer.uint32(10).string(message.avatar);
     }
@@ -856,10 +705,7 @@ export const EntityMetadata_Media = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_Media {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_Media {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Media();
@@ -894,9 +740,7 @@ export const EntityMetadata_Media = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Media>, I>>(
-    object: I
-  ): EntityMetadata_Media {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Media>, I>>(object: I): EntityMetadata_Media {
     const message = createBaseEntityMetadata_Media();
     message.avatar = object.avatar ?? "";
     message.header = object.header ?? "";
@@ -905,21 +749,11 @@ export const EntityMetadata_Media = {
 };
 
 function createBaseEntityMetadata_Action(): EntityMetadata_Action {
-  return {
-    type: "",
-    actionKey: "",
-    name: {},
-    visible: "",
-    url: "",
-    imageSources: [],
-  };
+  return { type: "", actionKey: "", name: {}, visible: "", url: "", imageSources: [] };
 }
 
 export const EntityMetadata_Action = {
-  encode(
-    message: EntityMetadata_Action,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_Action, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -927,10 +761,7 @@ export const EntityMetadata_Action = {
       writer.uint32(58).string(message.actionKey);
     }
     Object.entries(message.name).forEach(([key, value]) => {
-      EntityMetadata_Action_NameEntry.encode(
-        { key: key as any, value },
-        writer.uint32(18).fork()
-      ).ldelim();
+      EntityMetadata_Action_NameEntry.encode({ key: key as any, value }, writer.uint32(18).fork()).ldelim();
     });
     if (message.visible !== "") {
       writer.uint32(26).string(message.visible);
@@ -939,18 +770,12 @@ export const EntityMetadata_Action = {
       writer.uint32(34).string(message.url);
     }
     for (const v of message.imageSources) {
-      EntityMetadata_Action_ImageSource.encode(
-        v!,
-        writer.uint32(42).fork()
-      ).ldelim();
+      EntityMetadata_Action_ImageSource.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_Action {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_Action {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action();
@@ -964,10 +789,7 @@ export const EntityMetadata_Action = {
           message.actionKey = reader.string();
           break;
         case 2:
-          const entry2 = EntityMetadata_Action_NameEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry2 = EntityMetadata_Action_NameEntry.decode(reader, reader.uint32());
           if (entry2.value !== undefined) {
             message.name[entry2.key] = entry2.value;
           }
@@ -979,9 +801,7 @@ export const EntityMetadata_Action = {
           message.url = reader.string();
           break;
         case 5:
-          message.imageSources.push(
-            EntityMetadata_Action_ImageSource.decode(reader, reader.uint32())
-          );
+          message.imageSources.push(EntityMetadata_Action_ImageSource.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -996,20 +816,15 @@ export const EntityMetadata_Action = {
       type: isSet(object.type) ? String(object.type) : "",
       actionKey: isSet(object.actionKey) ? String(object.actionKey) : "",
       name: isObject(object.name)
-        ? Object.entries(object.name).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.name).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
       visible: isSet(object.visible) ? String(object.visible) : "",
       url: isSet(object.url) ? String(object.url) : "",
       imageSources: Array.isArray(object?.imageSources)
-        ? object.imageSources.map((e: any) =>
-            EntityMetadata_Action_ImageSource.fromJSON(e)
-          )
+        ? object.imageSources.map((e: any) => EntityMetadata_Action_ImageSource.fromJSON(e))
         : [],
     };
   },
@@ -1027,24 +842,18 @@ export const EntityMetadata_Action = {
     message.visible !== undefined && (obj.visible = message.visible);
     message.url !== undefined && (obj.url = message.url);
     if (message.imageSources) {
-      obj.imageSources = message.imageSources.map((e) =>
-        e ? EntityMetadata_Action_ImageSource.toJSON(e) : undefined
-      );
+      obj.imageSources = message.imageSources.map((e) => e ? EntityMetadata_Action_ImageSource.toJSON(e) : undefined);
     } else {
       obj.imageSources = [];
     }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action>, I>>(
-    object: I
-  ): EntityMetadata_Action {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action>, I>>(object: I): EntityMetadata_Action {
     const message = createBaseEntityMetadata_Action();
     message.type = object.type ?? "";
     message.actionKey = object.actionKey ?? "";
-    message.name = Object.entries(object.name ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.name = Object.entries(object.name ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
@@ -1052,10 +861,7 @@ export const EntityMetadata_Action = {
     }, {});
     message.visible = object.visible ?? "";
     message.url = object.url ?? "";
-    message.imageSources =
-      object.imageSources?.map((e) =>
-        EntityMetadata_Action_ImageSource.fromPartial(e)
-      ) || [];
+    message.imageSources = object.imageSources?.map((e) => EntityMetadata_Action_ImageSource.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1065,10 +871,7 @@ function createBaseEntityMetadata_Action_NameEntry(): EntityMetadata_Action_Name
 }
 
 export const EntityMetadata_Action_NameEntry = {
-  encode(
-    message: EntityMetadata_Action_NameEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_Action_NameEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -1078,10 +881,7 @@ export const EntityMetadata_Action_NameEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_Action_NameEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_Action_NameEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action_NameEntry();
@@ -1103,10 +903,7 @@ export const EntityMetadata_Action_NameEntry = {
   },
 
   fromJSON(object: any): EntityMetadata_Action_NameEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: EntityMetadata_Action_NameEntry): unknown {
@@ -1117,7 +914,7 @@ export const EntityMetadata_Action_NameEntry = {
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_NameEntry>, I>>(
-    object: I
+    object: I,
   ): EntityMetadata_Action_NameEntry {
     const message = createBaseEntityMetadata_Action_NameEntry();
     message.key = object.key ?? "";
@@ -1131,10 +928,7 @@ function createBaseEntityMetadata_Action_ImageSource(): EntityMetadata_Action_Im
 }
 
 export const EntityMetadata_Action_ImageSource = {
-  encode(
-    message: EntityMetadata_Action_ImageSource,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_Action_ImageSource, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -1148,18 +942,13 @@ export const EntityMetadata_Action_ImageSource = {
       writer.uint32(34).string(message.overlay);
     }
     Object.entries(message.caption).forEach(([key, value]) => {
-      EntityMetadata_Action_ImageSource_CaptionEntry.encode(
-        { key: key as any, value },
-        writer.uint32(42).fork()
-      ).ldelim();
+      EntityMetadata_Action_ImageSource_CaptionEntry.encode({ key: key as any, value }, writer.uint32(42).fork())
+        .ldelim();
     });
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_Action_ImageSource {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_Action_ImageSource {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action_ImageSource();
@@ -1179,10 +968,7 @@ export const EntityMetadata_Action_ImageSource = {
           message.overlay = reader.string();
           break;
         case 5:
-          const entry5 = EntityMetadata_Action_ImageSource_CaptionEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry5 = EntityMetadata_Action_ImageSource_CaptionEntry.decode(reader, reader.uint32());
           if (entry5.value !== undefined) {
             message.caption[entry5.key] = entry5.value;
           }
@@ -1202,13 +988,10 @@ export const EntityMetadata_Action_ImageSource = {
       orientation: isSet(object.orientation) ? String(object.orientation) : "",
       overlay: isSet(object.overlay) ? String(object.overlay) : "",
       caption: isObject(object.caption)
-        ? Object.entries(object.caption).reduce<{ [key: string]: string }>(
-            (acc, [key, value]) => {
-              acc[key] = String(value);
-              return acc;
-            },
-            {}
-          )
+        ? Object.entries(object.caption).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
         : {},
     };
   },
@@ -1217,8 +1000,7 @@ export const EntityMetadata_Action_ImageSource = {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
     message.name !== undefined && (obj.name = message.name);
-    message.orientation !== undefined &&
-      (obj.orientation = message.orientation);
+    message.orientation !== undefined && (obj.orientation = message.orientation);
     message.overlay !== undefined && (obj.overlay = message.overlay);
     obj.caption = {};
     if (message.caption) {
@@ -1229,17 +1011,15 @@ export const EntityMetadata_Action_ImageSource = {
     return obj;
   },
 
-  fromPartial<
-    I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource>, I>
-  >(object: I): EntityMetadata_Action_ImageSource {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource>, I>>(
+    object: I,
+  ): EntityMetadata_Action_ImageSource {
     const message = createBaseEntityMetadata_Action_ImageSource();
     message.type = object.type ?? "";
     message.name = object.name ?? "";
     message.orientation = object.orientation ?? "";
     message.overlay = object.overlay ?? "";
-    message.caption = Object.entries(object.caption ?? {}).reduce<{
-      [key: string]: string;
-    }>((acc, [key, value]) => {
+    message.caption = Object.entries(object.caption ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
       }
@@ -1256,7 +1036,7 @@ function createBaseEntityMetadata_Action_ImageSource_CaptionEntry(): EntityMetad
 export const EntityMetadata_Action_ImageSource_CaptionEntry = {
   encode(
     message: EntityMetadata_Action_ImageSource_CaptionEntry,
-    writer: _m0.Writer = _m0.Writer.create()
+    writer: _m0.Writer = _m0.Writer.create(),
   ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
@@ -1267,10 +1047,7 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_Action_ImageSource_CaptionEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_Action_ImageSource_CaptionEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_Action_ImageSource_CaptionEntry();
@@ -1292,10 +1069,7 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
   },
 
   fromJSON(object: any): EntityMetadata_Action_ImageSource_CaptionEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: EntityMetadata_Action_ImageSource_CaptionEntry): unknown {
@@ -1305,12 +1079,9 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     return obj;
   },
 
-  fromPartial<
-    I extends Exact<
-      DeepPartial<EntityMetadata_Action_ImageSource_CaptionEntry>,
-      I
-    >
-  >(object: I): EntityMetadata_Action_ImageSource_CaptionEntry {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource_CaptionEntry>, I>>(
+    object: I,
+  ): EntityMetadata_Action_ImageSource_CaptionEntry {
     const message = createBaseEntityMetadata_Action_ImageSource_CaptionEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -1323,10 +1094,7 @@ function createBaseEntityMetadata_MetaEntry(): EntityMetadata_MetaEntry {
 }
 
 export const EntityMetadata_MetaEntry = {
-  encode(
-    message: EntityMetadata_MetaEntry,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityMetadata_MetaEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -1336,10 +1104,7 @@ export const EntityMetadata_MetaEntry = {
     return writer;
   },
 
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): EntityMetadata_MetaEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntityMetadata_MetaEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseEntityMetadata_MetaEntry();
@@ -1361,10 +1126,7 @@ export const EntityMetadata_MetaEntry = {
   },
 
   fromJSON(object: any): EntityMetadata_MetaEntry {
-    return {
-      key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? String(object.value) : "",
-    };
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
   toJSON(message: EntityMetadata_MetaEntry): unknown {
@@ -1374,9 +1136,7 @@ export const EntityMetadata_MetaEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityMetadata_MetaEntry>, I>>(
-    object: I
-  ): EntityMetadata_MetaEntry {
+  fromPartial<I extends Exact<DeepPartial<EntityMetadata_MetaEntry>, I>>(object: I): EntityMetadata_MetaEntry {
     const message = createBaseEntityMetadata_MetaEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -1389,10 +1149,7 @@ function createBaseEntityReference(): EntityReference {
 }
 
 export const EntityReference = {
-  encode(
-    message: EntityReference,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
+  encode(message: EntityReference, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.entityId !== "") {
       writer.uint32(10).string(message.entityId);
     }
@@ -1426,9 +1183,7 @@ export const EntityReference = {
   fromJSON(object: any): EntityReference {
     return {
       entityId: isSet(object.entityId) ? String(object.entityId) : "",
-      entryPoints: Array.isArray(object?.entryPoints)
-        ? object.entryPoints.map((e: any) => String(e))
-        : [],
+      entryPoints: Array.isArray(object?.entryPoints) ? object.entryPoints.map((e: any) => String(e)) : [],
     };
   },
 
@@ -1443,9 +1198,7 @@ export const EntityReference = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<EntityReference>, I>>(
-    object: I
-  ): EntityReference {
+  fromPartial<I extends Exact<DeepPartial<EntityReference>, I>>(object: I): EntityReference {
     const message = createBaseEntityReference();
     message.entityId = object.entityId ?? "";
     message.entryPoints = object.entryPoints?.map((e) => e) || [];
@@ -1453,36 +1206,17 @@ export const EntityReference = {
   },
 };
 
-type Builtin =
-  | Date
-  | Function
-  | Uint8Array
-  | string
-  | number
-  | boolean
-  | undefined;
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends { $case: string }
-  ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & {
-      $case: T["$case"];
-    }
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<
-        Exclude<keyof I, KeysOfUnion<P>>,
-        never
-      >;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;
