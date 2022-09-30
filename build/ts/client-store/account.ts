@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 import { EntityReference } from "../metadata/entity";
 import { Wallet } from "./wallet";
 
