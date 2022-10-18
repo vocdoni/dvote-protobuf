@@ -134,6 +134,8 @@ message Account {
 	string infoURI = 3;
 	repeated bytes delegateAddrs = 4;
 	uint32 processIndex = 5;
+	string name = 6;
+	AccountKeys keys = 7;
 }
 
 message Treasurer {
@@ -259,6 +261,8 @@ message SetAccountInfoTx {
 	string infoURI = 3;
 	bytes account = 4;
 	FaucetPackage faucetPackage = 5;
+	string name = 6;
+	AccountKeys keys = 7;
 }
 
 message SetAccountDelegateTx {
@@ -479,4 +483,9 @@ message ProcessEndingList {
 // KeyKeeper
 message StoredKeys {
 	repeated bytes pids = 1;
+}
+
+message AccountKeys {
+	optional bytes secp256k1 = 1;
+	optional bytes ed25519 = 2;
 }
