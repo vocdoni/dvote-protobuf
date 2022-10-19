@@ -103,9 +103,14 @@ message ProofArbo {
 			BLAKE2B = 0;
 			POSEIDON = 1;
 	}
+	enum KeyType {
+		PUBKEY = 0;
+		ADDRESS = 1;
+	}
 	Type type = 1;
 	bytes siblings = 2;
 	bytes value = 3;
+	KeyType keyType = 4;
 }
 
 // Groth16 zkSNARK proof + public inputs
