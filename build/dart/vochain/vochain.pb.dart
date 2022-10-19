@@ -812,6 +812,7 @@ class ProofArbo extends $pb.GeneratedMessage {
     ..e<ProofArbo_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofArbo_Type.BLAKE2B, valueOf: ProofArbo_Type.valueOf, enumValues: ProofArbo_Type.values)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siblings', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
+    ..e<ProofArbo_KeyType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyType', $pb.PbFieldType.OE, protoName: 'keyType', defaultOrMaker: ProofArbo_KeyType.PUBKEY, valueOf: ProofArbo_KeyType.valueOf, enumValues: ProofArbo_KeyType.values)
     ..hasRequiredFields = false
   ;
 
@@ -820,6 +821,7 @@ class ProofArbo extends $pb.GeneratedMessage {
     ProofArbo_Type? type,
     $core.List<$core.int>? siblings,
     $core.List<$core.int>? value,
+    ProofArbo_KeyType? keyType,
   }) {
     final _result = create();
     if (type != null) {
@@ -830,6 +832,9 @@ class ProofArbo extends $pb.GeneratedMessage {
     }
     if (value != null) {
       _result.value = value;
+    }
+    if (keyType != null) {
+      _result.keyType = keyType;
     }
     return _result;
   }
@@ -880,6 +885,15 @@ class ProofArbo extends $pb.GeneratedMessage {
   $core.bool hasValue() => $_has(2);
   @$pb.TagNumber(3)
   void clearValue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  ProofArbo_KeyType get keyType => $_getN(3);
+  @$pb.TagNumber(4)
+  set keyType(ProofArbo_KeyType v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasKeyType() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearKeyType() => clearField(4);
 }
 
 class ProofZkSNARK extends $pb.GeneratedMessage {

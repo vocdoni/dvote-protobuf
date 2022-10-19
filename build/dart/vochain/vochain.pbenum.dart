@@ -222,3 +222,18 @@ class ProofArbo_Type extends $pb.ProtobufEnum {
   const ProofArbo_Type._($core.int v, $core.String n) : super(v, n);
 }
 
+class ProofArbo_KeyType extends $pb.ProtobufEnum {
+  static const ProofArbo_KeyType PUBKEY = ProofArbo_KeyType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PUBKEY');
+  static const ProofArbo_KeyType ADDRESS = ProofArbo_KeyType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADDRESS');
+
+  static const $core.List<ProofArbo_KeyType> values = <ProofArbo_KeyType> [
+    PUBKEY,
+    ADDRESS,
+  ];
+
+  static final $core.Map<$core.int, ProofArbo_KeyType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ProofArbo_KeyType? valueOf($core.int value) => _byValue[value];
+
+  const ProofArbo_KeyType._($core.int v, $core.String n) : super(v, n);
+}
+

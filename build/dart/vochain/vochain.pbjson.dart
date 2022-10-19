@@ -255,8 +255,9 @@ const ProofArbo$json = const {
     const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofArbo.Type', '10': 'type'},
     const {'1': 'siblings', '3': 2, '4': 1, '5': 12, '10': 'siblings'},
     const {'1': 'value', '3': 3, '4': 1, '5': 12, '10': 'value'},
+    const {'1': 'keyType', '3': 4, '4': 1, '5': 14, '6': '.dvote.types.v1.ProofArbo.KeyType', '10': 'keyType'},
   ],
-  '4': const [ProofArbo_Type$json],
+  '4': const [ProofArbo_Type$json, ProofArbo_KeyType$json],
 };
 
 @$core.Deprecated('Use proofArboDescriptor instead')
@@ -268,8 +269,17 @@ const ProofArbo_Type$json = const {
   ],
 };
 
+@$core.Deprecated('Use proofArboDescriptor instead')
+const ProofArbo_KeyType$json = const {
+  '1': 'KeyType',
+  '2': const [
+    const {'1': 'PUBKEY', '2': 0},
+    const {'1': 'ADDRESS', '2': 1},
+  ],
+};
+
 /// Descriptor for `ProofArbo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proofArboDescriptor = $convert.base64Decode('CglQcm9vZkFyYm8SMgoEdHlwZRgBIAEoDjIeLmR2b3RlLnR5cGVzLnYxLlByb29mQXJiby5UeXBlUgR0eXBlEhoKCHNpYmxpbmdzGAIgASgMUghzaWJsaW5ncxIUCgV2YWx1ZRgDIAEoDFIFdmFsdWUiIQoEVHlwZRILCgdCTEFLRTJCEAASDAoIUE9TRUlET04QAQ==');
+final $typed_data.Uint8List proofArboDescriptor = $convert.base64Decode('CglQcm9vZkFyYm8SMgoEdHlwZRgBIAEoDjIeLmR2b3RlLnR5cGVzLnYxLlByb29mQXJiby5UeXBlUgR0eXBlEhoKCHNpYmxpbmdzGAIgASgMUghzaWJsaW5ncxIUCgV2YWx1ZRgDIAEoDFIFdmFsdWUSOwoHa2V5VHlwZRgEIAEoDjIhLmR2b3RlLnR5cGVzLnYxLlByb29mQXJiby5LZXlUeXBlUgdrZXlUeXBlIiEKBFR5cGUSCwoHQkxBS0UyQhAAEgwKCFBPU0VJRE9OEAEiIgoHS2V5VHlwZRIKCgZQVUJLRVkQABILCgdBRERSRVNTEAE=');
 @$core.Deprecated('Use proofZkSNARKDescriptor instead')
 const ProofZkSNARK$json = const {
   '1': 'ProofZkSNARK',

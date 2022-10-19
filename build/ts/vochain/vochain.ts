@@ -601,6 +601,7 @@ export interface ProofArbo {
   type: ProofArbo_Type;
   siblings: Uint8Array;
   value: Uint8Array;
+  keyType: ProofArbo_KeyType;
 }
 
 export enum ProofArbo_Type {
@@ -631,6 +632,39 @@ export function proofArbo_TypeToJSON(object: ProofArbo_Type): string {
     case ProofArbo_Type.POSEIDON:
       return "POSEIDON";
     case ProofArbo_Type.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
+export enum ProofArbo_KeyType {
+  PUBKEY = 0,
+  ADDRESS = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function proofArbo_KeyTypeFromJSON(object: any): ProofArbo_KeyType {
+  switch (object) {
+    case 0:
+    case "PUBKEY":
+      return ProofArbo_KeyType.PUBKEY;
+    case 1:
+    case "ADDRESS":
+      return ProofArbo_KeyType.ADDRESS;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ProofArbo_KeyType.UNRECOGNIZED;
+  }
+}
+
+export function proofArbo_KeyTypeToJSON(object: ProofArbo_KeyType): string {
+  switch (object) {
+    case ProofArbo_KeyType.PUBKEY:
+      return "PUBKEY";
+    case ProofArbo_KeyType.ADDRESS:
+      return "ADDRESS";
+    case ProofArbo_KeyType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
   }
@@ -1789,7 +1823,7 @@ export const CAbundle = {
 };
 
 function createBaseProofArbo(): ProofArbo {
-  return { type: 0, siblings: new Uint8Array(), value: new Uint8Array() };
+  return { type: 0, siblings: new Uint8Array(), value: new Uint8Array(), keyType: 0 };
 }
 
 export const ProofArbo = {
@@ -1802,6 +1836,9 @@ export const ProofArbo = {
     }
     if (message.value.length !== 0) {
       writer.uint32(26).bytes(message.value);
+    }
+    if (message.keyType !== 0) {
+      writer.uint32(32).int32(message.keyType);
     }
     return writer;
   },
@@ -1822,6 +1859,9 @@ export const ProofArbo = {
         case 3:
           message.value = reader.bytes();
           break;
+        case 4:
+          message.keyType = reader.int32() as any;
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1835,6 +1875,7 @@ export const ProofArbo = {
       type: isSet(object.type) ? proofArbo_TypeFromJSON(object.type) : 0,
       siblings: isSet(object.siblings) ? bytesFromBase64(object.siblings) : new Uint8Array(),
       value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(),
+      keyType: isSet(object.keyType) ? proofArbo_KeyTypeFromJSON(object.keyType) : 0,
     };
   },
 
@@ -1845,6 +1886,7 @@ export const ProofArbo = {
       (obj.siblings = base64FromBytes(message.siblings !== undefined ? message.siblings : new Uint8Array()));
     message.value !== undefined &&
       (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
+    message.keyType !== undefined && (obj.keyType = proofArbo_KeyTypeToJSON(message.keyType));
     return obj;
   },
 
@@ -1853,6 +1895,7 @@ export const ProofArbo = {
     message.type = object.type ?? 0;
     message.siblings = object.siblings ?? new Uint8Array();
     message.value = object.value ?? new Uint8Array();
+    message.keyType = object.keyType ?? 0;
     return message;
   },
 };
