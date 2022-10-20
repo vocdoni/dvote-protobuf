@@ -285,7 +285,7 @@ message FaucetPayload {
 }
 
 message FaucetPackage {
-	FaucetPayload payload = 1;
+	bytes payload = 1;
 	bytes signature = 2;
 }
 
