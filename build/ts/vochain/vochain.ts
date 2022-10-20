@@ -828,7 +828,7 @@ export interface FaucetPayload {
 }
 
 export interface FaucetPackage {
-  payload: FaucetPayload | undefined;
+  payload: Uint8Array;
   signature: Uint8Array;
 }
 
@@ -3441,13 +3441,13 @@ export const FaucetPayload = {
 };
 
 function createBaseFaucetPackage(): FaucetPackage {
-  return { payload: undefined, signature: new Uint8Array() };
+  return { payload: new Uint8Array(), signature: new Uint8Array() };
 }
 
 export const FaucetPackage = {
   encode(message: FaucetPackage, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.payload !== undefined) {
-      FaucetPayload.encode(message.payload, writer.uint32(10).fork()).ldelim();
+    if (message.payload.length !== 0) {
+      writer.uint32(10).bytes(message.payload);
     }
     if (message.signature.length !== 0) {
       writer.uint32(18).bytes(message.signature);
@@ -3463,7 +3463,7 @@ export const FaucetPackage = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.payload = FaucetPayload.decode(reader, reader.uint32());
+          message.payload = reader.bytes();
           break;
         case 2:
           message.signature = reader.bytes();
@@ -3478,7 +3478,7 @@ export const FaucetPackage = {
 
   fromJSON(object: any): FaucetPackage {
     return {
-      payload: isSet(object.payload) ? FaucetPayload.fromJSON(object.payload) : undefined,
+      payload: isSet(object.payload) ? bytesFromBase64(object.payload) : new Uint8Array(),
       signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(),
     };
   },
@@ -3486,7 +3486,7 @@ export const FaucetPackage = {
   toJSON(message: FaucetPackage): unknown {
     const obj: any = {};
     message.payload !== undefined &&
-      (obj.payload = message.payload ? FaucetPayload.toJSON(message.payload) : undefined);
+      (obj.payload = base64FromBytes(message.payload !== undefined ? message.payload : new Uint8Array()));
     message.signature !== undefined &&
       (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     return obj;
@@ -3494,9 +3494,7 @@ export const FaucetPackage = {
 
   fromPartial<I extends Exact<DeepPartial<FaucetPackage>, I>>(object: I): FaucetPackage {
     const message = createBaseFaucetPackage();
-    message.payload = (object.payload !== undefined && object.payload !== null)
-      ? FaucetPayload.fromPartial(object.payload)
-      : undefined;
+    message.payload = object.payload ?? new Uint8Array();
     message.signature = object.signature ?? new Uint8Array();
     return message;
   },

@@ -528,13 +528,13 @@ final $typed_data.Uint8List faucetPayloadDescriptor = $convert.base64Decode('Cg1
 const FaucetPackage$json = const {
   '1': 'FaucetPackage',
   '2': const [
-    const {'1': 'payload', '3': 1, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPayload', '10': 'payload'},
+    const {'1': 'payload', '3': 1, '4': 1, '5': 12, '10': 'payload'},
     const {'1': 'signature', '3': 2, '4': 1, '5': 12, '10': 'signature'},
   ],
 };
 
 /// Descriptor for `FaucetPackage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List faucetPackageDescriptor = $convert.base64Decode('Cg1GYXVjZXRQYWNrYWdlEjcKB3BheWxvYWQYASABKAsyHS5kdm90ZS50eXBlcy52MS5GYXVjZXRQYXlsb2FkUgdwYXlsb2FkEhwKCXNpZ25hdHVyZRgCIAEoDFIJc2lnbmF0dXJl');
+final $typed_data.Uint8List faucetPackageDescriptor = $convert.base64Decode('Cg1GYXVjZXRQYWNrYWdlEhgKB3BheWxvYWQYASABKAxSB3BheWxvYWQSHAoJc2lnbmF0dXJlGAIgASgMUglzaWduYXR1cmU=');
 @$core.Deprecated('Use setKeykeeperTxDescriptor instead')
 const SetKeykeeperTx$json = const {
   '1': 'SetKeykeeperTx',

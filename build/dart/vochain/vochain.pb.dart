@@ -2559,14 +2559,14 @@ class FaucetPayload extends $pb.GeneratedMessage {
 
 class FaucetPackage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaucetPackage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..aOM<FaucetPayload>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'payload', subBuilder: FaucetPayload.create)
+    ..a<$core.List<$core.int>>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'payload', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
   FaucetPackage._() : super();
   factory FaucetPackage({
-    FaucetPayload? payload,
+    $core.List<$core.int>? payload,
     $core.List<$core.int>? signature,
   }) {
     final _result = create();
@@ -2600,15 +2600,13 @@ class FaucetPackage extends $pb.GeneratedMessage {
   static FaucetPackage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  FaucetPayload get payload => $_getN(0);
+  $core.List<$core.int> get payload => $_getN(0);
   @$pb.TagNumber(1)
-  set payload(FaucetPayload v) { setField(1, v); }
+  set payload($core.List<$core.int> v) { $_setBytes(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasPayload() => $_has(0);
   @$pb.TagNumber(1)
   void clearPayload() => clearField(1);
-  @$pb.TagNumber(1)
-  FaucetPayload ensurePayload() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.List<$core.int> get signature => $_getN(1);
