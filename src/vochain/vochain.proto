@@ -164,7 +164,7 @@ enum TxType {
 	MINT_TOKENS = 14;
 	SEND_TOKENS = 15;
 	SET_TRANSACTION_COSTS = 16;
-	SET_ACCOUNT_INFO = 17;
+	SET_ACCOUNT_INFO_URI = 17;
 	ADD_DELEGATE_FOR_ACCOUNT = 18;
 	DEL_DELEGATE_FOR_ACCOUNT = 19;
 	COLLECT_FAUCET = 20;
@@ -182,10 +182,9 @@ message Tx {
 		MintTokensTx mintTokens = 6;
 		SendTokensTx sendTokens = 7;
 		SetTransactionCostsTx setTransactionCosts = 8;
-		SetAccountInfoTx setAccountInfo = 9;
-		SetAccountDelegateTx setAccountDelegateTx = 10;
-		CollectFaucetTx collectFaucet = 11;
-		SetKeykeeperTx setKeykeeper = 12;
+		SetAccountTx setAccount = 9;
+		CollectFaucetTx collectFaucet = 10;
+		SetKeykeeperTx setKeykeeper = 11;
 	}
 }
 
@@ -258,18 +257,13 @@ message SetTransactionCostsTx {
 	uint64 value = 3;
 }
 
-message SetAccountInfoTx {
+message SetAccountTx {
 	TxType txtype = 1;
 	uint32 nonce = 2;
 	string infoURI = 3;
 	bytes account = 4;
 	FaucetPackage faucetPackage = 5;
-}
-
-message SetAccountDelegateTx {
-	TxType txtype = 1;
-	uint32 nonce = 2;
-	bytes delegate = 3;
+	repeated bytes delegates = 6;
 }
 
 message CollectFaucetTx {
