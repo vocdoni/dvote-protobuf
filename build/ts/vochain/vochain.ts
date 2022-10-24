@@ -22,7 +22,7 @@ export enum TxType {
   MINT_TOKENS = 14,
   SEND_TOKENS = 15,
   SET_TRANSACTION_COSTS = 16,
-  SET_ACCOUNT_INFO = 17,
+  SET_ACCOUNT_INFO_URI = 17,
   ADD_DELEGATE_FOR_ACCOUNT = 18,
   DEL_DELEGATE_FOR_ACCOUNT = 19,
   COLLECT_FAUCET = 20,
@@ -85,8 +85,8 @@ export function txTypeFromJSON(object: any): TxType {
     case "SET_TRANSACTION_COSTS":
       return TxType.SET_TRANSACTION_COSTS;
     case 17:
-    case "SET_ACCOUNT_INFO":
-      return TxType.SET_ACCOUNT_INFO;
+    case "SET_ACCOUNT_INFO_URI":
+      return TxType.SET_ACCOUNT_INFO_URI;
     case 18:
     case "ADD_DELEGATE_FOR_ACCOUNT":
       return TxType.ADD_DELEGATE_FOR_ACCOUNT;
@@ -145,8 +145,8 @@ export function txTypeToJSON(object: TxType): string {
       return "SEND_TOKENS";
     case TxType.SET_TRANSACTION_COSTS:
       return "SET_TRANSACTION_COSTS";
-    case TxType.SET_ACCOUNT_INFO:
-      return "SET_ACCOUNT_INFO";
+    case TxType.SET_ACCOUNT_INFO_URI:
+      return "SET_ACCOUNT_INFO_URI";
     case TxType.ADD_DELEGATE_FOR_ACCOUNT:
       return "ADD_DELEGATE_FOR_ACCOUNT";
     case TxType.DEL_DELEGATE_FOR_ACCOUNT:
@@ -717,8 +717,7 @@ export interface Tx {
     | { $case: "mintTokens"; mintTokens: MintTokensTx }
     | { $case: "sendTokens"; sendTokens: SendTokensTx }
     | { $case: "setTransactionCosts"; setTransactionCosts: SetTransactionCostsTx }
-    | { $case: "setAccountInfo"; setAccountInfo: SetAccountInfoTx }
-    | { $case: "setAccountDelegateTx"; setAccountDelegateTx: SetAccountDelegateTx }
+    | { $case: "setAccount"; setAccount: SetAccountTx }
     | { $case: "collectFaucet"; collectFaucet: CollectFaucetTx }
     | { $case: "setKeykeeper"; setKeykeeper: SetKeykeeperTx };
 }
@@ -801,18 +800,13 @@ export interface SetTransactionCostsTx {
   value: number;
 }
 
-export interface SetAccountInfoTx {
+export interface SetAccountTx {
   txtype: TxType;
   nonce: number;
   infoURI: string;
   account: Uint8Array;
   faucetPackage: FaucetPackage | undefined;
-}
-
-export interface SetAccountDelegateTx {
-  txtype: TxType;
-  nonce: number;
-  delegate: Uint8Array;
+  delegates: Uint8Array[];
 }
 
 export interface CollectFaucetTx {
@@ -2182,17 +2176,14 @@ export const Tx = {
     if (message.payload?.$case === "setTransactionCosts") {
       SetTransactionCostsTx.encode(message.payload.setTransactionCosts, writer.uint32(66).fork()).ldelim();
     }
-    if (message.payload?.$case === "setAccountInfo") {
-      SetAccountInfoTx.encode(message.payload.setAccountInfo, writer.uint32(74).fork()).ldelim();
-    }
-    if (message.payload?.$case === "setAccountDelegateTx") {
-      SetAccountDelegateTx.encode(message.payload.setAccountDelegateTx, writer.uint32(82).fork()).ldelim();
+    if (message.payload?.$case === "setAccount") {
+      SetAccountTx.encode(message.payload.setAccount, writer.uint32(74).fork()).ldelim();
     }
     if (message.payload?.$case === "collectFaucet") {
-      CollectFaucetTx.encode(message.payload.collectFaucet, writer.uint32(90).fork()).ldelim();
+      CollectFaucetTx.encode(message.payload.collectFaucet, writer.uint32(82).fork()).ldelim();
     }
     if (message.payload?.$case === "setKeykeeper") {
-      SetKeykeeperTx.encode(message.payload.setKeykeeper, writer.uint32(98).fork()).ldelim();
+      SetKeykeeperTx.encode(message.payload.setKeykeeper, writer.uint32(90).fork()).ldelim();
     }
     return writer;
   },
@@ -2232,21 +2223,12 @@ export const Tx = {
           };
           break;
         case 9:
-          message.payload = {
-            $case: "setAccountInfo",
-            setAccountInfo: SetAccountInfoTx.decode(reader, reader.uint32()),
-          };
+          message.payload = { $case: "setAccount", setAccount: SetAccountTx.decode(reader, reader.uint32()) };
           break;
         case 10:
-          message.payload = {
-            $case: "setAccountDelegateTx",
-            setAccountDelegateTx: SetAccountDelegateTx.decode(reader, reader.uint32()),
-          };
-          break;
-        case 11:
           message.payload = { $case: "collectFaucet", collectFaucet: CollectFaucetTx.decode(reader, reader.uint32()) };
           break;
-        case 12:
+        case 11:
           message.payload = { $case: "setKeykeeper", setKeykeeper: SetKeykeeperTx.decode(reader, reader.uint32()) };
           break;
         default:
@@ -2278,13 +2260,8 @@ export const Tx = {
           $case: "setTransactionCosts",
           setTransactionCosts: SetTransactionCostsTx.fromJSON(object.setTransactionCosts),
         }
-        : isSet(object.setAccountInfo)
-        ? { $case: "setAccountInfo", setAccountInfo: SetAccountInfoTx.fromJSON(object.setAccountInfo) }
-        : isSet(object.setAccountDelegateTx)
-        ? {
-          $case: "setAccountDelegateTx",
-          setAccountDelegateTx: SetAccountDelegateTx.fromJSON(object.setAccountDelegateTx),
-        }
+        : isSet(object.setAccount)
+        ? { $case: "setAccount", setAccount: SetAccountTx.fromJSON(object.setAccount) }
         : isSet(object.collectFaucet)
         ? { $case: "collectFaucet", collectFaucet: CollectFaucetTx.fromJSON(object.collectFaucet) }
         : isSet(object.setKeykeeper)
@@ -2312,13 +2289,8 @@ export const Tx = {
     message.payload?.$case === "setTransactionCosts" && (obj.setTransactionCosts = message.payload?.setTransactionCosts
       ? SetTransactionCostsTx.toJSON(message.payload?.setTransactionCosts)
       : undefined);
-    message.payload?.$case === "setAccountInfo" && (obj.setAccountInfo = message.payload?.setAccountInfo
-      ? SetAccountInfoTx.toJSON(message.payload?.setAccountInfo)
-      : undefined);
-    message.payload?.$case === "setAccountDelegateTx" &&
-      (obj.setAccountDelegateTx = message.payload?.setAccountDelegateTx
-        ? SetAccountDelegateTx.toJSON(message.payload?.setAccountDelegateTx)
-        : undefined);
+    message.payload?.$case === "setAccount" &&
+      (obj.setAccount = message.payload?.setAccount ? SetAccountTx.toJSON(message.payload?.setAccount) : undefined);
     message.payload?.$case === "collectFaucet" && (obj.collectFaucet = message.payload?.collectFaucet
       ? CollectFaucetTx.toJSON(message.payload?.collectFaucet)
       : undefined);
@@ -2382,24 +2354,11 @@ export const Tx = {
       };
     }
     if (
-      object.payload?.$case === "setAccountInfo" &&
-      object.payload?.setAccountInfo !== undefined &&
-      object.payload?.setAccountInfo !== null
+      object.payload?.$case === "setAccount" &&
+      object.payload?.setAccount !== undefined &&
+      object.payload?.setAccount !== null
     ) {
-      message.payload = {
-        $case: "setAccountInfo",
-        setAccountInfo: SetAccountInfoTx.fromPartial(object.payload.setAccountInfo),
-      };
-    }
-    if (
-      object.payload?.$case === "setAccountDelegateTx" &&
-      object.payload?.setAccountDelegateTx !== undefined &&
-      object.payload?.setAccountDelegateTx !== null
-    ) {
-      message.payload = {
-        $case: "setAccountDelegateTx",
-        setAccountDelegateTx: SetAccountDelegateTx.fromPartial(object.payload.setAccountDelegateTx),
-      };
+      message.payload = { $case: "setAccount", setAccount: SetAccountTx.fromPartial(object.payload.setAccount) };
     }
     if (
       object.payload?.$case === "collectFaucet" &&
@@ -3146,12 +3105,12 @@ export const SetTransactionCostsTx = {
   },
 };
 
-function createBaseSetAccountInfoTx(): SetAccountInfoTx {
-  return { txtype: 0, nonce: 0, infoURI: "", account: new Uint8Array(), faucetPackage: undefined };
+function createBaseSetAccountTx(): SetAccountTx {
+  return { txtype: 0, nonce: 0, infoURI: "", account: new Uint8Array(), faucetPackage: undefined, delegates: [] };
 }
 
-export const SetAccountInfoTx = {
-  encode(message: SetAccountInfoTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const SetAccountTx = {
+  encode(message: SetAccountTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
@@ -3167,13 +3126,16 @@ export const SetAccountInfoTx = {
     if (message.faucetPackage !== undefined) {
       FaucetPackage.encode(message.faucetPackage, writer.uint32(42).fork()).ldelim();
     }
+    for (const v of message.delegates) {
+      writer.uint32(50).bytes(v!);
+    }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetAccountInfoTx {
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetAccountTx {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetAccountInfoTx();
+    const message = createBaseSetAccountTx();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3192,6 +3154,9 @@ export const SetAccountInfoTx = {
         case 5:
           message.faucetPackage = FaucetPackage.decode(reader, reader.uint32());
           break;
+        case 6:
+          message.delegates.push(reader.bytes());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -3200,17 +3165,18 @@ export const SetAccountInfoTx = {
     return message;
   },
 
-  fromJSON(object: any): SetAccountInfoTx {
+  fromJSON(object: any): SetAccountTx {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
       infoURI: isSet(object.infoURI) ? String(object.infoURI) : "",
       account: isSet(object.account) ? bytesFromBase64(object.account) : new Uint8Array(),
       faucetPackage: isSet(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : undefined,
+      delegates: Array.isArray(object?.delegates) ? object.delegates.map((e: any) => bytesFromBase64(e)) : [],
     };
   },
 
-  toJSON(message: SetAccountInfoTx): unknown {
+  toJSON(message: SetAccountTx): unknown {
     const obj: any = {};
     message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
@@ -3219,11 +3185,16 @@ export const SetAccountInfoTx = {
       (obj.account = base64FromBytes(message.account !== undefined ? message.account : new Uint8Array()));
     message.faucetPackage !== undefined &&
       (obj.faucetPackage = message.faucetPackage ? FaucetPackage.toJSON(message.faucetPackage) : undefined);
+    if (message.delegates) {
+      obj.delegates = message.delegates.map((e) => base64FromBytes(e !== undefined ? e : new Uint8Array()));
+    } else {
+      obj.delegates = [];
+    }
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<SetAccountInfoTx>, I>>(object: I): SetAccountInfoTx {
-    const message = createBaseSetAccountInfoTx();
+  fromPartial<I extends Exact<DeepPartial<SetAccountTx>, I>>(object: I): SetAccountTx {
+    const message = createBaseSetAccountTx();
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
     message.infoURI = object.infoURI ?? "";
@@ -3231,74 +3202,7 @@ export const SetAccountInfoTx = {
     message.faucetPackage = (object.faucetPackage !== undefined && object.faucetPackage !== null)
       ? FaucetPackage.fromPartial(object.faucetPackage)
       : undefined;
-    return message;
-  },
-};
-
-function createBaseSetAccountDelegateTx(): SetAccountDelegateTx {
-  return { txtype: 0, nonce: 0, delegate: new Uint8Array() };
-}
-
-export const SetAccountDelegateTx = {
-  encode(message: SetAccountDelegateTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.txtype !== 0) {
-      writer.uint32(8).int32(message.txtype);
-    }
-    if (message.nonce !== 0) {
-      writer.uint32(16).uint32(message.nonce);
-    }
-    if (message.delegate.length !== 0) {
-      writer.uint32(26).bytes(message.delegate);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetAccountDelegateTx {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetAccountDelegateTx();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.txtype = reader.int32() as any;
-          break;
-        case 2:
-          message.nonce = reader.uint32();
-          break;
-        case 3:
-          message.delegate = reader.bytes();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): SetAccountDelegateTx {
-    return {
-      txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      delegate: isSet(object.delegate) ? bytesFromBase64(object.delegate) : new Uint8Array(),
-    };
-  },
-
-  toJSON(message: SetAccountDelegateTx): unknown {
-    const obj: any = {};
-    message.txtype !== undefined && (obj.txtype = txTypeToJSON(message.txtype));
-    message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
-    message.delegate !== undefined &&
-      (obj.delegate = base64FromBytes(message.delegate !== undefined ? message.delegate : new Uint8Array()));
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<SetAccountDelegateTx>, I>>(object: I): SetAccountDelegateTx {
-    const message = createBaseSetAccountDelegateTx();
-    message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? 0;
-    message.delegate = object.delegate ?? new Uint8Array();
+    message.delegates = object.delegates?.map((e) => e) || [];
     return message;
   },
 };

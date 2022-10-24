@@ -1142,8 +1142,7 @@ enum Tx_Payload {
   mintTokens, 
   sendTokens, 
   setTransactionCosts, 
-  setAccountInfo, 
-  setAccountDelegateTx, 
+  setAccount, 
   collectFaucet, 
   setKeykeeper, 
   notSet
@@ -1159,14 +1158,13 @@ class Tx extends $pb.GeneratedMessage {
     6 : Tx_Payload.mintTokens,
     7 : Tx_Payload.sendTokens,
     8 : Tx_Payload.setTransactionCosts,
-    9 : Tx_Payload.setAccountInfo,
-    10 : Tx_Payload.setAccountDelegateTx,
-    11 : Tx_Payload.collectFaucet,
-    12 : Tx_Payload.setKeykeeper,
+    9 : Tx_Payload.setAccount,
+    10 : Tx_Payload.collectFaucet,
+    11 : Tx_Payload.setKeykeeper,
     0 : Tx_Payload.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Tx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
     ..aOM<VoteEnvelope>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vote', subBuilder: VoteEnvelope.create)
     ..aOM<NewProcessTx>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newProcess', protoName: 'newProcess', subBuilder: NewProcessTx.create)
     ..aOM<AdminTx>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'admin', subBuilder: AdminTx.create)
@@ -1175,10 +1173,9 @@ class Tx extends $pb.GeneratedMessage {
     ..aOM<MintTokensTx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mintTokens', protoName: 'mintTokens', subBuilder: MintTokensTx.create)
     ..aOM<SendTokensTx>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sendTokens', protoName: 'sendTokens', subBuilder: SendTokensTx.create)
     ..aOM<SetTransactionCostsTx>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setTransactionCosts', protoName: 'setTransactionCosts', subBuilder: SetTransactionCostsTx.create)
-    ..aOM<SetAccountInfoTx>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccountInfo', protoName: 'setAccountInfo', subBuilder: SetAccountInfoTx.create)
-    ..aOM<SetAccountDelegateTx>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccountDelegateTx', protoName: 'setAccountDelegateTx', subBuilder: SetAccountDelegateTx.create)
-    ..aOM<CollectFaucetTx>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'collectFaucet', protoName: 'collectFaucet', subBuilder: CollectFaucetTx.create)
-    ..aOM<SetKeykeeperTx>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setKeykeeper', protoName: 'setKeykeeper', subBuilder: SetKeykeeperTx.create)
+    ..aOM<SetAccountTx>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setAccount', protoName: 'setAccount', subBuilder: SetAccountTx.create)
+    ..aOM<CollectFaucetTx>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'collectFaucet', protoName: 'collectFaucet', subBuilder: CollectFaucetTx.create)
+    ..aOM<SetKeykeeperTx>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setKeykeeper', protoName: 'setKeykeeper', subBuilder: SetKeykeeperTx.create)
     ..hasRequiredFields = false
   ;
 
@@ -1192,8 +1189,7 @@ class Tx extends $pb.GeneratedMessage {
     MintTokensTx? mintTokens,
     SendTokensTx? sendTokens,
     SetTransactionCostsTx? setTransactionCosts,
-    SetAccountInfoTx? setAccountInfo,
-    SetAccountDelegateTx? setAccountDelegateTx,
+    SetAccountTx? setAccount,
     CollectFaucetTx? collectFaucet,
     SetKeykeeperTx? setKeykeeper,
   }) {
@@ -1222,11 +1218,8 @@ class Tx extends $pb.GeneratedMessage {
     if (setTransactionCosts != null) {
       _result.setTransactionCosts = setTransactionCosts;
     }
-    if (setAccountInfo != null) {
-      _result.setAccountInfo = setAccountInfo;
-    }
-    if (setAccountDelegateTx != null) {
-      _result.setAccountDelegateTx = setAccountDelegateTx;
+    if (setAccount != null) {
+      _result.setAccount = setAccount;
     }
     if (collectFaucet != null) {
       _result.collectFaucet = collectFaucet;
@@ -1349,48 +1342,37 @@ class Tx extends $pb.GeneratedMessage {
   SetTransactionCostsTx ensureSetTransactionCosts() => $_ensure(7);
 
   @$pb.TagNumber(9)
-  SetAccountInfoTx get setAccountInfo => $_getN(8);
+  SetAccountTx get setAccount => $_getN(8);
   @$pb.TagNumber(9)
-  set setAccountInfo(SetAccountInfoTx v) { setField(9, v); }
+  set setAccount(SetAccountTx v) { setField(9, v); }
   @$pb.TagNumber(9)
-  $core.bool hasSetAccountInfo() => $_has(8);
+  $core.bool hasSetAccount() => $_has(8);
   @$pb.TagNumber(9)
-  void clearSetAccountInfo() => clearField(9);
+  void clearSetAccount() => clearField(9);
   @$pb.TagNumber(9)
-  SetAccountInfoTx ensureSetAccountInfo() => $_ensure(8);
+  SetAccountTx ensureSetAccount() => $_ensure(8);
 
   @$pb.TagNumber(10)
-  SetAccountDelegateTx get setAccountDelegateTx => $_getN(9);
+  CollectFaucetTx get collectFaucet => $_getN(9);
   @$pb.TagNumber(10)
-  set setAccountDelegateTx(SetAccountDelegateTx v) { setField(10, v); }
+  set collectFaucet(CollectFaucetTx v) { setField(10, v); }
   @$pb.TagNumber(10)
-  $core.bool hasSetAccountDelegateTx() => $_has(9);
+  $core.bool hasCollectFaucet() => $_has(9);
   @$pb.TagNumber(10)
-  void clearSetAccountDelegateTx() => clearField(10);
+  void clearCollectFaucet() => clearField(10);
   @$pb.TagNumber(10)
-  SetAccountDelegateTx ensureSetAccountDelegateTx() => $_ensure(9);
+  CollectFaucetTx ensureCollectFaucet() => $_ensure(9);
 
   @$pb.TagNumber(11)
-  CollectFaucetTx get collectFaucet => $_getN(10);
+  SetKeykeeperTx get setKeykeeper => $_getN(10);
   @$pb.TagNumber(11)
-  set collectFaucet(CollectFaucetTx v) { setField(11, v); }
+  set setKeykeeper(SetKeykeeperTx v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasCollectFaucet() => $_has(10);
+  $core.bool hasSetKeykeeper() => $_has(10);
   @$pb.TagNumber(11)
-  void clearCollectFaucet() => clearField(11);
+  void clearSetKeykeeper() => clearField(11);
   @$pb.TagNumber(11)
-  CollectFaucetTx ensureCollectFaucet() => $_ensure(10);
-
-  @$pb.TagNumber(12)
-  SetKeykeeperTx get setKeykeeper => $_getN(11);
-  @$pb.TagNumber(12)
-  set setKeykeeper(SetKeykeeperTx v) { setField(12, v); }
-  @$pb.TagNumber(12)
-  $core.bool hasSetKeykeeper() => $_has(11);
-  @$pb.TagNumber(12)
-  void clearSetKeykeeper() => clearField(12);
-  @$pb.TagNumber(12)
-  SetKeykeeperTx ensureSetKeykeeper() => $_ensure(11);
+  SetKeykeeperTx ensureSetKeykeeper() => $_ensure(10);
 }
 
 class SignedTx extends $pb.GeneratedMessage {
@@ -2225,23 +2207,25 @@ class SetTransactionCostsTx extends $pb.GeneratedMessage {
   void clearValue() => clearField(3);
 }
 
-class SetAccountInfoTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetAccountInfoTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
+class SetAccountTx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetAccountTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'infoURI', protoName: 'infoURI')
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'account', $pb.PbFieldType.OY)
     ..aOM<FaucetPackage>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faucetPackage', protoName: 'faucetPackage', subBuilder: FaucetPackage.create)
+    ..p<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delegates', $pb.PbFieldType.PY)
     ..hasRequiredFields = false
   ;
 
-  SetAccountInfoTx._() : super();
-  factory SetAccountInfoTx({
+  SetAccountTx._() : super();
+  factory SetAccountTx({
     TxType? txtype,
     $core.int? nonce,
     $core.String? infoURI,
     $core.List<$core.int>? account,
     FaucetPackage? faucetPackage,
+    $core.Iterable<$core.List<$core.int>>? delegates,
   }) {
     final _result = create();
     if (txtype != null) {
@@ -2259,28 +2243,31 @@ class SetAccountInfoTx extends $pb.GeneratedMessage {
     if (faucetPackage != null) {
       _result.faucetPackage = faucetPackage;
     }
+    if (delegates != null) {
+      _result.delegates.addAll(delegates);
+    }
     return _result;
   }
-  factory SetAccountInfoTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SetAccountInfoTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory SetAccountTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetAccountTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SetAccountInfoTx clone() => SetAccountInfoTx()..mergeFromMessage(this);
+  SetAccountTx clone() => SetAccountTx()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetAccountInfoTx copyWith(void Function(SetAccountInfoTx) updates) => super.copyWith((message) => updates(message as SetAccountInfoTx)) as SetAccountInfoTx; // ignore: deprecated_member_use
+  SetAccountTx copyWith(void Function(SetAccountTx) updates) => super.copyWith((message) => updates(message as SetAccountTx)) as SetAccountTx; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static SetAccountInfoTx create() => SetAccountInfoTx._();
-  SetAccountInfoTx createEmptyInstance() => create();
-  static $pb.PbList<SetAccountInfoTx> createRepeated() => $pb.PbList<SetAccountInfoTx>();
+  static SetAccountTx create() => SetAccountTx._();
+  SetAccountTx createEmptyInstance() => create();
+  static $pb.PbList<SetAccountTx> createRepeated() => $pb.PbList<SetAccountTx>();
   @$core.pragma('dart2js:noInline')
-  static SetAccountInfoTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetAccountInfoTx>(create);
-  static SetAccountInfoTx? _defaultInstance;
+  static SetAccountTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetAccountTx>(create);
+  static SetAccountTx? _defaultInstance;
 
   @$pb.TagNumber(1)
   TxType get txtype => $_getN(0);
@@ -2328,81 +2315,9 @@ class SetAccountInfoTx extends $pb.GeneratedMessage {
   void clearFaucetPackage() => clearField(5);
   @$pb.TagNumber(5)
   FaucetPackage ensureFaucetPackage() => $_ensure(4);
-}
 
-class SetAccountDelegateTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetAccountDelegateTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
-    ..e<TxType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'txtype', $pb.PbFieldType.OE, defaultOrMaker: TxType.TX_UNKNOWN, valueOf: TxType.valueOf, enumValues: TxType.values)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU3)
-    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delegate', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  SetAccountDelegateTx._() : super();
-  factory SetAccountDelegateTx({
-    TxType? txtype,
-    $core.int? nonce,
-    $core.List<$core.int>? delegate,
-  }) {
-    final _result = create();
-    if (txtype != null) {
-      _result.txtype = txtype;
-    }
-    if (nonce != null) {
-      _result.nonce = nonce;
-    }
-    if (delegate != null) {
-      _result.delegate = delegate;
-    }
-    return _result;
-  }
-  factory SetAccountDelegateTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SetAccountDelegateTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SetAccountDelegateTx clone() => SetAccountDelegateTx()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SetAccountDelegateTx copyWith(void Function(SetAccountDelegateTx) updates) => super.copyWith((message) => updates(message as SetAccountDelegateTx)) as SetAccountDelegateTx; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static SetAccountDelegateTx create() => SetAccountDelegateTx._();
-  SetAccountDelegateTx createEmptyInstance() => create();
-  static $pb.PbList<SetAccountDelegateTx> createRepeated() => $pb.PbList<SetAccountDelegateTx>();
-  @$core.pragma('dart2js:noInline')
-  static SetAccountDelegateTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetAccountDelegateTx>(create);
-  static SetAccountDelegateTx? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  TxType get txtype => $_getN(0);
-  @$pb.TagNumber(1)
-  set txtype(TxType v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasTxtype() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTxtype() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.int get nonce => $_getIZ(1);
-  @$pb.TagNumber(2)
-  set nonce($core.int v) { $_setUnsignedInt32(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasNonce() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearNonce() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.List<$core.int> get delegate => $_getN(2);
-  @$pb.TagNumber(3)
-  set delegate($core.List<$core.int> v) { $_setBytes(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasDelegate() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearDelegate() => clearField(3);
+  @$pb.TagNumber(6)
+  $core.List<$core.List<$core.int>> get delegates => $_getList(5);
 }
 
 class CollectFaucetTx extends $pb.GeneratedMessage {

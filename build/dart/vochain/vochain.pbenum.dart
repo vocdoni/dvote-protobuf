@@ -27,7 +27,7 @@ class TxType extends $pb.ProtobufEnum {
   static const TxType MINT_TOKENS = TxType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MINT_TOKENS');
   static const TxType SEND_TOKENS = TxType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SEND_TOKENS');
   static const TxType SET_TRANSACTION_COSTS = TxType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_TRANSACTION_COSTS');
-  static const TxType SET_ACCOUNT_INFO = TxType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_ACCOUNT_INFO');
+  static const TxType SET_ACCOUNT_INFO_URI = TxType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SET_ACCOUNT_INFO_URI');
   static const TxType ADD_DELEGATE_FOR_ACCOUNT = TxType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_DELEGATE_FOR_ACCOUNT');
   static const TxType DEL_DELEGATE_FOR_ACCOUNT = TxType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DEL_DELEGATE_FOR_ACCOUNT');
   static const TxType COLLECT_FAUCET = TxType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLLECT_FAUCET');
@@ -52,7 +52,7 @@ class TxType extends $pb.ProtobufEnum {
     MINT_TOKENS,
     SEND_TOKENS,
     SET_TRANSACTION_COSTS,
-    SET_ACCOUNT_INFO,
+    SET_ACCOUNT_INFO_URI,
     ADD_DELEGATE_FOR_ACCOUNT,
     DEL_DELEGATE_FOR_ACCOUNT,
     COLLECT_FAUCET,
