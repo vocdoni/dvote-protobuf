@@ -810,7 +810,7 @@ export interface SetAccountTx {
   txtype: TxType;
   nonce?: number | undefined;
   infoURI?: string | undefined;
-  account: Uint8Array;
+  account?: Uint8Array | undefined;
   faucetPackage?: FaucetPackage | undefined;
   delegates: Uint8Array[];
 }
@@ -3116,7 +3116,7 @@ function createBaseSetAccountTx(): SetAccountTx {
     txtype: 0,
     nonce: undefined,
     infoURI: undefined,
-    account: new Uint8Array(),
+    account: undefined,
     faucetPackage: undefined,
     delegates: [],
   };
@@ -3133,7 +3133,7 @@ export const SetAccountTx = {
     if (message.infoURI !== undefined) {
       writer.uint32(26).string(message.infoURI);
     }
-    if (message.account.length !== 0) {
+    if (message.account !== undefined) {
       writer.uint32(34).bytes(message.account);
     }
     if (message.faucetPackage !== undefined) {
@@ -3183,7 +3183,7 @@ export const SetAccountTx = {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet(object.nonce) ? Number(object.nonce) : undefined,
       infoURI: isSet(object.infoURI) ? String(object.infoURI) : undefined,
-      account: isSet(object.account) ? bytesFromBase64(object.account) : new Uint8Array(),
+      account: isSet(object.account) ? bytesFromBase64(object.account) : undefined,
       faucetPackage: isSet(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : undefined,
       delegates: Array.isArray(object?.delegates) ? object.delegates.map((e: any) => bytesFromBase64(e)) : [],
     };
@@ -3195,7 +3195,7 @@ export const SetAccountTx = {
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.infoURI !== undefined && (obj.infoURI = message.infoURI);
     message.account !== undefined &&
-      (obj.account = base64FromBytes(message.account !== undefined ? message.account : new Uint8Array()));
+      (obj.account = message.account !== undefined ? base64FromBytes(message.account) : undefined);
     message.faucetPackage !== undefined &&
       (obj.faucetPackage = message.faucetPackage ? FaucetPackage.toJSON(message.faucetPackage) : undefined);
     if (message.delegates) {
@@ -3211,7 +3211,7 @@ export const SetAccountTx = {
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? undefined;
     message.infoURI = object.infoURI ?? undefined;
-    message.account = object.account ?? new Uint8Array();
+    message.account = object.account ?? undefined;
     message.faucetPackage = (object.faucetPackage !== undefined && object.faucetPackage !== null)
       ? FaucetPackage.fromPartial(object.faucetPackage)
       : undefined;

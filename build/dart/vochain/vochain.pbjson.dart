@@ -481,19 +481,20 @@ const SetAccountTx$json = const {
     const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
     const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '9': 0, '10': 'nonce', '17': true},
     const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'infoURI', '17': true},
-    const {'1': 'account', '3': 4, '4': 1, '5': 12, '10': 'account'},
-    const {'1': 'faucetPackage', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '9': 2, '10': 'faucetPackage', '17': true},
+    const {'1': 'account', '3': 4, '4': 1, '5': 12, '9': 2, '10': 'account', '17': true},
+    const {'1': 'faucetPackage', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '9': 3, '10': 'faucetPackage', '17': true},
     const {'1': 'delegates', '3': 6, '4': 3, '5': 12, '10': 'delegates'},
   ],
   '8': const [
     const {'1': '_nonce'},
     const {'1': '_infoURI'},
+    const {'1': '_account'},
     const {'1': '_faucetPackage'},
   ],
 };
 
 /// Descriptor for `SetAccountTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setAccountTxDescriptor = $convert.base64Decode('CgxTZXRBY2NvdW50VHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSGQoFbm9uY2UYAiABKA1IAFIFbm9uY2WIAQESHQoHaW5mb1VSSRgDIAEoCUgBUgdpbmZvVVJJiAEBEhgKB2FjY291bnQYBCABKAxSB2FjY291bnQSSAoNZmF1Y2V0UGFja2FnZRgFIAEoCzIdLmR2b3RlLnR5cGVzLnYxLkZhdWNldFBhY2thZ2VIAlINZmF1Y2V0UGFja2FnZYgBARIcCglkZWxlZ2F0ZXMYBiADKAxSCWRlbGVnYXRlc0IICgZfbm9uY2VCCgoIX2luZm9VUklCEAoOX2ZhdWNldFBhY2thZ2U=');
+final $typed_data.Uint8List setAccountTxDescriptor = $convert.base64Decode('CgxTZXRBY2NvdW50VHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSGQoFbm9uY2UYAiABKA1IAFIFbm9uY2WIAQESHQoHaW5mb1VSSRgDIAEoCUgBUgdpbmZvVVJJiAEBEh0KB2FjY291bnQYBCABKAxIAlIHYWNjb3VudIgBARJICg1mYXVjZXRQYWNrYWdlGAUgASgLMh0uZHZvdGUudHlwZXMudjEuRmF1Y2V0UGFja2FnZUgDUg1mYXVjZXRQYWNrYWdliAEBEhwKCWRlbGVnYXRlcxgGIAMoDFIJZGVsZWdhdGVzQggKBl9ub25jZUIKCghfaW5mb1VSSUIKCghfYWNjb3VudEIQCg5fZmF1Y2V0UGFja2FnZQ==');
 @$core.Deprecated('Use collectFaucetTxDescriptor instead')
 const CollectFaucetTx$json = const {
   '1': 'CollectFaucetTx',
