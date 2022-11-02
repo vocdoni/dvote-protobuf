@@ -262,7 +262,7 @@ message SetAccountTx {
 	TxType txtype = 1;
 	optional uint32 nonce = 2;
 	optional string infoURI = 3;
-	bytes account = 4;
+	optional bytes account = 4;
 	optional FaucetPackage faucetPackage = 5;
 	repeated bytes delegates = 6;
 }
