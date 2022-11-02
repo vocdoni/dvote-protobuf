@@ -35,11 +35,12 @@ const TxType$json = const {
     const {'1': 'COLLECT_FAUCET', '2': 20},
     const {'1': 'ADD_KEYKEEPER', '2': 21},
     const {'1': 'DELETE_KEYKEEPER', '2': 22},
+    const {'1': 'CREATE_ACCOUNT', '2': 23},
   ],
 };
 
 /// Descriptor for `TxType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List txTypeDescriptor = $convert.base64Decode('CgZUeFR5cGUSDgoKVFhfVU5LTk9XThAAEg8KC05FV19QUk9DRVNTEAESFgoSU0VUX1BST0NFU1NfU1RBVFVTEAISFgoSU0VUX1BST0NFU1NfQ0VOU1VTEAMSHgoaU0VUX1BST0NFU1NfUVVFU1RJT05fSU5ERVgQBBIUChBBRERfUFJPQ0VTU19LRVlTEAUSFwoTUkVWRUFMX1BST0NFU1NfS0VZUxAGEg4KCkFERF9PUkFDTEUQBxIRCg1SRU1PVkVfT1JBQ0xFEAgSEQoNQUREX1ZBTElEQVRPUhAJEhQKEFJFTU9WRV9WQUxJREFUT1IQChIICgRWT1RFEAsSFwoTU0VUX1BST0NFU1NfUkVTVUxUUxAMEhYKElJFR0lTVEVSX1ZPVEVSX0tFWRANEg8KC01JTlRfVE9LRU5TEA4SDwoLU0VORF9UT0tFTlMQDxIZChVTRVRfVFJBTlNBQ1RJT05fQ09TVFMQEBIYChRTRVRfQUNDT1VOVF9JTkZPX1VSSRAREhwKGEFERF9ERUxFR0FURV9GT1JfQUNDT1VOVBASEhwKGERFTF9ERUxFR0FURV9GT1JfQUNDT1VOVBATEhIKDkNPTExFQ1RfRkFVQ0VUEBQSEQoNQUREX0tFWUtFRVBFUhAVEhQKEERFTEVURV9LRVlLRUVQRVIQFg==');
+final $typed_data.Uint8List txTypeDescriptor = $convert.base64Decode('CgZUeFR5cGUSDgoKVFhfVU5LTk9XThAAEg8KC05FV19QUk9DRVNTEAESFgoSU0VUX1BST0NFU1NfU1RBVFVTEAISFgoSU0VUX1BST0NFU1NfQ0VOU1VTEAMSHgoaU0VUX1BST0NFU1NfUVVFU1RJT05fSU5ERVgQBBIUChBBRERfUFJPQ0VTU19LRVlTEAUSFwoTUkVWRUFMX1BST0NFU1NfS0VZUxAGEg4KCkFERF9PUkFDTEUQBxIRCg1SRU1PVkVfT1JBQ0xFEAgSEQoNQUREX1ZBTElEQVRPUhAJEhQKEFJFTU9WRV9WQUxJREFUT1IQChIICgRWT1RFEAsSFwoTU0VUX1BST0NFU1NfUkVTVUxUUxAMEhYKElJFR0lTVEVSX1ZPVEVSX0tFWRANEg8KC01JTlRfVE9LRU5TEA4SDwoLU0VORF9UT0tFTlMQDxIZChVTRVRfVFJBTlNBQ1RJT05fQ09TVFMQEBIYChRTRVRfQUNDT1VOVF9JTkZPX1VSSRAREhwKGEFERF9ERUxFR0FURV9GT1JfQUNDT1VOVBASEhwKGERFTF9ERUxFR0FURV9GT1JfQUNDT1VOVBATEhIKDkNPTExFQ1RfRkFVQ0VUEBQSEQoNQUREX0tFWUtFRVBFUhAVEhQKEERFTEVURV9LRVlLRUVQRVIQFhISCg5DUkVBVEVfQUNDT1VOVBAX');
 @$core.Deprecated('Use processStatusDescriptor instead')
 const ProcessStatus$json = const {
   '1': 'ProcessStatus',
@@ -478,16 +479,21 @@ const SetAccountTx$json = const {
   '1': 'SetAccountTx',
   '2': const [
     const {'1': 'txtype', '3': 1, '4': 1, '5': 14, '6': '.dvote.types.v1.TxType', '10': 'txtype'},
-    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '10': 'nonce'},
-    const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '10': 'infoURI'},
+    const {'1': 'nonce', '3': 2, '4': 1, '5': 13, '9': 0, '10': 'nonce', '17': true},
+    const {'1': 'infoURI', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'infoURI', '17': true},
     const {'1': 'account', '3': 4, '4': 1, '5': 12, '10': 'account'},
-    const {'1': 'faucetPackage', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '10': 'faucetPackage'},
+    const {'1': 'faucetPackage', '3': 5, '4': 1, '5': 11, '6': '.dvote.types.v1.FaucetPackage', '9': 2, '10': 'faucetPackage', '17': true},
     const {'1': 'delegates', '3': 6, '4': 3, '5': 12, '10': 'delegates'},
+  ],
+  '8': const [
+    const {'1': '_nonce'},
+    const {'1': '_infoURI'},
+    const {'1': '_faucetPackage'},
   ],
 };
 
 /// Descriptor for `SetAccountTx`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setAccountTxDescriptor = $convert.base64Decode('CgxTZXRBY2NvdW50VHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSFAoFbm9uY2UYAiABKA1SBW5vbmNlEhgKB2luZm9VUkkYAyABKAlSB2luZm9VUkkSGAoHYWNjb3VudBgEIAEoDFIHYWNjb3VudBJDCg1mYXVjZXRQYWNrYWdlGAUgASgLMh0uZHZvdGUudHlwZXMudjEuRmF1Y2V0UGFja2FnZVINZmF1Y2V0UGFja2FnZRIcCglkZWxlZ2F0ZXMYBiADKAxSCWRlbGVnYXRlcw==');
+final $typed_data.Uint8List setAccountTxDescriptor = $convert.base64Decode('CgxTZXRBY2NvdW50VHgSLgoGdHh0eXBlGAEgASgOMhYuZHZvdGUudHlwZXMudjEuVHhUeXBlUgZ0eHR5cGUSGQoFbm9uY2UYAiABKA1IAFIFbm9uY2WIAQESHQoHaW5mb1VSSRgDIAEoCUgBUgdpbmZvVVJJiAEBEhgKB2FjY291bnQYBCABKAxSB2FjY291bnQSSAoNZmF1Y2V0UGFja2FnZRgFIAEoCzIdLmR2b3RlLnR5cGVzLnYxLkZhdWNldFBhY2thZ2VIAlINZmF1Y2V0UGFja2FnZYgBARIcCglkZWxlZ2F0ZXMYBiADKAxSCWRlbGVnYXRlc0IICgZfbm9uY2VCCgoIX2luZm9VUklCEAoOX2ZhdWNldFBhY2thZ2U=');
 @$core.Deprecated('Use collectFaucetTxDescriptor instead')
 const CollectFaucetTx$json = const {
   '1': 'CollectFaucetTx',

@@ -28,6 +28,7 @@ export enum TxType {
   COLLECT_FAUCET = 20,
   ADD_KEYKEEPER = 21,
   DELETE_KEYKEEPER = 22,
+  CREATE_ACCOUNT = 23,
   UNRECOGNIZED = -1,
 }
 
@@ -102,6 +103,9 @@ export function txTypeFromJSON(object: any): TxType {
     case 22:
     case "DELETE_KEYKEEPER":
       return TxType.DELETE_KEYKEEPER;
+    case 23:
+    case "CREATE_ACCOUNT":
+      return TxType.CREATE_ACCOUNT;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -157,6 +161,8 @@ export function txTypeToJSON(object: TxType): string {
       return "ADD_KEYKEEPER";
     case TxType.DELETE_KEYKEEPER:
       return "DELETE_KEYKEEPER";
+    case TxType.CREATE_ACCOUNT:
+      return "CREATE_ACCOUNT";
     case TxType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -802,10 +808,10 @@ export interface SetTransactionCostsTx {
 
 export interface SetAccountTx {
   txtype: TxType;
-  nonce: number;
-  infoURI: string;
+  nonce?: number | undefined;
+  infoURI?: string | undefined;
   account: Uint8Array;
-  faucetPackage: FaucetPackage | undefined;
+  faucetPackage?: FaucetPackage | undefined;
   delegates: Uint8Array[];
 }
 
@@ -3106,7 +3112,14 @@ export const SetTransactionCostsTx = {
 };
 
 function createBaseSetAccountTx(): SetAccountTx {
-  return { txtype: 0, nonce: 0, infoURI: "", account: new Uint8Array(), faucetPackage: undefined, delegates: [] };
+  return {
+    txtype: 0,
+    nonce: undefined,
+    infoURI: undefined,
+    account: new Uint8Array(),
+    faucetPackage: undefined,
+    delegates: [],
+  };
 }
 
 export const SetAccountTx = {
@@ -3114,10 +3127,10 @@ export const SetAccountTx = {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
     }
-    if (message.nonce !== 0) {
+    if (message.nonce !== undefined) {
       writer.uint32(16).uint32(message.nonce);
     }
-    if (message.infoURI !== "") {
+    if (message.infoURI !== undefined) {
       writer.uint32(26).string(message.infoURI);
     }
     if (message.account.length !== 0) {
@@ -3168,8 +3181,8 @@ export const SetAccountTx = {
   fromJSON(object: any): SetAccountTx {
     return {
       txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet(object.nonce) ? Number(object.nonce) : 0,
-      infoURI: isSet(object.infoURI) ? String(object.infoURI) : "",
+      nonce: isSet(object.nonce) ? Number(object.nonce) : undefined,
+      infoURI: isSet(object.infoURI) ? String(object.infoURI) : undefined,
       account: isSet(object.account) ? bytesFromBase64(object.account) : new Uint8Array(),
       faucetPackage: isSet(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : undefined,
       delegates: Array.isArray(object?.delegates) ? object.delegates.map((e: any) => bytesFromBase64(e)) : [],
@@ -3196,8 +3209,8 @@ export const SetAccountTx = {
   fromPartial<I extends Exact<DeepPartial<SetAccountTx>, I>>(object: I): SetAccountTx {
     const message = createBaseSetAccountTx();
     message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? 0;
-    message.infoURI = object.infoURI ?? "";
+    message.nonce = object.nonce ?? undefined;
+    message.infoURI = object.infoURI ?? undefined;
     message.account = object.account ?? new Uint8Array();
     message.faucetPackage = (object.faucetPackage !== undefined && object.faucetPackage !== null)
       ? FaucetPackage.fromPartial(object.faucetPackage)

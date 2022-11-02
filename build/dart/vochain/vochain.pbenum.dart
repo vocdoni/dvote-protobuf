@@ -33,6 +33,7 @@ class TxType extends $pb.ProtobufEnum {
   static const TxType COLLECT_FAUCET = TxType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLLECT_FAUCET');
   static const TxType ADD_KEYKEEPER = TxType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_KEYKEEPER');
   static const TxType DELETE_KEYKEEPER = TxType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DELETE_KEYKEEPER');
+  static const TxType CREATE_ACCOUNT = TxType._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CREATE_ACCOUNT');
 
   static const $core.List<TxType> values = <TxType> [
     TX_UNKNOWN,
@@ -58,6 +59,7 @@ class TxType extends $pb.ProtobufEnum {
     COLLECT_FAUCET,
     ADD_KEYKEEPER,
     DELETE_KEYKEEPER,
+    CREATE_ACCOUNT,
   ];
 
   static final $core.Map<$core.int, TxType> _byValue = $pb.ProtobufEnum.initByValue(values);
