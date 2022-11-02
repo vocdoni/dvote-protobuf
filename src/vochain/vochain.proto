@@ -170,6 +170,7 @@ enum TxType {
 	COLLECT_FAUCET = 20;
 	ADD_KEYKEEPER = 21;
 	DELETE_KEYKEEPER = 22;
+	CREATE_ACCOUNT = 23;
 }
 
 message Tx {
@@ -259,10 +260,10 @@ message SetTransactionCostsTx {
 
 message SetAccountTx {
 	TxType txtype = 1;
-	uint32 nonce = 2;
-	string infoURI = 3;
+	optional uint32 nonce = 2;
+	optional string infoURI = 3;
 	bytes account = 4;
-	FaucetPackage faucetPackage = 5;
+	optional FaucetPackage faucetPackage = 5;
 	repeated bytes delegates = 6;
 }
 
