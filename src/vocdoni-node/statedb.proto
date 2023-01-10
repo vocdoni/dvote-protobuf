@@ -22,6 +22,8 @@ message StateDBVote {
     bytes processId = 2;
     // nullifier from Vote.nullifier
     bytes nullifier = 3;
+    // overwriteCount stores the number of times this vote has been overwritten
+    optional uint32 overwriteCount = 4;
 }
 
 message ProcessIdList {
