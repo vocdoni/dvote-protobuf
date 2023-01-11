@@ -431,6 +431,7 @@ message Vote {
 	bytes votePackage = 4;
 	repeated uint32 encryptionKeyIndexes = 5;
 	bytes weight = 6;
+	bytes voterId = 7;
 }
 
 message TendermintHeader {
