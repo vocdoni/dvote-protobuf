@@ -3545,6 +3545,7 @@ class Vote extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votePackage', $pb.PbFieldType.OY, protoName: 'votePackage')
     ..p<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encryptionKeyIndexes', $pb.PbFieldType.KU3, protoName: 'encryptionKeyIndexes')
     ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'voterId', $pb.PbFieldType.OY, protoName: 'voterId')
     ..hasRequiredFields = false
   ;
 
@@ -3556,6 +3557,7 @@ class Vote extends $pb.GeneratedMessage {
     $core.List<$core.int>? votePackage,
     $core.Iterable<$core.int>? encryptionKeyIndexes,
     $core.List<$core.int>? weight,
+    $core.List<$core.int>? voterId,
   }) {
     final _result = create();
     if (height != null) {
@@ -3575,6 +3577,9 @@ class Vote extends $pb.GeneratedMessage {
     }
     if (weight != null) {
       _result.weight = weight;
+    }
+    if (voterId != null) {
+      _result.voterId = voterId;
     }
     return _result;
   }
@@ -3646,6 +3651,15 @@ class Vote extends $pb.GeneratedMessage {
   $core.bool hasWeight() => $_has(5);
   @$pb.TagNumber(6)
   void clearWeight() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.List<$core.int> get voterId => $_getN(6);
+  @$pb.TagNumber(7)
+  set voterId($core.List<$core.int> v) { $_setBytes(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasVoterId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearVoterId() => clearField(7);
 }
 
 class TendermintHeader extends $pb.GeneratedMessage {

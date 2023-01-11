@@ -970,6 +970,7 @@ export interface Vote {
   votePackage: Uint8Array;
   encryptionKeyIndexes: number[];
   weight: Uint8Array;
+  voterId: Uint8Array;
 }
 
 export interface TendermintHeader {
@@ -1129,6 +1130,10 @@ export const VoteEnvelope = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<VoteEnvelope>, I>>(base?: I): VoteEnvelope {
+    return VoteEnvelope.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<VoteEnvelope>, I>>(object: I): VoteEnvelope {
     const message = createBaseVoteEnvelope();
     message.nonce = object.nonce ?? new Uint8Array();
@@ -1172,6 +1177,10 @@ export const Census = {
   toJSON(_: Census): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Census>, I>>(base?: I): Census {
+    return Census.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Census>, I>>(_: I): Census {
@@ -1303,6 +1312,10 @@ export const Proof = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Proof>, I>>(base?: I): Proof {
+    return Proof.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Proof>, I>>(object: I): Proof {
     const message = createBaseProof();
     if (
@@ -1401,6 +1414,10 @@ export const ProofGraviton = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProofGraviton>, I>>(base?: I): ProofGraviton {
+    return ProofGraviton.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProofGraviton>, I>>(object: I): ProofGraviton {
     const message = createBaseProofGraviton();
     message.siblings = object.siblings ?? new Uint8Array();
@@ -1447,6 +1464,10 @@ export const ProofIden3 = {
     message.siblings !== undefined &&
       (obj.siblings = base64FromBytes(message.siblings !== undefined ? message.siblings : new Uint8Array()));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProofIden3>, I>>(base?: I): ProofIden3 {
+    return ProofIden3.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofIden3>, I>>(object: I): ProofIden3 {
@@ -1518,6 +1539,10 @@ export const ProofEthereumStorage = {
       obj.siblings = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProofEthereumStorage>, I>>(base?: I): ProofEthereumStorage {
+    return ProofEthereumStorage.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofEthereumStorage>, I>>(object: I): ProofEthereumStorage {
@@ -1617,6 +1642,10 @@ export const ProofEthereumAccount = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProofEthereumAccount>, I>>(base?: I): ProofEthereumAccount {
+    return ProofEthereumAccount.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProofEthereumAccount>, I>>(object: I): ProofEthereumAccount {
     const message = createBaseProofEthereumAccount();
     message.nonce = object.nonce ?? new Uint8Array();
@@ -1678,6 +1707,10 @@ export const ProofMinime = {
     message.proofNextBlock !== undefined &&
       (obj.proofNextBlock = message.proofNextBlock ? ProofEthereumStorage.toJSON(message.proofNextBlock) : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProofMinime>, I>>(base?: I): ProofMinime {
+    return ProofMinime.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofMinime>, I>>(object: I): ProofMinime {
@@ -1751,6 +1784,10 @@ export const ProofCA = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProofCA>, I>>(base?: I): ProofCA {
+    return ProofCA.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProofCA>, I>>(object: I): ProofCA {
     const message = createBaseProofCA();
     message.type = object.type ?? 0;
@@ -1812,6 +1849,10 @@ export const CAbundle = {
     message.address !== undefined &&
       (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<CAbundle>, I>>(base?: I): CAbundle {
+    return CAbundle.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<CAbundle>, I>>(object: I): CAbundle {
@@ -1888,6 +1929,10 @@ export const ProofArbo = {
       (obj.value = base64FromBytes(message.value !== undefined ? message.value : new Uint8Array()));
     message.keyType !== undefined && (obj.keyType = proofArbo_KeyTypeToJSON(message.keyType));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProofArbo>, I>>(base?: I): ProofArbo {
+    return ProofArbo.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProofArbo>, I>>(object: I): ProofArbo {
@@ -1991,6 +2036,10 @@ export const ProofZkSNARK = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProofZkSNARK>, I>>(base?: I): ProofZkSNARK {
+    return ProofZkSNARK.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProofZkSNARK>, I>>(object: I): ProofZkSNARK {
     const message = createBaseProofZkSNARK();
     message.circuitParametersIndex = object.circuitParametersIndex ?? 0;
@@ -2082,6 +2131,10 @@ export const Account = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Account>, I>>(base?: I): Account {
+    return Account.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Account>, I>>(object: I): Account {
     const message = createBaseAccount();
     message.balance = object.balance ?? 0;
@@ -2142,6 +2195,10 @@ export const Treasurer = {
       (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Treasurer>, I>>(base?: I): Treasurer {
+    return Treasurer.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Treasurer>, I>>(object: I): Treasurer {
@@ -2306,6 +2363,10 @@ export const Tx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Tx>, I>>(base?: I): Tx {
+    return Tx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Tx>, I>>(object: I): Tx {
     const message = createBaseTx();
     if (object.payload?.$case === "vote" && object.payload?.vote !== undefined && object.payload?.vote !== null) {
@@ -2441,6 +2502,10 @@ export const SignedTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<SignedTx>, I>>(base?: I): SignedTx {
+    return SignedTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<SignedTx>, I>>(object: I): SignedTx {
     const message = createBaseSignedTx();
     message.tx = object.tx ?? new Uint8Array();
@@ -2505,6 +2570,10 @@ export const NewProcessTx = {
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.process !== undefined && (obj.process = message.process ? Process.toJSON(message.process) : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<NewProcessTx>, I>>(base?: I): NewProcessTx {
+    return NewProcessTx.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<NewProcessTx>, I>>(object: I): NewProcessTx {
@@ -2636,6 +2705,10 @@ export const SetProcessTx = {
     message.results !== undefined &&
       (obj.results = message.results ? ProcessResult.toJSON(message.results) : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetProcessTx>, I>>(base?: I): SetProcessTx {
+    return SetProcessTx.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<SetProcessTx>, I>>(object: I): SetProcessTx {
@@ -2780,6 +2853,10 @@ export const AdminTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<AdminTx>, I>>(base?: I): AdminTx {
+    return AdminTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<AdminTx>, I>>(object: I): AdminTx {
     const message = createBaseAdminTx();
     message.txtype = object.txtype ?? 0;
@@ -2871,6 +2948,10 @@ export const RegisterKeyTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<RegisterKeyTx>, I>>(base?: I): RegisterKeyTx {
+    return RegisterKeyTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<RegisterKeyTx>, I>>(object: I): RegisterKeyTx {
     const message = createBaseRegisterKeyTx();
     message.nonce = object.nonce ?? 0;
@@ -2946,6 +3027,10 @@ export const MintTokensTx = {
     message.to !== undefined && (obj.to = base64FromBytes(message.to !== undefined ? message.to : new Uint8Array()));
     message.value !== undefined && (obj.value = Math.round(message.value));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MintTokensTx>, I>>(base?: I): MintTokensTx {
+    return MintTokensTx.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MintTokensTx>, I>>(object: I): MintTokensTx {
@@ -3033,6 +3118,10 @@ export const SendTokensTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<SendTokensTx>, I>>(base?: I): SendTokensTx {
+    return SendTokensTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<SendTokensTx>, I>>(object: I): SendTokensTx {
     const message = createBaseSendTokensTx();
     message.txtype = object.txtype ?? 0;
@@ -3100,6 +3189,10 @@ export const SetTransactionCostsTx = {
     message.nonce !== undefined && (obj.nonce = Math.round(message.nonce));
     message.value !== undefined && (obj.value = Math.round(message.value));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetTransactionCostsTx>, I>>(base?: I): SetTransactionCostsTx {
+    return SetTransactionCostsTx.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<SetTransactionCostsTx>, I>>(object: I): SetTransactionCostsTx {
@@ -3206,6 +3299,10 @@ export const SetAccountTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<SetAccountTx>, I>>(base?: I): SetAccountTx {
+    return SetAccountTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<SetAccountTx>, I>>(object: I): SetAccountTx {
     const message = createBaseSetAccountTx();
     message.txtype = object.txtype ?? 0;
@@ -3279,6 +3376,10 @@ export const CollectFaucetTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<CollectFaucetTx>, I>>(base?: I): CollectFaucetTx {
+    return CollectFaucetTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<CollectFaucetTx>, I>>(object: I): CollectFaucetTx {
     const message = createBaseCollectFaucetTx();
     message.txType = object.txType ?? 0;
@@ -3348,6 +3449,10 @@ export const FaucetPayload = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<FaucetPayload>, I>>(base?: I): FaucetPayload {
+    return FaucetPayload.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<FaucetPayload>, I>>(object: I): FaucetPayload {
     const message = createBaseFaucetPayload();
     message.identifier = object.identifier ?? 0;
@@ -3407,6 +3512,10 @@ export const FaucetPackage = {
     message.signature !== undefined &&
       (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<FaucetPackage>, I>>(base?: I): FaucetPackage {
+    return FaucetPackage.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<FaucetPackage>, I>>(object: I): FaucetPackage {
@@ -3474,6 +3583,10 @@ export const SetKeykeeperTx = {
     message.keykeeper !== undefined &&
       (obj.keykeeper = base64FromBytes(message.keykeeper !== undefined ? message.keykeeper : new Uint8Array()));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetKeykeeperTx>, I>>(base?: I): SetKeykeeperTx {
+    return SetKeykeeperTx.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<SetKeykeeperTx>, I>>(object: I): SetKeykeeperTx {
@@ -3839,6 +3952,10 @@ export const Process = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Process>, I>>(base?: I): Process {
+    return Process.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Process>, I>>(object: I): Process {
     const message = createBaseProcess();
     message.processId = object.processId ?? new Uint8Array();
@@ -3956,6 +4073,10 @@ export const EnvelopeType = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EnvelopeType>, I>>(base?: I): EnvelopeType {
+    return EnvelopeType.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EnvelopeType>, I>>(object: I): EnvelopeType {
     const message = createBaseEnvelopeType();
     message.serial = object.serial ?? false;
@@ -4039,6 +4160,10 @@ export const ProcessMode = {
     message.encryptedMetaData !== undefined && (obj.encryptedMetaData = message.encryptedMetaData);
     message.preRegister !== undefined && (obj.preRegister = message.preRegister);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProcessMode>, I>>(base?: I): ProcessMode {
+    return ProcessMode.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProcessMode>, I>>(object: I): ProcessMode {
@@ -4126,6 +4251,10 @@ export const ProcessVoteOptions = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessVoteOptions>, I>>(base?: I): ProcessVoteOptions {
+    return ProcessVoteOptions.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessVoteOptions>, I>>(object: I): ProcessVoteOptions {
     const message = createBaseProcessVoteOptions();
     message.maxCount = object.maxCount ?? 0;
@@ -4181,6 +4310,10 @@ export const OracleList = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<OracleList>, I>>(base?: I): OracleList {
+    return OracleList.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<OracleList>, I>>(object: I): OracleList {
     const message = createBaseOracleList();
     message.oracles = object.oracles?.map((e) => e) || [];
@@ -4232,6 +4365,10 @@ export const ValidatorList = {
       obj.validators = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ValidatorList>, I>>(base?: I): ValidatorList {
+    return ValidatorList.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ValidatorList>, I>>(object: I): ValidatorList {
@@ -4309,6 +4446,10 @@ export const Validator = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Validator>, I>>(base?: I): Validator {
+    return Validator.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Validator>, I>>(object: I): Validator {
     const message = createBaseValidator();
     message.address = object.address ?? new Uint8Array();
@@ -4327,6 +4468,7 @@ function createBaseVote(): Vote {
     votePackage: new Uint8Array(),
     encryptionKeyIndexes: [],
     weight: new Uint8Array(),
+    voterId: new Uint8Array(),
   };
 }
 
@@ -4351,6 +4493,9 @@ export const Vote = {
     writer.ldelim();
     if (message.weight.length !== 0) {
       writer.uint32(50).bytes(message.weight);
+    }
+    if (message.voterId.length !== 0) {
+      writer.uint32(58).bytes(message.voterId);
     }
     return writer;
   },
@@ -4387,6 +4532,9 @@ export const Vote = {
         case 6:
           message.weight = reader.bytes();
           break;
+        case 7:
+          message.voterId = reader.bytes();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -4405,6 +4553,7 @@ export const Vote = {
         ? object.encryptionKeyIndexes.map((e: any) => Number(e))
         : [],
       weight: isSet(object.weight) ? bytesFromBase64(object.weight) : new Uint8Array(),
+      voterId: isSet(object.voterId) ? bytesFromBase64(object.voterId) : new Uint8Array(),
     };
   },
 
@@ -4424,7 +4573,13 @@ export const Vote = {
     }
     message.weight !== undefined &&
       (obj.weight = base64FromBytes(message.weight !== undefined ? message.weight : new Uint8Array()));
+    message.voterId !== undefined &&
+      (obj.voterId = base64FromBytes(message.voterId !== undefined ? message.voterId : new Uint8Array()));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Vote>, I>>(base?: I): Vote {
+    return Vote.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Vote>, I>>(object: I): Vote {
@@ -4435,6 +4590,7 @@ export const Vote = {
     message.votePackage = object.votePackage ?? new Uint8Array();
     message.encryptionKeyIndexes = object.encryptionKeyIndexes?.map((e) => e) || [];
     message.weight = object.weight ?? new Uint8Array();
+    message.voterId = object.voterId ?? new Uint8Array();
     return message;
   },
 };
@@ -4617,6 +4773,10 @@ export const TendermintHeader = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<TendermintHeader>, I>>(base?: I): TendermintHeader {
+    return TendermintHeader.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<TendermintHeader>, I>>(object: I): TendermintHeader {
     const message = createBaseTendermintHeader();
     message.chainId = object.chainId ?? "";
@@ -4718,6 +4878,10 @@ export const ProcessResult = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessResult>, I>>(base?: I): ProcessResult {
+    return ProcessResult.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessResult>, I>>(object: I): ProcessResult {
     const message = createBaseProcessResult();
     message.votes = object.votes?.map((e) => QuestionResult.fromPartial(e)) || [];
@@ -4773,6 +4937,10 @@ export const QuestionResult = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<QuestionResult>, I>>(base?: I): QuestionResult {
+    return QuestionResult.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<QuestionResult>, I>>(object: I): QuestionResult {
     const message = createBaseQuestionResult();
     message.question = object.question?.map((e) => e) || [];
@@ -4826,6 +4994,10 @@ export const ProcessEndingList = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessEndingList>, I>>(base?: I): ProcessEndingList {
+    return ProcessEndingList.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessEndingList>, I>>(object: I): ProcessEndingList {
     const message = createBaseProcessEndingList();
     message.processList = object.processList?.map((e) => e) || [];
@@ -4877,6 +5049,10 @@ export const StoredKeys = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<StoredKeys>, I>>(base?: I): StoredKeys {
+    return StoredKeys.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<StoredKeys>, I>>(object: I): StoredKeys {
     const message = createBaseStoredKeys();
     message.pids = object.pids?.map((e) => e) || [];
@@ -4887,7 +5063,7 @@ export const StoredKeys = {
 declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
-var globalThis: any = (() => {
+var tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
@@ -4904,10 +5080,10 @@ var globalThis: any = (() => {
 })();
 
 function bytesFromBase64(b64: string): Uint8Array {
-  if (globalThis.Buffer) {
-    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  if (tsProtoGlobalThis.Buffer) {
+    return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = globalThis.atob(b64);
+    const bin = tsProtoGlobalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -4917,14 +5093,14 @@ function bytesFromBase64(b64: string): Uint8Array {
 }
 
 function base64FromBytes(arr: Uint8Array): string {
-  if (globalThis.Buffer) {
-    return globalThis.Buffer.from(arr).toString("base64");
+  if (tsProtoGlobalThis.Buffer) {
+    return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin: string[] = [];
     arr.forEach((byte) => {
       bin.push(String.fromCharCode(byte));
     });
-    return globalThis.btoa(bin.join(""));
+    return tsProtoGlobalThis.btoa(bin.join(""));
   }
 }
 
@@ -4942,7 +5118,7 @@ export type Exact<P, I extends P> = P extends Builtin ? P
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

@@ -98,6 +98,10 @@ export const AccountsStore = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<AccountsStore>, I>>(base?: I): AccountsStore {
+    return AccountsStore.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<AccountsStore>, I>>(object: I): AccountsStore {
     const message = createBaseAccountsStore();
     message.items = object.items?.map((e) => Account.fromPartial(e)) || [];
@@ -200,6 +204,10 @@ export const Account = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Account>, I>>(base?: I): Account {
+    return Account.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Account>, I>>(object: I): Account {
     const message = createBaseAccount();
     message.name = object.name ?? "";
@@ -275,6 +283,10 @@ export const Account_AppVoter = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Account_AppVoter>, I>>(base?: I): Account_AppVoter {
+    return Account_AppVoter.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Account_AppVoter>, I>>(object: I): Account_AppVoter {
     const message = createBaseAccount_AppVoter();
     message.appAnalyticsID = object.appAnalyticsID ?? "";
@@ -321,6 +333,10 @@ export const Account_WebEntity = {
     const obj: any = {};
     message.webAnalyticsID !== undefined && (obj.webAnalyticsID = message.webAnalyticsID);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Account_WebEntity>, I>>(base?: I): Account_WebEntity {
+    return Account_WebEntity.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Account_WebEntity>, I>>(object: I): Account_WebEntity {
@@ -383,6 +399,10 @@ export const Account_Extra = {
     message.content?.$case === "webEntity" &&
       (obj.webEntity = message.content?.webEntity ? Account_WebEntity.toJSON(message.content?.webEntity) : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Account_Extra>, I>>(base?: I): Account_Extra {
+    return Account_Extra.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Account_Extra>, I>>(object: I): Account_Extra {
@@ -450,6 +470,10 @@ export const Account_MetaEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Account_MetaEntry>, I>>(base?: I): Account_MetaEntry {
+    return Account_MetaEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Account_MetaEntry>, I>>(object: I): Account_MetaEntry {

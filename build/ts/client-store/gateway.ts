@@ -141,6 +141,10 @@ export const BootNodeGateways = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<BootNodeGateways>, I>>(base?: I): BootNodeGateways {
+    return BootNodeGateways.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways>, I>>(object: I): BootNodeGateways {
     const message = createBaseBootNodeGateways();
     message.homestead = (object.homestead !== undefined && object.homestead !== null)
@@ -230,6 +234,10 @@ export const BootNodeGateways_NetworkNodes = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes>, I>>(base?: I): BootNodeGateways_NetworkNodes {
+    return BootNodeGateways_NetworkNodes.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes>, I>>(
     object: I,
   ): BootNodeGateways_NetworkNodes {
@@ -302,6 +310,12 @@ export const BootNodeGateways_NetworkNodes_DVote = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_DVote>, I>>(
+    base?: I,
+  ): BootNodeGateways_NetworkNodes_DVote {
+    return BootNodeGateways_NetworkNodes_DVote.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_DVote>, I>>(
     object: I,
   ): BootNodeGateways_NetworkNodes_DVote {
@@ -351,6 +365,12 @@ export const BootNodeGateways_NetworkNodes_Web3 = {
     const obj: any = {};
     message.uri !== undefined && (obj.uri = message.uri);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_Web3>, I>>(
+    base?: I,
+  ): BootNodeGateways_NetworkNodes_Web3 {
+    return BootNodeGateways_NetworkNodes_Web3.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways_NetworkNodes_Web3>, I>>(
@@ -407,6 +427,10 @@ export const BootNodeGateways_MetaEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<BootNodeGateways_MetaEntry>, I>>(base?: I): BootNodeGateways_MetaEntry {
+    return BootNodeGateways_MetaEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<BootNodeGateways_MetaEntry>, I>>(object: I): BootNodeGateways_MetaEntry {

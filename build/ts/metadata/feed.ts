@@ -97,6 +97,10 @@ export const FeedStore = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<FeedStore>, I>>(base?: I): FeedStore {
+    return FeedStore.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<FeedStore>, I>>(object: I): FeedStore {
     const message = createBaseFeedStore();
     message.items = object.items?.map((e) => Feed.fromPartial(e)) || [];
@@ -246,6 +250,10 @@ export const Feed = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Feed>, I>>(base?: I): Feed {
+    return Feed.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Feed>, I>>(object: I): Feed {
     const message = createBaseFeed();
     message.version = object.version ?? "";
@@ -312,6 +320,10 @@ export const Feed_MetaEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Feed_MetaEntry>, I>>(base?: I): Feed_MetaEntry {
+    return Feed_MetaEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<Feed_MetaEntry>, I>>(object: I): Feed_MetaEntry {
@@ -460,6 +472,10 @@ export const FeedPost = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<FeedPost>, I>>(base?: I): FeedPost {
+    return FeedPost.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<FeedPost>, I>>(object: I): FeedPost {
     const message = createBaseFeedPost();
     message.id = object.id ?? "";
@@ -524,6 +540,10 @@ export const FeedPost_Author = {
     message.name !== undefined && (obj.name = message.name);
     message.url !== undefined && (obj.url = message.url);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<FeedPost_Author>, I>>(base?: I): FeedPost_Author {
+    return FeedPost_Author.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<FeedPost_Author>, I>>(object: I): FeedPost_Author {

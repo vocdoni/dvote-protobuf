@@ -121,6 +121,10 @@ export const ProcessMetadataStore = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadataStore>, I>>(base?: I): ProcessMetadataStore {
+    return ProcessMetadataStore.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadataStore>, I>>(object: I): ProcessMetadataStore {
     const message = createBaseProcessMetadataStore();
     message.items = object.items?.map((e) => ProcessMetadata.fromPartial(e)) || [];
@@ -277,6 +281,10 @@ export const ProcessMetadata = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata>, I>>(base?: I): ProcessMetadata {
+    return ProcessMetadata.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata>, I>>(object: I): ProcessMetadata {
     const message = createBaseProcessMetadata();
     message.version = object.version ?? "";
@@ -362,6 +370,10 @@ export const ProcessMetadata_TitleEntry = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata_TitleEntry>, I>>(base?: I): ProcessMetadata_TitleEntry {
+    return ProcessMetadata_TitleEntry.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_TitleEntry>, I>>(object: I): ProcessMetadata_TitleEntry {
     const message = createBaseProcessMetadata_TitleEntry();
     message.key = object.key ?? "";
@@ -415,6 +427,12 @@ export const ProcessMetadata_DescriptionEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProcessMetadata_DescriptionEntry>, I>>(
+    base?: I,
+  ): ProcessMetadata_DescriptionEntry {
+    return ProcessMetadata_DescriptionEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_DescriptionEntry>, I>>(
@@ -472,6 +490,10 @@ export const ProcessMetadata_MediaEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProcessMetadata_MediaEntry>, I>>(base?: I): ProcessMetadata_MediaEntry {
+    return ProcessMetadata_MediaEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_MediaEntry>, I>>(object: I): ProcessMetadata_MediaEntry {
@@ -572,6 +594,10 @@ export const ProcessMetadata_Question = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata_Question>, I>>(base?: I): ProcessMetadata_Question {
+    return ProcessMetadata_Question.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question>, I>>(object: I): ProcessMetadata_Question {
     const message = createBaseProcessMetadata_Question();
     message.title = Object.entries(object.title ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -641,6 +667,12 @@ export const ProcessMetadata_Question_TitleEntry = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata_Question_TitleEntry>, I>>(
+    base?: I,
+  ): ProcessMetadata_Question_TitleEntry {
+    return ProcessMetadata_Question_TitleEntry.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question_TitleEntry>, I>>(
     object: I,
   ): ProcessMetadata_Question_TitleEntry {
@@ -696,6 +728,12 @@ export const ProcessMetadata_Question_DescriptionEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProcessMetadata_Question_DescriptionEntry>, I>>(
+    base?: I,
+  ): ProcessMetadata_Question_DescriptionEntry {
+    return ProcessMetadata_Question_DescriptionEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question_DescriptionEntry>, I>>(
@@ -772,6 +810,12 @@ export const ProcessMetadata_Question_VoteOption = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata_Question_VoteOption>, I>>(
+    base?: I,
+  ): ProcessMetadata_Question_VoteOption {
+    return ProcessMetadata_Question_VoteOption.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question_VoteOption>, I>>(
     object: I,
   ): ProcessMetadata_Question_VoteOption {
@@ -837,6 +881,12 @@ export const ProcessMetadata_Question_VoteOption_TitleEntry = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata_Question_VoteOption_TitleEntry>, I>>(
+    base?: I,
+  ): ProcessMetadata_Question_VoteOption_TitleEntry {
+    return ProcessMetadata_Question_VoteOption_TitleEntry.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Question_VoteOption_TitleEntry>, I>>(
     object: I,
   ): ProcessMetadata_Question_VoteOption_TitleEntry {
@@ -897,6 +947,10 @@ export const ProcessMetadata_Results = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ProcessMetadata_Results>, I>>(base?: I): ProcessMetadata_Results {
+    return ProcessMetadata_Results.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_Results>, I>>(object: I): ProcessMetadata_Results {
     const message = createBaseProcessMetadata_Results();
     message.aggregation = object.aggregation ?? "";
@@ -950,6 +1004,10 @@ export const ProcessMetadata_MetaEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProcessMetadata_MetaEntry>, I>>(base?: I): ProcessMetadata_MetaEntry {
+    return ProcessMetadata_MetaEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ProcessMetadata_MetaEntry>, I>>(object: I): ProcessMetadata_MetaEntry {

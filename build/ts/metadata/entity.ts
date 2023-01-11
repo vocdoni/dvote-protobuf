@@ -156,6 +156,10 @@ export const EntityMetadataStore = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadataStore>, I>>(base?: I): EntityMetadataStore {
+    return EntityMetadataStore.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadataStore>, I>>(object: I): EntityMetadataStore {
     const message = createBaseEntityMetadataStore();
     message.items = object.items?.map((e) => EntityMetadata.fromPartial(e)) || [];
@@ -407,6 +411,10 @@ export const EntityMetadata = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadata>, I>>(base?: I): EntityMetadata {
+    return EntityMetadata.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadata>, I>>(object: I): EntityMetadata {
     const message = createBaseEntityMetadata();
     message.version = object.version ?? "";
@@ -502,6 +510,10 @@ export const EntityMetadata_NameEntry = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadata_NameEntry>, I>>(base?: I): EntityMetadata_NameEntry {
+    return EntityMetadata_NameEntry.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_NameEntry>, I>>(object: I): EntityMetadata_NameEntry {
     const message = createBaseEntityMetadata_NameEntry();
     message.key = object.key ?? "";
@@ -555,6 +567,10 @@ export const EntityMetadata_DescriptionEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EntityMetadata_DescriptionEntry>, I>>(base?: I): EntityMetadata_DescriptionEntry {
+    return EntityMetadata_DescriptionEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_DescriptionEntry>, I>>(
@@ -625,6 +641,10 @@ export const EntityMetadata_VotingProcesses = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadata_VotingProcesses>, I>>(base?: I): EntityMetadata_VotingProcesses {
+    return EntityMetadata_VotingProcesses.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_VotingProcesses>, I>>(
     object: I,
   ): EntityMetadata_VotingProcesses {
@@ -680,6 +700,10 @@ export const EntityMetadata_NewsFeedEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EntityMetadata_NewsFeedEntry>, I>>(base?: I): EntityMetadata_NewsFeedEntry {
+    return EntityMetadata_NewsFeedEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_NewsFeedEntry>, I>>(object: I): EntityMetadata_NewsFeedEntry {
@@ -738,6 +762,10 @@ export const EntityMetadata_Media = {
     message.avatar !== undefined && (obj.avatar = message.avatar);
     message.header !== undefined && (obj.header = message.header);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EntityMetadata_Media>, I>>(base?: I): EntityMetadata_Media {
+    return EntityMetadata_Media.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_Media>, I>>(object: I): EntityMetadata_Media {
@@ -849,6 +877,10 @@ export const EntityMetadata_Action = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadata_Action>, I>>(base?: I): EntityMetadata_Action {
+    return EntityMetadata_Action.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action>, I>>(object: I): EntityMetadata_Action {
     const message = createBaseEntityMetadata_Action();
     message.type = object.type ?? "";
@@ -911,6 +943,10 @@ export const EntityMetadata_Action_NameEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EntityMetadata_Action_NameEntry>, I>>(base?: I): EntityMetadata_Action_NameEntry {
+    return EntityMetadata_Action_NameEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_NameEntry>, I>>(
@@ -1011,6 +1047,12 @@ export const EntityMetadata_Action_ImageSource = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource>, I>>(
+    base?: I,
+  ): EntityMetadata_Action_ImageSource {
+    return EntityMetadata_Action_ImageSource.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource>, I>>(
     object: I,
   ): EntityMetadata_Action_ImageSource {
@@ -1079,6 +1121,12 @@ export const EntityMetadata_Action_ImageSource_CaptionEntry = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource_CaptionEntry>, I>>(
+    base?: I,
+  ): EntityMetadata_Action_ImageSource_CaptionEntry {
+    return EntityMetadata_Action_ImageSource_CaptionEntry.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_Action_ImageSource_CaptionEntry>, I>>(
     object: I,
   ): EntityMetadata_Action_ImageSource_CaptionEntry {
@@ -1134,6 +1182,10 @@ export const EntityMetadata_MetaEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EntityMetadata_MetaEntry>, I>>(base?: I): EntityMetadata_MetaEntry {
+    return EntityMetadata_MetaEntry.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityMetadata_MetaEntry>, I>>(object: I): EntityMetadata_MetaEntry {
@@ -1196,6 +1248,10 @@ export const EntityReference = {
       obj.entryPoints = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EntityReference>, I>>(base?: I): EntityReference {
+    return EntityReference.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<EntityReference>, I>>(object: I): EntityReference {
