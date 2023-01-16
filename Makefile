@@ -61,7 +61,7 @@ init: protoc protoc-dart-plugin $(PROTOC_TS_PLUGIN) protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
-	rm -Rf build include
+	rm -Rf build include dist
 
 ## :
 
@@ -102,9 +102,11 @@ js: protoc $(PROTOC_TS_PLUGIN) build/ts
 ts: js
 
 build/ts: $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES) $(METADATA_SOURCES)
+	mkdir -p build
+	cp -r typescript build/ts
 	mkdir -p $@
 	for f in $^ ; do \
-		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=esModuleInterop=true --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
+		$(PROTOC) -I=$(PWD)/src --plugin=$(PROTOC_TS_PLUGIN) --experimental_allow_proto3_optional --ts_proto_opt=esModuleInterop=true --ts_proto_opt=exportCommonSymbols=false --ts_proto_opt=oneof=unions --ts_proto_out=$@ $(PWD)/$$f ; \
 	done
 	@touch $@
 	npm i --no-package-lock
