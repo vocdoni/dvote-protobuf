@@ -1,11 +1,10 @@
 import {
-    SignedTx,
-    Tx,
-    VoteEnvelope,
     Proof,
     ProofArbo,
-    ProofArbo_Type,
-} from "../build/ts/vochain/vochain"
+    ProofArbo_Type, SignedTx,
+    Tx,
+    VoteEnvelope
+} from "@vocdoni/proto/vochain"
 import { Reader } from "protobufjs"
 
 const dummyArray = new Uint8Array([100, 150, 200, 250])
@@ -25,11 +24,7 @@ console.log(recoveredSignedTx)
 let recoveredTx = Tx.decode(Reader.create(recoveredSignedTx.tx))
 console.log(recoveredTx)
 
-let recoveredEnvelope: VoteEnvelope
-switch (recoveredTx.payload.$case) {
+switch (recoveredTx.payload?.$case) {
     case "vote":
-        recoveredEnvelope = recoveredTx.payload.vote
+        console.log(recoveredTx.payload.vote)
 }
-
-console.log(recoveredEnvelope)
-

@@ -45,7 +45,7 @@ Then, run `make all` to build all the targets
 - `common`
   - Types shared across many components
 - `metadata`
-  - Human readable data for organizations, governance processes, news feeds, etc.  - Human readable data for organizations, governance processes, news feeds, etc.
+  - Human readable data for organizations, governance processes, news feeds, etc.
 - `vochain`
   - Specific data types for the Vocdoni Vochain
 
@@ -63,4 +63,50 @@ Import the files from:
 
 ## Usage
 
-See [example/index.ts](./example/index.ts) for a TypeScript usage example.
+### Typescript/Nodejs
+
+You can either import things from the main package or from the individual exports
+
+~~~js
+const { Vochain } = require('@vocdoni/proto')
+// this is the same as
+const Vochain = require('@vocdoni/proto/vochain')
+~~~
+
+Using the individual exports is useful if you want to import only a specific part
+and not the entire bundle. It's also less boilerplate, since you can directly access
+the types without having to use the required namespace:
+
+~~~js
+import { TxType } from '@vocdoni/proto/vochain'
+// this is the same as
+
+import { Vochain } from '@vocdoni/proto'
+const { TxType } = Vochain
+~~~
+
+> Note: required namespaces can be `Vochain`, `Metadata` and `ClientStore`.
+> Named exports are dashed: `vochain`, `metadata` and `client-store`.
+
+## License
+
+This SDK is licensed under the [GNU Affero General Public License v3.0][license].
+
+    Vocdoni Proto - Protobuf definitions for messages and services used by the
+    Vocdoni open stack.
+    Copyright (C) 2022 Vocdoni Roots MCU
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+[license]: ./LICENSE
