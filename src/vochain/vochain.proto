@@ -424,16 +424,6 @@ message Validator {
 	string name = 4;
 }
 
-message Vote {
-	uint32 height = 1;
-	bytes nullifier = 2;
-	bytes processId = 3;
-	bytes votePackage = 4;
-	repeated uint32 encryptionKeyIndexes = 5;
-	bytes weight = 6;
-	bytes voterId = 7;
-}
-
 message TendermintHeader {
 	// basic block info
 	string chain_id = 2 ;
