@@ -674,22 +674,6 @@ const Validator$json = const {
 
 /// Descriptor for `Validator`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List validatorDescriptor = $convert.base64Decode('CglWYWxpZGF0b3ISGAoHYWRkcmVzcxgBIAEoDFIHYWRkcmVzcxIWCgZwdWJLZXkYAiABKAxSBnB1YktleRIUCgVwb3dlchgDIAEoBFIFcG93ZXISEgoEbmFtZRgEIAEoCVIEbmFtZQ==');
-@$core.Deprecated('Use voteDescriptor instead')
-const Vote$json = const {
-  '1': 'Vote',
-  '2': const [
-    const {'1': 'height', '3': 1, '4': 1, '5': 13, '10': 'height'},
-    const {'1': 'nullifier', '3': 2, '4': 1, '5': 12, '10': 'nullifier'},
-    const {'1': 'processId', '3': 3, '4': 1, '5': 12, '10': 'processId'},
-    const {'1': 'votePackage', '3': 4, '4': 1, '5': 12, '10': 'votePackage'},
-    const {'1': 'encryptionKeyIndexes', '3': 5, '4': 3, '5': 13, '10': 'encryptionKeyIndexes'},
-    const {'1': 'weight', '3': 6, '4': 1, '5': 12, '10': 'weight'},
-    const {'1': 'voterId', '3': 7, '4': 1, '5': 12, '10': 'voterId'},
-  ],
-};
-
-/// Descriptor for `Vote`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List voteDescriptor = $convert.base64Decode('CgRWb3RlEhYKBmhlaWdodBgBIAEoDVIGaGVpZ2h0EhwKCW51bGxpZmllchgCIAEoDFIJbnVsbGlmaWVyEhwKCXByb2Nlc3NJZBgDIAEoDFIJcHJvY2Vzc0lkEiAKC3ZvdGVQYWNrYWdlGAQgASgMUgt2b3RlUGFja2FnZRIyChRlbmNyeXB0aW9uS2V5SW5kZXhlcxgFIAMoDVIUZW5jcnlwdGlvbktleUluZGV4ZXMSFgoGd2VpZ2h0GAYgASgMUgZ3ZWlnaHQSGAoHdm90ZXJJZBgHIAEoDFIHdm90ZXJJZA==');
 @$core.Deprecated('Use tendermintHeaderDescriptor instead')
 const TendermintHeader$json = const {
   '1': 'TendermintHeader',
