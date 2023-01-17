@@ -18,12 +18,14 @@ message StateDBProcess {
 message StateDBVote {
     // hash of the protobuf-marshalled Vote
     bytes voteHash = 1;
-    // processId from Vote.processId
-    bytes processId = 2;
-    // nullifier from Vote.nullifier
+    // nullifier identifies the vote
     bytes nullifier = 3;
+    // votePackage contains the choices for the vote
+    bytes votePackage = 4;
+    // weight of the vote
+    bytes Weight = 5;
     // overwriteCount stores the number of times this vote has been overwritten
-    optional uint32 overwriteCount = 4;
+    optional uint32 overwriteCount = 6;
 }
 
 message ProcessIdList {
