@@ -139,6 +139,7 @@ message Account {
 	string infoURI = 3;
 	repeated bytes delegateAddrs = 4;
 	uint32 processIndex = 5;
+	repeated bytes zKey = 6; // zkSNARK friendly key
 }
 
 message Treasurer {
