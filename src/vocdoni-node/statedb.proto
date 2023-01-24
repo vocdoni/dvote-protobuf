@@ -26,6 +26,8 @@ message StateDBVote {
     bytes Weight = 5;
     // overwriteCount stores the number of times this vote has been overwritten
     optional uint32 overwriteCount = 6;
+    // encryptionKeyIndexes stores the indexes of the encryption keys used to encrypt the vote
+    repeated uint32 encryptionKeyIndexes = 7;
 }
 
 message ProcessIdList {
