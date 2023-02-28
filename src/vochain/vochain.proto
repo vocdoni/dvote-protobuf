@@ -422,6 +422,7 @@ message Validator {
 	bytes pubKey = 2;
 	uint64 power = 3;
 	string name = 4;
+	uint32 keyIndex = 5;
 }
 
 message TendermintHeader {
