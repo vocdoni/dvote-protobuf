@@ -669,11 +669,12 @@ const Validator$json = const {
     const {'1': 'pubKey', '3': 2, '4': 1, '5': 12, '10': 'pubKey'},
     const {'1': 'power', '3': 3, '4': 1, '5': 4, '10': 'power'},
     const {'1': 'name', '3': 4, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'keyIndex', '3': 5, '4': 1, '5': 13, '10': 'keyIndex'},
   ],
 };
 
 /// Descriptor for `Validator`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List validatorDescriptor = $convert.base64Decode('CglWYWxpZGF0b3ISGAoHYWRkcmVzcxgBIAEoDFIHYWRkcmVzcxIWCgZwdWJLZXkYAiABKAxSBnB1YktleRIUCgVwb3dlchgDIAEoBFIFcG93ZXISEgoEbmFtZRgEIAEoCVIEbmFtZQ==');
+final $typed_data.Uint8List validatorDescriptor = $convert.base64Decode('CglWYWxpZGF0b3ISGAoHYWRkcmVzcxgBIAEoDFIHYWRkcmVzcxIWCgZwdWJLZXkYAiABKAxSBnB1YktleRIUCgVwb3dlchgDIAEoBFIFcG93ZXISEgoEbmFtZRgEIAEoCVIEbmFtZRIaCghrZXlJbmRleBgFIAEoDVIIa2V5SW5kZXg=');
 @$core.Deprecated('Use tendermintHeaderDescriptor instead')
 const TendermintHeader$json = const {
   '1': 'TendermintHeader',

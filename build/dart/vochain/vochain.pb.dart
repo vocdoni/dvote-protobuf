@@ -3454,6 +3454,7 @@ class Validator extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pubKey', $pb.PbFieldType.OY, protoName: 'pubKey')
     ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'power', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyIndex', $pb.PbFieldType.OU3, protoName: 'keyIndex')
     ..hasRequiredFields = false
   ;
 
@@ -3463,6 +3464,7 @@ class Validator extends $pb.GeneratedMessage {
     $core.List<$core.int>? pubKey,
     $fixnum.Int64? power,
     $core.String? name,
+    $core.int? keyIndex,
   }) {
     final _result = create();
     if (address != null) {
@@ -3476,6 +3478,9 @@ class Validator extends $pb.GeneratedMessage {
     }
     if (name != null) {
       _result.name = name;
+    }
+    if (keyIndex != null) {
+      _result.keyIndex = keyIndex;
     }
     return _result;
   }
@@ -3535,6 +3540,15 @@ class Validator extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(3);
   @$pb.TagNumber(4)
   void clearName() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get keyIndex => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set keyIndex($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasKeyIndex() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearKeyIndex() => clearField(5);
 }
 
 class TendermintHeader extends $pb.GeneratedMessage {
