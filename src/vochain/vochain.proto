@@ -109,8 +109,9 @@ message ProofArbo {
 	}
 	Type type = 1;
 	bytes siblings = 2;
-	bytes value = 3;
+	bytes leafWeight = 3;
 	KeyType keyType = 4;
+	bytes votingWeight = 5;
 }
 
 // Groth16 zkSNARK proof + public inputs
