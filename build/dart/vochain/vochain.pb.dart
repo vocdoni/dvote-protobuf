@@ -811,8 +811,9 @@ class ProofArbo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProofArbo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'dvote.types.v1'), createEmptyInstance: create)
     ..e<ProofArbo_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ProofArbo_Type.BLAKE2B, valueOf: ProofArbo_Type.valueOf, enumValues: ProofArbo_Type.values)
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'siblings', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'leafWeight', $pb.PbFieldType.OY, protoName: 'leafWeight')
     ..e<ProofArbo_KeyType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'keyType', $pb.PbFieldType.OE, protoName: 'keyType', defaultOrMaker: ProofArbo_KeyType.PUBKEY, valueOf: ProofArbo_KeyType.valueOf, enumValues: ProofArbo_KeyType.values)
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'votingWeight', $pb.PbFieldType.OY, protoName: 'votingWeight')
     ..hasRequiredFields = false
   ;
 
@@ -820,8 +821,9 @@ class ProofArbo extends $pb.GeneratedMessage {
   factory ProofArbo({
     ProofArbo_Type? type,
     $core.List<$core.int>? siblings,
-    $core.List<$core.int>? value,
+    $core.List<$core.int>? leafWeight,
     ProofArbo_KeyType? keyType,
+    $core.List<$core.int>? votingWeight,
   }) {
     final _result = create();
     if (type != null) {
@@ -830,11 +832,14 @@ class ProofArbo extends $pb.GeneratedMessage {
     if (siblings != null) {
       _result.siblings = siblings;
     }
-    if (value != null) {
-      _result.value = value;
+    if (leafWeight != null) {
+      _result.leafWeight = leafWeight;
     }
     if (keyType != null) {
       _result.keyType = keyType;
+    }
+    if (votingWeight != null) {
+      _result.votingWeight = votingWeight;
     }
     return _result;
   }
@@ -878,13 +883,13 @@ class ProofArbo extends $pb.GeneratedMessage {
   void clearSiblings() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<$core.int> get value => $_getN(2);
+  $core.List<$core.int> get leafWeight => $_getN(2);
   @$pb.TagNumber(3)
-  set value($core.List<$core.int> v) { $_setBytes(2, v); }
+  set leafWeight($core.List<$core.int> v) { $_setBytes(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasValue() => $_has(2);
+  $core.bool hasLeafWeight() => $_has(2);
   @$pb.TagNumber(3)
-  void clearValue() => clearField(3);
+  void clearLeafWeight() => clearField(3);
 
   @$pb.TagNumber(4)
   ProofArbo_KeyType get keyType => $_getN(3);
@@ -894,6 +899,15 @@ class ProofArbo extends $pb.GeneratedMessage {
   $core.bool hasKeyType() => $_has(3);
   @$pb.TagNumber(4)
   void clearKeyType() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<$core.int> get votingWeight => $_getN(4);
+  @$pb.TagNumber(5)
+  set votingWeight($core.List<$core.int> v) { $_setBytes(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasVotingWeight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearVotingWeight() => clearField(5);
 }
 
 class ProofZkSNARK extends $pb.GeneratedMessage {
