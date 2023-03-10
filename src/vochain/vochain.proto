@@ -329,7 +329,7 @@ message Process {
 	// SourceNetworkId is the identifier of the network origin (where the process have been created)
 	SourceNetworkId sourceNetworkId = 27;
 	// MaxCensusSize is set by the Process creator, indicates the maximum number of votes that will be allowed.
-	 uint64 maxCensusSize = 28;
+	uint64 maxCensusSize = 28;
 	// RollingCensusRoot merkle root of the rolling census.  Set by the
 	// vocdoni-node when Mode.Process = true
 	optional bytes rollingCensusRoot = 29;
