@@ -22,7 +22,6 @@ jobs:
           make init
           make dart
           make golang
-          make ts
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v2.3.0
         with:
