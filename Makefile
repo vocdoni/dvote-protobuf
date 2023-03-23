@@ -57,7 +57,7 @@ help:
 ## :
 
 ## init: Install external dependencies
-init: protoc protoc-dart-plugin $(PROTOC_TS_PLUGIN) protoc-go-plugin
+init: protoc $(PROTOC_TS_PLUGIN) protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
@@ -71,7 +71,7 @@ clean:
 
 
 ## all: Generate the source code for all supported languages
-all: protoc build/dart build/ts build/go/models
+all: protoc build/ts build/go/models
 
 ## golang: Generate the Golang protobuf artifacts
 golang: protoc protoc-go-plugin build/go/models
