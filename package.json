@@ -1,44 +1,44 @@
 {
-  "name": "@vocdoni/proto",
-  "version": "1.14.4",
-  "devDependencies": {
-    "ts-node": "^9.1.1",
-    "ts-proto": "^1.143.0",
-    "tsup": "^6.5.0",
-    "typescript": "^4.2.4"
-  },
-  "dependencies": {
-    "long": "^5.2.1",
-    "protobufjs": "^7.1.2"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.mjs",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "name": "@vocdoni/proto",
+    "version": "1.14.5",
+    "devDependencies": {
+        "ts-node": "^9.1.1",
+        "ts-proto": "^1.146.0",
+        "tsup": "^6.5.0",
+        "typescript": "^4.2.4"
     },
-    "./client-store": {
-      "import": "./dist/client-store/index.mjs",
-      "require": "./dist/client-store/index.js",
-      "types": "./dist/client-store/index.d.ts"
+    "dependencies": {
+        "long": "^5.2.1",
+        "protobufjs": "^7.1.2"
     },
-    "./metadata": {
-      "import": "./dist/metadata/index.mjs",
-      "require": "./dist/metadata/index.js",
-      "types": "./dist/metadata/index.d.ts"
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "module": "dist/index.mjs",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./client-store": {
+            "import": "./dist/client-store/index.mjs",
+            "require": "./dist/client-store/index.js",
+            "types": "./dist/client-store/index.d.ts"
+        },
+        "./metadata": {
+            "import": "./dist/metadata/index.mjs",
+            "require": "./dist/metadata/index.js",
+            "types": "./dist/metadata/index.d.ts"
+        },
+        "./vochain": {
+            "import": "./dist/vochain/index.mjs",
+            "require": "./dist/vochain/index.js",
+            "types": "./dist/vochain/index.d.ts"
+        },
+        "./package.json": "./package.json"
     },
-    "./vochain": {
-      "import": "./dist/vochain/index.mjs",
-      "require": "./dist/vochain/index.js",
-      "types": "./dist/vochain/index.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "scripts": {
-    "build": "make ts && tsup --dts",
-    "clean": "rm -Rf dist build/ts"
-  }
+    "scripts": {
+        "build": "make ts && tsup --dts",
+        "clean": "rm -Rf dist build/ts"
+    }
 }
