@@ -317,8 +317,7 @@ message Process {
 	optional uint32 questionCount = 18;
 	ProcessVoteOptions voteOptions = 19;
 	CensusOrigin censusOrigin = 20;
-	repeated ProcessResult results = 21;
-	repeated bytes resultsSignatures = 22;
+	ProcessResult results = 21;
 	optional uint32 ethIndexSlot = 23;
 	// SourceBlockHeight is the block height of the origin blockchain (if any)
 	optional uint64 sourceBlockHeight = 24;
@@ -452,13 +451,8 @@ message TendermintHeader {
 }
 
 
-// Scrutinizer
 message ProcessResult {
 	repeated QuestionResult votes = 1;
-	optional bytes processId = 2;
-	optional bytes entityId = 3;
-	optional bytes oracleAddress = 4;
-	optional bytes signature = 5;
 }
 
 message QuestionResult {
