@@ -133,13 +133,30 @@ message ProofZkSNARK {
 	repeated string publicInputs = 5;
 }
 
+message Delegation {
+	bytes organizationId = 1; // unique on Account delegates list
+	bytes account = 2; // a valid Vochain account
+}
+
 // Account represents an entity with an amount of tokens, usually attached to an address.
 message Account {
 	uint64 balance = 1;
 	uint32 nonce = 2;
-	string infoURI = 3;
-	repeated bytes delegateAddrs = 4;
-	uint32 processIndex = 5;
+	bytes zkKey = 3;
+	string infoURI = 4;
+	repeated bytes linkedAddresses = 5;
+	repeated Delegation delegates = 6;
+	optional bytes defaultDelegate = 7;
+	uint32 processIndex = 8;
+}
+
+message Organization {
+	string name = 1; // name for the organization, length > 6 chars
+    bytes owner = 2; // address of the organization owner, can change
+    string infoURI = 3; // ipfs URL with the organization metadata
+    repeated bytes managers = 4; // list of management Accounts
+    uint32 electionIndex = 5; // number of elections created
+    uint32 censusIndex = 6; // number of census created
 }
 
 message Treasurer {
@@ -172,6 +189,17 @@ enum TxType {
 	ADD_KEYKEEPER = 21;
 	DELETE_KEYKEEPER = 22;
 	CREATE_ACCOUNT = 23;
+	DEL_ACCOUNT = 24;
+	ADD_ACCOUNT_DELEGATES = 25; // Duplicated with `ADD_DELEGATE_FOR_ACCOUNT`?
+	DEL_ACCOUNT_DELEGATES = 26; // Duplicated with `DEL_DELEGATE_FOR_ACCOUNT`?
+	LINK_ADDRESS = 27;
+	SET_ZK_KEY = 28;
+	CREATE_ORGANIZATION = 29;
+	DEL_ORGANIZATION = 30;
+	SET_ORGANIZATION_INFO_URI = 31;
+	SET_ORGANIZATION_OWNER = 32;
+	ADD_ORGANIZATION_MANAGERS = 33;
+	DEL_ORGANIZATION_MANAGERS = 34;
 }
 
 message Tx {
@@ -265,7 +293,22 @@ message SetAccountTx {
 	optional string infoURI = 3;
 	optional bytes account = 4;
 	optional FaucetPackage faucetPackage = 5;
-	repeated bytes delegates = 6;
+	optional bytes defaultDelegate = 6;
+    repeated Delegation delegates = 7;
+}
+
+message SetOrganizationTx {
+    TxType txtype = 1;
+    uint32 nonce = 2;
+    optional bytes owner = 3;
+    optional string name = 4; 
+    optional string infoURI = 5; 
+    repeated bytes managers = 6;
+}
+
+message LinkAccountProof {
+	bytes address = 1; // ethereum address requested to be linked. Should not exist as Account and should not be already linked for this account. 
+	bytes signature = 2; // signature over the address with its privKey
 }
 
 message CollectFaucetTx {
