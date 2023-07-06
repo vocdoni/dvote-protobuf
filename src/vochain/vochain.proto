@@ -172,6 +172,8 @@ enum TxType {
 	ADD_KEYKEEPER = 21;
 	DELETE_KEYKEEPER = 22;
 	CREATE_ACCOUNT = 23;
+	DEL_ACCOUNT_SIK = 24;
+	SET_ACCOUNT_SIK = 24;
 }
 
 message Tx {
@@ -266,6 +268,13 @@ message SetAccountTx {
 	optional bytes account = 4;
 	optional FaucetPackage faucetPackage = 5;
 	repeated bytes delegates = 6;
+	optional bytes sik = 7;
+}
+
+message SetSikTx {
+	TxType txtype = 1;
+	bytes address = 2;
+	optional bytes sik = 3;
 }
 
 message CollectFaucetTx {
