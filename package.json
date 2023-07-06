@@ -1,6 +1,6 @@
 {
     "name": "@vocdoni/proto",
-    "version": "1.14.5",
+    "version": "1.14.4",
     "devDependencies": {
         "ts-node": "^9.1.1",
         "ts-proto": "^1.146.0",
