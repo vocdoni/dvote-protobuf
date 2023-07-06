@@ -189,6 +189,7 @@ message Tx {
 		SetAccountTx setAccount = 9;
 		CollectFaucetTx collectFaucet = 10;
 		SetKeykeeperTx setKeykeeper = 11;
+		SetSikTx setSik = 12;
 	}
 }
 
