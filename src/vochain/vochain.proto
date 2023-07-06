@@ -109,7 +109,7 @@ message ProofArbo {
 	}
 	Type type = 1;
 	bytes siblings = 2;
-	bytes avalaibleWeight = 3;
+	bytes availableWeight = 3;
 	KeyType keyType = 4;
 	bytes voteWeight = 5;
 }
