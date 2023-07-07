@@ -189,7 +189,9 @@ message Tx {
 		SetAccountTx setAccount = 9;
 		CollectFaucetTx collectFaucet = 10;
 		SetKeykeeperTx setKeykeeper = 11;
-		SetSikTx setSik = 12;
+		SikTx setSik = 12;
+		SikTx delSik = 13;
+
 	}
 }
 
@@ -272,7 +274,7 @@ message SetAccountTx {
 	optional bytes sik = 7;
 }
 
-message SetSikTx {
+message SikTx {
 	TxType txtype = 1;
 	bytes address = 2;
 	optional bytes sik = 3;
