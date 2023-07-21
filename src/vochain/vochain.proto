@@ -276,8 +276,13 @@ message SetAccountTx {
 
 message SikTx {
 	TxType txtype = 1;
-	bytes address = 2;
 	optional bytes sik = 3;
+}
+
+message RegisterSIKTx {
+	bytes electionId  = 1;
+	Proof censusProof = 2;
+	bytes sik         = 3;
 }
 
 message CollectFaucetTx {
