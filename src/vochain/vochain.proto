@@ -190,9 +190,9 @@ message Tx {
 		SetAccountTx setAccount = 9;
 		CollectFaucetTx collectFaucet = 10;
 		SetKeykeeperTx setKeykeeper = 11;
-		SikTx setSik = 12;
-		SikTx delSik = 13;
-		RegisterSIKTx registerSik = 14;
+		SIKTx setSIK = 12;
+		SIKTx delSIK = 13;
+		RegisterSIKTx registerSIK = 14;
 	}
 }
 
@@ -272,18 +272,18 @@ message SetAccountTx {
 	optional bytes account = 4;
 	optional FaucetPackage faucetPackage = 5;
 	repeated bytes delegates = 6;
-	optional bytes sik = 7;
+	optional bytes SIK = 7;
 }
 
-message SikTx {
+message SIKTx {
 	TxType txtype = 1;
-	optional bytes sik = 3;
+	optional bytes SIK = 3;
 }
 
 message RegisterSIKTx {
 	bytes electionId  = 1;
 	Proof censusProof = 2;
-	bytes sik         = 3;
+	bytes SIK         = 3;
 }
 
 message CollectFaucetTx {
