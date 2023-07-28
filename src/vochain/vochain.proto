@@ -222,6 +222,7 @@ message SetProcessTx {
 	optional string censusURI = 7;
 	optional Proof proof = 8;
 	optional ProcessResult results = 9;
+	optional bool tempSIKs = 10;
 }
 
 message AdminTx {
