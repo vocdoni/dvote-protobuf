@@ -109,9 +109,9 @@ message ProofArbo {
 	}
 	Type type = 1;
 	bytes siblings = 2;
-	bytes leafWeight = 3;
+	bytes availableWeight = 3;
 	KeyType keyType = 4;
-	bytes votingWeight = 5;
+	bytes voteWeight = 5;
 }
 
 // Groth16 zkSNARK proof + public inputs
@@ -172,6 +172,9 @@ enum TxType {
 	ADD_KEYKEEPER = 21;
 	DELETE_KEYKEEPER = 22;
 	CREATE_ACCOUNT = 23;
+	SET_ACCOUNT_SIK = 24;
+	DEL_ACCOUNT_SIK = 25;
+	REGISTER_SIK = 26;
 }
 
 message Tx {
@@ -187,6 +190,9 @@ message Tx {
 		SetAccountTx setAccount = 9;
 		CollectFaucetTx collectFaucet = 10;
 		SetKeykeeperTx setKeykeeper = 11;
+		SIKTx setSIK = 12;
+		SIKTx delSIK = 13;
+		RegisterSIKTx registerSIK = 14;
 	}
 }
 
@@ -216,6 +222,9 @@ message SetProcessTx {
 	optional string censusURI = 7;
 	optional Proof proof = 8;
 	optional ProcessResult results = 9;
+	// tempSIKs flag decides if when the process has finished, the SIKs related
+	// to it will be removed or not
+	optional bool tempSIKs = 10;
 }
 
 message AdminTx {
@@ -266,6 +275,18 @@ message SetAccountTx {
 	optional bytes account = 4;
 	optional FaucetPackage faucetPackage = 5;
 	repeated bytes delegates = 6;
+	optional bytes SIK = 7;
+}
+
+message SIKTx {
+	TxType txtype = 1;
+	optional bytes SIK = 3;
+}
+
+message RegisterSIKTx {
+	bytes electionId  = 1;
+	Proof censusProof = 2;
+	bytes SIK         = 3;
 }
 
 message CollectFaucetTx {
@@ -344,6 +365,9 @@ message Process {
 	// tokenDecimals represents the number of decimals of the token (i.e ERC20) used for voting.
 	// It is normally used for processes with on-chain census
 	optional uint32 tokenDecimals = 33;
+	// tempSIKs flag decides if when the process has finished, the SIKs related
+	// to it will be removed or not
+	optional bool tempSIKs = 34;
 }
 
 enum ProcessStatus {
