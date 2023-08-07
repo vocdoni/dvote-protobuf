@@ -55,17 +55,9 @@ Then, run `make all` to build all the targets
 + Build JS/TS models: `make ts`
 + Build GoLang models: `make golang`
 
-### Publishing a new npmjs version (ts/js)
+## Develop / Release
 
-For publishing a new release into npmjs, a github action has been created in
-order to minimize the work. Just follow these steps:
-
-- Do whatever changes you need to do in the `proto` files
-- Update the version in the `package.json` file
-- Commit the changes
-- Create a new release & tag with the version number you used in `package.json`
-
-The github action will take care of the rest.
+See DEVELOPING.md
 
 ## Artifacts
 
