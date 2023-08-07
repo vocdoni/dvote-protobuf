@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   protobuf-build:
@@ -18,13 +19,17 @@ jobs:
       - uses: actions/setup-go@v3
       - name: Build
         run: |
+          make clean
           make init
-          make golang
-          make ts
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v2.3.0
+          make all
+      - name: Archive build/ts
+        uses: actions/upload-artifact@v3
         with:
-          commit_message: Auto build commit
-          branch: master
+          name: build-ts
+          path: build/ts
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: auto build commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
