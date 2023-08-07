@@ -225,6 +225,8 @@ message SetProcessTx {
 	// tempSIKs flag decides if when the process has finished, the SIKs related
 	// to it will be removed or not
 	optional bool tempSIKs = 10;
+	// dummyChange to test CI workflows
+	optional bool dummyChange = 11;
 }
 
 message AdminTx {
