@@ -57,7 +57,7 @@ Then, run `make all` to build all the targets
 
 ## Develop / Release
 
-See DEVELOPING.md
+See [DEVELOPING.md]
 
 ## Artifacts
 
@@ -114,3 +114,4 @@ This SDK is licensed under the [GNU Affero General Public License v3.0][license]
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 [license]: ./LICENSE
+[DEVELOPING.md]: ./DEVELOPING.md
