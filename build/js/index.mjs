@@ -7995,7 +7995,8 @@ function createBaseSetProcessTx() {
     proof: void 0,
     results: void 0,
     tempSIKs: void 0,
-    dummyChange: void 0
+    dummyChange: void 0,
+    dummyChange2: void 0
   };
 }
 var SetProcessTx = {
@@ -8032,6 +8033,9 @@ var SetProcessTx = {
     }
     if (message.dummyChange !== void 0) {
       writer.uint32(88).bool(message.dummyChange);
+    }
+    if (message.dummyChange2 !== void 0) {
+      writer.uint32(96).bool(message.dummyChange2);
     }
     return writer;
   },
@@ -8108,6 +8112,12 @@ var SetProcessTx = {
           }
           message.dummyChange = reader.bool();
           continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+          message.dummyChange2 = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -8128,7 +8138,8 @@ var SetProcessTx = {
       proof: isSet8(object.proof) ? Proof.fromJSON(object.proof) : void 0,
       results: isSet8(object.results) ? ProcessResult.fromJSON(object.results) : void 0,
       tempSIKs: isSet8(object.tempSIKs) ? Boolean(object.tempSIKs) : void 0,
-      dummyChange: isSet8(object.dummyChange) ? Boolean(object.dummyChange) : void 0
+      dummyChange: isSet8(object.dummyChange) ? Boolean(object.dummyChange) : void 0,
+      dummyChange2: isSet8(object.dummyChange2) ? Boolean(object.dummyChange2) : void 0
     };
   },
   toJSON(message) {
@@ -8166,6 +8177,9 @@ var SetProcessTx = {
     if (message.dummyChange !== void 0) {
       obj.dummyChange = message.dummyChange;
     }
+    if (message.dummyChange2 !== void 0) {
+      obj.dummyChange2 = message.dummyChange2;
+    }
     return obj;
   },
   create(base) {
@@ -8184,6 +8198,7 @@ var SetProcessTx = {
     message.results = object.results !== void 0 && object.results !== null ? ProcessResult.fromPartial(object.results) : void 0;
     message.tempSIKs = object.tempSIKs ?? void 0;
     message.dummyChange = object.dummyChange ?? void 0;
+    message.dummyChange2 = object.dummyChange2 ?? void 0;
     return message;
   }
 };

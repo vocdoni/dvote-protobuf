@@ -2199,6 +2199,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3311,6 +3312,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3409,6 +3411,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -3714,6 +3717,7 @@ declare const Tx: {
                 } & { [K_76 in Exclude<keyof I["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } & { [K_77 in Exclude<keyof I["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_78 in Exclude<keyof I["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -5084,6 +5088,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -6196,6 +6201,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -6294,6 +6300,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -6599,6 +6606,7 @@ declare const Tx: {
                 } & { [K_235 in Exclude<keyof I_1["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
                 dummyChange?: boolean | undefined;
+                dummyChange2?: boolean | undefined;
             } & { [K_236 in Exclude<keyof I_1["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_237 in Exclude<keyof I_1["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -8166,6 +8174,8 @@ interface SetProcessTx {
     tempSIKs?: boolean | undefined;
     /** dummyChange to test CI workflows */
     dummyChange?: boolean | undefined;
+    /** dummyChange to confirm CI workflows */
+    dummyChange2?: boolean | undefined;
 }
 declare const SetProcessTx: {
     encode(message: SetProcessTx, writer?: _m0.Writer): _m0.Writer;
@@ -8266,6 +8276,7 @@ declare const SetProcessTx: {
         } | undefined;
         tempSIKs?: boolean | undefined;
         dummyChange?: boolean | undefined;
+        dummyChange2?: boolean | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -8571,6 +8582,7 @@ declare const SetProcessTx: {
         } & { [K_31 in Exclude<keyof I["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
         dummyChange?: boolean | undefined;
+        dummyChange2?: boolean | undefined;
     } & { [K_32 in Exclude<keyof I, keyof SetProcessTx>]: never; }>(base?: I | undefined): SetProcessTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
@@ -8666,6 +8678,7 @@ declare const SetProcessTx: {
         } | undefined;
         tempSIKs?: boolean | undefined;
         dummyChange?: boolean | undefined;
+        dummyChange2?: boolean | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -8971,6 +8984,7 @@ declare const SetProcessTx: {
         } & { [K_64 in Exclude<keyof I_1["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
         dummyChange?: boolean | undefined;
+        dummyChange2?: boolean | undefined;
     } & { [K_65 in Exclude<keyof I_1, keyof SetProcessTx>]: never; }>(object: I_1): SetProcessTx;
 };
 interface AdminTx {
