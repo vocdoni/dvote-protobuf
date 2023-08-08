@@ -22,11 +22,8 @@ jobs:
           make clean
           make init
           make all
-      - name: Archive build/ts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-ts
-          path: build/ts
+      - run: yarn
+      - run: yarn build
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
