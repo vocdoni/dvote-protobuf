@@ -227,6 +227,8 @@ message SetProcessTx {
 	optional bool tempSIKs = 10;
 	// dummyChange to test CI workflows
 	optional bool dummyChange = 11;
+	// dummyChange to confirm CI workflows
+	optional bool dummyChange2 = 12;
 }
 
 message AdminTx {
