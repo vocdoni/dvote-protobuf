@@ -61,7 +61,7 @@ init: protoc $(PROTOC_TS_PLUGIN) protoc-go-plugin
 
 ## clean: Remove the build artifacts
 clean:
-	rm -Rf build include dist
+	rm -Rf build include
 
 ## :
 
