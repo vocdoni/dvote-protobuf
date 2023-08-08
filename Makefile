@@ -71,7 +71,7 @@ clean:
 
 
 ## all: Generate the source code for all supported languages
-all: protoc build/ts build/go/models
+all: golang js
 
 ## golang: Generate the Golang protobuf artifacts
 golang: protoc protoc-go-plugin build/go/models
@@ -97,9 +97,8 @@ build/dart: $(CLIENT_STORE_SOURCES) $(METADATA_SOURCES) $(VOCHAIN_SOURCES)
 	done
 	@touch $@
 
-## js: Generate the TypeScript protobuf artifacts
-js: protoc $(PROTOC_TS_PLUGIN) build/ts
-ts: js
+## ts: Generate the TypeScript protobuf artifacts
+ts: protoc $(PROTOC_TS_PLUGIN) build/ts
 
 build/ts: $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES) $(METADATA_SOURCES)
 	mkdir -p build
@@ -110,6 +109,13 @@ build/ts: $(VOCHAIN_SOURCES) $(CLIENT_STORE_SOURCES) $(METADATA_SOURCES)
 	done
 	@touch $@
 	npm i --no-package-lock
+
+## js: Generate the JavaScript bundle
+js: ts build/js
+
+build/js:
+	yarn
+	yarn build
 
 #-----------------------------------------------------------------------
 # COMPILERS
