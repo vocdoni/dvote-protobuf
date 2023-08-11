@@ -42,5 +42,7 @@
     "build": "make ts && tsup --dts --out-dir ./build/js",
     "clean": "rm -Rf build/ts build/js"
   },
-  "files": ["build/js"]
+  "files": [
+    "build/js"
+  ]
 }
