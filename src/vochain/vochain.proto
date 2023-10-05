@@ -280,6 +280,7 @@ message SetAccountTx {
 
 message SIKTx {
 	TxType txtype = 1;
+	optional uint32 nonce = 2;
 	optional bytes SIK = 3;
 }
 
