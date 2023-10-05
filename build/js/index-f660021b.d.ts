@@ -2353,6 +2353,7 @@ declare const Tx: {
         }) | ({
             setSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -2360,6 +2361,7 @@ declare const Tx: {
         }) | ({
             delSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -4334,6 +4336,7 @@ declare const Tx: {
         } & { [K_123 in Exclude<keyof I["payload"], "$case" | "setKeykeeper">]: never; }) | ({
             setSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -4341,15 +4344,18 @@ declare const Tx: {
         } & {
             setSIK?: ({
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & { [K_124 in Exclude<keyof I["payload"]["setSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "setSIK";
         } & { [K_125 in Exclude<keyof I["payload"], "$case" | "setSIK">]: never; }) | ({
             delSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -4357,9 +4363,11 @@ declare const Tx: {
         } & {
             delSIK?: ({
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & { [K_126 in Exclude<keyof I["payload"]["delSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "delSIK";
@@ -5234,6 +5242,7 @@ declare const Tx: {
         }) | ({
             setSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -5241,6 +5250,7 @@ declare const Tx: {
         }) | ({
             delSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -7215,6 +7225,7 @@ declare const Tx: {
         } & { [K_282 in Exclude<keyof I_1["payload"], "$case" | "setKeykeeper">]: never; }) | ({
             setSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -7222,15 +7233,18 @@ declare const Tx: {
         } & {
             setSIK?: ({
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & { [K_283 in Exclude<keyof I_1["payload"]["setSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "setSIK";
         } & { [K_284 in Exclude<keyof I_1["payload"], "$case" | "setSIK">]: never; }) | ({
             delSIK?: {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } | undefined;
         } & {
@@ -7238,9 +7252,11 @@ declare const Tx: {
         } & {
             delSIK?: ({
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & {
                 txtype?: TxType | undefined;
+                nonce?: number | undefined;
                 SIK?: Uint8Array | undefined;
             } & { [K_285 in Exclude<keyof I_1["payload"]["delSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "delSIK";
@@ -9947,6 +9963,7 @@ declare const SetAccountTx: {
 };
 interface SIKTx {
     txtype: TxType;
+    nonce?: number | undefined;
     SIK?: Uint8Array | undefined;
 }
 declare const SIKTx: {
@@ -9956,16 +9973,20 @@ declare const SIKTx: {
     toJSON(message: SIKTx): unknown;
     create<I extends {
         txtype?: TxType | undefined;
+        nonce?: number | undefined;
         SIK?: Uint8Array | undefined;
     } & {
         txtype?: TxType | undefined;
+        nonce?: number | undefined;
         SIK?: Uint8Array | undefined;
     } & { [K in Exclude<keyof I, keyof SIKTx>]: never; }>(base?: I | undefined): SIKTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
+        nonce?: number | undefined;
         SIK?: Uint8Array | undefined;
     } & {
         txtype?: TxType | undefined;
+        nonce?: number | undefined;
         SIK?: Uint8Array | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof SIKTx>]: never; }>(object: I_1): SIKTx;
 };

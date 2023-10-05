@@ -1201,7 +1201,11 @@ var require_reader = __commonJS({
       this.pos += length;
       if (Array.isArray(this.buf))
         return this.buf.slice(start, end);
-      return start === end ? new this.buf.constructor(0) : this._slice.call(this.buf, start, end);
+      if (start === end) {
+        var nativeBuffer = util.Buffer;
+        return nativeBuffer ? nativeBuffer.alloc(0) : new this.buf.constructor(0);
+      }
+      return this._slice.call(this.buf, start, end);
     };
     Reader.prototype.string = function read_string() {
       var bytes = this.bytes();
@@ -1489,7 +1493,9 @@ var EntityMetadataStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => EntityMetadata.fromJSON(e)) : [] };
+    return {
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => EntityMetadata.fromJSON(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -1674,8 +1680,8 @@ var EntityMetadata = {
   },
   fromJSON(object) {
     return {
-      version: isSet(object.version) ? String(object.version) : "",
-      languages: Array.isArray(object?.languages) ? object.languages.map((e) => String(e)) : [],
+      version: isSet(object.version) ? globalThis.String(object.version) : "",
+      languages: globalThis.Array.isArray(object?.languages) ? object.languages.map((e) => globalThis.String(e)) : [],
       name: isObject(object.name) ? Object.entries(object.name).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -1690,11 +1696,11 @@ var EntityMetadata = {
         return acc;
       }, {}) : {},
       media: isSet(object.media) ? EntityMetadata_Media.fromJSON(object.media) : void 0,
-      actions: Array.isArray(object?.actions) ? object.actions.map((e) => EntityMetadata_Action.fromJSON(e)) : [],
-      bootEntities: Array.isArray(object?.bootEntities) ? object.bootEntities.map((e) => EntityReference.fromJSON(e)) : [],
-      fallbackBootNodeEntities: Array.isArray(object?.fallbackBootNodeEntities) ? object.fallbackBootNodeEntities.map((e) => EntityReference.fromJSON(e)) : [],
-      trustedEntities: Array.isArray(object?.trustedEntities) ? object.trustedEntities.map((e) => EntityReference.fromJSON(e)) : [],
-      censusServiceManagedEntities: Array.isArray(object?.censusServiceManagedEntities) ? object.censusServiceManagedEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      actions: globalThis.Array.isArray(object?.actions) ? object.actions.map((e) => EntityMetadata_Action.fromJSON(e)) : [],
+      bootEntities: globalThis.Array.isArray(object?.bootEntities) ? object.bootEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      fallbackBootNodeEntities: globalThis.Array.isArray(object?.fallbackBootNodeEntities) ? object.fallbackBootNodeEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      trustedEntities: globalThis.Array.isArray(object?.trustedEntities) ? object.trustedEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      censusServiceManagedEntities: globalThis.Array.isArray(object?.censusServiceManagedEntities) ? object.censusServiceManagedEntities.map((e) => EntityReference.fromJSON(e)) : [],
       meta: isObject(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -1777,14 +1783,14 @@ var EntityMetadata = {
     message.languages = object.languages?.map((e) => e) || [];
     message.name = Object.entries(object.name ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.description = Object.entries(object.description ?? {}).reduce(
       (acc, [key, value]) => {
         if (value !== void 0) {
-          acc[key] = String(value);
+          acc[key] = globalThis.String(value);
         }
         return acc;
       },
@@ -1793,7 +1799,7 @@ var EntityMetadata = {
     message.votingProcesses = object.votingProcesses !== void 0 && object.votingProcesses !== null ? EntityMetadata_VotingProcesses.fromPartial(object.votingProcesses) : void 0;
     message.newsFeed = Object.entries(object.newsFeed ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -1805,7 +1811,7 @@ var EntityMetadata = {
     message.censusServiceManagedEntities = object.censusServiceManagedEntities?.map((e) => EntityReference.fromPartial(e)) || [];
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -1853,7 +1859,10 @@ var EntityMetadata_NameEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -1916,7 +1925,10 @@ var EntityMetadata_DescriptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -1980,8 +1992,8 @@ var EntityMetadata_VotingProcesses = {
   },
   fromJSON(object) {
     return {
-      active: Array.isArray(object?.active) ? object.active.map((e) => String(e)) : [],
-      ended: Array.isArray(object?.ended) ? object.ended.map((e) => String(e)) : []
+      active: globalThis.Array.isArray(object?.active) ? object.active.map((e) => globalThis.String(e)) : [],
+      ended: globalThis.Array.isArray(object?.ended) ? object.ended.map((e) => globalThis.String(e)) : []
     };
   },
   toJSON(message) {
@@ -2045,7 +2057,10 @@ var EntityMetadata_NewsFeedEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2109,8 +2124,8 @@ var EntityMetadata_Media = {
   },
   fromJSON(object) {
     return {
-      avatar: isSet(object.avatar) ? String(object.avatar) : "",
-      header: isSet(object.header) ? String(object.header) : ""
+      avatar: isSet(object.avatar) ? globalThis.String(object.avatar) : "",
+      header: isSet(object.header) ? globalThis.String(object.header) : ""
     };
   },
   toJSON(message) {
@@ -2214,15 +2229,15 @@ var EntityMetadata_Action = {
   },
   fromJSON(object) {
     return {
-      type: isSet(object.type) ? String(object.type) : "",
-      actionKey: isSet(object.actionKey) ? String(object.actionKey) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
+      actionKey: isSet(object.actionKey) ? globalThis.String(object.actionKey) : "",
       name: isObject(object.name) ? Object.entries(object.name).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      visible: isSet(object.visible) ? String(object.visible) : "",
-      url: isSet(object.url) ? String(object.url) : "",
-      imageSources: Array.isArray(object?.imageSources) ? object.imageSources.map((e) => EntityMetadata_Action_ImageSource.fromJSON(e)) : []
+      visible: isSet(object.visible) ? globalThis.String(object.visible) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      imageSources: globalThis.Array.isArray(object?.imageSources) ? object.imageSources.map((e) => EntityMetadata_Action_ImageSource.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -2262,7 +2277,7 @@ var EntityMetadata_Action = {
     message.actionKey = object.actionKey ?? "";
     message.name = Object.entries(object.name ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -2313,7 +2328,10 @@ var EntityMetadata_Action_NameEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2407,10 +2425,10 @@ var EntityMetadata_Action_ImageSource = {
   },
   fromJSON(object) {
     return {
-      type: isSet(object.type) ? String(object.type) : "",
-      name: isSet(object.name) ? String(object.name) : "",
-      orientation: isSet(object.orientation) ? String(object.orientation) : "",
-      overlay: isSet(object.overlay) ? String(object.overlay) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      orientation: isSet(object.orientation) ? globalThis.String(object.orientation) : "",
+      overlay: isSet(object.overlay) ? globalThis.String(object.overlay) : "",
       caption: isObject(object.caption) ? Object.entries(object.caption).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -2453,7 +2471,7 @@ var EntityMetadata_Action_ImageSource = {
     message.overlay = object.overlay ?? "";
     message.caption = Object.entries(object.caption ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -2501,7 +2519,10 @@ var EntityMetadata_Action_ImageSource_CaptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2564,7 +2585,10 @@ var EntityMetadata_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2628,8 +2652,8 @@ var EntityReference = {
   },
   fromJSON(object) {
     return {
-      entityId: isSet(object.entityId) ? String(object.entityId) : "",
-      entryPoints: Array.isArray(object?.entryPoints) ? object.entryPoints.map((e) => String(e)) : []
+      entityId: isSet(object.entityId) ? globalThis.String(object.entityId) : "",
+      entryPoints: globalThis.Array.isArray(object?.entryPoints) ? object.entryPoints.map((e) => globalThis.String(e)) : []
     };
   },
   toJSON(message) {
@@ -2693,7 +2717,7 @@ var FeedStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => Feed.fromJSON(e)) : [] };
+    return { items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => Feed.fromJSON(e)) : [] };
   },
   toJSON(message) {
     const obj = {};
@@ -2839,15 +2863,15 @@ var Feed = {
   },
   fromJSON(object) {
     return {
-      version: isSet2(object.version) ? String(object.version) : "",
-      title: isSet2(object.title) ? String(object.title) : "",
-      homePageUrl: isSet2(object.homePageUrl) ? String(object.homePageUrl) : "",
-      description: isSet2(object.description) ? String(object.description) : "",
-      feedUrl: isSet2(object.feedUrl) ? String(object.feedUrl) : "",
-      icon: isSet2(object.icon) ? String(object.icon) : "",
-      favicon: isSet2(object.favicon) ? String(object.favicon) : "",
-      expired: isSet2(object.expired) ? Boolean(object.expired) : false,
-      items: Array.isArray(object?.items) ? object.items.map((e) => FeedPost.fromJSON(e)) : [],
+      version: isSet2(object.version) ? globalThis.String(object.version) : "",
+      title: isSet2(object.title) ? globalThis.String(object.title) : "",
+      homePageUrl: isSet2(object.homePageUrl) ? globalThis.String(object.homePageUrl) : "",
+      description: isSet2(object.description) ? globalThis.String(object.description) : "",
+      feedUrl: isSet2(object.feedUrl) ? globalThis.String(object.feedUrl) : "",
+      icon: isSet2(object.icon) ? globalThis.String(object.icon) : "",
+      favicon: isSet2(object.favicon) ? globalThis.String(object.favicon) : "",
+      expired: isSet2(object.expired) ? globalThis.Boolean(object.expired) : false,
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => FeedPost.fromJSON(e)) : [],
       meta: isObject2(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -2910,7 +2934,7 @@ var Feed = {
     message.items = object.items?.map((e) => FeedPost.fromPartial(e)) || [];
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -2958,7 +2982,10 @@ var Feed_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet2(object.key) ? String(object.key) : "", value: isSet2(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet2(object.key) ? globalThis.String(object.key) : "",
+      value: isSet2(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3115,16 +3142,16 @@ var FeedPost = {
   },
   fromJSON(object) {
     return {
-      id: isSet2(object.id) ? String(object.id) : "",
-      title: isSet2(object.title) ? String(object.title) : "",
-      summary: isSet2(object.summary) ? String(object.summary) : "",
-      contentText: isSet2(object.contentText) ? String(object.contentText) : "",
-      contentHtml: isSet2(object.contentHtml) ? String(object.contentHtml) : "",
-      url: isSet2(object.url) ? String(object.url) : "",
-      image: isSet2(object.image) ? String(object.image) : "",
-      tags: Array.isArray(object?.tags) ? object.tags.map((e) => String(e)) : [],
-      datePublished: isSet2(object.datePublished) ? String(object.datePublished) : "",
-      dateModified: isSet2(object.dateModified) ? String(object.dateModified) : "",
+      id: isSet2(object.id) ? globalThis.String(object.id) : "",
+      title: isSet2(object.title) ? globalThis.String(object.title) : "",
+      summary: isSet2(object.summary) ? globalThis.String(object.summary) : "",
+      contentText: isSet2(object.contentText) ? globalThis.String(object.contentText) : "",
+      contentHtml: isSet2(object.contentHtml) ? globalThis.String(object.contentHtml) : "",
+      url: isSet2(object.url) ? globalThis.String(object.url) : "",
+      image: isSet2(object.image) ? globalThis.String(object.image) : "",
+      tags: globalThis.Array.isArray(object?.tags) ? object.tags.map((e) => globalThis.String(e)) : [],
+      datePublished: isSet2(object.datePublished) ? globalThis.String(object.datePublished) : "",
+      dateModified: isSet2(object.dateModified) ? globalThis.String(object.dateModified) : "",
       author: isSet2(object.author) ? FeedPost_Author.fromJSON(object.author) : void 0
     };
   },
@@ -3225,7 +3252,10 @@ var FeedPost_Author = {
     return message;
   },
   fromJSON(object) {
-    return { name: isSet2(object.name) ? String(object.name) : "", url: isSet2(object.url) ? String(object.url) : "" };
+    return {
+      name: isSet2(object.name) ? globalThis.String(object.name) : "",
+      url: isSet2(object.url) ? globalThis.String(object.url) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3288,7 +3318,9 @@ var ProcessMetadataStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => ProcessMetadata.fromJSON(e)) : [] };
+    return {
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => ProcessMetadata.fromJSON(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3405,7 +3437,7 @@ var ProcessMetadata = {
   },
   fromJSON(object) {
     return {
-      version: isSet3(object.version) ? String(object.version) : "",
+      version: isSet3(object.version) ? globalThis.String(object.version) : "",
       title: isObject3(object.title) ? Object.entries(object.title).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -3418,7 +3450,7 @@ var ProcessMetadata = {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      questions: Array.isArray(object?.questions) ? object.questions.map((e) => ProcessMetadata_Question.fromJSON(e)) : [],
+      questions: globalThis.Array.isArray(object?.questions) ? object.questions.map((e) => ProcessMetadata_Question.fromJSON(e)) : [],
       results: isSet3(object.results) ? ProcessMetadata_Results.fromJSON(object.results) : void 0,
       meta: isObject3(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
@@ -3483,14 +3515,14 @@ var ProcessMetadata = {
     message.version = object.version ?? "";
     message.title = Object.entries(object.title ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.description = Object.entries(object.description ?? {}).reduce(
       (acc, [key, value]) => {
         if (value !== void 0) {
-          acc[key] = String(value);
+          acc[key] = globalThis.String(value);
         }
         return acc;
       },
@@ -3498,7 +3530,7 @@ var ProcessMetadata = {
     );
     message.media = Object.entries(object.media ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -3506,7 +3538,7 @@ var ProcessMetadata = {
     message.results = object.results !== void 0 && object.results !== null ? ProcessMetadata_Results.fromPartial(object.results) : void 0;
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -3554,7 +3586,10 @@ var ProcessMetadata_TitleEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3617,7 +3652,10 @@ var ProcessMetadata_DescriptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3680,7 +3718,10 @@ var ProcessMetadata_MediaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3767,7 +3808,7 @@ var ProcessMetadata_Question = {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      choices: Array.isArray(object?.choices) ? object.choices.map((e) => ProcessMetadata_Question_VoteOption.fromJSON(e)) : []
+      choices: globalThis.Array.isArray(object?.choices) ? object.choices.map((e) => ProcessMetadata_Question_VoteOption.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -3802,14 +3843,14 @@ var ProcessMetadata_Question = {
     const message = createBaseProcessMetadata_Question();
     message.title = Object.entries(object.title ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.description = Object.entries(object.description ?? {}).reduce(
       (acc, [key, value]) => {
         if (value !== void 0) {
-          acc[key] = String(value);
+          acc[key] = globalThis.String(value);
         }
         return acc;
       },
@@ -3860,7 +3901,10 @@ var ProcessMetadata_Question_TitleEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3923,7 +3967,10 @@ var ProcessMetadata_Question_DescriptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3994,7 +4041,7 @@ var ProcessMetadata_Question_VoteOption = {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      value: isSet3(object.value) ? Number(object.value) : 0
+      value: isSet3(object.value) ? globalThis.Number(object.value) : 0
     };
   },
   toJSON(message) {
@@ -4020,7 +4067,7 @@ var ProcessMetadata_Question_VoteOption = {
     const message = createBaseProcessMetadata_Question_VoteOption();
     message.title = Object.entries(object.title ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -4069,7 +4116,10 @@ var ProcessMetadata_Question_VoteOption_TitleEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -4133,8 +4183,8 @@ var ProcessMetadata_Results = {
   },
   fromJSON(object) {
     return {
-      aggregation: isSet3(object.aggregation) ? String(object.aggregation) : "",
-      display: isSet3(object.display) ? String(object.display) : ""
+      aggregation: isSet3(object.aggregation) ? globalThis.String(object.aggregation) : "",
+      display: isSet3(object.display) ? globalThis.String(object.display) : ""
     };
   },
   toJSON(message) {
@@ -4198,7 +4248,10 @@ var ProcessMetadata_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};

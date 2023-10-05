@@ -1199,7 +1199,11 @@ var require_reader = __commonJS({
       this.pos += length;
       if (Array.isArray(this.buf))
         return this.buf.slice(start, end);
-      return start === end ? new this.buf.constructor(0) : this._slice.call(this.buf, start, end);
+      if (start === end) {
+        var nativeBuffer = util.Buffer;
+        return nativeBuffer ? nativeBuffer.alloc(0) : new this.buf.constructor(0);
+      }
+      return this._slice.call(this.buf, start, end);
     };
     Reader.prototype.string = function read_string() {
       var bytes = this.bytes();
@@ -1472,7 +1476,9 @@ var EntityMetadataStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => EntityMetadata.fromJSON(e)) : [] };
+    return {
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => EntityMetadata.fromJSON(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -1657,8 +1663,8 @@ var EntityMetadata = {
   },
   fromJSON(object) {
     return {
-      version: isSet(object.version) ? String(object.version) : "",
-      languages: Array.isArray(object?.languages) ? object.languages.map((e) => String(e)) : [],
+      version: isSet(object.version) ? globalThis.String(object.version) : "",
+      languages: globalThis.Array.isArray(object?.languages) ? object.languages.map((e) => globalThis.String(e)) : [],
       name: isObject(object.name) ? Object.entries(object.name).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -1673,11 +1679,11 @@ var EntityMetadata = {
         return acc;
       }, {}) : {},
       media: isSet(object.media) ? EntityMetadata_Media.fromJSON(object.media) : void 0,
-      actions: Array.isArray(object?.actions) ? object.actions.map((e) => EntityMetadata_Action.fromJSON(e)) : [],
-      bootEntities: Array.isArray(object?.bootEntities) ? object.bootEntities.map((e) => EntityReference.fromJSON(e)) : [],
-      fallbackBootNodeEntities: Array.isArray(object?.fallbackBootNodeEntities) ? object.fallbackBootNodeEntities.map((e) => EntityReference.fromJSON(e)) : [],
-      trustedEntities: Array.isArray(object?.trustedEntities) ? object.trustedEntities.map((e) => EntityReference.fromJSON(e)) : [],
-      censusServiceManagedEntities: Array.isArray(object?.censusServiceManagedEntities) ? object.censusServiceManagedEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      actions: globalThis.Array.isArray(object?.actions) ? object.actions.map((e) => EntityMetadata_Action.fromJSON(e)) : [],
+      bootEntities: globalThis.Array.isArray(object?.bootEntities) ? object.bootEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      fallbackBootNodeEntities: globalThis.Array.isArray(object?.fallbackBootNodeEntities) ? object.fallbackBootNodeEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      trustedEntities: globalThis.Array.isArray(object?.trustedEntities) ? object.trustedEntities.map((e) => EntityReference.fromJSON(e)) : [],
+      censusServiceManagedEntities: globalThis.Array.isArray(object?.censusServiceManagedEntities) ? object.censusServiceManagedEntities.map((e) => EntityReference.fromJSON(e)) : [],
       meta: isObject(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -1760,14 +1766,14 @@ var EntityMetadata = {
     message.languages = object.languages?.map((e) => e) || [];
     message.name = Object.entries(object.name ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.description = Object.entries(object.description ?? {}).reduce(
       (acc, [key, value]) => {
         if (value !== void 0) {
-          acc[key] = String(value);
+          acc[key] = globalThis.String(value);
         }
         return acc;
       },
@@ -1776,7 +1782,7 @@ var EntityMetadata = {
     message.votingProcesses = object.votingProcesses !== void 0 && object.votingProcesses !== null ? EntityMetadata_VotingProcesses.fromPartial(object.votingProcesses) : void 0;
     message.newsFeed = Object.entries(object.newsFeed ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -1788,7 +1794,7 @@ var EntityMetadata = {
     message.censusServiceManagedEntities = object.censusServiceManagedEntities?.map((e) => EntityReference.fromPartial(e)) || [];
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -1836,7 +1842,10 @@ var EntityMetadata_NameEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -1899,7 +1908,10 @@ var EntityMetadata_DescriptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -1963,8 +1975,8 @@ var EntityMetadata_VotingProcesses = {
   },
   fromJSON(object) {
     return {
-      active: Array.isArray(object?.active) ? object.active.map((e) => String(e)) : [],
-      ended: Array.isArray(object?.ended) ? object.ended.map((e) => String(e)) : []
+      active: globalThis.Array.isArray(object?.active) ? object.active.map((e) => globalThis.String(e)) : [],
+      ended: globalThis.Array.isArray(object?.ended) ? object.ended.map((e) => globalThis.String(e)) : []
     };
   },
   toJSON(message) {
@@ -2028,7 +2040,10 @@ var EntityMetadata_NewsFeedEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2092,8 +2107,8 @@ var EntityMetadata_Media = {
   },
   fromJSON(object) {
     return {
-      avatar: isSet(object.avatar) ? String(object.avatar) : "",
-      header: isSet(object.header) ? String(object.header) : ""
+      avatar: isSet(object.avatar) ? globalThis.String(object.avatar) : "",
+      header: isSet(object.header) ? globalThis.String(object.header) : ""
     };
   },
   toJSON(message) {
@@ -2197,15 +2212,15 @@ var EntityMetadata_Action = {
   },
   fromJSON(object) {
     return {
-      type: isSet(object.type) ? String(object.type) : "",
-      actionKey: isSet(object.actionKey) ? String(object.actionKey) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
+      actionKey: isSet(object.actionKey) ? globalThis.String(object.actionKey) : "",
       name: isObject(object.name) ? Object.entries(object.name).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      visible: isSet(object.visible) ? String(object.visible) : "",
-      url: isSet(object.url) ? String(object.url) : "",
-      imageSources: Array.isArray(object?.imageSources) ? object.imageSources.map((e) => EntityMetadata_Action_ImageSource.fromJSON(e)) : []
+      visible: isSet(object.visible) ? globalThis.String(object.visible) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      imageSources: globalThis.Array.isArray(object?.imageSources) ? object.imageSources.map((e) => EntityMetadata_Action_ImageSource.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -2245,7 +2260,7 @@ var EntityMetadata_Action = {
     message.actionKey = object.actionKey ?? "";
     message.name = Object.entries(object.name ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -2296,7 +2311,10 @@ var EntityMetadata_Action_NameEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2390,10 +2408,10 @@ var EntityMetadata_Action_ImageSource = {
   },
   fromJSON(object) {
     return {
-      type: isSet(object.type) ? String(object.type) : "",
-      name: isSet(object.name) ? String(object.name) : "",
-      orientation: isSet(object.orientation) ? String(object.orientation) : "",
-      overlay: isSet(object.overlay) ? String(object.overlay) : "",
+      type: isSet(object.type) ? globalThis.String(object.type) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      orientation: isSet(object.orientation) ? globalThis.String(object.orientation) : "",
+      overlay: isSet(object.overlay) ? globalThis.String(object.overlay) : "",
       caption: isObject(object.caption) ? Object.entries(object.caption).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -2436,7 +2454,7 @@ var EntityMetadata_Action_ImageSource = {
     message.overlay = object.overlay ?? "";
     message.caption = Object.entries(object.caption ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -2484,7 +2502,10 @@ var EntityMetadata_Action_ImageSource_CaptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2547,7 +2568,10 @@ var EntityMetadata_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet(object.key) ? globalThis.String(object.key) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2611,8 +2635,8 @@ var EntityReference = {
   },
   fromJSON(object) {
     return {
-      entityId: isSet(object.entityId) ? String(object.entityId) : "",
-      entryPoints: Array.isArray(object?.entryPoints) ? object.entryPoints.map((e) => String(e)) : []
+      entityId: isSet(object.entityId) ? globalThis.String(object.entityId) : "",
+      entryPoints: globalThis.Array.isArray(object?.entryPoints) ? object.entryPoints.map((e) => globalThis.String(e)) : []
     };
   },
   toJSON(message) {
@@ -2743,8 +2767,8 @@ var Wallet = {
   fromJSON(object) {
     return {
       encryptedMnemonic: isSet2(object.encryptedMnemonic) ? bytesFromBase64(object.encryptedMnemonic) : new Uint8Array(0),
-      hdPath: isSet2(object.hdPath) ? String(object.hdPath) : "",
-      locale: isSet2(object.locale) ? String(object.locale) : "",
+      hdPath: isSet2(object.hdPath) ? globalThis.String(object.hdPath) : "",
+      locale: isSet2(object.locale) ? globalThis.String(object.locale) : "",
       authMethod: isSet2(object.authMethod) ? wallet_AuthMethodFromJSON(object.authMethod) : 0
     };
   },
@@ -2776,26 +2800,11 @@ var Wallet = {
     return message;
   }
 };
-var tsProtoGlobalThis = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 function bytesFromBase64(b64) {
-  if (tsProtoGlobalThis.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = tsProtoGlobalThis.atob(b64);
+    const bin = globalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -2804,14 +2813,14 @@ function bytesFromBase64(b64) {
   }
 }
 function base64FromBytes(arr) {
-  if (tsProtoGlobalThis.Buffer) {
-    return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin = [];
     arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
+      bin.push(globalThis.String.fromCharCode(byte));
     });
-    return tsProtoGlobalThis.btoa(bin.join(""));
+    return globalThis.btoa(bin.join(""));
   }
 }
 function isSet2(value) {
@@ -2851,7 +2860,7 @@ var AccountsStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => Account.fromJSON(e)) : [] };
+    return { items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => Account.fromJSON(e)) : [] };
   },
   toJSON(message) {
     const obj = {};
@@ -2950,10 +2959,10 @@ var Account = {
   },
   fromJSON(object) {
     return {
-      name: isSet3(object.name) ? String(object.name) : "",
+      name: isSet3(object.name) ? globalThis.String(object.name) : "",
       wallet: isSet3(object.wallet) ? Wallet.fromJSON(object.wallet) : void 0,
-      address: isSet3(object.address) ? String(object.address) : "",
-      hasBackup: isSet3(object.hasBackup) ? Boolean(object.hasBackup) : false,
+      address: isSet3(object.address) ? globalThis.String(object.address) : "",
+      hasBackup: isSet3(object.hasBackup) ? globalThis.Boolean(object.hasBackup) : false,
       extra: isSet3(object.extra) ? Account_Extra.fromJSON(object.extra) : void 0,
       meta: isObject2(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
@@ -3001,7 +3010,7 @@ var Account = {
     message.extra = object.extra !== void 0 && object.extra !== null ? Account_Extra.fromPartial(object.extra) : void 0;
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -3050,8 +3059,8 @@ var Account_AppVoter = {
   },
   fromJSON(object) {
     return {
-      appAnalyticsID: isSet3(object.appAnalyticsID) ? String(object.appAnalyticsID) : "",
-      entities: Array.isArray(object?.entities) ? object.entities.map((e) => EntityReference.fromJSON(e)) : []
+      appAnalyticsID: isSet3(object.appAnalyticsID) ? globalThis.String(object.appAnalyticsID) : "",
+      entities: globalThis.Array.isArray(object?.entities) ? object.entities.map((e) => EntityReference.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -3106,7 +3115,7 @@ var Account_WebEntity = {
     return message;
   },
   fromJSON(object) {
-    return { webAnalyticsID: isSet3(object.webAnalyticsID) ? String(object.webAnalyticsID) : "" };
+    return { webAnalyticsID: isSet3(object.webAnalyticsID) ? globalThis.String(object.webAnalyticsID) : "" };
   },
   toJSON(message) {
     const obj = {};
@@ -3236,7 +3245,10 @@ var Account_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -3469,8 +3481,8 @@ var WalletBackup = {
   },
   fromJSON(object) {
     return {
-      name: isSet4(object.name) ? String(object.name) : "",
-      timestamp: isSet4(object.timestamp) ? Number(object.timestamp) : 0,
+      name: isSet4(object.name) ? globalThis.String(object.name) : "",
+      timestamp: isSet4(object.timestamp) ? globalThis.Number(object.timestamp) : 0,
       wallet: isSet4(object.wallet) ? Wallet.fromJSON(object.wallet) : void 0,
       passphraseRecovery: isSet4(object.passphraseRecovery) ? WalletBackup_Recovery.fromJSON(object.passphraseRecovery) : void 0
     };
@@ -3554,7 +3566,7 @@ var WalletBackup_Recovery = {
   },
   fromJSON(object) {
     return {
-      questionIds: Array.isArray(object?.questionIds) ? object.questionIds.map((e) => walletBackup_Recovery_QuestionEnumFromJSON(e)) : [],
+      questionIds: globalThis.Array.isArray(object?.questionIds) ? object.questionIds.map((e) => walletBackup_Recovery_QuestionEnumFromJSON(e)) : [],
       encryptedPassphrase: isSet4(object.encryptedPassphrase) ? bytesFromBase642(object.encryptedPassphrase) : new Uint8Array(0)
     };
   },
@@ -3578,26 +3590,11 @@ var WalletBackup_Recovery = {
     return message;
   }
 };
-var tsProtoGlobalThis2 = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 function bytesFromBase642(b64) {
-  if (tsProtoGlobalThis2.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis2.Buffer.from(b64, "base64"));
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = tsProtoGlobalThis2.atob(b64);
+    const bin = globalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -3606,19 +3603,19 @@ function bytesFromBase642(b64) {
   }
 }
 function base64FromBytes2(arr) {
-  if (tsProtoGlobalThis2.Buffer) {
-    return tsProtoGlobalThis2.Buffer.from(arr).toString("base64");
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin = [];
     arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
+      bin.push(globalThis.String.fromCharCode(byte));
     });
-    return tsProtoGlobalThis2.btoa(bin.join(""));
+    return globalThis.btoa(bin.join(""));
   }
 }
 function longToNumber(long) {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis2.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
@@ -3772,7 +3769,7 @@ var BootNodeGateways = {
     message.rinkeby = object.rinkeby !== void 0 && object.rinkeby !== null ? BootNodeGateways_NetworkNodes.fromPartial(object.rinkeby) : void 0;
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -3821,8 +3818,8 @@ var BootNodeGateways_NetworkNodes = {
   },
   fromJSON(object) {
     return {
-      dvote: Array.isArray(object?.dvote) ? object.dvote.map((e) => BootNodeGateways_NetworkNodes_DVote.fromJSON(e)) : [],
-      web3: Array.isArray(object?.web3) ? object.web3.map((e) => BootNodeGateways_NetworkNodes_Web3.fromJSON(e)) : []
+      dvote: globalThis.Array.isArray(object?.dvote) ? object.dvote.map((e) => BootNodeGateways_NetworkNodes_DVote.fromJSON(e)) : [],
+      web3: globalThis.Array.isArray(object?.web3) ? object.web3.map((e) => BootNodeGateways_NetworkNodes_Web3.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -3896,9 +3893,9 @@ var BootNodeGateways_NetworkNodes_DVote = {
   },
   fromJSON(object) {
     return {
-      uri: isSet5(object.uri) ? String(object.uri) : "",
-      apis: Array.isArray(object?.apis) ? object.apis.map((e) => String(e)) : [],
-      pubKey: isSet5(object.pubKey) ? String(object.pubKey) : ""
+      uri: isSet5(object.uri) ? globalThis.String(object.uri) : "",
+      apis: globalThis.Array.isArray(object?.apis) ? object.apis.map((e) => globalThis.String(e)) : [],
+      pubKey: isSet5(object.pubKey) ? globalThis.String(object.pubKey) : ""
     };
   },
   toJSON(message) {
@@ -3957,7 +3954,7 @@ var BootNodeGateways_NetworkNodes_Web3 = {
     return message;
   },
   fromJSON(object) {
-    return { uri: isSet5(object.uri) ? String(object.uri) : "" };
+    return { uri: isSet5(object.uri) ? globalThis.String(object.uri) : "" };
   },
   toJSON(message) {
     const obj = {};
@@ -4016,7 +4013,10 @@ var BootNodeGateways_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet5(object.key) ? String(object.key) : "", value: isSet5(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet5(object.key) ? globalThis.String(object.key) : "",
+      value: isSet5(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -4114,7 +4114,7 @@ var FeedStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => Feed.fromJSON(e)) : [] };
+    return { items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => Feed.fromJSON(e)) : [] };
   },
   toJSON(message) {
     const obj = {};
@@ -4260,15 +4260,15 @@ var Feed = {
   },
   fromJSON(object) {
     return {
-      version: isSet6(object.version) ? String(object.version) : "",
-      title: isSet6(object.title) ? String(object.title) : "",
-      homePageUrl: isSet6(object.homePageUrl) ? String(object.homePageUrl) : "",
-      description: isSet6(object.description) ? String(object.description) : "",
-      feedUrl: isSet6(object.feedUrl) ? String(object.feedUrl) : "",
-      icon: isSet6(object.icon) ? String(object.icon) : "",
-      favicon: isSet6(object.favicon) ? String(object.favicon) : "",
-      expired: isSet6(object.expired) ? Boolean(object.expired) : false,
-      items: Array.isArray(object?.items) ? object.items.map((e) => FeedPost.fromJSON(e)) : [],
+      version: isSet6(object.version) ? globalThis.String(object.version) : "",
+      title: isSet6(object.title) ? globalThis.String(object.title) : "",
+      homePageUrl: isSet6(object.homePageUrl) ? globalThis.String(object.homePageUrl) : "",
+      description: isSet6(object.description) ? globalThis.String(object.description) : "",
+      feedUrl: isSet6(object.feedUrl) ? globalThis.String(object.feedUrl) : "",
+      icon: isSet6(object.icon) ? globalThis.String(object.icon) : "",
+      favicon: isSet6(object.favicon) ? globalThis.String(object.favicon) : "",
+      expired: isSet6(object.expired) ? globalThis.Boolean(object.expired) : false,
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => FeedPost.fromJSON(e)) : [],
       meta: isObject4(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -4331,7 +4331,7 @@ var Feed = {
     message.items = object.items?.map((e) => FeedPost.fromPartial(e)) || [];
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -4379,7 +4379,10 @@ var Feed_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet6(object.key) ? String(object.key) : "", value: isSet6(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet6(object.key) ? globalThis.String(object.key) : "",
+      value: isSet6(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -4536,16 +4539,16 @@ var FeedPost = {
   },
   fromJSON(object) {
     return {
-      id: isSet6(object.id) ? String(object.id) : "",
-      title: isSet6(object.title) ? String(object.title) : "",
-      summary: isSet6(object.summary) ? String(object.summary) : "",
-      contentText: isSet6(object.contentText) ? String(object.contentText) : "",
-      contentHtml: isSet6(object.contentHtml) ? String(object.contentHtml) : "",
-      url: isSet6(object.url) ? String(object.url) : "",
-      image: isSet6(object.image) ? String(object.image) : "",
-      tags: Array.isArray(object?.tags) ? object.tags.map((e) => String(e)) : [],
-      datePublished: isSet6(object.datePublished) ? String(object.datePublished) : "",
-      dateModified: isSet6(object.dateModified) ? String(object.dateModified) : "",
+      id: isSet6(object.id) ? globalThis.String(object.id) : "",
+      title: isSet6(object.title) ? globalThis.String(object.title) : "",
+      summary: isSet6(object.summary) ? globalThis.String(object.summary) : "",
+      contentText: isSet6(object.contentText) ? globalThis.String(object.contentText) : "",
+      contentHtml: isSet6(object.contentHtml) ? globalThis.String(object.contentHtml) : "",
+      url: isSet6(object.url) ? globalThis.String(object.url) : "",
+      image: isSet6(object.image) ? globalThis.String(object.image) : "",
+      tags: globalThis.Array.isArray(object?.tags) ? object.tags.map((e) => globalThis.String(e)) : [],
+      datePublished: isSet6(object.datePublished) ? globalThis.String(object.datePublished) : "",
+      dateModified: isSet6(object.dateModified) ? globalThis.String(object.dateModified) : "",
       author: isSet6(object.author) ? FeedPost_Author.fromJSON(object.author) : void 0
     };
   },
@@ -4646,7 +4649,10 @@ var FeedPost_Author = {
     return message;
   },
   fromJSON(object) {
-    return { name: isSet6(object.name) ? String(object.name) : "", url: isSet6(object.url) ? String(object.url) : "" };
+    return {
+      name: isSet6(object.name) ? globalThis.String(object.name) : "",
+      url: isSet6(object.url) ? globalThis.String(object.url) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -4709,7 +4715,9 @@ var ProcessMetadataStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => ProcessMetadata.fromJSON(e)) : [] };
+    return {
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => ProcessMetadata.fromJSON(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -4826,7 +4834,7 @@ var ProcessMetadata = {
   },
   fromJSON(object) {
     return {
-      version: isSet7(object.version) ? String(object.version) : "",
+      version: isSet7(object.version) ? globalThis.String(object.version) : "",
       title: isObject5(object.title) ? Object.entries(object.title).reduce((acc, [key, value]) => {
         acc[key] = String(value);
         return acc;
@@ -4839,7 +4847,7 @@ var ProcessMetadata = {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      questions: Array.isArray(object?.questions) ? object.questions.map((e) => ProcessMetadata_Question.fromJSON(e)) : [],
+      questions: globalThis.Array.isArray(object?.questions) ? object.questions.map((e) => ProcessMetadata_Question.fromJSON(e)) : [],
       results: isSet7(object.results) ? ProcessMetadata_Results.fromJSON(object.results) : void 0,
       meta: isObject5(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
@@ -4904,14 +4912,14 @@ var ProcessMetadata = {
     message.version = object.version ?? "";
     message.title = Object.entries(object.title ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.description = Object.entries(object.description ?? {}).reduce(
       (acc, [key, value]) => {
         if (value !== void 0) {
-          acc[key] = String(value);
+          acc[key] = globalThis.String(value);
         }
         return acc;
       },
@@ -4919,7 +4927,7 @@ var ProcessMetadata = {
     );
     message.media = Object.entries(object.media ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -4927,7 +4935,7 @@ var ProcessMetadata = {
     message.results = object.results !== void 0 && object.results !== null ? ProcessMetadata_Results.fromPartial(object.results) : void 0;
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -4975,7 +4983,10 @@ var ProcessMetadata_TitleEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -5038,7 +5049,10 @@ var ProcessMetadata_DescriptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -5101,7 +5115,10 @@ var ProcessMetadata_MediaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -5188,7 +5205,7 @@ var ProcessMetadata_Question = {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      choices: Array.isArray(object?.choices) ? object.choices.map((e) => ProcessMetadata_Question_VoteOption.fromJSON(e)) : []
+      choices: globalThis.Array.isArray(object?.choices) ? object.choices.map((e) => ProcessMetadata_Question_VoteOption.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -5223,14 +5240,14 @@ var ProcessMetadata_Question = {
     const message = createBaseProcessMetadata_Question();
     message.title = Object.entries(object.title ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
     message.description = Object.entries(object.description ?? {}).reduce(
       (acc, [key, value]) => {
         if (value !== void 0) {
-          acc[key] = String(value);
+          acc[key] = globalThis.String(value);
         }
         return acc;
       },
@@ -5281,7 +5298,10 @@ var ProcessMetadata_Question_TitleEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -5344,7 +5364,10 @@ var ProcessMetadata_Question_DescriptionEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -5415,7 +5438,7 @@ var ProcessMetadata_Question_VoteOption = {
         acc[key] = String(value);
         return acc;
       }, {}) : {},
-      value: isSet7(object.value) ? Number(object.value) : 0
+      value: isSet7(object.value) ? globalThis.Number(object.value) : 0
     };
   },
   toJSON(message) {
@@ -5441,7 +5464,7 @@ var ProcessMetadata_Question_VoteOption = {
     const message = createBaseProcessMetadata_Question_VoteOption();
     message.title = Object.entries(object.title ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -5490,7 +5513,10 @@ var ProcessMetadata_Question_VoteOption_TitleEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -5554,8 +5580,8 @@ var ProcessMetadata_Results = {
   },
   fromJSON(object) {
     return {
-      aggregation: isSet7(object.aggregation) ? String(object.aggregation) : "",
-      display: isSet7(object.display) ? String(object.display) : ""
+      aggregation: isSet7(object.aggregation) ? globalThis.String(object.aggregation) : "",
+      display: isSet7(object.display) ? globalThis.String(object.display) : ""
     };
   },
   toJSON(message) {
@@ -5619,7 +5645,10 @@ var ProcessMetadata_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet7(object.key) ? String(object.key) : "", value: isSet7(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet7(object.key) ? globalThis.String(object.key) : "",
+      value: isSet7(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -6417,7 +6446,7 @@ var VoteEnvelope = {
       proof: isSet8(object.proof) ? Proof.fromJSON(object.proof) : void 0,
       votePackage: isSet8(object.votePackage) ? bytesFromBase643(object.votePackage) : new Uint8Array(0),
       nullifier: isSet8(object.nullifier) ? bytesFromBase643(object.nullifier) : new Uint8Array(0),
-      encryptionKeyIndexes: Array.isArray(object?.encryptionKeyIndexes) ? object.encryptionKeyIndexes.map((e) => Number(e)) : []
+      encryptionKeyIndexes: globalThis.Array.isArray(object?.encryptionKeyIndexes) ? object.encryptionKeyIndexes.map((e) => globalThis.Number(e)) : []
     };
   },
   toJSON(message) {
@@ -6822,7 +6851,7 @@ var ProofEthereumStorage = {
     return {
       key: isSet8(object.key) ? bytesFromBase643(object.key) : new Uint8Array(0),
       value: isSet8(object.value) ? bytesFromBase643(object.value) : new Uint8Array(0),
-      siblings: Array.isArray(object?.siblings) ? object.siblings.map((e) => bytesFromBase643(e)) : []
+      siblings: globalThis.Array.isArray(object?.siblings) ? object.siblings.map((e) => bytesFromBase643(e)) : []
     };
   },
   toJSON(message) {
@@ -6928,7 +6957,7 @@ var ProofEthereumAccount = {
       balance: isSet8(object.balance) ? bytesFromBase643(object.balance) : new Uint8Array(0),
       storageHash: isSet8(object.storageHash) ? bytesFromBase643(object.storageHash) : new Uint8Array(0),
       codeHash: isSet8(object.codeHash) ? bytesFromBase643(object.codeHash) : new Uint8Array(0),
-      siblings: Array.isArray(object?.siblings) ? object.siblings.map((e) => bytesFromBase643(e)) : []
+      siblings: globalThis.Array.isArray(object?.siblings) ? object.siblings.map((e) => bytesFromBase643(e)) : []
     };
   },
   toJSON(message) {
@@ -7358,11 +7387,11 @@ var ProofZkSNARK = {
   },
   fromJSON(object) {
     return {
-      circuitParametersIndex: isSet8(object.circuitParametersIndex) ? Number(object.circuitParametersIndex) : 0,
-      a: Array.isArray(object?.a) ? object.a.map((e) => String(e)) : [],
-      b: Array.isArray(object?.b) ? object.b.map((e) => String(e)) : [],
-      c: Array.isArray(object?.c) ? object.c.map((e) => String(e)) : [],
-      publicInputs: Array.isArray(object?.publicInputs) ? object.publicInputs.map((e) => String(e)) : []
+      circuitParametersIndex: isSet8(object.circuitParametersIndex) ? globalThis.Number(object.circuitParametersIndex) : 0,
+      a: globalThis.Array.isArray(object?.a) ? object.a.map((e) => globalThis.String(e)) : [],
+      b: globalThis.Array.isArray(object?.b) ? object.b.map((e) => globalThis.String(e)) : [],
+      c: globalThis.Array.isArray(object?.c) ? object.c.map((e) => globalThis.String(e)) : [],
+      publicInputs: globalThis.Array.isArray(object?.publicInputs) ? object.publicInputs.map((e) => globalThis.String(e)) : []
     };
   },
   toJSON(message) {
@@ -7466,11 +7495,11 @@ var Account2 = {
   },
   fromJSON(object) {
     return {
-      balance: isSet8(object.balance) ? Number(object.balance) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
-      infoURI: isSet8(object.infoURI) ? String(object.infoURI) : "",
-      delegateAddrs: Array.isArray(object?.delegateAddrs) ? object.delegateAddrs.map((e) => bytesFromBase643(e)) : [],
-      processIndex: isSet8(object.processIndex) ? Number(object.processIndex) : 0
+      balance: isSet8(object.balance) ? globalThis.Number(object.balance) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
+      infoURI: isSet8(object.infoURI) ? globalThis.String(object.infoURI) : "",
+      delegateAddrs: globalThis.Array.isArray(object?.delegateAddrs) ? object.delegateAddrs.map((e) => bytesFromBase643(e)) : [],
+      processIndex: isSet8(object.processIndex) ? globalThis.Number(object.processIndex) : 0
     };
   },
   toJSON(message) {
@@ -7548,7 +7577,7 @@ var Treasurer = {
   fromJSON(object) {
     return {
       address: isSet8(object.address) ? bytesFromBase643(object.address) : new Uint8Array(0),
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0
     };
   },
   toJSON(message) {
@@ -7955,7 +7984,7 @@ var NewProcessTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
       process: isSet8(object.process) ? Process.fromJSON(object.process) : void 0
     };
   },
@@ -8109,15 +8138,15 @@ var SetProcessTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
       processId: isSet8(object.processId) ? bytesFromBase643(object.processId) : new Uint8Array(0),
       status: isSet8(object.status) ? processStatusFromJSON(object.status) : void 0,
-      questionIndex: isSet8(object.questionIndex) ? Number(object.questionIndex) : void 0,
+      questionIndex: isSet8(object.questionIndex) ? globalThis.Number(object.questionIndex) : void 0,
       censusRoot: isSet8(object.censusRoot) ? bytesFromBase643(object.censusRoot) : void 0,
-      censusURI: isSet8(object.censusURI) ? String(object.censusURI) : void 0,
+      censusURI: isSet8(object.censusURI) ? globalThis.String(object.censusURI) : void 0,
       proof: isSet8(object.proof) ? Proof.fromJSON(object.proof) : void 0,
       results: isSet8(object.results) ? ProcessResult.fromJSON(object.results) : void 0,
-      tempSIKs: isSet8(object.tempSIKs) ? Boolean(object.tempSIKs) : void 0
+      tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0
     };
   },
   toJSON(message) {
@@ -8292,10 +8321,10 @@ var AdminTx = {
       address: isSet8(object.address) ? bytesFromBase643(object.address) : void 0,
       encryptionPrivateKey: isSet8(object.encryptionPrivateKey) ? bytesFromBase643(object.encryptionPrivateKey) : void 0,
       encryptionPublicKey: isSet8(object.encryptionPublicKey) ? bytesFromBase643(object.encryptionPublicKey) : void 0,
-      keyIndex: isSet8(object.keyIndex) ? Number(object.keyIndex) : void 0,
-      power: isSet8(object.power) ? Number(object.power) : void 0,
+      keyIndex: isSet8(object.keyIndex) ? globalThis.Number(object.keyIndex) : void 0,
+      power: isSet8(object.power) ? globalThis.Number(object.power) : void 0,
       publicKey: isSet8(object.publicKey) ? bytesFromBase643(object.publicKey) : void 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0
     };
   },
   toJSON(message) {
@@ -8415,11 +8444,11 @@ var RegisterKeyTx = {
   },
   fromJSON(object) {
     return {
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
       processId: isSet8(object.processId) ? bytesFromBase643(object.processId) : new Uint8Array(0),
       proof: isSet8(object.proof) ? Proof.fromJSON(object.proof) : void 0,
       newKey: isSet8(object.newKey) ? bytesFromBase643(object.newKey) : new Uint8Array(0),
-      weight: isSet8(object.weight) ? String(object.weight) : ""
+      weight: isSet8(object.weight) ? globalThis.String(object.weight) : ""
     };
   },
   toJSON(message) {
@@ -8515,9 +8544,9 @@ var MintTokensTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
       to: isSet8(object.to) ? bytesFromBase643(object.to) : new Uint8Array(0),
-      value: isSet8(object.value) ? Number(object.value) : 0
+      value: isSet8(object.value) ? globalThis.Number(object.value) : 0
     };
   },
   toJSON(message) {
@@ -8618,10 +8647,10 @@ var SendTokensTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
       from: isSet8(object.from) ? bytesFromBase643(object.from) : new Uint8Array(0),
       to: isSet8(object.to) ? bytesFromBase643(object.to) : new Uint8Array(0),
-      value: isSet8(object.value) ? Number(object.value) : 0
+      value: isSet8(object.value) ? globalThis.Number(object.value) : 0
     };
   },
   toJSON(message) {
@@ -8708,8 +8737,8 @@ var SetTransactionCostsTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
-      value: isSet8(object.value) ? Number(object.value) : 0
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
+      value: isSet8(object.value) ? globalThis.Number(object.value) : 0
     };
   },
   toJSON(message) {
@@ -8832,11 +8861,11 @@ var SetAccountTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : void 0,
-      infoURI: isSet8(object.infoURI) ? String(object.infoURI) : void 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : void 0,
+      infoURI: isSet8(object.infoURI) ? globalThis.String(object.infoURI) : void 0,
       account: isSet8(object.account) ? bytesFromBase643(object.account) : void 0,
       faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0,
-      delegates: Array.isArray(object?.delegates) ? object.delegates.map((e) => bytesFromBase643(e)) : [],
+      delegates: globalThis.Array.isArray(object?.delegates) ? object.delegates.map((e) => bytesFromBase643(e)) : [],
       SIK: isSet8(object.SIK) ? bytesFromBase643(object.SIK) : void 0
     };
   },
@@ -8881,12 +8910,15 @@ var SetAccountTx = {
   }
 };
 function createBaseSIKTx() {
-  return { txtype: 0, SIK: void 0 };
+  return { txtype: 0, nonce: void 0, SIK: void 0 };
 }
 var SIKTx = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
     if (message.txtype !== 0) {
       writer.uint32(8).int32(message.txtype);
+    }
+    if (message.nonce !== void 0) {
+      writer.uint32(16).uint32(message.nonce);
     }
     if (message.SIK !== void 0) {
       writer.uint32(26).bytes(message.SIK);
@@ -8906,6 +8938,12 @@ var SIKTx = {
           }
           message.txtype = reader.int32();
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+          message.nonce = reader.uint32();
+          continue;
         case 3:
           if (tag !== 26) {
             break;
@@ -8923,6 +8961,7 @@ var SIKTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : void 0,
       SIK: isSet8(object.SIK) ? bytesFromBase643(object.SIK) : void 0
     };
   },
@@ -8930,6 +8969,9 @@ var SIKTx = {
     const obj = {};
     if (message.txtype !== 0) {
       obj.txtype = txTypeToJSON(message.txtype);
+    }
+    if (message.nonce !== void 0) {
+      obj.nonce = Math.round(message.nonce);
     }
     if (message.SIK !== void 0) {
       obj.SIK = base64FromBytes3(message.SIK);
@@ -8942,6 +8984,7 @@ var SIKTx = {
   fromPartial(object) {
     const message = createBaseSIKTx();
     message.txtype = object.txtype ?? 0;
+    message.nonce = object.nonce ?? void 0;
     message.SIK = object.SIK ?? void 0;
     return message;
   }
@@ -9079,7 +9122,7 @@ var CollectFaucetTx = {
     return {
       txType: isSet8(object.txType) ? txTypeFromJSON(object.txType) : 0,
       faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0
     };
   },
   toJSON(message) {
@@ -9157,9 +9200,9 @@ var FaucetPayload = {
   },
   fromJSON(object) {
     return {
-      identifier: isSet8(object.identifier) ? Number(object.identifier) : 0,
+      identifier: isSet8(object.identifier) ? globalThis.Number(object.identifier) : 0,
       to: isSet8(object.to) ? bytesFromBase643(object.to) : new Uint8Array(0),
-      amount: isSet8(object.amount) ? Number(object.amount) : 0
+      amount: isSet8(object.amount) ? globalThis.Number(object.amount) : 0
     };
   },
   toJSON(message) {
@@ -9304,7 +9347,7 @@ var SetKeykeeperTx = {
   fromJSON(object) {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet8(object.nonce) ? Number(object.nonce) : 0,
+      nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
       keykeeper: isSet8(object.keykeeper) ? bytesFromBase643(object.keykeeper) : new Uint8Array(0)
     };
   },
@@ -9669,35 +9712,35 @@ var Process = {
     return {
       processId: isSet8(object.processId) ? bytesFromBase643(object.processId) : new Uint8Array(0),
       entityId: isSet8(object.entityId) ? bytesFromBase643(object.entityId) : new Uint8Array(0),
-      startBlock: isSet8(object.startBlock) ? Number(object.startBlock) : 0,
-      blockCount: isSet8(object.blockCount) ? Number(object.blockCount) : 0,
+      startBlock: isSet8(object.startBlock) ? globalThis.Number(object.startBlock) : 0,
+      blockCount: isSet8(object.blockCount) ? globalThis.Number(object.blockCount) : 0,
       censusRoot: isSet8(object.censusRoot) ? bytesFromBase643(object.censusRoot) : new Uint8Array(0),
-      censusURI: isSet8(object.censusURI) ? String(object.censusURI) : void 0,
-      encryptionPrivateKeys: Array.isArray(object?.encryptionPrivateKeys) ? object.encryptionPrivateKeys.map((e) => String(e)) : [],
-      encryptionPublicKeys: Array.isArray(object?.encryptionPublicKeys) ? object.encryptionPublicKeys.map((e) => String(e)) : [],
-      keyIndex: isSet8(object.keyIndex) ? Number(object.keyIndex) : void 0,
+      censusURI: isSet8(object.censusURI) ? globalThis.String(object.censusURI) : void 0,
+      encryptionPrivateKeys: globalThis.Array.isArray(object?.encryptionPrivateKeys) ? object.encryptionPrivateKeys.map((e) => globalThis.String(e)) : [],
+      encryptionPublicKeys: globalThis.Array.isArray(object?.encryptionPublicKeys) ? object.encryptionPublicKeys.map((e) => globalThis.String(e)) : [],
+      keyIndex: isSet8(object.keyIndex) ? globalThis.Number(object.keyIndex) : void 0,
       status: isSet8(object.status) ? processStatusFromJSON(object.status) : 0,
       paramsSignature: isSet8(object.paramsSignature) ? bytesFromBase643(object.paramsSignature) : void 0,
-      namespace: isSet8(object.namespace) ? Number(object.namespace) : 0,
+      namespace: isSet8(object.namespace) ? globalThis.Number(object.namespace) : 0,
       envelopeType: isSet8(object.envelopeType) ? EnvelopeType.fromJSON(object.envelopeType) : void 0,
       mode: isSet8(object.mode) ? ProcessMode.fromJSON(object.mode) : void 0,
-      questionIndex: isSet8(object.questionIndex) ? Number(object.questionIndex) : void 0,
-      questionCount: isSet8(object.questionCount) ? Number(object.questionCount) : void 0,
+      questionIndex: isSet8(object.questionIndex) ? globalThis.Number(object.questionIndex) : void 0,
+      questionCount: isSet8(object.questionCount) ? globalThis.Number(object.questionCount) : void 0,
       voteOptions: isSet8(object.voteOptions) ? ProcessVoteOptions.fromJSON(object.voteOptions) : void 0,
       censusOrigin: isSet8(object.censusOrigin) ? censusOriginFromJSON(object.censusOrigin) : 0,
       results: isSet8(object.results) ? ProcessResult.fromJSON(object.results) : void 0,
-      ethIndexSlot: isSet8(object.ethIndexSlot) ? Number(object.ethIndexSlot) : void 0,
-      sourceBlockHeight: isSet8(object.sourceBlockHeight) ? Number(object.sourceBlockHeight) : void 0,
+      ethIndexSlot: isSet8(object.ethIndexSlot) ? globalThis.Number(object.ethIndexSlot) : void 0,
+      sourceBlockHeight: isSet8(object.sourceBlockHeight) ? globalThis.Number(object.sourceBlockHeight) : void 0,
       owner: isSet8(object.owner) ? bytesFromBase643(object.owner) : void 0,
-      metadata: isSet8(object.metadata) ? String(object.metadata) : void 0,
+      metadata: isSet8(object.metadata) ? globalThis.String(object.metadata) : void 0,
       sourceNetworkId: isSet8(object.sourceNetworkId) ? sourceNetworkIdFromJSON(object.sourceNetworkId) : 0,
-      maxCensusSize: isSet8(object.maxCensusSize) ? Number(object.maxCensusSize) : 0,
+      maxCensusSize: isSet8(object.maxCensusSize) ? globalThis.Number(object.maxCensusSize) : 0,
       rollingCensusRoot: isSet8(object.rollingCensusRoot) ? bytesFromBase643(object.rollingCensusRoot) : void 0,
-      rollingCensusSize: isSet8(object.rollingCensusSize) ? Number(object.rollingCensusSize) : void 0,
+      rollingCensusSize: isSet8(object.rollingCensusSize) ? globalThis.Number(object.rollingCensusSize) : void 0,
       nullifiersRoot: isSet8(object.nullifiersRoot) ? bytesFromBase643(object.nullifiersRoot) : void 0,
       sourceNetworkContractAddr: isSet8(object.sourceNetworkContractAddr) ? bytesFromBase643(object.sourceNetworkContractAddr) : void 0,
-      tokenDecimals: isSet8(object.tokenDecimals) ? Number(object.tokenDecimals) : void 0,
-      tempSIKs: isSet8(object.tempSIKs) ? Boolean(object.tempSIKs) : void 0
+      tokenDecimals: isSet8(object.tokenDecimals) ? globalThis.Number(object.tokenDecimals) : void 0,
+      tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0
     };
   },
   toJSON(message) {
@@ -9905,11 +9948,11 @@ var EnvelopeType = {
   },
   fromJSON(object) {
     return {
-      serial: isSet8(object.serial) ? Boolean(object.serial) : false,
-      anonymous: isSet8(object.anonymous) ? Boolean(object.anonymous) : false,
-      encryptedVotes: isSet8(object.encryptedVotes) ? Boolean(object.encryptedVotes) : false,
-      uniqueValues: isSet8(object.uniqueValues) ? Boolean(object.uniqueValues) : false,
-      costFromWeight: isSet8(object.costFromWeight) ? Boolean(object.costFromWeight) : false
+      serial: isSet8(object.serial) ? globalThis.Boolean(object.serial) : false,
+      anonymous: isSet8(object.anonymous) ? globalThis.Boolean(object.anonymous) : false,
+      encryptedVotes: isSet8(object.encryptedVotes) ? globalThis.Boolean(object.encryptedVotes) : false,
+      uniqueValues: isSet8(object.uniqueValues) ? globalThis.Boolean(object.uniqueValues) : false,
+      costFromWeight: isSet8(object.costFromWeight) ? globalThis.Boolean(object.costFromWeight) : false
     };
   },
   toJSON(message) {
@@ -10013,11 +10056,11 @@ var ProcessMode = {
   },
   fromJSON(object) {
     return {
-      autoStart: isSet8(object.autoStart) ? Boolean(object.autoStart) : false,
-      interruptible: isSet8(object.interruptible) ? Boolean(object.interruptible) : false,
-      dynamicCensus: isSet8(object.dynamicCensus) ? Boolean(object.dynamicCensus) : false,
-      encryptedMetaData: isSet8(object.encryptedMetaData) ? Boolean(object.encryptedMetaData) : false,
-      preRegister: isSet8(object.preRegister) ? Boolean(object.preRegister) : false
+      autoStart: isSet8(object.autoStart) ? globalThis.Boolean(object.autoStart) : false,
+      interruptible: isSet8(object.interruptible) ? globalThis.Boolean(object.interruptible) : false,
+      dynamicCensus: isSet8(object.dynamicCensus) ? globalThis.Boolean(object.dynamicCensus) : false,
+      encryptedMetaData: isSet8(object.encryptedMetaData) ? globalThis.Boolean(object.encryptedMetaData) : false,
+      preRegister: isSet8(object.preRegister) ? globalThis.Boolean(object.preRegister) : false
     };
   },
   toJSON(message) {
@@ -10121,11 +10164,11 @@ var ProcessVoteOptions = {
   },
   fromJSON(object) {
     return {
-      maxCount: isSet8(object.maxCount) ? Number(object.maxCount) : 0,
-      maxValue: isSet8(object.maxValue) ? Number(object.maxValue) : 0,
-      maxVoteOverwrites: isSet8(object.maxVoteOverwrites) ? Number(object.maxVoteOverwrites) : 0,
-      maxTotalCost: isSet8(object.maxTotalCost) ? Number(object.maxTotalCost) : 0,
-      costExponent: isSet8(object.costExponent) ? Number(object.costExponent) : 0
+      maxCount: isSet8(object.maxCount) ? globalThis.Number(object.maxCount) : 0,
+      maxValue: isSet8(object.maxValue) ? globalThis.Number(object.maxValue) : 0,
+      maxVoteOverwrites: isSet8(object.maxVoteOverwrites) ? globalThis.Number(object.maxVoteOverwrites) : 0,
+      maxTotalCost: isSet8(object.maxTotalCost) ? globalThis.Number(object.maxTotalCost) : 0,
+      costExponent: isSet8(object.costExponent) ? globalThis.Number(object.costExponent) : 0
     };
   },
   toJSON(message) {
@@ -10192,7 +10235,9 @@ var OracleList = {
     return message;
   },
   fromJSON(object) {
-    return { oracles: Array.isArray(object?.oracles) ? object.oracles.map((e) => bytesFromBase643(e)) : [] };
+    return {
+      oracles: globalThis.Array.isArray(object?.oracles) ? object.oracles.map((e) => bytesFromBase643(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -10243,7 +10288,7 @@ var ValidatorList = {
   },
   fromJSON(object) {
     return {
-      validators: Array.isArray(object?.validators) ? object.validators.map((e) => Validator.fromJSON(e)) : []
+      validators: globalThis.Array.isArray(object?.validators) ? object.validators.map((e) => Validator.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -10333,9 +10378,9 @@ var Validator = {
     return {
       address: isSet8(object.address) ? bytesFromBase643(object.address) : new Uint8Array(0),
       pubKey: isSet8(object.pubKey) ? bytesFromBase643(object.pubKey) : new Uint8Array(0),
-      power: isSet8(object.power) ? Number(object.power) : 0,
-      name: isSet8(object.name) ? String(object.name) : "",
-      keyIndex: isSet8(object.keyIndex) ? Number(object.keyIndex) : 0
+      power: isSet8(object.power) ? globalThis.Number(object.power) : 0,
+      name: isSet8(object.name) ? globalThis.String(object.name) : "",
+      keyIndex: isSet8(object.keyIndex) ? globalThis.Number(object.keyIndex) : 0
     };
   },
   toJSON(message) {
@@ -10525,9 +10570,9 @@ var TendermintHeader = {
   },
   fromJSON(object) {
     return {
-      chainId: isSet8(object.chainId) ? String(object.chainId) : "",
-      height: isSet8(object.height) ? Number(object.height) : 0,
-      timestamp: isSet8(object.timestamp) ? Number(object.timestamp) : 0,
+      chainId: isSet8(object.chainId) ? globalThis.String(object.chainId) : "",
+      height: isSet8(object.height) ? globalThis.Number(object.height) : 0,
+      timestamp: isSet8(object.timestamp) ? globalThis.Number(object.timestamp) : 0,
       blockID: isSet8(object.blockID) ? bytesFromBase643(object.blockID) : new Uint8Array(0),
       lastCommitHash: isSet8(object.lastCommitHash) ? bytesFromBase643(object.lastCommitHash) : new Uint8Array(0),
       dataHash: isSet8(object.dataHash) ? bytesFromBase643(object.dataHash) : new Uint8Array(0),
@@ -10636,7 +10681,9 @@ var ProcessResult = {
     return message;
   },
   fromJSON(object) {
-    return { votes: Array.isArray(object?.votes) ? object.votes.map((e) => QuestionResult.fromJSON(e)) : [] };
+    return {
+      votes: globalThis.Array.isArray(object?.votes) ? object.votes.map((e) => QuestionResult.fromJSON(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -10686,7 +10733,9 @@ var QuestionResult = {
     return message;
   },
   fromJSON(object) {
-    return { question: Array.isArray(object?.question) ? object.question.map((e) => bytesFromBase643(e)) : [] };
+    return {
+      question: globalThis.Array.isArray(object?.question) ? object.question.map((e) => bytesFromBase643(e)) : []
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -10737,7 +10786,7 @@ var ProcessEndingList = {
   },
   fromJSON(object) {
     return {
-      processList: Array.isArray(object?.processList) ? object.processList.map((e) => bytesFromBase643(e)) : []
+      processList: globalThis.Array.isArray(object?.processList) ? object.processList.map((e) => bytesFromBase643(e)) : []
     };
   },
   toJSON(message) {
@@ -10788,7 +10837,7 @@ var StoredKeys = {
     return message;
   },
   fromJSON(object) {
-    return { pids: Array.isArray(object?.pids) ? object.pids.map((e) => bytesFromBase643(e)) : [] };
+    return { pids: globalThis.Array.isArray(object?.pids) ? object.pids.map((e) => bytesFromBase643(e)) : [] };
   },
   toJSON(message) {
     const obj = {};
@@ -10806,26 +10855,11 @@ var StoredKeys = {
     return message;
   }
 };
-var tsProtoGlobalThis3 = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 function bytesFromBase643(b64) {
-  if (tsProtoGlobalThis3.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis3.Buffer.from(b64, "base64"));
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = tsProtoGlobalThis3.atob(b64);
+    const bin = globalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -10834,19 +10868,19 @@ function bytesFromBase643(b64) {
   }
 }
 function base64FromBytes3(arr) {
-  if (tsProtoGlobalThis3.Buffer) {
-    return tsProtoGlobalThis3.Buffer.from(arr).toString("base64");
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin = [];
     arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
+      bin.push(globalThis.String.fromCharCode(byte));
     });
-    return tsProtoGlobalThis3.btoa(bin.join(""));
+    return globalThis.btoa(bin.join(""));
   }
 }
 function longToNumber2(long) {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis3.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }

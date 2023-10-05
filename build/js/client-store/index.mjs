@@ -1199,7 +1199,11 @@ var require_reader = __commonJS({
       this.pos += length;
       if (Array.isArray(this.buf))
         return this.buf.slice(start, end);
-      return start === end ? new this.buf.constructor(0) : this._slice.call(this.buf, start, end);
+      if (start === end) {
+        var nativeBuffer = util.Buffer;
+        return nativeBuffer ? nativeBuffer.alloc(0) : new this.buf.constructor(0);
+      }
+      return this._slice.call(this.buf, start, end);
     };
     Reader.prototype.string = function read_string() {
       var bytes = this.bytes();
@@ -1473,8 +1477,8 @@ var EntityReference = {
   },
   fromJSON(object) {
     return {
-      entityId: isSet(object.entityId) ? String(object.entityId) : "",
-      entryPoints: Array.isArray(object?.entryPoints) ? object.entryPoints.map((e) => String(e)) : []
+      entityId: isSet(object.entityId) ? globalThis.String(object.entityId) : "",
+      entryPoints: globalThis.Array.isArray(object?.entryPoints) ? object.entryPoints.map((e) => globalThis.String(e)) : []
     };
   },
   toJSON(message) {
@@ -1602,8 +1606,8 @@ var Wallet = {
   fromJSON(object) {
     return {
       encryptedMnemonic: isSet2(object.encryptedMnemonic) ? bytesFromBase64(object.encryptedMnemonic) : new Uint8Array(0),
-      hdPath: isSet2(object.hdPath) ? String(object.hdPath) : "",
-      locale: isSet2(object.locale) ? String(object.locale) : "",
+      hdPath: isSet2(object.hdPath) ? globalThis.String(object.hdPath) : "",
+      locale: isSet2(object.locale) ? globalThis.String(object.locale) : "",
       authMethod: isSet2(object.authMethod) ? wallet_AuthMethodFromJSON(object.authMethod) : 0
     };
   },
@@ -1635,26 +1639,11 @@ var Wallet = {
     return message;
   }
 };
-var tsProtoGlobalThis = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 function bytesFromBase64(b64) {
-  if (tsProtoGlobalThis.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = tsProtoGlobalThis.atob(b64);
+    const bin = globalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -1663,14 +1652,14 @@ function bytesFromBase64(b64) {
   }
 }
 function base64FromBytes(arr) {
-  if (tsProtoGlobalThis.Buffer) {
-    return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin = [];
     arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
+      bin.push(globalThis.String.fromCharCode(byte));
     });
-    return tsProtoGlobalThis.btoa(bin.join(""));
+    return globalThis.btoa(bin.join(""));
   }
 }
 function isSet2(value) {
@@ -1710,7 +1699,7 @@ var AccountsStore = {
     return message;
   },
   fromJSON(object) {
-    return { items: Array.isArray(object?.items) ? object.items.map((e) => Account.fromJSON(e)) : [] };
+    return { items: globalThis.Array.isArray(object?.items) ? object.items.map((e) => Account.fromJSON(e)) : [] };
   },
   toJSON(message) {
     const obj = {};
@@ -1809,10 +1798,10 @@ var Account = {
   },
   fromJSON(object) {
     return {
-      name: isSet3(object.name) ? String(object.name) : "",
+      name: isSet3(object.name) ? globalThis.String(object.name) : "",
       wallet: isSet3(object.wallet) ? Wallet.fromJSON(object.wallet) : void 0,
-      address: isSet3(object.address) ? String(object.address) : "",
-      hasBackup: isSet3(object.hasBackup) ? Boolean(object.hasBackup) : false,
+      address: isSet3(object.address) ? globalThis.String(object.address) : "",
+      hasBackup: isSet3(object.hasBackup) ? globalThis.Boolean(object.hasBackup) : false,
       extra: isSet3(object.extra) ? Account_Extra.fromJSON(object.extra) : void 0,
       meta: isObject(object.meta) ? Object.entries(object.meta).reduce((acc, [key, value]) => {
         acc[key] = String(value);
@@ -1860,7 +1849,7 @@ var Account = {
     message.extra = object.extra !== void 0 && object.extra !== null ? Account_Extra.fromPartial(object.extra) : void 0;
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -1909,8 +1898,8 @@ var Account_AppVoter = {
   },
   fromJSON(object) {
     return {
-      appAnalyticsID: isSet3(object.appAnalyticsID) ? String(object.appAnalyticsID) : "",
-      entities: Array.isArray(object?.entities) ? object.entities.map((e) => EntityReference.fromJSON(e)) : []
+      appAnalyticsID: isSet3(object.appAnalyticsID) ? globalThis.String(object.appAnalyticsID) : "",
+      entities: globalThis.Array.isArray(object?.entities) ? object.entities.map((e) => EntityReference.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -1965,7 +1954,7 @@ var Account_WebEntity = {
     return message;
   },
   fromJSON(object) {
-    return { webAnalyticsID: isSet3(object.webAnalyticsID) ? String(object.webAnalyticsID) : "" };
+    return { webAnalyticsID: isSet3(object.webAnalyticsID) ? globalThis.String(object.webAnalyticsID) : "" };
   },
   toJSON(message) {
     const obj = {};
@@ -2095,7 +2084,10 @@ var Account_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet3(object.key) ? String(object.key) : "", value: isSet3(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet3(object.key) ? globalThis.String(object.key) : "",
+      value: isSet3(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
@@ -2328,8 +2320,8 @@ var WalletBackup = {
   },
   fromJSON(object) {
     return {
-      name: isSet4(object.name) ? String(object.name) : "",
-      timestamp: isSet4(object.timestamp) ? Number(object.timestamp) : 0,
+      name: isSet4(object.name) ? globalThis.String(object.name) : "",
+      timestamp: isSet4(object.timestamp) ? globalThis.Number(object.timestamp) : 0,
       wallet: isSet4(object.wallet) ? Wallet.fromJSON(object.wallet) : void 0,
       passphraseRecovery: isSet4(object.passphraseRecovery) ? WalletBackup_Recovery.fromJSON(object.passphraseRecovery) : void 0
     };
@@ -2413,7 +2405,7 @@ var WalletBackup_Recovery = {
   },
   fromJSON(object) {
     return {
-      questionIds: Array.isArray(object?.questionIds) ? object.questionIds.map((e) => walletBackup_Recovery_QuestionEnumFromJSON(e)) : [],
+      questionIds: globalThis.Array.isArray(object?.questionIds) ? object.questionIds.map((e) => walletBackup_Recovery_QuestionEnumFromJSON(e)) : [],
       encryptedPassphrase: isSet4(object.encryptedPassphrase) ? bytesFromBase642(object.encryptedPassphrase) : new Uint8Array(0)
     };
   },
@@ -2437,26 +2429,11 @@ var WalletBackup_Recovery = {
     return message;
   }
 };
-var tsProtoGlobalThis2 = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
 function bytesFromBase642(b64) {
-  if (tsProtoGlobalThis2.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis2.Buffer.from(b64, "base64"));
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
   } else {
-    const bin = tsProtoGlobalThis2.atob(b64);
+    const bin = globalThis.atob(b64);
     const arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; ++i) {
       arr[i] = bin.charCodeAt(i);
@@ -2465,19 +2442,19 @@ function bytesFromBase642(b64) {
   }
 }
 function base64FromBytes2(arr) {
-  if (tsProtoGlobalThis2.Buffer) {
-    return tsProtoGlobalThis2.Buffer.from(arr).toString("base64");
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
   } else {
     const bin = [];
     arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
+      bin.push(globalThis.String.fromCharCode(byte));
     });
-    return tsProtoGlobalThis2.btoa(bin.join(""));
+    return globalThis.btoa(bin.join(""));
   }
 }
 function longToNumber(long) {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new tsProtoGlobalThis2.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
   return long.toNumber();
 }
@@ -2631,7 +2608,7 @@ var BootNodeGateways = {
     message.rinkeby = object.rinkeby !== void 0 && object.rinkeby !== null ? BootNodeGateways_NetworkNodes.fromPartial(object.rinkeby) : void 0;
     message.meta = Object.entries(object.meta ?? {}).reduce((acc, [key, value]) => {
       if (value !== void 0) {
-        acc[key] = String(value);
+        acc[key] = globalThis.String(value);
       }
       return acc;
     }, {});
@@ -2680,8 +2657,8 @@ var BootNodeGateways_NetworkNodes = {
   },
   fromJSON(object) {
     return {
-      dvote: Array.isArray(object?.dvote) ? object.dvote.map((e) => BootNodeGateways_NetworkNodes_DVote.fromJSON(e)) : [],
-      web3: Array.isArray(object?.web3) ? object.web3.map((e) => BootNodeGateways_NetworkNodes_Web3.fromJSON(e)) : []
+      dvote: globalThis.Array.isArray(object?.dvote) ? object.dvote.map((e) => BootNodeGateways_NetworkNodes_DVote.fromJSON(e)) : [],
+      web3: globalThis.Array.isArray(object?.web3) ? object.web3.map((e) => BootNodeGateways_NetworkNodes_Web3.fromJSON(e)) : []
     };
   },
   toJSON(message) {
@@ -2755,9 +2732,9 @@ var BootNodeGateways_NetworkNodes_DVote = {
   },
   fromJSON(object) {
     return {
-      uri: isSet5(object.uri) ? String(object.uri) : "",
-      apis: Array.isArray(object?.apis) ? object.apis.map((e) => String(e)) : [],
-      pubKey: isSet5(object.pubKey) ? String(object.pubKey) : ""
+      uri: isSet5(object.uri) ? globalThis.String(object.uri) : "",
+      apis: globalThis.Array.isArray(object?.apis) ? object.apis.map((e) => globalThis.String(e)) : [],
+      pubKey: isSet5(object.pubKey) ? globalThis.String(object.pubKey) : ""
     };
   },
   toJSON(message) {
@@ -2816,7 +2793,7 @@ var BootNodeGateways_NetworkNodes_Web3 = {
     return message;
   },
   fromJSON(object) {
-    return { uri: isSet5(object.uri) ? String(object.uri) : "" };
+    return { uri: isSet5(object.uri) ? globalThis.String(object.uri) : "" };
   },
   toJSON(message) {
     const obj = {};
@@ -2875,7 +2852,10 @@ var BootNodeGateways_MetaEntry = {
     return message;
   },
   fromJSON(object) {
-    return { key: isSet5(object.key) ? String(object.key) : "", value: isSet5(object.value) ? String(object.value) : "" };
+    return {
+      key: isSet5(object.key) ? globalThis.String(object.key) : "",
+      value: isSet5(object.value) ? globalThis.String(object.value) : ""
+    };
   },
   toJSON(message) {
     const obj = {};
