@@ -175,6 +175,7 @@ enum TxType {
 	SET_ACCOUNT_SIK = 24;
 	DEL_ACCOUNT_SIK = 25;
 	REGISTER_SIK = 26;
+	SET_ACCOUNT_VALIDATOR = 27;
 }
 
 message Tx {
@@ -276,6 +277,8 @@ message SetAccountTx {
 	optional FaucetPackage faucetPackage = 5;
 	repeated bytes delegates = 6;
 	optional bytes SIK = 7;
+	optional bytes publicKey = 8;
+	optional string name = 9;
 }
 
 message SIKTx {
@@ -448,6 +451,11 @@ message Validator {
 	uint64 power = 3;
 	string name = 4;
 	uint32 keyIndex = 5;
+	uint64 height = 6;
+	uint64 proposals = 7;
+	uint64 votes = 8;
+	bytes validatorAddress = 9;
+	uint32 score = 10;
 }
 
 message TendermintHeader {
