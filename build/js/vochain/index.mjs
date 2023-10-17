@@ -1448,6 +1448,7 @@ var TxType = /* @__PURE__ */ ((TxType2) => {
   TxType2[TxType2["SET_ACCOUNT_SIK"] = 24] = "SET_ACCOUNT_SIK";
   TxType2[TxType2["DEL_ACCOUNT_SIK"] = 25] = "DEL_ACCOUNT_SIK";
   TxType2[TxType2["REGISTER_SIK"] = 26] = "REGISTER_SIK";
+  TxType2[TxType2["SET_ACCOUNT_VALIDATOR"] = 27] = "SET_ACCOUNT_VALIDATOR";
   TxType2[TxType2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return TxType2;
 })(TxType || {});
@@ -1534,6 +1535,9 @@ function txTypeFromJSON(object) {
     case 26:
     case "REGISTER_SIK":
       return 26 /* REGISTER_SIK */;
+    case 27:
+    case "SET_ACCOUNT_VALIDATOR":
+      return 27 /* SET_ACCOUNT_VALIDATOR */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1596,6 +1600,8 @@ function txTypeToJSON(object) {
       return "DEL_ACCOUNT_SIK";
     case 26 /* REGISTER_SIK */:
       return "REGISTER_SIK";
+    case 27 /* SET_ACCOUNT_VALIDATOR */:
+      return "SET_ACCOUNT_VALIDATOR";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -4442,7 +4448,9 @@ function createBaseSetAccountTx() {
     account: void 0,
     faucetPackage: void 0,
     delegates: [],
-    SIK: void 0
+    SIK: void 0,
+    publicKey: void 0,
+    name: void 0
   };
 }
 var SetAccountTx = {
@@ -4467,6 +4475,12 @@ var SetAccountTx = {
     }
     if (message.SIK !== void 0) {
       writer.uint32(58).bytes(message.SIK);
+    }
+    if (message.publicKey !== void 0) {
+      writer.uint32(66).bytes(message.publicKey);
+    }
+    if (message.name !== void 0) {
+      writer.uint32(74).string(message.name);
     }
     return writer;
   },
@@ -4519,6 +4533,18 @@ var SetAccountTx = {
           }
           message.SIK = reader.bytes();
           continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+          message.publicKey = reader.bytes();
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+          message.name = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4535,7 +4561,9 @@ var SetAccountTx = {
       account: isSet(object.account) ? bytesFromBase64(object.account) : void 0,
       faucetPackage: isSet(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0,
       delegates: globalThis.Array.isArray(object?.delegates) ? object.delegates.map((e) => bytesFromBase64(e)) : [],
-      SIK: isSet(object.SIK) ? bytesFromBase64(object.SIK) : void 0
+      SIK: isSet(object.SIK) ? bytesFromBase64(object.SIK) : void 0,
+      publicKey: isSet(object.publicKey) ? bytesFromBase64(object.publicKey) : void 0,
+      name: isSet(object.name) ? globalThis.String(object.name) : void 0
     };
   },
   toJSON(message) {
@@ -4561,6 +4589,12 @@ var SetAccountTx = {
     if (message.SIK !== void 0) {
       obj.SIK = base64FromBytes(message.SIK);
     }
+    if (message.publicKey !== void 0) {
+      obj.publicKey = base64FromBytes(message.publicKey);
+    }
+    if (message.name !== void 0) {
+      obj.name = message.name;
+    }
     return obj;
   },
   create(base) {
@@ -4575,6 +4609,8 @@ var SetAccountTx = {
     message.faucetPackage = object.faucetPackage !== void 0 && object.faucetPackage !== null ? FaucetPackage.fromPartial(object.faucetPackage) : void 0;
     message.delegates = object.delegates?.map((e) => e) || [];
     message.SIK = object.SIK ?? void 0;
+    message.publicKey = object.publicKey ?? void 0;
+    message.name = object.name ?? void 0;
     return message;
   }
 };
@@ -5977,7 +6013,18 @@ var ValidatorList = {
   }
 };
 function createBaseValidator() {
-  return { address: new Uint8Array(0), pubKey: new Uint8Array(0), power: 0, name: "", keyIndex: 0 };
+  return {
+    address: new Uint8Array(0),
+    pubKey: new Uint8Array(0),
+    power: 0,
+    name: "",
+    keyIndex: 0,
+    height: 0,
+    proposals: 0,
+    votes: 0,
+    validatorAddress: new Uint8Array(0),
+    score: 0
+  };
 }
 var Validator = {
   encode(message, writer = import_minimal.default.Writer.create()) {
@@ -5995,6 +6042,21 @@ var Validator = {
     }
     if (message.keyIndex !== 0) {
       writer.uint32(40).uint32(message.keyIndex);
+    }
+    if (message.height !== 0) {
+      writer.uint32(48).uint64(message.height);
+    }
+    if (message.proposals !== 0) {
+      writer.uint32(56).uint64(message.proposals);
+    }
+    if (message.votes !== 0) {
+      writer.uint32(64).uint64(message.votes);
+    }
+    if (message.validatorAddress.length !== 0) {
+      writer.uint32(74).bytes(message.validatorAddress);
+    }
+    if (message.score !== 0) {
+      writer.uint32(80).uint32(message.score);
     }
     return writer;
   },
@@ -6035,6 +6097,36 @@ var Validator = {
           }
           message.keyIndex = reader.uint32();
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+          message.height = longToNumber(reader.uint64());
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+          message.proposals = longToNumber(reader.uint64());
+          continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+          message.votes = longToNumber(reader.uint64());
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+          message.validatorAddress = reader.bytes();
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+          message.score = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -6049,7 +6141,12 @@ var Validator = {
       pubKey: isSet(object.pubKey) ? bytesFromBase64(object.pubKey) : new Uint8Array(0),
       power: isSet(object.power) ? globalThis.Number(object.power) : 0,
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      keyIndex: isSet(object.keyIndex) ? globalThis.Number(object.keyIndex) : 0
+      keyIndex: isSet(object.keyIndex) ? globalThis.Number(object.keyIndex) : 0,
+      height: isSet(object.height) ? globalThis.Number(object.height) : 0,
+      proposals: isSet(object.proposals) ? globalThis.Number(object.proposals) : 0,
+      votes: isSet(object.votes) ? globalThis.Number(object.votes) : 0,
+      validatorAddress: isSet(object.validatorAddress) ? bytesFromBase64(object.validatorAddress) : new Uint8Array(0),
+      score: isSet(object.score) ? globalThis.Number(object.score) : 0
     };
   },
   toJSON(message) {
@@ -6069,6 +6166,21 @@ var Validator = {
     if (message.keyIndex !== 0) {
       obj.keyIndex = Math.round(message.keyIndex);
     }
+    if (message.height !== 0) {
+      obj.height = Math.round(message.height);
+    }
+    if (message.proposals !== 0) {
+      obj.proposals = Math.round(message.proposals);
+    }
+    if (message.votes !== 0) {
+      obj.votes = Math.round(message.votes);
+    }
+    if (message.validatorAddress.length !== 0) {
+      obj.validatorAddress = base64FromBytes(message.validatorAddress);
+    }
+    if (message.score !== 0) {
+      obj.score = Math.round(message.score);
+    }
     return obj;
   },
   create(base) {
@@ -6081,6 +6193,11 @@ var Validator = {
     message.power = object.power ?? 0;
     message.name = object.name ?? "";
     message.keyIndex = object.keyIndex ?? 0;
+    message.height = object.height ?? 0;
+    message.proposals = object.proposals ?? 0;
+    message.votes = object.votes ?? 0;
+    message.validatorAddress = object.validatorAddress ?? new Uint8Array(0);
+    message.score = object.score ?? 0;
     return message;
   }
 };

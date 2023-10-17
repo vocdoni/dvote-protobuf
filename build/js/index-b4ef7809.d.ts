@@ -28,6 +28,7 @@ declare enum TxType {
     SET_ACCOUNT_SIK = 24,
     DEL_ACCOUNT_SIK = 25,
     REGISTER_SIK = 26,
+    SET_ACCOUNT_VALIDATOR = 27,
     UNRECOGNIZED = -1
 }
 declare function txTypeFromJSON(object: any): TxType;
@@ -2328,6 +2329,8 @@ declare const Tx: {
                 } | undefined;
                 delegates?: Uint8Array[] | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } | undefined;
         } & {
             $case: "setAccount";
@@ -4252,6 +4255,8 @@ declare const Tx: {
                 } | undefined;
                 delegates?: Uint8Array[] | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } | undefined;
         } & {
             $case: "setAccount";
@@ -4267,6 +4272,8 @@ declare const Tx: {
                 } | undefined;
                 delegates?: Uint8Array[] | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4281,6 +4288,8 @@ declare const Tx: {
                 } & { [K_115 in Exclude<keyof I["payload"]["setAccount"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
                 delegates?: (Uint8Array[] & Uint8Array[] & { [K_116 in Exclude<keyof I["payload"]["setAccount"]["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } & { [K_117 in Exclude<keyof I["payload"]["setAccount"], keyof SetAccountTx>]: never; }) | undefined;
             $case: "setAccount";
         } & { [K_118 in Exclude<keyof I["payload"], "$case" | "setAccount">]: never; }) | ({
@@ -5217,6 +5226,8 @@ declare const Tx: {
                 } | undefined;
                 delegates?: Uint8Array[] | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } | undefined;
         } & {
             $case: "setAccount";
@@ -7141,6 +7152,8 @@ declare const Tx: {
                 } | undefined;
                 delegates?: Uint8Array[] | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } | undefined;
         } & {
             $case: "setAccount";
@@ -7156,6 +7169,8 @@ declare const Tx: {
                 } | undefined;
                 delegates?: Uint8Array[] | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -7170,6 +7185,8 @@ declare const Tx: {
                 } & { [K_274 in Exclude<keyof I_1["payload"]["setAccount"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
                 delegates?: (Uint8Array[] & Uint8Array[] & { [K_275 in Exclude<keyof I_1["payload"]["setAccount"]["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
                 SIK?: Uint8Array | undefined;
+                publicKey?: Uint8Array | undefined;
+                name?: string | undefined;
             } & { [K_276 in Exclude<keyof I_1["payload"]["setAccount"], keyof SetAccountTx>]: never; }) | undefined;
             $case: "setAccount";
         } & { [K_277 in Exclude<keyof I_1["payload"], "$case" | "setAccount">]: never; }) | ({
@@ -9902,6 +9919,8 @@ interface SetAccountTx {
     faucetPackage?: FaucetPackage | undefined;
     delegates: Uint8Array[];
     SIK?: Uint8Array | undefined;
+    publicKey?: Uint8Array | undefined;
+    name?: string | undefined;
 }
 declare const SetAccountTx: {
     encode(message: SetAccountTx, writer?: _m0.Writer): _m0.Writer;
@@ -9919,6 +9938,8 @@ declare const SetAccountTx: {
         } | undefined;
         delegates?: Uint8Array[] | undefined;
         SIK?: Uint8Array | undefined;
+        publicKey?: Uint8Array | undefined;
+        name?: string | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -9933,6 +9954,8 @@ declare const SetAccountTx: {
         } & { [K in Exclude<keyof I["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
         delegates?: (Uint8Array[] & Uint8Array[] & { [K_1 in Exclude<keyof I["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
         SIK?: Uint8Array | undefined;
+        publicKey?: Uint8Array | undefined;
+        name?: string | undefined;
     } & { [K_2 in Exclude<keyof I, keyof SetAccountTx>]: never; }>(base?: I | undefined): SetAccountTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
@@ -9945,6 +9968,8 @@ declare const SetAccountTx: {
         } | undefined;
         delegates?: Uint8Array[] | undefined;
         SIK?: Uint8Array | undefined;
+        publicKey?: Uint8Array | undefined;
+        name?: string | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -9959,6 +9984,8 @@ declare const SetAccountTx: {
         } & { [K_3 in Exclude<keyof I_1["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
         delegates?: (Uint8Array[] & Uint8Array[] & { [K_4 in Exclude<keyof I_1["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
         SIK?: Uint8Array | undefined;
+        publicKey?: Uint8Array | undefined;
+        name?: string | undefined;
     } & { [K_5 in Exclude<keyof I_1, keyof SetAccountTx>]: never; }>(object: I_1): SetAccountTx;
 };
 interface SIKTx {
@@ -11362,6 +11389,11 @@ declare const ValidatorList: {
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         }[] | undefined;
     } & {
         validators?: ({
@@ -11370,24 +11402,44 @@ declare const ValidatorList: {
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         }[] & ({
             address?: Uint8Array | undefined;
             pubKey?: Uint8Array | undefined;
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         } & {
             address?: Uint8Array | undefined;
             pubKey?: Uint8Array | undefined;
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         } & { [K in Exclude<keyof I["validators"][number], keyof Validator>]: never; })[] & { [K_1 in Exclude<keyof I["validators"], keyof {
             address?: Uint8Array | undefined;
             pubKey?: Uint8Array | undefined;
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_2 in Exclude<keyof I, "validators">]: never; }>(base?: I | undefined): ValidatorList;
     fromPartial<I_1 extends {
@@ -11397,6 +11449,11 @@ declare const ValidatorList: {
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         }[] | undefined;
     } & {
         validators?: ({
@@ -11405,24 +11462,44 @@ declare const ValidatorList: {
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         }[] & ({
             address?: Uint8Array | undefined;
             pubKey?: Uint8Array | undefined;
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         } & {
             address?: Uint8Array | undefined;
             pubKey?: Uint8Array | undefined;
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         } & { [K_3 in Exclude<keyof I_1["validators"][number], keyof Validator>]: never; })[] & { [K_4 in Exclude<keyof I_1["validators"], keyof {
             address?: Uint8Array | undefined;
             pubKey?: Uint8Array | undefined;
             power?: number | undefined;
             name?: string | undefined;
             keyIndex?: number | undefined;
+            height?: number | undefined;
+            proposals?: number | undefined;
+            votes?: number | undefined;
+            validatorAddress?: Uint8Array | undefined;
+            score?: number | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_5 in Exclude<keyof I_1, "validators">]: never; }>(object: I_1): ValidatorList;
 };
@@ -11432,6 +11509,11 @@ interface Validator {
     power: number;
     name: string;
     keyIndex: number;
+    height: number;
+    proposals: number;
+    votes: number;
+    validatorAddress: Uint8Array;
+    score: number;
 }
 declare const Validator: {
     encode(message: Validator, writer?: _m0.Writer): _m0.Writer;
@@ -11444,12 +11526,22 @@ declare const Validator: {
         power?: number | undefined;
         name?: string | undefined;
         keyIndex?: number | undefined;
+        height?: number | undefined;
+        proposals?: number | undefined;
+        votes?: number | undefined;
+        validatorAddress?: Uint8Array | undefined;
+        score?: number | undefined;
     } & {
         address?: Uint8Array | undefined;
         pubKey?: Uint8Array | undefined;
         power?: number | undefined;
         name?: string | undefined;
         keyIndex?: number | undefined;
+        height?: number | undefined;
+        proposals?: number | undefined;
+        votes?: number | undefined;
+        validatorAddress?: Uint8Array | undefined;
+        score?: number | undefined;
     } & { [K in Exclude<keyof I, keyof Validator>]: never; }>(base?: I | undefined): Validator;
     fromPartial<I_1 extends {
         address?: Uint8Array | undefined;
@@ -11457,12 +11549,22 @@ declare const Validator: {
         power?: number | undefined;
         name?: string | undefined;
         keyIndex?: number | undefined;
+        height?: number | undefined;
+        proposals?: number | undefined;
+        votes?: number | undefined;
+        validatorAddress?: Uint8Array | undefined;
+        score?: number | undefined;
     } & {
         address?: Uint8Array | undefined;
         pubKey?: Uint8Array | undefined;
         power?: number | undefined;
         name?: string | undefined;
         keyIndex?: number | undefined;
+        height?: number | undefined;
+        proposals?: number | undefined;
+        votes?: number | undefined;
+        validatorAddress?: Uint8Array | undefined;
+        score?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof Validator>]: never; }>(object: I_1): Validator;
 };
 interface TendermintHeader {
