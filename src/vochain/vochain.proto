@@ -33,17 +33,17 @@ message Census {
 message Proof {
 	oneof payload {
 		// Proof used on EVM census based processes
-		ProofEthereumStorage ethereumStorage = 2;
+		ProofEthereumStorage ethereumStorage = 3;
 		// Proof used by oracles to update the census of EVM processes
-		ProofEthereumAccount ethereumAccount = 3;
+		ProofEthereumAccount ethereumAccount = 4;
 		// Proof Certification Authority
-		ProofCA ca = 4;
+		ProofCA ca = 5;
 		// Proof used for census using arbo
-		ProofArbo arbo = 5;
+		ProofArbo arbo = 6;
 		// zkSnark proof
-		ProofZkSNARK zkSnark = 6;
+		ProofZkSNARK zkSnark = 7;
 		// Proof used in Minime token based census
-		ProofMinime minimeStorage = 7;
+		ProofMinime minimeStorage = 8;
 	}
 }
 
