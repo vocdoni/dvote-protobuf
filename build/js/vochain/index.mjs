@@ -1435,9 +1435,7 @@ var TxType = /* @__PURE__ */ ((TxType2) => {
   TxType2[TxType2["VOTE"] = 11] = "VOTE";
   TxType2[TxType2["SET_PROCESS_RESULTS"] = 12] = "SET_PROCESS_RESULTS";
   TxType2[TxType2["REGISTER_VOTER_KEY"] = 13] = "REGISTER_VOTER_KEY";
-  TxType2[TxType2["MINT_TOKENS"] = 14] = "MINT_TOKENS";
   TxType2[TxType2["SEND_TOKENS"] = 15] = "SEND_TOKENS";
-  TxType2[TxType2["SET_TRANSACTION_COSTS"] = 16] = "SET_TRANSACTION_COSTS";
   TxType2[TxType2["SET_ACCOUNT_INFO_URI"] = 17] = "SET_ACCOUNT_INFO_URI";
   TxType2[TxType2["ADD_DELEGATE_FOR_ACCOUNT"] = 18] = "ADD_DELEGATE_FOR_ACCOUNT";
   TxType2[TxType2["DEL_DELEGATE_FOR_ACCOUNT"] = 19] = "DEL_DELEGATE_FOR_ACCOUNT";
@@ -1496,15 +1494,9 @@ function txTypeFromJSON(object) {
     case 13:
     case "REGISTER_VOTER_KEY":
       return 13 /* REGISTER_VOTER_KEY */;
-    case 14:
-    case "MINT_TOKENS":
-      return 14 /* MINT_TOKENS */;
     case 15:
     case "SEND_TOKENS":
       return 15 /* SEND_TOKENS */;
-    case 16:
-    case "SET_TRANSACTION_COSTS":
-      return 16 /* SET_TRANSACTION_COSTS */;
     case 17:
     case "SET_ACCOUNT_INFO_URI":
       return 17 /* SET_ACCOUNT_INFO_URI */;
@@ -1574,12 +1566,8 @@ function txTypeToJSON(object) {
       return "SET_PROCESS_RESULTS";
     case 13 /* REGISTER_VOTER_KEY */:
       return "REGISTER_VOTER_KEY";
-    case 14 /* MINT_TOKENS */:
-      return "MINT_TOKENS";
     case 15 /* SEND_TOKENS */:
       return "SEND_TOKENS";
-    case 16 /* SET_TRANSACTION_COSTS */:
-      return "SET_TRANSACTION_COSTS";
     case 17 /* SET_ACCOUNT_INFO_URI */:
       return "SET_ACCOUNT_INFO_URI";
     case 18 /* ADD_DELEGATE_FOR_ACCOUNT */:
@@ -1851,8 +1839,6 @@ var Census_Type = /* @__PURE__ */ ((Census_Type2) => {
   Census_Type2[Census_Type2["ETHEREUMSTORAGE"] = 3] = "ETHEREUMSTORAGE";
   Census_Type2[Census_Type2["ETHEREUMACCOUNT"] = 4] = "ETHEREUMACCOUNT";
   Census_Type2[Census_Type2["CA"] = 5] = "CA";
-  Census_Type2[Census_Type2["GRAVITON"] = 1001] = "GRAVITON";
-  Census_Type2[Census_Type2["IDEN3"] = 1002] = "IDEN3";
   Census_Type2[Census_Type2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return Census_Type2;
 })(Census_Type || {});
@@ -1876,12 +1862,6 @@ function census_TypeFromJSON(object) {
     case 5:
     case "CA":
       return 5 /* CA */;
-    case 1001:
-    case "GRAVITON":
-      return 1001 /* GRAVITON */;
-    case 1002:
-    case "IDEN3":
-      return 1002 /* IDEN3 */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1902,10 +1882,6 @@ function census_TypeToJSON(object) {
       return "ETHEREUMACCOUNT";
     case 5 /* CA */:
       return "CA";
-    case 1001 /* GRAVITON */:
-      return "GRAVITON";
-    case 1002 /* IDEN3 */:
-      return "IDEN3";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -2203,29 +2179,23 @@ function createBaseProof() {
 var Proof = {
   encode(message, writer = import_minimal.default.Writer.create()) {
     switch (message.payload?.$case) {
-      case "graviton":
-        ProofGraviton.encode(message.payload.graviton, writer.uint32(10).fork()).ldelim();
-        break;
-      case "iden3":
-        ProofIden3.encode(message.payload.iden3, writer.uint32(18).fork()).ldelim();
-        break;
       case "ethereumStorage":
-        ProofEthereumStorage.encode(message.payload.ethereumStorage, writer.uint32(26).fork()).ldelim();
+        ProofEthereumStorage.encode(message.payload.ethereumStorage, writer.uint32(18).fork()).ldelim();
         break;
       case "ethereumAccount":
-        ProofEthereumAccount.encode(message.payload.ethereumAccount, writer.uint32(34).fork()).ldelim();
+        ProofEthereumAccount.encode(message.payload.ethereumAccount, writer.uint32(26).fork()).ldelim();
         break;
       case "ca":
-        ProofCA.encode(message.payload.ca, writer.uint32(42).fork()).ldelim();
+        ProofCA.encode(message.payload.ca, writer.uint32(34).fork()).ldelim();
         break;
       case "arbo":
-        ProofArbo.encode(message.payload.arbo, writer.uint32(50).fork()).ldelim();
+        ProofArbo.encode(message.payload.arbo, writer.uint32(42).fork()).ldelim();
         break;
       case "zkSnark":
-        ProofZkSNARK.encode(message.payload.zkSnark, writer.uint32(58).fork()).ldelim();
+        ProofZkSNARK.encode(message.payload.zkSnark, writer.uint32(50).fork()).ldelim();
         break;
       case "minimeStorage":
-        ProofMinime.encode(message.payload.minimeStorage, writer.uint32(66).fork()).ldelim();
+        ProofMinime.encode(message.payload.minimeStorage, writer.uint32(58).fork()).ldelim();
         break;
     }
     return writer;
@@ -2237,20 +2207,8 @@ var Proof = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.payload = { $case: "graviton", graviton: ProofGraviton.decode(reader, reader.uint32()) };
-          continue;
         case 2:
           if (tag !== 18) {
-            break;
-          }
-          message.payload = { $case: "iden3", iden3: ProofIden3.decode(reader, reader.uint32()) };
-          continue;
-        case 3:
-          if (tag !== 26) {
             break;
           }
           message.payload = {
@@ -2258,8 +2216,8 @@ var Proof = {
             ethereumStorage: ProofEthereumStorage.decode(reader, reader.uint32())
           };
           continue;
-        case 4:
-          if (tag !== 34) {
+        case 3:
+          if (tag !== 26) {
             break;
           }
           message.payload = {
@@ -2267,26 +2225,26 @@ var Proof = {
             ethereumAccount: ProofEthereumAccount.decode(reader, reader.uint32())
           };
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+          message.payload = { $case: "ca", ca: ProofCA.decode(reader, reader.uint32()) };
+          continue;
         case 5:
           if (tag !== 42) {
             break;
           }
-          message.payload = { $case: "ca", ca: ProofCA.decode(reader, reader.uint32()) };
+          message.payload = { $case: "arbo", arbo: ProofArbo.decode(reader, reader.uint32()) };
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
-          message.payload = { $case: "arbo", arbo: ProofArbo.decode(reader, reader.uint32()) };
+          message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.decode(reader, reader.uint32()) };
           continue;
         case 7:
           if (tag !== 58) {
-            break;
-          }
-          message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.decode(reader, reader.uint32()) };
-          continue;
-        case 8:
-          if (tag !== 66) {
             break;
           }
           message.payload = { $case: "minimeStorage", minimeStorage: ProofMinime.decode(reader, reader.uint32()) };
@@ -2301,17 +2259,11 @@ var Proof = {
   },
   fromJSON(object) {
     return {
-      payload: isSet(object.graviton) ? { $case: "graviton", graviton: ProofGraviton.fromJSON(object.graviton) } : isSet(object.iden3) ? { $case: "iden3", iden3: ProofIden3.fromJSON(object.iden3) } : isSet(object.ethereumStorage) ? { $case: "ethereumStorage", ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage) } : isSet(object.ethereumAccount) ? { $case: "ethereumAccount", ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount) } : isSet(object.ca) ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) } : isSet(object.arbo) ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) } : isSet(object.zkSnark) ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) } : isSet(object.minimeStorage) ? { $case: "minimeStorage", minimeStorage: ProofMinime.fromJSON(object.minimeStorage) } : void 0
+      payload: isSet(object.ethereumStorage) ? { $case: "ethereumStorage", ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage) } : isSet(object.ethereumAccount) ? { $case: "ethereumAccount", ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount) } : isSet(object.ca) ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) } : isSet(object.arbo) ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) } : isSet(object.zkSnark) ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) } : isSet(object.minimeStorage) ? { $case: "minimeStorage", minimeStorage: ProofMinime.fromJSON(object.minimeStorage) } : void 0
     };
   },
   toJSON(message) {
     const obj = {};
-    if (message.payload?.$case === "graviton") {
-      obj.graviton = ProofGraviton.toJSON(message.payload.graviton);
-    }
-    if (message.payload?.$case === "iden3") {
-      obj.iden3 = ProofIden3.toJSON(message.payload.iden3);
-    }
     if (message.payload?.$case === "ethereumStorage") {
       obj.ethereumStorage = ProofEthereumStorage.toJSON(message.payload.ethereumStorage);
     }
@@ -2337,12 +2289,6 @@ var Proof = {
   },
   fromPartial(object) {
     const message = createBaseProof();
-    if (object.payload?.$case === "graviton" && object.payload?.graviton !== void 0 && object.payload?.graviton !== null) {
-      message.payload = { $case: "graviton", graviton: ProofGraviton.fromPartial(object.payload.graviton) };
-    }
-    if (object.payload?.$case === "iden3" && object.payload?.iden3 !== void 0 && object.payload?.iden3 !== null) {
-      message.payload = { $case: "iden3", iden3: ProofIden3.fromPartial(object.payload.iden3) };
-    }
     if (object.payload?.$case === "ethereumStorage" && object.payload?.ethereumStorage !== void 0 && object.payload?.ethereumStorage !== null) {
       message.payload = {
         $case: "ethereumStorage",
@@ -2370,106 +2316,6 @@ var Proof = {
         minimeStorage: ProofMinime.fromPartial(object.payload.minimeStorage)
       };
     }
-    return message;
-  }
-};
-function createBaseProofGraviton() {
-  return { siblings: new Uint8Array(0) };
-}
-var ProofGraviton = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.siblings.length !== 0) {
-      writer.uint32(10).bytes(message.siblings);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseProofGraviton();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.siblings = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return { siblings: isSet(object.siblings) ? bytesFromBase64(object.siblings) : new Uint8Array(0) };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.siblings.length !== 0) {
-      obj.siblings = base64FromBytes(message.siblings);
-    }
-    return obj;
-  },
-  create(base) {
-    return ProofGraviton.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseProofGraviton();
-    message.siblings = object.siblings ?? new Uint8Array(0);
-    return message;
-  }
-};
-function createBaseProofIden3() {
-  return { siblings: new Uint8Array(0) };
-}
-var ProofIden3 = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.siblings.length !== 0) {
-      writer.uint32(10).bytes(message.siblings);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseProofIden3();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.siblings = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return { siblings: isSet(object.siblings) ? bytesFromBase64(object.siblings) : new Uint8Array(0) };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.siblings.length !== 0) {
-      obj.siblings = base64FromBytes(message.siblings);
-    }
-    return obj;
-  },
-  create(base) {
-    return ProofIden3.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseProofIden3();
-    message.siblings = object.siblings ?? new Uint8Array(0);
     return message;
   }
 };
@@ -3209,72 +3055,6 @@ var Account = {
     return message;
   }
 };
-function createBaseTreasurer() {
-  return { address: new Uint8Array(0), nonce: 0 };
-}
-var Treasurer = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.address.length !== 0) {
-      writer.uint32(10).bytes(message.address);
-    }
-    if (message.nonce !== 0) {
-      writer.uint32(16).uint32(message.nonce);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseTreasurer();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.address = reader.bytes();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-          message.nonce = reader.uint32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(0),
-      nonce: isSet(object.nonce) ? globalThis.Number(object.nonce) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.address.length !== 0) {
-      obj.address = base64FromBytes(message.address);
-    }
-    if (message.nonce !== 0) {
-      obj.nonce = Math.round(message.nonce);
-    }
-    return obj;
-  },
-  create(base) {
-    return Treasurer.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseTreasurer();
-    message.address = object.address ?? new Uint8Array(0);
-    message.nonce = object.nonce ?? 0;
-    return message;
-  }
-};
 function createBaseTx() {
   return { payload: void 0 };
 }
@@ -3295,9 +3075,6 @@ var Tx = {
         break;
       case "registerKey":
         RegisterKeyTx.encode(message.payload.registerKey, writer.uint32(42).fork()).ldelim();
-        break;
-      case "mintTokens":
-        MintTokensTx.encode(message.payload.mintTokens, writer.uint32(50).fork()).ldelim();
         break;
       case "sendTokens":
         SendTokensTx.encode(message.payload.sendTokens, writer.uint32(58).fork()).ldelim();
@@ -3363,12 +3140,6 @@ var Tx = {
           }
           message.payload = { $case: "registerKey", registerKey: RegisterKeyTx.decode(reader, reader.uint32()) };
           continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-          message.payload = { $case: "mintTokens", mintTokens: MintTokensTx.decode(reader, reader.uint32()) };
-          continue;
         case 7:
           if (tag !== 58) {
             break;
@@ -3430,7 +3201,7 @@ var Tx = {
   },
   fromJSON(object) {
     return {
-      payload: isSet(object.vote) ? { $case: "vote", vote: VoteEnvelope.fromJSON(object.vote) } : isSet(object.newProcess) ? { $case: "newProcess", newProcess: NewProcessTx.fromJSON(object.newProcess) } : isSet(object.admin) ? { $case: "admin", admin: AdminTx.fromJSON(object.admin) } : isSet(object.setProcess) ? { $case: "setProcess", setProcess: SetProcessTx.fromJSON(object.setProcess) } : isSet(object.registerKey) ? { $case: "registerKey", registerKey: RegisterKeyTx.fromJSON(object.registerKey) } : isSet(object.mintTokens) ? { $case: "mintTokens", mintTokens: MintTokensTx.fromJSON(object.mintTokens) } : isSet(object.sendTokens) ? { $case: "sendTokens", sendTokens: SendTokensTx.fromJSON(object.sendTokens) } : isSet(object.setTransactionCosts) ? {
+      payload: isSet(object.vote) ? { $case: "vote", vote: VoteEnvelope.fromJSON(object.vote) } : isSet(object.newProcess) ? { $case: "newProcess", newProcess: NewProcessTx.fromJSON(object.newProcess) } : isSet(object.admin) ? { $case: "admin", admin: AdminTx.fromJSON(object.admin) } : isSet(object.setProcess) ? { $case: "setProcess", setProcess: SetProcessTx.fromJSON(object.setProcess) } : isSet(object.registerKey) ? { $case: "registerKey", registerKey: RegisterKeyTx.fromJSON(object.registerKey) } : isSet(object.sendTokens) ? { $case: "sendTokens", sendTokens: SendTokensTx.fromJSON(object.sendTokens) } : isSet(object.setTransactionCosts) ? {
         $case: "setTransactionCosts",
         setTransactionCosts: SetTransactionCostsTx.fromJSON(object.setTransactionCosts)
       } : isSet(object.setAccount) ? { $case: "setAccount", setAccount: SetAccountTx.fromJSON(object.setAccount) } : isSet(object.collectFaucet) ? { $case: "collectFaucet", collectFaucet: CollectFaucetTx.fromJSON(object.collectFaucet) } : isSet(object.setKeykeeper) ? { $case: "setKeykeeper", setKeykeeper: SetKeykeeperTx.fromJSON(object.setKeykeeper) } : isSet(object.setSIK) ? { $case: "setSIK", setSIK: SIKTx.fromJSON(object.setSIK) } : isSet(object.delSIK) ? { $case: "delSIK", delSIK: SIKTx.fromJSON(object.delSIK) } : isSet(object.registerSIK) ? { $case: "registerSIK", registerSIK: RegisterSIKTx.fromJSON(object.registerSIK) } : void 0
@@ -3452,9 +3223,6 @@ var Tx = {
     }
     if (message.payload?.$case === "registerKey") {
       obj.registerKey = RegisterKeyTx.toJSON(message.payload.registerKey);
-    }
-    if (message.payload?.$case === "mintTokens") {
-      obj.mintTokens = MintTokensTx.toJSON(message.payload.mintTokens);
     }
     if (message.payload?.$case === "sendTokens") {
       obj.sendTokens = SendTokensTx.toJSON(message.payload.sendTokens);
@@ -3501,9 +3269,6 @@ var Tx = {
     }
     if (object.payload?.$case === "registerKey" && object.payload?.registerKey !== void 0 && object.payload?.registerKey !== null) {
       message.payload = { $case: "registerKey", registerKey: RegisterKeyTx.fromPartial(object.payload.registerKey) };
-    }
-    if (object.payload?.$case === "mintTokens" && object.payload?.mintTokens !== void 0 && object.payload?.mintTokens !== null) {
-      message.payload = { $case: "mintTokens", mintTokens: MintTokensTx.fromPartial(object.payload.mintTokens) };
     }
     if (object.payload?.$case === "sendTokens" && object.payload?.sendTokens !== void 0 && object.payload?.sendTokens !== null) {
       message.payload = { $case: "sendTokens", sendTokens: SendTokensTx.fromPartial(object.payload.sendTokens) };
@@ -4155,100 +3920,6 @@ var RegisterKeyTx = {
     message.proof = object.proof !== void 0 && object.proof !== null ? Proof.fromPartial(object.proof) : void 0;
     message.newKey = object.newKey ?? new Uint8Array(0);
     message.weight = object.weight ?? "";
-    return message;
-  }
-};
-function createBaseMintTokensTx() {
-  return { txtype: 0, nonce: 0, to: new Uint8Array(0), value: 0 };
-}
-var MintTokensTx = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.txtype !== 0) {
-      writer.uint32(8).int32(message.txtype);
-    }
-    if (message.nonce !== 0) {
-      writer.uint32(16).uint32(message.nonce);
-    }
-    if (message.to.length !== 0) {
-      writer.uint32(26).bytes(message.to);
-    }
-    if (message.value !== 0) {
-      writer.uint32(32).uint64(message.value);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseMintTokensTx();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-          message.txtype = reader.int32();
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-          message.nonce = reader.uint32();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-          message.to = reader.bytes();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-          message.value = longToNumber(reader.uint64());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      txtype: isSet(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
-      nonce: isSet(object.nonce) ? globalThis.Number(object.nonce) : 0,
-      to: isSet(object.to) ? bytesFromBase64(object.to) : new Uint8Array(0),
-      value: isSet(object.value) ? globalThis.Number(object.value) : 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.txtype !== 0) {
-      obj.txtype = txTypeToJSON(message.txtype);
-    }
-    if (message.nonce !== 0) {
-      obj.nonce = Math.round(message.nonce);
-    }
-    if (message.to.length !== 0) {
-      obj.to = base64FromBytes(message.to);
-    }
-    if (message.value !== 0) {
-      obj.value = Math.round(message.value);
-    }
-    return obj;
-  },
-  create(base) {
-    return MintTokensTx.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseMintTokensTx();
-    message.txtype = object.txtype ?? 0;
-    message.nonce = object.nonce ?? 0;
-    message.to = object.to ?? new Uint8Array(0);
-    message.value = object.value ?? 0;
     return message;
   }
 };
@@ -6688,7 +6359,6 @@ export {
   EnvelopeType,
   FaucetPackage,
   FaucetPayload,
-  MintTokensTx,
   NewProcessTx,
   OracleList,
   Process,
@@ -6705,8 +6375,6 @@ export {
   ProofCA_Type,
   ProofEthereumAccount,
   ProofEthereumStorage,
-  ProofGraviton,
-  ProofIden3,
   ProofMinime,
   ProofZkSNARK,
   QuestionResult,
@@ -6722,7 +6390,6 @@ export {
   SourceNetworkId,
   StoredKeys,
   TendermintHeader,
-  Treasurer,
   Tx,
   TxType,
   Validator,
