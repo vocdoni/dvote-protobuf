@@ -27,38 +27,24 @@ message Census {
 		ETHEREUMSTORAGE = 3;
 		ETHEREUMACCOUNT = 4;
 		CA = 5;
-		GRAVITON = 1001;
-		IDEN3 = 1002;
 	}
 }
 
 message Proof {
 	oneof payload {
-		// Proof used for signed envelopes
-		ProofGraviton graviton = 1;
-		// Proof used for anonymous votes
-		ProofIden3 iden3 = 2;
 		// Proof used on EVM census based processes
-		ProofEthereumStorage ethereumStorage = 3;
+		ProofEthereumStorage ethereumStorage = 2;
 		// Proof used by oracles to update the census of EVM processes
-		ProofEthereumAccount ethereumAccount = 4;
+		ProofEthereumAccount ethereumAccount = 3;
 		// Proof Certification Authority
-		ProofCA ca = 5;
+		ProofCA ca = 4;
 		// Proof used for census using arbo
-		ProofArbo arbo = 6;
+		ProofArbo arbo = 5;
 		// zkSnark proof
-		ProofZkSNARK zkSnark = 7;
+		ProofZkSNARK zkSnark = 6;
 		// Proof used in Minime token based census
-		ProofMinime minimeStorage = 8;
+		ProofMinime minimeStorage = 7;
 	}
-}
-
-message ProofGraviton {
-    bytes siblings = 1;
-}
-
-message ProofIden3 {
-	bytes siblings = 1;
 }
 
 message ProofEthereumStorage {
@@ -142,11 +128,6 @@ message Account {
 	uint32 processIndex = 5;
 }
 
-message Treasurer {
-	bytes address = 1;
-	uint32 nonce = 2;
-}
-
 enum TxType {
 	TX_UNKNOWN = 0;
 	NEW_PROCESS = 1;
@@ -162,9 +143,7 @@ enum TxType {
 	VOTE = 11;
 	SET_PROCESS_RESULTS = 12;
 	REGISTER_VOTER_KEY = 13;
-	MINT_TOKENS = 14;
 	SEND_TOKENS = 15;
-	SET_TRANSACTION_COSTS = 16;
 	SET_ACCOUNT_INFO_URI = 17;
 	ADD_DELEGATE_FOR_ACCOUNT = 18;
 	DEL_DELEGATE_FOR_ACCOUNT = 19;
@@ -185,7 +164,6 @@ message Tx {
 		AdminTx admin = 3;
 		SetProcessTx setProcess = 4;
 		RegisterKeyTx registerKey = 5;
-		MintTokensTx mintTokens = 6;
 		SendTokensTx sendTokens = 7;
 		SetTransactionCostsTx setTransactionCosts = 8;
 		SetAccountTx setAccount = 9;
@@ -246,13 +224,6 @@ message RegisterKeyTx {
 	Proof proof = 3;  	  // Franchise proof
 	bytes newKey = 4;     // New key to register
 	string weight = 5;    // Weight to delegate to newKey
-}
-
-message MintTokensTx {
-	TxType txtype = 1;
-	uint32 nonce = 2;
-	bytes to = 3;
-	uint64 value = 4;
 }
 
 message SendTokensTx {
