@@ -6507,22 +6507,22 @@ var Proof = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
     switch (message.payload?.$case) {
       case "ethereumStorage":
-        ProofEthereumStorage.encode(message.payload.ethereumStorage, writer.uint32(18).fork()).ldelim();
+        ProofEthereumStorage.encode(message.payload.ethereumStorage, writer.uint32(26).fork()).ldelim();
         break;
       case "ethereumAccount":
-        ProofEthereumAccount.encode(message.payload.ethereumAccount, writer.uint32(26).fork()).ldelim();
+        ProofEthereumAccount.encode(message.payload.ethereumAccount, writer.uint32(34).fork()).ldelim();
         break;
       case "ca":
-        ProofCA.encode(message.payload.ca, writer.uint32(34).fork()).ldelim();
+        ProofCA.encode(message.payload.ca, writer.uint32(42).fork()).ldelim();
         break;
       case "arbo":
-        ProofArbo.encode(message.payload.arbo, writer.uint32(42).fork()).ldelim();
+        ProofArbo.encode(message.payload.arbo, writer.uint32(50).fork()).ldelim();
         break;
       case "zkSnark":
-        ProofZkSNARK.encode(message.payload.zkSnark, writer.uint32(50).fork()).ldelim();
+        ProofZkSNARK.encode(message.payload.zkSnark, writer.uint32(58).fork()).ldelim();
         break;
       case "minimeStorage":
-        ProofMinime.encode(message.payload.minimeStorage, writer.uint32(58).fork()).ldelim();
+        ProofMinime.encode(message.payload.minimeStorage, writer.uint32(66).fork()).ldelim();
         break;
     }
     return writer;
@@ -6534,8 +6534,8 @@ var Proof = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 2:
-          if (tag !== 18) {
+        case 3:
+          if (tag !== 26) {
             break;
           }
           message.payload = {
@@ -6543,8 +6543,8 @@ var Proof = {
             ethereumStorage: ProofEthereumStorage.decode(reader, reader.uint32())
           };
           continue;
-        case 3:
-          if (tag !== 26) {
+        case 4:
+          if (tag !== 34) {
             break;
           }
           message.payload = {
@@ -6552,26 +6552,26 @@ var Proof = {
             ethereumAccount: ProofEthereumAccount.decode(reader, reader.uint32())
           };
           continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-          message.payload = { $case: "ca", ca: ProofCA.decode(reader, reader.uint32()) };
-          continue;
         case 5:
           if (tag !== 42) {
             break;
           }
-          message.payload = { $case: "arbo", arbo: ProofArbo.decode(reader, reader.uint32()) };
+          message.payload = { $case: "ca", ca: ProofCA.decode(reader, reader.uint32()) };
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
-          message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.decode(reader, reader.uint32()) };
+          message.payload = { $case: "arbo", arbo: ProofArbo.decode(reader, reader.uint32()) };
           continue;
         case 7:
           if (tag !== 58) {
+            break;
+          }
+          message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.decode(reader, reader.uint32()) };
+          continue;
+        case 8:
+          if (tag !== 66) {
             break;
           }
           message.payload = { $case: "minimeStorage", minimeStorage: ProofMinime.decode(reader, reader.uint32()) };
