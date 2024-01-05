@@ -155,6 +155,7 @@ enum TxType {
 	DEL_ACCOUNT_SIK = 25;
 	REGISTER_SIK = 26;
 	SET_ACCOUNT_VALIDATOR = 27;
+	SET_PROCESS_DURATION = 28;
 }
 
 message Tx {
@@ -204,6 +205,7 @@ message SetProcessTx {
 	// tempSIKs flag decides if when the process has finished, the SIKs related
 	// to it will be removed or not
 	optional bool tempSIKs = 10;
+	optional uint32 duration = 11;
 }
 
 message AdminTx {
@@ -292,9 +294,9 @@ message Process {
 	// EntityId identifies unequivocally an entity
 	bytes entityId = 2;
 	// StartBlock represents the tendermint block where the process goes from scheduled to active
-	uint32 startBlock = 3;
+	uint32 startBlock = 3; // deprecated
 	// BlockCount represents the amount of tendermint blocks that the process will last
-	uint32 blockCount = 4;
+	uint32 blockCount = 4; // deprecated
 	// CensusRoot merkle root of all the census in the process
 	bytes censusRoot = 5;
 	// CensusURI where to find the census
@@ -343,6 +345,10 @@ message Process {
 	// tempSIKs flag decides if when the process has finished, the SIKs related
 	// to it will be removed or not
 	optional bool tempSIKs = 34;
+	// The unix timestamp of the start of the process
+	uint32 startTime = 35;
+	// The duration of the process in seconds
+	uint32 duration = 36;
 }
 
 enum ProcessStatus {
