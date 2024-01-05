@@ -27,6 +27,7 @@ declare enum TxType {
     DEL_ACCOUNT_SIK = 25,
     REGISTER_SIK = 26,
     SET_ACCOUNT_VALIDATOR = 27,
+    SET_PROCESS_DURATION = 28,
     UNRECOGNIZED = -1
 }
 declare function txTypeFromJSON(object: any): TxType;
@@ -1824,6 +1825,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } | undefined;
             } | undefined;
         } & {
@@ -1924,6 +1927,7 @@ declare const Tx: {
                     }[] | undefined;
                 } | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -2608,6 +2612,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } | undefined;
             } | undefined;
         } & {
@@ -2670,6 +2676,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } | undefined;
             } & {
                 txtype?: TxType | undefined;
@@ -2728,6 +2736,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } & {
                     processId?: Uint8Array | undefined;
                     entityId?: Uint8Array | undefined;
@@ -2810,6 +2820,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } & { [K_36 in Exclude<keyof I["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
             } & { [K_37 in Exclude<keyof I["payload"]["newProcess"], keyof NewProcessTx>]: never; }) | undefined;
             $case: "newProcess";
@@ -2932,6 +2944,7 @@ declare const Tx: {
                     }[] | undefined;
                 } | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3017,6 +3030,7 @@ declare const Tx: {
                     }[] | undefined;
                 } | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -3283,6 +3297,7 @@ declare const Tx: {
                     }[]>]: never; }) | undefined;
                 } & { [K_68 in Exclude<keyof I["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } & { [K_69 in Exclude<keyof I["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_70 in Exclude<keyof I["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -4394,6 +4409,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } | undefined;
             } | undefined;
         } & {
@@ -4494,6 +4511,7 @@ declare const Tx: {
                     }[] | undefined;
                 } | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -5178,6 +5196,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } | undefined;
             } | undefined;
         } & {
@@ -5240,6 +5260,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } | undefined;
             } & {
                 txtype?: TxType | undefined;
@@ -5298,6 +5320,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } & {
                     processId?: Uint8Array | undefined;
                     entityId?: Uint8Array | undefined;
@@ -5380,6 +5404,8 @@ declare const Tx: {
                     sourceNetworkContractAddr?: Uint8Array | undefined;
                     tokenDecimals?: number | undefined;
                     tempSIKs?: boolean | undefined;
+                    startTime?: number | undefined;
+                    duration?: number | undefined;
                 } & { [K_177 in Exclude<keyof I_1["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
             } & { [K_178 in Exclude<keyof I_1["payload"]["newProcess"], keyof NewProcessTx>]: never; }) | undefined;
             $case: "newProcess";
@@ -5502,6 +5528,7 @@ declare const Tx: {
                     }[] | undefined;
                 } | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -5587,6 +5614,7 @@ declare const Tx: {
                     }[] | undefined;
                 } | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -5853,6 +5881,7 @@ declare const Tx: {
                     }[]>]: never; }) | undefined;
                 } & { [K_209 in Exclude<keyof I_1["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
+                duration?: number | undefined;
             } & { [K_210 in Exclude<keyof I_1["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_211 in Exclude<keyof I_1["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -6927,6 +6956,8 @@ declare const NewProcessTx: {
             sourceNetworkContractAddr?: Uint8Array | undefined;
             tokenDecimals?: number | undefined;
             tempSIKs?: boolean | undefined;
+            startTime?: number | undefined;
+            duration?: number | undefined;
         } | undefined;
     } & {
         txtype?: TxType | undefined;
@@ -6985,6 +7016,8 @@ declare const NewProcessTx: {
             sourceNetworkContractAddr?: Uint8Array | undefined;
             tokenDecimals?: number | undefined;
             tempSIKs?: boolean | undefined;
+            startTime?: number | undefined;
+            duration?: number | undefined;
         } & {
             processId?: Uint8Array | undefined;
             entityId?: Uint8Array | undefined;
@@ -7067,6 +7100,8 @@ declare const NewProcessTx: {
             sourceNetworkContractAddr?: Uint8Array | undefined;
             tokenDecimals?: number | undefined;
             tempSIKs?: boolean | undefined;
+            startTime?: number | undefined;
+            duration?: number | undefined;
         } & { [K_9 in Exclude<keyof I["process"], keyof Process>]: never; }) | undefined;
     } & { [K_10 in Exclude<keyof I, keyof NewProcessTx>]: never; }>(base?: I | undefined): NewProcessTx;
     fromPartial<I_1 extends {
@@ -7126,6 +7161,8 @@ declare const NewProcessTx: {
             sourceNetworkContractAddr?: Uint8Array | undefined;
             tokenDecimals?: number | undefined;
             tempSIKs?: boolean | undefined;
+            startTime?: number | undefined;
+            duration?: number | undefined;
         } | undefined;
     } & {
         txtype?: TxType | undefined;
@@ -7184,6 +7221,8 @@ declare const NewProcessTx: {
             sourceNetworkContractAddr?: Uint8Array | undefined;
             tokenDecimals?: number | undefined;
             tempSIKs?: boolean | undefined;
+            startTime?: number | undefined;
+            duration?: number | undefined;
         } & {
             processId?: Uint8Array | undefined;
             entityId?: Uint8Array | undefined;
@@ -7266,6 +7305,8 @@ declare const NewProcessTx: {
             sourceNetworkContractAddr?: Uint8Array | undefined;
             tokenDecimals?: number | undefined;
             tempSIKs?: boolean | undefined;
+            startTime?: number | undefined;
+            duration?: number | undefined;
         } & { [K_20 in Exclude<keyof I_1["process"], keyof Process>]: never; }) | undefined;
     } & { [K_21 in Exclude<keyof I_1, keyof NewProcessTx>]: never; }>(object: I_1): NewProcessTx;
 };
@@ -7284,6 +7325,7 @@ interface SetProcessTx {
      * to it will be removed or not
      */
     tempSIKs?: boolean | undefined;
+    duration?: number | undefined;
 }
 declare const SetProcessTx: {
     encode(message: SetProcessTx, writer?: _m0.Writer): _m0.Writer;
@@ -7371,6 +7413,7 @@ declare const SetProcessTx: {
             }[] | undefined;
         } | undefined;
         tempSIKs?: boolean | undefined;
+        duration?: number | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -7637,6 +7680,7 @@ declare const SetProcessTx: {
             }[]>]: never; }) | undefined;
         } & { [K_27 in Exclude<keyof I["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
+        duration?: number | undefined;
     } & { [K_28 in Exclude<keyof I, keyof SetProcessTx>]: never; }>(base?: I | undefined): SetProcessTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
@@ -7719,6 +7763,7 @@ declare const SetProcessTx: {
             }[] | undefined;
         } | undefined;
         tempSIKs?: boolean | undefined;
+        duration?: number | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -7985,6 +8030,7 @@ declare const SetProcessTx: {
             }[]>]: never; }) | undefined;
         } & { [K_56 in Exclude<keyof I_1["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
+        duration?: number | undefined;
     } & { [K_57 in Exclude<keyof I_1, keyof SetProcessTx>]: never; }>(object: I_1): SetProcessTx;
 };
 interface AdminTx {
@@ -9718,6 +9764,10 @@ interface Process {
      * to it will be removed or not
      */
     tempSIKs?: boolean | undefined;
+    /** The unix timestamp of the start of the process */
+    startTime: number;
+    /** The duration of the process in seconds */
+    duration: number;
 }
 declare const Process: {
     encode(message: Process, writer?: _m0.Writer): _m0.Writer;
@@ -9778,6 +9828,8 @@ declare const Process: {
         sourceNetworkContractAddr?: Uint8Array | undefined;
         tokenDecimals?: number | undefined;
         tempSIKs?: boolean | undefined;
+        startTime?: number | undefined;
+        duration?: number | undefined;
     } & {
         processId?: Uint8Array | undefined;
         entityId?: Uint8Array | undefined;
@@ -9860,6 +9912,8 @@ declare const Process: {
         sourceNetworkContractAddr?: Uint8Array | undefined;
         tokenDecimals?: number | undefined;
         tempSIKs?: boolean | undefined;
+        startTime?: number | undefined;
+        duration?: number | undefined;
     } & { [K_9 in Exclude<keyof I, keyof Process>]: never; }>(base?: I | undefined): Process;
     fromPartial<I_1 extends {
         processId?: Uint8Array | undefined;
@@ -9915,6 +9969,8 @@ declare const Process: {
         sourceNetworkContractAddr?: Uint8Array | undefined;
         tokenDecimals?: number | undefined;
         tempSIKs?: boolean | undefined;
+        startTime?: number | undefined;
+        duration?: number | undefined;
     } & {
         processId?: Uint8Array | undefined;
         entityId?: Uint8Array | undefined;
@@ -9997,6 +10053,8 @@ declare const Process: {
         sourceNetworkContractAddr?: Uint8Array | undefined;
         tokenDecimals?: number | undefined;
         tempSIKs?: boolean | undefined;
+        startTime?: number | undefined;
+        duration?: number | undefined;
     } & { [K_19 in Exclude<keyof I_1, keyof Process>]: never; }>(object: I_1): Process;
 };
 interface EnvelopeType {

@@ -1521,6 +1521,7 @@ var TxType = /* @__PURE__ */ ((TxType2) => {
   TxType2[TxType2["DEL_ACCOUNT_SIK"] = 25] = "DEL_ACCOUNT_SIK";
   TxType2[TxType2["REGISTER_SIK"] = 26] = "REGISTER_SIK";
   TxType2[TxType2["SET_ACCOUNT_VALIDATOR"] = 27] = "SET_ACCOUNT_VALIDATOR";
+  TxType2[TxType2["SET_PROCESS_DURATION"] = 28] = "SET_PROCESS_DURATION";
   TxType2[TxType2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return TxType2;
 })(TxType || {});
@@ -1604,6 +1605,9 @@ function txTypeFromJSON(object) {
     case 27:
     case "SET_ACCOUNT_VALIDATOR":
       return 27 /* SET_ACCOUNT_VALIDATOR */;
+    case 28:
+    case "SET_PROCESS_DURATION":
+      return 28 /* SET_PROCESS_DURATION */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1664,6 +1668,8 @@ function txTypeToJSON(object) {
       return "REGISTER_SIK";
     case 27 /* SET_ACCOUNT_VALIDATOR */:
       return "SET_ACCOUNT_VALIDATOR";
+    case 28 /* SET_PROCESS_DURATION */:
+      return "SET_PROCESS_DURATION";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -3537,7 +3543,8 @@ function createBaseSetProcessTx() {
     censusURI: void 0,
     proof: void 0,
     results: void 0,
-    tempSIKs: void 0
+    tempSIKs: void 0,
+    duration: void 0
   };
 }
 var SetProcessTx = {
@@ -3571,6 +3578,9 @@ var SetProcessTx = {
     }
     if (message.tempSIKs !== void 0) {
       writer.uint32(80).bool(message.tempSIKs);
+    }
+    if (message.duration !== void 0) {
+      writer.uint32(88).uint32(message.duration);
     }
     return writer;
   },
@@ -3641,6 +3651,12 @@ var SetProcessTx = {
           }
           message.tempSIKs = reader.bool();
           continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+          message.duration = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3660,7 +3676,8 @@ var SetProcessTx = {
       censusURI: isSet(object.censusURI) ? globalThis.String(object.censusURI) : void 0,
       proof: isSet(object.proof) ? Proof.fromJSON(object.proof) : void 0,
       results: isSet(object.results) ? ProcessResult.fromJSON(object.results) : void 0,
-      tempSIKs: isSet(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0
+      tempSIKs: isSet(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : void 0
     };
   },
   toJSON(message) {
@@ -3695,6 +3712,9 @@ var SetProcessTx = {
     if (message.tempSIKs !== void 0) {
       obj.tempSIKs = message.tempSIKs;
     }
+    if (message.duration !== void 0) {
+      obj.duration = Math.round(message.duration);
+    }
     return obj;
   },
   create(base) {
@@ -3712,6 +3732,7 @@ var SetProcessTx = {
     message.proof = object.proof !== void 0 && object.proof !== null ? Proof.fromPartial(object.proof) : void 0;
     message.results = object.results !== void 0 && object.results !== null ? ProcessResult.fromPartial(object.results) : void 0;
     message.tempSIKs = object.tempSIKs ?? void 0;
+    message.duration = object.duration ?? void 0;
     return message;
   }
 };
@@ -4857,7 +4878,9 @@ function createBaseProcess() {
     nullifiersRoot: void 0,
     sourceNetworkContractAddr: void 0,
     tokenDecimals: void 0,
-    tempSIKs: void 0
+    tempSIKs: void 0,
+    startTime: 0,
+    duration: 0
   };
 }
 var Process = {
@@ -4954,6 +4977,12 @@ var Process = {
     }
     if (message.tempSIKs !== void 0) {
       writer.uint32(272).bool(message.tempSIKs);
+    }
+    if (message.startTime !== 0) {
+      writer.uint32(280).uint32(message.startTime);
+    }
+    if (message.duration !== 0) {
+      writer.uint32(288).uint32(message.duration);
     }
     return writer;
   },
@@ -5150,6 +5179,18 @@ var Process = {
           }
           message.tempSIKs = reader.bool();
           continue;
+        case 35:
+          if (tag !== 280) {
+            break;
+          }
+          message.startTime = reader.uint32();
+          continue;
+        case 36:
+          if (tag !== 288) {
+            break;
+          }
+          message.duration = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5190,7 +5231,9 @@ var Process = {
       nullifiersRoot: isSet(object.nullifiersRoot) ? bytesFromBase64(object.nullifiersRoot) : void 0,
       sourceNetworkContractAddr: isSet(object.sourceNetworkContractAddr) ? bytesFromBase64(object.sourceNetworkContractAddr) : void 0,
       tokenDecimals: isSet(object.tokenDecimals) ? globalThis.Number(object.tokenDecimals) : void 0,
-      tempSIKs: isSet(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0
+      tempSIKs: isSet(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
+      startTime: isSet(object.startTime) ? globalThis.Number(object.startTime) : 0,
+      duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0
     };
   },
   toJSON(message) {
@@ -5288,6 +5331,12 @@ var Process = {
     if (message.tempSIKs !== void 0) {
       obj.tempSIKs = message.tempSIKs;
     }
+    if (message.startTime !== 0) {
+      obj.startTime = Math.round(message.startTime);
+    }
+    if (message.duration !== 0) {
+      obj.duration = Math.round(message.duration);
+    }
     return obj;
   },
   create(base) {
@@ -5326,6 +5375,8 @@ var Process = {
     message.sourceNetworkContractAddr = object.sourceNetworkContractAddr ?? void 0;
     message.tokenDecimals = object.tokenDecimals ?? void 0;
     message.tempSIKs = object.tempSIKs ?? void 0;
+    message.startTime = object.startTime ?? 0;
+    message.duration = object.duration ?? 0;
     return message;
   }
 };
