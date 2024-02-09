@@ -296,6 +296,7 @@ const (
 	CensusOrigin_ERC1155                 CensusOrigin = 13
 	CensusOrigin_ERC777                  CensusOrigin = 14
 	CensusOrigin_MINI_ME                 CensusOrigin = 15
+	CensusOrigin_FARCASTER_FRAME         CensusOrigin = 16
 )
 
 // Enum value maps for CensusOrigin.
@@ -310,6 +311,7 @@ var (
 		13: "ERC1155",
 		14: "ERC777",
 		15: "MINI_ME",
+		16: "FARCASTER_FRAME",
 	}
 	CensusOrigin_value = map[string]int32{
 		"CENSUS_UNKNOWN":          0,
@@ -321,6 +323,7 @@ var (
 		"ERC1155":                 13,
 		"ERC777":                  14,
 		"MINI_ME":                 15,
+		"FARCASTER_FRAME":         16,
 	}
 )
 
@@ -360,6 +363,7 @@ const (
 	Census_ETHEREUMSTORAGE Census_Type = 3
 	Census_ETHEREUMACCOUNT Census_Type = 4
 	Census_CA              Census_Type = 5
+	Census_FARCASTER_FRAME Census_Type = 6
 )
 
 // Enum value maps for Census_Type.
@@ -371,6 +375,7 @@ var (
 		3: "ETHEREUMSTORAGE",
 		4: "ETHEREUMACCOUNT",
 		5: "CA",
+		6: "FARCASTER_FRAME",
 	}
 	Census_Type_value = map[string]int32{
 		"UNKNOWN":         0,
@@ -379,6 +384,7 @@ var (
 		"ETHEREUMSTORAGE": 3,
 		"ETHEREUMACCOUNT": 4,
 		"CA":              5,
+		"FARCASTER_FRAME": 6,
 	}
 )
 
@@ -700,6 +706,7 @@ type Proof struct {
 	//	*Proof_Arbo
 	//	*Proof_ZkSnark
 	//	*Proof_MinimeStorage
+	//	*Proof_FarcasterFrame
 	Payload isProof_Payload `protobuf_oneof:"payload"`
 }
 
@@ -784,6 +791,13 @@ func (x *Proof) GetMinimeStorage() *ProofMinime {
 	return nil
 }
 
+func (x *Proof) GetFarcasterFrame() *ProofFarcasterFrame {
+	if x, ok := x.GetPayload().(*Proof_FarcasterFrame); ok {
+		return x.FarcasterFrame
+	}
+	return nil
+}
+
 type isProof_Payload interface {
 	isProof_Payload()
 }
@@ -818,6 +832,11 @@ type Proof_MinimeStorage struct {
 	MinimeStorage *ProofMinime `protobuf:"bytes,8,opt,name=minimeStorage,proto3,oneof"`
 }
 
+type Proof_FarcasterFrame struct {
+	// ProofFarcastFrame is a proof created on the Farcaster network
+	FarcasterFrame *ProofFarcasterFrame `protobuf:"bytes,9,opt,name=farcasterFrame,proto3,oneof"`
+}
+
 func (*Proof_EthereumStorage) isProof_Payload() {}
 
 func (*Proof_EthereumAccount) isProof_Payload() {}
@@ -829,6 +848,8 @@ func (*Proof_Arbo) isProof_Payload() {}
 func (*Proof_ZkSnark) isProof_Payload() {}
 
 func (*Proof_MinimeStorage) isProof_Payload() {}
+
+func (*Proof_FarcasterFrame) isProof_Payload() {}
 
 type ProofEthereumStorage struct {
 	state         protoimpl.MessageState
@@ -1314,6 +1335,70 @@ func (x *ProofZkSNARK) GetPublicInputs() []string {
 	return nil
 }
 
+// ProofFarcasterFrame is a proof created on the Farcaster network
+type ProofFarcasterFrame struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SignedFrameMessageBody []byte     `protobuf:"bytes,1,opt,name=signedFrameMessageBody,proto3" json:"signedFrameMessageBody,omitempty"`
+	CensusProof            *ProofArbo `protobuf:"bytes,2,opt,name=censusProof,proto3" json:"censusProof,omitempty"`
+	PublicKey              []byte     `protobuf:"bytes,3,opt,name=publicKey,proto3" json:"publicKey,omitempty"`
+}
+
+func (x *ProofFarcasterFrame) Reset() {
+	*x = ProofFarcasterFrame{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vochain_vochain_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProofFarcasterFrame) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProofFarcasterFrame) ProtoMessage() {}
+
+func (x *ProofFarcasterFrame) ProtoReflect() protoreflect.Message {
+	mi := &file_vochain_vochain_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProofFarcasterFrame.ProtoReflect.Descriptor instead.
+func (*ProofFarcasterFrame) Descriptor() ([]byte, []int) {
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ProofFarcasterFrame) GetSignedFrameMessageBody() []byte {
+	if x != nil {
+		return x.SignedFrameMessageBody
+	}
+	return nil
+}
+
+func (x *ProofFarcasterFrame) GetCensusProof() *ProofArbo {
+	if x != nil {
+		return x.CensusProof
+	}
+	return nil
+}
+
+func (x *ProofFarcasterFrame) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
 // Account represents an entity with an amount of tokens, usually attached to an address.
 type Account struct {
 	state         protoimpl.MessageState
@@ -1330,7 +1415,7 @@ type Account struct {
 func (x *Account) Reset() {
 	*x = Account{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[10]
+		mi := &file_vochain_vochain_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1343,7 +1428,7 @@ func (x *Account) String() string {
 func (*Account) ProtoMessage() {}
 
 func (x *Account) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[10]
+	mi := &file_vochain_vochain_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1356,7 +1441,7 @@ func (x *Account) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Account.ProtoReflect.Descriptor instead.
 func (*Account) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{10}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *Account) GetBalance() uint64 {
@@ -1420,7 +1505,7 @@ type Tx struct {
 func (x *Tx) Reset() {
 	*x = Tx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[11]
+		mi := &file_vochain_vochain_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1433,7 +1518,7 @@ func (x *Tx) String() string {
 func (*Tx) ProtoMessage() {}
 
 func (x *Tx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[11]
+	mi := &file_vochain_vochain_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1446,7 +1531,7 @@ func (x *Tx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Tx.ProtoReflect.Descriptor instead.
 func (*Tx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{11}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{12}
 }
 
 func (m *Tx) GetPayload() isTx_Payload {
@@ -1646,7 +1731,7 @@ type SignedTx struct {
 func (x *SignedTx) Reset() {
 	*x = SignedTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[12]
+		mi := &file_vochain_vochain_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1659,7 +1744,7 @@ func (x *SignedTx) String() string {
 func (*SignedTx) ProtoMessage() {}
 
 func (x *SignedTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[12]
+	mi := &file_vochain_vochain_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1672,7 +1757,7 @@ func (x *SignedTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignedTx.ProtoReflect.Descriptor instead.
 func (*SignedTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{12}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SignedTx) GetTx() []byte {
@@ -1702,7 +1787,7 @@ type NewProcessTx struct {
 func (x *NewProcessTx) Reset() {
 	*x = NewProcessTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[13]
+		mi := &file_vochain_vochain_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1715,7 +1800,7 @@ func (x *NewProcessTx) String() string {
 func (*NewProcessTx) ProtoMessage() {}
 
 func (x *NewProcessTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[13]
+	mi := &file_vochain_vochain_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1728,7 +1813,7 @@ func (x *NewProcessTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewProcessTx.ProtoReflect.Descriptor instead.
 func (*NewProcessTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{13}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *NewProcessTx) GetTxtype() TxType {
@@ -1775,7 +1860,7 @@ type SetProcessTx struct {
 func (x *SetProcessTx) Reset() {
 	*x = SetProcessTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[14]
+		mi := &file_vochain_vochain_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1788,7 +1873,7 @@ func (x *SetProcessTx) String() string {
 func (*SetProcessTx) ProtoMessage() {}
 
 func (x *SetProcessTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[14]
+	mi := &file_vochain_vochain_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1801,7 +1886,7 @@ func (x *SetProcessTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetProcessTx.ProtoReflect.Descriptor instead.
 func (*SetProcessTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{14}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SetProcessTx) GetTxtype() TxType {
@@ -1900,7 +1985,7 @@ type AdminTx struct {
 func (x *AdminTx) Reset() {
 	*x = AdminTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[15]
+		mi := &file_vochain_vochain_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1913,7 +1998,7 @@ func (x *AdminTx) String() string {
 func (*AdminTx) ProtoMessage() {}
 
 func (x *AdminTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[15]
+	mi := &file_vochain_vochain_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1926,7 +2011,7 @@ func (x *AdminTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdminTx.ProtoReflect.Descriptor instead.
 func (*AdminTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{15}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AdminTx) GetTxtype() TxType {
@@ -2007,7 +2092,7 @@ type RegisterKeyTx struct {
 func (x *RegisterKeyTx) Reset() {
 	*x = RegisterKeyTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[16]
+		mi := &file_vochain_vochain_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2020,7 +2105,7 @@ func (x *RegisterKeyTx) String() string {
 func (*RegisterKeyTx) ProtoMessage() {}
 
 func (x *RegisterKeyTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[16]
+	mi := &file_vochain_vochain_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2033,7 +2118,7 @@ func (x *RegisterKeyTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterKeyTx.ProtoReflect.Descriptor instead.
 func (*RegisterKeyTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{16}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *RegisterKeyTx) GetNonce() uint32 {
@@ -2086,7 +2171,7 @@ type SendTokensTx struct {
 func (x *SendTokensTx) Reset() {
 	*x = SendTokensTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[17]
+		mi := &file_vochain_vochain_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2099,7 +2184,7 @@ func (x *SendTokensTx) String() string {
 func (*SendTokensTx) ProtoMessage() {}
 
 func (x *SendTokensTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[17]
+	mi := &file_vochain_vochain_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2112,7 +2197,7 @@ func (x *SendTokensTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendTokensTx.ProtoReflect.Descriptor instead.
 func (*SendTokensTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{17}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *SendTokensTx) GetTxtype() TxType {
@@ -2163,7 +2248,7 @@ type SetTransactionCostsTx struct {
 func (x *SetTransactionCostsTx) Reset() {
 	*x = SetTransactionCostsTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[18]
+		mi := &file_vochain_vochain_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2176,7 +2261,7 @@ func (x *SetTransactionCostsTx) String() string {
 func (*SetTransactionCostsTx) ProtoMessage() {}
 
 func (x *SetTransactionCostsTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[18]
+	mi := &file_vochain_vochain_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2189,7 +2274,7 @@ func (x *SetTransactionCostsTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetTransactionCostsTx.ProtoReflect.Descriptor instead.
 func (*SetTransactionCostsTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{18}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *SetTransactionCostsTx) GetTxtype() TxType {
@@ -2232,7 +2317,7 @@ type SetAccountTx struct {
 func (x *SetAccountTx) Reset() {
 	*x = SetAccountTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[19]
+		mi := &file_vochain_vochain_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2245,7 +2330,7 @@ func (x *SetAccountTx) String() string {
 func (*SetAccountTx) ProtoMessage() {}
 
 func (x *SetAccountTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[19]
+	mi := &file_vochain_vochain_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2258,7 +2343,7 @@ func (x *SetAccountTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAccountTx.ProtoReflect.Descriptor instead.
 func (*SetAccountTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{19}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *SetAccountTx) GetTxtype() TxType {
@@ -2337,7 +2422,7 @@ type SIKTx struct {
 func (x *SIKTx) Reset() {
 	*x = SIKTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[20]
+		mi := &file_vochain_vochain_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2350,7 +2435,7 @@ func (x *SIKTx) String() string {
 func (*SIKTx) ProtoMessage() {}
 
 func (x *SIKTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[20]
+	mi := &file_vochain_vochain_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2363,7 +2448,7 @@ func (x *SIKTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SIKTx.ProtoReflect.Descriptor instead.
 func (*SIKTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{20}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *SIKTx) GetTxtype() TxType {
@@ -2400,7 +2485,7 @@ type RegisterSIKTx struct {
 func (x *RegisterSIKTx) Reset() {
 	*x = RegisterSIKTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[21]
+		mi := &file_vochain_vochain_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2413,7 +2498,7 @@ func (x *RegisterSIKTx) String() string {
 func (*RegisterSIKTx) ProtoMessage() {}
 
 func (x *RegisterSIKTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[21]
+	mi := &file_vochain_vochain_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2426,7 +2511,7 @@ func (x *RegisterSIKTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterSIKTx.ProtoReflect.Descriptor instead.
 func (*RegisterSIKTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{21}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *RegisterSIKTx) GetElectionId() []byte {
@@ -2463,7 +2548,7 @@ type CollectFaucetTx struct {
 func (x *CollectFaucetTx) Reset() {
 	*x = CollectFaucetTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[22]
+		mi := &file_vochain_vochain_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2476,7 +2561,7 @@ func (x *CollectFaucetTx) String() string {
 func (*CollectFaucetTx) ProtoMessage() {}
 
 func (x *CollectFaucetTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[22]
+	mi := &file_vochain_vochain_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2489,7 +2574,7 @@ func (x *CollectFaucetTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectFaucetTx.ProtoReflect.Descriptor instead.
 func (*CollectFaucetTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{22}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *CollectFaucetTx) GetTxType() TxType {
@@ -2526,7 +2611,7 @@ type FaucetPayload struct {
 func (x *FaucetPayload) Reset() {
 	*x = FaucetPayload{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[23]
+		mi := &file_vochain_vochain_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2539,7 +2624,7 @@ func (x *FaucetPayload) String() string {
 func (*FaucetPayload) ProtoMessage() {}
 
 func (x *FaucetPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[23]
+	mi := &file_vochain_vochain_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2552,7 +2637,7 @@ func (x *FaucetPayload) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FaucetPayload.ProtoReflect.Descriptor instead.
 func (*FaucetPayload) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{23}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *FaucetPayload) GetIdentifier() uint64 {
@@ -2588,7 +2673,7 @@ type FaucetPackage struct {
 func (x *FaucetPackage) Reset() {
 	*x = FaucetPackage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[24]
+		mi := &file_vochain_vochain_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2601,7 +2686,7 @@ func (x *FaucetPackage) String() string {
 func (*FaucetPackage) ProtoMessage() {}
 
 func (x *FaucetPackage) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[24]
+	mi := &file_vochain_vochain_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2614,7 +2699,7 @@ func (x *FaucetPackage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FaucetPackage.ProtoReflect.Descriptor instead.
 func (*FaucetPackage) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{24}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *FaucetPackage) GetPayload() []byte {
@@ -2644,7 +2729,7 @@ type SetKeykeeperTx struct {
 func (x *SetKeykeeperTx) Reset() {
 	*x = SetKeykeeperTx{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[25]
+		mi := &file_vochain_vochain_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2657,7 +2742,7 @@ func (x *SetKeykeeperTx) String() string {
 func (*SetKeykeeperTx) ProtoMessage() {}
 
 func (x *SetKeykeeperTx) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[25]
+	mi := &file_vochain_vochain_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2670,7 +2755,7 @@ func (x *SetKeykeeperTx) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetKeykeeperTx.ProtoReflect.Descriptor instead.
 func (*SetKeykeeperTx) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{25}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *SetKeykeeperTx) GetTxtype() TxType {
@@ -2763,7 +2848,7 @@ type Process struct {
 func (x *Process) Reset() {
 	*x = Process{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[26]
+		mi := &file_vochain_vochain_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2776,7 +2861,7 @@ func (x *Process) String() string {
 func (*Process) ProtoMessage() {}
 
 func (x *Process) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[26]
+	mi := &file_vochain_vochain_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2789,7 +2874,7 @@ func (x *Process) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Process.ProtoReflect.Descriptor instead.
 func (*Process) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{26}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *Process) GetProcessId() []byte {
@@ -3038,7 +3123,7 @@ type EnvelopeType struct {
 func (x *EnvelopeType) Reset() {
 	*x = EnvelopeType{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[27]
+		mi := &file_vochain_vochain_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3051,7 +3136,7 @@ func (x *EnvelopeType) String() string {
 func (*EnvelopeType) ProtoMessage() {}
 
 func (x *EnvelopeType) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[27]
+	mi := &file_vochain_vochain_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3064,7 +3149,7 @@ func (x *EnvelopeType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvelopeType.ProtoReflect.Descriptor instead.
 func (*EnvelopeType) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{27}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *EnvelopeType) GetSerial() bool {
@@ -3117,7 +3202,7 @@ type ProcessMode struct {
 func (x *ProcessMode) Reset() {
 	*x = ProcessMode{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[28]
+		mi := &file_vochain_vochain_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3130,7 +3215,7 @@ func (x *ProcessMode) String() string {
 func (*ProcessMode) ProtoMessage() {}
 
 func (x *ProcessMode) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[28]
+	mi := &file_vochain_vochain_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3143,7 +3228,7 @@ func (x *ProcessMode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessMode.ProtoReflect.Descriptor instead.
 func (*ProcessMode) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{28}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ProcessMode) GetAutoStart() bool {
@@ -3196,7 +3281,7 @@ type ProcessVoteOptions struct {
 func (x *ProcessVoteOptions) Reset() {
 	*x = ProcessVoteOptions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[29]
+		mi := &file_vochain_vochain_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3209,7 +3294,7 @@ func (x *ProcessVoteOptions) String() string {
 func (*ProcessVoteOptions) ProtoMessage() {}
 
 func (x *ProcessVoteOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[29]
+	mi := &file_vochain_vochain_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3222,7 +3307,7 @@ func (x *ProcessVoteOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessVoteOptions.ProtoReflect.Descriptor instead.
 func (*ProcessVoteOptions) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{29}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ProcessVoteOptions) GetMaxCount() uint32 {
@@ -3271,7 +3356,7 @@ type OracleList struct {
 func (x *OracleList) Reset() {
 	*x = OracleList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[30]
+		mi := &file_vochain_vochain_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3284,7 +3369,7 @@ func (x *OracleList) String() string {
 func (*OracleList) ProtoMessage() {}
 
 func (x *OracleList) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[30]
+	mi := &file_vochain_vochain_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3297,7 +3382,7 @@ func (x *OracleList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OracleList.ProtoReflect.Descriptor instead.
 func (*OracleList) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{30}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *OracleList) GetOracles() [][]byte {
@@ -3318,7 +3403,7 @@ type ValidatorList struct {
 func (x *ValidatorList) Reset() {
 	*x = ValidatorList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[31]
+		mi := &file_vochain_vochain_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3331,7 +3416,7 @@ func (x *ValidatorList) String() string {
 func (*ValidatorList) ProtoMessage() {}
 
 func (x *ValidatorList) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[31]
+	mi := &file_vochain_vochain_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3344,7 +3429,7 @@ func (x *ValidatorList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidatorList.ProtoReflect.Descriptor instead.
 func (*ValidatorList) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{31}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *ValidatorList) GetValidators() []*Validator {
@@ -3374,7 +3459,7 @@ type Validator struct {
 func (x *Validator) Reset() {
 	*x = Validator{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[32]
+		mi := &file_vochain_vochain_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3387,7 +3472,7 @@ func (x *Validator) String() string {
 func (*Validator) ProtoMessage() {}
 
 func (x *Validator) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[32]
+	mi := &file_vochain_vochain_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3400,7 +3485,7 @@ func (x *Validator) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Validator.ProtoReflect.Descriptor instead.
 func (*Validator) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{32}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *Validator) GetAddress() []byte {
@@ -3501,7 +3586,7 @@ type TendermintHeader struct {
 func (x *TendermintHeader) Reset() {
 	*x = TendermintHeader{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[33]
+		mi := &file_vochain_vochain_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3514,7 +3599,7 @@ func (x *TendermintHeader) String() string {
 func (*TendermintHeader) ProtoMessage() {}
 
 func (x *TendermintHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[33]
+	mi := &file_vochain_vochain_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3527,7 +3612,7 @@ func (x *TendermintHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TendermintHeader.ProtoReflect.Descriptor instead.
 func (*TendermintHeader) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{33}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *TendermintHeader) GetChainId() string {
@@ -3632,7 +3717,7 @@ type ProcessResult struct {
 func (x *ProcessResult) Reset() {
 	*x = ProcessResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[34]
+		mi := &file_vochain_vochain_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3645,7 +3730,7 @@ func (x *ProcessResult) String() string {
 func (*ProcessResult) ProtoMessage() {}
 
 func (x *ProcessResult) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[34]
+	mi := &file_vochain_vochain_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3658,7 +3743,7 @@ func (x *ProcessResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessResult.ProtoReflect.Descriptor instead.
 func (*ProcessResult) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{34}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *ProcessResult) GetVotes() []*QuestionResult {
@@ -3679,7 +3764,7 @@ type QuestionResult struct {
 func (x *QuestionResult) Reset() {
 	*x = QuestionResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[35]
+		mi := &file_vochain_vochain_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3692,7 +3777,7 @@ func (x *QuestionResult) String() string {
 func (*QuestionResult) ProtoMessage() {}
 
 func (x *QuestionResult) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[35]
+	mi := &file_vochain_vochain_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3705,7 +3790,7 @@ func (x *QuestionResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuestionResult.ProtoReflect.Descriptor instead.
 func (*QuestionResult) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{35}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *QuestionResult) GetQuestion() [][]byte {
@@ -3726,7 +3811,7 @@ type ProcessEndingList struct {
 func (x *ProcessEndingList) Reset() {
 	*x = ProcessEndingList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[36]
+		mi := &file_vochain_vochain_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3739,7 +3824,7 @@ func (x *ProcessEndingList) String() string {
 func (*ProcessEndingList) ProtoMessage() {}
 
 func (x *ProcessEndingList) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[36]
+	mi := &file_vochain_vochain_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3752,7 +3837,7 @@ func (x *ProcessEndingList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessEndingList.ProtoReflect.Descriptor instead.
 func (*ProcessEndingList) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{36}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ProcessEndingList) GetProcessList() [][]byte {
@@ -3774,7 +3859,7 @@ type StoredKeys struct {
 func (x *StoredKeys) Reset() {
 	*x = StoredKeys{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vochain_vochain_proto_msgTypes[37]
+		mi := &file_vochain_vochain_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3787,7 +3872,7 @@ func (x *StoredKeys) String() string {
 func (*StoredKeys) ProtoMessage() {}
 
 func (x *StoredKeys) ProtoReflect() protoreflect.Message {
-	mi := &file_vochain_vochain_proto_msgTypes[37]
+	mi := &file_vochain_vochain_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3800,7 +3885,7 @@ func (x *StoredKeys) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StoredKeys.ProtoReflect.Descriptor instead.
 func (*StoredKeys) Descriptor() ([]byte, []int) {
-	return file_vochain_vochain_proto_rawDescGZIP(), []int{37}
+	return file_vochain_vochain_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *StoredKeys) GetPids() [][]byte {
@@ -3829,114 +3914,131 @@ var file_vochain_vochain_proto_rawDesc = []byte{
 	0x6e, 0x75, 0x6c, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x72, 0x12, 0x32, 0x0a, 0x14, 0x65, 0x6e, 0x63,
 	0x72, 0x79, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x65,
 	0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0d, 0x52, 0x14, 0x65, 0x6e, 0x63, 0x72, 0x79, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x65, 0x73, 0x22, 0x74, 0x0a,
-	0x06, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x22, 0x6a, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12,
-	0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c,
-	0x41, 0x52, 0x42, 0x4f, 0x5f, 0x42, 0x4c, 0x41, 0x4b, 0x45, 0x32, 0x42, 0x10, 0x01, 0x12, 0x11,
-	0x0a, 0x0d, 0x41, 0x52, 0x42, 0x4f, 0x5f, 0x50, 0x4f, 0x53, 0x45, 0x49, 0x44, 0x4f, 0x4e, 0x10,
-	0x02, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x54, 0x48, 0x45, 0x52, 0x45, 0x55, 0x4d, 0x53, 0x54, 0x4f,
-	0x52, 0x41, 0x47, 0x45, 0x10, 0x03, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x54, 0x48, 0x45, 0x52, 0x45,
-	0x55, 0x4d, 0x41, 0x43, 0x43, 0x4f, 0x55, 0x4e, 0x54, 0x10, 0x04, 0x12, 0x06, 0x0a, 0x02, 0x43,
-	0x41, 0x10, 0x05, 0x22, 0x91, 0x03, 0x0a, 0x05, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x12, 0x50, 0x0a,
-	0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74,
-	0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68,
-	0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x48, 0x00, 0x52, 0x0f,
-	0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x12,
-	0x50, 0x0a, 0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x41, 0x63, 0x63, 0x6f, 0x75,
-	0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65,
-	0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45,
-	0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x48, 0x00,
-	0x52, 0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e,
-	0x74, 0x12, 0x29, 0x0a, 0x02, 0x63, 0x61, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e,
-	0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50,
-	0x72, 0x6f, 0x6f, 0x66, 0x43, 0x41, 0x48, 0x00, 0x52, 0x02, 0x63, 0x61, 0x12, 0x2f, 0x0a, 0x04,
-	0x61, 0x72, 0x62, 0x6f, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x64, 0x76, 0x6f,
-	0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f,
-	0x66, 0x41, 0x72, 0x62, 0x6f, 0x48, 0x00, 0x52, 0x04, 0x61, 0x72, 0x62, 0x6f, 0x12, 0x38, 0x0a,
-	0x07, 0x7a, 0x6b, 0x53, 0x6e, 0x61, 0x72, 0x6b, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c,
-	0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e,
-	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x5a, 0x6b, 0x53, 0x4e, 0x41, 0x52, 0x4b, 0x48, 0x00, 0x52, 0x07,
-	0x7a, 0x6b, 0x53, 0x6e, 0x61, 0x72, 0x6b, 0x12, 0x43, 0x0a, 0x0d, 0x6d, 0x69, 0x6e, 0x69, 0x6d,
-	0x65, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b,
-	0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e,
-	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4d, 0x69, 0x6e, 0x69, 0x6d, 0x65, 0x48, 0x00, 0x52, 0x0d, 0x6d,
-	0x69, 0x6e, 0x69, 0x6d, 0x65, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x42, 0x09, 0x0a, 0x07,
-	0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x22, 0x5a, 0x0a, 0x14, 0x50, 0x72, 0x6f, 0x6f, 0x66,
-	0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x12,
-	0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x03, 0x6b, 0x65,
-	0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c,
-	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x69, 0x62, 0x6c, 0x69,
-	0x6e, 0x67, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x08, 0x73, 0x69, 0x62, 0x6c, 0x69,
-	0x6e, 0x67, 0x73, 0x22, 0xa0, 0x01, 0x0a, 0x14, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68,
-	0x65, 0x72, 0x65, 0x75, 0x6d, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05,
-	0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x6e, 0x6f, 0x6e,
-	0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0c, 0x52, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x20, 0x0a, 0x0b,
-	0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x48, 0x61, 0x73, 0x68, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x0c, 0x52, 0x0b, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x48, 0x61, 0x73, 0x68, 0x12, 0x1a,
-	0x0a, 0x08, 0x63, 0x6f, 0x64, 0x65, 0x48, 0x61, 0x73, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0c,
-	0x52, 0x08, 0x63, 0x6f, 0x64, 0x65, 0x48, 0x61, 0x73, 0x68, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x69,
-	0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x08, 0x73, 0x69,
-	0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x22, 0xa9, 0x01, 0x0a, 0x0b, 0x50, 0x72, 0x6f, 0x6f, 0x66,
-	0x4d, 0x69, 0x6e, 0x69, 0x6d, 0x65, 0x12, 0x4c, 0x0a, 0x0e, 0x70, 0x72, 0x6f, 0x6f, 0x66, 0x50,
-	0x72, 0x65, 0x76, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24,
-	0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e,
-	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f,
-	0x72, 0x61, 0x67, 0x65, 0x52, 0x0e, 0x70, 0x72, 0x6f, 0x6f, 0x66, 0x50, 0x72, 0x65, 0x76, 0x42,
-	0x6c, 0x6f, 0x63, 0x6b, 0x12, 0x4c, 0x0a, 0x0e, 0x70, 0x72, 0x6f, 0x6f, 0x66, 0x4e, 0x65, 0x78,
-	0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x64,
+	0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x65, 0x73, 0x22, 0x89, 0x01,
+	0x0a, 0x06, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x22, 0x7f, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x10, 0x0a,
+	0x0c, 0x41, 0x52, 0x42, 0x4f, 0x5f, 0x42, 0x4c, 0x41, 0x4b, 0x45, 0x32, 0x42, 0x10, 0x01, 0x12,
+	0x11, 0x0a, 0x0d, 0x41, 0x52, 0x42, 0x4f, 0x5f, 0x50, 0x4f, 0x53, 0x45, 0x49, 0x44, 0x4f, 0x4e,
+	0x10, 0x02, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x54, 0x48, 0x45, 0x52, 0x45, 0x55, 0x4d, 0x53, 0x54,
+	0x4f, 0x52, 0x41, 0x47, 0x45, 0x10, 0x03, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x54, 0x48, 0x45, 0x52,
+	0x45, 0x55, 0x4d, 0x41, 0x43, 0x43, 0x4f, 0x55, 0x4e, 0x54, 0x10, 0x04, 0x12, 0x06, 0x0a, 0x02,
+	0x43, 0x41, 0x10, 0x05, 0x12, 0x13, 0x0a, 0x0f, 0x46, 0x41, 0x52, 0x43, 0x41, 0x53, 0x54, 0x45,
+	0x52, 0x5f, 0x46, 0x52, 0x41, 0x4d, 0x45, 0x10, 0x06, 0x22, 0xe0, 0x03, 0x0a, 0x05, 0x50, 0x72,
+	0x6f, 0x6f, 0x66, 0x12, 0x50, 0x0a, 0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53,
+	0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x64,
 	0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72,
 	0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f, 0x72, 0x61,
-	0x67, 0x65, 0x52, 0x0e, 0x70, 0x72, 0x6f, 0x6f, 0x66, 0x4e, 0x65, 0x78, 0x74, 0x42, 0x6c, 0x6f,
-	0x63, 0x6b, 0x22, 0xec, 0x01, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x43, 0x41, 0x12, 0x30,
-	0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c, 0x2e, 0x64,
-	0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72,
-	0x6f, 0x6f, 0x66, 0x43, 0x41, 0x2e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65,
-	0x12, 0x30, 0x0a, 0x06, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x18, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76,
-	0x31, 0x2e, 0x43, 0x41, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x52, 0x06, 0x62, 0x75, 0x6e, 0x64,
-	0x6c, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65,
-	0x22, 0x5f, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e,
-	0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x45, 0x43, 0x44, 0x53, 0x41, 0x10, 0x01,
-	0x12, 0x13, 0x0a, 0x0f, 0x45, 0x43, 0x44, 0x53, 0x41, 0x5f, 0x50, 0x49, 0x44, 0x53, 0x41, 0x4c,
-	0x54, 0x45, 0x44, 0x10, 0x02, 0x12, 0x0f, 0x0a, 0x0b, 0x45, 0x43, 0x44, 0x53, 0x41, 0x5f, 0x42,
-	0x4c, 0x49, 0x4e, 0x44, 0x10, 0x03, 0x12, 0x19, 0x0a, 0x15, 0x45, 0x43, 0x44, 0x53, 0x41, 0x5f,
-	0x42, 0x4c, 0x49, 0x4e, 0x44, 0x5f, 0x50, 0x49, 0x44, 0x53, 0x41, 0x4c, 0x54, 0x45, 0x44, 0x10,
-	0x04, 0x22, 0x42, 0x0a, 0x08, 0x43, 0x41, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x1c, 0x0a,
-	0x09, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c,
-	0x52, 0x09, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x61,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0xa9, 0x02, 0x0a, 0x09, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41,
-	0x72, 0x62, 0x6f, 0x12, 0x32, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0e, 0x32, 0x1e, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e,
-	0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62, 0x6f, 0x2e, 0x54, 0x79, 0x70,
-	0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x69, 0x62, 0x6c, 0x69,
-	0x6e, 0x67, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x08, 0x73, 0x69, 0x62, 0x6c, 0x69,
-	0x6e, 0x67, 0x73, 0x12, 0x28, 0x0a, 0x0f, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65,
-	0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0f, 0x61, 0x76,
-	0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x3b, 0x0a,
-	0x07, 0x6b, 0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21,
+	0x67, 0x65, 0x48, 0x00, 0x52, 0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74,
+	0x6f, 0x72, 0x61, 0x67, 0x65, 0x12, 0x50, 0x0a, 0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75,
+	0x6d, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x24,
 	0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e,
-	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62, 0x6f, 0x2e, 0x4b, 0x65, 0x79, 0x54, 0x79, 0x70,
-	0x65, 0x52, 0x07, 0x6b, 0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x76, 0x6f,
-	0x74, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a,
-	0x76, 0x6f, 0x74, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x22, 0x21, 0x0a, 0x04, 0x54, 0x79,
-	0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x42, 0x4c, 0x41, 0x4b, 0x45, 0x32, 0x42, 0x10, 0x00, 0x12,
-	0x0c, 0x0a, 0x08, 0x50, 0x4f, 0x53, 0x45, 0x49, 0x44, 0x4f, 0x4e, 0x10, 0x01, 0x22, 0x22, 0x0a,
-	0x07, 0x4b, 0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x50, 0x55, 0x42, 0x4b,
-	0x45, 0x59, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x41, 0x44, 0x44, 0x52, 0x45, 0x53, 0x53, 0x10,
-	0x01, 0x22, 0x94, 0x01, 0x0a, 0x0c, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x5a, 0x6b, 0x53, 0x4e, 0x41,
-	0x52, 0x4b, 0x12, 0x36, 0x0a, 0x16, 0x63, 0x69, 0x72, 0x63, 0x75, 0x69, 0x74, 0x50, 0x61, 0x72,
-	0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x73, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x05, 0x52, 0x16, 0x63, 0x69, 0x72, 0x63, 0x75, 0x69, 0x74, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x65, 0x74, 0x65, 0x72, 0x73, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x12, 0x0c, 0x0a, 0x01, 0x61, 0x18,
-	0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x01, 0x61, 0x12, 0x0c, 0x0a, 0x01, 0x62, 0x18, 0x03, 0x20,
-	0x03, 0x28, 0x09, 0x52, 0x01, 0x62, 0x12, 0x0c, 0x0a, 0x01, 0x63, 0x18, 0x04, 0x20, 0x03, 0x28,
-	0x09, 0x52, 0x01, 0x63, 0x12, 0x22, 0x0a, 0x0c, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x49, 0x6e,
-	0x70, 0x75, 0x74, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0c, 0x70, 0x75, 0x62, 0x6c,
-	0x69, 0x63, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x73, 0x22, 0x9d, 0x01, 0x0a, 0x07, 0x41, 0x63, 0x63,
+	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x41, 0x63, 0x63,
+	0x6f, 0x75, 0x6e, 0x74, 0x48, 0x00, 0x52, 0x0f, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d,
+	0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x29, 0x0a, 0x02, 0x63, 0x61, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x43, 0x41, 0x48, 0x00, 0x52, 0x02,
+	0x63, 0x61, 0x12, 0x2f, 0x0a, 0x04, 0x61, 0x72, 0x62, 0x6f, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76,
+	0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62, 0x6f, 0x48, 0x00, 0x52, 0x04, 0x61,
+	0x72, 0x62, 0x6f, 0x12, 0x38, 0x0a, 0x07, 0x7a, 0x6b, 0x53, 0x6e, 0x61, 0x72, 0x6b, 0x18, 0x07,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70,
+	0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x5a, 0x6b, 0x53, 0x4e, 0x41,
+	0x52, 0x4b, 0x48, 0x00, 0x52, 0x07, 0x7a, 0x6b, 0x53, 0x6e, 0x61, 0x72, 0x6b, 0x12, 0x43, 0x0a,
+	0x0d, 0x6d, 0x69, 0x6e, 0x69, 0x6d, 0x65, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x18, 0x08,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70,
+	0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4d, 0x69, 0x6e, 0x69, 0x6d,
+	0x65, 0x48, 0x00, 0x52, 0x0d, 0x6d, 0x69, 0x6e, 0x69, 0x6d, 0x65, 0x53, 0x74, 0x6f, 0x72, 0x61,
+	0x67, 0x65, 0x12, 0x4d, 0x0a, 0x0e, 0x66, 0x61, 0x72, 0x63, 0x61, 0x73, 0x74, 0x65, 0x72, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x64, 0x76, 0x6f,
+	0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f,
+	0x66, 0x46, 0x61, 0x72, 0x63, 0x61, 0x73, 0x74, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x48,
+	0x00, 0x52, 0x0e, 0x66, 0x61, 0x72, 0x63, 0x61, 0x73, 0x74, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x42, 0x09, 0x0a, 0x07, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x22, 0x5a, 0x0a, 0x14,
+	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x53, 0x74, 0x6f,
+	0x72, 0x61, 0x67, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0c, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x1a, 0x0a, 0x08,
+	0x73, 0x69, 0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x08,
+	0x73, 0x69, 0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x22, 0xa0, 0x01, 0x0a, 0x14, 0x50, 0x72, 0x6f,
+	0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x12, 0x14, 0x0a, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c,
+	0x52, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e,
+	0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63,
+	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x48, 0x61, 0x73, 0x68,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0b, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x48,
+	0x61, 0x73, 0x68, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x64, 0x65, 0x48, 0x61, 0x73, 0x68, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x08, 0x63, 0x6f, 0x64, 0x65, 0x48, 0x61, 0x73, 0x68, 0x12,
+	0x1a, 0x0a, 0x08, 0x73, 0x69, 0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28,
+	0x0c, 0x52, 0x08, 0x73, 0x69, 0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x22, 0xa9, 0x01, 0x0a, 0x0b,
+	0x50, 0x72, 0x6f, 0x6f, 0x66, 0x4d, 0x69, 0x6e, 0x69, 0x6d, 0x65, 0x12, 0x4c, 0x0a, 0x0e, 0x70,
+	0x72, 0x6f, 0x6f, 0x66, 0x50, 0x72, 0x65, 0x76, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65,
+	0x75, 0x6d, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x52, 0x0e, 0x70, 0x72, 0x6f, 0x6f, 0x66,
+	0x50, 0x72, 0x65, 0x76, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x12, 0x4c, 0x0a, 0x0e, 0x70, 0x72, 0x6f,
+	0x6f, 0x66, 0x4e, 0x65, 0x78, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x24, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e,
+	0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x45, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d,
+	0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x52, 0x0e, 0x70, 0x72, 0x6f, 0x6f, 0x66, 0x4e, 0x65,
+	0x78, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x22, 0xec, 0x01, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x6f,
+	0x66, 0x43, 0x41, 0x12, 0x30, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0e, 0x32, 0x1c, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e,
+	0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x43, 0x41, 0x2e, 0x54, 0x79, 0x70, 0x65, 0x52,
+	0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x30, 0x0a, 0x06, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79,
+	0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x41, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x52,
+	0x06, 0x62, 0x75, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x69, 0x67, 0x6e, 0x61,
+	0x74, 0x75, 0x72, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x73, 0x69, 0x67, 0x6e,
+	0x61, 0x74, 0x75, 0x72, 0x65, 0x22, 0x5f, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a,
+	0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x45, 0x43,
+	0x44, 0x53, 0x41, 0x10, 0x01, 0x12, 0x13, 0x0a, 0x0f, 0x45, 0x43, 0x44, 0x53, 0x41, 0x5f, 0x50,
+	0x49, 0x44, 0x53, 0x41, 0x4c, 0x54, 0x45, 0x44, 0x10, 0x02, 0x12, 0x0f, 0x0a, 0x0b, 0x45, 0x43,
+	0x44, 0x53, 0x41, 0x5f, 0x42, 0x4c, 0x49, 0x4e, 0x44, 0x10, 0x03, 0x12, 0x19, 0x0a, 0x15, 0x45,
+	0x43, 0x44, 0x53, 0x41, 0x5f, 0x42, 0x4c, 0x49, 0x4e, 0x44, 0x5f, 0x50, 0x49, 0x44, 0x53, 0x41,
+	0x4c, 0x54, 0x45, 0x44, 0x10, 0x04, 0x22, 0x42, 0x0a, 0x08, 0x43, 0x41, 0x62, 0x75, 0x6e, 0x64,
+	0x6c, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x63, 0x65, 0x73, 0x73, 0x49, 0x64,
+	0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0c, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0xa9, 0x02, 0x0a, 0x09, 0x50,
+	0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62, 0x6f, 0x12, 0x32, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1e, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74,
+	0x79, 0x70, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62,
+	0x6f, 0x2e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x1a, 0x0a, 0x08,
+	0x73, 0x69, 0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x08,
+	0x73, 0x69, 0x62, 0x6c, 0x69, 0x6e, 0x67, 0x73, 0x12, 0x28, 0x0a, 0x0f, 0x61, 0x76, 0x61, 0x69,
+	0x6c, 0x61, 0x62, 0x6c, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x0c, 0x52, 0x0f, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65, 0x57, 0x65, 0x69, 0x67,
+	0x68, 0x74, 0x12, 0x3b, 0x0a, 0x07, 0x6b, 0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62, 0x6f, 0x2e, 0x4b,
+	0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x52, 0x07, 0x6b, 0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x1e, 0x0a, 0x0a, 0x76, 0x6f, 0x74, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0c, 0x52, 0x0a, 0x76, 0x6f, 0x74, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x22,
+	0x21, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x42, 0x4c, 0x41, 0x4b, 0x45,
+	0x32, 0x42, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x50, 0x4f, 0x53, 0x45, 0x49, 0x44, 0x4f, 0x4e,
+	0x10, 0x01, 0x22, 0x22, 0x0a, 0x07, 0x4b, 0x65, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a,
+	0x06, 0x50, 0x55, 0x42, 0x4b, 0x45, 0x59, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x41, 0x44, 0x44,
+	0x52, 0x45, 0x53, 0x53, 0x10, 0x01, 0x22, 0x94, 0x01, 0x0a, 0x0c, 0x50, 0x72, 0x6f, 0x6f, 0x66,
+	0x5a, 0x6b, 0x53, 0x4e, 0x41, 0x52, 0x4b, 0x12, 0x36, 0x0a, 0x16, 0x63, 0x69, 0x72, 0x63, 0x75,
+	0x69, 0x74, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x73, 0x49, 0x6e, 0x64, 0x65,
+	0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x16, 0x63, 0x69, 0x72, 0x63, 0x75, 0x69, 0x74,
+	0x50, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x73, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x12,
+	0x0c, 0x0a, 0x01, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x01, 0x61, 0x12, 0x0c, 0x0a,
+	0x01, 0x62, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x01, 0x62, 0x12, 0x0c, 0x0a, 0x01, 0x63,
+	0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x01, 0x63, 0x12, 0x22, 0x0a, 0x0c, 0x70, 0x75, 0x62,
+	0x6c, 0x69, 0x63, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x09, 0x52,
+	0x0c, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x73, 0x22, 0xa8, 0x01,
+	0x0a, 0x13, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x46, 0x61, 0x72, 0x63, 0x61, 0x73, 0x74, 0x65, 0x72,
+	0x46, 0x72, 0x61, 0x6d, 0x65, 0x12, 0x36, 0x0a, 0x16, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x42, 0x6f, 0x64, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x16, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x46, 0x72, 0x61,
+	0x6d, 0x65, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x42, 0x6f, 0x64, 0x79, 0x12, 0x3b, 0x0a,
+	0x0b, 0x63, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x19, 0x2e, 0x64, 0x76, 0x6f, 0x74, 0x65, 0x2e, 0x74, 0x79, 0x70, 0x65, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x41, 0x72, 0x62, 0x6f, 0x52, 0x0b, 0x63,
+	0x65, 0x6e, 0x73, 0x75, 0x73, 0x50, 0x72, 0x6f, 0x6f, 0x66, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x75,
+	0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x09, 0x70,
+	0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x22, 0x9d, 0x01, 0x0a, 0x07, 0x41, 0x63, 0x63,
 	0x6f, 0x75, 0x6e, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x14,
 	0x0a, 0x05, 0x6e, 0x6f, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x6e,
@@ -4446,7 +4548,7 @@ var file_vochain_vochain_proto_rawDesc = []byte{
 	0x12, 0x12, 0x0a, 0x0e, 0x50, 0x4f, 0x4c, 0x59, 0x47, 0x4f, 0x4e, 0x5f, 0x4d, 0x55, 0x4d, 0x42,
 	0x41, 0x49, 0x10, 0x0c, 0x12, 0x0c, 0x0a, 0x08, 0x4f, 0x50, 0x54, 0x49, 0x4d, 0x49, 0x53, 0x4d,
 	0x10, 0x0d, 0x12, 0x0c, 0x0a, 0x08, 0x41, 0x52, 0x42, 0x49, 0x54, 0x52, 0x55, 0x4d, 0x10, 0x0e,
-	0x2a, 0xa2, 0x01, 0x0a, 0x0c, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x4f, 0x72, 0x69, 0x67, 0x69,
+	0x2a, 0xb7, 0x01, 0x0a, 0x0c, 0x43, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x4f, 0x72, 0x69, 0x67, 0x69,
 	0x6e, 0x12, 0x12, 0x0a, 0x0e, 0x43, 0x45, 0x4e, 0x53, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x4b, 0x4e,
 	0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x12, 0x0a, 0x0e, 0x4f, 0x46, 0x46, 0x5f, 0x43, 0x48, 0x41,
 	0x49, 0x4e, 0x5f, 0x54, 0x52, 0x45, 0x45, 0x10, 0x01, 0x12, 0x1b, 0x0a, 0x17, 0x4f, 0x46, 0x46,
@@ -4456,10 +4558,11 @@ var file_vochain_vochain_proto_rawDesc = []byte{
 	0x30, 0x10, 0x0b, 0x12, 0x0a, 0x0a, 0x06, 0x45, 0x52, 0x43, 0x37, 0x32, 0x31, 0x10, 0x0c, 0x12,
 	0x0b, 0x0a, 0x07, 0x45, 0x52, 0x43, 0x31, 0x31, 0x35, 0x35, 0x10, 0x0d, 0x12, 0x0a, 0x0a, 0x06,
 	0x45, 0x52, 0x43, 0x37, 0x37, 0x37, 0x10, 0x0e, 0x12, 0x0b, 0x0a, 0x07, 0x4d, 0x49, 0x4e, 0x49,
-	0x5f, 0x4d, 0x45, 0x10, 0x0f, 0x42, 0x25, 0x5a, 0x23, 0x67, 0x6f, 0x2e, 0x76, 0x6f, 0x63, 0x64,
-	0x6f, 0x6e, 0x69, 0x2e, 0x69, 0x6f, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x62, 0x75, 0x69,
-	0x6c, 0x64, 0x2f, 0x67, 0x6f, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x5f, 0x4d, 0x45, 0x10, 0x0f, 0x12, 0x13, 0x0a, 0x0f, 0x46, 0x41, 0x52, 0x43, 0x41, 0x53, 0x54,
+	0x45, 0x52, 0x5f, 0x46, 0x52, 0x41, 0x4d, 0x45, 0x10, 0x10, 0x42, 0x25, 0x5a, 0x23, 0x67, 0x6f,
+	0x2e, 0x76, 0x6f, 0x63, 0x64, 0x6f, 0x6e, 0x69, 0x2e, 0x69, 0x6f, 0x2f, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x2f, 0x62, 0x75, 0x69, 0x6c, 0x64, 0x2f, 0x67, 0x6f, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4475,7 +4578,7 @@ func file_vochain_vochain_proto_rawDescGZIP() []byte {
 }
 
 var file_vochain_vochain_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
-var file_vochain_vochain_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
+var file_vochain_vochain_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
 var file_vochain_vochain_proto_goTypes = []interface{}{
 	(TxType)(0),                   // 0: dvote.types.v1.TxType
 	(ProcessStatus)(0),            // 1: dvote.types.v1.ProcessStatus
@@ -4495,34 +4598,35 @@ var file_vochain_vochain_proto_goTypes = []interface{}{
 	(*CAbundle)(nil),              // 15: dvote.types.v1.CAbundle
 	(*ProofArbo)(nil),             // 16: dvote.types.v1.ProofArbo
 	(*ProofZkSNARK)(nil),          // 17: dvote.types.v1.ProofZkSNARK
-	(*Account)(nil),               // 18: dvote.types.v1.Account
-	(*Tx)(nil),                    // 19: dvote.types.v1.Tx
-	(*SignedTx)(nil),              // 20: dvote.types.v1.SignedTx
-	(*NewProcessTx)(nil),          // 21: dvote.types.v1.NewProcessTx
-	(*SetProcessTx)(nil),          // 22: dvote.types.v1.SetProcessTx
-	(*AdminTx)(nil),               // 23: dvote.types.v1.AdminTx
-	(*RegisterKeyTx)(nil),         // 24: dvote.types.v1.RegisterKeyTx
-	(*SendTokensTx)(nil),          // 25: dvote.types.v1.SendTokensTx
-	(*SetTransactionCostsTx)(nil), // 26: dvote.types.v1.SetTransactionCostsTx
-	(*SetAccountTx)(nil),          // 27: dvote.types.v1.SetAccountTx
-	(*SIKTx)(nil),                 // 28: dvote.types.v1.SIKTx
-	(*RegisterSIKTx)(nil),         // 29: dvote.types.v1.RegisterSIKTx
-	(*CollectFaucetTx)(nil),       // 30: dvote.types.v1.CollectFaucetTx
-	(*FaucetPayload)(nil),         // 31: dvote.types.v1.FaucetPayload
-	(*FaucetPackage)(nil),         // 32: dvote.types.v1.FaucetPackage
-	(*SetKeykeeperTx)(nil),        // 33: dvote.types.v1.SetKeykeeperTx
-	(*Process)(nil),               // 34: dvote.types.v1.Process
-	(*EnvelopeType)(nil),          // 35: dvote.types.v1.EnvelopeType
-	(*ProcessMode)(nil),           // 36: dvote.types.v1.ProcessMode
-	(*ProcessVoteOptions)(nil),    // 37: dvote.types.v1.ProcessVoteOptions
-	(*OracleList)(nil),            // 38: dvote.types.v1.OracleList
-	(*ValidatorList)(nil),         // 39: dvote.types.v1.ValidatorList
-	(*Validator)(nil),             // 40: dvote.types.v1.Validator
-	(*TendermintHeader)(nil),      // 41: dvote.types.v1.TendermintHeader
-	(*ProcessResult)(nil),         // 42: dvote.types.v1.ProcessResult
-	(*QuestionResult)(nil),        // 43: dvote.types.v1.QuestionResult
-	(*ProcessEndingList)(nil),     // 44: dvote.types.v1.ProcessEndingList
-	(*StoredKeys)(nil),            // 45: dvote.types.v1.StoredKeys
+	(*ProofFarcasterFrame)(nil),   // 18: dvote.types.v1.ProofFarcasterFrame
+	(*Account)(nil),               // 19: dvote.types.v1.Account
+	(*Tx)(nil),                    // 20: dvote.types.v1.Tx
+	(*SignedTx)(nil),              // 21: dvote.types.v1.SignedTx
+	(*NewProcessTx)(nil),          // 22: dvote.types.v1.NewProcessTx
+	(*SetProcessTx)(nil),          // 23: dvote.types.v1.SetProcessTx
+	(*AdminTx)(nil),               // 24: dvote.types.v1.AdminTx
+	(*RegisterKeyTx)(nil),         // 25: dvote.types.v1.RegisterKeyTx
+	(*SendTokensTx)(nil),          // 26: dvote.types.v1.SendTokensTx
+	(*SetTransactionCostsTx)(nil), // 27: dvote.types.v1.SetTransactionCostsTx
+	(*SetAccountTx)(nil),          // 28: dvote.types.v1.SetAccountTx
+	(*SIKTx)(nil),                 // 29: dvote.types.v1.SIKTx
+	(*RegisterSIKTx)(nil),         // 30: dvote.types.v1.RegisterSIKTx
+	(*CollectFaucetTx)(nil),       // 31: dvote.types.v1.CollectFaucetTx
+	(*FaucetPayload)(nil),         // 32: dvote.types.v1.FaucetPayload
+	(*FaucetPackage)(nil),         // 33: dvote.types.v1.FaucetPackage
+	(*SetKeykeeperTx)(nil),        // 34: dvote.types.v1.SetKeykeeperTx
+	(*Process)(nil),               // 35: dvote.types.v1.Process
+	(*EnvelopeType)(nil),          // 36: dvote.types.v1.EnvelopeType
+	(*ProcessMode)(nil),           // 37: dvote.types.v1.ProcessMode
+	(*ProcessVoteOptions)(nil),    // 38: dvote.types.v1.ProcessVoteOptions
+	(*OracleList)(nil),            // 39: dvote.types.v1.OracleList
+	(*ValidatorList)(nil),         // 40: dvote.types.v1.ValidatorList
+	(*Validator)(nil),             // 41: dvote.types.v1.Validator
+	(*TendermintHeader)(nil),      // 42: dvote.types.v1.TendermintHeader
+	(*ProcessResult)(nil),         // 43: dvote.types.v1.ProcessResult
+	(*QuestionResult)(nil),        // 44: dvote.types.v1.QuestionResult
+	(*ProcessEndingList)(nil),     // 45: dvote.types.v1.ProcessEndingList
+	(*StoredKeys)(nil),            // 46: dvote.types.v1.StoredKeys
 }
 var file_vochain_vochain_proto_depIdxs = []int32{
 	10, // 0: dvote.types.v1.VoteEnvelope.proof:type_name -> dvote.types.v1.Proof
@@ -4532,56 +4636,58 @@ var file_vochain_vochain_proto_depIdxs = []int32{
 	16, // 4: dvote.types.v1.Proof.arbo:type_name -> dvote.types.v1.ProofArbo
 	17, // 5: dvote.types.v1.Proof.zkSnark:type_name -> dvote.types.v1.ProofZkSNARK
 	13, // 6: dvote.types.v1.Proof.minimeStorage:type_name -> dvote.types.v1.ProofMinime
-	11, // 7: dvote.types.v1.ProofMinime.proofPrevBlock:type_name -> dvote.types.v1.ProofEthereumStorage
-	11, // 8: dvote.types.v1.ProofMinime.proofNextBlock:type_name -> dvote.types.v1.ProofEthereumStorage
-	5,  // 9: dvote.types.v1.ProofCA.type:type_name -> dvote.types.v1.ProofCA.Type
-	15, // 10: dvote.types.v1.ProofCA.bundle:type_name -> dvote.types.v1.CAbundle
-	6,  // 11: dvote.types.v1.ProofArbo.type:type_name -> dvote.types.v1.ProofArbo.Type
-	7,  // 12: dvote.types.v1.ProofArbo.keyType:type_name -> dvote.types.v1.ProofArbo.KeyType
-	8,  // 13: dvote.types.v1.Tx.vote:type_name -> dvote.types.v1.VoteEnvelope
-	21, // 14: dvote.types.v1.Tx.newProcess:type_name -> dvote.types.v1.NewProcessTx
-	23, // 15: dvote.types.v1.Tx.admin:type_name -> dvote.types.v1.AdminTx
-	22, // 16: dvote.types.v1.Tx.setProcess:type_name -> dvote.types.v1.SetProcessTx
-	24, // 17: dvote.types.v1.Tx.registerKey:type_name -> dvote.types.v1.RegisterKeyTx
-	25, // 18: dvote.types.v1.Tx.sendTokens:type_name -> dvote.types.v1.SendTokensTx
-	26, // 19: dvote.types.v1.Tx.setTransactionCosts:type_name -> dvote.types.v1.SetTransactionCostsTx
-	27, // 20: dvote.types.v1.Tx.setAccount:type_name -> dvote.types.v1.SetAccountTx
-	30, // 21: dvote.types.v1.Tx.collectFaucet:type_name -> dvote.types.v1.CollectFaucetTx
-	33, // 22: dvote.types.v1.Tx.setKeykeeper:type_name -> dvote.types.v1.SetKeykeeperTx
-	28, // 23: dvote.types.v1.Tx.setSIK:type_name -> dvote.types.v1.SIKTx
-	28, // 24: dvote.types.v1.Tx.delSIK:type_name -> dvote.types.v1.SIKTx
-	29, // 25: dvote.types.v1.Tx.registerSIK:type_name -> dvote.types.v1.RegisterSIKTx
-	0,  // 26: dvote.types.v1.NewProcessTx.txtype:type_name -> dvote.types.v1.TxType
-	34, // 27: dvote.types.v1.NewProcessTx.process:type_name -> dvote.types.v1.Process
-	0,  // 28: dvote.types.v1.SetProcessTx.txtype:type_name -> dvote.types.v1.TxType
-	1,  // 29: dvote.types.v1.SetProcessTx.status:type_name -> dvote.types.v1.ProcessStatus
-	10, // 30: dvote.types.v1.SetProcessTx.proof:type_name -> dvote.types.v1.Proof
-	42, // 31: dvote.types.v1.SetProcessTx.results:type_name -> dvote.types.v1.ProcessResult
-	0,  // 32: dvote.types.v1.AdminTx.txtype:type_name -> dvote.types.v1.TxType
-	10, // 33: dvote.types.v1.RegisterKeyTx.proof:type_name -> dvote.types.v1.Proof
-	0,  // 34: dvote.types.v1.SendTokensTx.txtype:type_name -> dvote.types.v1.TxType
-	0,  // 35: dvote.types.v1.SetTransactionCostsTx.txtype:type_name -> dvote.types.v1.TxType
-	0,  // 36: dvote.types.v1.SetAccountTx.txtype:type_name -> dvote.types.v1.TxType
-	32, // 37: dvote.types.v1.SetAccountTx.faucetPackage:type_name -> dvote.types.v1.FaucetPackage
-	0,  // 38: dvote.types.v1.SIKTx.txtype:type_name -> dvote.types.v1.TxType
-	10, // 39: dvote.types.v1.RegisterSIKTx.censusProof:type_name -> dvote.types.v1.Proof
-	0,  // 40: dvote.types.v1.CollectFaucetTx.txType:type_name -> dvote.types.v1.TxType
-	32, // 41: dvote.types.v1.CollectFaucetTx.faucetPackage:type_name -> dvote.types.v1.FaucetPackage
-	0,  // 42: dvote.types.v1.SetKeykeeperTx.txtype:type_name -> dvote.types.v1.TxType
-	1,  // 43: dvote.types.v1.Process.status:type_name -> dvote.types.v1.ProcessStatus
-	35, // 44: dvote.types.v1.Process.envelopeType:type_name -> dvote.types.v1.EnvelopeType
-	36, // 45: dvote.types.v1.Process.mode:type_name -> dvote.types.v1.ProcessMode
-	37, // 46: dvote.types.v1.Process.voteOptions:type_name -> dvote.types.v1.ProcessVoteOptions
-	3,  // 47: dvote.types.v1.Process.censusOrigin:type_name -> dvote.types.v1.CensusOrigin
-	42, // 48: dvote.types.v1.Process.results:type_name -> dvote.types.v1.ProcessResult
-	2,  // 49: dvote.types.v1.Process.sourceNetworkId:type_name -> dvote.types.v1.SourceNetworkId
-	40, // 50: dvote.types.v1.ValidatorList.validators:type_name -> dvote.types.v1.Validator
-	43, // 51: dvote.types.v1.ProcessResult.votes:type_name -> dvote.types.v1.QuestionResult
-	52, // [52:52] is the sub-list for method output_type
-	52, // [52:52] is the sub-list for method input_type
-	52, // [52:52] is the sub-list for extension type_name
-	52, // [52:52] is the sub-list for extension extendee
-	0,  // [0:52] is the sub-list for field type_name
+	18, // 7: dvote.types.v1.Proof.farcasterFrame:type_name -> dvote.types.v1.ProofFarcasterFrame
+	11, // 8: dvote.types.v1.ProofMinime.proofPrevBlock:type_name -> dvote.types.v1.ProofEthereumStorage
+	11, // 9: dvote.types.v1.ProofMinime.proofNextBlock:type_name -> dvote.types.v1.ProofEthereumStorage
+	5,  // 10: dvote.types.v1.ProofCA.type:type_name -> dvote.types.v1.ProofCA.Type
+	15, // 11: dvote.types.v1.ProofCA.bundle:type_name -> dvote.types.v1.CAbundle
+	6,  // 12: dvote.types.v1.ProofArbo.type:type_name -> dvote.types.v1.ProofArbo.Type
+	7,  // 13: dvote.types.v1.ProofArbo.keyType:type_name -> dvote.types.v1.ProofArbo.KeyType
+	16, // 14: dvote.types.v1.ProofFarcasterFrame.censusProof:type_name -> dvote.types.v1.ProofArbo
+	8,  // 15: dvote.types.v1.Tx.vote:type_name -> dvote.types.v1.VoteEnvelope
+	22, // 16: dvote.types.v1.Tx.newProcess:type_name -> dvote.types.v1.NewProcessTx
+	24, // 17: dvote.types.v1.Tx.admin:type_name -> dvote.types.v1.AdminTx
+	23, // 18: dvote.types.v1.Tx.setProcess:type_name -> dvote.types.v1.SetProcessTx
+	25, // 19: dvote.types.v1.Tx.registerKey:type_name -> dvote.types.v1.RegisterKeyTx
+	26, // 20: dvote.types.v1.Tx.sendTokens:type_name -> dvote.types.v1.SendTokensTx
+	27, // 21: dvote.types.v1.Tx.setTransactionCosts:type_name -> dvote.types.v1.SetTransactionCostsTx
+	28, // 22: dvote.types.v1.Tx.setAccount:type_name -> dvote.types.v1.SetAccountTx
+	31, // 23: dvote.types.v1.Tx.collectFaucet:type_name -> dvote.types.v1.CollectFaucetTx
+	34, // 24: dvote.types.v1.Tx.setKeykeeper:type_name -> dvote.types.v1.SetKeykeeperTx
+	29, // 25: dvote.types.v1.Tx.setSIK:type_name -> dvote.types.v1.SIKTx
+	29, // 26: dvote.types.v1.Tx.delSIK:type_name -> dvote.types.v1.SIKTx
+	30, // 27: dvote.types.v1.Tx.registerSIK:type_name -> dvote.types.v1.RegisterSIKTx
+	0,  // 28: dvote.types.v1.NewProcessTx.txtype:type_name -> dvote.types.v1.TxType
+	35, // 29: dvote.types.v1.NewProcessTx.process:type_name -> dvote.types.v1.Process
+	0,  // 30: dvote.types.v1.SetProcessTx.txtype:type_name -> dvote.types.v1.TxType
+	1,  // 31: dvote.types.v1.SetProcessTx.status:type_name -> dvote.types.v1.ProcessStatus
+	10, // 32: dvote.types.v1.SetProcessTx.proof:type_name -> dvote.types.v1.Proof
+	43, // 33: dvote.types.v1.SetProcessTx.results:type_name -> dvote.types.v1.ProcessResult
+	0,  // 34: dvote.types.v1.AdminTx.txtype:type_name -> dvote.types.v1.TxType
+	10, // 35: dvote.types.v1.RegisterKeyTx.proof:type_name -> dvote.types.v1.Proof
+	0,  // 36: dvote.types.v1.SendTokensTx.txtype:type_name -> dvote.types.v1.TxType
+	0,  // 37: dvote.types.v1.SetTransactionCostsTx.txtype:type_name -> dvote.types.v1.TxType
+	0,  // 38: dvote.types.v1.SetAccountTx.txtype:type_name -> dvote.types.v1.TxType
+	33, // 39: dvote.types.v1.SetAccountTx.faucetPackage:type_name -> dvote.types.v1.FaucetPackage
+	0,  // 40: dvote.types.v1.SIKTx.txtype:type_name -> dvote.types.v1.TxType
+	10, // 41: dvote.types.v1.RegisterSIKTx.censusProof:type_name -> dvote.types.v1.Proof
+	0,  // 42: dvote.types.v1.CollectFaucetTx.txType:type_name -> dvote.types.v1.TxType
+	33, // 43: dvote.types.v1.CollectFaucetTx.faucetPackage:type_name -> dvote.types.v1.FaucetPackage
+	0,  // 44: dvote.types.v1.SetKeykeeperTx.txtype:type_name -> dvote.types.v1.TxType
+	1,  // 45: dvote.types.v1.Process.status:type_name -> dvote.types.v1.ProcessStatus
+	36, // 46: dvote.types.v1.Process.envelopeType:type_name -> dvote.types.v1.EnvelopeType
+	37, // 47: dvote.types.v1.Process.mode:type_name -> dvote.types.v1.ProcessMode
+	38, // 48: dvote.types.v1.Process.voteOptions:type_name -> dvote.types.v1.ProcessVoteOptions
+	3,  // 49: dvote.types.v1.Process.censusOrigin:type_name -> dvote.types.v1.CensusOrigin
+	43, // 50: dvote.types.v1.Process.results:type_name -> dvote.types.v1.ProcessResult
+	2,  // 51: dvote.types.v1.Process.sourceNetworkId:type_name -> dvote.types.v1.SourceNetworkId
+	41, // 52: dvote.types.v1.ValidatorList.validators:type_name -> dvote.types.v1.Validator
+	44, // 53: dvote.types.v1.ProcessResult.votes:type_name -> dvote.types.v1.QuestionResult
+	54, // [54:54] is the sub-list for method output_type
+	54, // [54:54] is the sub-list for method input_type
+	54, // [54:54] is the sub-list for extension type_name
+	54, // [54:54] is the sub-list for extension extendee
+	0,  // [0:54] is the sub-list for field type_name
 }
 
 func init() { file_vochain_vochain_proto_init() }
@@ -4711,7 +4817,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Account); i {
+			switch v := v.(*ProofFarcasterFrame); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4723,7 +4829,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Tx); i {
+			switch v := v.(*Account); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4735,7 +4841,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SignedTx); i {
+			switch v := v.(*Tx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4747,7 +4853,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NewProcessTx); i {
+			switch v := v.(*SignedTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4759,7 +4865,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetProcessTx); i {
+			switch v := v.(*NewProcessTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4771,7 +4877,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AdminTx); i {
+			switch v := v.(*SetProcessTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4783,7 +4889,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RegisterKeyTx); i {
+			switch v := v.(*AdminTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4795,7 +4901,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SendTokensTx); i {
+			switch v := v.(*RegisterKeyTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4807,7 +4913,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetTransactionCostsTx); i {
+			switch v := v.(*SendTokensTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4819,7 +4925,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetAccountTx); i {
+			switch v := v.(*SetTransactionCostsTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4831,7 +4937,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SIKTx); i {
+			switch v := v.(*SetAccountTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4843,7 +4949,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RegisterSIKTx); i {
+			switch v := v.(*SIKTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4855,7 +4961,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CollectFaucetTx); i {
+			switch v := v.(*RegisterSIKTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4867,7 +4973,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FaucetPayload); i {
+			switch v := v.(*CollectFaucetTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4879,7 +4985,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FaucetPackage); i {
+			switch v := v.(*FaucetPayload); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4891,7 +4997,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetKeykeeperTx); i {
+			switch v := v.(*FaucetPackage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4903,7 +5009,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Process); i {
+			switch v := v.(*SetKeykeeperTx); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4915,7 +5021,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EnvelopeType); i {
+			switch v := v.(*Process); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4927,7 +5033,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProcessMode); i {
+			switch v := v.(*EnvelopeType); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4939,7 +5045,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProcessVoteOptions); i {
+			switch v := v.(*ProcessMode); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4951,7 +5057,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OracleList); i {
+			switch v := v.(*ProcessVoteOptions); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4963,7 +5069,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ValidatorList); i {
+			switch v := v.(*OracleList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4975,7 +5081,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Validator); i {
+			switch v := v.(*ValidatorList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4987,7 +5093,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TendermintHeader); i {
+			switch v := v.(*Validator); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4999,7 +5105,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProcessResult); i {
+			switch v := v.(*TendermintHeader); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5011,7 +5117,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuestionResult); i {
+			switch v := v.(*ProcessResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5023,7 +5129,7 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProcessEndingList); i {
+			switch v := v.(*QuestionResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5035,6 +5141,18 @@ func file_vochain_vochain_proto_init() {
 			}
 		}
 		file_vochain_vochain_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProcessEndingList); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vochain_vochain_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StoredKeys); i {
 			case 0:
 				return &v.state
@@ -5054,8 +5172,9 @@ func file_vochain_vochain_proto_init() {
 		(*Proof_Arbo)(nil),
 		(*Proof_ZkSnark)(nil),
 		(*Proof_MinimeStorage)(nil),
+		(*Proof_FarcasterFrame)(nil),
 	}
-	file_vochain_vochain_proto_msgTypes[11].OneofWrappers = []interface{}{
+	file_vochain_vochain_proto_msgTypes[12].OneofWrappers = []interface{}{
 		(*Tx_Vote)(nil),
 		(*Tx_NewProcess)(nil),
 		(*Tx_Admin)(nil),
@@ -5070,19 +5189,19 @@ func file_vochain_vochain_proto_init() {
 		(*Tx_DelSIK)(nil),
 		(*Tx_RegisterSIK)(nil),
 	}
-	file_vochain_vochain_proto_msgTypes[12].OneofWrappers = []interface{}{}
-	file_vochain_vochain_proto_msgTypes[14].OneofWrappers = []interface{}{}
+	file_vochain_vochain_proto_msgTypes[13].OneofWrappers = []interface{}{}
 	file_vochain_vochain_proto_msgTypes[15].OneofWrappers = []interface{}{}
-	file_vochain_vochain_proto_msgTypes[19].OneofWrappers = []interface{}{}
+	file_vochain_vochain_proto_msgTypes[16].OneofWrappers = []interface{}{}
 	file_vochain_vochain_proto_msgTypes[20].OneofWrappers = []interface{}{}
-	file_vochain_vochain_proto_msgTypes[26].OneofWrappers = []interface{}{}
+	file_vochain_vochain_proto_msgTypes[21].OneofWrappers = []interface{}{}
+	file_vochain_vochain_proto_msgTypes[27].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vochain_vochain_proto_rawDesc,
 			NumEnums:      8,
-			NumMessages:   38,
+			NumMessages:   39,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -4,7 +4,7 @@
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "ts-node": "^9.1.1",
-    "ts-proto": "^1.166.2",
+    "ts-proto": "^1.167.3",
     "tsup": "^6.5.0",
     "typescript": "^4.2.4"
   },

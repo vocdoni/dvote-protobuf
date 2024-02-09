@@ -5717,6 +5717,7 @@ __export(vochain_exports, {
   ProofCA_Type: () => ProofCA_Type,
   ProofEthereumAccount: () => ProofEthereumAccount,
   ProofEthereumStorage: () => ProofEthereumStorage,
+  ProofFarcasterFrame: () => ProofFarcasterFrame,
   ProofMinime: () => ProofMinime,
   ProofZkSNARK: () => ProofZkSNARK,
   QuestionResult: () => QuestionResult,
@@ -6113,6 +6114,7 @@ var CensusOrigin = /* @__PURE__ */ ((CensusOrigin2) => {
   CensusOrigin2[CensusOrigin2["ERC1155"] = 13] = "ERC1155";
   CensusOrigin2[CensusOrigin2["ERC777"] = 14] = "ERC777";
   CensusOrigin2[CensusOrigin2["MINI_ME"] = 15] = "MINI_ME";
+  CensusOrigin2[CensusOrigin2["FARCASTER_FRAME"] = 16] = "FARCASTER_FRAME";
   CensusOrigin2[CensusOrigin2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return CensusOrigin2;
 })(CensusOrigin || {});
@@ -6145,6 +6147,9 @@ function censusOriginFromJSON(object) {
     case 15:
     case "MINI_ME":
       return 15 /* MINI_ME */;
+    case 16:
+    case "FARCASTER_FRAME":
+      return 16 /* FARCASTER_FRAME */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -6171,6 +6176,8 @@ function censusOriginToJSON(object) {
       return "ERC777";
     case 15 /* MINI_ME */:
       return "MINI_ME";
+    case 16 /* FARCASTER_FRAME */:
+      return "FARCASTER_FRAME";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -6183,6 +6190,7 @@ var Census_Type = /* @__PURE__ */ ((Census_Type2) => {
   Census_Type2[Census_Type2["ETHEREUMSTORAGE"] = 3] = "ETHEREUMSTORAGE";
   Census_Type2[Census_Type2["ETHEREUMACCOUNT"] = 4] = "ETHEREUMACCOUNT";
   Census_Type2[Census_Type2["CA"] = 5] = "CA";
+  Census_Type2[Census_Type2["FARCASTER_FRAME"] = 6] = "FARCASTER_FRAME";
   Census_Type2[Census_Type2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return Census_Type2;
 })(Census_Type || {});
@@ -6206,6 +6214,9 @@ function census_TypeFromJSON(object) {
     case 5:
     case "CA":
       return 5 /* CA */;
+    case 6:
+    case "FARCASTER_FRAME":
+      return 6 /* FARCASTER_FRAME */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -6226,6 +6237,8 @@ function census_TypeToJSON(object) {
       return "ETHEREUMACCOUNT";
     case 5 /* CA */:
       return "CA";
+    case 6 /* FARCASTER_FRAME */:
+      return "FARCASTER_FRAME";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -6541,6 +6554,9 @@ var Proof = {
       case "minimeStorage":
         ProofMinime.encode(message.payload.minimeStorage, writer.uint32(66).fork()).ldelim();
         break;
+      case "farcasterFrame":
+        ProofFarcasterFrame.encode(message.payload.farcasterFrame, writer.uint32(74).fork()).ldelim();
+        break;
     }
     return writer;
   },
@@ -6593,6 +6609,15 @@ var Proof = {
           }
           message.payload = { $case: "minimeStorage", minimeStorage: ProofMinime.decode(reader, reader.uint32()) };
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+          message.payload = {
+            $case: "farcasterFrame",
+            farcasterFrame: ProofFarcasterFrame.decode(reader, reader.uint32())
+          };
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -6603,7 +6628,7 @@ var Proof = {
   },
   fromJSON(object) {
     return {
-      payload: isSet8(object.ethereumStorage) ? { $case: "ethereumStorage", ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage) } : isSet8(object.ethereumAccount) ? { $case: "ethereumAccount", ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount) } : isSet8(object.ca) ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) } : isSet8(object.arbo) ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) } : isSet8(object.zkSnark) ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) } : isSet8(object.minimeStorage) ? { $case: "minimeStorage", minimeStorage: ProofMinime.fromJSON(object.minimeStorage) } : void 0
+      payload: isSet8(object.ethereumStorage) ? { $case: "ethereumStorage", ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage) } : isSet8(object.ethereumAccount) ? { $case: "ethereumAccount", ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount) } : isSet8(object.ca) ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) } : isSet8(object.arbo) ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) } : isSet8(object.zkSnark) ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) } : isSet8(object.minimeStorage) ? { $case: "minimeStorage", minimeStorage: ProofMinime.fromJSON(object.minimeStorage) } : isSet8(object.farcasterFrame) ? { $case: "farcasterFrame", farcasterFrame: ProofFarcasterFrame.fromJSON(object.farcasterFrame) } : void 0
     };
   },
   toJSON(message) {
@@ -6625,6 +6650,9 @@ var Proof = {
     }
     if (message.payload?.$case === "minimeStorage") {
       obj.minimeStorage = ProofMinime.toJSON(message.payload.minimeStorage);
+    }
+    if (message.payload?.$case === "farcasterFrame") {
+      obj.farcasterFrame = ProofFarcasterFrame.toJSON(message.payload.farcasterFrame);
     }
     return obj;
   },
@@ -6658,6 +6686,12 @@ var Proof = {
       message.payload = {
         $case: "minimeStorage",
         minimeStorage: ProofMinime.fromPartial(object.payload.minimeStorage)
+      };
+    }
+    if (object.payload?.$case === "farcasterFrame" && object.payload?.farcasterFrame !== void 0 && object.payload?.farcasterFrame !== null) {
+      message.payload = {
+        $case: "farcasterFrame",
+        farcasterFrame: ProofFarcasterFrame.fromPartial(object.payload.farcasterFrame)
       };
     }
     return message;
@@ -7288,6 +7322,86 @@ var ProofZkSNARK = {
     message.b = object.b?.map((e) => e) || [];
     message.c = object.c?.map((e) => e) || [];
     message.publicInputs = object.publicInputs?.map((e) => e) || [];
+    return message;
+  }
+};
+function createBaseProofFarcasterFrame() {
+  return { signedFrameMessageBody: new Uint8Array(0), censusProof: void 0, publicKey: new Uint8Array(0) };
+}
+var ProofFarcasterFrame = {
+  encode(message, writer = import_minimal8.default.Writer.create()) {
+    if (message.signedFrameMessageBody.length !== 0) {
+      writer.uint32(10).bytes(message.signedFrameMessageBody);
+    }
+    if (message.censusProof !== void 0) {
+      ProofArbo.encode(message.censusProof, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.publicKey.length !== 0) {
+      writer.uint32(26).bytes(message.publicKey);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof import_minimal8.default.Reader ? input : import_minimal8.default.Reader.create(input);
+    let end = length === void 0 ? reader.len : reader.pos + length;
+    const message = createBaseProofFarcasterFrame();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+          message.signedFrameMessageBody = reader.bytes();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+          message.censusProof = ProofArbo.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+          message.publicKey = reader.bytes();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      signedFrameMessageBody: isSet8(object.signedFrameMessageBody) ? bytesFromBase643(object.signedFrameMessageBody) : new Uint8Array(0),
+      censusProof: isSet8(object.censusProof) ? ProofArbo.fromJSON(object.censusProof) : void 0,
+      publicKey: isSet8(object.publicKey) ? bytesFromBase643(object.publicKey) : new Uint8Array(0)
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.signedFrameMessageBody.length !== 0) {
+      obj.signedFrameMessageBody = base64FromBytes3(message.signedFrameMessageBody);
+    }
+    if (message.censusProof !== void 0) {
+      obj.censusProof = ProofArbo.toJSON(message.censusProof);
+    }
+    if (message.publicKey.length !== 0) {
+      obj.publicKey = base64FromBytes3(message.publicKey);
+    }
+    return obj;
+  },
+  create(base) {
+    return ProofFarcasterFrame.fromPartial(base ?? {});
+  },
+  fromPartial(object) {
+    const message = createBaseProofFarcasterFrame();
+    message.signedFrameMessageBody = object.signedFrameMessageBody ?? new Uint8Array(0);
+    message.censusProof = object.censusProof !== void 0 && object.censusProof !== null ? ProofArbo.fromPartial(object.censusProof) : void 0;
+    message.publicKey = object.publicKey ?? new Uint8Array(0);
     return message;
   }
 };
