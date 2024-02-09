@@ -27,6 +27,7 @@ message Census {
 		ETHEREUMSTORAGE = 3;
 		ETHEREUMACCOUNT = 4;
 		CA = 5;
+		FARCASTER_FRAME = 6;
 	}
 }
 
@@ -44,6 +45,8 @@ message Proof {
 		ProofZkSNARK zkSnark = 7;
 		// Proof used in Minime token based census
 		ProofMinime minimeStorage = 8;
+		// ProofFarcastFrame is a proof created on the Farcaster network
+		ProofFarcasterFrame farcasterFrame = 9;
 	}
 }
 
@@ -117,6 +120,13 @@ message ProofZkSNARK {
 	// c represents a G1 point in Affine coordinates
 	repeated string c = 4;
 	repeated string publicInputs = 5;
+}
+
+// ProofFarcasterFrame is a proof created on the Farcaster network
+message ProofFarcasterFrame {
+	bytes signedFrameMessageBody = 1;
+	ProofArbo censusProof = 2;
+	bytes publicKey = 3;
 }
 
 // Account represents an entity with an amount of tokens, usually attached to an address.
@@ -388,6 +398,7 @@ enum CensusOrigin {
 	ERC1155 = 13;
 	ERC777 = 14;
 	MINI_ME = 15;
+	FARCASTER_FRAME = 16;
 }
 
 message EnvelopeType {
