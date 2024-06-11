@@ -1743,7 +1743,7 @@ var Account = {
     if (message.address !== "") {
       writer.uint32(26).string(message.address);
     }
-    if (message.hasBackup === true) {
+    if (message.hasBackup !== false) {
       writer.uint32(32).bool(message.hasBackup);
     }
     if (message.extra !== void 0) {
@@ -1832,7 +1832,7 @@ var Account = {
     if (message.address !== "") {
       obj.address = message.address;
     }
-    if (message.hasBackup === true) {
+    if (message.hasBackup !== false) {
       obj.hasBackup = message.hasBackup;
     }
     if (message.extra !== void 0) {
@@ -2467,6 +2467,9 @@ function base64FromBytes2(arr) {
 function longToNumber(long) {
   if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
     throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  if (long.lt(globalThis.Number.MIN_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
   }
   return long.toNumber();
 }

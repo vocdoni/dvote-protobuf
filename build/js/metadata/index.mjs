@@ -2730,7 +2730,7 @@ var Feed = {
     if (message.favicon !== "") {
       writer.uint32(58).string(message.favicon);
     }
-    if (message.expired === true) {
+    if (message.expired !== false) {
       writer.uint32(64).bool(message.expired);
     }
     for (const v of message.items) {
@@ -2859,7 +2859,7 @@ var Feed = {
     if (message.favicon !== "") {
       obj.favicon = message.favicon;
     }
-    if (message.expired === true) {
+    if (message.expired !== false) {
       obj.expired = message.expired;
     }
     if (message.items?.length) {

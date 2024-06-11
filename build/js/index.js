@@ -2903,7 +2903,7 @@ var Account = {
     if (message.address !== "") {
       writer.uint32(26).string(message.address);
     }
-    if (message.hasBackup === true) {
+    if (message.hasBackup !== false) {
       writer.uint32(32).bool(message.hasBackup);
     }
     if (message.extra !== void 0) {
@@ -2992,7 +2992,7 @@ var Account = {
     if (message.address !== "") {
       obj.address = message.address;
     }
-    if (message.hasBackup === true) {
+    if (message.hasBackup !== false) {
       obj.hasBackup = message.hasBackup;
     }
     if (message.extra !== void 0) {
@@ -3628,6 +3628,9 @@ function longToNumber(long) {
   if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
     throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
   }
+  if (long.lt(globalThis.Number.MIN_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+  }
   return long.toNumber();
 }
 if (import_minimal4.default.util.Long !== import_long.default) {
@@ -4180,7 +4183,7 @@ var Feed = {
     if (message.favicon !== "") {
       writer.uint32(58).string(message.favicon);
     }
-    if (message.expired === true) {
+    if (message.expired !== false) {
       writer.uint32(64).bool(message.expired);
     }
     for (const v of message.items) {
@@ -4309,7 +4312,7 @@ var Feed = {
     if (message.favicon !== "") {
       obj.favicon = message.favicon;
     }
-    if (message.expired === true) {
+    if (message.expired !== false) {
       obj.expired = message.expired;
     }
     if (message.items?.length) {
@@ -7922,7 +7925,8 @@ function createBaseSetProcessTx() {
     proof: void 0,
     results: void 0,
     tempSIKs: void 0,
-    duration: void 0
+    duration: void 0,
+    censusSize: void 0
   };
 }
 var SetProcessTx = {
@@ -7959,6 +7963,9 @@ var SetProcessTx = {
     }
     if (message.duration !== void 0) {
       writer.uint32(88).uint32(message.duration);
+    }
+    if (message.censusSize !== void 0) {
+      writer.uint32(96).uint64(message.censusSize);
     }
     return writer;
   },
@@ -8035,6 +8042,12 @@ var SetProcessTx = {
           }
           message.duration = reader.uint32();
           continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+          message.censusSize = longToNumber2(reader.uint64());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -8055,7 +8068,8 @@ var SetProcessTx = {
       proof: isSet8(object.proof) ? Proof.fromJSON(object.proof) : void 0,
       results: isSet8(object.results) ? ProcessResult.fromJSON(object.results) : void 0,
       tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
-      duration: isSet8(object.duration) ? globalThis.Number(object.duration) : void 0
+      duration: isSet8(object.duration) ? globalThis.Number(object.duration) : void 0,
+      censusSize: isSet8(object.censusSize) ? globalThis.Number(object.censusSize) : void 0
     };
   },
   toJSON(message) {
@@ -8093,6 +8107,9 @@ var SetProcessTx = {
     if (message.duration !== void 0) {
       obj.duration = Math.round(message.duration);
     }
+    if (message.censusSize !== void 0) {
+      obj.censusSize = Math.round(message.censusSize);
+    }
     return obj;
   },
   create(base) {
@@ -8111,6 +8128,7 @@ var SetProcessTx = {
     message.results = object.results !== void 0 && object.results !== null ? ProcessResult.fromPartial(object.results) : void 0;
     message.tempSIKs = object.tempSIKs ?? void 0;
     message.duration = object.duration ?? void 0;
+    message.censusSize = object.censusSize ?? void 0;
     return message;
   }
 };
@@ -9763,19 +9781,19 @@ function createBaseEnvelopeType() {
 }
 var EnvelopeType = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
-    if (message.serial === true) {
+    if (message.serial !== false) {
       writer.uint32(8).bool(message.serial);
     }
-    if (message.anonymous === true) {
+    if (message.anonymous !== false) {
       writer.uint32(16).bool(message.anonymous);
     }
-    if (message.encryptedVotes === true) {
+    if (message.encryptedVotes !== false) {
       writer.uint32(24).bool(message.encryptedVotes);
     }
-    if (message.uniqueValues === true) {
+    if (message.uniqueValues !== false) {
       writer.uint32(32).bool(message.uniqueValues);
     }
-    if (message.costFromWeight === true) {
+    if (message.costFromWeight !== false) {
       writer.uint32(40).bool(message.costFromWeight);
     }
     return writer;
@@ -9836,19 +9854,19 @@ var EnvelopeType = {
   },
   toJSON(message) {
     const obj = {};
-    if (message.serial === true) {
+    if (message.serial !== false) {
       obj.serial = message.serial;
     }
-    if (message.anonymous === true) {
+    if (message.anonymous !== false) {
       obj.anonymous = message.anonymous;
     }
-    if (message.encryptedVotes === true) {
+    if (message.encryptedVotes !== false) {
       obj.encryptedVotes = message.encryptedVotes;
     }
-    if (message.uniqueValues === true) {
+    if (message.uniqueValues !== false) {
       obj.uniqueValues = message.uniqueValues;
     }
-    if (message.costFromWeight === true) {
+    if (message.costFromWeight !== false) {
       obj.costFromWeight = message.costFromWeight;
     }
     return obj;
@@ -9871,19 +9889,19 @@ function createBaseProcessMode() {
 }
 var ProcessMode = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
-    if (message.autoStart === true) {
+    if (message.autoStart !== false) {
       writer.uint32(8).bool(message.autoStart);
     }
-    if (message.interruptible === true) {
+    if (message.interruptible !== false) {
       writer.uint32(16).bool(message.interruptible);
     }
-    if (message.dynamicCensus === true) {
+    if (message.dynamicCensus !== false) {
       writer.uint32(24).bool(message.dynamicCensus);
     }
-    if (message.encryptedMetaData === true) {
+    if (message.encryptedMetaData !== false) {
       writer.uint32(32).bool(message.encryptedMetaData);
     }
-    if (message.preRegister === true) {
+    if (message.preRegister !== false) {
       writer.uint32(40).bool(message.preRegister);
     }
     return writer;
@@ -9944,19 +9962,19 @@ var ProcessMode = {
   },
   toJSON(message) {
     const obj = {};
-    if (message.autoStart === true) {
+    if (message.autoStart !== false) {
       obj.autoStart = message.autoStart;
     }
-    if (message.interruptible === true) {
+    if (message.interruptible !== false) {
       obj.interruptible = message.interruptible;
     }
-    if (message.dynamicCensus === true) {
+    if (message.dynamicCensus !== false) {
       obj.dynamicCensus = message.dynamicCensus;
     }
-    if (message.encryptedMetaData === true) {
+    if (message.encryptedMetaData !== false) {
       obj.encryptedMetaData = message.encryptedMetaData;
     }
-    if (message.preRegister === true) {
+    if (message.preRegister !== false) {
       obj.preRegister = message.preRegister;
     }
     return obj;
@@ -10841,6 +10859,9 @@ function base64FromBytes3(arr) {
 function longToNumber2(long) {
   if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
     throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  if (long.lt(globalThis.Number.MIN_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
   }
   return long.toNumber();
 }

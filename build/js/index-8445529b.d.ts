@@ -2283,6 +2283,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3427,6 +3428,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3527,6 +3529,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -3851,6 +3854,7 @@ declare const Tx: {
                 } & { [K_74 in Exclude<keyof I["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } & { [K_75 in Exclude<keyof I["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_76 in Exclude<keyof I["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -5263,6 +5267,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -6407,6 +6412,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -6507,6 +6513,7 @@ declare const Tx: {
                 } | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -6831,6 +6838,7 @@ declare const Tx: {
                 } & { [K_227 in Exclude<keyof I_1["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
+                censusSize?: number | undefined;
             } & { [K_228 in Exclude<keyof I_1["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_229 in Exclude<keyof I_1["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -8445,6 +8453,7 @@ interface SetProcessTx {
      */
     tempSIKs?: boolean | undefined;
     duration?: number | undefined;
+    censusSize?: number | undefined;
 }
 declare const SetProcessTx: {
     encode(message: SetProcessTx, writer?: _m0.Writer): _m0.Writer;
@@ -8547,6 +8556,7 @@ declare const SetProcessTx: {
         } | undefined;
         tempSIKs?: boolean | undefined;
         duration?: number | undefined;
+        censusSize?: number | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -8871,6 +8881,7 @@ declare const SetProcessTx: {
         } & { [K_30 in Exclude<keyof I["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
         duration?: number | undefined;
+        censusSize?: number | undefined;
     } & { [K_31 in Exclude<keyof I, keyof SetProcessTx>]: never; }>(base?: I | undefined): SetProcessTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
@@ -8968,6 +8979,7 @@ declare const SetProcessTx: {
         } | undefined;
         tempSIKs?: boolean | undefined;
         duration?: number | undefined;
+        censusSize?: number | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -9292,6 +9304,7 @@ declare const SetProcessTx: {
         } & { [K_62 in Exclude<keyof I_1["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
         duration?: number | undefined;
+        censusSize?: number | undefined;
     } & { [K_63 in Exclude<keyof I_1, keyof SetProcessTx>]: never; }>(object: I_1): SetProcessTx;
 };
 interface AdminTx {
