@@ -38,6 +38,22 @@
     },
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "client-store": [
+        "./build/js/client-store/index.d.ts"
+      ],
+      "metadata": [
+        "./build/js/metadata/index.d.ts"
+      ],
+      "vochain": [
+        "./build/js/vochain/index.d.ts"
+      ],
+      "*": [
+        "./build/js/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "make ts && tsup --dts --out-dir ./build/js",
     "clean": "rm -Rf build/ts build/js"
