@@ -4,9 +4,10 @@ name: Post merge build step
 on:
   push:
     branches:
-      - master
-  pull_request:
-
+    - master
+    tags:
+    - '*'
+  pull_request: ~
 jobs:
   protobuf-build:
     runs-on: ubuntu-latest
@@ -28,3 +29,21 @@ jobs:
           commit_message: auto build commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if tag
+        id: check_tag
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "is_tag=true" >> $GITHUB_ENV
+          else
+            echo "is_tag=false" >> $GITHUB_ENV
+          fi
+
+      - name: Publish to npm
+        if: env.is_tag == 'true'
+        run: |
+          yarn
+          yarn build
+          yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
