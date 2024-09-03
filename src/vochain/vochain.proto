@@ -200,6 +200,7 @@ message NewProcessTx {
 	TxType txtype = 1;
 	uint32 nonce = 2;
 	Process process = 3;
+	optional FaucetPackage faucetPackage = 4;
 }
 
 message SetProcessTx {
@@ -217,6 +218,7 @@ message SetProcessTx {
 	optional bool tempSIKs = 10;
 	optional uint32 duration = 11;
 	optional uint64 censusSize = 12;
+	optional FaucetPackage faucetPackage = 13;
 }
 
 message AdminTx {
@@ -269,6 +271,7 @@ message SIKTx {
 	TxType txtype = 1;
 	optional uint32 nonce = 2;
 	optional bytes SIK = 3;
+	optional FaucetPackage faucetPackage = 4;
 }
 
 message RegisterSIKTx {
