@@ -7834,7 +7834,7 @@ var SignedTx = {
   }
 };
 function createBaseNewProcessTx() {
-  return { txtype: 0, nonce: 0, process: void 0 };
+  return { txtype: 0, nonce: 0, process: void 0, faucetPackage: void 0 };
 }
 var NewProcessTx = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
@@ -7846,6 +7846,9 @@ var NewProcessTx = {
     }
     if (message.process !== void 0) {
       Process.encode(message.process, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.faucetPackage !== void 0) {
+      FaucetPackage.encode(message.faucetPackage, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -7874,6 +7877,12 @@ var NewProcessTx = {
           }
           message.process = Process.decode(reader, reader.uint32());
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+          message.faucetPackage = FaucetPackage.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -7886,7 +7895,8 @@ var NewProcessTx = {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : 0,
-      process: isSet8(object.process) ? Process.fromJSON(object.process) : void 0
+      process: isSet8(object.process) ? Process.fromJSON(object.process) : void 0,
+      faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0
     };
   },
   toJSON(message) {
@@ -7900,6 +7910,9 @@ var NewProcessTx = {
     if (message.process !== void 0) {
       obj.process = Process.toJSON(message.process);
     }
+    if (message.faucetPackage !== void 0) {
+      obj.faucetPackage = FaucetPackage.toJSON(message.faucetPackage);
+    }
     return obj;
   },
   create(base) {
@@ -7910,6 +7923,7 @@ var NewProcessTx = {
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? 0;
     message.process = object.process !== void 0 && object.process !== null ? Process.fromPartial(object.process) : void 0;
+    message.faucetPackage = object.faucetPackage !== void 0 && object.faucetPackage !== null ? FaucetPackage.fromPartial(object.faucetPackage) : void 0;
     return message;
   }
 };
@@ -7926,7 +7940,8 @@ function createBaseSetProcessTx() {
     results: void 0,
     tempSIKs: void 0,
     duration: void 0,
-    censusSize: void 0
+    censusSize: void 0,
+    faucetPackage: void 0
   };
 }
 var SetProcessTx = {
@@ -7966,6 +7981,9 @@ var SetProcessTx = {
     }
     if (message.censusSize !== void 0) {
       writer.uint32(96).uint64(message.censusSize);
+    }
+    if (message.faucetPackage !== void 0) {
+      FaucetPackage.encode(message.faucetPackage, writer.uint32(106).fork()).ldelim();
     }
     return writer;
   },
@@ -8048,6 +8066,12 @@ var SetProcessTx = {
           }
           message.censusSize = longToNumber2(reader.uint64());
           continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+          message.faucetPackage = FaucetPackage.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -8069,7 +8093,8 @@ var SetProcessTx = {
       results: isSet8(object.results) ? ProcessResult.fromJSON(object.results) : void 0,
       tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
       duration: isSet8(object.duration) ? globalThis.Number(object.duration) : void 0,
-      censusSize: isSet8(object.censusSize) ? globalThis.Number(object.censusSize) : void 0
+      censusSize: isSet8(object.censusSize) ? globalThis.Number(object.censusSize) : void 0,
+      faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0
     };
   },
   toJSON(message) {
@@ -8110,6 +8135,9 @@ var SetProcessTx = {
     if (message.censusSize !== void 0) {
       obj.censusSize = Math.round(message.censusSize);
     }
+    if (message.faucetPackage !== void 0) {
+      obj.faucetPackage = FaucetPackage.toJSON(message.faucetPackage);
+    }
     return obj;
   },
   create(base) {
@@ -8129,6 +8157,7 @@ var SetProcessTx = {
     message.tempSIKs = object.tempSIKs ?? void 0;
     message.duration = object.duration ?? void 0;
     message.censusSize = object.censusSize ?? void 0;
+    message.faucetPackage = object.faucetPackage !== void 0 && object.faucetPackage !== null ? FaucetPackage.fromPartial(object.faucetPackage) : void 0;
     return message;
   }
 };
@@ -8777,7 +8806,7 @@ var SetAccountTx = {
   }
 };
 function createBaseSIKTx() {
-  return { txtype: 0, nonce: void 0, SIK: void 0 };
+  return { txtype: 0, nonce: void 0, SIK: void 0, faucetPackage: void 0 };
 }
 var SIKTx = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
@@ -8789,6 +8818,9 @@ var SIKTx = {
     }
     if (message.SIK !== void 0) {
       writer.uint32(26).bytes(message.SIK);
+    }
+    if (message.faucetPackage !== void 0) {
+      FaucetPackage.encode(message.faucetPackage, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -8817,6 +8849,12 @@ var SIKTx = {
           }
           message.SIK = reader.bytes();
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+          message.faucetPackage = FaucetPackage.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -8829,7 +8867,8 @@ var SIKTx = {
     return {
       txtype: isSet8(object.txtype) ? txTypeFromJSON(object.txtype) : 0,
       nonce: isSet8(object.nonce) ? globalThis.Number(object.nonce) : void 0,
-      SIK: isSet8(object.SIK) ? bytesFromBase643(object.SIK) : void 0
+      SIK: isSet8(object.SIK) ? bytesFromBase643(object.SIK) : void 0,
+      faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0
     };
   },
   toJSON(message) {
@@ -8843,6 +8882,9 @@ var SIKTx = {
     if (message.SIK !== void 0) {
       obj.SIK = base64FromBytes3(message.SIK);
     }
+    if (message.faucetPackage !== void 0) {
+      obj.faucetPackage = FaucetPackage.toJSON(message.faucetPackage);
+    }
     return obj;
   },
   create(base) {
@@ -8853,6 +8895,7 @@ var SIKTx = {
     message.txtype = object.txtype ?? 0;
     message.nonce = object.nonce ?? void 0;
     message.SIK = object.SIK ?? void 0;
+    message.faucetPackage = object.faucetPackage !== void 0 && object.faucetPackage !== null ? FaucetPackage.fromPartial(object.faucetPackage) : void 0;
     return message;
   }
 };
