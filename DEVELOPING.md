@@ -79,8 +79,5 @@ order to minimize the work. Just follow these steps:
 - Commit the changes: `git commit package.json -m "@vocdoni/proto 1.2.3"`
 - Tag the commit: `git tag v1.2.3`
 - Push the ref and the tag: `git push origin master v1.2.3`
-- Create a new github release: https://github.com/vocdoni/dvote-protobuf/releases/new?tag=v1.2.3
 
-As soon as the github release is done, the github action will take care of the rest automatically: build the npm package and publish it on https://www.npmjs.com/package/@vocdoni/proto
-
-TODO(gui): automate the release creation step, using the github action, triggered by the push of a tag
+The publish to npmjs should be triggered by GH actions as soon as the new tag is detected.
