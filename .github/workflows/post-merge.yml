@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+          registry-url: "https://registry.npmjs.org"
       - uses: actions/setup-go@v3
       - name: Build
         run: |
@@ -45,5 +46,3 @@ jobs:
           yarn
           yarn build
           yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
