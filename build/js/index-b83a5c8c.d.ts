@@ -161,6 +161,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -248,6 +249,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -354,6 +356,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -365,6 +368,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -372,9 +376,11 @@ declare const VoteEnvelope: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_6 in Exclude<keyof I["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_7 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -554,6 +560,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -641,6 +648,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -747,6 +755,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -758,6 +767,7 @@ declare const VoteEnvelope: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -765,9 +775,11 @@ declare const VoteEnvelope: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_35 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_36 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -984,6 +996,7 @@ declare const Proof: {
                 bundle?: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
             } | undefined;
@@ -1090,6 +1103,7 @@ declare const Proof: {
                 bundle?: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
             } | undefined;
@@ -1101,6 +1115,7 @@ declare const Proof: {
                 bundle?: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
             } & {
@@ -1108,9 +1123,11 @@ declare const Proof: {
                 bundle?: ({
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } & {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } & { [K_6 in Exclude<keyof I["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                 signature?: Uint8Array | undefined;
             } & { [K_7 in Exclude<keyof I["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -1283,6 +1300,7 @@ declare const Proof: {
                 bundle?: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
             } | undefined;
@@ -1389,6 +1407,7 @@ declare const Proof: {
                 bundle?: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
             } | undefined;
@@ -1400,6 +1419,7 @@ declare const Proof: {
                 bundle?: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
             } & {
@@ -1407,9 +1427,11 @@ declare const Proof: {
                 bundle?: ({
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } & {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
+                    voteWeight?: Uint8Array | undefined;
                 } & { [K_33 in Exclude<keyof I_1["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                 signature?: Uint8Array | undefined;
             } & { [K_34 in Exclude<keyof I_1["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -1714,6 +1736,7 @@ declare const ProofCA: {
         bundle?: {
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
+            voteWeight?: Uint8Array | undefined;
         } | undefined;
         signature?: Uint8Array | undefined;
     } & {
@@ -1721,9 +1744,11 @@ declare const ProofCA: {
         bundle?: ({
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
+            voteWeight?: Uint8Array | undefined;
         } & {
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
+            voteWeight?: Uint8Array | undefined;
         } & { [K in Exclude<keyof I["bundle"], keyof CAbundle>]: never; }) | undefined;
         signature?: Uint8Array | undefined;
     } & { [K_1 in Exclude<keyof I, keyof ProofCA>]: never; }>(base?: I | undefined): ProofCA;
@@ -1732,6 +1757,7 @@ declare const ProofCA: {
         bundle?: {
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
+            voteWeight?: Uint8Array | undefined;
         } | undefined;
         signature?: Uint8Array | undefined;
     } & {
@@ -1739,9 +1765,11 @@ declare const ProofCA: {
         bundle?: ({
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
+            voteWeight?: Uint8Array | undefined;
         } & {
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
+            voteWeight?: Uint8Array | undefined;
         } & { [K_2 in Exclude<keyof I_1["bundle"], keyof CAbundle>]: never; }) | undefined;
         signature?: Uint8Array | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof ProofCA>]: never; }>(object: I_1): ProofCA;
@@ -1749,6 +1777,7 @@ declare const ProofCA: {
 interface CAbundle {
     processId: Uint8Array;
     address: Uint8Array;
+    voteWeight: Uint8Array;
 }
 declare const CAbundle: {
     encode(message: CAbundle, writer?: _m0.Writer): _m0.Writer;
@@ -1758,16 +1787,20 @@ declare const CAbundle: {
     create<I extends {
         processId?: Uint8Array | undefined;
         address?: Uint8Array | undefined;
+        voteWeight?: Uint8Array | undefined;
     } & {
         processId?: Uint8Array | undefined;
         address?: Uint8Array | undefined;
+        voteWeight?: Uint8Array | undefined;
     } & { [K in Exclude<keyof I, keyof CAbundle>]: never; }>(base?: I | undefined): CAbundle;
     fromPartial<I_1 extends {
         processId?: Uint8Array | undefined;
         address?: Uint8Array | undefined;
+        voteWeight?: Uint8Array | undefined;
     } & {
         processId?: Uint8Array | undefined;
         address?: Uint8Array | undefined;
+        voteWeight?: Uint8Array | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof CAbundle>]: never; }>(object: I_1): CAbundle;
 };
 interface ProofArbo {
@@ -2046,6 +2079,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2224,6 +2258,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2324,6 +2359,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2491,6 +2527,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2582,6 +2619,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2673,6 +2711,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2760,6 +2799,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2866,6 +2906,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -2877,6 +2918,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -2884,9 +2926,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_6 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_7 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -3396,6 +3440,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -3501,6 +3546,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -3602,6 +3648,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -3708,6 +3755,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -3719,6 +3767,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -3726,9 +3775,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_51 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_52 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -3932,6 +3983,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4022,6 +4074,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4108,6 +4161,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4214,6 +4268,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4225,6 +4280,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -4232,9 +4288,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_85 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_86 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -4625,6 +4683,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4713,6 +4772,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4797,6 +4857,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4903,6 +4964,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -4914,6 +4976,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -4921,9 +4984,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_133 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_134 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -5106,6 +5171,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5284,6 +5350,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5384,6 +5451,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5551,6 +5619,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5642,6 +5711,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5733,6 +5803,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5820,6 +5891,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5926,6 +5998,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -5937,6 +6010,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -5944,9 +6018,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_163 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_164 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -6456,6 +6532,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -6561,6 +6638,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -6662,6 +6740,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -6768,6 +6847,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -6779,6 +6859,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -6786,9 +6867,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_208 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_209 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -6992,6 +7075,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7082,6 +7166,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7168,6 +7253,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7274,6 +7360,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7285,6 +7372,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -7292,9 +7380,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_242 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_243 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -7685,6 +7775,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7773,6 +7864,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7857,6 +7949,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7963,6 +8056,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } | undefined;
@@ -7974,6 +8068,7 @@ declare const Tx: {
                             bundle?: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
                         } & {
@@ -7981,9 +8076,11 @@ declare const Tx: {
                             bundle?: ({
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
+                                voteWeight?: Uint8Array | undefined;
                             } & { [K_290 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
                         } & { [K_291 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -8669,6 +8766,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -8770,6 +8868,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -8876,6 +8975,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -8887,6 +8987,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -8894,9 +8995,11 @@ declare const SetProcessTx: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_6 in Exclude<keyof I["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_7 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -9103,6 +9206,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -9204,6 +9308,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -9310,6 +9415,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -9321,6 +9427,7 @@ declare const SetProcessTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -9328,9 +9435,11 @@ declare const SetProcessTx: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_39 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_40 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -9609,6 +9718,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -9695,6 +9805,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -9801,6 +9912,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -9812,6 +9924,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -9819,9 +9932,11 @@ declare const RegisterKeyTx: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_6 in Exclude<keyof I["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_7 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -10000,6 +10115,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -10086,6 +10202,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -10192,6 +10309,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -10203,6 +10321,7 @@ declare const RegisterKeyTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -10210,9 +10329,11 @@ declare const RegisterKeyTx: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_34 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_35 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -10598,6 +10719,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -10682,6 +10804,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -10788,6 +10911,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -10799,6 +10923,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -10806,9 +10931,11 @@ declare const RegisterSIKTx: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_6 in Exclude<keyof I["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_7 in Exclude<keyof I["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
@@ -10985,6 +11112,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -11069,6 +11197,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -11175,6 +11304,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
@@ -11186,6 +11316,7 @@ declare const RegisterSIKTx: {
                     bundle?: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
@@ -11193,9 +11324,11 @@ declare const RegisterSIKTx: {
                     bundle?: ({
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
+                        voteWeight?: Uint8Array | undefined;
                     } & { [K_34 in Exclude<keyof I_1["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_35 in Exclude<keyof I_1["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;

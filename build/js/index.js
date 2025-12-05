@@ -7041,7 +7041,7 @@ var ProofCA = {
   }
 };
 function createBaseCAbundle() {
-  return { processId: new Uint8Array(0), address: new Uint8Array(0) };
+  return { processId: new Uint8Array(0), address: new Uint8Array(0), voteWeight: new Uint8Array(0) };
 }
 var CAbundle = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
@@ -7050,6 +7050,9 @@ var CAbundle = {
     }
     if (message.address.length !== 0) {
       writer.uint32(18).bytes(message.address);
+    }
+    if (message.voteWeight.length !== 0) {
+      writer.uint32(26).bytes(message.voteWeight);
     }
     return writer;
   },
@@ -7072,6 +7075,12 @@ var CAbundle = {
           }
           message.address = reader.bytes();
           continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+          message.voteWeight = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -7083,7 +7092,8 @@ var CAbundle = {
   fromJSON(object) {
     return {
       processId: isSet8(object.processId) ? bytesFromBase643(object.processId) : new Uint8Array(0),
-      address: isSet8(object.address) ? bytesFromBase643(object.address) : new Uint8Array(0)
+      address: isSet8(object.address) ? bytesFromBase643(object.address) : new Uint8Array(0),
+      voteWeight: isSet8(object.voteWeight) ? bytesFromBase643(object.voteWeight) : new Uint8Array(0)
     };
   },
   toJSON(message) {
@@ -7094,6 +7104,9 @@ var CAbundle = {
     if (message.address.length !== 0) {
       obj.address = base64FromBytes3(message.address);
     }
+    if (message.voteWeight.length !== 0) {
+      obj.voteWeight = base64FromBytes3(message.voteWeight);
+    }
     return obj;
   },
   create(base) {
@@ -7103,6 +7116,7 @@ var CAbundle = {
     const message = createBaseCAbundle();
     message.processId = object.processId ?? new Uint8Array(0);
     message.address = object.address ?? new Uint8Array(0);
+    message.voteWeight = object.voteWeight ?? new Uint8Array(0);
     return message;
   }
 };
