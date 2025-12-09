@@ -85,7 +85,7 @@ message ProofCA {
 message CAbundle {
 	bytes processId = 1;
 	bytes address = 2;
-	bytes voteWeight = 3;
+	optional bytes voteWeight = 3;
 }
 
 message ProofArbo {
