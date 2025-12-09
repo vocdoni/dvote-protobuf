@@ -1777,7 +1777,7 @@ declare const ProofCA: {
 interface CAbundle {
     processId: Uint8Array;
     address: Uint8Array;
-    voteWeight: Uint8Array;
+    voteWeight?: Uint8Array | undefined;
 }
 declare const CAbundle: {
     encode(message: CAbundle, writer?: _m0.Writer): _m0.Writer;
