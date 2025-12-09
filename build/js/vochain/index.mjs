@@ -2699,7 +2699,7 @@ var ProofCA = {
   }
 };
 function createBaseCAbundle() {
-  return { processId: new Uint8Array(0), address: new Uint8Array(0), voteWeight: new Uint8Array(0) };
+  return { processId: new Uint8Array(0), address: new Uint8Array(0), voteWeight: void 0 };
 }
 var CAbundle = {
   encode(message, writer = import_minimal.default.Writer.create()) {
@@ -2709,7 +2709,7 @@ var CAbundle = {
     if (message.address.length !== 0) {
       writer.uint32(18).bytes(message.address);
     }
-    if (message.voteWeight.length !== 0) {
+    if (message.voteWeight !== void 0) {
       writer.uint32(26).bytes(message.voteWeight);
     }
     return writer;
@@ -2751,7 +2751,7 @@ var CAbundle = {
     return {
       processId: isSet(object.processId) ? bytesFromBase64(object.processId) : new Uint8Array(0),
       address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(0),
-      voteWeight: isSet(object.voteWeight) ? bytesFromBase64(object.voteWeight) : new Uint8Array(0)
+      voteWeight: isSet(object.voteWeight) ? bytesFromBase64(object.voteWeight) : void 0
     };
   },
   toJSON(message) {
@@ -2762,7 +2762,7 @@ var CAbundle = {
     if (message.address.length !== 0) {
       obj.address = base64FromBytes(message.address);
     }
-    if (message.voteWeight.length !== 0) {
+    if (message.voteWeight !== void 0) {
       obj.voteWeight = base64FromBytes(message.voteWeight);
     }
     return obj;
@@ -2774,7 +2774,7 @@ var CAbundle = {
     const message = createBaseCAbundle();
     message.processId = object.processId ?? new Uint8Array(0);
     message.address = object.address ?? new Uint8Array(0);
-    message.voteWeight = object.voteWeight ?? new Uint8Array(0);
+    message.voteWeight = object.voteWeight ?? void 0;
     return message;
   }
 };
