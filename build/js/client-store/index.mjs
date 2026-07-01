@@ -4,8 +4,15 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __commonJS = (cb, mod2) => function __require() {
-  return mod2 || (0, cb[__getOwnPropNames(cb)[0]])((mod2 = { exports: {} }).exports, mod2), mod2.exports;
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined")
+    return require.apply(this, arguments);
+  throw new Error('Dynamic require of "' + x + '" is not supported');
+});
+var __commonJS = (cb, mod) => function __require2() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
   for (var name in all)
@@ -19,20 +26,20 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod2, isNodeMode, target) => (target = mod2 != null ? __create(__getProtoOf(mod2)) : {}, __copyProps(
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
   // If the importer is in node compatibility mode or this is not an ESM
   // file that has been converted to a CommonJS file using a Babel-
   // compatible transform (i.e. "__esModule" has not been set), then set
   // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod2 || !mod2.__esModule ? __defProp(target, "default", { value: mod2, enumerable: true }) : target,
-  mod2
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
 ));
 
 // node_modules/@protobufjs/aspromise/index.js
 var require_aspromise = __commonJS({
-  "node_modules/@protobufjs/aspromise/index.js"(exports2, module2) {
+  "node_modules/@protobufjs/aspromise/index.js"(exports, module) {
     "use strict";
-    module2.exports = asPromise;
+    module.exports = asPromise;
     function asPromise(fn, ctx) {
       var params = new Array(arguments.length - 1), offset = 0, index = 2, pending = true;
       while (index < arguments.length)
@@ -66,9 +73,9 @@ var require_aspromise = __commonJS({
 
 // node_modules/@protobufjs/base64/index.js
 var require_base64 = __commonJS({
-  "node_modules/@protobufjs/base64/index.js"(exports2) {
+  "node_modules/@protobufjs/base64/index.js"(exports) {
     "use strict";
-    var base64 = exports2;
+    var base64 = exports;
     base64.length = function length(string) {
       var p = string.length;
       if (!p)
@@ -166,11 +173,11 @@ var require_base64 = __commonJS({
 
 // node_modules/@protobufjs/eventemitter/index.js
 var require_eventemitter = __commonJS({
-  "node_modules/@protobufjs/eventemitter/index.js"(exports2, module2) {
+  "node_modules/@protobufjs/eventemitter/index.js"(exports, module) {
     "use strict";
-    module2.exports = EventEmitter;
+    module.exports = EventEmitter;
     function EventEmitter() {
-      this._listeners = {};
+      this._listeners = /* @__PURE__ */ Object.create(null);
     }
     EventEmitter.prototype.on = function on(evt, fn, ctx) {
       (this._listeners[evt] || (this._listeners[evt] = [])).push({
@@ -181,12 +188,14 @@ var require_eventemitter = __commonJS({
     };
     EventEmitter.prototype.off = function off(evt, fn) {
       if (evt === void 0)
-        this._listeners = {};
+        this._listeners = /* @__PURE__ */ Object.create(null);
       else {
         if (fn === void 0)
           this._listeners[evt] = [];
         else {
           var listeners = this._listeners[evt];
+          if (!listeners)
+            return this;
           for (var i = 0; i < listeners.length; )
             if (listeners[i].fn === fn)
               listeners.splice(i, 1);
@@ -212,10 +221,10 @@ var require_eventemitter = __commonJS({
 
 // node_modules/@protobufjs/float/index.js
 var require_float = __commonJS({
-  "node_modules/@protobufjs/float/index.js"(exports2, module2) {
+  "node_modules/@protobufjs/float/index.js"(exports, module) {
     "use strict";
-    module2.exports = factory(factory);
-    function factory(exports3) {
+    module.exports = factory(factory);
+    function factory(exports2) {
       if (typeof Float32Array !== "undefined")
         (function() {
           var f32 = new Float32Array([-0]), f8b = new Uint8Array(f32.buffer), le = f8b[3] === 128;
@@ -233,8 +242,8 @@ var require_float = __commonJS({
             buf[pos + 2] = f8b[1];
             buf[pos + 3] = f8b[0];
           }
-          exports3.writeFloatLE = le ? writeFloat_f32_cpy : writeFloat_f32_rev;
-          exports3.writeFloatBE = le ? writeFloat_f32_rev : writeFloat_f32_cpy;
+          exports2.writeFloatLE = le ? writeFloat_f32_cpy : writeFloat_f32_rev;
+          exports2.writeFloatBE = le ? writeFloat_f32_rev : writeFloat_f32_cpy;
           function readFloat_f32_cpy(buf, pos) {
             f8b[0] = buf[pos];
             f8b[1] = buf[pos + 1];
@@ -249,8 +258,8 @@ var require_float = __commonJS({
             f8b[0] = buf[pos + 3];
             return f32[0];
           }
-          exports3.readFloatLE = le ? readFloat_f32_cpy : readFloat_f32_rev;
-          exports3.readFloatBE = le ? readFloat_f32_rev : readFloat_f32_cpy;
+          exports2.readFloatLE = le ? readFloat_f32_cpy : readFloat_f32_rev;
+          exports2.readFloatBE = le ? readFloat_f32_rev : readFloat_f32_cpy;
         })();
       else
         (function() {
@@ -277,14 +286,14 @@ var require_float = __commonJS({
               writeUint((sign << 31 | exponent + 127 << 23 | mantissa) >>> 0, buf, pos);
             }
           }
-          exports3.writeFloatLE = writeFloat_ieee754.bind(null, writeUintLE);
-          exports3.writeFloatBE = writeFloat_ieee754.bind(null, writeUintBE);
+          exports2.writeFloatLE = writeFloat_ieee754.bind(null, writeUintLE);
+          exports2.writeFloatBE = writeFloat_ieee754.bind(null, writeUintBE);
           function readFloat_ieee754(readUint, buf, pos) {
             var uint = readUint(buf, pos), sign = (uint >> 31) * 2 + 1, exponent = uint >>> 23 & 255, mantissa = uint & 8388607;
             return exponent === 255 ? mantissa ? NaN : sign * Infinity : exponent === 0 ? sign * 1401298464324817e-60 * mantissa : sign * Math.pow(2, exponent - 150) * (mantissa + 8388608);
           }
-          exports3.readFloatLE = readFloat_ieee754.bind(null, readUintLE);
-          exports3.readFloatBE = readFloat_ieee754.bind(null, readUintBE);
+          exports2.readFloatLE = readFloat_ieee754.bind(null, readUintLE);
+          exports2.readFloatBE = readFloat_ieee754.bind(null, readUintBE);
         })();
       if (typeof Float64Array !== "undefined")
         (function() {
@@ -311,8 +320,8 @@ var require_float = __commonJS({
             buf[pos + 6] = f8b[1];
             buf[pos + 7] = f8b[0];
           }
-          exports3.writeDoubleLE = le ? writeDouble_f64_cpy : writeDouble_f64_rev;
-          exports3.writeDoubleBE = le ? writeDouble_f64_rev : writeDouble_f64_cpy;
+          exports2.writeDoubleLE = le ? writeDouble_f64_cpy : writeDouble_f64_rev;
+          exports2.writeDoubleBE = le ? writeDouble_f64_rev : writeDouble_f64_cpy;
           function readDouble_f64_cpy(buf, pos) {
             f8b[0] = buf[pos];
             f8b[1] = buf[pos + 1];
@@ -335,8 +344,8 @@ var require_float = __commonJS({
             f8b[0] = buf[pos + 7];
             return f64[0];
           }
-          exports3.readDoubleLE = le ? readDouble_f64_cpy : readDouble_f64_rev;
-          exports3.readDoubleBE = le ? readDouble_f64_rev : readDouble_f64_cpy;
+          exports2.readDoubleLE = le ? readDouble_f64_cpy : readDouble_f64_rev;
+          exports2.readDoubleBE = le ? readDouble_f64_rev : readDouble_f64_cpy;
         })();
       else
         (function() {
@@ -375,17 +384,17 @@ var require_float = __commonJS({
               }
             }
           }
-          exports3.writeDoubleLE = writeDouble_ieee754.bind(null, writeUintLE, 0, 4);
-          exports3.writeDoubleBE = writeDouble_ieee754.bind(null, writeUintBE, 4, 0);
+          exports2.writeDoubleLE = writeDouble_ieee754.bind(null, writeUintLE, 0, 4);
+          exports2.writeDoubleBE = writeDouble_ieee754.bind(null, writeUintBE, 4, 0);
           function readDouble_ieee754(readUint, off0, off1, buf, pos) {
             var lo = readUint(buf, pos + off0), hi = readUint(buf, pos + off1);
             var sign = (hi >> 31) * 2 + 1, exponent = hi >>> 20 & 2047, mantissa = 4294967296 * (hi & 1048575) + lo;
             return exponent === 2047 ? mantissa ? NaN : sign * Infinity : exponent === 0 ? sign * 5e-324 * mantissa : sign * Math.pow(2, exponent - 1075) * (mantissa + 4503599627370496);
           }
-          exports3.readDoubleLE = readDouble_ieee754.bind(null, readUintLE, 0, 4);
-          exports3.readDoubleBE = readDouble_ieee754.bind(null, readUintBE, 4, 0);
+          exports2.readDoubleLE = readDouble_ieee754.bind(null, readUintLE, 0, 4);
+          exports2.readDoubleBE = readDouble_ieee754.bind(null, readUintBE, 4, 0);
         })();
-      return exports3;
+      return exports2;
     }
     function writeUintLE(val, buf, pos) {
       buf[pos] = val & 255;
@@ -408,28 +417,12 @@ var require_float = __commonJS({
   }
 });
 
-// node_modules/@protobufjs/inquire/index.js
-var require_inquire = __commonJS({
-  "node_modules/@protobufjs/inquire/index.js"(exports, module) {
-    "use strict";
-    module.exports = inquire;
-    function inquire(moduleName) {
-      try {
-        var mod = eval("quire".replace(/^/, "re"))(moduleName);
-        if (mod && (mod.length || Object.keys(mod).length))
-          return mod;
-      } catch (e) {
-      }
-      return null;
-    }
-  }
-});
-
 // node_modules/@protobufjs/utf8/index.js
 var require_utf8 = __commonJS({
-  "node_modules/@protobufjs/utf8/index.js"(exports2) {
+  "node_modules/@protobufjs/utf8/index.js"(exports) {
     "use strict";
-    var utf8 = exports2;
+    var utf8 = exports;
+    var replacementChar = "\uFFFD";
     utf8.length = function utf8_length(string) {
       var len = 0, c = 0;
       for (var i = 0; i < string.length; ++i) {
@@ -447,33 +440,32 @@ var require_utf8 = __commonJS({
       return len;
     };
     utf8.read = function utf8_read(buffer, start, end) {
-      var len = end - start;
-      if (len < 1)
+      if (end - start < 1) {
         return "";
-      var parts = null, chunk = [], i = 0, t;
-      while (start < end) {
-        t = buffer[start++];
-        if (t < 128)
-          chunk[i++] = t;
-        else if (t > 191 && t < 224)
-          chunk[i++] = (t & 31) << 6 | buffer[start++] & 63;
-        else if (t > 239 && t < 365) {
-          t = ((t & 7) << 18 | (buffer[start++] & 63) << 12 | (buffer[start++] & 63) << 6 | buffer[start++] & 63) - 65536;
-          chunk[i++] = 55296 + (t >> 10);
-          chunk[i++] = 56320 + (t & 1023);
-        } else
-          chunk[i++] = (t & 15) << 12 | (buffer[start++] & 63) << 6 | buffer[start++] & 63;
-        if (i > 8191) {
-          (parts || (parts = [])).push(String.fromCharCode.apply(String, chunk));
-          i = 0;
+      }
+      var str = "";
+      for (var i = start; i < end; ) {
+        var t = buffer[i++];
+        if (t <= 127) {
+          str += String.fromCharCode(t);
+        } else if (t >= 192 && t < 224) {
+          var c2 = (t & 31) << 6 | buffer[i++] & 63;
+          str += c2 >= 128 ? String.fromCharCode(c2) : replacementChar;
+        } else if (t >= 224 && t < 240) {
+          var c3 = (t & 15) << 12 | (buffer[i++] & 63) << 6 | buffer[i++] & 63;
+          str += c3 >= 2048 ? String.fromCharCode(c3) : replacementChar;
+        } else if (t >= 240) {
+          var t2 = (t & 7) << 18 | (buffer[i++] & 63) << 12 | (buffer[i++] & 63) << 6 | buffer[i++] & 63;
+          if (t2 < 65536 || t2 > 1114111)
+            str += replacementChar;
+          else {
+            t2 -= 65536;
+            str += String.fromCharCode(55296 + (t2 >> 10));
+            str += String.fromCharCode(56320 + (t2 & 1023));
+          }
         }
       }
-      if (parts) {
-        if (i)
-          parts.push(String.fromCharCode.apply(String, chunk.slice(0, i)));
-        return parts.join("");
-      }
-      return String.fromCharCode.apply(String, chunk.slice(0, i));
+      return str;
     };
     utf8.write = function utf8_write(string, buffer, offset) {
       var start = offset, c1, c2;
@@ -504,9 +496,9 @@ var require_utf8 = __commonJS({
 
 // node_modules/@protobufjs/pool/index.js
 var require_pool = __commonJS({
-  "node_modules/@protobufjs/pool/index.js"(exports2, module2) {
+  "node_modules/@protobufjs/pool/index.js"(exports, module) {
     "use strict";
-    module2.exports = pool;
+    module.exports = pool;
     function pool(alloc, slice, size) {
       var SIZE = size || 8192;
       var MAX = SIZE >>> 1;
@@ -530,9 +522,9 @@ var require_pool = __commonJS({
 
 // node_modules/protobufjs/src/util/longbits.js
 var require_longbits = __commonJS({
-  "node_modules/protobufjs/src/util/longbits.js"(exports2, module2) {
+  "node_modules/protobufjs/src/util/longbits.js"(exports, module) {
     "use strict";
-    module2.exports = LongBits;
+    module.exports = LongBits;
     var util = require_minimal();
     function LongBits(lo, hi) {
       this.lo = lo >>> 0;
@@ -632,19 +624,22 @@ var require_longbits = __commonJS({
 
 // node_modules/protobufjs/src/util/minimal.js
 var require_minimal = __commonJS({
-  "node_modules/protobufjs/src/util/minimal.js"(exports2) {
+  "node_modules/protobufjs/src/util/minimal.js"(exports) {
     "use strict";
-    var util = exports2;
+    var util = exports;
     util.asPromise = require_aspromise();
     util.base64 = require_base64();
     util.EventEmitter = require_eventemitter();
     util.float = require_float();
-    util.inquire = require_inquire();
     util.utf8 = require_utf8();
     util.pool = require_pool();
     util.LongBits = require_longbits();
+    function isUnsafeProperty(key) {
+      return key === "__proto__" || key === "prototype" || key === "constructor";
+    }
+    util.isUnsafeProperty = isUnsafeProperty;
     util.isNode = Boolean(typeof global !== "undefined" && global && global.process && global.process.versions && global.process.versions.node);
-    util.global = util.isNode && global || typeof window !== "undefined" && window || typeof self !== "undefined" && self || exports2;
+    util.global = util.isNode && global || typeof window !== "undefined" && window || typeof self !== "undefined" && self || exports;
     util.emptyArray = Object.freeze ? Object.freeze([]) : (
       /* istanbul ignore next */
       []
@@ -671,13 +666,13 @@ var require_minimal = __commonJS({
      */
     util.isSet = function isSet6(obj, prop) {
       var value = obj[prop];
-      if (value != null && obj.hasOwnProperty(prop))
+      if (value != null && Object.hasOwnProperty.call(obj, prop))
         return typeof value !== "object" || (Array.isArray(value) ? value.length : Object.keys(value).length) > 0;
       return false;
     };
     util.Buffer = function() {
       try {
-        var Buffer2 = util.inquire("buffer").Buffer;
+        var Buffer2 = util.global.Buffer;
         return Buffer2.prototype.utf8Write ? Buffer2 : (
           /* istanbul ignore next */
           null
@@ -695,7 +690,14 @@ var require_minimal = __commonJS({
     util.Long = /* istanbul ignore next */
     util.global.dcodeIO && /* istanbul ignore next */
     util.global.dcodeIO.Long || /* istanbul ignore next */
-    util.global.Long || util.inquire("long");
+    util.global.Long || function() {
+      try {
+        var Long2 = __require("long");
+        return Long2 && Long2.isLong ? Long2 : null;
+      } catch (e) {
+        return null;
+      }
+    }();
     util.key2Re = /^true|false|0|1$/;
     util.key32Re = /^-?(?:0|[1-9][0-9]*)$/;
     util.key64Re = /^(?:[\\x00-\\xff]{8}|-?(?:0|[1-9][0-9]*))$/;
@@ -708,13 +710,29 @@ var require_minimal = __commonJS({
         return util.Long.fromBits(bits.lo, bits.hi, unsigned);
       return bits.toNumber(Boolean(unsigned));
     };
-    function merge(dst, src, ifNotSet) {
-      for (var keys = Object.keys(src), i = 0; i < keys.length; ++i)
-        if (dst[keys[i]] === void 0 || !ifNotSet)
-          dst[keys[i]] = src[keys[i]];
+    function merge(dst) {
+      var ifNotSet = typeof arguments[arguments.length - 1] === "boolean", limit = ifNotSet ? arguments.length - 1 : arguments.length;
+      ifNotSet = ifNotSet && arguments[arguments.length - 1];
+      for (var a = 1; a < limit; ++a) {
+        var src = arguments[a];
+        if (!src)
+          continue;
+        for (var keys = Object.keys(src), i = 0; i < keys.length; ++i)
+          if (!isUnsafeProperty(keys[i]) && (dst[keys[i]] === void 0 || !ifNotSet))
+            dst[keys[i]] = src[keys[i]];
+      }
       return dst;
     }
     util.merge = merge;
+    util.nestingLimit = 32;
+    util.recursionLimit = 100;
+    util.makeProp = function makeProp(obj, key) {
+      Object.defineProperty(obj, key, {
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    };
     util.lcFirst = function lcFirst(str) {
       return str.charAt(0).toLowerCase() + str.substring(1);
     };
@@ -807,9 +825,9 @@ var require_minimal = __commonJS({
 
 // node_modules/protobufjs/src/writer.js
 var require_writer = __commonJS({
-  "node_modules/protobufjs/src/writer.js"(exports2, module2) {
+  "node_modules/protobufjs/src/writer.js"(exports, module) {
     "use strict";
-    module2.exports = Writer;
+    module.exports = Writer;
     var util = require_minimal();
     var BufferWriter;
     var LongBits = util.LongBits;
@@ -880,22 +898,23 @@ var require_writer = __commonJS({
       return this;
     };
     Writer.prototype.int32 = function write_int32(value) {
-      return value < 0 ? this._push(writeVarint64, 10, LongBits.fromNumber(value)) : this.uint32(value);
+      return (value |= 0) < 0 ? this._push(writeVarint64, 10, LongBits.fromNumber(value)) : this.uint32(value);
     };
     Writer.prototype.sint32 = function write_sint32(value) {
       return this.uint32((value << 1 ^ value >> 31) >>> 0);
     };
     function writeVarint64(val, buf, pos) {
-      while (val.hi) {
-        buf[pos++] = val.lo & 127 | 128;
-        val.lo = (val.lo >>> 7 | val.hi << 25) >>> 0;
-        val.hi >>>= 7;
+      var lo = val.lo, hi = val.hi;
+      while (hi) {
+        buf[pos++] = lo & 127 | 128;
+        lo = (lo >>> 7 | hi << 25) >>> 0;
+        hi >>>= 7;
       }
-      while (val.lo > 127) {
-        buf[pos++] = val.lo & 127 | 128;
-        val.lo = val.lo >>> 7;
+      while (lo > 127) {
+        buf[pos++] = lo & 127 | 128;
+        lo = lo >>> 7;
       }
-      buf[pos++] = val.lo;
+      buf[pos++] = lo;
     }
     Writer.prototype.uint64 = function write_uint64(value) {
       var bits = LongBits.from(value);
@@ -998,9 +1017,9 @@ var require_writer = __commonJS({
 
 // node_modules/protobufjs/src/writer_buffer.js
 var require_writer_buffer = __commonJS({
-  "node_modules/protobufjs/src/writer_buffer.js"(exports2, module2) {
+  "node_modules/protobufjs/src/writer_buffer.js"(exports, module) {
     "use strict";
-    module2.exports = BufferWriter;
+    module.exports = BufferWriter;
     var Writer = require_writer();
     (BufferWriter.prototype = Object.create(Writer.prototype)).constructor = BufferWriter;
     var util = require_minimal();
@@ -1049,9 +1068,9 @@ var require_writer_buffer = __commonJS({
 
 // node_modules/protobufjs/src/reader.js
 var require_reader = __commonJS({
-  "node_modules/protobufjs/src/reader.js"(exports2, module2) {
+  "node_modules/protobufjs/src/reader.js"(exports, module) {
     "use strict";
-    module2.exports = Reader;
+    module.exports = Reader;
     var util = require_minimal();
     var BufferReader;
     var LongBits = util.LongBits;
@@ -1222,7 +1241,12 @@ var require_reader = __commonJS({
       }
       return this;
     };
-    Reader.prototype.skipType = function(wireType) {
+    Reader.recursionLimit = util.recursionLimit;
+    Reader.prototype.skipType = function(wireType, depth) {
+      if (depth === void 0)
+        depth = 0;
+      if (depth > Reader.recursionLimit)
+        throw Error("maximum nesting depth exceeded");
       switch (wireType) {
         case 0:
           this.skip();
@@ -1235,7 +1259,7 @@ var require_reader = __commonJS({
           break;
         case 3:
           while ((wireType = this.uint32() & 7) !== 4) {
-            this.skipType(wireType);
+            this.skipType(wireType, depth + 1);
           }
           break;
         case 5:
@@ -1277,9 +1301,9 @@ var require_reader = __commonJS({
 
 // node_modules/protobufjs/src/reader_buffer.js
 var require_reader_buffer = __commonJS({
-  "node_modules/protobufjs/src/reader_buffer.js"(exports2, module2) {
+  "node_modules/protobufjs/src/reader_buffer.js"(exports, module) {
     "use strict";
-    module2.exports = BufferReader;
+    module.exports = BufferReader;
     var Reader = require_reader();
     (BufferReader.prototype = Object.create(Reader.prototype)).constructor = BufferReader;
     var util = require_minimal();
@@ -1300,9 +1324,9 @@ var require_reader_buffer = __commonJS({
 
 // node_modules/protobufjs/src/rpc/service.js
 var require_service = __commonJS({
-  "node_modules/protobufjs/src/rpc/service.js"(exports2, module2) {
+  "node_modules/protobufjs/src/rpc/service.js"(exports, module) {
     "use strict";
-    module2.exports = Service;
+    module.exports = Service;
     var util = require_minimal();
     (Service.prototype = Object.create(util.EventEmitter.prototype)).constructor = Service;
     function Service(rpcImpl, requestDelimited, responseDelimited) {
@@ -1375,26 +1399,26 @@ var require_service = __commonJS({
 
 // node_modules/protobufjs/src/rpc.js
 var require_rpc = __commonJS({
-  "node_modules/protobufjs/src/rpc.js"(exports2) {
+  "node_modules/protobufjs/src/rpc.js"(exports) {
     "use strict";
-    var rpc = exports2;
+    var rpc = exports;
     rpc.Service = require_service();
   }
 });
 
 // node_modules/protobufjs/src/roots.js
 var require_roots = __commonJS({
-  "node_modules/protobufjs/src/roots.js"(exports2, module2) {
+  "node_modules/protobufjs/src/roots.js"(exports, module) {
     "use strict";
-    module2.exports = {};
+    module.exports = /* @__PURE__ */ Object.create(null);
   }
 });
 
 // node_modules/protobufjs/src/index-minimal.js
 var require_index_minimal = __commonJS({
-  "node_modules/protobufjs/src/index-minimal.js"(exports2) {
+  "node_modules/protobufjs/src/index-minimal.js"(exports) {
     "use strict";
-    var protobuf = exports2;
+    var protobuf = exports;
     protobuf.build = "minimal";
     protobuf.Writer = require_writer();
     protobuf.BufferWriter = require_writer_buffer();
@@ -1415,9 +1439,9 @@ var require_index_minimal = __commonJS({
 
 // node_modules/protobufjs/minimal.js
 var require_minimal2 = __commonJS({
-  "node_modules/protobufjs/minimal.js"(exports2, module2) {
+  "node_modules/protobufjs/minimal.js"(exports, module) {
     "use strict";
-    module2.exports = require_index_minimal();
+    module.exports = require_index_minimal();
   }
 });
 
