@@ -17,6 +17,8 @@ message VoteEnvelope {
 	bytes nullifier = 5;
 	// On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 	repeated uint32 encryptionKeyIndexes = 6;
+	// Optional free-text note attached by the voter (max 256 bytes), e.g. an open "Other" answer
+	optional string memo = 7;
 }
 
 message Census {
