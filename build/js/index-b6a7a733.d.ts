@@ -127,6 +127,8 @@ interface VoteEnvelope {
     nullifier: Uint8Array;
     /** On encrypted votes, contains the (sorted) indexes of the keys used to encrypt */
     encryptionKeyIndexes: number[];
+    /** Optional free-text note attached by the voter (max 256 bytes), e.g. an open "Other" answer */
+    memo?: string | undefined;
 }
 declare const VoteEnvelope: {
     encode(message: VoteEnvelope, writer?: _m0.Writer): _m0.Writer;
@@ -221,6 +223,7 @@ declare const VoteEnvelope: {
         votePackage?: Uint8Array | undefined;
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: number[] | undefined;
+        memo?: string | undefined;
     } & {
         nonce?: Uint8Array | undefined;
         processId?: Uint8Array | undefined;
@@ -531,6 +534,7 @@ declare const VoteEnvelope: {
         votePackage?: Uint8Array | undefined;
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: (number[] & number[] & { [K_27 in Exclude<keyof I["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+        memo?: string | undefined;
     } & { [K_28 in Exclude<keyof I, keyof VoteEnvelope>]: never; }>(base?: I | undefined): VoteEnvelope;
     fromPartial<I_1 extends {
         nonce?: Uint8Array | undefined;
@@ -620,6 +624,7 @@ declare const VoteEnvelope: {
         votePackage?: Uint8Array | undefined;
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: number[] | undefined;
+        memo?: string | undefined;
     } & {
         nonce?: Uint8Array | undefined;
         processId?: Uint8Array | undefined;
@@ -930,6 +935,7 @@ declare const VoteEnvelope: {
         votePackage?: Uint8Array | undefined;
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: (number[] & number[] & { [K_56 in Exclude<keyof I_1["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+        memo?: string | undefined;
     } & { [K_57 in Exclude<keyof I_1, keyof VoteEnvelope>]: never; }>(object: I_1): VoteEnvelope;
 };
 interface Census {
@@ -2139,6 +2145,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
+                memo?: string | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -2679,6 +2686,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
+                memo?: string | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -2771,6 +2779,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
+                memo?: string | undefined;
             } & {
                 nonce?: Uint8Array | undefined;
                 processId?: Uint8Array | undefined;
@@ -3081,6 +3090,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: (number[] & number[] & { [K_27 in Exclude<keyof I["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+                memo?: string | undefined;
             } & { [K_28 in Exclude<keyof I["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
             $case: "vote";
         } & { [K_29 in Exclude<keyof I["payload"], "$case" | "vote">]: never; }) | ({
@@ -5231,6 +5241,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
+                memo?: string | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -5771,6 +5782,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
+                memo?: string | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -5863,6 +5875,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
+                memo?: string | undefined;
             } & {
                 nonce?: Uint8Array | undefined;
                 processId?: Uint8Array | undefined;
@@ -6173,6 +6186,7 @@ declare const Tx: {
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: (number[] & number[] & { [K_184 in Exclude<keyof I_1["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+                memo?: string | undefined;
             } & { [K_185 in Exclude<keyof I_1["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
             $case: "vote";
         } & { [K_186 in Exclude<keyof I_1["payload"], "$case" | "vote">]: never; }) | ({

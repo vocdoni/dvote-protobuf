@@ -28,6 +28,8 @@ message StateDBVote {
     optional uint32 overwriteCount = 6;
     // encryptionKeyIndexes stores the indexes of the encryption keys used to encrypt the vote
     repeated uint32 encryptionKeyIndexes = 7;
+    // memo stores the optional free-text note attached by the voter (max 256 bytes)
+    optional string memo = 8;
 }
 
 message ProcessIdList {
