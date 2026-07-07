@@ -422,7 +422,7 @@ var require_utf8 = __commonJS({
   "node_modules/@protobufjs/utf8/index.js"(exports) {
     "use strict";
     var utf8 = exports;
-    var replacementChar = "\uFFFD";
+    var replacementCharCode = 65533;
     utf8.length = function utf8_length(string) {
       var len = 0, c = 0;
       for (var i = 0; i < string.length; ++i) {
@@ -440,32 +440,40 @@ var require_utf8 = __commonJS({
       return len;
     };
     utf8.read = function utf8_read(buffer, start, end) {
-      if (end - start < 1) {
+      if (end - start < 1)
         return "";
-      }
-      var str = "";
-      for (var i = start; i < end; ) {
-        var t = buffer[i++];
+      var parts = null, chunk = [], i = 0, t, t2, c2, c3;
+      while (start < end) {
+        t = buffer[start++];
         if (t <= 127) {
-          str += String.fromCharCode(t);
+          chunk[i++] = t;
         } else if (t >= 192 && t < 224) {
-          var c2 = (t & 31) << 6 | buffer[i++] & 63;
-          str += c2 >= 128 ? String.fromCharCode(c2) : replacementChar;
+          c2 = (t & 31) << 6 | buffer[start++] & 63;
+          chunk[i++] = c2 >= 128 ? c2 : replacementCharCode;
         } else if (t >= 224 && t < 240) {
-          var c3 = (t & 15) << 12 | (buffer[i++] & 63) << 6 | buffer[i++] & 63;
-          str += c3 >= 2048 ? String.fromCharCode(c3) : replacementChar;
+          c3 = (t & 15) << 12 | (buffer[start++] & 63) << 6 | buffer[start++] & 63;
+          chunk[i++] = c3 >= 2048 ? c3 : replacementCharCode;
         } else if (t >= 240) {
-          var t2 = (t & 7) << 18 | (buffer[i++] & 63) << 12 | (buffer[i++] & 63) << 6 | buffer[i++] & 63;
+          t2 = (t & 7) << 18 | (buffer[start++] & 63) << 12 | (buffer[start++] & 63) << 6 | buffer[start++] & 63;
           if (t2 < 65536 || t2 > 1114111)
-            str += replacementChar;
+            chunk[i++] = replacementCharCode;
           else {
             t2 -= 65536;
-            str += String.fromCharCode(55296 + (t2 >> 10));
-            str += String.fromCharCode(56320 + (t2 & 1023));
+            chunk[i++] = 55296 + (t2 >> 10);
+            chunk[i++] = 56320 + (t2 & 1023);
           }
         }
+        if (i > 8191) {
+          (parts || (parts = [])).push(String.fromCharCode.apply(String, chunk.slice(0, i)));
+          i = 0;
+        }
       }
-      return str;
+      if (parts) {
+        if (i)
+          parts.push(String.fromCharCode.apply(String, chunk.slice(0, i)));
+        return parts.join("");
+      }
+      return String.fromCharCode.apply(String, chunk.slice(0, i));
     };
     utf8.write = function utf8_write(string, buffer, offset) {
       var start = offset, c1, c2;
