@@ -2150,7 +2150,7 @@ var VoteEnvelope = {
     }
     writer.ldelim();
     if (message.memo !== void 0) {
-      writer.uint32(58).string(message.memo);
+      writer.uint32(58).bytes(message.memo);
     }
     return writer;
   },
@@ -2208,7 +2208,7 @@ var VoteEnvelope = {
           if (tag !== 58) {
             break;
           }
-          message.memo = reader.string();
+          message.memo = reader.bytes();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2226,7 +2226,7 @@ var VoteEnvelope = {
       votePackage: isSet(object.votePackage) ? bytesFromBase64(object.votePackage) : new Uint8Array(0),
       nullifier: isSet(object.nullifier) ? bytesFromBase64(object.nullifier) : new Uint8Array(0),
       encryptionKeyIndexes: globalThis.Array.isArray(object?.encryptionKeyIndexes) ? object.encryptionKeyIndexes.map((e) => globalThis.Number(e)) : [],
-      memo: isSet(object.memo) ? globalThis.String(object.memo) : void 0
+      memo: isSet(object.memo) ? bytesFromBase64(object.memo) : void 0
     };
   },
   toJSON(message) {
@@ -2250,7 +2250,7 @@ var VoteEnvelope = {
       obj.encryptionKeyIndexes = message.encryptionKeyIndexes.map((e) => Math.round(e));
     }
     if (message.memo !== void 0) {
-      obj.memo = message.memo;
+      obj.memo = base64FromBytes(message.memo);
     }
     return obj;
   },
