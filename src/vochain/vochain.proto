@@ -17,8 +17,11 @@ message VoteEnvelope {
 	bytes nullifier = 5;
 	// On encrypted votes, contains the (sorted) indexes of the keys used to encrypt
 	repeated uint32 encryptionKeyIndexes = 6;
-	// Optional free-text note attached by the voter (max 256 bytes), e.g. an open "Other" answer
-	optional string memo = 7;
+	// Optional free-text note attached by the voter (max 256 bytes), e.g. an open "Other" answer.
+	// Declared as bytes (not string) so that nodes without this field treat it as an opaque
+	// unknown field identically to nodes that have it — avoiding a proto3-string UTF-8 decode
+	// divergence during a rolling upgrade. UTF-8/size validation is enforced at the app layer.
+	optional bytes memo = 7;
 }
 
 message Census {
