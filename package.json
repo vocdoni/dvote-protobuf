@@ -2,6 +2,10 @@
   "name": "@vocdoni/proto",
   "version": "1.15.13",
   "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vocdoni/dvote-protobuf.git"
+  },
   "devDependencies": {
     "ts-node": "^9.1.1",
     "ts-proto": "^1.181.2",
