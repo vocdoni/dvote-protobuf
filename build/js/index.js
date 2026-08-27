@@ -6137,6 +6137,7 @@ var CensusOrigin = /* @__PURE__ */ ((CensusOrigin2) => {
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_TREE"] = 1] = "OFF_CHAIN_TREE";
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_TREE_WEIGHTED"] = 2] = "OFF_CHAIN_TREE_WEIGHTED";
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA"] = 3] = "OFF_CHAIN_CA";
+  CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA_V2"] = 4] = "OFF_CHAIN_CA_V2";
   CensusOrigin2[CensusOrigin2["ERC20"] = 11] = "ERC20";
   CensusOrigin2[CensusOrigin2["ERC721"] = 12] = "ERC721";
   CensusOrigin2[CensusOrigin2["ERC1155"] = 13] = "ERC1155";
@@ -6160,6 +6161,9 @@ function censusOriginFromJSON(object) {
     case 3:
     case "OFF_CHAIN_CA":
       return 3 /* OFF_CHAIN_CA */;
+    case 4:
+    case "OFF_CHAIN_CA_V2":
+      return 4 /* OFF_CHAIN_CA_V2 */;
     case 11:
     case "ERC20":
       return 11 /* ERC20 */;
@@ -6194,6 +6198,8 @@ function censusOriginToJSON(object) {
       return "OFF_CHAIN_TREE_WEIGHTED";
     case 3 /* OFF_CHAIN_CA */:
       return "OFF_CHAIN_CA";
+    case 4 /* OFF_CHAIN_CA_V2 */:
+      return "OFF_CHAIN_CA_V2";
     case 11 /* ERC20 */:
       return "ERC20";
     case 12 /* ERC721 */:
