@@ -71,9 +71,9 @@ declare enum CensusOrigin {
     /**
      * OFF_CHAIN_CA_V2 - OFF_CHAIN_CA_V2 is OFF_CHAIN_CA with a fixed salt derivation for the
      * salted proof types (ECDSA_PIDSALTED, ECDSA_BLIND_PIDSALTED): the salt
-     * covers the whole processID and the CSP-authorized vote weight, so a CSP
+     * covers the whole processId and the CSP-authorized vote weight, so a CSP
      * authorization is bound to one election and one weight. OFF_CHAIN_CA keeps
-     * the legacy derivation, which cropped the processID to 20 bytes and shared
+     * the legacy derivation, which cropped the processId to 20 bytes and shared
      * one salted key across every election of an organization.
      */
     OFF_CHAIN_CA_V2 = 4,
