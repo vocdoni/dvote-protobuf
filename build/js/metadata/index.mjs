@@ -1106,9 +1106,27 @@ var require_reader = __commonJS({
     Reader.create = create();
     Reader.prototype._slice = util.Array.prototype.subarray || /* istanbul ignore next */
     util.Array.prototype.slice;
+    function readVarint32NearEnd(reader) {
+      var value = 0;
+      for (var i = 0; i < 4; ++i) {
+        if (reader.pos >= reader.len)
+          throw indexOutOfRange(reader);
+        var b = reader.buf[reader.pos++];
+        value = (value | (b & 127) << i * 7) >>> 0;
+        if (b < 128)
+          return value;
+      }
+      throw indexOutOfRange(reader);
+    }
     Reader.prototype.uint32 = function read_uint32_setup() {
       var value = 4294967295;
       return function read_uint32() {
+        if (this.len - this.pos < 5) {
+          if (this.pos >= this.len)
+            throw indexOutOfRange(this);
+          if (this.buf[this.pos] >= 128)
+            return readVarint32NearEnd(this);
+        }
         value = (this.buf[this.pos] & 127) >>> 0;
         if (this.buf[this.pos++] < 128)
           return value;
