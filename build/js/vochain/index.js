@@ -1493,10 +1493,6 @@ __export(vochain_exports, {
   ProofArbo_Type: () => ProofArbo_Type,
   ProofCA: () => ProofCA,
   ProofCA_Type: () => ProofCA_Type,
-  ProofEthereumAccount: () => ProofEthereumAccount,
-  ProofEthereumStorage: () => ProofEthereumStorage,
-  ProofFarcasterFrame: () => ProofFarcasterFrame,
-  ProofMinime: () => ProofMinime,
   ProofZkSNARK: () => ProofZkSNARK,
   QuestionResult: () => QuestionResult,
   RegisterKeyTx: () => RegisterKeyTx,
@@ -1889,12 +1885,6 @@ var CensusOrigin = /* @__PURE__ */ ((CensusOrigin2) => {
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_TREE_WEIGHTED"] = 2] = "OFF_CHAIN_TREE_WEIGHTED";
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA"] = 3] = "OFF_CHAIN_CA";
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA_V2"] = 4] = "OFF_CHAIN_CA_V2";
-  CensusOrigin2[CensusOrigin2["ERC20"] = 11] = "ERC20";
-  CensusOrigin2[CensusOrigin2["ERC721"] = 12] = "ERC721";
-  CensusOrigin2[CensusOrigin2["ERC1155"] = 13] = "ERC1155";
-  CensusOrigin2[CensusOrigin2["ERC777"] = 14] = "ERC777";
-  CensusOrigin2[CensusOrigin2["MINI_ME"] = 15] = "MINI_ME";
-  CensusOrigin2[CensusOrigin2["FARCASTER_FRAME"] = 16] = "FARCASTER_FRAME";
   CensusOrigin2[CensusOrigin2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return CensusOrigin2;
 })(CensusOrigin || {});
@@ -1915,24 +1905,6 @@ function censusOriginFromJSON(object) {
     case 4:
     case "OFF_CHAIN_CA_V2":
       return 4 /* OFF_CHAIN_CA_V2 */;
-    case 11:
-    case "ERC20":
-      return 11 /* ERC20 */;
-    case 12:
-    case "ERC721":
-      return 12 /* ERC721 */;
-    case 13:
-    case "ERC1155":
-      return 13 /* ERC1155 */;
-    case 14:
-    case "ERC777":
-      return 14 /* ERC777 */;
-    case 15:
-    case "MINI_ME":
-      return 15 /* MINI_ME */;
-    case 16:
-    case "FARCASTER_FRAME":
-      return 16 /* FARCASTER_FRAME */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1951,18 +1923,6 @@ function censusOriginToJSON(object) {
       return "OFF_CHAIN_CA";
     case 4 /* OFF_CHAIN_CA_V2 */:
       return "OFF_CHAIN_CA_V2";
-    case 11 /* ERC20 */:
-      return "ERC20";
-    case 12 /* ERC721 */:
-      return "ERC721";
-    case 13 /* ERC1155 */:
-      return "ERC1155";
-    case 14 /* ERC777 */:
-      return "ERC777";
-    case 15 /* MINI_ME */:
-      return "MINI_ME";
-    case 16 /* FARCASTER_FRAME */:
-      return "FARCASTER_FRAME";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -1972,10 +1932,7 @@ var Census_Type = /* @__PURE__ */ ((Census_Type2) => {
   Census_Type2[Census_Type2["UNKNOWN"] = 0] = "UNKNOWN";
   Census_Type2[Census_Type2["ARBO_BLAKE2B"] = 1] = "ARBO_BLAKE2B";
   Census_Type2[Census_Type2["ARBO_POSEIDON"] = 2] = "ARBO_POSEIDON";
-  Census_Type2[Census_Type2["ETHEREUMSTORAGE"] = 3] = "ETHEREUMSTORAGE";
-  Census_Type2[Census_Type2["ETHEREUMACCOUNT"] = 4] = "ETHEREUMACCOUNT";
   Census_Type2[Census_Type2["CA"] = 5] = "CA";
-  Census_Type2[Census_Type2["FARCASTER_FRAME"] = 6] = "FARCASTER_FRAME";
   Census_Type2[Census_Type2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return Census_Type2;
 })(Census_Type || {});
@@ -1990,18 +1947,9 @@ function census_TypeFromJSON(object) {
     case 2:
     case "ARBO_POSEIDON":
       return 2 /* ARBO_POSEIDON */;
-    case 3:
-    case "ETHEREUMSTORAGE":
-      return 3 /* ETHEREUMSTORAGE */;
-    case 4:
-    case "ETHEREUMACCOUNT":
-      return 4 /* ETHEREUMACCOUNT */;
     case 5:
     case "CA":
       return 5 /* CA */;
-    case 6:
-    case "FARCASTER_FRAME":
-      return 6 /* FARCASTER_FRAME */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -2016,14 +1964,8 @@ function census_TypeToJSON(object) {
       return "ARBO_BLAKE2B";
     case 2 /* ARBO_POSEIDON */:
       return "ARBO_POSEIDON";
-    case 3 /* ETHEREUMSTORAGE */:
-      return "ETHEREUMSTORAGE";
-    case 4 /* ETHEREUMACCOUNT */:
-      return "ETHEREUMACCOUNT";
     case 5 /* CA */:
       return "CA";
-    case 6 /* FARCASTER_FRAME */:
-      return "FARCASTER_FRAME";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -2336,12 +2278,6 @@ function createBaseProof() {
 var Proof = {
   encode(message, writer = import_minimal.default.Writer.create()) {
     switch (message.payload?.$case) {
-      case "ethereumStorage":
-        ProofEthereumStorage.encode(message.payload.ethereumStorage, writer.uint32(26).fork()).ldelim();
-        break;
-      case "ethereumAccount":
-        ProofEthereumAccount.encode(message.payload.ethereumAccount, writer.uint32(34).fork()).ldelim();
-        break;
       case "ca":
         ProofCA.encode(message.payload.ca, writer.uint32(42).fork()).ldelim();
         break;
@@ -2350,12 +2286,6 @@ var Proof = {
         break;
       case "zkSnark":
         ProofZkSNARK.encode(message.payload.zkSnark, writer.uint32(58).fork()).ldelim();
-        break;
-      case "minimeStorage":
-        ProofMinime.encode(message.payload.minimeStorage, writer.uint32(66).fork()).ldelim();
-        break;
-      case "farcasterFrame":
-        ProofFarcasterFrame.encode(message.payload.farcasterFrame, writer.uint32(74).fork()).ldelim();
         break;
     }
     return writer;
@@ -2367,24 +2297,6 @@ var Proof = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-          message.payload = {
-            $case: "ethereumStorage",
-            ethereumStorage: ProofEthereumStorage.decode(reader, reader.uint32())
-          };
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-          message.payload = {
-            $case: "ethereumAccount",
-            ethereumAccount: ProofEthereumAccount.decode(reader, reader.uint32())
-          };
-          continue;
         case 5:
           if (tag !== 42) {
             break;
@@ -2403,21 +2315,6 @@ var Proof = {
           }
           message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.decode(reader, reader.uint32()) };
           continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-          message.payload = { $case: "minimeStorage", minimeStorage: ProofMinime.decode(reader, reader.uint32()) };
-          continue;
-        case 9:
-          if (tag !== 74) {
-            break;
-          }
-          message.payload = {
-            $case: "farcasterFrame",
-            farcasterFrame: ProofFarcasterFrame.decode(reader, reader.uint32())
-          };
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2428,17 +2325,11 @@ var Proof = {
   },
   fromJSON(object) {
     return {
-      payload: isSet(object.ethereumStorage) ? { $case: "ethereumStorage", ethereumStorage: ProofEthereumStorage.fromJSON(object.ethereumStorage) } : isSet(object.ethereumAccount) ? { $case: "ethereumAccount", ethereumAccount: ProofEthereumAccount.fromJSON(object.ethereumAccount) } : isSet(object.ca) ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) } : isSet(object.arbo) ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) } : isSet(object.zkSnark) ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) } : isSet(object.minimeStorage) ? { $case: "minimeStorage", minimeStorage: ProofMinime.fromJSON(object.minimeStorage) } : isSet(object.farcasterFrame) ? { $case: "farcasterFrame", farcasterFrame: ProofFarcasterFrame.fromJSON(object.farcasterFrame) } : void 0
+      payload: isSet(object.ca) ? { $case: "ca", ca: ProofCA.fromJSON(object.ca) } : isSet(object.arbo) ? { $case: "arbo", arbo: ProofArbo.fromJSON(object.arbo) } : isSet(object.zkSnark) ? { $case: "zkSnark", zkSnark: ProofZkSNARK.fromJSON(object.zkSnark) } : void 0
     };
   },
   toJSON(message) {
     const obj = {};
-    if (message.payload?.$case === "ethereumStorage") {
-      obj.ethereumStorage = ProofEthereumStorage.toJSON(message.payload.ethereumStorage);
-    }
-    if (message.payload?.$case === "ethereumAccount") {
-      obj.ethereumAccount = ProofEthereumAccount.toJSON(message.payload.ethereumAccount);
-    }
     if (message.payload?.$case === "ca") {
       obj.ca = ProofCA.toJSON(message.payload.ca);
     }
@@ -2448,12 +2339,6 @@ var Proof = {
     if (message.payload?.$case === "zkSnark") {
       obj.zkSnark = ProofZkSNARK.toJSON(message.payload.zkSnark);
     }
-    if (message.payload?.$case === "minimeStorage") {
-      obj.minimeStorage = ProofMinime.toJSON(message.payload.minimeStorage);
-    }
-    if (message.payload?.$case === "farcasterFrame") {
-      obj.farcasterFrame = ProofFarcasterFrame.toJSON(message.payload.farcasterFrame);
-    }
     return obj;
   },
   create(base) {
@@ -2461,18 +2346,6 @@ var Proof = {
   },
   fromPartial(object) {
     const message = createBaseProof();
-    if (object.payload?.$case === "ethereumStorage" && object.payload?.ethereumStorage !== void 0 && object.payload?.ethereumStorage !== null) {
-      message.payload = {
-        $case: "ethereumStorage",
-        ethereumStorage: ProofEthereumStorage.fromPartial(object.payload.ethereumStorage)
-      };
-    }
-    if (object.payload?.$case === "ethereumAccount" && object.payload?.ethereumAccount !== void 0 && object.payload?.ethereumAccount !== null) {
-      message.payload = {
-        $case: "ethereumAccount",
-        ethereumAccount: ProofEthereumAccount.fromPartial(object.payload.ethereumAccount)
-      };
-    }
     if (object.payload?.$case === "ca" && object.payload?.ca !== void 0 && object.payload?.ca !== null) {
       message.payload = { $case: "ca", ca: ProofCA.fromPartial(object.payload.ca) };
     }
@@ -2482,278 +2355,6 @@ var Proof = {
     if (object.payload?.$case === "zkSnark" && object.payload?.zkSnark !== void 0 && object.payload?.zkSnark !== null) {
       message.payload = { $case: "zkSnark", zkSnark: ProofZkSNARK.fromPartial(object.payload.zkSnark) };
     }
-    if (object.payload?.$case === "minimeStorage" && object.payload?.minimeStorage !== void 0 && object.payload?.minimeStorage !== null) {
-      message.payload = {
-        $case: "minimeStorage",
-        minimeStorage: ProofMinime.fromPartial(object.payload.minimeStorage)
-      };
-    }
-    if (object.payload?.$case === "farcasterFrame" && object.payload?.farcasterFrame !== void 0 && object.payload?.farcasterFrame !== null) {
-      message.payload = {
-        $case: "farcasterFrame",
-        farcasterFrame: ProofFarcasterFrame.fromPartial(object.payload.farcasterFrame)
-      };
-    }
-    return message;
-  }
-};
-function createBaseProofEthereumStorage() {
-  return { key: new Uint8Array(0), value: new Uint8Array(0), siblings: [] };
-}
-var ProofEthereumStorage = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.key.length !== 0) {
-      writer.uint32(10).bytes(message.key);
-    }
-    if (message.value.length !== 0) {
-      writer.uint32(18).bytes(message.value);
-    }
-    for (const v of message.siblings) {
-      writer.uint32(26).bytes(v);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseProofEthereumStorage();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.key = reader.bytes();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-          message.value = reader.bytes();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-          message.siblings.push(reader.bytes());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
-      value: isSet(object.value) ? bytesFromBase64(object.value) : new Uint8Array(0),
-      siblings: globalThis.Array.isArray(object?.siblings) ? object.siblings.map((e) => bytesFromBase64(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.key.length !== 0) {
-      obj.key = base64FromBytes(message.key);
-    }
-    if (message.value.length !== 0) {
-      obj.value = base64FromBytes(message.value);
-    }
-    if (message.siblings?.length) {
-      obj.siblings = message.siblings.map((e) => base64FromBytes(e));
-    }
-    return obj;
-  },
-  create(base) {
-    return ProofEthereumStorage.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseProofEthereumStorage();
-    message.key = object.key ?? new Uint8Array(0);
-    message.value = object.value ?? new Uint8Array(0);
-    message.siblings = object.siblings?.map((e) => e) || [];
-    return message;
-  }
-};
-function createBaseProofEthereumAccount() {
-  return {
-    nonce: new Uint8Array(0),
-    balance: new Uint8Array(0),
-    storageHash: new Uint8Array(0),
-    codeHash: new Uint8Array(0),
-    siblings: []
-  };
-}
-var ProofEthereumAccount = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.nonce.length !== 0) {
-      writer.uint32(10).bytes(message.nonce);
-    }
-    if (message.balance.length !== 0) {
-      writer.uint32(18).bytes(message.balance);
-    }
-    if (message.storageHash.length !== 0) {
-      writer.uint32(26).bytes(message.storageHash);
-    }
-    if (message.codeHash.length !== 0) {
-      writer.uint32(34).bytes(message.codeHash);
-    }
-    for (const v of message.siblings) {
-      writer.uint32(42).bytes(v);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseProofEthereumAccount();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.nonce = reader.bytes();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-          message.balance = reader.bytes();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-          message.storageHash = reader.bytes();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-          message.codeHash = reader.bytes();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-          message.siblings.push(reader.bytes());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      nonce: isSet(object.nonce) ? bytesFromBase64(object.nonce) : new Uint8Array(0),
-      balance: isSet(object.balance) ? bytesFromBase64(object.balance) : new Uint8Array(0),
-      storageHash: isSet(object.storageHash) ? bytesFromBase64(object.storageHash) : new Uint8Array(0),
-      codeHash: isSet(object.codeHash) ? bytesFromBase64(object.codeHash) : new Uint8Array(0),
-      siblings: globalThis.Array.isArray(object?.siblings) ? object.siblings.map((e) => bytesFromBase64(e)) : []
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.nonce.length !== 0) {
-      obj.nonce = base64FromBytes(message.nonce);
-    }
-    if (message.balance.length !== 0) {
-      obj.balance = base64FromBytes(message.balance);
-    }
-    if (message.storageHash.length !== 0) {
-      obj.storageHash = base64FromBytes(message.storageHash);
-    }
-    if (message.codeHash.length !== 0) {
-      obj.codeHash = base64FromBytes(message.codeHash);
-    }
-    if (message.siblings?.length) {
-      obj.siblings = message.siblings.map((e) => base64FromBytes(e));
-    }
-    return obj;
-  },
-  create(base) {
-    return ProofEthereumAccount.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseProofEthereumAccount();
-    message.nonce = object.nonce ?? new Uint8Array(0);
-    message.balance = object.balance ?? new Uint8Array(0);
-    message.storageHash = object.storageHash ?? new Uint8Array(0);
-    message.codeHash = object.codeHash ?? new Uint8Array(0);
-    message.siblings = object.siblings?.map((e) => e) || [];
-    return message;
-  }
-};
-function createBaseProofMinime() {
-  return { proofPrevBlock: void 0, proofNextBlock: void 0 };
-}
-var ProofMinime = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.proofPrevBlock !== void 0) {
-      ProofEthereumStorage.encode(message.proofPrevBlock, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.proofNextBlock !== void 0) {
-      ProofEthereumStorage.encode(message.proofNextBlock, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseProofMinime();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.proofPrevBlock = ProofEthereumStorage.decode(reader, reader.uint32());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-          message.proofNextBlock = ProofEthereumStorage.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      proofPrevBlock: isSet(object.proofPrevBlock) ? ProofEthereumStorage.fromJSON(object.proofPrevBlock) : void 0,
-      proofNextBlock: isSet(object.proofNextBlock) ? ProofEthereumStorage.fromJSON(object.proofNextBlock) : void 0
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.proofPrevBlock !== void 0) {
-      obj.proofPrevBlock = ProofEthereumStorage.toJSON(message.proofPrevBlock);
-    }
-    if (message.proofNextBlock !== void 0) {
-      obj.proofNextBlock = ProofEthereumStorage.toJSON(message.proofNextBlock);
-    }
-    return obj;
-  },
-  create(base) {
-    return ProofMinime.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseProofMinime();
-    message.proofPrevBlock = object.proofPrevBlock !== void 0 && object.proofPrevBlock !== null ? ProofEthereumStorage.fromPartial(object.proofPrevBlock) : void 0;
-    message.proofNextBlock = object.proofNextBlock !== void 0 && object.proofNextBlock !== null ? ProofEthereumStorage.fromPartial(object.proofNextBlock) : void 0;
     return message;
   }
 };
@@ -3136,86 +2737,6 @@ var ProofZkSNARK = {
     message.b = object.b?.map((e) => e) || [];
     message.c = object.c?.map((e) => e) || [];
     message.publicInputs = object.publicInputs?.map((e) => e) || [];
-    return message;
-  }
-};
-function createBaseProofFarcasterFrame() {
-  return { signedFrameMessageBody: new Uint8Array(0), censusProof: void 0, publicKey: new Uint8Array(0) };
-}
-var ProofFarcasterFrame = {
-  encode(message, writer = import_minimal.default.Writer.create()) {
-    if (message.signedFrameMessageBody.length !== 0) {
-      writer.uint32(10).bytes(message.signedFrameMessageBody);
-    }
-    if (message.censusProof !== void 0) {
-      ProofArbo.encode(message.censusProof, writer.uint32(18).fork()).ldelim();
-    }
-    if (message.publicKey.length !== 0) {
-      writer.uint32(26).bytes(message.publicKey);
-    }
-    return writer;
-  },
-  decode(input, length) {
-    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
-    let end = length === void 0 ? reader.len : reader.pos + length;
-    const message = createBaseProofFarcasterFrame();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-          message.signedFrameMessageBody = reader.bytes();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-          message.censusProof = ProofArbo.decode(reader, reader.uint32());
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-          message.publicKey = reader.bytes();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-  fromJSON(object) {
-    return {
-      signedFrameMessageBody: isSet(object.signedFrameMessageBody) ? bytesFromBase64(object.signedFrameMessageBody) : new Uint8Array(0),
-      censusProof: isSet(object.censusProof) ? ProofArbo.fromJSON(object.censusProof) : void 0,
-      publicKey: isSet(object.publicKey) ? bytesFromBase64(object.publicKey) : new Uint8Array(0)
-    };
-  },
-  toJSON(message) {
-    const obj = {};
-    if (message.signedFrameMessageBody.length !== 0) {
-      obj.signedFrameMessageBody = base64FromBytes(message.signedFrameMessageBody);
-    }
-    if (message.censusProof !== void 0) {
-      obj.censusProof = ProofArbo.toJSON(message.censusProof);
-    }
-    if (message.publicKey.length !== 0) {
-      obj.publicKey = base64FromBytes(message.publicKey);
-    }
-    return obj;
-  },
-  create(base) {
-    return ProofFarcasterFrame.fromPartial(base ?? {});
-  },
-  fromPartial(object) {
-    const message = createBaseProofFarcasterFrame();
-    message.signedFrameMessageBody = object.signedFrameMessageBody ?? new Uint8Array(0);
-    message.censusProof = object.censusProof !== void 0 && object.censusProof !== null ? ProofArbo.fromPartial(object.censusProof) : void 0;
-    message.publicKey = object.publicKey ?? new Uint8Array(0);
     return message;
   }
 };
@@ -6752,10 +6273,6 @@ function isSet(value) {
   ProofArbo_Type,
   ProofCA,
   ProofCA_Type,
-  ProofEthereumAccount,
-  ProofEthereumStorage,
-  ProofFarcasterFrame,
-  ProofMinime,
   ProofZkSNARK,
   QuestionResult,
   RegisterKeyTx,
