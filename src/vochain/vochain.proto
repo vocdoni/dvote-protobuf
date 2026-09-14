@@ -29,49 +29,26 @@ message Census {
 		UNKNOWN = 0;
 		ARBO_BLAKE2B = 1;
 		ARBO_POSEIDON = 2;
-		ETHEREUMSTORAGE = 3;
-		ETHEREUMACCOUNT = 4;
+		reserved 3, 4, 6; // ETHEREUMSTORAGE, ETHEREUMACCOUNT, FARCASTER_FRAME (retired in LTS/1.3)
+		reserved "ETHEREUMSTORAGE", "ETHEREUMACCOUNT", "FARCASTER_FRAME";
 		CA = 5;
-		FARCASTER_FRAME = 6;
 	}
 }
 
 message Proof {
+	// Retired in LTS/1.3: storage-proof and Farcaster-frame payloads.
+	// Keep the tag numbers reserved so the field indices never get reused
+	// and old on-wire messages carrying these tags decode as unknown fields.
+	reserved 3, 4, 8, 9;
+	reserved "ethereumStorage", "ethereumAccount", "minimeStorage", "farcasterFrame";
 	oneof payload {
-		// Proof used on EVM census based processes
-		ProofEthereumStorage ethereumStorage = 3;
-		// Proof used by oracles to update the census of EVM processes
-		ProofEthereumAccount ethereumAccount = 4;
 		// Proof Certification Authority
 		ProofCA ca = 5;
 		// Proof used for census using arbo
 		ProofArbo arbo = 6;
 		// zkSnark proof
 		ProofZkSNARK zkSnark = 7;
-		// Proof used in Minime token based census
-		ProofMinime minimeStorage = 8;
-		// ProofFarcastFrame is a proof created on the Farcaster network
-		ProofFarcasterFrame farcasterFrame = 9;
 	}
-}
-
-message ProofEthereumStorage {
-	bytes key = 1;
-	bytes value = 2;
-	repeated bytes siblings = 3;
-}
-
-message ProofEthereumAccount {
-	bytes nonce = 1;
-	bytes balance = 2;  // Big Int encoded as bytes
-	bytes storageHash = 3;
-	bytes codeHash = 4;
-	repeated bytes siblings = 5;
-}
-
-message ProofMinime {
-	ProofEthereumStorage proofPrevBlock = 1;
-	ProofEthereumStorage proofNextBlock = 2;
 }
 
 message ProofCA {
@@ -126,13 +103,6 @@ message ProofZkSNARK {
 	// c represents a G1 point in Affine coordinates
 	repeated string c = 4;
 	repeated string publicInputs = 5;
-}
-
-// ProofFarcasterFrame is a proof created on the Farcaster network
-message ProofFarcasterFrame {
-	bytes signedFrameMessageBody = 1;
-	ProofArbo censusProof = 2;
-	bytes publicKey = 3;
 }
 
 // Account represents an entity with an amount of tokens, usually attached to an address.
@@ -410,12 +380,11 @@ enum CensusOrigin {
 	// the legacy derivation, which cropped the processId to 20 bytes and shared
 	// one salted key across every election of an organization.
 	OFF_CHAIN_CA_V2 = 4;
-	ERC20 = 11;
-	ERC721 = 12;
-	ERC1155 = 13;
-	ERC777 = 14;
-	MINI_ME = 15;
-	FARCASTER_FRAME = 16;
+	// Retired in LTS/1.3: ERC20 = 11, ERC721 = 12, ERC1155 = 13, ERC777 = 14,
+	// MINI_ME = 15, FARCASTER_FRAME = 16. Reserved so their numbers are never
+	// reused; old on-wire values decode as unknown enum values.
+	reserved 11, 12, 13, 14, 15, 16;
+	reserved "ERC20", "ERC721", "ERC1155", "ERC777", "MINI_ME", "FARCASTER_FRAME";
 }
 
 message EnvelopeType {
