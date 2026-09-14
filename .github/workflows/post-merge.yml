@@ -31,6 +31,11 @@ jobs:
           make init
           make all
       - name: Commit changes
+        # Skip auto-commit when the PR comes from a fork: the action would try to
+        # push generated build artifacts back to a branch that only exists in the
+        # forked repo, which fails with "fatal: invalid reference". On same-repo
+        # PRs and pushes to master/tags the step runs as before.
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: auto build commit
