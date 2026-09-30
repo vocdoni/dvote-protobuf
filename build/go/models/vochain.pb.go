@@ -51,6 +51,7 @@ const (
 	TxType_REGISTER_SIK               TxType = 26
 	TxType_SET_ACCOUNT_VALIDATOR      TxType = 27
 	TxType_SET_PROCESS_DURATION       TxType = 28
+	TxType_SET_PROCESS_METADATA       TxType = 29
 )
 
 // Enum value maps for TxType.
@@ -83,6 +84,7 @@ var (
 		26: "REGISTER_SIK",
 		27: "SET_ACCOUNT_VALIDATOR",
 		28: "SET_PROCESS_DURATION",
+		29: "SET_PROCESS_METADATA",
 	}
 	TxType_value = map[string]int32{
 		"TX_UNKNOWN":                 0,
@@ -112,6 +114,7 @@ var (
 		"REGISTER_SIK":               26,
 		"SET_ACCOUNT_VALIDATOR":      27,
 		"SET_PROCESS_DURATION":       28,
+		"SET_PROCESS_METADATA":       29,
 	}
 )
 
@@ -563,7 +566,10 @@ type VoteEnvelope struct {
 	// Declared as bytes (not string) so that nodes without this field treat it as an opaque
 	// unknown field identically to nodes that have it — avoiding a proto3-string UTF-8 decode
 	// divergence during a rolling upgrade. UTF-8/size validation is enforced at the app layer.
-	Memo          []byte `protobuf:"bytes,7,opt,name=memo,proto3,oneof" json:"memo,omitempty"`
+	Memo []byte `protobuf:"bytes,7,opt,name=memo,proto3,oneof" json:"memo,omitempty"`
+	// Hash of the raw metadata document the voter was shown. When the process has a
+	// metadataHash, it must match it at the time the vote is included in a block.
+	MetadataHash  []byte `protobuf:"bytes,8,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -643,6 +649,13 @@ func (x *VoteEnvelope) GetEncryptionKeyIndexes() []uint32 {
 func (x *VoteEnvelope) GetMemo() []byte {
 	if x != nil {
 		return x.Memo
+	}
+	return nil
+}
+
+func (x *VoteEnvelope) GetMetadataHash() []byte {
+	if x != nil {
+		return x.MetadataHash
 	}
 	return nil
 }
@@ -1544,6 +1557,11 @@ type SetProcessTx struct {
 	Duration      *uint32        `protobuf:"varint,11,opt,name=duration,proto3,oneof" json:"duration,omitempty"`
 	CensusSize    *uint64        `protobuf:"varint,12,opt,name=censusSize,proto3,oneof" json:"censusSize,omitempty"`
 	FaucetPackage *FaucetPackage `protobuf:"bytes,13,opt,name=faucetPackage,proto3,oneof" json:"faucetPackage,omitempty"`
+	// metadata is the new metadata URI (used by SET_PROCESS_METADATA)
+	Metadata *string `protobuf:"bytes,14,opt,name=metadata,proto3,oneof" json:"metadata,omitempty"`
+	// metadataHash is the hash of the raw metadata document (used by SET_PROCESS_METADATA).
+	// The chain stores it as opaque bytes and does not interpret it.
+	MetadataHash  []byte `protobuf:"bytes,15,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1665,6 +1683,20 @@ func (x *SetProcessTx) GetCensusSize() uint64 {
 func (x *SetProcessTx) GetFaucetPackage() *FaucetPackage {
 	if x != nil {
 		return x.FaucetPackage
+	}
+	return nil
+}
+
+func (x *SetProcessTx) GetMetadata() string {
+	if x != nil && x.Metadata != nil {
+		return *x.Metadata
+	}
+	return ""
+}
+
+func (x *SetProcessTx) GetMetadataHash() []byte {
+	if x != nil {
+		return x.MetadataHash
 	}
 	return nil
 }
@@ -2517,7 +2549,10 @@ type Process struct {
 	// The unix timestamp of the start of the process
 	StartTime uint32 `protobuf:"varint,35,opt,name=startTime,proto3" json:"startTime,omitempty"`
 	// The duration of the process in seconds
-	Duration      uint32 `protobuf:"varint,36,opt,name=duration,proto3" json:"duration,omitempty"`
+	Duration uint32 `protobuf:"varint,36,opt,name=duration,proto3" json:"duration,omitempty"`
+	// MetadataHash is the hash of the raw metadata document referenced by Metadata.
+	// The chain stores it as opaque bytes and does not interpret it.
+	MetadataHash  []byte `protobuf:"bytes,37,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2781,6 +2816,13 @@ func (x *Process) GetDuration() uint32 {
 		return x.Duration
 	}
 	return 0
+}
+
+func (x *Process) GetMetadataHash() []byte {
+	if x != nil {
+		return x.MetadataHash
+	}
+	return nil
 }
 
 type EnvelopeType struct {
@@ -3541,7 +3583,7 @@ var File_vochain_vochain_proto protoreflect.FileDescriptor
 
 const file_vochain_vochain_proto_rawDesc = "" +
 	"\n" +
-	"\x15vochain/vochain.proto\x12\x0edvote.types.v1\"\x85\x02\n" +
+	"\x15vochain/vochain.proto\x12\x0edvote.types.v1\"\xbf\x02\n" +
 	"\fVoteEnvelope\x12\x14\n" +
 	"\x05nonce\x18\x01 \x01(\fR\x05nonce\x12\x1c\n" +
 	"\tprocessId\x18\x02 \x01(\fR\tprocessId\x12+\n" +
@@ -3549,8 +3591,10 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\vvotePackage\x18\x04 \x01(\fR\vvotePackage\x12\x1c\n" +
 	"\tnullifier\x18\x05 \x01(\fR\tnullifier\x122\n" +
 	"\x14encryptionKeyIndexes\x18\x06 \x03(\rR\x14encryptionKeyIndexes\x12\x17\n" +
-	"\x04memo\x18\a \x01(\fH\x00R\x04memo\x88\x01\x01B\a\n" +
-	"\x05_memo\"\x90\x01\n" +
+	"\x04memo\x18\a \x01(\fH\x00R\x04memo\x88\x01\x01\x12'\n" +
+	"\fmetadataHash\x18\b \x01(\fH\x01R\fmetadataHash\x88\x01\x01B\a\n" +
+	"\x05_memoB\x0f\n" +
+	"\r_metadataHash\"\x90\x01\n" +
 	"\x06Census\"\x85\x01\n" +
 	"\x04Type\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\x10\n" +
@@ -3641,7 +3685,7 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\x05nonce\x18\x02 \x01(\rR\x05nonce\x121\n" +
 	"\aprocess\x18\x03 \x01(\v2\x17.dvote.types.v1.ProcessR\aprocess\x12H\n" +
 	"\rfaucetPackage\x18\x04 \x01(\v2\x1d.dvote.types.v1.FaucetPackageH\x00R\rfaucetPackage\x88\x01\x01B\x10\n" +
-	"\x0e_faucetPackage\"\xcd\x05\n" +
+	"\x0e_faucetPackage\"\xb5\x06\n" +
 	"\fSetProcessTx\x12.\n" +
 	"\x06txtype\x18\x01 \x01(\x0e2\x16.dvote.types.v1.TxTypeR\x06txtype\x12\x14\n" +
 	"\x05nonce\x18\x02 \x01(\rR\x05nonce\x12\x1c\n" +
@@ -3660,7 +3704,10 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\n" +
 	"censusSize\x18\f \x01(\x04H\bR\n" +
 	"censusSize\x88\x01\x01\x12H\n" +
-	"\rfaucetPackage\x18\r \x01(\v2\x1d.dvote.types.v1.FaucetPackageH\tR\rfaucetPackage\x88\x01\x01B\t\n" +
+	"\rfaucetPackage\x18\r \x01(\v2\x1d.dvote.types.v1.FaucetPackageH\tR\rfaucetPackage\x88\x01\x01\x12\x1f\n" +
+	"\bmetadata\x18\x0e \x01(\tH\n" +
+	"R\bmetadata\x88\x01\x01\x12'\n" +
+	"\fmetadataHash\x18\x0f \x01(\fH\vR\fmetadataHash\x88\x01\x01B\t\n" +
 	"\a_statusB\x10\n" +
 	"\x0e_questionIndexB\r\n" +
 	"\v_censusRootB\f\n" +
@@ -3672,7 +3719,9 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\t_tempSIKsB\v\n" +
 	"\t_durationB\r\n" +
 	"\v_censusSizeB\x10\n" +
-	"\x0e_faucetPackage\"\xbd\x03\n" +
+	"\x0e_faucetPackageB\v\n" +
+	"\t_metadataB\x0f\n" +
+	"\r_metadataHash\"\xbd\x03\n" +
 	"\aAdminTx\x12.\n" +
 	"\x06txtype\x18\x01 \x01(\x0e2\x16.dvote.types.v1.TxTypeR\x06txtype\x12\x1c\n" +
 	"\tprocessId\x18\x02 \x01(\fR\tprocessId\x12\x1d\n" +
@@ -3757,7 +3806,7 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\x0eSetKeykeeperTx\x12.\n" +
 	"\x06txtype\x18\x01 \x01(\x0e2\x16.dvote.types.v1.TxTypeR\x06txtype\x12\x14\n" +
 	"\x05nonce\x18\x02 \x01(\rR\x05nonce\x12\x1c\n" +
-	"\tkeykeeper\x18\x03 \x01(\fR\tkeykeeper\"\xd1\r\n" +
+	"\tkeykeeper\x18\x03 \x01(\fR\tkeykeeper\"\x8b\x0e\n" +
 	"\aProcess\x12\x1c\n" +
 	"\tprocessId\x18\x01 \x01(\fR\tprocessId\x12\x1a\n" +
 	"\bentityId\x18\x02 \x01(\fR\bentityId\x12\x1e\n" +
@@ -3798,7 +3847,8 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\rtokenDecimals\x18! \x01(\rH\rR\rtokenDecimals\x88\x01\x01\x12\x1f\n" +
 	"\btempSIKs\x18\" \x01(\bH\x0eR\btempSIKs\x88\x01\x01\x12\x1c\n" +
 	"\tstartTime\x18# \x01(\rR\tstartTime\x12\x1a\n" +
-	"\bduration\x18$ \x01(\rR\bdurationB\f\n" +
+	"\bduration\x18$ \x01(\rR\bduration\x12'\n" +
+	"\fmetadataHash\x18% \x01(\fH\x0fR\fmetadataHash\x88\x01\x01B\f\n" +
 	"\n" +
 	"_censusURIB\v\n" +
 	"\t_keyIndexB\x12\n" +
@@ -3814,7 +3864,8 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\x0f_nullifiersRootB\x1c\n" +
 	"\x1a_sourceNetworkContractAddrB\x10\n" +
 	"\x0e_tokenDecimalsB\v\n" +
-	"\t_tempSIKs\"\xb8\x01\n" +
+	"\t_tempSIKsB\x0f\n" +
+	"\r_metadataHash\"\xb8\x01\n" +
 	"\fEnvelopeType\x12\x16\n" +
 	"\x06serial\x18\x01 \x01(\bR\x06serial\x12\x1c\n" +
 	"\tanonymous\x18\x02 \x01(\bR\tanonymous\x12&\n" +
@@ -3875,7 +3926,7 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\vprocessList\x18\x01 \x03(\fR\vprocessList\" \n" +
 	"\n" +
 	"StoredKeys\x12\x12\n" +
-	"\x04pids\x18\x01 \x03(\fR\x04pids*\xd8\x04\n" +
+	"\x04pids\x18\x01 \x03(\fR\x04pids*\xf2\x04\n" +
 	"\x06TxType\x12\x0e\n" +
 	"\n" +
 	"TX_UNKNOWN\x10\x00\x12\x0f\n" +
@@ -3906,7 +3957,8 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\x0fDEL_ACCOUNT_SIK\x10\x19\x12\x10\n" +
 	"\fREGISTER_SIK\x10\x1a\x12\x19\n" +
 	"\x15SET_ACCOUNT_VALIDATOR\x10\x1b\x12\x18\n" +
-	"\x14SET_PROCESS_DURATION\x10\x1c*a\n" +
+	"\x14SET_PROCESS_DURATION\x10\x1c\x12\x18\n" +
+	"\x14SET_PROCESS_METADATA\x10\x1d*a\n" +
 	"\rProcessStatus\x12\x13\n" +
 	"\x0fPROCESS_UNKNOWN\x10\x00\x12\t\n" +
 	"\x05READY\x10\x01\x12\t\n" +

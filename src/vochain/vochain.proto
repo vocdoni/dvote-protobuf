@@ -22,6 +22,9 @@ message VoteEnvelope {
 	// unknown field identically to nodes that have it — avoiding a proto3-string UTF-8 decode
 	// divergence during a rolling upgrade. UTF-8/size validation is enforced at the app layer.
 	optional bytes memo = 7;
+	// Hash of the raw metadata document the voter was shown. When the process has a
+	// metadataHash, it must match it at the time the vote is included in a block.
+	optional bytes metadataHash = 8;
 }
 
 message Census {
@@ -142,6 +145,7 @@ enum TxType {
 	REGISTER_SIK = 26;
 	SET_ACCOUNT_VALIDATOR = 27;
 	SET_PROCESS_DURATION = 28;
+	SET_PROCESS_METADATA = 29;
 }
 
 message Tx {
@@ -195,6 +199,11 @@ message SetProcessTx {
 	optional uint32 duration = 11;
 	optional uint64 censusSize = 12;
 	optional FaucetPackage faucetPackage = 13;
+	// metadata is the new metadata URI (used by SET_PROCESS_METADATA)
+	optional string metadata = 14;
+	// metadataHash is the hash of the raw metadata document (used by SET_PROCESS_METADATA).
+	// The chain stores it as opaque bytes and does not interpret it.
+	optional bytes metadataHash = 15;
 }
 
 message AdminTx {
@@ -339,6 +348,9 @@ message Process {
 	uint32 startTime = 35;
 	// The duration of the process in seconds
 	uint32 duration = 36;
+	// MetadataHash is the hash of the raw metadata document referenced by Metadata.
+	// The chain stores it as opaque bytes and does not interpret it.
+	optional bytes metadataHash = 37;
 }
 
 enum ProcessStatus {
