@@ -28,6 +28,7 @@ declare enum TxType {
     REGISTER_SIK = 26,
     SET_ACCOUNT_VALIDATOR = 27,
     SET_PROCESS_DURATION = 28,
+    SET_PROCESS_METADATA = 29,
     UNRECOGNIZED = -1
 }
 declare function txTypeFromJSON(object: any): TxType;
@@ -134,6 +135,11 @@ interface VoteEnvelope {
      * divergence during a rolling upgrade. UTF-8/size validation is enforced at the app layer.
      */
     memo?: Uint8Array | undefined;
+    /**
+     * Hash of the raw metadata document the voter was shown. When the process has a
+     * metadataHash, it must match it at the time the vote is included in a block.
+     */
+    metadataHash?: Uint8Array | undefined;
 }
 declare const VoteEnvelope: {
     encode(message: VoteEnvelope, writer?: _m0.Writer): _m0.Writer;
@@ -182,6 +188,7 @@ declare const VoteEnvelope: {
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: number[] | undefined;
         memo?: Uint8Array | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & {
         nonce?: Uint8Array | undefined;
         processId?: Uint8Array | undefined;
@@ -311,6 +318,7 @@ declare const VoteEnvelope: {
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: (number[] & number[] & { [K_12 in Exclude<keyof I["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
         memo?: Uint8Array | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & { [K_13 in Exclude<keyof I, keyof VoteEnvelope>]: never; }>(base?: I | undefined): VoteEnvelope;
     fromPartial<I_1 extends {
         nonce?: Uint8Array | undefined;
@@ -354,6 +362,7 @@ declare const VoteEnvelope: {
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: number[] | undefined;
         memo?: Uint8Array | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & {
         nonce?: Uint8Array | undefined;
         processId?: Uint8Array | undefined;
@@ -483,6 +492,7 @@ declare const VoteEnvelope: {
         nullifier?: Uint8Array | undefined;
         encryptionKeyIndexes?: (number[] & number[] & { [K_26 in Exclude<keyof I_1["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
         memo?: Uint8Array | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & { [K_27 in Exclude<keyof I_1, keyof VoteEnvelope>]: never; }>(object: I_1): VoteEnvelope;
 };
 interface Census {
@@ -1063,6 +1073,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -1126,6 +1137,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } | undefined;
                 faucetPackage?: {
                     payload?: Uint8Array | undefined;
@@ -1204,6 +1216,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -1416,6 +1430,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -1462,6 +1477,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & {
                 nonce?: Uint8Array | undefined;
                 processId?: Uint8Array | undefined;
@@ -1591,6 +1607,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: (number[] & number[] & { [K_12 in Exclude<keyof I["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & { [K_13 in Exclude<keyof I["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
             $case: "vote";
         } & { [K_14 in Exclude<keyof I["payload"], "$case" | "vote">]: never; }) | ({
@@ -1653,6 +1670,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } | undefined;
                 faucetPackage?: {
                     payload?: Uint8Array | undefined;
@@ -1721,6 +1739,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } | undefined;
                 faucetPackage?: {
                     payload?: Uint8Array | undefined;
@@ -1785,6 +1804,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } & {
                     processId?: Uint8Array | undefined;
                     entityId?: Uint8Array | undefined;
@@ -1869,6 +1889,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } & { [K_24 in Exclude<keyof I["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
                 faucetPackage?: ({
                     payload?: Uint8Array | undefined;
@@ -1972,6 +1993,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -2031,6 +2054,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2186,6 +2211,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_46 in Exclude<keyof I["payload"]["setProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & { [K_47 in Exclude<keyof I["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_48 in Exclude<keyof I["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -2867,6 +2894,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -2930,6 +2958,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } | undefined;
                 faucetPackage?: {
                     payload?: Uint8Array | undefined;
@@ -3008,6 +3037,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3220,6 +3251,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "vote";
@@ -3266,6 +3298,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: number[] | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & {
                 nonce?: Uint8Array | undefined;
                 processId?: Uint8Array | undefined;
@@ -3395,6 +3428,7 @@ declare const Tx: {
                 nullifier?: Uint8Array | undefined;
                 encryptionKeyIndexes?: (number[] & number[] & { [K_109 in Exclude<keyof I_1["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
                 memo?: Uint8Array | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & { [K_110 in Exclude<keyof I_1["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
             $case: "vote";
         } & { [K_111 in Exclude<keyof I_1["payload"], "$case" | "vote">]: never; }) | ({
@@ -3457,6 +3491,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } | undefined;
                 faucetPackage?: {
                     payload?: Uint8Array | undefined;
@@ -3525,6 +3560,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } | undefined;
                 faucetPackage?: {
                     payload?: Uint8Array | undefined;
@@ -3589,6 +3625,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } & {
                     processId?: Uint8Array | undefined;
                     entityId?: Uint8Array | undefined;
@@ -3673,6 +3710,7 @@ declare const Tx: {
                     tempSIKs?: boolean | undefined;
                     startTime?: number | undefined;
                     duration?: number | undefined;
+                    metadataHash?: Uint8Array | undefined;
                 } & { [K_121 in Exclude<keyof I_1["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
                 faucetPackage?: ({
                     payload?: Uint8Array | undefined;
@@ -3776,6 +3814,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } | undefined;
         } & {
             $case: "setProcess";
@@ -3835,6 +3875,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -3990,6 +4032,8 @@ declare const Tx: {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } & { [K_143 in Exclude<keyof I_1["payload"]["setProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                metadata?: string | undefined;
+                metadataHash?: Uint8Array | undefined;
             } & { [K_144 in Exclude<keyof I_1["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
         } & { [K_145 in Exclude<keyof I_1["payload"], "$case" | "setProcess">]: never; }) | ({
@@ -4729,6 +4773,7 @@ declare const NewProcessTx: {
             tempSIKs?: boolean | undefined;
             startTime?: number | undefined;
             duration?: number | undefined;
+            metadataHash?: Uint8Array | undefined;
         } | undefined;
         faucetPackage?: {
             payload?: Uint8Array | undefined;
@@ -4793,6 +4838,7 @@ declare const NewProcessTx: {
             tempSIKs?: boolean | undefined;
             startTime?: number | undefined;
             duration?: number | undefined;
+            metadataHash?: Uint8Array | undefined;
         } & {
             processId?: Uint8Array | undefined;
             entityId?: Uint8Array | undefined;
@@ -4877,6 +4923,7 @@ declare const NewProcessTx: {
             tempSIKs?: boolean | undefined;
             startTime?: number | undefined;
             duration?: number | undefined;
+            metadataHash?: Uint8Array | undefined;
         } & { [K_9 in Exclude<keyof I["process"], keyof Process>]: never; }) | undefined;
         faucetPackage?: ({
             payload?: Uint8Array | undefined;
@@ -4945,6 +4992,7 @@ declare const NewProcessTx: {
             tempSIKs?: boolean | undefined;
             startTime?: number | undefined;
             duration?: number | undefined;
+            metadataHash?: Uint8Array | undefined;
         } | undefined;
         faucetPackage?: {
             payload?: Uint8Array | undefined;
@@ -5009,6 +5057,7 @@ declare const NewProcessTx: {
             tempSIKs?: boolean | undefined;
             startTime?: number | undefined;
             duration?: number | undefined;
+            metadataHash?: Uint8Array | undefined;
         } & {
             processId?: Uint8Array | undefined;
             entityId?: Uint8Array | undefined;
@@ -5093,6 +5142,7 @@ declare const NewProcessTx: {
             tempSIKs?: boolean | undefined;
             startTime?: number | undefined;
             duration?: number | undefined;
+            metadataHash?: Uint8Array | undefined;
         } & { [K_21 in Exclude<keyof I_1["process"], keyof Process>]: never; }) | undefined;
         faucetPackage?: ({
             payload?: Uint8Array | undefined;
@@ -5121,6 +5171,13 @@ interface SetProcessTx {
     duration?: number | undefined;
     censusSize?: number | undefined;
     faucetPackage?: FaucetPackage | undefined;
+    /** metadata is the new metadata URI (used by SET_PROCESS_METADATA) */
+    metadata?: string | undefined;
+    /**
+     * metadataHash is the hash of the raw metadata document (used by SET_PROCESS_METADATA).
+     * The chain stores it as opaque bytes and does not interpret it.
+     */
+    metadataHash?: Uint8Array | undefined;
 }
 declare const SetProcessTx: {
     encode(message: SetProcessTx, writer?: _m0.Writer): _m0.Writer;
@@ -5182,6 +5239,8 @@ declare const SetProcessTx: {
             payload?: Uint8Array | undefined;
             signature?: Uint8Array | undefined;
         } | undefined;
+        metadata?: string | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -5337,6 +5396,8 @@ declare const SetProcessTx: {
             payload?: Uint8Array | undefined;
             signature?: Uint8Array | undefined;
         } & { [K_16 in Exclude<keyof I["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+        metadata?: string | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & { [K_17 in Exclude<keyof I, keyof SetProcessTx>]: never; }>(base?: I | undefined): SetProcessTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
@@ -5393,6 +5454,8 @@ declare const SetProcessTx: {
             payload?: Uint8Array | undefined;
             signature?: Uint8Array | undefined;
         } | undefined;
+        metadata?: string | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -5548,6 +5611,8 @@ declare const SetProcessTx: {
             payload?: Uint8Array | undefined;
             signature?: Uint8Array | undefined;
         } & { [K_34 in Exclude<keyof I_1["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+        metadata?: string | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & { [K_35 in Exclude<keyof I_1, keyof SetProcessTx>]: never; }>(object: I_1): SetProcessTx;
 };
 interface AdminTx {
@@ -6700,6 +6765,11 @@ interface Process {
     startTime: number;
     /** The duration of the process in seconds */
     duration: number;
+    /**
+     * MetadataHash is the hash of the raw metadata document referenced by Metadata.
+     * The chain stores it as opaque bytes and does not interpret it.
+     */
+    metadataHash?: Uint8Array | undefined;
 }
 declare const Process: {
     encode(message: Process, writer?: _m0.Writer): _m0.Writer;
@@ -6762,6 +6832,7 @@ declare const Process: {
         tempSIKs?: boolean | undefined;
         startTime?: number | undefined;
         duration?: number | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & {
         processId?: Uint8Array | undefined;
         entityId?: Uint8Array | undefined;
@@ -6846,6 +6917,7 @@ declare const Process: {
         tempSIKs?: boolean | undefined;
         startTime?: number | undefined;
         duration?: number | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & { [K_9 in Exclude<keyof I, keyof Process>]: never; }>(base?: I | undefined): Process;
     fromPartial<I_1 extends {
         processId?: Uint8Array | undefined;
@@ -6903,6 +6975,7 @@ declare const Process: {
         tempSIKs?: boolean | undefined;
         startTime?: number | undefined;
         duration?: number | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & {
         processId?: Uint8Array | undefined;
         entityId?: Uint8Array | undefined;
@@ -6987,6 +7060,7 @@ declare const Process: {
         tempSIKs?: boolean | undefined;
         startTime?: number | undefined;
         duration?: number | undefined;
+        metadataHash?: Uint8Array | undefined;
     } & { [K_19 in Exclude<keyof I_1, keyof Process>]: never; }>(object: I_1): Process;
 };
 interface EnvelopeType {
