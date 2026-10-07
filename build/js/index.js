@@ -5829,6 +5829,7 @@ var TxType = /* @__PURE__ */ ((TxType2) => {
   TxType2[TxType2["REGISTER_SIK"] = 26] = "REGISTER_SIK";
   TxType2[TxType2["SET_ACCOUNT_VALIDATOR"] = 27] = "SET_ACCOUNT_VALIDATOR";
   TxType2[TxType2["SET_PROCESS_DURATION"] = 28] = "SET_PROCESS_DURATION";
+  TxType2[TxType2["SET_PROCESS_METADATA"] = 29] = "SET_PROCESS_METADATA";
   TxType2[TxType2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return TxType2;
 })(TxType || {});
@@ -5915,6 +5916,9 @@ function txTypeFromJSON(object) {
     case 28:
     case "SET_PROCESS_DURATION":
       return 28 /* SET_PROCESS_DURATION */;
+    case 29:
+    case "SET_PROCESS_METADATA":
+      return 29 /* SET_PROCESS_METADATA */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -5977,6 +5981,8 @@ function txTypeToJSON(object) {
       return "SET_ACCOUNT_VALIDATOR";
     case 28 /* SET_PROCESS_DURATION */:
       return "SET_PROCESS_DURATION";
+    case 29 /* SET_PROCESS_METADATA */:
+      return "SET_PROCESS_METADATA";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -6357,7 +6363,8 @@ function createBaseVoteEnvelope() {
     votePackage: new Uint8Array(0),
     nullifier: new Uint8Array(0),
     encryptionKeyIndexes: [],
-    memo: void 0
+    memo: void 0,
+    metadataHash: void 0
   };
 }
 var VoteEnvelope = {
@@ -6384,6 +6391,9 @@ var VoteEnvelope = {
     writer.ldelim();
     if (message.memo !== void 0) {
       writer.uint32(58).bytes(message.memo);
+    }
+    if (message.metadataHash !== void 0) {
+      writer.uint32(66).bytes(message.metadataHash);
     }
     return writer;
   },
@@ -6443,6 +6453,12 @@ var VoteEnvelope = {
           }
           message.memo = reader.bytes();
           continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+          message.metadataHash = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -6459,7 +6475,8 @@ var VoteEnvelope = {
       votePackage: isSet8(object.votePackage) ? bytesFromBase643(object.votePackage) : new Uint8Array(0),
       nullifier: isSet8(object.nullifier) ? bytesFromBase643(object.nullifier) : new Uint8Array(0),
       encryptionKeyIndexes: globalThis.Array.isArray(object?.encryptionKeyIndexes) ? object.encryptionKeyIndexes.map((e) => globalThis.Number(e)) : [],
-      memo: isSet8(object.memo) ? bytesFromBase643(object.memo) : void 0
+      memo: isSet8(object.memo) ? bytesFromBase643(object.memo) : void 0,
+      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0
     };
   },
   toJSON(message) {
@@ -6485,6 +6502,9 @@ var VoteEnvelope = {
     if (message.memo !== void 0) {
       obj.memo = base64FromBytes3(message.memo);
     }
+    if (message.metadataHash !== void 0) {
+      obj.metadataHash = base64FromBytes3(message.metadataHash);
+    }
     return obj;
   },
   create(base) {
@@ -6499,6 +6519,7 @@ var VoteEnvelope = {
     message.nullifier = object.nullifier ?? new Uint8Array(0);
     message.encryptionKeyIndexes = object.encryptionKeyIndexes?.map((e) => e) || [];
     message.memo = object.memo ?? void 0;
+    message.metadataHash = object.metadataHash ?? void 0;
     return message;
   }
 };
@@ -7540,7 +7561,9 @@ function createBaseSetProcessTx() {
     tempSIKs: void 0,
     duration: void 0,
     censusSize: void 0,
-    faucetPackage: void 0
+    faucetPackage: void 0,
+    metadata: void 0,
+    metadataHash: void 0
   };
 }
 var SetProcessTx = {
@@ -7583,6 +7606,12 @@ var SetProcessTx = {
     }
     if (message.faucetPackage !== void 0) {
       FaucetPackage.encode(message.faucetPackage, writer.uint32(106).fork()).ldelim();
+    }
+    if (message.metadata !== void 0) {
+      writer.uint32(114).string(message.metadata);
+    }
+    if (message.metadataHash !== void 0) {
+      writer.uint32(122).bytes(message.metadataHash);
     }
     return writer;
   },
@@ -7671,6 +7700,18 @@ var SetProcessTx = {
           }
           message.faucetPackage = FaucetPackage.decode(reader, reader.uint32());
           continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+          message.metadata = reader.string();
+          continue;
+        case 15:
+          if (tag !== 122) {
+            break;
+          }
+          message.metadataHash = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -7693,7 +7734,9 @@ var SetProcessTx = {
       tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
       duration: isSet8(object.duration) ? globalThis.Number(object.duration) : void 0,
       censusSize: isSet8(object.censusSize) ? globalThis.Number(object.censusSize) : void 0,
-      faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0
+      faucetPackage: isSet8(object.faucetPackage) ? FaucetPackage.fromJSON(object.faucetPackage) : void 0,
+      metadata: isSet8(object.metadata) ? globalThis.String(object.metadata) : void 0,
+      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0
     };
   },
   toJSON(message) {
@@ -7737,6 +7780,12 @@ var SetProcessTx = {
     if (message.faucetPackage !== void 0) {
       obj.faucetPackage = FaucetPackage.toJSON(message.faucetPackage);
     }
+    if (message.metadata !== void 0) {
+      obj.metadata = message.metadata;
+    }
+    if (message.metadataHash !== void 0) {
+      obj.metadataHash = base64FromBytes3(message.metadataHash);
+    }
     return obj;
   },
   create(base) {
@@ -7757,6 +7806,8 @@ var SetProcessTx = {
     message.duration = object.duration ?? void 0;
     message.censusSize = object.censusSize ?? void 0;
     message.faucetPackage = object.faucetPackage !== void 0 && object.faucetPackage !== null ? FaucetPackage.fromPartial(object.faucetPackage) : void 0;
+    message.metadata = object.metadata ?? void 0;
+    message.metadataHash = object.metadataHash ?? void 0;
     return message;
   }
 };
@@ -8918,7 +8969,8 @@ function createBaseProcess() {
     tokenDecimals: void 0,
     tempSIKs: void 0,
     startTime: 0,
-    duration: 0
+    duration: 0,
+    metadataHash: void 0
   };
 }
 var Process = {
@@ -9021,6 +9073,9 @@ var Process = {
     }
     if (message.duration !== 0) {
       writer.uint32(288).uint32(message.duration);
+    }
+    if (message.metadataHash !== void 0) {
+      writer.uint32(298).bytes(message.metadataHash);
     }
     return writer;
   },
@@ -9229,6 +9284,12 @@ var Process = {
           }
           message.duration = reader.uint32();
           continue;
+        case 37:
+          if (tag !== 298) {
+            break;
+          }
+          message.metadataHash = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -9271,7 +9332,8 @@ var Process = {
       tokenDecimals: isSet8(object.tokenDecimals) ? globalThis.Number(object.tokenDecimals) : void 0,
       tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
       startTime: isSet8(object.startTime) ? globalThis.Number(object.startTime) : 0,
-      duration: isSet8(object.duration) ? globalThis.Number(object.duration) : 0
+      duration: isSet8(object.duration) ? globalThis.Number(object.duration) : 0,
+      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0
     };
   },
   toJSON(message) {
@@ -9375,6 +9437,9 @@ var Process = {
     if (message.duration !== 0) {
       obj.duration = Math.round(message.duration);
     }
+    if (message.metadataHash !== void 0) {
+      obj.metadataHash = base64FromBytes3(message.metadataHash);
+    }
     return obj;
   },
   create(base) {
@@ -9415,6 +9480,7 @@ var Process = {
     message.tempSIKs = object.tempSIKs ?? void 0;
     message.startTime = object.startTime ?? 0;
     message.duration = object.duration ?? 0;
+    message.metadataHash = object.metadataHash ?? void 0;
     return message;
   }
 };
