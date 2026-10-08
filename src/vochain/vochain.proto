@@ -25,6 +25,10 @@ message VoteEnvelope {
 	// Hash of the raw metadata document the voter was shown. When the process has a
 	// metadataHash, it must match it at the time the vote is included in a block.
 	optional bytes metadataHash = 8;
+	// Hash of the raw metadata document of the parent process the voter was shown. When the
+	// process has a parentProcessId, it must match the parent's metadataHash at the time the
+	// vote is included in a block.
+	optional bytes parentMetadataHash = 9;
 }
 
 message Census {
@@ -351,6 +355,9 @@ message Process {
 	// MetadataHash is the hash of the raw metadata document referenced by Metadata.
 	// The chain stores it as opaque bytes and does not interpret it.
 	optional bytes metadataHash = 37;
+	// ParentProcessId is the id of a metadata-only process (one without voteOptions) whose
+	// metadata applies to this process too. Both processes belong to the same entity.
+	optional bytes parentProcessId = 38;
 }
 
 enum ProcessStatus {
