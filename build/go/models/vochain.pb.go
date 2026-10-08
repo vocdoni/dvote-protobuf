@@ -569,9 +569,13 @@ type VoteEnvelope struct {
 	Memo []byte `protobuf:"bytes,7,opt,name=memo,proto3,oneof" json:"memo,omitempty"`
 	// Hash of the raw metadata document the voter was shown. When the process has a
 	// metadataHash, it must match it at the time the vote is included in a block.
-	MetadataHash  []byte `protobuf:"bytes,8,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	MetadataHash []byte `protobuf:"bytes,8,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
+	// Hash of the raw metadata document of the parent process the voter was shown. When the
+	// process has a parentProcessId, it must match the parent's metadataHash at the time the
+	// vote is included in a block.
+	ParentMetadataHash []byte `protobuf:"bytes,9,opt,name=parentMetadataHash,proto3,oneof" json:"parentMetadataHash,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *VoteEnvelope) Reset() {
@@ -656,6 +660,13 @@ func (x *VoteEnvelope) GetMemo() []byte {
 func (x *VoteEnvelope) GetMetadataHash() []byte {
 	if x != nil {
 		return x.MetadataHash
+	}
+	return nil
+}
+
+func (x *VoteEnvelope) GetParentMetadataHash() []byte {
+	if x != nil {
+		return x.ParentMetadataHash
 	}
 	return nil
 }
@@ -2552,9 +2563,12 @@ type Process struct {
 	Duration uint32 `protobuf:"varint,36,opt,name=duration,proto3" json:"duration,omitempty"`
 	// MetadataHash is the hash of the raw metadata document referenced by Metadata.
 	// The chain stores it as opaque bytes and does not interpret it.
-	MetadataHash  []byte `protobuf:"bytes,37,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	MetadataHash []byte `protobuf:"bytes,37,opt,name=metadataHash,proto3,oneof" json:"metadataHash,omitempty"`
+	// ParentProcessId is the id of a metadata-only process (one without voteOptions) whose
+	// metadata applies to this process too. Both processes belong to the same entity.
+	ParentProcessId []byte `protobuf:"bytes,38,opt,name=parentProcessId,proto3,oneof" json:"parentProcessId,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Process) Reset() {
@@ -2821,6 +2835,13 @@ func (x *Process) GetDuration() uint32 {
 func (x *Process) GetMetadataHash() []byte {
 	if x != nil {
 		return x.MetadataHash
+	}
+	return nil
+}
+
+func (x *Process) GetParentProcessId() []byte {
+	if x != nil {
+		return x.ParentProcessId
 	}
 	return nil
 }
@@ -3583,7 +3604,7 @@ var File_vochain_vochain_proto protoreflect.FileDescriptor
 
 const file_vochain_vochain_proto_rawDesc = "" +
 	"\n" +
-	"\x15vochain/vochain.proto\x12\x0edvote.types.v1\"\xbf\x02\n" +
+	"\x15vochain/vochain.proto\x12\x0edvote.types.v1\"\x8b\x03\n" +
 	"\fVoteEnvelope\x12\x14\n" +
 	"\x05nonce\x18\x01 \x01(\fR\x05nonce\x12\x1c\n" +
 	"\tprocessId\x18\x02 \x01(\fR\tprocessId\x12+\n" +
@@ -3592,9 +3613,11 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\tnullifier\x18\x05 \x01(\fR\tnullifier\x122\n" +
 	"\x14encryptionKeyIndexes\x18\x06 \x03(\rR\x14encryptionKeyIndexes\x12\x17\n" +
 	"\x04memo\x18\a \x01(\fH\x00R\x04memo\x88\x01\x01\x12'\n" +
-	"\fmetadataHash\x18\b \x01(\fH\x01R\fmetadataHash\x88\x01\x01B\a\n" +
+	"\fmetadataHash\x18\b \x01(\fH\x01R\fmetadataHash\x88\x01\x01\x123\n" +
+	"\x12parentMetadataHash\x18\t \x01(\fH\x02R\x12parentMetadataHash\x88\x01\x01B\a\n" +
 	"\x05_memoB\x0f\n" +
-	"\r_metadataHash\"\x90\x01\n" +
+	"\r_metadataHashB\x15\n" +
+	"\x13_parentMetadataHash\"\x90\x01\n" +
 	"\x06Census\"\x85\x01\n" +
 	"\x04Type\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\x10\n" +
@@ -3806,7 +3829,7 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\x0eSetKeykeeperTx\x12.\n" +
 	"\x06txtype\x18\x01 \x01(\x0e2\x16.dvote.types.v1.TxTypeR\x06txtype\x12\x14\n" +
 	"\x05nonce\x18\x02 \x01(\rR\x05nonce\x12\x1c\n" +
-	"\tkeykeeper\x18\x03 \x01(\fR\tkeykeeper\"\x8b\x0e\n" +
+	"\tkeykeeper\x18\x03 \x01(\fR\tkeykeeper\"\xce\x0e\n" +
 	"\aProcess\x12\x1c\n" +
 	"\tprocessId\x18\x01 \x01(\fR\tprocessId\x12\x1a\n" +
 	"\bentityId\x18\x02 \x01(\fR\bentityId\x12\x1e\n" +
@@ -3848,7 +3871,8 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\btempSIKs\x18\" \x01(\bH\x0eR\btempSIKs\x88\x01\x01\x12\x1c\n" +
 	"\tstartTime\x18# \x01(\rR\tstartTime\x12\x1a\n" +
 	"\bduration\x18$ \x01(\rR\bduration\x12'\n" +
-	"\fmetadataHash\x18% \x01(\fH\x0fR\fmetadataHash\x88\x01\x01B\f\n" +
+	"\fmetadataHash\x18% \x01(\fH\x0fR\fmetadataHash\x88\x01\x01\x12-\n" +
+	"\x0fparentProcessId\x18& \x01(\fH\x10R\x0fparentProcessId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_censusURIB\v\n" +
 	"\t_keyIndexB\x12\n" +
@@ -3865,7 +3889,8 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\x1a_sourceNetworkContractAddrB\x10\n" +
 	"\x0e_tokenDecimalsB\v\n" +
 	"\t_tempSIKsB\x0f\n" +
-	"\r_metadataHash\"\xb8\x01\n" +
+	"\r_metadataHashB\x12\n" +
+	"\x10_parentProcessId\"\xb8\x01\n" +
 	"\fEnvelopeType\x12\x16\n" +
 	"\x06serial\x18\x01 \x01(\bR\x06serial\x12\x1c\n" +
 	"\tanonymous\x18\x02 \x01(\bR\tanonymous\x12&\n" +
