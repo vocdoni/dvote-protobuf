@@ -2097,7 +2097,8 @@ function createBaseVoteEnvelope() {
     nullifier: new Uint8Array(0),
     encryptionKeyIndexes: [],
     memo: void 0,
-    metadataHash: void 0
+    metadataHash: void 0,
+    parentMetadataHash: void 0
   };
 }
 var VoteEnvelope = {
@@ -2127,6 +2128,9 @@ var VoteEnvelope = {
     }
     if (message.metadataHash !== void 0) {
       writer.uint32(66).bytes(message.metadataHash);
+    }
+    if (message.parentMetadataHash !== void 0) {
+      writer.uint32(74).bytes(message.parentMetadataHash);
     }
     return writer;
   },
@@ -2192,6 +2196,12 @@ var VoteEnvelope = {
           }
           message.metadataHash = reader.bytes();
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+          message.parentMetadataHash = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2209,7 +2219,8 @@ var VoteEnvelope = {
       nullifier: isSet(object.nullifier) ? bytesFromBase64(object.nullifier) : new Uint8Array(0),
       encryptionKeyIndexes: globalThis.Array.isArray(object?.encryptionKeyIndexes) ? object.encryptionKeyIndexes.map((e) => globalThis.Number(e)) : [],
       memo: isSet(object.memo) ? bytesFromBase64(object.memo) : void 0,
-      metadataHash: isSet(object.metadataHash) ? bytesFromBase64(object.metadataHash) : void 0
+      metadataHash: isSet(object.metadataHash) ? bytesFromBase64(object.metadataHash) : void 0,
+      parentMetadataHash: isSet(object.parentMetadataHash) ? bytesFromBase64(object.parentMetadataHash) : void 0
     };
   },
   toJSON(message) {
@@ -2238,6 +2249,9 @@ var VoteEnvelope = {
     if (message.metadataHash !== void 0) {
       obj.metadataHash = base64FromBytes(message.metadataHash);
     }
+    if (message.parentMetadataHash !== void 0) {
+      obj.parentMetadataHash = base64FromBytes(message.parentMetadataHash);
+    }
     return obj;
   },
   create(base) {
@@ -2253,6 +2267,7 @@ var VoteEnvelope = {
     message.encryptionKeyIndexes = object.encryptionKeyIndexes?.map((e) => e) || [];
     message.memo = object.memo ?? void 0;
     message.metadataHash = object.metadataHash ?? void 0;
+    message.parentMetadataHash = object.parentMetadataHash ?? void 0;
     return message;
   }
 };
@@ -4703,7 +4718,8 @@ function createBaseProcess() {
     tempSIKs: void 0,
     startTime: 0,
     duration: 0,
-    metadataHash: void 0
+    metadataHash: void 0,
+    parentProcessId: void 0
   };
 }
 var Process = {
@@ -4809,6 +4825,9 @@ var Process = {
     }
     if (message.metadataHash !== void 0) {
       writer.uint32(298).bytes(message.metadataHash);
+    }
+    if (message.parentProcessId !== void 0) {
+      writer.uint32(306).bytes(message.parentProcessId);
     }
     return writer;
   },
@@ -5023,6 +5042,12 @@ var Process = {
           }
           message.metadataHash = reader.bytes();
           continue;
+        case 38:
+          if (tag !== 306) {
+            break;
+          }
+          message.parentProcessId = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -5066,7 +5091,8 @@ var Process = {
       tempSIKs: isSet(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
       startTime: isSet(object.startTime) ? globalThis.Number(object.startTime) : 0,
       duration: isSet(object.duration) ? globalThis.Number(object.duration) : 0,
-      metadataHash: isSet(object.metadataHash) ? bytesFromBase64(object.metadataHash) : void 0
+      metadataHash: isSet(object.metadataHash) ? bytesFromBase64(object.metadataHash) : void 0,
+      parentProcessId: isSet(object.parentProcessId) ? bytesFromBase64(object.parentProcessId) : void 0
     };
   },
   toJSON(message) {
@@ -5173,6 +5199,9 @@ var Process = {
     if (message.metadataHash !== void 0) {
       obj.metadataHash = base64FromBytes(message.metadataHash);
     }
+    if (message.parentProcessId !== void 0) {
+      obj.parentProcessId = base64FromBytes(message.parentProcessId);
+    }
     return obj;
   },
   create(base) {
@@ -5214,6 +5243,7 @@ var Process = {
     message.startTime = object.startTime ?? 0;
     message.duration = object.duration ?? 0;
     message.metadataHash = object.metadataHash ?? void 0;
+    message.parentProcessId = object.parentProcessId ?? void 0;
     return message;
   }
 };

@@ -6360,7 +6360,8 @@ function createBaseVoteEnvelope() {
     nullifier: new Uint8Array(0),
     encryptionKeyIndexes: [],
     memo: void 0,
-    metadataHash: void 0
+    metadataHash: void 0,
+    parentMetadataHash: void 0
   };
 }
 var VoteEnvelope = {
@@ -6390,6 +6391,9 @@ var VoteEnvelope = {
     }
     if (message.metadataHash !== void 0) {
       writer.uint32(66).bytes(message.metadataHash);
+    }
+    if (message.parentMetadataHash !== void 0) {
+      writer.uint32(74).bytes(message.parentMetadataHash);
     }
     return writer;
   },
@@ -6455,6 +6459,12 @@ var VoteEnvelope = {
           }
           message.metadataHash = reader.bytes();
           continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+          message.parentMetadataHash = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -6472,7 +6482,8 @@ var VoteEnvelope = {
       nullifier: isSet8(object.nullifier) ? bytesFromBase643(object.nullifier) : new Uint8Array(0),
       encryptionKeyIndexes: globalThis.Array.isArray(object?.encryptionKeyIndexes) ? object.encryptionKeyIndexes.map((e) => globalThis.Number(e)) : [],
       memo: isSet8(object.memo) ? bytesFromBase643(object.memo) : void 0,
-      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0
+      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0,
+      parentMetadataHash: isSet8(object.parentMetadataHash) ? bytesFromBase643(object.parentMetadataHash) : void 0
     };
   },
   toJSON(message) {
@@ -6501,6 +6512,9 @@ var VoteEnvelope = {
     if (message.metadataHash !== void 0) {
       obj.metadataHash = base64FromBytes3(message.metadataHash);
     }
+    if (message.parentMetadataHash !== void 0) {
+      obj.parentMetadataHash = base64FromBytes3(message.parentMetadataHash);
+    }
     return obj;
   },
   create(base) {
@@ -6516,6 +6530,7 @@ var VoteEnvelope = {
     message.encryptionKeyIndexes = object.encryptionKeyIndexes?.map((e) => e) || [];
     message.memo = object.memo ?? void 0;
     message.metadataHash = object.metadataHash ?? void 0;
+    message.parentMetadataHash = object.parentMetadataHash ?? void 0;
     return message;
   }
 };
@@ -8966,7 +8981,8 @@ function createBaseProcess() {
     tempSIKs: void 0,
     startTime: 0,
     duration: 0,
-    metadataHash: void 0
+    metadataHash: void 0,
+    parentProcessId: void 0
   };
 }
 var Process = {
@@ -9072,6 +9088,9 @@ var Process = {
     }
     if (message.metadataHash !== void 0) {
       writer.uint32(298).bytes(message.metadataHash);
+    }
+    if (message.parentProcessId !== void 0) {
+      writer.uint32(306).bytes(message.parentProcessId);
     }
     return writer;
   },
@@ -9286,6 +9305,12 @@ var Process = {
           }
           message.metadataHash = reader.bytes();
           continue;
+        case 38:
+          if (tag !== 306) {
+            break;
+          }
+          message.parentProcessId = reader.bytes();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -9329,7 +9354,8 @@ var Process = {
       tempSIKs: isSet8(object.tempSIKs) ? globalThis.Boolean(object.tempSIKs) : void 0,
       startTime: isSet8(object.startTime) ? globalThis.Number(object.startTime) : 0,
       duration: isSet8(object.duration) ? globalThis.Number(object.duration) : 0,
-      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0
+      metadataHash: isSet8(object.metadataHash) ? bytesFromBase643(object.metadataHash) : void 0,
+      parentProcessId: isSet8(object.parentProcessId) ? bytesFromBase643(object.parentProcessId) : void 0
     };
   },
   toJSON(message) {
@@ -9436,6 +9462,9 @@ var Process = {
     if (message.metadataHash !== void 0) {
       obj.metadataHash = base64FromBytes3(message.metadataHash);
     }
+    if (message.parentProcessId !== void 0) {
+      obj.parentProcessId = base64FromBytes3(message.parentProcessId);
+    }
     return obj;
   },
   create(base) {
@@ -9477,6 +9506,7 @@ var Process = {
     message.startTime = object.startTime ?? 0;
     message.duration = object.duration ?? 0;
     message.metadataHash = object.metadataHash ?? void 0;
+    message.parentProcessId = object.parentProcessId ?? void 0;
     return message;
   }
 };
