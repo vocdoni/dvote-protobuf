@@ -70,14 +70,14 @@ declare enum CensusOrigin {
     OFF_CHAIN_TREE_WEIGHTED = 2,
     /**
      * OFF_CHAIN_CA - OFF_CHAIN_CA verifies CSP proofs against the census root shifted by a
-     * public salt. No new processes use it from the CSP key fork on.
+     * public salt. No new processes are accepted with it.
      */
     OFF_CHAIN_CA = 3,
     /**
      * OFF_CHAIN_CA_V2 - OFF_CHAIN_CA_V2 is OFF_CHAIN_CA with a salt derived from the whole
      * processId and the CSP-authorized vote weight. The salt is public, so a
      * blind signature for one salt can be shifted to another; no new processes
-     * use it from the CSP key fork on.
+     * are accepted with it.
      */
     OFF_CHAIN_CA_V2 = 4,
     /**
