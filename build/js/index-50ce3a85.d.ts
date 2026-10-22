@@ -68,16 +68,30 @@ declare enum CensusOrigin {
     CENSUS_UNKNOWN = 0,
     OFF_CHAIN_TREE = 1,
     OFF_CHAIN_TREE_WEIGHTED = 2,
+    /**
+     * OFF_CHAIN_CA - OFF_CHAIN_CA verifies CSP proofs against the census root shifted by a
+     * public salt. No new processes are accepted with it.
+     */
     OFF_CHAIN_CA = 3,
     /**
-     * OFF_CHAIN_CA_V2 - OFF_CHAIN_CA_V2 is OFF_CHAIN_CA with a fixed salt derivation for the
-     * salted proof types (ECDSA_PIDSALTED, ECDSA_BLIND_PIDSALTED): the salt
-     * covers the whole processId and the CSP-authorized vote weight, so a CSP
-     * authorization is bound to one election and one weight. OFF_CHAIN_CA keeps
-     * the legacy derivation, which cropped the processId to 20 bytes and shared
-     * one salted key across every election of an organization.
+     * OFF_CHAIN_CA_V2 - OFF_CHAIN_CA_V2 is OFF_CHAIN_CA with a salt derived from the whole
+     * processId and the CSP-authorized vote weight. The salt is public, so a
+     * blind signature for one salt can be shifted to another; no new processes
+     * are accepted with it.
      */
     OFF_CHAIN_CA_V2 = 4,
+    /**
+     * OFF_CHAIN_CA_V3_ECDSA - OFF_CHAIN_CA_V3_ECDSA: the census root is a per-election CSP public key
+     * (33 bytes, compressed) and proofs are ProofCA of type ECDSA, signed by it.
+     */
+    OFF_CHAIN_CA_V3_ECDSA = 5,
+    /**
+     * OFF_CHAIN_CA_V3_BLIND - OFF_CHAIN_CA_V3_BLIND: the census root is a per-election CSP public key
+     * that only signs weight certificates. Proofs are ProofCA of type
+     * ECDSA_BLIND, signed by the certified weight key, with a
+     * CAWeightCertificate.
+     */
+    OFF_CHAIN_CA_V3_BLIND = 6,
     UNRECOGNIZED = -1
 }
 declare function censusOriginFromJSON(object: any): CensusOrigin;
@@ -159,6 +173,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -202,6 +220,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -236,6 +258,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -248,6 +274,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -260,9 +290,16 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } & { [K in Exclude<keyof I["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_1 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_1 in Exclude<keyof I["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_2 in Exclude<keyof I["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_3 in Exclude<keyof I["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -285,9 +322,9 @@ declare const VoteEnvelope: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_3 in Exclude<keyof I["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_4 in Exclude<keyof I["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_4 in Exclude<keyof I["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_5 in Exclude<keyof I["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -306,20 +343,20 @@ declare const VoteEnvelope: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_5 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_6 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_7 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_8 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_9 in Exclude<keyof I["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_6 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_7 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_8 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_9 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_10 in Exclude<keyof I["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_10 in Exclude<keyof I["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_11 in Exclude<keyof I["proof"], "payload">]: never; }) | undefined;
+            } & { [K_11 in Exclude<keyof I["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_12 in Exclude<keyof I["proof"], "payload">]: never; }) | undefined;
         votePackage?: Uint8Array | undefined;
         nullifier?: Uint8Array | undefined;
-        encryptionKeyIndexes?: (number[] & number[] & { [K_12 in Exclude<keyof I["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+        encryptionKeyIndexes?: (number[] & number[] & { [K_13 in Exclude<keyof I["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
         memo?: Uint8Array | undefined;
         metadataHash?: Uint8Array | undefined;
-    } & { [K_13 in Exclude<keyof I, keyof VoteEnvelope>]: never; }>(base?: I | undefined): VoteEnvelope;
+    } & { [K_14 in Exclude<keyof I, keyof VoteEnvelope>]: never; }>(base?: I | undefined): VoteEnvelope;
     fromPartial<I_1 extends {
         nonce?: Uint8Array | undefined;
         processId?: Uint8Array | undefined;
@@ -333,6 +370,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -376,6 +417,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -410,6 +455,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -422,6 +471,10 @@ declare const VoteEnvelope: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -432,11 +485,18 @@ declare const VoteEnvelope: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
                         voteWeight?: Uint8Array | undefined;
-                    } & { [K_14 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                    } & { [K_15 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_15 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_16 in Exclude<keyof I_1["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_17 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_16 in Exclude<keyof I_1["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_18 in Exclude<keyof I_1["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -459,9 +519,9 @@ declare const VoteEnvelope: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_17 in Exclude<keyof I_1["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_19 in Exclude<keyof I_1["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_18 in Exclude<keyof I_1["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_20 in Exclude<keyof I_1["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -480,20 +540,20 @@ declare const VoteEnvelope: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_19 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_22 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_23 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_22 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_23 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_24 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_25 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_24 in Exclude<keyof I_1["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_25 in Exclude<keyof I_1["proof"], "payload">]: never; }) | undefined;
+            } & { [K_26 in Exclude<keyof I_1["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_27 in Exclude<keyof I_1["proof"], "payload">]: never; }) | undefined;
         votePackage?: Uint8Array | undefined;
         nullifier?: Uint8Array | undefined;
-        encryptionKeyIndexes?: (number[] & number[] & { [K_26 in Exclude<keyof I_1["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+        encryptionKeyIndexes?: (number[] & number[] & { [K_28 in Exclude<keyof I_1["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
         memo?: Uint8Array | undefined;
         metadataHash?: Uint8Array | undefined;
-    } & { [K_27 in Exclude<keyof I_1, keyof VoteEnvelope>]: never; }>(object: I_1): VoteEnvelope;
+    } & { [K_29 in Exclude<keyof I_1, keyof VoteEnvelope>]: never; }>(object: I_1): VoteEnvelope;
 };
 interface Census {
 }
@@ -532,6 +592,10 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
+                weightCertificate?: {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
             } | undefined;
         } & {
             $case: "ca";
@@ -566,6 +630,10 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
+                weightCertificate?: {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
             } | undefined;
         } & {
             $case: "ca";
@@ -578,6 +646,10 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
+                weightCertificate?: {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
             } & {
                 type?: ProofCA_Type | undefined;
                 bundle?: ({
@@ -590,9 +662,16 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } & { [K in Exclude<keyof I["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                 signature?: Uint8Array | undefined;
-            } & { [K_1 in Exclude<keyof I["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                weightCertificate?: ({
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } & {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } & { [K_1 in Exclude<keyof I["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+            } & { [K_2 in Exclude<keyof I["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
             $case: "ca";
-        } & { [K_2 in Exclude<keyof I["payload"], "$case" | "ca">]: never; }) | ({
+        } & { [K_3 in Exclude<keyof I["payload"], "$case" | "ca">]: never; }) | ({
             arbo?: {
                 type?: ProofArbo_Type | undefined;
                 siblings?: Uint8Array | undefined;
@@ -615,9 +694,9 @@ declare const Proof: {
                 availableWeight?: Uint8Array | undefined;
                 keyType?: ProofArbo_KeyType | undefined;
                 voteWeight?: Uint8Array | undefined;
-            } & { [K_3 in Exclude<keyof I["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+            } & { [K_4 in Exclude<keyof I["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
             $case: "arbo";
-        } & { [K_4 in Exclude<keyof I["payload"], "$case" | "arbo">]: never; }) | ({
+        } & { [K_5 in Exclude<keyof I["payload"], "$case" | "arbo">]: never; }) | ({
             zkSnark?: {
                 circuitParametersIndex?: number | undefined;
                 a?: string[] | undefined;
@@ -636,14 +715,14 @@ declare const Proof: {
                 publicInputs?: string[] | undefined;
             } & {
                 circuitParametersIndex?: number | undefined;
-                a?: (string[] & string[] & { [K_5 in Exclude<keyof I["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                b?: (string[] & string[] & { [K_6 in Exclude<keyof I["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                c?: (string[] & string[] & { [K_7 in Exclude<keyof I["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                publicInputs?: (string[] & string[] & { [K_8 in Exclude<keyof I["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-            } & { [K_9 in Exclude<keyof I["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                a?: (string[] & string[] & { [K_6 in Exclude<keyof I["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                b?: (string[] & string[] & { [K_7 in Exclude<keyof I["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                c?: (string[] & string[] & { [K_8 in Exclude<keyof I["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                publicInputs?: (string[] & string[] & { [K_9 in Exclude<keyof I["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+            } & { [K_10 in Exclude<keyof I["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
             $case: "zkSnark";
-        } & { [K_10 in Exclude<keyof I["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-    } & { [K_11 in Exclude<keyof I, "payload">]: never; }>(base?: I | undefined): Proof;
+        } & { [K_11 in Exclude<keyof I["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+    } & { [K_12 in Exclude<keyof I, "payload">]: never; }>(base?: I | undefined): Proof;
     fromPartial<I_1 extends {
         payload?: ({
             ca?: {
@@ -654,6 +733,10 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
+                weightCertificate?: {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
             } | undefined;
         } & {
             $case: "ca";
@@ -688,6 +771,10 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
+                weightCertificate?: {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
             } | undefined;
         } & {
             $case: "ca";
@@ -700,6 +787,10 @@ declare const Proof: {
                     voteWeight?: Uint8Array | undefined;
                 } | undefined;
                 signature?: Uint8Array | undefined;
+                weightCertificate?: {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } | undefined;
             } & {
                 type?: ProofCA_Type | undefined;
                 bundle?: ({
@@ -710,11 +801,18 @@ declare const Proof: {
                     processId?: Uint8Array | undefined;
                     address?: Uint8Array | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_12 in Exclude<keyof I_1["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                } & { [K_13 in Exclude<keyof I_1["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                 signature?: Uint8Array | undefined;
-            } & { [K_13 in Exclude<keyof I_1["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                weightCertificate?: ({
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } & {
+                    weightKey?: Uint8Array | undefined;
+                    signature?: Uint8Array | undefined;
+                } & { [K_14 in Exclude<keyof I_1["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+            } & { [K_15 in Exclude<keyof I_1["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
             $case: "ca";
-        } & { [K_14 in Exclude<keyof I_1["payload"], "$case" | "ca">]: never; }) | ({
+        } & { [K_16 in Exclude<keyof I_1["payload"], "$case" | "ca">]: never; }) | ({
             arbo?: {
                 type?: ProofArbo_Type | undefined;
                 siblings?: Uint8Array | undefined;
@@ -737,9 +835,9 @@ declare const Proof: {
                 availableWeight?: Uint8Array | undefined;
                 keyType?: ProofArbo_KeyType | undefined;
                 voteWeight?: Uint8Array | undefined;
-            } & { [K_15 in Exclude<keyof I_1["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+            } & { [K_17 in Exclude<keyof I_1["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
             $case: "arbo";
-        } & { [K_16 in Exclude<keyof I_1["payload"], "$case" | "arbo">]: never; }) | ({
+        } & { [K_18 in Exclude<keyof I_1["payload"], "$case" | "arbo">]: never; }) | ({
             zkSnark?: {
                 circuitParametersIndex?: number | undefined;
                 a?: string[] | undefined;
@@ -758,19 +856,24 @@ declare const Proof: {
                 publicInputs?: string[] | undefined;
             } & {
                 circuitParametersIndex?: number | undefined;
-                a?: (string[] & string[] & { [K_17 in Exclude<keyof I_1["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                b?: (string[] & string[] & { [K_18 in Exclude<keyof I_1["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                c?: (string[] & string[] & { [K_19 in Exclude<keyof I_1["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                publicInputs?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-            } & { [K_21 in Exclude<keyof I_1["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                a?: (string[] & string[] & { [K_19 in Exclude<keyof I_1["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                b?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                c?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                publicInputs?: (string[] & string[] & { [K_22 in Exclude<keyof I_1["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+            } & { [K_23 in Exclude<keyof I_1["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
             $case: "zkSnark";
-        } & { [K_22 in Exclude<keyof I_1["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-    } & { [K_23 in Exclude<keyof I_1, "payload">]: never; }>(object: I_1): Proof;
+        } & { [K_24 in Exclude<keyof I_1["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+    } & { [K_25 in Exclude<keyof I_1, "payload">]: never; }>(object: I_1): Proof;
 };
 interface ProofCA {
     type: ProofCA_Type;
     bundle: CAbundle | undefined;
     signature: Uint8Array;
+    /**
+     * weightCertificate is required on OFF_CHAIN_CA_V3_BLIND elections and
+     * must be absent on every other census origin.
+     */
+    weightCertificate: CAWeightCertificate | undefined;
 }
 declare const ProofCA: {
     encode(message: ProofCA, writer?: _m0.Writer): _m0.Writer;
@@ -785,6 +888,10 @@ declare const ProofCA: {
             voteWeight?: Uint8Array | undefined;
         } | undefined;
         signature?: Uint8Array | undefined;
+        weightCertificate?: {
+            weightKey?: Uint8Array | undefined;
+            signature?: Uint8Array | undefined;
+        } | undefined;
     } & {
         type?: ProofCA_Type | undefined;
         bundle?: ({
@@ -797,7 +904,14 @@ declare const ProofCA: {
             voteWeight?: Uint8Array | undefined;
         } & { [K in Exclude<keyof I["bundle"], keyof CAbundle>]: never; }) | undefined;
         signature?: Uint8Array | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof ProofCA>]: never; }>(base?: I | undefined): ProofCA;
+        weightCertificate?: ({
+            weightKey?: Uint8Array | undefined;
+            signature?: Uint8Array | undefined;
+        } & {
+            weightKey?: Uint8Array | undefined;
+            signature?: Uint8Array | undefined;
+        } & { [K_1 in Exclude<keyof I["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+    } & { [K_2 in Exclude<keyof I, keyof ProofCA>]: never; }>(base?: I | undefined): ProofCA;
     fromPartial<I_1 extends {
         type?: ProofCA_Type | undefined;
         bundle?: {
@@ -806,6 +920,10 @@ declare const ProofCA: {
             voteWeight?: Uint8Array | undefined;
         } | undefined;
         signature?: Uint8Array | undefined;
+        weightCertificate?: {
+            weightKey?: Uint8Array | undefined;
+            signature?: Uint8Array | undefined;
+        } | undefined;
     } & {
         type?: ProofCA_Type | undefined;
         bundle?: ({
@@ -816,9 +934,56 @@ declare const ProofCA: {
             processId?: Uint8Array | undefined;
             address?: Uint8Array | undefined;
             voteWeight?: Uint8Array | undefined;
-        } & { [K_2 in Exclude<keyof I_1["bundle"], keyof CAbundle>]: never; }) | undefined;
+        } & { [K_3 in Exclude<keyof I_1["bundle"], keyof CAbundle>]: never; }) | undefined;
         signature?: Uint8Array | undefined;
-    } & { [K_3 in Exclude<keyof I_1, keyof ProofCA>]: never; }>(object: I_1): ProofCA;
+        weightCertificate?: ({
+            weightKey?: Uint8Array | undefined;
+            signature?: Uint8Array | undefined;
+        } & {
+            weightKey?: Uint8Array | undefined;
+            signature?: Uint8Array | undefined;
+        } & { [K_4 in Exclude<keyof I_1["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+    } & { [K_5 in Exclude<keyof I_1, keyof ProofCA>]: never; }>(object: I_1): ProofCA;
+};
+/**
+ * CAWeightCertificate binds a blind signing key to one election and one vote
+ * weight. The election key (the census root of an OFF_CHAIN_CA_V3_BLIND
+ * process) signs the message
+ *   "vocdoni/csp/v3/weight-cert" || processId (32 bytes) ||
+ *   voteWeight (32 bytes, big-endian) || weightKey (33 bytes)
+ * with an Ethereum personal-sign signature.
+ */
+interface CAWeightCertificate {
+    /**
+     * weightKey is the 33-byte compressed secp256k1 public key that signed the
+     * blind CAbundle.
+     */
+    weightKey: Uint8Array;
+    /**
+     * signature is the 65-byte Ethereum signature by the election key over the
+     * certificate message.
+     */
+    signature: Uint8Array;
+}
+declare const CAWeightCertificate: {
+    encode(message: CAWeightCertificate, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): CAWeightCertificate;
+    fromJSON(object: any): CAWeightCertificate;
+    toJSON(message: CAWeightCertificate): unknown;
+    create<I extends {
+        weightKey?: Uint8Array | undefined;
+        signature?: Uint8Array | undefined;
+    } & {
+        weightKey?: Uint8Array | undefined;
+        signature?: Uint8Array | undefined;
+    } & { [K in Exclude<keyof I, keyof CAWeightCertificate>]: never; }>(base?: I | undefined): CAWeightCertificate;
+    fromPartial<I_1 extends {
+        weightKey?: Uint8Array | undefined;
+        signature?: Uint8Array | undefined;
+    } & {
+        weightKey?: Uint8Array | undefined;
+        signature?: Uint8Array | undefined;
+    } & { [K_1 in Exclude<keyof I_1, keyof CAWeightCertificate>]: never; }>(object: I_1): CAWeightCertificate;
 };
 interface CAbundle {
     processId: Uint8Array;
@@ -1044,6 +1209,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1179,6 +1348,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1235,6 +1408,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1356,6 +1533,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1401,6 +1582,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1448,6 +1633,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1491,6 +1680,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1525,6 +1718,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -1537,6 +1734,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -1549,9 +1750,16 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } & { [K in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_1 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_1 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_2 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_2 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_3 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -1574,9 +1782,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_3 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_4 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_4 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_5 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -1595,22 +1803,22 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_5 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_6 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_7 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_8 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_9 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_6 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_7 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_8 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_9 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_10 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_10 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_11 in Exclude<keyof I["payload"]["vote"]["proof"], "payload">]: never; }) | undefined;
+                    } & { [K_11 in Exclude<keyof I["payload"]["vote"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_12 in Exclude<keyof I["payload"]["vote"]["proof"], "payload">]: never; }) | undefined;
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
-                encryptionKeyIndexes?: (number[] & number[] & { [K_12 in Exclude<keyof I["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+                encryptionKeyIndexes?: (number[] & number[] & { [K_13 in Exclude<keyof I["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
                 memo?: Uint8Array | undefined;
                 metadataHash?: Uint8Array | undefined;
-            } & { [K_13 in Exclude<keyof I["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
+            } & { [K_14 in Exclude<keyof I["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
             $case: "vote";
-        } & { [K_14 in Exclude<keyof I["payload"], "$case" | "vote">]: never; }) | ({
+        } & { [K_15 in Exclude<keyof I["payload"], "$case" | "vote">]: never; }) | ({
             newProcess?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -1812,8 +2020,8 @@ declare const Tx: {
                     blockCount?: number | undefined;
                     censusRoot?: Uint8Array | undefined;
                     censusURI?: string | undefined;
-                    encryptionPrivateKeys?: (string[] & string[] & { [K_15 in Exclude<keyof I["payload"]["newProcess"]["process"]["encryptionPrivateKeys"], keyof string[]>]: never; }) | undefined;
-                    encryptionPublicKeys?: (string[] & string[] & { [K_16 in Exclude<keyof I["payload"]["newProcess"]["process"]["encryptionPublicKeys"], keyof string[]>]: never; }) | undefined;
+                    encryptionPrivateKeys?: (string[] & string[] & { [K_16 in Exclude<keyof I["payload"]["newProcess"]["process"]["encryptionPrivateKeys"], keyof string[]>]: never; }) | undefined;
+                    encryptionPublicKeys?: (string[] & string[] & { [K_17 in Exclude<keyof I["payload"]["newProcess"]["process"]["encryptionPublicKeys"], keyof string[]>]: never; }) | undefined;
                     keyIndex?: number | undefined;
                     status?: ProcessStatus | undefined;
                     paramsSignature?: Uint8Array | undefined;
@@ -1830,7 +2038,7 @@ declare const Tx: {
                         encryptedVotes?: boolean | undefined;
                         uniqueValues?: boolean | undefined;
                         costFromWeight?: boolean | undefined;
-                    } & { [K_17 in Exclude<keyof I["payload"]["newProcess"]["process"]["envelopeType"], keyof EnvelopeType>]: never; }) | undefined;
+                    } & { [K_18 in Exclude<keyof I["payload"]["newProcess"]["process"]["envelopeType"], keyof EnvelopeType>]: never; }) | undefined;
                     mode?: ({
                         autoStart?: boolean | undefined;
                         interruptible?: boolean | undefined;
@@ -1843,7 +2051,7 @@ declare const Tx: {
                         dynamicCensus?: boolean | undefined;
                         encryptedMetaData?: boolean | undefined;
                         preRegister?: boolean | undefined;
-                    } & { [K_18 in Exclude<keyof I["payload"]["newProcess"]["process"]["mode"], keyof ProcessMode>]: never; }) | undefined;
+                    } & { [K_19 in Exclude<keyof I["payload"]["newProcess"]["process"]["mode"], keyof ProcessMode>]: never; }) | undefined;
                     questionIndex?: number | undefined;
                     questionCount?: number | undefined;
                     voteOptions?: ({
@@ -1858,7 +2066,7 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
-                    } & { [K_19 in Exclude<keyof I["payload"]["newProcess"]["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
+                    } & { [K_20 in Exclude<keyof I["payload"]["newProcess"]["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: ({
                         votes?: {
@@ -1870,11 +2078,11 @@ declare const Tx: {
                         }[] & ({
                             question?: Uint8Array[] | undefined;
                         } & {
-                            question?: (Uint8Array[] & Uint8Array[] & { [K_20 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
-                        } & { [K_21 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"]["votes"][number], "question">]: never; })[] & { [K_22 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"]["votes"], keyof {
+                            question?: (Uint8Array[] & Uint8Array[] & { [K_21 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
+                        } & { [K_22 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"]["votes"][number], "question">]: never; })[] & { [K_23 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"]["votes"], keyof {
                             question?: Uint8Array[] | undefined;
                         }[]>]: never; }) | undefined;
-                    } & { [K_23 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"], "votes">]: never; }) | undefined;
+                    } & { [K_24 in Exclude<keyof I["payload"]["newProcess"]["process"]["results"], "votes">]: never; }) | undefined;
                     ethIndexSlot?: number | undefined;
                     sourceBlockHeight?: number | undefined;
                     owner?: Uint8Array | undefined;
@@ -1890,17 +2098,17 @@ declare const Tx: {
                     startTime?: number | undefined;
                     duration?: number | undefined;
                     metadataHash?: Uint8Array | undefined;
-                } & { [K_24 in Exclude<keyof I["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
+                } & { [K_25 in Exclude<keyof I["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
                 faucetPackage?: ({
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_25 in Exclude<keyof I["payload"]["newProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-            } & { [K_26 in Exclude<keyof I["payload"]["newProcess"], keyof NewProcessTx>]: never; }) | undefined;
+                } & { [K_26 in Exclude<keyof I["payload"]["newProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+            } & { [K_27 in Exclude<keyof I["payload"]["newProcess"], keyof NewProcessTx>]: never; }) | undefined;
             $case: "newProcess";
-        } & { [K_27 in Exclude<keyof I["payload"], "$case" | "newProcess">]: never; }) | ({
+        } & { [K_28 in Exclude<keyof I["payload"], "$case" | "newProcess">]: never; }) | ({
             admin?: {
                 txtype?: TxType | undefined;
                 processId?: Uint8Array | undefined;
@@ -1935,9 +2143,9 @@ declare const Tx: {
                 power?: number | undefined;
                 publicKey?: Uint8Array | undefined;
                 nonce?: number | undefined;
-            } & { [K_28 in Exclude<keyof I["payload"]["admin"], keyof AdminTx>]: never; }) | undefined;
+            } & { [K_29 in Exclude<keyof I["payload"]["admin"], keyof AdminTx>]: never; }) | undefined;
             $case: "admin";
-        } & { [K_29 in Exclude<keyof I["payload"], "$case" | "admin">]: never; }) | ({
+        } & { [K_30 in Exclude<keyof I["payload"], "$case" | "admin">]: never; }) | ({
             setProcess?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -1956,6 +2164,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2017,6 +2229,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2074,6 +2290,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2108,6 +2328,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2120,6 +2344,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -2130,11 +2358,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_30 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_31 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_31 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_32 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_33 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_32 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_34 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -2157,9 +2392,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_33 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_35 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_34 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_36 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -2178,14 +2413,14 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_35 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_36 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_37 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_38 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_39 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_37 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_38 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_39 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_40 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_41 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_40 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_41 in Exclude<keyof I["payload"]["setProcess"]["proof"], "payload">]: never; }) | undefined;
+                    } & { [K_42 in Exclude<keyof I["payload"]["setProcess"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_43 in Exclude<keyof I["payload"]["setProcess"]["proof"], "payload">]: never; }) | undefined;
                 results?: ({
                     votes?: {
                         question?: Uint8Array[] | undefined;
@@ -2196,11 +2431,11 @@ declare const Tx: {
                     }[] & ({
                         question?: Uint8Array[] | undefined;
                     } & {
-                        question?: (Uint8Array[] & Uint8Array[] & { [K_42 in Exclude<keyof I["payload"]["setProcess"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
-                    } & { [K_43 in Exclude<keyof I["payload"]["setProcess"]["results"]["votes"][number], "question">]: never; })[] & { [K_44 in Exclude<keyof I["payload"]["setProcess"]["results"]["votes"], keyof {
+                        question?: (Uint8Array[] & Uint8Array[] & { [K_44 in Exclude<keyof I["payload"]["setProcess"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
+                    } & { [K_45 in Exclude<keyof I["payload"]["setProcess"]["results"]["votes"][number], "question">]: never; })[] & { [K_46 in Exclude<keyof I["payload"]["setProcess"]["results"]["votes"], keyof {
                         question?: Uint8Array[] | undefined;
                     }[]>]: never; }) | undefined;
-                } & { [K_45 in Exclude<keyof I["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
+                } & { [K_47 in Exclude<keyof I["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
                 censusSize?: number | undefined;
@@ -2210,12 +2445,12 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_46 in Exclude<keyof I["payload"]["setProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                } & { [K_48 in Exclude<keyof I["payload"]["setProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
                 metadata?: string | undefined;
                 metadataHash?: Uint8Array | undefined;
-            } & { [K_47 in Exclude<keyof I["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
+            } & { [K_49 in Exclude<keyof I["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
-        } & { [K_48 in Exclude<keyof I["payload"], "$case" | "setProcess">]: never; }) | ({
+        } & { [K_50 in Exclude<keyof I["payload"], "$case" | "setProcess">]: never; }) | ({
             registerKey?: {
                 nonce?: number | undefined;
                 processId?: Uint8Array | undefined;
@@ -2229,6 +2464,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2273,6 +2512,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2313,6 +2556,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2347,6 +2594,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2359,6 +2610,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -2369,11 +2624,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_49 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_51 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_50 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_52 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_53 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_51 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_54 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -2396,9 +2658,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_52 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_55 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_53 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_56 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -2417,19 +2679,19 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_54 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_55 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_56 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_57 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_58 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_57 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_58 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_59 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_60 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_61 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_59 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_60 in Exclude<keyof I["payload"]["registerKey"]["proof"], "payload">]: never; }) | undefined;
+                    } & { [K_62 in Exclude<keyof I["payload"]["registerKey"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_63 in Exclude<keyof I["payload"]["registerKey"]["proof"], "payload">]: never; }) | undefined;
                 newKey?: Uint8Array | undefined;
                 weight?: string | undefined;
-            } & { [K_61 in Exclude<keyof I["payload"]["registerKey"], keyof RegisterKeyTx>]: never; }) | undefined;
+            } & { [K_64 in Exclude<keyof I["payload"]["registerKey"], keyof RegisterKeyTx>]: never; }) | undefined;
             $case: "registerKey";
-        } & { [K_62 in Exclude<keyof I["payload"], "$case" | "registerKey">]: never; }) | ({
+        } & { [K_65 in Exclude<keyof I["payload"], "$case" | "registerKey">]: never; }) | ({
             sendTokens?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2452,9 +2714,9 @@ declare const Tx: {
                 from?: Uint8Array | undefined;
                 to?: Uint8Array | undefined;
                 value?: number | undefined;
-            } & { [K_63 in Exclude<keyof I["payload"]["sendTokens"], keyof SendTokensTx>]: never; }) | undefined;
+            } & { [K_66 in Exclude<keyof I["payload"]["sendTokens"], keyof SendTokensTx>]: never; }) | undefined;
             $case: "sendTokens";
-        } & { [K_64 in Exclude<keyof I["payload"], "$case" | "sendTokens">]: never; }) | ({
+        } & { [K_67 in Exclude<keyof I["payload"], "$case" | "sendTokens">]: never; }) | ({
             setTransactionCosts?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2471,9 +2733,9 @@ declare const Tx: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
                 value?: number | undefined;
-            } & { [K_65 in Exclude<keyof I["payload"]["setTransactionCosts"], keyof SetTransactionCostsTx>]: never; }) | undefined;
+            } & { [K_68 in Exclude<keyof I["payload"]["setTransactionCosts"], keyof SetTransactionCostsTx>]: never; }) | undefined;
             $case: "setTransactionCosts";
-        } & { [K_66 in Exclude<keyof I["payload"], "$case" | "setTransactionCosts">]: never; }) | ({
+        } & { [K_69 in Exclude<keyof I["payload"], "$case" | "setTransactionCosts">]: never; }) | ({
             setAccount?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2515,14 +2777,14 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_67 in Exclude<keyof I["payload"]["setAccount"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-                delegates?: (Uint8Array[] & Uint8Array[] & { [K_68 in Exclude<keyof I["payload"]["setAccount"]["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
+                } & { [K_70 in Exclude<keyof I["payload"]["setAccount"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                delegates?: (Uint8Array[] & Uint8Array[] & { [K_71 in Exclude<keyof I["payload"]["setAccount"]["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
                 SIK?: Uint8Array | undefined;
                 publicKey?: Uint8Array | undefined;
                 name?: string | undefined;
-            } & { [K_69 in Exclude<keyof I["payload"]["setAccount"], keyof SetAccountTx>]: never; }) | undefined;
+            } & { [K_72 in Exclude<keyof I["payload"]["setAccount"], keyof SetAccountTx>]: never; }) | undefined;
             $case: "setAccount";
-        } & { [K_70 in Exclude<keyof I["payload"], "$case" | "setAccount">]: never; }) | ({
+        } & { [K_73 in Exclude<keyof I["payload"], "$case" | "setAccount">]: never; }) | ({
             collectFaucet?: {
                 txType?: TxType | undefined;
                 faucetPackage?: {
@@ -2549,11 +2811,11 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_71 in Exclude<keyof I["payload"]["collectFaucet"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                } & { [K_74 in Exclude<keyof I["payload"]["collectFaucet"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
                 nonce?: number | undefined;
-            } & { [K_72 in Exclude<keyof I["payload"]["collectFaucet"], keyof CollectFaucetTx>]: never; }) | undefined;
+            } & { [K_75 in Exclude<keyof I["payload"]["collectFaucet"], keyof CollectFaucetTx>]: never; }) | undefined;
             $case: "collectFaucet";
-        } & { [K_73 in Exclude<keyof I["payload"], "$case" | "collectFaucet">]: never; }) | ({
+        } & { [K_76 in Exclude<keyof I["payload"], "$case" | "collectFaucet">]: never; }) | ({
             setKeykeeper?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2570,9 +2832,9 @@ declare const Tx: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
                 keykeeper?: Uint8Array | undefined;
-            } & { [K_74 in Exclude<keyof I["payload"]["setKeykeeper"], keyof SetKeykeeperTx>]: never; }) | undefined;
+            } & { [K_77 in Exclude<keyof I["payload"]["setKeykeeper"], keyof SetKeykeeperTx>]: never; }) | undefined;
             $case: "setKeykeeper";
-        } & { [K_75 in Exclude<keyof I["payload"], "$case" | "setKeykeeper">]: never; }) | ({
+        } & { [K_78 in Exclude<keyof I["payload"], "$case" | "setKeykeeper">]: never; }) | ({
             setSIK?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2603,10 +2865,10 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_76 in Exclude<keyof I["payload"]["setSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-            } & { [K_77 in Exclude<keyof I["payload"]["setSIK"], keyof SIKTx>]: never; }) | undefined;
+                } & { [K_79 in Exclude<keyof I["payload"]["setSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+            } & { [K_80 in Exclude<keyof I["payload"]["setSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "setSIK";
-        } & { [K_78 in Exclude<keyof I["payload"], "$case" | "setSIK">]: never; }) | ({
+        } & { [K_81 in Exclude<keyof I["payload"], "$case" | "setSIK">]: never; }) | ({
             delSIK?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -2637,10 +2899,10 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_79 in Exclude<keyof I["payload"]["delSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-            } & { [K_80 in Exclude<keyof I["payload"]["delSIK"], keyof SIKTx>]: never; }) | undefined;
+                } & { [K_82 in Exclude<keyof I["payload"]["delSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+            } & { [K_83 in Exclude<keyof I["payload"]["delSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "delSIK";
-        } & { [K_81 in Exclude<keyof I["payload"], "$case" | "delSIK">]: never; }) | ({
+        } & { [K_84 in Exclude<keyof I["payload"], "$case" | "delSIK">]: never; }) | ({
             registerSIK?: {
                 electionId?: Uint8Array | undefined;
                 censusProof?: {
@@ -2653,6 +2915,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2695,6 +2961,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2733,6 +3003,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2767,6 +3041,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -2779,6 +3057,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -2789,11 +3071,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_82 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_85 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_83 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_86 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_87 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_84 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_88 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -2816,9 +3105,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_85 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_89 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_86 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_90 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -2837,19 +3126,19 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_87 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_88 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_89 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_90 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_91 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_91 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_92 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_93 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_94 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_95 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_92 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_93 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"], "payload">]: never; }) | undefined;
+                    } & { [K_96 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_97 in Exclude<keyof I["payload"]["registerSIK"]["censusProof"], "payload">]: never; }) | undefined;
                 SIK?: Uint8Array | undefined;
-            } & { [K_94 in Exclude<keyof I["payload"]["registerSIK"], keyof RegisterSIKTx>]: never; }) | undefined;
+            } & { [K_98 in Exclude<keyof I["payload"]["registerSIK"], keyof RegisterSIKTx>]: never; }) | undefined;
             $case: "registerSIK";
-        } & { [K_95 in Exclude<keyof I["payload"], "$case" | "registerSIK">]: never; }) | undefined;
-    } & { [K_96 in Exclude<keyof I, "payload">]: never; }>(base?: I | undefined): Tx;
+        } & { [K_99 in Exclude<keyof I["payload"], "$case" | "registerSIK">]: never; }) | undefined;
+    } & { [K_100 in Exclude<keyof I, "payload">]: never; }>(base?: I | undefined): Tx;
     fromPartial<I_1 extends {
         payload?: ({
             vote?: {
@@ -2865,6 +3154,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3000,6 +3293,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3056,6 +3353,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3177,6 +3478,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3222,6 +3527,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3269,6 +3578,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3312,6 +3625,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3346,6 +3663,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3358,6 +3679,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -3368,11 +3693,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_97 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_101 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_98 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_102 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_103 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_99 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_104 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -3395,9 +3727,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_100 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_105 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_101 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_106 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -3416,22 +3748,22 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_102 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_103 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_104 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_105 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_106 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_107 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_108 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_109 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_110 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_111 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_107 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_108 in Exclude<keyof I_1["payload"]["vote"]["proof"], "payload">]: never; }) | undefined;
+                    } & { [K_112 in Exclude<keyof I_1["payload"]["vote"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_113 in Exclude<keyof I_1["payload"]["vote"]["proof"], "payload">]: never; }) | undefined;
                 votePackage?: Uint8Array | undefined;
                 nullifier?: Uint8Array | undefined;
-                encryptionKeyIndexes?: (number[] & number[] & { [K_109 in Exclude<keyof I_1["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
+                encryptionKeyIndexes?: (number[] & number[] & { [K_114 in Exclude<keyof I_1["payload"]["vote"]["encryptionKeyIndexes"], keyof number[]>]: never; }) | undefined;
                 memo?: Uint8Array | undefined;
                 metadataHash?: Uint8Array | undefined;
-            } & { [K_110 in Exclude<keyof I_1["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
+            } & { [K_115 in Exclude<keyof I_1["payload"]["vote"], keyof VoteEnvelope>]: never; }) | undefined;
             $case: "vote";
-        } & { [K_111 in Exclude<keyof I_1["payload"], "$case" | "vote">]: never; }) | ({
+        } & { [K_116 in Exclude<keyof I_1["payload"], "$case" | "vote">]: never; }) | ({
             newProcess?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -3633,8 +3965,8 @@ declare const Tx: {
                     blockCount?: number | undefined;
                     censusRoot?: Uint8Array | undefined;
                     censusURI?: string | undefined;
-                    encryptionPrivateKeys?: (string[] & string[] & { [K_112 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["encryptionPrivateKeys"], keyof string[]>]: never; }) | undefined;
-                    encryptionPublicKeys?: (string[] & string[] & { [K_113 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["encryptionPublicKeys"], keyof string[]>]: never; }) | undefined;
+                    encryptionPrivateKeys?: (string[] & string[] & { [K_117 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["encryptionPrivateKeys"], keyof string[]>]: never; }) | undefined;
+                    encryptionPublicKeys?: (string[] & string[] & { [K_118 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["encryptionPublicKeys"], keyof string[]>]: never; }) | undefined;
                     keyIndex?: number | undefined;
                     status?: ProcessStatus | undefined;
                     paramsSignature?: Uint8Array | undefined;
@@ -3651,7 +3983,7 @@ declare const Tx: {
                         encryptedVotes?: boolean | undefined;
                         uniqueValues?: boolean | undefined;
                         costFromWeight?: boolean | undefined;
-                    } & { [K_114 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["envelopeType"], keyof EnvelopeType>]: never; }) | undefined;
+                    } & { [K_119 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["envelopeType"], keyof EnvelopeType>]: never; }) | undefined;
                     mode?: ({
                         autoStart?: boolean | undefined;
                         interruptible?: boolean | undefined;
@@ -3664,7 +3996,7 @@ declare const Tx: {
                         dynamicCensus?: boolean | undefined;
                         encryptedMetaData?: boolean | undefined;
                         preRegister?: boolean | undefined;
-                    } & { [K_115 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["mode"], keyof ProcessMode>]: never; }) | undefined;
+                    } & { [K_120 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["mode"], keyof ProcessMode>]: never; }) | undefined;
                     questionIndex?: number | undefined;
                     questionCount?: number | undefined;
                     voteOptions?: ({
@@ -3679,7 +4011,7 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
-                    } & { [K_116 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
+                    } & { [K_121 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: ({
                         votes?: {
@@ -3691,11 +4023,11 @@ declare const Tx: {
                         }[] & ({
                             question?: Uint8Array[] | undefined;
                         } & {
-                            question?: (Uint8Array[] & Uint8Array[] & { [K_117 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
-                        } & { [K_118 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"]["votes"][number], "question">]: never; })[] & { [K_119 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"]["votes"], keyof {
+                            question?: (Uint8Array[] & Uint8Array[] & { [K_122 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
+                        } & { [K_123 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"]["votes"][number], "question">]: never; })[] & { [K_124 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"]["votes"], keyof {
                             question?: Uint8Array[] | undefined;
                         }[]>]: never; }) | undefined;
-                    } & { [K_120 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"], "votes">]: never; }) | undefined;
+                    } & { [K_125 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["results"], "votes">]: never; }) | undefined;
                     ethIndexSlot?: number | undefined;
                     sourceBlockHeight?: number | undefined;
                     owner?: Uint8Array | undefined;
@@ -3711,17 +4043,17 @@ declare const Tx: {
                     startTime?: number | undefined;
                     duration?: number | undefined;
                     metadataHash?: Uint8Array | undefined;
-                } & { [K_121 in Exclude<keyof I_1["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
+                } & { [K_126 in Exclude<keyof I_1["payload"]["newProcess"]["process"], keyof Process>]: never; }) | undefined;
                 faucetPackage?: ({
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_122 in Exclude<keyof I_1["payload"]["newProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-            } & { [K_123 in Exclude<keyof I_1["payload"]["newProcess"], keyof NewProcessTx>]: never; }) | undefined;
+                } & { [K_127 in Exclude<keyof I_1["payload"]["newProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+            } & { [K_128 in Exclude<keyof I_1["payload"]["newProcess"], keyof NewProcessTx>]: never; }) | undefined;
             $case: "newProcess";
-        } & { [K_124 in Exclude<keyof I_1["payload"], "$case" | "newProcess">]: never; }) | ({
+        } & { [K_129 in Exclude<keyof I_1["payload"], "$case" | "newProcess">]: never; }) | ({
             admin?: {
                 txtype?: TxType | undefined;
                 processId?: Uint8Array | undefined;
@@ -3756,9 +4088,9 @@ declare const Tx: {
                 power?: number | undefined;
                 publicKey?: Uint8Array | undefined;
                 nonce?: number | undefined;
-            } & { [K_125 in Exclude<keyof I_1["payload"]["admin"], keyof AdminTx>]: never; }) | undefined;
+            } & { [K_130 in Exclude<keyof I_1["payload"]["admin"], keyof AdminTx>]: never; }) | undefined;
             $case: "admin";
-        } & { [K_126 in Exclude<keyof I_1["payload"], "$case" | "admin">]: never; }) | ({
+        } & { [K_131 in Exclude<keyof I_1["payload"], "$case" | "admin">]: never; }) | ({
             setProcess?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -3777,6 +4109,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3838,6 +4174,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3895,6 +4235,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3929,6 +4273,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -3941,6 +4289,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -3951,11 +4303,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_127 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_132 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_128 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_133 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_134 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_129 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_135 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -3978,9 +4337,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_130 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_136 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_131 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_137 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -3999,14 +4358,14 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_132 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_133 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_134 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_135 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_136 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_138 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_139 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_140 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_141 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_142 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_137 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_138 in Exclude<keyof I_1["payload"]["setProcess"]["proof"], "payload">]: never; }) | undefined;
+                    } & { [K_143 in Exclude<keyof I_1["payload"]["setProcess"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_144 in Exclude<keyof I_1["payload"]["setProcess"]["proof"], "payload">]: never; }) | undefined;
                 results?: ({
                     votes?: {
                         question?: Uint8Array[] | undefined;
@@ -4017,11 +4376,11 @@ declare const Tx: {
                     }[] & ({
                         question?: Uint8Array[] | undefined;
                     } & {
-                        question?: (Uint8Array[] & Uint8Array[] & { [K_139 in Exclude<keyof I_1["payload"]["setProcess"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
-                    } & { [K_140 in Exclude<keyof I_1["payload"]["setProcess"]["results"]["votes"][number], "question">]: never; })[] & { [K_141 in Exclude<keyof I_1["payload"]["setProcess"]["results"]["votes"], keyof {
+                        question?: (Uint8Array[] & Uint8Array[] & { [K_145 in Exclude<keyof I_1["payload"]["setProcess"]["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
+                    } & { [K_146 in Exclude<keyof I_1["payload"]["setProcess"]["results"]["votes"][number], "question">]: never; })[] & { [K_147 in Exclude<keyof I_1["payload"]["setProcess"]["results"]["votes"], keyof {
                         question?: Uint8Array[] | undefined;
                     }[]>]: never; }) | undefined;
-                } & { [K_142 in Exclude<keyof I_1["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
+                } & { [K_148 in Exclude<keyof I_1["payload"]["setProcess"]["results"], "votes">]: never; }) | undefined;
                 tempSIKs?: boolean | undefined;
                 duration?: number | undefined;
                 censusSize?: number | undefined;
@@ -4031,12 +4390,12 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_143 in Exclude<keyof I_1["payload"]["setProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                } & { [K_149 in Exclude<keyof I_1["payload"]["setProcess"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
                 metadata?: string | undefined;
                 metadataHash?: Uint8Array | undefined;
-            } & { [K_144 in Exclude<keyof I_1["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
+            } & { [K_150 in Exclude<keyof I_1["payload"]["setProcess"], keyof SetProcessTx>]: never; }) | undefined;
             $case: "setProcess";
-        } & { [K_145 in Exclude<keyof I_1["payload"], "$case" | "setProcess">]: never; }) | ({
+        } & { [K_151 in Exclude<keyof I_1["payload"], "$case" | "setProcess">]: never; }) | ({
             registerKey?: {
                 nonce?: number | undefined;
                 processId?: Uint8Array | undefined;
@@ -4050,6 +4409,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4094,6 +4457,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4134,6 +4501,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4168,6 +4539,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4180,6 +4555,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -4190,11 +4569,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_146 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_152 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_147 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_153 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_154 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_148 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_155 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -4217,9 +4603,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_149 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_156 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_150 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_157 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -4238,19 +4624,19 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_151 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_152 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_153 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_154 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_155 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_158 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_159 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_160 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_161 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_162 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_156 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_157 in Exclude<keyof I_1["payload"]["registerKey"]["proof"], "payload">]: never; }) | undefined;
+                    } & { [K_163 in Exclude<keyof I_1["payload"]["registerKey"]["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_164 in Exclude<keyof I_1["payload"]["registerKey"]["proof"], "payload">]: never; }) | undefined;
                 newKey?: Uint8Array | undefined;
                 weight?: string | undefined;
-            } & { [K_158 in Exclude<keyof I_1["payload"]["registerKey"], keyof RegisterKeyTx>]: never; }) | undefined;
+            } & { [K_165 in Exclude<keyof I_1["payload"]["registerKey"], keyof RegisterKeyTx>]: never; }) | undefined;
             $case: "registerKey";
-        } & { [K_159 in Exclude<keyof I_1["payload"], "$case" | "registerKey">]: never; }) | ({
+        } & { [K_166 in Exclude<keyof I_1["payload"], "$case" | "registerKey">]: never; }) | ({
             sendTokens?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4273,9 +4659,9 @@ declare const Tx: {
                 from?: Uint8Array | undefined;
                 to?: Uint8Array | undefined;
                 value?: number | undefined;
-            } & { [K_160 in Exclude<keyof I_1["payload"]["sendTokens"], keyof SendTokensTx>]: never; }) | undefined;
+            } & { [K_167 in Exclude<keyof I_1["payload"]["sendTokens"], keyof SendTokensTx>]: never; }) | undefined;
             $case: "sendTokens";
-        } & { [K_161 in Exclude<keyof I_1["payload"], "$case" | "sendTokens">]: never; }) | ({
+        } & { [K_168 in Exclude<keyof I_1["payload"], "$case" | "sendTokens">]: never; }) | ({
             setTransactionCosts?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4292,9 +4678,9 @@ declare const Tx: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
                 value?: number | undefined;
-            } & { [K_162 in Exclude<keyof I_1["payload"]["setTransactionCosts"], keyof SetTransactionCostsTx>]: never; }) | undefined;
+            } & { [K_169 in Exclude<keyof I_1["payload"]["setTransactionCosts"], keyof SetTransactionCostsTx>]: never; }) | undefined;
             $case: "setTransactionCosts";
-        } & { [K_163 in Exclude<keyof I_1["payload"], "$case" | "setTransactionCosts">]: never; }) | ({
+        } & { [K_170 in Exclude<keyof I_1["payload"], "$case" | "setTransactionCosts">]: never; }) | ({
             setAccount?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4336,14 +4722,14 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_164 in Exclude<keyof I_1["payload"]["setAccount"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-                delegates?: (Uint8Array[] & Uint8Array[] & { [K_165 in Exclude<keyof I_1["payload"]["setAccount"]["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
+                } & { [K_171 in Exclude<keyof I_1["payload"]["setAccount"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                delegates?: (Uint8Array[] & Uint8Array[] & { [K_172 in Exclude<keyof I_1["payload"]["setAccount"]["delegates"], keyof Uint8Array[]>]: never; }) | undefined;
                 SIK?: Uint8Array | undefined;
                 publicKey?: Uint8Array | undefined;
                 name?: string | undefined;
-            } & { [K_166 in Exclude<keyof I_1["payload"]["setAccount"], keyof SetAccountTx>]: never; }) | undefined;
+            } & { [K_173 in Exclude<keyof I_1["payload"]["setAccount"], keyof SetAccountTx>]: never; }) | undefined;
             $case: "setAccount";
-        } & { [K_167 in Exclude<keyof I_1["payload"], "$case" | "setAccount">]: never; }) | ({
+        } & { [K_174 in Exclude<keyof I_1["payload"], "$case" | "setAccount">]: never; }) | ({
             collectFaucet?: {
                 txType?: TxType | undefined;
                 faucetPackage?: {
@@ -4370,11 +4756,11 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_168 in Exclude<keyof I_1["payload"]["collectFaucet"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+                } & { [K_175 in Exclude<keyof I_1["payload"]["collectFaucet"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
                 nonce?: number | undefined;
-            } & { [K_169 in Exclude<keyof I_1["payload"]["collectFaucet"], keyof CollectFaucetTx>]: never; }) | undefined;
+            } & { [K_176 in Exclude<keyof I_1["payload"]["collectFaucet"], keyof CollectFaucetTx>]: never; }) | undefined;
             $case: "collectFaucet";
-        } & { [K_170 in Exclude<keyof I_1["payload"], "$case" | "collectFaucet">]: never; }) | ({
+        } & { [K_177 in Exclude<keyof I_1["payload"], "$case" | "collectFaucet">]: never; }) | ({
             setKeykeeper?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4391,9 +4777,9 @@ declare const Tx: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
                 keykeeper?: Uint8Array | undefined;
-            } & { [K_171 in Exclude<keyof I_1["payload"]["setKeykeeper"], keyof SetKeykeeperTx>]: never; }) | undefined;
+            } & { [K_178 in Exclude<keyof I_1["payload"]["setKeykeeper"], keyof SetKeykeeperTx>]: never; }) | undefined;
             $case: "setKeykeeper";
-        } & { [K_172 in Exclude<keyof I_1["payload"], "$case" | "setKeykeeper">]: never; }) | ({
+        } & { [K_179 in Exclude<keyof I_1["payload"], "$case" | "setKeykeeper">]: never; }) | ({
             setSIK?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4424,10 +4810,10 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_173 in Exclude<keyof I_1["payload"]["setSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-            } & { [K_174 in Exclude<keyof I_1["payload"]["setSIK"], keyof SIKTx>]: never; }) | undefined;
+                } & { [K_180 in Exclude<keyof I_1["payload"]["setSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+            } & { [K_181 in Exclude<keyof I_1["payload"]["setSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "setSIK";
-        } & { [K_175 in Exclude<keyof I_1["payload"], "$case" | "setSIK">]: never; }) | ({
+        } & { [K_182 in Exclude<keyof I_1["payload"], "$case" | "setSIK">]: never; }) | ({
             delSIK?: {
                 txtype?: TxType | undefined;
                 nonce?: number | undefined;
@@ -4458,10 +4844,10 @@ declare const Tx: {
                 } & {
                     payload?: Uint8Array | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_176 in Exclude<keyof I_1["payload"]["delSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
-            } & { [K_177 in Exclude<keyof I_1["payload"]["delSIK"], keyof SIKTx>]: never; }) | undefined;
+                } & { [K_183 in Exclude<keyof I_1["payload"]["delSIK"]["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+            } & { [K_184 in Exclude<keyof I_1["payload"]["delSIK"], keyof SIKTx>]: never; }) | undefined;
             $case: "delSIK";
-        } & { [K_178 in Exclude<keyof I_1["payload"], "$case" | "delSIK">]: never; }) | ({
+        } & { [K_185 in Exclude<keyof I_1["payload"], "$case" | "delSIK">]: never; }) | ({
             registerSIK?: {
                 electionId?: Uint8Array | undefined;
                 censusProof?: {
@@ -4474,6 +4860,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4516,6 +4906,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4554,6 +4948,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4588,6 +4986,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } | undefined;
                     } & {
                         $case: "ca";
@@ -4600,6 +5002,10 @@ declare const Tx: {
                                 voteWeight?: Uint8Array | undefined;
                             } | undefined;
                             signature?: Uint8Array | undefined;
+                            weightCertificate?: {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } | undefined;
                         } & {
                             type?: ProofCA_Type | undefined;
                             bundle?: ({
@@ -4610,11 +5016,18 @@ declare const Tx: {
                                 processId?: Uint8Array | undefined;
                                 address?: Uint8Array | undefined;
                                 voteWeight?: Uint8Array | undefined;
-                            } & { [K_179 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                            } & { [K_186 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                             signature?: Uint8Array | undefined;
-                        } & { [K_180 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                            weightCertificate?: ({
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & {
+                                weightKey?: Uint8Array | undefined;
+                                signature?: Uint8Array | undefined;
+                            } & { [K_187 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                        } & { [K_188 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                         $case: "ca";
-                    } & { [K_181 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
+                    } & { [K_189 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
                         arbo?: {
                             type?: ProofArbo_Type | undefined;
                             siblings?: Uint8Array | undefined;
@@ -4637,9 +5050,9 @@ declare const Tx: {
                             availableWeight?: Uint8Array | undefined;
                             keyType?: ProofArbo_KeyType | undefined;
                             voteWeight?: Uint8Array | undefined;
-                        } & { [K_182 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                        } & { [K_190 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                         $case: "arbo";
-                    } & { [K_183 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
+                    } & { [K_191 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
                         zkSnark?: {
                             circuitParametersIndex?: number | undefined;
                             a?: string[] | undefined;
@@ -4658,19 +5071,19 @@ declare const Tx: {
                             publicInputs?: string[] | undefined;
                         } & {
                             circuitParametersIndex?: number | undefined;
-                            a?: (string[] & string[] & { [K_184 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                            b?: (string[] & string[] & { [K_185 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                            c?: (string[] & string[] & { [K_186 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                            publicInputs?: (string[] & string[] & { [K_187 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                        } & { [K_188 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                            a?: (string[] & string[] & { [K_192 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                            b?: (string[] & string[] & { [K_193 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                            c?: (string[] & string[] & { [K_194 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                            publicInputs?: (string[] & string[] & { [K_195 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                        } & { [K_196 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                         $case: "zkSnark";
-                    } & { [K_189 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-                } & { [K_190 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"], "payload">]: never; }) | undefined;
+                    } & { [K_197 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+                } & { [K_198 in Exclude<keyof I_1["payload"]["registerSIK"]["censusProof"], "payload">]: never; }) | undefined;
                 SIK?: Uint8Array | undefined;
-            } & { [K_191 in Exclude<keyof I_1["payload"]["registerSIK"], keyof RegisterSIKTx>]: never; }) | undefined;
+            } & { [K_199 in Exclude<keyof I_1["payload"]["registerSIK"], keyof RegisterSIKTx>]: never; }) | undefined;
             $case: "registerSIK";
-        } & { [K_192 in Exclude<keyof I_1["payload"], "$case" | "registerSIK">]: never; }) | undefined;
-    } & { [K_193 in Exclude<keyof I_1, "payload">]: never; }>(object: I_1): Tx;
+        } & { [K_200 in Exclude<keyof I_1["payload"], "$case" | "registerSIK">]: never; }) | undefined;
+    } & { [K_201 in Exclude<keyof I_1, "payload">]: never; }>(object: I_1): Tx;
 };
 interface SignedTx {
     /** The bytes produced by Marshaling a Tx{} message */
@@ -5202,6 +5615,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5259,6 +5676,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5293,6 +5714,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5305,6 +5730,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -5317,9 +5746,16 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } & { [K in Exclude<keyof I["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_1 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_1 in Exclude<keyof I["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_2 in Exclude<keyof I["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_3 in Exclude<keyof I["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -5342,9 +5778,9 @@ declare const SetProcessTx: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_3 in Exclude<keyof I["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_4 in Exclude<keyof I["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_4 in Exclude<keyof I["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_5 in Exclude<keyof I["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -5363,14 +5799,14 @@ declare const SetProcessTx: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_5 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_6 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_7 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_8 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_9 in Exclude<keyof I["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_6 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_7 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_8 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_9 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_10 in Exclude<keyof I["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_10 in Exclude<keyof I["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_11 in Exclude<keyof I["proof"], "payload">]: never; }) | undefined;
+            } & { [K_11 in Exclude<keyof I["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_12 in Exclude<keyof I["proof"], "payload">]: never; }) | undefined;
         results?: ({
             votes?: {
                 question?: Uint8Array[] | undefined;
@@ -5381,11 +5817,11 @@ declare const SetProcessTx: {
             }[] & ({
                 question?: Uint8Array[] | undefined;
             } & {
-                question?: (Uint8Array[] & Uint8Array[] & { [K_12 in Exclude<keyof I["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
-            } & { [K_13 in Exclude<keyof I["results"]["votes"][number], "question">]: never; })[] & { [K_14 in Exclude<keyof I["results"]["votes"], keyof {
+                question?: (Uint8Array[] & Uint8Array[] & { [K_13 in Exclude<keyof I["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
+            } & { [K_14 in Exclude<keyof I["results"]["votes"][number], "question">]: never; })[] & { [K_15 in Exclude<keyof I["results"]["votes"], keyof {
                 question?: Uint8Array[] | undefined;
             }[]>]: never; }) | undefined;
-        } & { [K_15 in Exclude<keyof I["results"], "votes">]: never; }) | undefined;
+        } & { [K_16 in Exclude<keyof I["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
         duration?: number | undefined;
         censusSize?: number | undefined;
@@ -5395,10 +5831,10 @@ declare const SetProcessTx: {
         } & {
             payload?: Uint8Array | undefined;
             signature?: Uint8Array | undefined;
-        } & { [K_16 in Exclude<keyof I["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+        } & { [K_17 in Exclude<keyof I["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
         metadata?: string | undefined;
         metadataHash?: Uint8Array | undefined;
-    } & { [K_17 in Exclude<keyof I, keyof SetProcessTx>]: never; }>(base?: I | undefined): SetProcessTx;
+    } & { [K_18 in Exclude<keyof I, keyof SetProcessTx>]: never; }>(base?: I | undefined): SetProcessTx;
     fromPartial<I_1 extends {
         txtype?: TxType | undefined;
         nonce?: number | undefined;
@@ -5417,6 +5853,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5474,6 +5914,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5508,6 +5952,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5520,6 +5968,10 @@ declare const SetProcessTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -5530,11 +5982,18 @@ declare const SetProcessTx: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
                         voteWeight?: Uint8Array | undefined;
-                    } & { [K_18 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                    } & { [K_19 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_19 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_20 in Exclude<keyof I_1["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_21 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_20 in Exclude<keyof I_1["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_22 in Exclude<keyof I_1["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -5557,9 +6016,9 @@ declare const SetProcessTx: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_21 in Exclude<keyof I_1["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_23 in Exclude<keyof I_1["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_22 in Exclude<keyof I_1["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_24 in Exclude<keyof I_1["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -5578,14 +6037,14 @@ declare const SetProcessTx: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_23 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_24 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_25 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_26 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_27 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_25 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_26 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_27 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_28 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_29 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_28 in Exclude<keyof I_1["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_29 in Exclude<keyof I_1["proof"], "payload">]: never; }) | undefined;
+            } & { [K_30 in Exclude<keyof I_1["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_31 in Exclude<keyof I_1["proof"], "payload">]: never; }) | undefined;
         results?: ({
             votes?: {
                 question?: Uint8Array[] | undefined;
@@ -5596,11 +6055,11 @@ declare const SetProcessTx: {
             }[] & ({
                 question?: Uint8Array[] | undefined;
             } & {
-                question?: (Uint8Array[] & Uint8Array[] & { [K_30 in Exclude<keyof I_1["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
-            } & { [K_31 in Exclude<keyof I_1["results"]["votes"][number], "question">]: never; })[] & { [K_32 in Exclude<keyof I_1["results"]["votes"], keyof {
+                question?: (Uint8Array[] & Uint8Array[] & { [K_32 in Exclude<keyof I_1["results"]["votes"][number]["question"], keyof Uint8Array[]>]: never; }) | undefined;
+            } & { [K_33 in Exclude<keyof I_1["results"]["votes"][number], "question">]: never; })[] & { [K_34 in Exclude<keyof I_1["results"]["votes"], keyof {
                 question?: Uint8Array[] | undefined;
             }[]>]: never; }) | undefined;
-        } & { [K_33 in Exclude<keyof I_1["results"], "votes">]: never; }) | undefined;
+        } & { [K_35 in Exclude<keyof I_1["results"], "votes">]: never; }) | undefined;
         tempSIKs?: boolean | undefined;
         duration?: number | undefined;
         censusSize?: number | undefined;
@@ -5610,10 +6069,10 @@ declare const SetProcessTx: {
         } & {
             payload?: Uint8Array | undefined;
             signature?: Uint8Array | undefined;
-        } & { [K_34 in Exclude<keyof I_1["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
+        } & { [K_36 in Exclude<keyof I_1["faucetPackage"], keyof FaucetPackage>]: never; }) | undefined;
         metadata?: string | undefined;
         metadataHash?: Uint8Array | undefined;
-    } & { [K_35 in Exclude<keyof I_1, keyof SetProcessTx>]: never; }>(object: I_1): SetProcessTx;
+    } & { [K_37 in Exclude<keyof I_1, keyof SetProcessTx>]: never; }>(object: I_1): SetProcessTx;
 };
 interface AdminTx {
     txtype: TxType;
@@ -5704,6 +6163,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5744,6 +6207,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5778,6 +6245,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5790,6 +6261,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -5802,9 +6277,16 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } & { [K in Exclude<keyof I["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_1 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_1 in Exclude<keyof I["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_2 in Exclude<keyof I["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_3 in Exclude<keyof I["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -5827,9 +6309,9 @@ declare const RegisterKeyTx: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_3 in Exclude<keyof I["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_4 in Exclude<keyof I["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_4 in Exclude<keyof I["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_5 in Exclude<keyof I["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -5848,17 +6330,17 @@ declare const RegisterKeyTx: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_5 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_6 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_7 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_8 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_9 in Exclude<keyof I["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_6 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_7 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_8 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_9 in Exclude<keyof I["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_10 in Exclude<keyof I["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_10 in Exclude<keyof I["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_11 in Exclude<keyof I["proof"], "payload">]: never; }) | undefined;
+            } & { [K_11 in Exclude<keyof I["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_12 in Exclude<keyof I["proof"], "payload">]: never; }) | undefined;
         newKey?: Uint8Array | undefined;
         weight?: string | undefined;
-    } & { [K_12 in Exclude<keyof I, keyof RegisterKeyTx>]: never; }>(base?: I | undefined): RegisterKeyTx;
+    } & { [K_13 in Exclude<keyof I, keyof RegisterKeyTx>]: never; }>(base?: I | undefined): RegisterKeyTx;
     fromPartial<I_1 extends {
         nonce?: number | undefined;
         processId?: Uint8Array | undefined;
@@ -5872,6 +6354,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5912,6 +6398,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5946,6 +6436,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -5958,6 +6452,10 @@ declare const RegisterKeyTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -5968,11 +6466,18 @@ declare const RegisterKeyTx: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
                         voteWeight?: Uint8Array | undefined;
-                    } & { [K_13 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                    } & { [K_14 in Exclude<keyof I_1["proof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_14 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_15 in Exclude<keyof I_1["proof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_16 in Exclude<keyof I_1["proof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_15 in Exclude<keyof I_1["proof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_17 in Exclude<keyof I_1["proof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -5995,9 +6500,9 @@ declare const RegisterKeyTx: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_16 in Exclude<keyof I_1["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_18 in Exclude<keyof I_1["proof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_17 in Exclude<keyof I_1["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_19 in Exclude<keyof I_1["proof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -6016,17 +6521,17 @@ declare const RegisterKeyTx: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_18 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_19 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_22 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_22 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_23 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_24 in Exclude<keyof I_1["proof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_23 in Exclude<keyof I_1["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_24 in Exclude<keyof I_1["proof"], "payload">]: never; }) | undefined;
+            } & { [K_25 in Exclude<keyof I_1["proof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_26 in Exclude<keyof I_1["proof"], "payload">]: never; }) | undefined;
         newKey?: Uint8Array | undefined;
         weight?: string | undefined;
-    } & { [K_25 in Exclude<keyof I_1, keyof RegisterKeyTx>]: never; }>(object: I_1): RegisterKeyTx;
+    } & { [K_27 in Exclude<keyof I_1, keyof RegisterKeyTx>]: never; }>(object: I_1): RegisterKeyTx;
 };
 interface SendTokensTx {
     txtype: TxType;
@@ -6247,6 +6752,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -6285,6 +6794,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -6319,6 +6832,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -6331,6 +6848,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -6343,9 +6864,16 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } & { [K in Exclude<keyof I["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_1 in Exclude<keyof I["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_1 in Exclude<keyof I["censusProof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_2 in Exclude<keyof I["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_3 in Exclude<keyof I["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -6368,9 +6896,9 @@ declare const RegisterSIKTx: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_3 in Exclude<keyof I["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_4 in Exclude<keyof I["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_4 in Exclude<keyof I["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_5 in Exclude<keyof I["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -6389,16 +6917,16 @@ declare const RegisterSIKTx: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_5 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_6 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_7 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_8 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_9 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_6 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_7 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_8 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_9 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_10 in Exclude<keyof I["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_10 in Exclude<keyof I["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_11 in Exclude<keyof I["censusProof"], "payload">]: never; }) | undefined;
+            } & { [K_11 in Exclude<keyof I["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_12 in Exclude<keyof I["censusProof"], "payload">]: never; }) | undefined;
         SIK?: Uint8Array | undefined;
-    } & { [K_12 in Exclude<keyof I, keyof RegisterSIKTx>]: never; }>(base?: I | undefined): RegisterSIKTx;
+    } & { [K_13 in Exclude<keyof I, keyof RegisterSIKTx>]: never; }>(base?: I | undefined): RegisterSIKTx;
     fromPartial<I_1 extends {
         electionId?: Uint8Array | undefined;
         censusProof?: {
@@ -6411,6 +6939,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -6449,6 +6981,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -6483,6 +7019,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 $case: "ca";
@@ -6495,6 +7035,10 @@ declare const RegisterSIKTx: {
                         voteWeight?: Uint8Array | undefined;
                     } | undefined;
                     signature?: Uint8Array | undefined;
+                    weightCertificate?: {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } | undefined;
                 } & {
                     type?: ProofCA_Type | undefined;
                     bundle?: ({
@@ -6505,11 +7049,18 @@ declare const RegisterSIKTx: {
                         processId?: Uint8Array | undefined;
                         address?: Uint8Array | undefined;
                         voteWeight?: Uint8Array | undefined;
-                    } & { [K_13 in Exclude<keyof I_1["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
+                    } & { [K_14 in Exclude<keyof I_1["censusProof"]["payload"]["ca"]["bundle"], keyof CAbundle>]: never; }) | undefined;
                     signature?: Uint8Array | undefined;
-                } & { [K_14 in Exclude<keyof I_1["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
+                    weightCertificate?: ({
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & {
+                        weightKey?: Uint8Array | undefined;
+                        signature?: Uint8Array | undefined;
+                    } & { [K_15 in Exclude<keyof I_1["censusProof"]["payload"]["ca"]["weightCertificate"], keyof CAWeightCertificate>]: never; }) | undefined;
+                } & { [K_16 in Exclude<keyof I_1["censusProof"]["payload"]["ca"], keyof ProofCA>]: never; }) | undefined;
                 $case: "ca";
-            } & { [K_15 in Exclude<keyof I_1["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
+            } & { [K_17 in Exclude<keyof I_1["censusProof"]["payload"], "$case" | "ca">]: never; }) | ({
                 arbo?: {
                     type?: ProofArbo_Type | undefined;
                     siblings?: Uint8Array | undefined;
@@ -6532,9 +7083,9 @@ declare const RegisterSIKTx: {
                     availableWeight?: Uint8Array | undefined;
                     keyType?: ProofArbo_KeyType | undefined;
                     voteWeight?: Uint8Array | undefined;
-                } & { [K_16 in Exclude<keyof I_1["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
+                } & { [K_18 in Exclude<keyof I_1["censusProof"]["payload"]["arbo"], keyof ProofArbo>]: never; }) | undefined;
                 $case: "arbo";
-            } & { [K_17 in Exclude<keyof I_1["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
+            } & { [K_19 in Exclude<keyof I_1["censusProof"]["payload"], "$case" | "arbo">]: never; }) | ({
                 zkSnark?: {
                     circuitParametersIndex?: number | undefined;
                     a?: string[] | undefined;
@@ -6553,16 +7104,16 @@ declare const RegisterSIKTx: {
                     publicInputs?: string[] | undefined;
                 } & {
                     circuitParametersIndex?: number | undefined;
-                    a?: (string[] & string[] & { [K_18 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
-                    b?: (string[] & string[] & { [K_19 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
-                    c?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
-                    publicInputs?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
-                } & { [K_22 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
+                    a?: (string[] & string[] & { [K_20 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["a"], keyof string[]>]: never; }) | undefined;
+                    b?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["b"], keyof string[]>]: never; }) | undefined;
+                    c?: (string[] & string[] & { [K_22 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["c"], keyof string[]>]: never; }) | undefined;
+                    publicInputs?: (string[] & string[] & { [K_23 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"]["publicInputs"], keyof string[]>]: never; }) | undefined;
+                } & { [K_24 in Exclude<keyof I_1["censusProof"]["payload"]["zkSnark"], keyof ProofZkSNARK>]: never; }) | undefined;
                 $case: "zkSnark";
-            } & { [K_23 in Exclude<keyof I_1["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
-        } & { [K_24 in Exclude<keyof I_1["censusProof"], "payload">]: never; }) | undefined;
+            } & { [K_25 in Exclude<keyof I_1["censusProof"]["payload"], "$case" | "zkSnark">]: never; }) | undefined;
+        } & { [K_26 in Exclude<keyof I_1["censusProof"], "payload">]: never; }) | undefined;
         SIK?: Uint8Array | undefined;
-    } & { [K_25 in Exclude<keyof I_1, keyof RegisterSIKTx>]: never; }>(object: I_1): RegisterSIKTx;
+    } & { [K_27 in Exclude<keyof I_1, keyof RegisterSIKTx>]: never; }>(object: I_1): RegisterSIKTx;
 };
 interface CollectFaucetTx {
     txType: TxType;
@@ -7582,6 +8133,7 @@ declare const StoredKeys: {
 
 declare const index_Account: typeof Account;
 declare const index_AdminTx: typeof AdminTx;
+declare const index_CAWeightCertificate: typeof CAWeightCertificate;
 declare const index_CAbundle: typeof CAbundle;
 declare const index_Census: typeof Census;
 type index_CensusOrigin = CensusOrigin;
@@ -7651,6 +8203,7 @@ declare namespace index {
   export {
     index_Account as Account,
     index_AdminTx as AdminTx,
+    index_CAWeightCertificate as CAWeightCertificate,
     index_CAbundle as CAbundle,
     index_Census as Census,
     index_CensusOrigin as CensusOrigin,
@@ -7711,4 +8264,4 @@ declare namespace index {
   };
 }
 
-export { ValidatorList as $, ProofZkSNARK as A, Account as B, CensusOrigin as C, Tx as D, SignedTx as E, SetProcessTx as F, AdminTx as G, SendTokensTx as H, SetTransactionCostsTx as I, SetAccountTx as J, SIKTx as K, RegisterSIKTx as L, CollectFaucetTx as M, NewProcessTx as N, FaucetPayload as O, ProcessStatus as P, FaucetPackage as Q, RegisterKeyTx as R, SourceNetworkId as S, TxType as T, SetKeykeeperTx as U, VoteEnvelope as V, Process as W, EnvelopeType as X, ProcessMode as Y, ProcessVoteOptions as Z, OracleList as _, txTypeToJSON as a, Validator as a0, TendermintHeader as a1, ProcessResult as a2, QuestionResult as a3, ProcessEndingList as a4, StoredKeys as a5, processStatusToJSON as b, sourceNetworkIdToJSON as c, censusOriginFromJSON as d, censusOriginToJSON as e, Census as f, Census_Type as g, census_TypeFromJSON as h, index as i, census_TypeToJSON as j, Proof as k, ProofCA as l, ProofCA_Type as m, proofCA_TypeFromJSON as n, proofCA_TypeToJSON as o, processStatusFromJSON as p, CAbundle as q, ProofArbo as r, sourceNetworkIdFromJSON as s, txTypeFromJSON as t, ProofArbo_Type as u, proofArbo_TypeFromJSON as v, proofArbo_TypeToJSON as w, ProofArbo_KeyType as x, proofArbo_KeyTypeFromJSON as y, proofArbo_KeyTypeToJSON as z };
+export { OracleList as $, proofArbo_KeyTypeToJSON as A, ProofZkSNARK as B, CensusOrigin as C, Account as D, Tx as E, SignedTx as F, SetProcessTx as G, AdminTx as H, SendTokensTx as I, SetTransactionCostsTx as J, SetAccountTx as K, SIKTx as L, RegisterSIKTx as M, NewProcessTx as N, CollectFaucetTx as O, ProcessStatus as P, FaucetPayload as Q, RegisterKeyTx as R, SourceNetworkId as S, TxType as T, FaucetPackage as U, VoteEnvelope as V, SetKeykeeperTx as W, Process as X, EnvelopeType as Y, ProcessMode as Z, ProcessVoteOptions as _, txTypeToJSON as a, ValidatorList as a0, Validator as a1, TendermintHeader as a2, ProcessResult as a3, QuestionResult as a4, ProcessEndingList as a5, StoredKeys as a6, processStatusToJSON as b, sourceNetworkIdToJSON as c, censusOriginFromJSON as d, censusOriginToJSON as e, Census as f, Census_Type as g, census_TypeFromJSON as h, index as i, census_TypeToJSON as j, Proof as k, ProofCA as l, ProofCA_Type as m, proofCA_TypeFromJSON as n, proofCA_TypeToJSON as o, processStatusFromJSON as p, CAWeightCertificate as q, CAbundle as r, sourceNetworkIdFromJSON as s, txTypeFromJSON as t, ProofArbo as u, ProofArbo_Type as v, proofArbo_TypeFromJSON as w, proofArbo_TypeToJSON as x, ProofArbo_KeyType as y, proofArbo_KeyTypeFromJSON as z };

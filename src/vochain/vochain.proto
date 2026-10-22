@@ -65,6 +65,24 @@ message ProofCA {
 	Type type = 1;
 	CAbundle bundle = 2;
 	bytes signature = 3;
+	// weightCertificate is required on OFF_CHAIN_CA_V3_BLIND elections and
+	// must be absent on every other census origin.
+	CAWeightCertificate weightCertificate = 4;
+}
+
+// CAWeightCertificate binds a blind signing key to one election and one vote
+// weight. The election key (the census root of an OFF_CHAIN_CA_V3_BLIND
+// process) signs the message
+//   "vocdoni/csp/v3/weight-cert" || processId (32 bytes) ||
+//   voteWeight (32 bytes, big-endian) || weightKey (33 bytes)
+// with an Ethereum personal-sign signature.
+message CAWeightCertificate {
+	// weightKey is the 33-byte compressed secp256k1 public key that signed the
+	// blind CAbundle.
+	bytes weightKey = 1;
+	// signature is the 65-byte Ethereum signature by the election key over the
+	// certificate message.
+	bytes signature = 2;
 }
 
 message CAbundle {
@@ -384,14 +402,22 @@ enum CensusOrigin {
 	CENSUS_UNKNOWN = 0;
 	OFF_CHAIN_TREE = 1;
 	OFF_CHAIN_TREE_WEIGHTED = 2;
+	// OFF_CHAIN_CA verifies CSP proofs against the census root shifted by a
+	// public salt. No new processes are accepted with it.
 	OFF_CHAIN_CA = 3;
-	// OFF_CHAIN_CA_V2 is OFF_CHAIN_CA with a fixed salt derivation for the
-	// salted proof types (ECDSA_PIDSALTED, ECDSA_BLIND_PIDSALTED): the salt
-	// covers the whole processId and the CSP-authorized vote weight, so a CSP
-	// authorization is bound to one election and one weight. OFF_CHAIN_CA keeps
-	// the legacy derivation, which cropped the processId to 20 bytes and shared
-	// one salted key across every election of an organization.
+	// OFF_CHAIN_CA_V2 is OFF_CHAIN_CA with a salt derived from the whole
+	// processId and the CSP-authorized vote weight. The salt is public, so a
+	// blind signature for one salt can be shifted to another; no new processes
+	// are accepted with it.
 	OFF_CHAIN_CA_V2 = 4;
+	// OFF_CHAIN_CA_V3_ECDSA: the census root is a per-election CSP public key
+	// (33 bytes, compressed) and proofs are ProofCA of type ECDSA, signed by it.
+	OFF_CHAIN_CA_V3_ECDSA = 5;
+	// OFF_CHAIN_CA_V3_BLIND: the census root is a per-election CSP public key
+	// that only signs weight certificates. Proofs are ProofCA of type
+	// ECDSA_BLIND, signed by the certified weight key, with a
+	// CAWeightCertificate.
+	OFF_CHAIN_CA_V3_BLIND = 6;
 	// Retired in LTS/1.3: ERC20 = 11, ERC721 = 12, ERC1155 = 13, ERC777 = 14,
 	// MINI_ME = 15, FARCASTER_FRAME = 16. Reserved so their numbers are never
 	// reused; old on-wire values decode as unknown enum values.

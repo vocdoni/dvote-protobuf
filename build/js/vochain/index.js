@@ -1471,6 +1471,7 @@ var vochain_exports = {};
 __export(vochain_exports, {
   Account: () => Account,
   AdminTx: () => AdminTx,
+  CAWeightCertificate: () => CAWeightCertificate,
   CAbundle: () => CAbundle,
   Census: () => Census,
   CensusOrigin: () => CensusOrigin,
@@ -1891,6 +1892,8 @@ var CensusOrigin = /* @__PURE__ */ ((CensusOrigin2) => {
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_TREE_WEIGHTED"] = 2] = "OFF_CHAIN_TREE_WEIGHTED";
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA"] = 3] = "OFF_CHAIN_CA";
   CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA_V2"] = 4] = "OFF_CHAIN_CA_V2";
+  CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA_V3_ECDSA"] = 5] = "OFF_CHAIN_CA_V3_ECDSA";
+  CensusOrigin2[CensusOrigin2["OFF_CHAIN_CA_V3_BLIND"] = 6] = "OFF_CHAIN_CA_V3_BLIND";
   CensusOrigin2[CensusOrigin2["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
   return CensusOrigin2;
 })(CensusOrigin || {});
@@ -1911,6 +1914,12 @@ function censusOriginFromJSON(object) {
     case 4:
     case "OFF_CHAIN_CA_V2":
       return 4 /* OFF_CHAIN_CA_V2 */;
+    case 5:
+    case "OFF_CHAIN_CA_V3_ECDSA":
+      return 5 /* OFF_CHAIN_CA_V3_ECDSA */;
+    case 6:
+    case "OFF_CHAIN_CA_V3_BLIND":
+      return 6 /* OFF_CHAIN_CA_V3_BLIND */;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -1929,6 +1938,10 @@ function censusOriginToJSON(object) {
       return "OFF_CHAIN_CA";
     case 4 /* OFF_CHAIN_CA_V2 */:
       return "OFF_CHAIN_CA_V2";
+    case 5 /* OFF_CHAIN_CA_V3_ECDSA */:
+      return "OFF_CHAIN_CA_V3_ECDSA";
+    case 6 /* OFF_CHAIN_CA_V3_BLIND */:
+      return "OFF_CHAIN_CA_V3_BLIND";
     case -1 /* UNRECOGNIZED */:
     default:
       return "UNRECOGNIZED";
@@ -2380,7 +2393,7 @@ var Proof = {
   }
 };
 function createBaseProofCA() {
-  return { type: 0, bundle: void 0, signature: new Uint8Array(0) };
+  return { type: 0, bundle: void 0, signature: new Uint8Array(0), weightCertificate: void 0 };
 }
 var ProofCA = {
   encode(message, writer = import_minimal.default.Writer.create()) {
@@ -2392,6 +2405,9 @@ var ProofCA = {
     }
     if (message.signature.length !== 0) {
       writer.uint32(26).bytes(message.signature);
+    }
+    if (message.weightCertificate !== void 0) {
+      CAWeightCertificate.encode(message.weightCertificate, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -2420,6 +2436,12 @@ var ProofCA = {
           }
           message.signature = reader.bytes();
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+          message.weightCertificate = CAWeightCertificate.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2432,7 +2454,8 @@ var ProofCA = {
     return {
       type: isSet(object.type) ? proofCA_TypeFromJSON(object.type) : 0,
       bundle: isSet(object.bundle) ? CAbundle.fromJSON(object.bundle) : void 0,
-      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0)
+      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0),
+      weightCertificate: isSet(object.weightCertificate) ? CAWeightCertificate.fromJSON(object.weightCertificate) : void 0
     };
   },
   toJSON(message) {
@@ -2446,6 +2469,9 @@ var ProofCA = {
     if (message.signature.length !== 0) {
       obj.signature = base64FromBytes(message.signature);
     }
+    if (message.weightCertificate !== void 0) {
+      obj.weightCertificate = CAWeightCertificate.toJSON(message.weightCertificate);
+    }
     return obj;
   },
   create(base) {
@@ -2455,6 +2481,73 @@ var ProofCA = {
     const message = createBaseProofCA();
     message.type = object.type ?? 0;
     message.bundle = object.bundle !== void 0 && object.bundle !== null ? CAbundle.fromPartial(object.bundle) : void 0;
+    message.signature = object.signature ?? new Uint8Array(0);
+    message.weightCertificate = object.weightCertificate !== void 0 && object.weightCertificate !== null ? CAWeightCertificate.fromPartial(object.weightCertificate) : void 0;
+    return message;
+  }
+};
+function createBaseCAWeightCertificate() {
+  return { weightKey: new Uint8Array(0), signature: new Uint8Array(0) };
+}
+var CAWeightCertificate = {
+  encode(message, writer = import_minimal.default.Writer.create()) {
+    if (message.weightKey.length !== 0) {
+      writer.uint32(10).bytes(message.weightKey);
+    }
+    if (message.signature.length !== 0) {
+      writer.uint32(18).bytes(message.signature);
+    }
+    return writer;
+  },
+  decode(input, length) {
+    const reader = input instanceof import_minimal.default.Reader ? input : import_minimal.default.Reader.create(input);
+    let end = length === void 0 ? reader.len : reader.pos + length;
+    const message = createBaseCAWeightCertificate();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+          message.weightKey = reader.bytes();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+          message.signature = reader.bytes();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+  fromJSON(object) {
+    return {
+      weightKey: isSet(object.weightKey) ? bytesFromBase64(object.weightKey) : new Uint8Array(0),
+      signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(0)
+    };
+  },
+  toJSON(message) {
+    const obj = {};
+    if (message.weightKey.length !== 0) {
+      obj.weightKey = base64FromBytes(message.weightKey);
+    }
+    if (message.signature.length !== 0) {
+      obj.signature = base64FromBytes(message.signature);
+    }
+    return obj;
+  },
+  create(base) {
+    return CAWeightCertificate.fromPartial(base ?? {});
+  },
+  fromPartial(object) {
+    const message = createBaseCAWeightCertificate();
+    message.weightKey = object.weightKey ?? new Uint8Array(0);
     message.signature = object.signature ?? new Uint8Array(0);
     return message;
   }
@@ -6317,6 +6410,7 @@ function isSet(value) {
 0 && (module.exports = {
   Account,
   AdminTx,
+  CAWeightCertificate,
   CAbundle,
   Census,
   CensusOrigin,
