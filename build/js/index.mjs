@@ -9697,7 +9697,15 @@ var ProcessMode = {
   }
 };
 function createBaseProcessVoteOptions() {
-  return { maxCount: 0, maxValue: 0, maxVoteOverwrites: 0, maxTotalCost: 0, costExponent: 0 };
+  return {
+    maxCount: 0,
+    maxValue: 0,
+    maxVoteOverwrites: 0,
+    maxTotalCost: 0,
+    costExponent: 0,
+    minValue: 0,
+    minTotalCost: 0
+  };
 }
 var ProcessVoteOptions = {
   encode(message, writer = import_minimal8.default.Writer.create()) {
@@ -9715,6 +9723,12 @@ var ProcessVoteOptions = {
     }
     if (message.costExponent !== 0) {
       writer.uint32(40).uint32(message.costExponent);
+    }
+    if (message.minValue !== 0) {
+      writer.uint32(48).uint32(message.minValue);
+    }
+    if (message.minTotalCost !== 0) {
+      writer.uint32(56).uint32(message.minTotalCost);
     }
     return writer;
   },
@@ -9755,6 +9769,18 @@ var ProcessVoteOptions = {
           }
           message.costExponent = reader.uint32();
           continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+          message.minValue = reader.uint32();
+          continue;
+        case 7:
+          if (tag !== 56) {
+            break;
+          }
+          message.minTotalCost = reader.uint32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -9769,7 +9795,9 @@ var ProcessVoteOptions = {
       maxValue: isSet8(object.maxValue) ? globalThis.Number(object.maxValue) : 0,
       maxVoteOverwrites: isSet8(object.maxVoteOverwrites) ? globalThis.Number(object.maxVoteOverwrites) : 0,
       maxTotalCost: isSet8(object.maxTotalCost) ? globalThis.Number(object.maxTotalCost) : 0,
-      costExponent: isSet8(object.costExponent) ? globalThis.Number(object.costExponent) : 0
+      costExponent: isSet8(object.costExponent) ? globalThis.Number(object.costExponent) : 0,
+      minValue: isSet8(object.minValue) ? globalThis.Number(object.minValue) : 0,
+      minTotalCost: isSet8(object.minTotalCost) ? globalThis.Number(object.minTotalCost) : 0
     };
   },
   toJSON(message) {
@@ -9789,6 +9817,12 @@ var ProcessVoteOptions = {
     if (message.costExponent !== 0) {
       obj.costExponent = Math.round(message.costExponent);
     }
+    if (message.minValue !== 0) {
+      obj.minValue = Math.round(message.minValue);
+    }
+    if (message.minTotalCost !== 0) {
+      obj.minTotalCost = Math.round(message.minTotalCost);
+    }
     return obj;
   },
   create(base) {
@@ -9801,6 +9835,8 @@ var ProcessVoteOptions = {
     message.maxVoteOverwrites = object.maxVoteOverwrites ?? 0;
     message.maxTotalCost = object.maxTotalCost ?? 0;
     message.costExponent = object.costExponent ?? 0;
+    message.minValue = object.minValue ?? 0;
+    message.minTotalCost = object.minTotalCost ?? 0;
     return message;
   }
 };

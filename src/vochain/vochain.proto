@@ -421,6 +421,12 @@ message ProcessVoteOptions {
 	uint32 maxVoteOverwrites = 3;
 	uint32 maxTotalCost = 4;
 	uint32 costExponent = 5;
+	// minValue is the smallest value a ballot field may take; 0 means no minimum.
+	uint32 minValue = 6;
+	// minTotalCost is the smallest total cost (sum of value^costExponent) a ballot
+	// may have; 0 means no minimum. With costFromWeight it stays a constant lower
+	// bound while the voter's weight is the upper one.
+	uint32 minTotalCost = 7;
 }
 
 message OracleList {

@@ -1116,6 +1116,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -1649,6 +1651,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -1718,6 +1722,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -1783,6 +1789,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -1852,12 +1860,16 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } & {
                         maxCount?: number | undefined;
                         maxValue?: number | undefined;
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } & { [K_19 in Exclude<keyof I["payload"]["newProcess"]["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: ({
@@ -2937,6 +2949,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -3470,6 +3484,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -3539,6 +3555,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -3604,6 +3622,8 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: {
@@ -3673,12 +3693,16 @@ declare const Tx: {
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } & {
                         maxCount?: number | undefined;
                         maxValue?: number | undefined;
                         maxVoteOverwrites?: number | undefined;
                         maxTotalCost?: number | undefined;
                         costExponent?: number | undefined;
+                        minValue?: number | undefined;
+                        minTotalCost?: number | undefined;
                     } & { [K_116 in Exclude<keyof I_1["payload"]["newProcess"]["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
                     censusOrigin?: CensusOrigin | undefined;
                     results?: ({
@@ -4752,6 +4776,8 @@ declare const NewProcessTx: {
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } | undefined;
             censusOrigin?: CensusOrigin | undefined;
             results?: {
@@ -4817,6 +4843,8 @@ declare const NewProcessTx: {
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } | undefined;
             censusOrigin?: CensusOrigin | undefined;
             results?: {
@@ -4886,12 +4914,16 @@ declare const NewProcessTx: {
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } & {
                 maxCount?: number | undefined;
                 maxValue?: number | undefined;
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } & { [K_4 in Exclude<keyof I["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
             censusOrigin?: CensusOrigin | undefined;
             results?: ({
@@ -4971,6 +5003,8 @@ declare const NewProcessTx: {
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } | undefined;
             censusOrigin?: CensusOrigin | undefined;
             results?: {
@@ -5036,6 +5070,8 @@ declare const NewProcessTx: {
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } | undefined;
             censusOrigin?: CensusOrigin | undefined;
             results?: {
@@ -5105,12 +5141,16 @@ declare const NewProcessTx: {
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } & {
                 maxCount?: number | undefined;
                 maxValue?: number | undefined;
                 maxVoteOverwrites?: number | undefined;
                 maxTotalCost?: number | undefined;
                 costExponent?: number | undefined;
+                minValue?: number | undefined;
+                minTotalCost?: number | undefined;
             } & { [K_16 in Exclude<keyof I_1["process"]["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
             censusOrigin?: CensusOrigin | undefined;
             results?: ({
@@ -6811,6 +6851,8 @@ declare const Process: {
             maxVoteOverwrites?: number | undefined;
             maxTotalCost?: number | undefined;
             costExponent?: number | undefined;
+            minValue?: number | undefined;
+            minTotalCost?: number | undefined;
         } | undefined;
         censusOrigin?: CensusOrigin | undefined;
         results?: {
@@ -6880,12 +6922,16 @@ declare const Process: {
             maxVoteOverwrites?: number | undefined;
             maxTotalCost?: number | undefined;
             costExponent?: number | undefined;
+            minValue?: number | undefined;
+            minTotalCost?: number | undefined;
         } & {
             maxCount?: number | undefined;
             maxValue?: number | undefined;
             maxVoteOverwrites?: number | undefined;
             maxTotalCost?: number | undefined;
             costExponent?: number | undefined;
+            minValue?: number | undefined;
+            minTotalCost?: number | undefined;
         } & { [K_4 in Exclude<keyof I["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
         censusOrigin?: CensusOrigin | undefined;
         results?: ({
@@ -6954,6 +7000,8 @@ declare const Process: {
             maxVoteOverwrites?: number | undefined;
             maxTotalCost?: number | undefined;
             costExponent?: number | undefined;
+            minValue?: number | undefined;
+            minTotalCost?: number | undefined;
         } | undefined;
         censusOrigin?: CensusOrigin | undefined;
         results?: {
@@ -7023,12 +7071,16 @@ declare const Process: {
             maxVoteOverwrites?: number | undefined;
             maxTotalCost?: number | undefined;
             costExponent?: number | undefined;
+            minValue?: number | undefined;
+            minTotalCost?: number | undefined;
         } & {
             maxCount?: number | undefined;
             maxValue?: number | undefined;
             maxVoteOverwrites?: number | undefined;
             maxTotalCost?: number | undefined;
             costExponent?: number | undefined;
+            minValue?: number | undefined;
+            minTotalCost?: number | undefined;
         } & { [K_14 in Exclude<keyof I_1["voteOptions"], keyof ProcessVoteOptions>]: never; }) | undefined;
         censusOrigin?: CensusOrigin | undefined;
         results?: ({
@@ -7147,6 +7199,14 @@ interface ProcessVoteOptions {
     maxVoteOverwrites: number;
     maxTotalCost: number;
     costExponent: number;
+    /** minValue is the smallest value a ballot field may take; 0 means no minimum. */
+    minValue: number;
+    /**
+     * minTotalCost is the smallest total cost (sum of value^costExponent) a ballot
+     * may have; 0 means no minimum. With costFromWeight it stays a constant lower
+     * bound while the voter's weight is the upper one.
+     */
+    minTotalCost: number;
 }
 declare const ProcessVoteOptions: {
     encode(message: ProcessVoteOptions, writer?: _m0.Writer): _m0.Writer;
@@ -7159,12 +7219,16 @@ declare const ProcessVoteOptions: {
         maxVoteOverwrites?: number | undefined;
         maxTotalCost?: number | undefined;
         costExponent?: number | undefined;
+        minValue?: number | undefined;
+        minTotalCost?: number | undefined;
     } & {
         maxCount?: number | undefined;
         maxValue?: number | undefined;
         maxVoteOverwrites?: number | undefined;
         maxTotalCost?: number | undefined;
         costExponent?: number | undefined;
+        minValue?: number | undefined;
+        minTotalCost?: number | undefined;
     } & { [K in Exclude<keyof I, keyof ProcessVoteOptions>]: never; }>(base?: I | undefined): ProcessVoteOptions;
     fromPartial<I_1 extends {
         maxCount?: number | undefined;
@@ -7172,12 +7236,16 @@ declare const ProcessVoteOptions: {
         maxVoteOverwrites?: number | undefined;
         maxTotalCost?: number | undefined;
         costExponent?: number | undefined;
+        minValue?: number | undefined;
+        minTotalCost?: number | undefined;
     } & {
         maxCount?: number | undefined;
         maxValue?: number | undefined;
         maxVoteOverwrites?: number | undefined;
         maxTotalCost?: number | undefined;
         costExponent?: number | undefined;
+        minValue?: number | undefined;
+        minTotalCost?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof ProcessVoteOptions>]: never; }>(object: I_1): ProcessVoteOptions;
 };
 interface OracleList {
