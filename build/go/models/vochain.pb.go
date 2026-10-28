@@ -2984,8 +2984,14 @@ type ProcessVoteOptions struct {
 	MaxVoteOverwrites uint32                 `protobuf:"varint,3,opt,name=maxVoteOverwrites,proto3" json:"maxVoteOverwrites,omitempty"`
 	MaxTotalCost      uint32                 `protobuf:"varint,4,opt,name=maxTotalCost,proto3" json:"maxTotalCost,omitempty"`
 	CostExponent      uint32                 `protobuf:"varint,5,opt,name=costExponent,proto3" json:"costExponent,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// minValue is the smallest value a ballot field may take; 0 means no minimum.
+	MinValue uint32 `protobuf:"varint,6,opt,name=minValue,proto3" json:"minValue,omitempty"`
+	// minTotalCost is the smallest total cost (sum of value^costExponent) a ballot
+	// may have; 0 means no minimum. With costFromWeight it stays a constant lower
+	// bound while the voter's weight is the upper one.
+	MinTotalCost  uint32 `protobuf:"varint,7,opt,name=minTotalCost,proto3" json:"minTotalCost,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ProcessVoteOptions) Reset() {
@@ -3049,6 +3055,20 @@ func (x *ProcessVoteOptions) GetMaxTotalCost() uint32 {
 func (x *ProcessVoteOptions) GetCostExponent() uint32 {
 	if x != nil {
 		return x.CostExponent
+	}
+	return 0
+}
+
+func (x *ProcessVoteOptions) GetMinValue() uint32 {
+	if x != nil {
+		return x.MinValue
+	}
+	return 0
+}
+
+func (x *ProcessVoteOptions) GetMinTotalCost() uint32 {
+	if x != nil {
+		return x.MinTotalCost
 	}
 	return 0
 }
@@ -3877,13 +3897,15 @@ const file_vochain_vochain_proto_rawDesc = "" +
 	"\rinterruptible\x18\x02 \x01(\bR\rinterruptible\x12$\n" +
 	"\rdynamicCensus\x18\x03 \x01(\bR\rdynamicCensus\x12,\n" +
 	"\x11encryptedMetaData\x18\x04 \x01(\bR\x11encryptedMetaData\x12 \n" +
-	"\vpreRegister\x18\x05 \x01(\bR\vpreRegister\"\xc2\x01\n" +
+	"\vpreRegister\x18\x05 \x01(\bR\vpreRegister\"\x82\x02\n" +
 	"\x12ProcessVoteOptions\x12\x1a\n" +
 	"\bmaxCount\x18\x01 \x01(\rR\bmaxCount\x12\x1a\n" +
 	"\bmaxValue\x18\x02 \x01(\rR\bmaxValue\x12,\n" +
 	"\x11maxVoteOverwrites\x18\x03 \x01(\rR\x11maxVoteOverwrites\x12\"\n" +
 	"\fmaxTotalCost\x18\x04 \x01(\rR\fmaxTotalCost\x12\"\n" +
-	"\fcostExponent\x18\x05 \x01(\rR\fcostExponent\"&\n" +
+	"\fcostExponent\x18\x05 \x01(\rR\fcostExponent\x12\x1a\n" +
+	"\bminValue\x18\x06 \x01(\rR\bminValue\x12\"\n" +
+	"\fminTotalCost\x18\a \x01(\rR\fminTotalCost\"&\n" +
 	"\n" +
 	"OracleList\x12\x18\n" +
 	"\aoracles\x18\x01 \x03(\fR\aoracles\"J\n" +
