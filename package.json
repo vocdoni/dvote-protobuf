@@ -64,6 +64,7 @@
   },
   "files": [
     "build/js",
-    "COPYING"
+    "COPYING",
+    "COPYING.LESSER"
   ]
 }

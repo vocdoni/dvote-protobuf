@@ -115,6 +115,6 @@ on top of the [GNU General Public License v3.0][copying].
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-[license]: ./LICENSE
+[license]: ./COPYING.LESSER
 [copying]: ./COPYING
 [DEVELOPING.md]: ./DEVELOPING.md
