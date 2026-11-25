@@ -79,7 +79,7 @@ func (x *StateDBProcess) GetVotesRoot() []byte {
 // Vote as it is stored in the Arbo-based StateDB
 type StateDBVote struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// hash of the protobuf-marshalled Vote
+	// voteHash is keccak256(processId, nullifier, votePackage, weight, memo).
 	VoteHash []byte `protobuf:"bytes,1,opt,name=voteHash,proto3" json:"voteHash,omitempty"`
 	// nullifier identifies the vote
 	Nullifier []byte `protobuf:"bytes,3,opt,name=nullifier,proto3" json:"nullifier,omitempty"`
@@ -87,13 +87,19 @@ type StateDBVote struct {
 	VotePackage []byte `protobuf:"bytes,4,opt,name=votePackage,proto3" json:"votePackage,omitempty"`
 	// weight of the vote
 	Weight []byte `protobuf:"bytes,5,opt,name=Weight,proto3" json:"Weight,omitempty"`
-	// overwriteCount stores the number of times this vote has been overwritten
+	// overwriteCount stores the number of times this vote has been overwritten. For a vote
+	// set entirely on voconed it equals len(txIds)-1; it stays the counter because votes
+	// imported from LTS carry a count but no txIds.
 	OverwriteCount *uint32 `protobuf:"varint,6,opt,name=overwriteCount,proto3,oneof" json:"overwriteCount,omitempty"`
 	// encryptionKeyIndexes stores the indexes of the encryption keys used to encrypt the vote
 	EncryptionKeyIndexes []uint32 `protobuf:"varint,7,rep,packed,name=encryptionKeyIndexes,proto3" json:"encryptionKeyIndexes,omitempty"`
 	// memo stores the optional free-text note attached by the voter (max 256 bytes).
 	// bytes (not string) to match VoteEnvelope.memo; see the note there.
-	Memo          []byte `protobuf:"bytes,8,opt,name=memo,proto3,oneof" json:"memo,omitempty"`
+	Memo []byte `protobuf:"bytes,8,opt,name=memo,proto3,oneof" json:"memo,omitempty"`
+	// txIds lists the transactions that set this vote: the first one and each overwrite,
+	// oldest first. An id hashes the signer and the signed transaction without the signature
+	// bytes, so a re-encoded signature maps to the same id. Empty for votes imported from LTS.
+	TxIds         [][]byte `protobuf:"bytes,9,rep,name=txIds,proto3" json:"txIds,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -177,6 +183,13 @@ func (x *StateDBVote) GetMemo() []byte {
 	return nil
 }
 
+func (x *StateDBVote) GetTxIds() [][]byte {
+	if x != nil {
+		return x.TxIds
+	}
+	return nil
+}
+
 type ProcessIdList struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ProcessIds    [][]byte               `protobuf:"bytes,1,rep,name=processIds,proto3" json:"processIds,omitempty"`
@@ -228,7 +241,7 @@ const file_vocdoni_node_statedb_proto_rawDesc = "" +
 	"\x1avocdoni-node/statedb.proto\x12\x0edvote.types.v1\x1a\x15vochain/vochain.proto\"a\n" +
 	"\x0eStateDBProcess\x121\n" +
 	"\aprocess\x18\x01 \x01(\v2\x17.dvote.types.v1.ProcessR\aprocess\x12\x1c\n" +
-	"\tvotesRoot\x18\x02 \x01(\fR\tvotesRoot\"\x97\x02\n" +
+	"\tvotesRoot\x18\x02 \x01(\fR\tvotesRoot\"\xad\x02\n" +
 	"\vStateDBVote\x12\x1a\n" +
 	"\bvoteHash\x18\x01 \x01(\fR\bvoteHash\x12\x1c\n" +
 	"\tnullifier\x18\x03 \x01(\fR\tnullifier\x12 \n" +
@@ -236,7 +249,8 @@ const file_vocdoni_node_statedb_proto_rawDesc = "" +
 	"\x06Weight\x18\x05 \x01(\fR\x06Weight\x12+\n" +
 	"\x0eoverwriteCount\x18\x06 \x01(\rH\x00R\x0eoverwriteCount\x88\x01\x01\x122\n" +
 	"\x14encryptionKeyIndexes\x18\a \x03(\rR\x14encryptionKeyIndexes\x12\x17\n" +
-	"\x04memo\x18\b \x01(\fH\x01R\x04memo\x88\x01\x01B\x11\n" +
+	"\x04memo\x18\b \x01(\fH\x01R\x04memo\x88\x01\x01\x12\x14\n" +
+	"\x05txIds\x18\t \x03(\fR\x05txIdsB\x11\n" +
 	"\x0f_overwriteCountB\a\n" +
 	"\x05_memo\"/\n" +
 	"\rProcessIdList\x12\x1e\n" +
