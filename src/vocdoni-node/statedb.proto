@@ -16,7 +16,7 @@ message StateDBProcess {
 
 // Vote as it is stored in the Arbo-based StateDB
 message StateDBVote {
-    // hash of the protobuf-marshalled Vote
+    // voteHash is keccak256(processId, nullifier, votePackage, weight, memo).
     bytes voteHash = 1;
     // nullifier identifies the vote
     bytes nullifier = 3;
@@ -24,13 +24,19 @@ message StateDBVote {
     bytes votePackage = 4;
     // weight of the vote
     bytes Weight = 5;
-    // overwriteCount stores the number of times this vote has been overwritten
+    // overwriteCount stores the number of times this vote has been overwritten. For a vote
+    // set entirely on voconed it equals len(txIds)-1; it stays the counter because votes
+    // imported from LTS carry a count but no txIds.
     optional uint32 overwriteCount = 6;
     // encryptionKeyIndexes stores the indexes of the encryption keys used to encrypt the vote
     repeated uint32 encryptionKeyIndexes = 7;
     // memo stores the optional free-text note attached by the voter (max 256 bytes).
     // bytes (not string) to match VoteEnvelope.memo; see the note there.
     optional bytes memo = 8;
+    // txIds lists the transactions that set this vote: the first one and each overwrite,
+    // oldest first. An id hashes the signer and the signed transaction without the signature
+    // bytes, so a re-encoded signature maps to the same id. Empty for votes imported from LTS.
+    repeated bytes txIds = 9;
 }
 
 message ProcessIdList {
