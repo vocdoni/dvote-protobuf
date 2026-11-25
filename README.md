@@ -94,24 +94,27 @@ const { TxType } = Vochain
 
 ## License
 
-This SDK is licensed under the [GNU Affero General Public License v3.0][license].
+This project is licensed under the [GNU Lesser General Public License v3.0][license]
+or (at your option) any later version. The LGPL is a set of additional permissions
+on top of the [GNU General Public License v3.0][copying].
 
     Vocdoni Proto - Protobuf definitions for messages and services used by the
     Vocdoni open stack.
     Copyright (C) 2022 Vocdoni Roots MCU
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
+    it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+    GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
+    You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-[license]: ./LICENSE
+[license]: ./COPYING.LESSER
+[copying]: ./COPYING
 [DEVELOPING.md]: ./DEVELOPING.md
